@@ -1,4 +1,3 @@
-import { IConversationClient } from "@/schema/conversation"
 import { Button } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
@@ -12,9 +11,9 @@ import {
 import { useDelConversation } from "@/store/conversation"
 
 export const ConversationListComp = ({
-  basic,
+  conversation,
 }: {
-  basic: IConversationClient
+  conversation: { id: string }
 }) => {
   const deleteConversation = useDelConversation()
 
@@ -23,8 +22,11 @@ export const ConversationListComp = ({
       variant={"ghost"}
       className={"w-full justify-start group px-2 gap-1"}
     >
-      <Link href={`/tt/${basic.id}`} className={"grow truncate text-left py-2"}>
-        {basic.id}
+      <Link
+        href={`/tt/${conversation.id}`}
+        className={"grow truncate text-left py-2"}
+      >
+        {conversation.id}
       </Link>
 
       <DropdownMenu>
@@ -40,7 +42,7 @@ export const ConversationListComp = ({
           <DropdownMenuItem
             className={"gap-2"}
             onClick={(event) => {
-              void deleteConversation(basic.id)
+              void deleteConversation(conversation.id)
             }}
           >
             <TrashIcon className={"w-4 h-4"} /> 删除会话

@@ -43,10 +43,6 @@ export const conversationSchema = validator<ConversationDefaultArgs>()({
   },
 })
 export type IConversation = ConversationGetPayload<typeof conversationSchema>
-export type IConversationBasic = Pick<
-  IConversation,
-  "id" | "updatedAt" | "title"
->
 
 export type IPAppClient = IPApp & {
   needFetchLLM?: boolean

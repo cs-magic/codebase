@@ -202,3 +202,14 @@ export function useQuery() {
     return
   }
 }
+
+export const useDeleteAllConversations = () => {
+  const router = useRouter()
+  const deleteAllConversations = api.llm.deleteAllConversations.useMutation({
+    onSuccess: () => {
+      conversationStore.conversations = []
+      router.push("/tt")
+    },
+  })
+  return () => deleteAllConversations.mutate()
+}
