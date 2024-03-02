@@ -14,6 +14,7 @@ const createQueryClient = () =>
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED,
+        retry: false, // 不要 retry，否则会导致客户端等待
       },
     },
   })

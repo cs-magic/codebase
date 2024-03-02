@@ -48,7 +48,7 @@ export const llmRouter = createTRPCRouter({
   }),
 
   // todo: 感觉还是装饰器模式更直观一些， ref: https://trpc.io/docs/server/procedures#reusable-base-procedures
-  getConversations: conversationProcedure.query(async ({ input, ctx }) => {
+  getConversation: conversationProcedure.query(async ({ input, ctx }) => {
     return ctx.conversation
   }),
 

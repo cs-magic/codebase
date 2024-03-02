@@ -10,14 +10,12 @@ import { conversationStore } from "@/store/conversation"
 
 const ChatLayout = ({ children }: PropsWithChildren) => {
   // 只能运行一次，不要有其他hook
-  const { data: conversations = [], isFetched } =
-    api.llm.listConversations.useQuery()
+  const { data: conversations } = api.llm.listConversations.useQuery()
 
   // 确保只运行一次
   useEffect(() => {
-    conversationStore.conversations = conversations
-    conversationStore.conversationsValid = isFetched
-  }, [isFetched, conversations])
+    if (conversations) conversationStore.conversations = conversations
+  }, [conversations])
 
   return (
     <div className={"w-full h-full overflow-auto flex border-y"}>
