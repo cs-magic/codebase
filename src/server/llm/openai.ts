@@ -18,6 +18,8 @@ export const callChatGPT = async ({
   const model = new ChatOpenAI({
     modelName: modelId, // Defaults to "gpt-3.5-turbo-instruct" if no model provided.
     temperature,
+
+    timeout: 3000,
   })
   return model.stream(prompt)
 }

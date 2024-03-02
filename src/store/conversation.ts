@@ -14,6 +14,9 @@ export interface IConversationStore {
   persistedPApps: IPAppClient[]
   conversations: IConversationClient[]
   conversationsValid: boolean
+  /**
+   * Attention :由路由更新，不要自己更新，否则会导致干扰！
+   */
   currentConversationId: string | null
 
   // computed
@@ -43,7 +46,7 @@ export interface IConversationStore {
    * --
    * 返回 id，用于其他的函数
    */
-  useAddConversation: () => () => string
+  useAddConversation: () => () => Promise<string>
   /**
    * 用户在会话列表页的展开工具里删除一个会话
    * @param conversationId
@@ -106,27 +109,37 @@ export const conversationStore = proxy<IConversationStore>({
   useAddConversation() {
     const router = useRouter()
     const addConversation = api.llm.addConversation.useMutation({
-      onSuccess: (data) => {
-        // update pApps with new-created ids
-        this.currentConversation!.pApps = data.pApps
-      },
       onError: () => {
         // todo: more friendly alert dialog
         toast.error("不好意思，新建会话失败，请刷新后再试，该会话将被重置！")
       },
+      onSuccess: (data) => {
+        const conversation = this.conversations.find((c) => c.id === data.id)
+        // 若还在的话
+        if (conversation) conversation.pApps = data.pApps
+        this.conversationsValid = true // final valid
+      },
     })
-    return () => {
+    return async () => {
+      this.conversationsValid = false
       const conversationId = nanoid()
-      console.log(`-- added Conversation(id=${conversationId})`)
+      console.log(
+        `-- added Conversation(id: ${this.currentConversationId} --> ${conversationId})`,
+      )
+
       // optimistic update
-      router.replace(`/tt/${conversationId}`)
-      const pApps = this.pApps
+      // 这个不是立即生效的，它会最后执行。。。
+      router.push(`/tt/${conversationId}`)
+
+      const pApps = this.pApps.map((p) => ({
+        ...p,
+        needFetchLLM: false, // reset need-fetch
+      }))
       this.conversations.splice(0, 0, {
         id: conversationId,
         pApps,
         messages: [],
       })
-      this.currentConversationId = conversationId
       void addConversation.mutate({
         id: conversationId,
         pApps,
@@ -137,6 +150,7 @@ export const conversationStore = proxy<IConversationStore>({
   },
 
   useDelConversation() {
+    const router = useRouter()
     const delConversation = api.llm.delConversation.useMutation({
       onError: (error) => {
         console.error(error)
@@ -147,8 +161,7 @@ export const conversationStore = proxy<IConversationStore>({
     return (conversationId: string) => {
       // optimistic update
       remove(this.conversations, (c) => c.id === conversationId)
-      if (conversationId === this.currentConversationId)
-        this.currentConversationId = null
+      if (conversationId === this.currentConversationId) router.push("/tt")
 
       void delConversation.mutateAsync({ conversationId })
     }
@@ -165,19 +178,18 @@ export const conversationStore = proxy<IConversationStore>({
         data.forEach(({ requestId, result }) => {
           if (!result) return toast.error(`App ${requestId} 出错`)
           console.log({ pApps: this.pApps.map((i) => i.id), requestId, result })
-          this.pApps.find((p) => p.id === requestId)!.needFetchLLM = true
+          const pApp = this.pApps.find((p) => p.id === requestId)
+          // 有可能已经换成新的pApp了
+          if (pApp) pApp.needFetchLLM = true
         })
       },
     })
     return (query) => {
       if (!query) return toast.error("不能为空")
 
-      console.log("[query]: ", { conversationStore })
-      if (!this.currentConversationId) addConversation()
-
-      const { id: conversationId, messages } = this.currentConversation!
-
       // optimistic update
+      if (!this.currentConversationId) void addConversation()
+      const { id: conversationId, messages } = this.currentConversation!
       messages.push({
         id: nanoid(),
         updatedAt: new Date(),

@@ -58,6 +58,10 @@ export const llmRouter = createTRPCRouter({
       .catch(console.error)
   }),
 
+  deleteAllConversations: protectedProcedure.mutation(() => {
+    return db.conversation.deleteMany({})
+  }),
+
   addConversation: protectedProcedure
     .input(createConversationSchema)
     .mutation(async ({ input, ctx }) => {

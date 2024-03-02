@@ -17,15 +17,18 @@ export default function ConversationPage({
     useSnapshot(conversationStore)
 
   useEffect(() => {
+    if (!valid) return console.log("skip update since invalid")
     // optimistic
+    console.log(
+      `update id(${conversationStore.currentConversationId} --> ${id})`,
+    )
     conversationStore.currentConversationId = id
 
     // ensure id valid
-    if (valid && !conversations.find((c) => c.id === id)) {
-      router.push("/tt")
-      conversationStore.currentConversationId = null
-    }
-  }, [id, conversations, valid])
+    if (!conversations.find((c) => c.id === id)) router.push("/tt")
+  }, [conversations, valid])
+
+  console.log({ id, valid, conversations })
 
   return <PAppsComp />
 }

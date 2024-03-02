@@ -22,6 +22,7 @@ export const fetchSSE = async (
     sse.close()
   }
   return () => {
+    console.log("event source close")
     sse.close()
   }
 }

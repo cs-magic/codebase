@@ -26,11 +26,8 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
     if (!pApp.needFetchLLM) return
     void fetchSSE(`/api/llm?r=${id}`, {
       onToken: (token) => {
-        const { messages, id: possibleNewConversationId } =
-          conversationStore.currentConversation!
-        console.log({ currentConversationId, possibleNewConversationId })
-        // todo: cut
-        if (possibleNewConversationId !== currentConversationId) return
+        const { messages } = conversationStore.currentConversation!
+        console.log({ currentConversationId, messagesLen: messages.length })
 
         const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
         const lastAssistantMessage = messages.find(
