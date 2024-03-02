@@ -20,6 +20,16 @@ export async function GET(req: NextRequest) {
   const encoder = new TextEncoder()
 
   const init = async () => {
+    /**
+     * // todo: ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
+     * req.signal.onabort = async () => {
+     *   const index = m.endpoints.findIndex((e) => e === endpoint)
+     *   console.log(`[sse] client[${index}] ABORTED`)
+     *   await writer.close() // unnecessary but better
+     *   m.endpoints.splice(index, 1)
+     * }
+     * @param sseEvent
+     */
     const sendToken = async (sseEvent: ISSEEvent) => {
       // 返回客户端不需要有 close 标志，直接 readystate=2 即可
       if (sseEvent.event === "close") return await writer.close()

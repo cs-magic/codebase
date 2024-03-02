@@ -1,14 +1,13 @@
 "use server"
 import { callChatGPT } from "@/server/llm/openai"
-import { last } from "lodash"
-import { MessageRole } from "@prisma/client"
 import { manager } from "@/app/api/llm/init"
 import { IRequest, ISSEEvent } from "@/app/api/llm/schema"
+import { ILLMMessage } from "@/schema/llm"
 
 export const triggerLLM = async (context: {
   requestId: string
   modelId: string
-  messages: { content: string; role: MessageRole }[]
+  messages: ILLMMessage[]
   // todo: more args
 }) => {
   // register into manger for later requests to read
@@ -28,8 +27,7 @@ export const triggerLLM = async (context: {
     try {
       const res = await callChatGPT({
         modelId,
-        // todo: context
-        prompt: last(messages)!.content,
+        messages,
       })
       for await (const chunk of res) {
         // console.log("[llm] chunk: ", JSON.stringify(chunk))

@@ -11,11 +11,16 @@ import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
 import { cn } from "@/lib/utils"
 import { openSelectPApps } from "@/store/ui"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
-import { conversationStore, selectPApp, useDelPApp } from "@/store/conversation"
+import {
+  conversationStore,
+  resetPAppSSE,
+  selectPApp,
+  useDelPApp,
+} from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
 import { Button } from "@/components/ui/button"
 
@@ -31,8 +36,12 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   useEffect(() => {
     if (!pApp.needFetchLLM) return
     void fetchSSE(`/api/llm?r=${id}`, {
+      onFinal: () => {
+        resetPAppSSE(pApp.id)
+      },
       onToken: (token) => {
-        const { messages } = conversationStore.currentConversation!
+        const { messages, messageSnapshots } =
+          conversationStore.currentConversation!
         // console.log({ currentConversationId, messagesLen: messages.length })
 
         const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
@@ -40,15 +49,19 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
           (m) => m.parentId === lastUserMessage.id && m.pAppId === id,
         )!
         if (!lastAssistantMessage && currentConversationId) {
+          const messageId = nanoid()
           messages.push({
             role: "assistant",
             content: token,
-            id: nanoid(),
+            id: messageId,
             updatedAt: new Date(),
             conversationId: currentConversationId,
             pAppId: id,
             parentId: lastUserMessage.id,
           })
+          // 默认使用此时的
+          if (pApp.id === currentConversation?.selectedPAppId)
+            last(messageSnapshots)!.push(messageId)
         } else {
           lastAssistantMessage.content += token
         }
@@ -58,6 +71,11 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
 
   const delPApp = useDelPApp()
   const selected = pApp.id === currentConversation?.selectedPAppId
+
+  const refScroll = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    refScroll.current?.scrollIntoView({ behavior: "auto" })
+  }, [currentConversation?.messages])
 
   return (
     <div className={cn("w-full h-full flex flex-col relative")}>
@@ -128,6 +146,8 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
               <div>{m.content}</div>
             </div>
           ))}
+
+        <div ref={refScroll} />
       </div>
 
       <div className={"flex items-center justify-center m-2 gap-2"}>

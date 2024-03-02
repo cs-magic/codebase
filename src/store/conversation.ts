@@ -2,7 +2,7 @@ import { proxy } from "valtio"
 import { IConversationClient, IPAppClient } from "@/schema/conversation"
 import { api } from "@/lib/trpc/react"
 import { toast } from "sonner"
-import { remove } from "lodash"
+import { last, remove } from "lodash"
 import { useRouter } from "next/navigation"
 import { nanoid } from "nanoid"
 
@@ -114,6 +114,8 @@ export function useAddConversation() {
       id: conversationId,
       pApps,
       messages: [],
+      messageSnapshots: [],
+      selectedPAppId: pApps[0]!.id, // 默认第一个
     })
     const data = await addConversation.mutateAsync({
       id: conversationId,
@@ -124,7 +126,10 @@ export function useAddConversation() {
       (c) => c.id === data.id,
     )
     // 若还在的话
-    if (conversation) conversation.pApps = data.pApps
+    if (conversation) {
+      conversation.pApps = data.pApps
+      conversation.selectedPAppId = data.pApps[0]!.id
+    }
     conversationStore.currentConversationId = conversationId
     conversationStore.conversationsValid = true // final valid
     router.push(`/tt/${conversationId}`) // 异步
@@ -187,10 +192,14 @@ export function useQuery() {
 
     // optimistic update
     if (!conversationStore.currentConversationId) await addConversation()
-    const { id: conversationId, messages } =
-      conversationStore.currentConversation!
+    const {
+      id: conversationId,
+      messages,
+      messageSnapshots,
+    } = conversationStore.currentConversation!
+    const id = nanoid()
     messages.push({
-      id: nanoid(),
+      id,
       updatedAt: new Date(),
       content: query,
       role: "user",
@@ -198,8 +207,12 @@ export function useQuery() {
       pAppId: null,
       parentId: null,
     })
-    queryLLM.mutate({ conversationId, query })
-    return
+    // init snapshots
+    messageSnapshots.push([...(last(messageSnapshots) ?? []), id])
+    const snapShot = last(messageSnapshots)!
+    const context = snapShot.map((s) => messages.find((m) => m.id === s)!)
+    console.log({ context })
+    queryLLM.mutate({ conversationId, messages: context })
   }
 }
 
@@ -217,4 +230,14 @@ export const useDeleteAllConversations = () => {
 export const selectPApp = (pAppId: string) => {
   if (conversationStore.currentConversation)
     conversationStore.currentConversation.selectedPAppId = pAppId
+  // 必然存在
+  const snapshot = last(
+    conversationStore.currentConversation?.messageSnapshots,
+  )!
+  snapshot[snapshot.length - 1] = pAppId
+}
+
+export const resetPAppSSE = (pAppId: string) => {
+  const pApp = conversationStore.pApps.find((p) => p.id === pAppId)
+  if (pApp) pApp.needFetchLLM = false
 }

@@ -14,7 +14,12 @@ const ChatLayout = ({ children }: PropsWithChildren) => {
 
   // 确保只运行一次
   useEffect(() => {
-    if (conversations) conversationStore.conversations = conversations
+    if (conversations)
+      conversationStore.conversations = conversations.map((c) => ({
+        ...c,
+        messageSnapshots: [],
+        selectedPAppId: c.pApps[0]!.id,
+      }))
   }, [conversations])
 
   return (

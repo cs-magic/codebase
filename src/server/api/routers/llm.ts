@@ -14,6 +14,8 @@ import {
 import { z } from "zod"
 
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
+import { MessageRole } from "@prisma/client"
+import { llmMessageSchema } from "@/schema/llm"
 
 export const llmRouter = createTRPCRouter({
   listModels: publicProcedure.query(async () => {
@@ -84,11 +86,11 @@ export const llmRouter = createTRPCRouter({
   queryConversation: conversationProcedure
     .input(
       z.object({
-        query: z.string(),
+        messages: llmMessageSchema.array(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      console.log({ input })
+      console.log("[query] input: ", input)
       const { conversation } = ctx
 
       return Promise.all(
@@ -97,7 +99,7 @@ export const llmRouter = createTRPCRouter({
           const result = await triggerLLM({
             requestId,
             modelId: p.modelId,
-            messages: [{ content: input.query, role: "user" }],
+            messages: input.messages,
           })
           return { requestId, result }
         }),

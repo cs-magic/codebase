@@ -5,6 +5,7 @@ export const fetchSSE = async (
   options?: {
     onToken?: (token: string) => void
     onOutput?: (output: string) => void
+    onFinal?: () => void
   },
 ) => {
   console.log({ requestUrl })
@@ -29,9 +30,11 @@ export const fetchSSE = async (
     if (err.eventPhase !== 2) console.log(`event source error: `, err)
     else console.log("event source closed")
     sse.close()
+    if (options?.onFinal) options.onFinal()
   }
 
   return () => {
+    if (options?.onFinal) options.onFinal()
     sse.close()
   }
 }

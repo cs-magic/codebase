@@ -52,5 +52,7 @@ export interface IConversationClient {
   id: string
   pApps: IPAppClient[]
   messages: IMessageInChat[]
+  // 这是一个栈（todo：森林？）
+  messageSnapshots: string[][]
   selectedPAppId?: string
 }
