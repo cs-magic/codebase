@@ -13,8 +13,7 @@
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
     "update": "git add . && git stash && git pull -f && yarn",
-    "postupdate": "DIST=.next-tmp && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next",
-    "postpostupdate": "pm2 restart sokka"
+    "postupdate": "DIST=.next-tmp && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart sokka"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",
