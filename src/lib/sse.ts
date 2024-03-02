@@ -3,7 +3,9 @@ import { ISSEEventType } from "@/app/api/llm/schema"
 export const fetchSSE = async (
   requestUrl: string,
   options?: {
-    onToken?: (token: string) => void
+    onOpen?: () => void
+    onData?: (data: string) => void
+    onError?: (data: string) => void
     onOutput?: (output: string) => void
     onFinal?: () => void
   },
@@ -15,14 +17,21 @@ export const fetchSSE = async (
    * sse 要自己控制关闭，https://stackoverflow.com/a/54385424/9422455
    */
 
-  sse.addEventListener("data" as ISSEEventType, (ev: MessageEvent<string>) => {
-    const token = JSON.parse(ev.data) as string
-    if (options?.onToken) options.onToken(token)
-
-    console.log({ token })
-  })
+  sse.addEventListener(
+    "onData" as ISSEEventType,
+    (ev: MessageEvent<string>) => {
+      if (options?.onData) options.onData(JSON.parse(ev.data) as string)
+    },
+  )
+  sse.addEventListener(
+    "onError" as ISSEEventType,
+    (ev: MessageEvent<string>) => {
+      if (options?.onError) options.onError(JSON.parse(ev.data) as string)
+    },
+  )
 
   sse.onopen = () => {
+    if (options?.onOpen) options.onOpen()
     console.log("event source opened")
   }
   sse.onerror = (err) => {

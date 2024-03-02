@@ -24,6 +24,10 @@ export const triggerLLM = async (context: {
   // console.debug("[sse] manager added: ", { manager })
 
   const successfullyCall = async () => {
+    const push = (e: ISSEEvent) => {
+      r.data.push(e)
+      r.clients.forEach((c) => c.onEvent(e))
+    }
     try {
       const res = await callChatGPT({
         modelId,
@@ -33,17 +37,15 @@ export const triggerLLM = async (context: {
         // console.log("[llm] chunk: ", JSON.stringify(chunk))
         const token = chunk.content as string
         console.log("[llm] token: ", { requestId, token })
-        const e: ISSEEvent = { event: "data", data: token }
-        r.data.push(e)
-        r.clients.forEach((c) => c.onEvent(e))
+        push({ event: "onData", data: token })
       }
     } catch (e) {
       console.error("[call] error: ", e)
+      const err = e as { message: string }
+      push({ event: "onError", data: err.message })
     } finally {
       // close
-      const e: ISSEEvent = { event: "close" }
-      r.data.push(e)
-      r.clients.forEach((c) => c.onEvent(e))
+      push({ event: "close" })
       r.finished = true
     }
   }

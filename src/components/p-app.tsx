@@ -1,17 +1,12 @@
 import { useSession } from "next-auth/react"
 import { IconContainer } from "@/components/containers"
-import {
-  CheckCircle,
-  MinusCircleIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-} from "lucide-react"
+import { MinusCircleIcon, PlusCircleIcon, SettingsIcon } from "lucide-react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
 import { cn } from "@/lib/utils"
 import { openSelectPApps } from "@/store/ui"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
@@ -23,26 +18,34 @@ import {
 } from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
 import { Button } from "@/components/ui/button"
+import { IMessageInChat } from "@/schema/message"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
 
-  const session = useSession()
-  const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
-
-  const { currentConversation, currentConversationId, pApps } =
+  const { currentConversation, currentConversationId } =
     useSnapshot(conversationStore)
+
+  const [error, setError] = useState("")
+  const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
     if (!pApp.needFetchLLM) return
     void fetchSSE(`/api/llm?r=${id}`, {
-      onFinal: () => {
-        resetPAppSSE(pApp.id)
+      onOpen: () => {
+        setFetching(true)
       },
-      onToken: (token) => {
-        const { messages, messageSnapshots } =
-          conversationStore.currentConversation!
-        // console.log({ currentConversationId, messagesLen: messages.length })
+      onFinal: () => {
+        setFetching(false)
+        resetPAppSSE(id)
+      },
+      onError: (data) => {
+        setError(data)
+      },
+      onData: (data) => {
+        // console.log({ onData: data })
+
+        const { messages } = conversationStore.currentConversation!
 
         const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
         const lastAssistantMessage = messages.find(
@@ -52,119 +55,179 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
           const messageId = nanoid()
           messages.push({
             role: "assistant",
-            content: token,
+            content: data,
             id: messageId,
             updatedAt: new Date(),
             conversationId: currentConversationId,
             pAppId: id,
             parentId: lastUserMessage.id,
           })
-          // 默认使用此时的
-          if (pApp.id === currentConversation?.selectedPAppId)
-            last(messageSnapshots)!.push(messageId)
         } else {
-          lastAssistantMessage.content += token
+          lastAssistantMessage.content += data
         }
       },
     })
   }, [pApp.needFetchLLM])
 
+  return (
+    <div className={cn("w-full h-full flex flex-col relative")}>
+      <TopBar id={id} title={pApp?.model.title} />
+
+      <MessagesComp id={id} logo={pApp?.model.logo} />
+
+      <Controls error={error} fetching={fetching} id={id} />
+    </div>
+  )
+}
+
+const TopBar = ({ id, title }: { id: string; title: string }) => {
   const delPApp = useDelPApp()
-  const selected = pApp.id === currentConversation?.selectedPAppId
+  const { currentConversation, pApps } = useSnapshot(conversationStore)
+  const selected = id === currentConversation?.selectedPAppId
+
+  return (
+    <div
+      className={cn(
+        "w-full flex items-center p-2 border-b",
+        selected && "bg-primary-foreground/50",
+      )}
+    >
+      <div className={"flex items-center gap-2"}>
+        <div className={"flex gap-2 items-baseline"}>
+          <span>{title}</span>
+
+          <span className={"text-muted-foreground text-xs"}>{id}</span>
+        </div>
+      </div>
+      <div className={"grow"} />
+
+      <IconContainer
+        className={cn(pApps.length === 1 && "text-muted-foreground")}
+        onClick={() => {
+          void delPApp(id)
+        }}
+      >
+        <MinusCircleIcon />
+      </IconContainer>
+
+      <IconContainer onClick={openSelectPApps}>
+        <PlusCircleIcon />
+      </IconContainer>
+
+      <IconContainer>
+        <SettingsIcon />
+      </IconContainer>
+    </div>
+  )
+}
+
+const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
+  const { currentSnapshot, currentMessages } = useSnapshot(conversationStore)
 
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
     refScroll.current?.scrollIntoView({ behavior: "auto" })
-  }, [currentConversation?.messages])
+  }, [currentMessages])
+
+  const theMessages: IMessageInChat[] = []
+  let snapShotIndex = 0
+  currentMessages.forEach((m) => {
+    if (snapShotIndex >= currentSnapshot.length) {
+      if (m.pAppId === id) theMessages.push(m)
+    } else {
+      if (m.id === currentSnapshot[snapShotIndex]) {
+        theMessages.push(m)
+        ++snapShotIndex
+      }
+    }
+  })
+
+  // currentConversation?.messages
+  // .filter(
+  //     (m) =>
+  //         // user
+  //         !m.pAppId ||
+  //         // assistant
+  //         m.pAppId === id,
+  // )
 
   return (
-    <div className={cn("w-full h-full flex flex-col relative")}>
-      {/* 遮罩*/}
-      {/*<div*/}
-      {/*  className={cn(*/}
-      {/*    currentConversation?.selectedPAppId &&*/}
-      {/*      pApp.id !== currentConversation.selectedPAppId &&*/}
-      {/*      "darken-overlay",*/}
-      {/*  )}*/}
-      {/*/>*/}
+    <div className={"grow overflow-auto"}>
+      {theMessages.map((m, index) => (
+        <MessageComp m={m} logo={logo} key={index} />
+      ))}
 
-      {/* model line */}
-      <div
-        className={cn(
-          "w-full flex items-center p-2 border-b",
-          selected && "bg-primary-foreground/50",
-        )}
-      >
-        <div className={"flex items-center gap-2"}>
-          <div className={"flex gap-2 items-baseline"}>
-            <span>{pApp?.model.title}</span>
+      <div ref={refScroll} />
+    </div>
+  )
+}
 
-            <span className={"text-muted-foreground text-xs"}>{pApp.id}</span>
-          </div>
-        </div>
-        <div className={"grow"} />
+const MessageComp = ({
+  m,
+  logo,
+}: {
+  m: IMessageInChat
+  logo: string | null
+}) => {
+  const session = useSession()
+  const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
 
-        <IconContainer
-          className={cn(pApps.length === 1 && "text-muted-foreground")}
-          onClick={() => {
-            void delPApp(pApp.id)
-          }}
-        >
-          <MinusCircleIcon />
-        </IconContainer>
+  return (
+    <div className={"w-full flex gap-2 p-2"}>
+      <Avatar className={"shrink-0"}>
+        <AvatarImage
+          src={m.role === "user" ? userAvatar : logo ?? DEFAULT_AVATAR}
+        />
+      </Avatar>
 
-        <IconContainer onClick={openSelectPApps}>
-          <PlusCircleIcon />
-        </IconContainer>
+      <div>{m.content}</div>
+    </div>
+  )
+}
 
-        <IconContainer>
-          <SettingsIcon />
-        </IconContainer>
-      </div>
-
-      <div className={"grow overflow-auto"}>
-        {currentConversation?.messages
-          .filter(
-            (m) =>
-              // user
-              !m.pAppId ||
-              // assistant
-              m.pAppId === id,
-          )
-          .map((m, index) => (
-            <div key={index} className={"w-full flex gap-2 p-2"}>
-              <Avatar className={"shrink-0"}>
-                <AvatarImage
-                  src={
-                    m.role === "user"
-                      ? userAvatar
-                      : pApp?.model.logo ?? DEFAULT_AVATAR
-                  }
-                />
-              </Avatar>
-
-              <div>{m.content}</div>
-            </div>
-          ))}
-
-        <div ref={refScroll} />
-      </div>
-
-      <div className={"flex items-center justify-center m-2 gap-2"}>
-        <Button variant={"outline"} className={""} onClick={() => {}}>
-          停止生成
-        </Button>
-
+const Controls = ({
+  error,
+  fetching,
+  id,
+}: {
+  error: string
+  fetching: boolean
+  id: string
+}) => {
+  return (
+    <div className={"flex items-center justify-center m-2 gap-2"}>
+      {error ? (
         <Button
           variant={"outline"}
           className={""}
           onClick={() => {
-            selectPApp(pApp.id)
+            return
           }}
         >
-          这个更好
+          点击重试
         </Button>
-      </div>
+      ) : (
+        <Button
+          disabled={!fetching}
+          variant={"outline"}
+          className={""}
+          onClick={() => {
+            return
+          }}
+        >
+          停止生成
+        </Button>
+      )}
+
+      <Button
+        variant={"outline"}
+        className={""}
+        onClick={() => {
+          selectPApp(id)
+        }}
+      >
+        这个更好
+      </Button>
     </div>
   )
 }

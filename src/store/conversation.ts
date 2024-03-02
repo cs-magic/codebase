@@ -5,6 +5,7 @@ import { toast } from "sonner"
 import { last, remove } from "lodash"
 import { useRouter } from "next/navigation"
 import { nanoid } from "nanoid"
+import { IMessageInChat } from "@/schema/message"
 
 export interface IConversationStore {
   // >> 1. state
@@ -21,6 +22,9 @@ export interface IConversationStore {
 
   // computed
   currentConversation: IConversationClient | null
+  currentMessages: IMessageInChat[]
+  currentSnapshot: string[]
+  currentPAppId?: string
   pApps: IPAppClient[]
 }
 
@@ -40,6 +44,17 @@ export const conversationStore = proxy<IConversationStore>({
   get pApps() {
     return this.currentConversation?.pApps ?? this.persistedPApps
   },
+  get currentSnapshot() {
+    const messageSnapshots: string[][] =
+      this.currentConversation?.messageSnapshots ?? []
+    return last(messageSnapshots) ?? []
+  },
+  get currentMessages() {
+    return this.currentConversation?.messages ?? []
+  },
+  get currentPAppId() {
+    return this.currentConversation?.selectedPAppId
+  },
 })
 
 /**
@@ -51,11 +66,13 @@ export const conversationStore = proxy<IConversationStore>({
  */
 export function useAddPApp() {
   const addPApp = api.llm.addPApp.useMutation()
+  const { pApps, currentMessages, currentConversationId, currentPAppId } =
+    conversationStore
   return async (pApp: IPAppClient) => {
-    if (conversationStore.pApps.length >= 3) return toast.error("最多只支持3个")
+    if (pApps.length >= 3) return toast.error("最多只支持3个")
     // optimistic update
-    conversationStore.pApps.push(pApp)
-    const conversationId = conversationStore.currentConversationId
+    pApps.push(pApp)
+    const conversationId = currentConversationId
     if (conversationId) {
       await addPApp.mutateAsync({
         conversationId,
@@ -63,6 +80,13 @@ export function useAddPApp() {
         modelId: pApp.modelId,
         title: pApp.title,
       })
+      // 如果此时有pApp的话，更新它的最新条目
+      if (currentPAppId) {
+        currentMessages.push({
+          ...last(currentMessages.filter((m) => m.pAppId === currentPAppId))!,
+          pAppId: pApp.id,
+        })
+      }
     }
   }
 }
@@ -196,6 +220,7 @@ export function useQuery() {
       id: conversationId,
       messages,
       messageSnapshots,
+      selectedPAppId,
     } = conversationStore.currentConversation!
     const id = nanoid()
     messages.push({
@@ -207,11 +232,21 @@ export function useQuery() {
       pAppId: null,
       parentId: null,
     })
+
     // init snapshots
-    messageSnapshots.push([...(last(messageSnapshots) ?? []), id])
-    const snapShot = last(messageSnapshots)!
-    const context = snapShot.map((s) => messages.find((m) => m.id === s)!)
-    console.log({ context })
+    if (!messageSnapshots.length) {
+      messageSnapshots.push([id])
+    } else {
+      messageSnapshots.push(last(messageSnapshots)!)
+      const theLastSelectedMessage = last(
+        messages.filter((m) => m.pAppId === selectedPAppId),
+      )!
+      last(messageSnapshots)!.push(theLastSelectedMessage.id, id)
+    }
+
+    const snapshot = last(messageSnapshots)!
+    const context = snapshot.map((s) => messages.find((m) => m.id === s)!)
+    console.log("query context: ", { context, snapshot })
     queryLLM.mutate({ conversationId, messages: context })
   }
 }
@@ -230,11 +265,6 @@ export const useDeleteAllConversations = () => {
 export const selectPApp = (pAppId: string) => {
   if (conversationStore.currentConversation)
     conversationStore.currentConversation.selectedPAppId = pAppId
-  // 必然存在
-  const snapshot = last(
-    conversationStore.currentConversation?.messageSnapshots,
-  )!
-  snapshot[snapshot.length - 1] = pAppId
 }
 
 export const resetPAppSSE = (pAppId: string) => {

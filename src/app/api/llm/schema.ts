@@ -7,13 +7,21 @@ export type IRequest = {
   clients: IClient[]
 }
 
-export type ISSEEventType = "data" | "close"
+/**
+ * 不能用 error 这是 sse 默认的 event-type
+ */
+export type ISSEEventType = "onData" | "onError" | "close"
 
-export type ISSEEvent<T extends ISSEEventType = any> = T extends "data"
+export type ISSEEvent<T extends ISSEEventType = any> = T extends "onData"
   ? {
-      event: "data"
+      event: "onData"
       data: string
     }
-  : {
-      event: "close"
-    }
+  : T extends "onError"
+    ? {
+        event: "onError"
+        data: string
+      }
+    : {
+        event: "close"
+      }
