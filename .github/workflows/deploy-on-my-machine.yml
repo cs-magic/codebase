@@ -6,7 +6,7 @@ name: Deploy On My Machine
 # or API.
 on:
 #  copied from github.com/markshawn2020/my-docusaurus/.github/workflows/mark-vercell-build.yml
-  repository_dispatch:
+  workflow_dispatch:
     types: deploy
     # Inputs the workflow accepts.
     inputs:
