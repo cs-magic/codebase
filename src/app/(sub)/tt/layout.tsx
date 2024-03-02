@@ -2,14 +2,22 @@
 
 import { Sidebar } from "@/components/sidebar"
 import { Separator } from "@/components/ui/separator"
-import { PropsWithChildren } from "react"
-import { useInitConversations } from "@/store/conversation"
+import { PropsWithChildren, useEffect } from "react"
 
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"
+import { api } from "@/lib/trpc/react"
+import { conversationStore } from "@/store/conversation"
 
 const ChatLayout = ({ children }: PropsWithChildren) => {
   // 只能运行一次，不要有其他hook
-  useInitConversations()
+  const { data: conversations = [], isFetched } =
+    api.llm.listConversations.useQuery()
+
+  // 确保只运行一次
+  useEffect(() => {
+    conversationStore.conversations = conversations
+    conversationStore.conversationsValid = isFetched
+  }, [isFetched, conversations])
 
   return (
     <div className={"w-full h-full overflow-auto flex border-y"}>

@@ -61,10 +61,10 @@ model Conversation {
   fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
   fromUserId String
 
-  type    ConversationType
-  pApps   PApp[]
-  title   String?
-  Message Message[]
+  type     ConversationType
+  pApps    PApp[]
+  title    String?
+  messages Message[]
 }
 
 enum ConversationType {

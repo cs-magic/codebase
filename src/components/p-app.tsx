@@ -4,17 +4,14 @@ import { MinusCircleIcon, PlusCircleIcon, SettingsIcon } from "lucide-react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
-import {
-  conversationsState,
-  IPAppClient,
-  useDelPApp,
-} from "@/store/conversation"
 import { cn } from "@/lib/utils"
 import { openSelectPApps } from "@/store/ui"
 import { useEffect } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
+import { conversationStore } from "@/store/conversation"
+import { IPAppClient } from "@/schema/conversation"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
@@ -22,25 +19,30 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const session = useSession()
   const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
 
-  const { conversationId, pApps, messages } = useSnapshot(conversationsState)
+  const { currentConversation, useDelPApp, currentConversationId, pApps } =
+    useSnapshot(conversationStore)
 
   useEffect(() => {
     if (!pApp.needFetchLLM) return
     void fetchSSE(`/api/llm?r=${id}`, {
       onToken: (token) => {
-        const lastUserMessage = last(
-          conversationsState.messages.filter((m) => m.role === "user"),
-        )!
-        const lastAssistantMessage = conversationsState.messages.find(
+        const { messages, id: possibleNewConversationId } =
+          conversationStore.currentConversation!
+        console.log({ currentConversationId, possibleNewConversationId })
+        // todo: cut
+        if (possibleNewConversationId !== currentConversationId) return
+
+        const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
+        const lastAssistantMessage = messages.find(
           (m) => m.parentId === lastUserMessage.id && m.pAppId === id,
-        )
-        if (!lastAssistantMessage) {
-          conversationsState.messages.push({
+        )!
+        if (!lastAssistantMessage && currentConversationId) {
+          messages.push({
             role: "assistant",
             content: token,
             id: nanoid(),
             updatedAt: new Date(),
-            conversationId: conversationId!,
+            conversationId: currentConversationId,
             pAppId: id,
             parentId: lastUserMessage.id,
           })
@@ -51,15 +53,17 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
     })
   }, [pApp.needFetchLLM])
 
-  const needFetchLLM = pApp.needFetchLLM
-  console.log({ pApp, needFetchLLM, messages })
   const delPApp = useDelPApp()
 
   return (
     <div className={"w-full"}>
       {/* model line */}
       <div className={"w-full flex items-center p-2 border-b"}>
-        <div>{pApp?.model.title}</div>
+        <div className={"flex gap-2 items-baseline"}>
+          <span>{pApp?.model.title}</span>
+
+          <span className={"text-muted-foreground text-xs"}>{pApp.id}</span>
+        </div>
 
         <div className={"grow"} />
 
@@ -81,7 +85,7 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
         </IconContainer>
       </div>
 
-      {messages
+      {currentConversation?.messages
         .filter(
           (m) =>
             // user

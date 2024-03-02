@@ -1,4 +1,4 @@
-import { IConversationBasic } from "@/schema/conversation"
+import { IConversationClient } from "@/schema/conversation"
 import { Button } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
@@ -9,18 +9,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useDeleteConversation } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation"
 
 export const ConversationListComp = ({
   basic,
 }: {
-  basic: IConversationBasic
+  basic: IConversationClient
 }) => {
-  const deleteConversation = useDeleteConversation()
+  const deleteConversation = conversationStore.useDelConversation()
 
   return (
-    <Button variant={"ghost"} className={"w-full justify-start group"}>
-      <Link href={`/tt/${basic.id}`} className={"grow text-left"}>
+    <Button
+      variant={"ghost"}
+      className={"w-full justify-start group px-2 gap-1"}
+    >
+      <Link href={`/tt/${basic.id}`} className={"grow truncate text-left py-2"}>
         {basic.id}
       </Link>
 
@@ -36,7 +39,7 @@ export const ConversationListComp = ({
         <DropdownMenuContent>
           <DropdownMenuItem
             className={"gap-2"}
-            onClick={() => {
+            onClick={(event) => {
               void deleteConversation(basic.id)
             }}
           >

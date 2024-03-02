@@ -7,10 +7,10 @@ import React from "react"
 import { openSelectPApps } from "@/store/ui"
 import JoinComponents from "../join-components"
 import { useSnapshot } from "valtio"
-import { conversationsState } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation"
 
 export const ConfigApp = () => {
-  const { pApps } = useSnapshot(conversationsState)
+  const { persistedPApps } = useSnapshot(conversationStore)
 
   return (
     <div className={"flex items-center gap-2"}>
@@ -20,7 +20,7 @@ export const ConfigApp = () => {
         <span className={"text-muted-foreground"}>模型：</span>
 
         <JoinComponents
-          components={pApps.map((p) => (
+          components={persistedPApps.map((p) => (
             <span key={p.id}>{p.title}</span>
           ))}
           separator={

@@ -58,12 +58,13 @@ export const llmRouter = createTRPCRouter({
       .catch(console.error)
   }),
 
-  createConversation: protectedProcedure
+  addConversation: protectedProcedure
     .input(createConversationSchema)
     .mutation(async ({ input, ctx }) => {
-      console.log({ input })
+      console.log("[add-conv] input: ", JSON.stringify(input, null, 2))
       const conversation = await db.conversation.create({
         data: {
+          id: input.id,
           fromUserId: ctx.user.id,
           type: input.type,
           pApps: {
@@ -72,7 +73,7 @@ export const llmRouter = createTRPCRouter({
         },
         ...conversationSchema,
       })
-      console.log({ conversation })
+      console.log("[add-conv] conv: ", JSON.stringify(conversation, null, 2))
       return conversation
     }),
 

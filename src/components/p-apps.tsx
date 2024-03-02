@@ -1,15 +1,11 @@
 import { Fragment } from "react"
 import { Separator } from "@/components/ui/separator"
 import { PAppComp } from "@/components/p-app"
-import { IPAppClient } from "@/store/conversation"
-import { conversationStore } from "@/store/conversation-v2"
+import { conversationStore } from "@/store/conversation"
+import { useSnapshot } from "valtio"
 
 export const PAppsComp = () => {
-  const { persistedPApps, conversations, currentConversationId } =
-    conversationStore.state
-  const pApps = currentConversationId
-    ? conversations.find((c) => c.id === currentConversationId)!.pApps
-    : persistedPApps
+  const { pApps } = useSnapshot(conversationStore)
 
   return (
     <div className={"grow overflow-auto flex gap-1 justify-center"}>

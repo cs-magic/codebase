@@ -10,6 +10,7 @@ import PAppDefaultArgs = Prisma.PAppDefaultArgs
 import PAppGetPayload = Prisma.PAppGetPayload
 
 export const createConversationSchema = z.object({
+  id: z.string(),
   pApps: z
     .object({
       modelId: z.string(),
@@ -38,6 +39,7 @@ export const conversationSchema = validator<ConversationDefaultArgs>()({
   include: {
     pApps: pAppSchema,
     fromUser: true,
+    messages: true,
   },
 })
 export type IConversation = ConversationGetPayload<typeof conversationSchema>

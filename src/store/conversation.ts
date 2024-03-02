@@ -1,198 +1,193 @@
 import { proxy } from "valtio"
-import { IConversationBasic, IPApp } from "@/schema/conversation"
+import { IConversationClient, IPApp, IPAppClient } from "@/schema/conversation"
 import { api } from "@/lib/trpc/react"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { IMessageInChat } from "@/schema/message"
-import { nanoid } from "nanoid"
 import { remove } from "lodash"
+import { useRouter } from "next/navigation"
+import { nanoid } from "nanoid"
 
-/////////////////////////
-// interface
-/////////////////////////
+export interface IConversationStore {
+  // >> 1. state
+  /**
+   * pApp 要能持久化，每次用户打开是上次的
+   */
+  persistedPApps: IPAppClient[]
+  conversations: IConversationClient[]
+  conversationsValid: boolean
+  currentConversationId: string | null
 
-export type IPAppClient = IPApp & {
-  needFetchLLM?: boolean
-}
-
-export interface IConversationState {
+  // computed
+  currentConversation: IConversationClient | null
   pApps: IPAppClient[]
 
-  conversationId: string | null
-  conversations: IConversationBasic[]
-
-  messages: IMessageInChat[]
-}
-
-/////////////////////////
-// states
-/////////////////////////
-
-export const conversationsState = proxy<IConversationState>({
-  pApps: [],
-  conversations: [],
-  conversationId: null,
-  messages: [],
-})
-
-/////////////////////////
-// Actions (code split)
-/////////////////////////
-
-export interface IConversationActions {
+  // >> 2. actions
   /**
    * 用户在弹窗界面增加一个pApp
    * - 最多只能有3个，或者视窗口长度限制
-   * - 首页增加要
+   * - 首页里增加要持久化
    * - 会话里增加要与数据库同步
    * @param pApp
    */
-  addApp: (pApp: IPApp) => void
-  delApp: (pAppId: string) => void
-
-  addConversation: () => void
-  delConversation: (conversationId: string) => void
-
-  queryInHomePage: (query: string) => void
-  queryInChatLayout: (conversationId: string | null, query: string) => void
+  useAddPApp: () => (pApp: IPApp) => void
+  /**
+   * 用户在首页或者会话里删除一个pApp
+   * - 最少要有1个
+   * - 首页里增加要持久化
+   * - 会话里增加要与数据库同步
+   * @param pAppId
+   */
+  useDelPApp: () => (pAppId: string) => void
+  /**
+   * 1. 用户在首页query后将自动触发新建一个会话
+   * 2. 用户在会话列表可以点击新增一个会话
+   * --
+   * 返回 id，用于其他的函数
+   */
+  useAddConversation: () => () => string
+  /**
+   * 用户在会话列表页的展开工具里删除一个会话
+   * @param conversationId
+   */
+  useDelConversation: () => (conversationId: string) => void
+  /**
+   * 1. 用户在首页query
+   * 2. 用户在会话里query
+   * @param query
+   */
+  useQuery: () => (query: string) => void
 }
 
-/**
- * 增加 pApp 时，要与数据库同步
- */
-export const useAddPApp = () => {
-  const conversationId = conversationsState.conversationId
-  const addPApp = api.llm.addPApp.useMutation()
+export const conversationStore = proxy<IConversationStore>({
+  persistedPApps: [],
+  conversations: [],
+  conversationsValid: false,
+  currentConversationId: null,
+  get currentConversation() {
+    return (
+      this.conversations.find(
+        // todo: auto infer?
+        (c: IConversationClient) => c.id === this.currentConversationId,
+      ) ?? null
+    )
+  },
+  get pApps() {
+    return this.currentConversation?.pApps ?? this.persistedPApps
+  },
 
-  return async (pApp: IPApp) => {
-    console.log("adding pApp: ", { conversationId, pApp })
-    if (conversationId) {
-      await addPApp.mutateAsync({
-        conversationId,
-        id: pApp.id,
-        modelId: pApp.modelId,
-        title: pApp.title,
-      })
+  useAddPApp() {
+    const addPApp = api.llm.addPApp.useMutation()
+    return async (pApp) => {
+      if (this.pApps.length >= 3) return toast.error("最多只支持3个")
+      // optimistic update
+      this.pApps.push(pApp)
+      const conversationId = this.currentConversationId
+      if (conversationId) {
+        await addPApp.mutateAsync({
+          conversationId,
+          id: pApp.id,
+          modelId: pApp.modelId,
+          title: pApp.title,
+        })
+      }
     }
-    conversationsState.pApps.push(pApp)
-  }
-}
+  },
 
-/**
- * 减少 pApp 时：
- * 1. 要确保至少有1个
- * 2. 要与数据库同步
- */
-export const useDelPApp = () => {
-  const conversationId = conversationsState.conversationId
-  const delPApp = api.llm.delPApp.useMutation()
-  return async (pAppId: string) => {
-    // 至少要有1个
-    if (conversationsState.pApps.length === 1) return
-    // 更新数据库
-    if (conversationId) await delPApp.mutateAsync({ conversationId, pAppId })
-    // 更新本地
-    remove(conversationsState.pApps, (i) => i.id === pAppId)
-  }
-}
+  useDelPApp() {
+    const delPApp = api.llm.delPApp.useMutation()
+    return async (pAppId) => {
+      if (this.pApps.length <= 1) return toast.error("至少需要一个")
+      // optimistic update
+      remove(this.pApps, (i) => i.id === pAppId)
+      if (this.currentConversationId)
+        delPApp.mutate({ conversationId: this.currentConversationId, pAppId })
+    }
+  },
 
-export const useInitConversations = () => {
-  const { data: conversations = [] } = api.llm.listConversations.useQuery()
-
-  useEffect(() => {
-    // console.log("inited conversations: ", conversations)
-    conversationsState.conversations = conversations
-  }, [
-    // 自己确保只运行一次
-    conversations,
-  ])
-}
-
-export const useAddConversation = () => {
-  const router = useRouter()
-
-  const { isLoading, mutateAsync } = api.llm.createConversation.useMutation({
-    onSuccess: (conversation) => {
-      conversationsState.conversations.splice(0, 0, conversation)
-      toast.success("新建会话成功")
-      router.push(`/tt/${conversation.id}`)
-      conversationsState.messages = []
-    },
-    onError: (error) => {
-      console.error(error)
-      toast.error("新建会话失败")
-    },
-  })
-
-  const addConversationWithoutPrompt = () =>
-    mutateAsync({ pApps: conversationsState.pApps, type: "LLM" })
-
-  return {
-    addConversationWithoutPrompt,
-    isLoading,
-  }
-}
-
-export const useQueryInHomePage = () => {
-  const { addConversationWithoutPrompt, isLoading } = useAddConversation()
-  const { queryInChatLayout } = useQueryInChatLayout()
-  const queryInHomePage = async (query: string) => {
-    const conversation = await addConversationWithoutPrompt()
-    queryInChatLayout(conversation.id, query)
-  }
-  return { queryInHomePage, isLoading }
-}
-
-export const useQueryInChatLayout = () => {
-  const doQuery = api.llm.queryConversation.useMutation({
-    onSuccess: (data) => {
-      data.forEach(({ requestId, result }) => {
-        if (result) {
-          const p = conversationsState.pApps.find((p) => p.id === requestId)
-          console.log({ p, requestId })
-          if (p) p.needFetchLLM = true
-        }
-      })
-    },
-  })
-
-  const queryInChatLayout = (conversationId: string | null, query: string) => {
-    console.log("[query]: ", { conversationId, query })
-    if (!conversationId) return
-
-    doQuery.mutate({ conversationId, query })
-
-    conversationsState.messages.push({
-      id: nanoid(),
-      updatedAt: new Date(),
-      content: query,
-      role: "user",
-      conversationId,
-      pAppId: null,
-      parentId: null,
+  useAddConversation() {
+    const router = useRouter()
+    const addConversation = api.llm.addConversation.useMutation({
+      onSuccess: (data) => {
+        // update pApps with new-created ids
+        this.currentConversation!.pApps = data.pApps
+      },
+      onError: () => {
+        // todo: more friendly alert dialog
+        toast.error("不好意思，新建会话失败，请刷新后再试，该会话将被重置！")
+      },
     })
-  }
-  return { queryInChatLayout }
-}
+    return () => {
+      const conversationId = nanoid()
+      console.log(`-- added Conversation(id=${conversationId})`)
+      // optimistic update
+      router.replace(`/tt/${conversationId}`)
+      const pApps = this.pApps
+      this.conversations.splice(0, 0, {
+        id: conversationId,
+        pApps,
+        messages: [],
+      })
+      this.currentConversationId = conversationId
+      void addConversation.mutate({
+        id: conversationId,
+        pApps,
+        type: "LLM",
+      })
+      return conversationId
+    }
+  },
 
-export const useDeleteConversation = () => {
-  const deleteConversation = api.llm.delConversation.useMutation({})
-
-  return async (conversationId: string) => {
-    void deleteConversation
-      .mutateAsync({ conversationId })
-      .catch((error) => {
+  useDelConversation() {
+    const delConversation = api.llm.delConversation.useMutation({
+      onError: (error) => {
         console.error(error)
         toast.error("删除失败！")
+      },
+    })
+
+    return (conversationId: string) => {
+      // optimistic update
+      remove(this.conversations, (c) => c.id === conversationId)
+      if (conversationId === this.currentConversationId)
+        this.currentConversationId = null
+
+      void delConversation.mutateAsync({ conversationId })
+    }
+  },
+
+  useQuery() {
+    const addConversation = this.useAddConversation()
+    const queryLLM = api.llm.queryConversation.useMutation({
+      onError: () => {
+        // todo: any rollback?
+        toast.error("消息回复出错，请刷新后重试！")
+      },
+      onSuccess: (data) => {
+        data.forEach(({ requestId, result }) => {
+          if (!result) return toast.error(`App ${requestId} 出错`)
+          console.log({ pApps: this.pApps.map((i) => i.id), requestId, result })
+          this.pApps.find((p) => p.id === requestId)!.needFetchLLM = true
+        })
+      },
+    })
+    return (query) => {
+      if (!query) return toast.error("不能为空")
+
+      console.log("[query]: ", { conversationStore })
+      if (!this.currentConversationId) addConversation()
+
+      const { id: conversationId, messages } = this.currentConversation!
+
+      // optimistic update
+      messages.push({
+        id: nanoid(),
+        updatedAt: new Date(),
+        content: query,
+        role: "user",
+        conversationId,
+        pAppId: null,
+        parentId: null,
       })
-      .then(() => {
-        toast.success("删除成功")
-        const index = conversationsState.conversations.findIndex(
-          (i) => i.id === conversationId,
-        )
-        if (index < 0) return
-        conversationsState.conversations.splice(index, 1)
-      })
-  }
-}
+      queryLLM.mutate({ conversationId, query })
+    }
+  },
+})

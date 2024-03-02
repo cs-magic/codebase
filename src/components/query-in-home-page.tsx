@@ -1,6 +1,5 @@
 "use client"
 
-import { conversationsState, useQueryInHomePage } from "@/store/conversation"
 import { Textarea } from "@/components/textarea"
 import { useState } from "react"
 import { useSession } from "next-auth/react"
@@ -15,22 +14,22 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { CheckAuth } from "./auth"
+import { conversationStore } from "@/store/conversation"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
 
-  const { queryInHomePage } = useQueryInHomePage()
-
   const session = useSession()
   const [open, setOpen] = useState(false)
-  const { pApps } = useSnapshot(conversationsState)
+  const { pApps } = useSnapshot(conversationStore)
+  const query = conversationStore.useQuery()
 
   const onSubmit = () => {
     console.log({ input })
     if (!input) return
     if (!pApps.length) return toast.error("至少需要选中一种模型")
     if (session.status !== "authenticated") return setOpen(true)
-    void queryInHomePage(input)
+    void query(input)
   }
 
   return (

@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./conversation-list"
 import { useSnapshot } from "valtio"
-import { conversationsState, useAddConversation } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation"
 
 export const Sidebar = () => {
-  const { conversations } = useSnapshot(conversationsState)
-  const { addConversationWithoutPrompt } = useAddConversation()
+  const { conversations } = useSnapshot(conversationStore)
+  const addConversation = conversationStore.useAddConversation()
   // console.log({ conversations })
 
   return (
@@ -15,7 +15,7 @@ export const Sidebar = () => {
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
-        onClick={addConversationWithoutPrompt}
+        onClick={addConversation}
       >
         <PlusIcon className={"w-4 h-4"} />
         新建会话
