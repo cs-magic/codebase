@@ -5,23 +5,12 @@ name: Deploy On My Machine
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-#  copied from github.com/markshawn2020/my-docusaurus/.github/workflows/mark-vercell-build.yml
-  workflow_dispatch:
-    types: deploy
-    # Inputs the workflow accepts.
-    inputs:
-      domain:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'machine domain'
-        # Default value if no value is explicitly provided
-        default: 'https://sokka.cs-mamgic.cn'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
   push:
     branches:
       - main
+
+env:
+  DOMAIN: 'https://sokka.cs-mamgic.cn'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,4 +23,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: trigger update via curl
-      run:  curl "${{ inputs.domain }}/api/system?update=true&useSSE=true"
+      run:  curl "${{ env.DOMAIN }}/api/system?update=true&useSSE=true"
