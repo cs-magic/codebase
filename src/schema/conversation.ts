@@ -52,4 +52,5 @@ export interface IConversationClient {
   id: string
   pApps: IPAppClient[]
   messages: IMessageInChat[]
+  selectedPAppId?: string
 }

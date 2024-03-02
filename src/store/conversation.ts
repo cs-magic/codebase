@@ -213,3 +213,8 @@ export const useDeleteAllConversations = () => {
   })
   return () => deleteAllConversations.mutate()
 }
+
+export const selectPApp = (pAppId: string) => {
+  if (conversationStore.currentConversation)
+    conversationStore.currentConversation.selectedPAppId = pAppId
+}

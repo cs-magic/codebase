@@ -10,7 +10,7 @@ export const PAppsComp = () => {
   const { pApps } = useSnapshot(conversationStore)
 
   return (
-    <div className={"grow overflow-auto flex gap-1 justify-center"}>
+    <div className={"grow overflow-auto flex justify-center"}>
       {pApps.map((pApp) => (
         <Fragment key={pApp.id}>
           <PAppComp pApp={pApp} />

@@ -1,6 +1,11 @@
 import { useSession } from "next-auth/react"
 import { IconContainer } from "@/components/containers"
-import { MinusCircleIcon, PlusCircleIcon, SettingsIcon } from "lucide-react"
+import {
+  CheckCircle,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  SettingsIcon,
+} from "lucide-react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
@@ -10,8 +15,9 @@ import { useEffect } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
-import { conversationStore, useDelPApp } from "@/store/conversation"
+import { conversationStore, selectPApp, useDelPApp } from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
+import { Button } from "@/components/ui/button"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
@@ -51,17 +57,33 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   }, [pApp.needFetchLLM])
 
   const delPApp = useDelPApp()
+  const selected = pApp.id === currentConversation?.selectedPAppId
 
   return (
-    <div className={"w-full"}>
+    <div className={cn("w-full h-full flex flex-col relative")}>
+      {/* 遮罩*/}
+      {/*<div*/}
+      {/*  className={cn(*/}
+      {/*    currentConversation?.selectedPAppId &&*/}
+      {/*      pApp.id !== currentConversation.selectedPAppId &&*/}
+      {/*      "darken-overlay",*/}
+      {/*  )}*/}
+      {/*/>*/}
+
       {/* model line */}
-      <div className={"w-full flex items-center p-2 border-b"}>
-        <div className={"flex gap-2 items-baseline"}>
-          <span>{pApp?.model.title}</span>
+      <div
+        className={cn(
+          "w-full flex items-center p-2 border-b",
+          selected && "bg-primary-foreground/50",
+        )}
+      >
+        <div className={"flex items-center gap-2"}>
+          <div className={"flex gap-2 items-baseline"}>
+            <span>{pApp?.model.title}</span>
 
-          <span className={"text-muted-foreground text-xs"}>{pApp.id}</span>
+            <span className={"text-muted-foreground text-xs"}>{pApp.id}</span>
+          </div>
         </div>
-
         <div className={"grow"} />
 
         <IconContainer
@@ -82,29 +104,47 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
         </IconContainer>
       </div>
 
-      {currentConversation?.messages
-        .filter(
-          (m) =>
-            // user
-            !m.pAppId ||
-            // assistant
-            m.pAppId === id,
-        )
-        .map((m, index) => (
-          <div key={index} className={"w-full flex gap-2 p-2"}>
-            <Avatar className={"shrink-0"}>
-              <AvatarImage
-                src={
-                  m.role === "user"
-                    ? userAvatar
-                    : pApp?.model.logo ?? DEFAULT_AVATAR
-                }
-              />
-            </Avatar>
+      <div className={"grow overflow-auto"}>
+        {currentConversation?.messages
+          .filter(
+            (m) =>
+              // user
+              !m.pAppId ||
+              // assistant
+              m.pAppId === id,
+          )
+          .map((m, index) => (
+            <div key={index} className={"w-full flex gap-2 p-2"}>
+              <Avatar className={"shrink-0"}>
+                <AvatarImage
+                  src={
+                    m.role === "user"
+                      ? userAvatar
+                      : pApp?.model.logo ?? DEFAULT_AVATAR
+                  }
+                />
+              </Avatar>
 
-            <div>{m.content}</div>
-          </div>
-        ))}
+              <div>{m.content}</div>
+            </div>
+          ))}
+      </div>
+
+      <div className={"flex items-center justify-center m-2 gap-2"}>
+        <Button variant={"outline"} className={""} onClick={() => {}}>
+          停止生成
+        </Button>
+
+        <Button
+          variant={"outline"}
+          className={""}
+          onClick={() => {
+            selectPApp(pApp.id)
+          }}
+        >
+          这个更好
+        </Button>
+      </div>
     </div>
   )
 }
