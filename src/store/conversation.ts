@@ -68,8 +68,8 @@ export function useAddPApp() {
   const addPApp = api.llm.addPApp.useMutation()
   const { pApps, currentMessages, currentConversationId, currentPAppId } =
     conversationStore
+
   return async (pApp: IPAppClient) => {
-    if (pApps.length >= 3) return toast.error("最多只支持3个")
     // optimistic update
     pApps.push(pApp)
     const conversationId = currentConversationId
@@ -100,6 +100,7 @@ export function useAddPApp() {
  */
 export function useDelPApp() {
   const delPApp = api.llm.delPApp.useMutation()
+
   return async (pAppId: string) => {
     if (conversationStore.pApps.length <= 1) return toast.error("至少需要一个")
     // optimistic update
@@ -109,6 +110,10 @@ export function useDelPApp() {
         conversationId: conversationStore.currentConversationId,
         pAppId,
       })
+
+    if (pAppId === conversationStore.currentPAppId) {
+      conversationStore.currentPAppId = conversationStore.pApps[0]!.id
+    }
   }
 }
 

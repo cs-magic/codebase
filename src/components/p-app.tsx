@@ -1,6 +1,13 @@
 import { useSession } from "next-auth/react"
 import { IconContainer } from "@/components/containers"
-import { MinusCircleIcon, PlusCircleIcon, SettingsIcon } from "lucide-react"
+import {
+  Lock,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  SettingsIcon,
+  StopCircle,
+  Unlock,
+} from "lucide-react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
@@ -17,8 +24,13 @@ import {
   useDelPApp,
 } from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
-import { Button } from "@/components/ui/button"
 import { IMessageInChat } from "@/schema/message"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
@@ -70,38 +82,68 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   }, [pApp.needFetchLLM])
 
   return (
-    <div className={cn("w-full h-full flex flex-col relative")}>
-      <TopBar id={id} title={pApp?.model.title} />
+    <div
+      className={cn(
+        "w-full h-full overflow-hidden flex flex-col relative border-t border-r",
+      )}
+    >
+      <TopBar id={id} title={pApp?.model.title} fetching={fetching} />
 
       <MessagesComp id={id} logo={pApp?.model.logo} />
-
-      <Controls error={error} fetching={fetching} id={id} />
     </div>
   )
 }
 
-const TopBar = ({ id, title }: { id: string; title: string }) => {
+const TopBar = ({
+  id,
+  title,
+  fetching,
+}: {
+  id: string
+  title: string
+  fetching: boolean
+}) => {
   const delPApp = useDelPApp()
   const { currentConversation, pApps } = useSnapshot(conversationStore)
   const selected = id === currentConversation?.selectedPAppId
+  const LockOrNot = selected ? Lock : Unlock
 
   return (
     <div
       className={cn(
-        "w-full flex items-center p-2 border-b",
-        selected && "bg-primary-foreground/50",
+        "w-full overflow-hidden flex items-center p-2 border-b",
+        selected && "border-b border-primary-foreground/50",
       )}
     >
-      <div className={"flex items-center gap-2"}>
-        <div className={"flex gap-2 items-baseline"}>
-          <span>{title}</span>
+      <div className={"flex items-center gap-2 overflow-hidden"}>
+        <div className={"w-full flex gap-2 items-baseline"}>
+          <span className={"truncate"}>{title}</span>
 
-          <span className={"text-muted-foreground text-xs"}>{id}</span>
+          {/*<span className={"text-muted-foreground text-xs"}>{id}</span>*/}
         </div>
       </div>
       <div className={"grow"} />
 
       <IconContainer
+        tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
+        onClick={() => {
+          // selectPApp(id)
+        }}
+      >
+        <LockOrNot className={cn(selected && "text-primary-foreground")} />
+      </IconContainer>
+
+      <IconContainer
+        tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
+        onClick={() => {
+          // selectPApp(id)
+        }}
+      >
+        <StopCircle className={cn(!fetching && "text-muted-foreground")} />
+      </IconContainer>
+
+      <IconContainer
+        tooltipContent={"删除一个App（注意，暂不可恢复）"}
         className={cn(pApps.length === 1 && "text-muted-foreground")}
         onClick={() => {
           void delPApp(id)
@@ -110,11 +152,14 @@ const TopBar = ({ id, title }: { id: string; title: string }) => {
         <MinusCircleIcon />
       </IconContainer>
 
-      <IconContainer onClick={openSelectPApps}>
+      <IconContainer
+        tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
+        onClick={openSelectPApps}
+      >
         <PlusCircleIcon />
       </IconContainer>
 
-      <IconContainer>
+      <IconContainer tooltipContent={"设置App（TODO）"}>
         <SettingsIcon />
       </IconContainer>
     </div>
@@ -181,53 +226,6 @@ const MessageComp = ({
       </Avatar>
 
       <div>{m.content}</div>
-    </div>
-  )
-}
-
-const Controls = ({
-  error,
-  fetching,
-  id,
-}: {
-  error: string
-  fetching: boolean
-  id: string
-}) => {
-  return (
-    <div className={"flex items-center justify-center m-2 gap-2"}>
-      {error ? (
-        <Button
-          variant={"outline"}
-          className={""}
-          onClick={() => {
-            return
-          }}
-        >
-          点击重试
-        </Button>
-      ) : (
-        <Button
-          disabled={!fetching}
-          variant={"outline"}
-          className={""}
-          onClick={() => {
-            return
-          }}
-        >
-          停止生成
-        </Button>
-      )}
-
-      <Button
-        variant={"outline"}
-        className={""}
-        onClick={() => {
-          selectPApp(id)
-        }}
-      >
-        这个更好
-      </Button>
     </div>
   )
 }

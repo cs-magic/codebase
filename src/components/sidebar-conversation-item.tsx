@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useDelConversation } from "@/store/conversation"
+import { cn } from "@/lib/utils"
 
 export const ConversationListComp = ({
   conversation,
@@ -18,9 +19,11 @@ export const ConversationListComp = ({
   const deleteConversation = useDelConversation()
 
   return (
-    <Button
-      variant={"ghost"}
-      className={"w-full justify-start group px-2 gap-1"}
+    <div
+      className={cn(
+        "w-full justify-start group px-2 gap-1",
+        buttonVariants({ variant: "ghost" }),
+      )}
     >
       <Link
         href={`/tt/${conversation.id}`}
@@ -49,6 +52,6 @@ export const ConversationListComp = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </Button>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 
@@ -6,6 +6,9 @@ import { IPApp } from "@/schema/conversation"
 import { useSnapshot } from "valtio"
 import { nanoid } from "nanoid"
 import { conversationStore, useAddPApp, useDelPApp } from "@/store/conversation"
+import { NANOID_LEN } from "@/config/system"
+import { cn } from "@/lib/utils"
+import { uiState } from "@/store/ui"
 
 export const SelectPApp = ({
   pApp,
@@ -18,16 +21,20 @@ export const SelectPApp = ({
   // console.log({ pApps, type, pApp })
   const addPApp = useAddPApp()
   const delPApp = useDelPApp()
+  const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
+  const { maxToAdd } = useSnapshot(uiState)
+  const disabled =
+    (type === "toAdd" && pApps.length >= maxToAdd) ||
+    (type === "toDel" && pApps.length <= 1)
 
   return (
-    <Button
-      variant={"ghost"}
+    <div
       key={pApp.id}
-      className={"w-full flex items-center p-2 rounded-lg group"}
-      disabled={
-        (type === "toAdd" && pApps.length >= 3) ||
-        (type === "toDel" && pApps.length <= 1)
-      }
+      className={cn(
+        "w-full flex items-center p-2 rounded-lg group",
+        buttonVariants({ variant: "ghost" }),
+        disabled && "pointer-events-none opacity-50",
+      )}
     >
       <IconContainer
         className={
@@ -39,11 +46,11 @@ export const SelectPApp = ({
             void addPApp({
               ...pApp,
               // a new id, in case of duplication
-              id: nanoid(),
+              id: nanoid(NANOID_LEN),
             })
         }}
       >
-        {type === "toDel" ? <MinusCircleIcon /> : <PlusCircleIcon />}
+        <Icon />
       </IconContainer>
 
       <span className={"mx-2"}>{pApp.model.title}</span>
@@ -53,6 +60,6 @@ export const SelectPApp = ({
       <span className={"text-muted-foreground text-sm"}>
         by {pApp.model.company.title}
       </span>
-    </Button>
+    </div>
   )
 }

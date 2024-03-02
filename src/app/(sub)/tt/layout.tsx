@@ -23,12 +23,12 @@ const ChatLayout = ({ children }: PropsWithChildren) => {
   }, [conversations])
 
   return (
-    <div className={"w-full h-full overflow-auto flex border-y"}>
+    <div className={"w-full h-full overflow-hidden flex border-y"}>
       <Sidebar />
 
       <Separator orientation={"vertical"} />
 
-      <div className={"grow h-full flex flex-col"}>
+      <div className={"grow overflow-hidden h-full flex flex-col "}>
         {children}
 
         <QueryInChatLayout />

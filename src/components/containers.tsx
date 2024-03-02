@@ -12,6 +12,11 @@ import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export type Orientation = "horizontal" | "vertical"
 
@@ -35,22 +40,29 @@ export const Container = ({
 }
 
 export const IconContainer = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement> & { size?: "sm" | "lg" }
->(({ className, size, ...props }, ref) => {
+  HTMLButtonElement,
+  ComponentProps<typeof TooltipTrigger> & {
+    size?: "sm" | "lg"
+    tooltipContent?: string
+  }
+>(({ className, size, tooltipContent, ...props }, ref) => {
   return (
-    <div
-      ref={ref}
-      className={cn(
-        // 外部6，内部4是最佳的小图标比例
-        " w-6 h-6",
-        size === "lg" && "w-8 h-8",
-        " p-1 [&>*]:w-full [&>*]:h-full center",
-        "cursor-pointer hover:bg-muted",
-        className,
-      )}
-      {...props}
-    />
+    <Tooltip disableHoverableContent delayDuration={100}>
+      <TooltipTrigger
+        ref={ref}
+        className={cn(
+          // 外部6，内部4是最佳的小图标比例
+          " w-6 h-6",
+          size === "lg" && "w-8 h-8",
+          " p-1 [&>*]:w-full [&>*]:h-full center",
+          "cursor-pointer hover:bg-muted",
+          className,
+        )}
+        {...props}
+      />
+
+      {tooltipContent && <TooltipContent>{tooltipContent}</TooltipContent>}
+    </Tooltip>
   )
 })
 IconContainer.displayName = "IconContainer"

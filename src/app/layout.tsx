@@ -52,7 +52,7 @@ export default function RootLayout({
               <AutoHeightProvider>
                 <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
                   <TooltipProvider>
-                    <main className={"flex flex-col h-screen"}>
+                    <main className={"w-full flex flex-col h-screen relative"}>
                       {children}
 
                       <Toaster

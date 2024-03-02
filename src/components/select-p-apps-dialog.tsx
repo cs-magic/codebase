@@ -10,6 +10,7 @@ import { SelectPApp } from "@/components/select-p-app"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { conversationStore } from "@/store/conversation"
+import { BEST_VIEWPOINT } from "@/config/system"
 
 export const SelectPAppsDialog = () => {
   const { data: pAppsInDB = [] } = api.llm.listPApps.useQuery()
@@ -27,6 +28,8 @@ export const SelectPAppsDialog = () => {
   }, [pAppsInDB, pApps])
   const { selectPAppsOpen, selectPAppsOnOpenChange } = useSnapshot(uiState)
 
+  const { maxToAdd } = useSnapshot(uiState)
+
   return (
     <Dialog open={selectPAppsOpen} onOpenChange={selectPAppsOnOpenChange}>
       <DialogContent>
@@ -34,7 +37,7 @@ export const SelectPAppsDialog = () => {
           <div>
             <Label className={"px-2 text-muted-foreground"}>
               <span>已选择</span>
-              <span className={"text-xs"}>（1-3个）</span>
+              {/*<span className={"text-xs"}>（1-3个）</span>*/}
             </Label>
 
             {pApps.map((m, index) => (
@@ -53,7 +56,12 @@ export const SelectPAppsDialog = () => {
           />
 
           <div>
-            <Label className={"px-2 text-muted-foreground"}>全部</Label>
+            <Label className={"px-2 text-muted-foreground"}>
+              全部
+              <span className={"text-xs"}>
+                （您的屏幕最多只能添加{maxToAdd}个App）
+              </span>
+            </Label>
             {pAppsInDB
               .filter(
                 (m) =>

@@ -1,14 +1,36 @@
 import { proxy } from "valtio"
+import { BEST_VIEWPOINT } from "@/config/system"
 
 export const uiState = proxy<{
+  mainArea: {
+    width: number
+    height: number
+  }
+  maxToAdd: number
+
   loading: boolean
   selectPAppsOpen: boolean
   selectPAppsOnOpenChange: (v: boolean) => void
 }>({
+  mainArea: {
+    width: 0,
+    height: 0,
+  },
   loading: false,
   selectPAppsOpen: false,
   selectPAppsOnOpenChange: (v) => {
     uiState.selectPAppsOpen = v
+  },
+
+  get maxToAdd() {
+    return Math.max(
+      Math.floor(
+        (this.mainArea.height * this.mainArea.width) /
+          BEST_VIEWPOINT /
+          BEST_VIEWPOINT,
+      ),
+      2, // se: 375x667
+    )
   },
 })
 

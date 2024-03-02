@@ -26,3 +26,6 @@ export const REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED = false
 // states
 /////////////////////////
 export const MSG_UNEXPECTED_ERROR = "Unexpected Error !"
+
+export const NANOID_LEN = 5
+export const BEST_VIEWPOINT = 320
