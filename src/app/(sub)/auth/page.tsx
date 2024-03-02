@@ -6,10 +6,11 @@
 import { AuthContainer } from "@/components/containers"
 import { SmsSendCode } from "@/components/sms/send-code"
 import { SmsSignIn } from "@/components/sms/sign-in"
-import { useSmsStore } from "@/store/sms"
+import { smsState } from "@/store/sms"
+import { useSnapshot } from "valtio"
 
 export default function AuthPage() {
-  const { stage } = useSmsStore()
+  const { stage } = useSnapshot(smsState)
 
   const Comp = stage === "toSendSms" ? SmsSendCode : SmsSignIn
 

@@ -1,11 +1,8 @@
-import { useSmsStore } from "@/store/sms"
+import { smsState } from "@/store/sms"
+import { useSnapshot } from "valtio"
 
 export const ResendVerifyCode = () => {
-  const { phone, downtime, sendCode } = useSmsStore((state) => ({
-    phone: state.phone,
-    downtime: state.downtime,
-    sendCode: state.sendCode,
-  }))
+  const { phone, downtime, sendCode } = useSnapshot(smsState)
 
   return (
     <div className={"text-muted-foreground text-xs flex items-center "}>

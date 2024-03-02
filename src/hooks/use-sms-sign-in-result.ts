@@ -1,11 +1,10 @@
-import { useSmsStore } from "@/store/sms"
+import { smsState } from "@/store/sms"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useSnapshot } from "valtio"
 
 export const useSignInResult = () => {
-  const { signInOk } = useSmsStore((state) => ({
-    signInOk: state.signInOk,
-  }))
+  const { signInOk } = useSnapshot(smsState)
   const router = useRouter()
 
   useEffect(() => {

@@ -1,10 +1,9 @@
-import { useSmsStore } from "@/store/sms"
+import { smsState } from "@/store/sms"
 import { DigitContainer } from "@/components/containers"
+import { useSnapshot } from "valtio"
 
 export const InputVerifyCode = () => {
-  const { code } = useSmsStore((state) => ({
-    code: state.code,
-  }))
+  const { code } = useSnapshot(smsState)
 
   return (
     <div className={"flex justify-center gap-2"}>

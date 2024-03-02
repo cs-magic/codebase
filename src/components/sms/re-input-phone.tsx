@@ -1,11 +1,9 @@
-import { useSmsStore } from "@/store/sms"
+import { smsState } from "@/store/sms"
 import { EditIcon } from "lucide-react"
+import { useSnapshot } from "valtio"
 
 export const ReInputPhone = () => {
-  const { phone, setStage } = useSmsStore((state) => ({
-    phone: state.phone,
-    setStage: state.setStage,
-  }))
+  const { phone } = useSnapshot(smsState)
 
   return (
     <div className={"font-semibold inline-flex items-center gap-1"}>
@@ -13,7 +11,7 @@ export const ReInputPhone = () => {
       <EditIcon
         className={"w-4 h-4 cursor-pointer"}
         onClick={() => {
-          setStage("toSendSms")
+          smsState.stage = "toSendSms"
         }}
       />
     </div>

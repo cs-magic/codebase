@@ -1,6 +1,6 @@
 "use client"
 
-import { useSmsStore } from "@/store/sms"
+import { sendCode, smsState } from "@/store/sms"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -22,9 +22,10 @@ import { useBrowserEnvironment } from "@/hooks/use-browser-environment"
 import { signIn } from "next-auth/react"
 import { WECHAT_PROVIDER_ID } from "@/server/wechat/auth/config"
 import { BrandTitle } from "@/components/branding"
+import { useSnapshot } from "valtio"
 
 export const SmsSendCode = () => {
-  const { downtime, sendCode } = useSmsStore()
+  const { downtime } = useSnapshot(smsState)
 
   const form = useForm<ISendSms>({
     resolver: zodResolver(sendSmsSchema),
