@@ -7,6 +7,10 @@ export interface UIState {
     height: number
   }
   loading: boolean
+  alertDialog: {
+    open: boolean
+    content: string
+  }
   selectPAppsOpen: boolean
   selectPAppsOnOpenChange: (v: boolean) => void
 
@@ -18,6 +22,10 @@ export const uiState = proxy<UIState>({
   mainArea: {
     width: 0,
     height: 0,
+  },
+  alertDialog: {
+    open: false,
+    content: "",
   },
   loading: false,
   selectPAppsOpen: false,

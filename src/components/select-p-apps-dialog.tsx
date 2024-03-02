@@ -22,8 +22,12 @@ export const SelectPAppsDialog = () => {
 
   useEffect(() => {
     if (!pApps.length && pAppsInDB.length) {
-      const pApp = pAppsInDB.find((p) => p.model.id === "gpt-3.5-turbo")
-      if (pApp) conversationStore.pApps.push(pApp)
+      const pApp = pAppsInDB.find((p) => p.model.slug === "gpt-3.5-turbo")
+      if (pApp) {
+        conversationStore.pApps.push(pApp)
+        if (!conversationStore.currentPAppId)
+          conversationStore.currentPAppId = pApp.slug
+      }
     }
   }, [pAppsInDB, pApps])
   const { selectPAppsOpen, selectPAppsOnOpenChange } = useSnapshot(uiState)

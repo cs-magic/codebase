@@ -85,7 +85,7 @@ export const conversationProcedure = protectedProcedure
     const conversation = await db.conversation.findUniqueOrThrow({
       where: {
         id: input.conversationId,
-        fromUserId: ctx.user.id,
+        fromUserId: ctx.user.slug,
       },
       ...conversationSchema,
     })

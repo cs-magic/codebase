@@ -6,15 +6,19 @@ import { TRPCReactProvider } from "@/lib/trpc/react"
 import ThemeProvider from "@/providers/theme"
 import { Toaster } from "@/components/ui/sonner"
 import { SessionProvider } from "@/providers/session"
-import { LoadingAlertDialog } from "@/components/common/dialogs"
+import {
+  ContentAlertDialog,
+  LoadingAlertDialog,
+} from "@/components/common/dialogs"
 import { type Viewport } from "next"
-import AutoHeightProvider from "@/providers/AutoHeightProvider"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import SocketProvider from "@/providers/socket"
 import { AppStatus } from "@/components/branding"
 import { SelectPAppsDialog } from "@/components/select-p-apps-dialog"
-import ScreenProvider from "@/providers/screen-provider"
+import LLMProvider from "@/providers/llm-provider"
+import { ScreenProvider } from "@/providers/screen-provider"
+import { AutoHeight } from "@/components/auto-height"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,8 +51,8 @@ export default function RootLayout({
         <SocketProvider>
           <SessionProvider>
             <TRPCReactProvider>
-              {/*ui layer */}
-              <AutoHeightProvider>
+              <LLMProvider>
+                {/*ui layer */}
                 <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
                   <TooltipProvider>
                     <ScreenProvider>
@@ -62,15 +66,18 @@ export default function RootLayout({
                         />
 
                         <LoadingAlertDialog />
+                        <ContentAlertDialog />
 
                         <SelectPAppsDialog />
+
+                        <AutoHeight />
 
                         <AppStatus />
                       </main>
                     </ScreenProvider>
                   </TooltipProvider>
                 </ThemeProvider>
-              </AutoHeightProvider>
+              </LLMProvider>
             </TRPCReactProvider>
           </SessionProvider>
         </SocketProvider>

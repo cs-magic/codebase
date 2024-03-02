@@ -1,6 +1,7 @@
 "use client"
 import { Textarea } from "@/components/common/textarea"
-import { useQuery } from "@/store/conversation"
+
+import { useQuery } from "@/store/use-query"
 
 export const QueryInChatLayout = () => {
   const query = useQuery()

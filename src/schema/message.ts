@@ -17,4 +17,6 @@ export type IMessageInChat = Pick<
   | "pAppId"
   | "conversationId"
   | "parentId"
->
+> & {
+  isError?: boolean
+}

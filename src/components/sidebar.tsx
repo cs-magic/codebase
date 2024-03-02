@@ -5,9 +5,9 @@ import { ConversationListComp } from "./sidebar-conversation-item"
 import { useSnapshot } from "valtio"
 import {
   conversationStore,
-  useAddConversation,
   useDeleteAllConversations,
 } from "@/store/conversation"
+import { useAddConversation } from "@/store/use-add-conv"
 
 export const Sidebar = () => {
   const { conversations } = useSnapshot(conversationStore)

@@ -13,7 +13,6 @@ export const PAppsComp = () => {
     mainArea: { width },
   } = useSnapshot(uiState)
   const cnt = conversationStore.pApps.length
-  console.log({ cnt })
   const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), cnt)
 
   return (

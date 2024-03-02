@@ -14,7 +14,6 @@ import {
 import { z } from "zod"
 
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
-import { MessageRole } from "@prisma/client"
 import { llmMessageSchema } from "@/schema/llm"
 
 export const llmRouter = createTRPCRouter({

@@ -25,20 +25,19 @@ import {
 } from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
 import { IMessageInChat } from "@/schema/message"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
 
-  const { currentConversationId } = useSnapshot(conversationStore)
+  const { currentConversationId, currentMessages } =
+    useSnapshot(conversationStore)
 
-  const [error, setError] = useState("")
+  const [, setError] = useState("")
   const [fetching, setFetching] = useState(false)
+  const lastUserMessage = last(
+    currentMessages.filter((m) => m.role === "user"),
+  )!
+  const messageId = nanoid()
 
   useEffect(() => {
     if (!pApp.needFetchLLM) return
@@ -52,20 +51,25 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
       },
       onError: (data) => {
         setError(data)
+        conversationStore.currentMessages.push({
+          role: "assistant",
+          content: data,
+          id: messageId,
+          updatedAt: new Date(),
+          conversationId: currentConversationId!,
+          pAppId: id,
+          parentId: lastUserMessage.id,
+          isError: true,
+        })
       },
       onData: (data) => {
         // console.log({ onData: data })
 
-        const { messages } = conversationStore.currentConversation!
-        console.log("onData: ", { data, messages })
-
-        const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
-        const lastAssistantMessage = messages.find(
+        const lastAssistantMessage = conversationStore.currentMessages.find(
           (m) => m.parentId === lastUserMessage.id && m.pAppId === id,
         )!
         if (!lastAssistantMessage && currentConversationId) {
-          const messageId = nanoid()
-          messages.push({
+          conversationStore.currentMessages.push({
             role: "assistant",
             content: data,
             id: messageId,
@@ -80,6 +84,8 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
       },
     })
   }, [pApp.needFetchLLM])
+
+  // console.log({ error })
 
   return (
     <div
@@ -104,9 +110,10 @@ const TopBar = ({
   fetching: boolean
 }) => {
   const delPApp = useDelPApp()
-  const { currentConversation, pApps } = useSnapshot(conversationStore)
-  const selected = id === currentConversation?.selectedPAppId
+  const { pApps, currentPAppId } = useSnapshot(conversationStore)
+  const selected = id === currentPAppId
   const LockOrNot = selected ? Lock : Unlock
+  // console.log({ id, currentPAppId })
 
   return (
     <div
@@ -127,7 +134,7 @@ const TopBar = ({
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          // selectPApp(id)
+          selectPApp(id)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -167,7 +174,8 @@ const TopBar = ({
 }
 
 const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
-  const { currentSnapshot, currentMessages } = useSnapshot(conversationStore)
+  const { currentMessages, currentConversation } =
+    useSnapshot(conversationStore)
 
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -175,27 +183,19 @@ const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
   }, [currentMessages])
 
   const theMessages: IMessageInChat[] = []
-  let snapShotIndex = 0
+  let mainMessageIndex = 0
+  const mainMessages = currentConversation?.mainMessages ?? []
   currentMessages.forEach((m) => {
-    if (snapShotIndex >= currentSnapshot.length) {
+    if (mainMessageIndex >= mainMessages.length) {
       if (m.pAppId === id) theMessages.push(m)
     } else {
-      if (m.id === currentSnapshot[snapShotIndex]) {
+      if (m.id === mainMessages[mainMessageIndex]) {
         theMessages.push(m)
-        ++snapShotIndex
+        ++mainMessageIndex
       }
     }
   })
-  console.log({ currentSnapshot, currentMessages, theMessages })
-
-  // currentConversation?.messages
-  // .filter(
-  //     (m) =>
-  //         // user
-  //         !m.pAppId ||
-  //         // assistant
-  //         m.pAppId === id,
-  // )
+  // console.log({ currentSnapshot, currentMessages, theMessages })
 
   return (
     <div className={"grow overflow-auto"}>
@@ -226,7 +226,14 @@ const MessageComp = ({
         />
       </Avatar>
 
-      <div>{m.content}</div>
+      <div
+        className={cn(
+          "p-2 rounded-lg overflow-hidden",
+          m.isError && "text-destructive-foreground bg-destructive/75",
+        )}
+      >
+        {m.content}
+      </div>
     </div>
   )
 }

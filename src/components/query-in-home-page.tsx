@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { CheckAuth } from "./auth"
-import { conversationStore, useQuery } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation"
+import { useQuery } from "@/store/use-query"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")

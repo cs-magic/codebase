@@ -4,15 +4,14 @@ import { api } from "@/lib/trpc/react"
 import { toast } from "sonner"
 import { last, remove } from "lodash"
 import { useRouter } from "next/navigation"
-import { nanoid } from "nanoid"
 import { IMessageInChat } from "@/schema/message"
-import { NANOID_LEN } from "@/config/system"
 
 export interface IConversationStore {
   // >> 1. state
   /**
    * pApp 要能持久化，每次用户打开是上次的
    */
+  allPApps: IPAppClient[]
   persistedPApps: IPAppClient[]
   conversations: IConversationClient[]
   conversationsValid: boolean
@@ -20,20 +19,21 @@ export interface IConversationStore {
    * Attention :由路由更新，不要自己更新，否则会导致干扰！
    */
   currentConversationId: string | null
+  currentPAppId: string | null
 
   // computed
   currentConversation: IConversationClient | null
   currentMessages: IMessageInChat[]
-  currentSnapshot: string[]
-  currentPAppId?: string
   pApps: IPAppClient[]
 }
 
 export const conversationStore = proxy<IConversationStore>({
+  allPApps: [],
   persistedPApps: [],
   conversations: [],
   conversationsValid: false,
   currentConversationId: null,
+  currentPAppId: null,
   get currentConversation() {
     return (
       this.conversations.find(
@@ -45,16 +45,8 @@ export const conversationStore = proxy<IConversationStore>({
   get pApps() {
     return this.currentConversation?.pApps ?? this.persistedPApps
   },
-  get currentSnapshot() {
-    const messageSnapshots: string[][] =
-      this.currentConversation?.messageSnapshots ?? []
-    return last(messageSnapshots) ?? []
-  },
   get currentMessages() {
     return this.currentConversation?.messages ?? []
-  },
-  get currentPAppId() {
-    return this.currentConversation?.selectedPAppId
   },
 })
 
@@ -119,55 +111,6 @@ export function useDelPApp() {
 }
 
 /**
- * 1. 用户在首页query后将自动触发新建一个会话
- * 2. 用户在会话列表可以点击新增一个会话
- * --
- * 返回 id，用于其他的函数
- */
-export function useAddConversation() {
-  const router = useRouter()
-  const addConversation = api.llm.addConversation.useMutation({
-    onError: () => {
-      // todo: more friendly alert dialog
-      toast.error("不好意思，新建会话失败，请刷新后再试，该会话将被重置！")
-    },
-  })
-  return async () => {
-    conversationStore.conversationsValid = false
-    const conversationId = nanoid(NANOID_LEN)
-
-    const pApps = conversationStore.pApps.map((p) => ({
-      ...p,
-      needFetchLLM: false, // reset need-fetch
-    }))
-    conversationStore.conversations.splice(0, 0, {
-      id: conversationId,
-      pApps,
-      messages: [],
-      messageSnapshots: [],
-      selectedPAppId: pApps[0]!.id, // 默认第一个
-    })
-    const data = await addConversation.mutateAsync({
-      id: conversationId,
-      pApps,
-      type: "LLM",
-    })
-    const conversation = conversationStore.conversations.find(
-      (c) => c.id === data.id,
-    )
-    // 若还在的话
-    if (conversation) {
-      conversation.pApps = data.pApps
-      conversation.selectedPAppId = data.pApps[0]!.id
-    }
-    conversationStore.currentConversationId = conversationId
-    conversationStore.conversationsValid = true // final valid
-    router.push(`/tt/${conversationId}`) // 异步
-    return conversationId
-  }
-}
-
-/**
  * 用户在会话列表页的展开工具里删除一个会话
  * @param conversationId
  */
@@ -190,73 +133,6 @@ export function useDelConversation() {
   }
 }
 
-/**
- * 1. 用户在首页query
- * 2. 用户在会话里query
- * @param query
- */
-export function useQuery() {
-  const addConversation = useAddConversation()
-  const queryLLM = api.llm.queryConversation.useMutation({
-    onError: () => {
-      // todo: any rollback?
-      toast.error("消息回复出错，请刷新后重试！")
-    },
-    onSuccess: (data) => {
-      data.forEach(({ requestId, result }) => {
-        if (!result) return toast.error(`App ${requestId} 出错`)
-        console.log({
-          pApps: conversationStore.pApps.map((i) => i.id),
-          requestId,
-          result,
-        })
-        const pApp = conversationStore.pApps.find((p) => p.id === requestId)
-        // 有可能已经换成新的pApp了
-        if (pApp) pApp.needFetchLLM = true
-      })
-    },
-  })
-
-  return async (query: string) => {
-    if (!query) return toast.error("不能为空")
-
-    // optimistic update
-    if (!conversationStore.currentConversationId) await addConversation()
-    const {
-      id: conversationId,
-      messages,
-      messageSnapshots,
-      selectedPAppId,
-    } = conversationStore.currentConversation!
-    const id = nanoid()
-    messages.push({
-      id,
-      updatedAt: new Date(),
-      content: query,
-      role: "user",
-      conversationId,
-      pAppId: null,
-      parentId: null,
-    })
-
-    // init snapshots
-    if (!messageSnapshots.length) {
-      messageSnapshots.push([id])
-    } else {
-      messageSnapshots.push(last(messageSnapshots)!)
-      const theLastSelectedMessage = last(
-        messages.filter((m) => m.pAppId === selectedPAppId),
-      )!
-      last(messageSnapshots)!.push(theLastSelectedMessage.id, id)
-    }
-
-    const snapshot = last(messageSnapshots)!
-    const context = snapshot.map((s) => messages.find((m) => m.id === s)!)
-    console.log("query context: ", { context, snapshot })
-    queryLLM.mutate({ conversationId, messages: context })
-  }
-}
-
 export const useDeleteAllConversations = () => {
   const router = useRouter()
   const deleteAllConversations = api.llm.deleteAllConversations.useMutation({
@@ -269,8 +145,7 @@ export const useDeleteAllConversations = () => {
 }
 
 export const selectPApp = (pAppId: string) => {
-  if (conversationStore.currentConversation)
-    conversationStore.currentConversation.selectedPAppId = pAppId
+  conversationStore.currentPAppId = pAppId
 }
 
 export const resetPAppSSE = (pAppId: string) => {

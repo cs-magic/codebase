@@ -1,6 +1,5 @@
 import { z } from "zod"
 import { ConversationType, Prisma } from "@prisma/client"
-import { IMessageInChat } from "@/schema/message"
 import validator = Prisma.validator
 import ModelDefaultArgs = Prisma.ModelDefaultArgs
 import ModelGetPayload = Prisma.ModelGetPayload
@@ -48,11 +47,4 @@ export type IPAppClient = IPApp & {
   needFetchLLM?: boolean
 }
 
-export interface IConversationClient {
-  id: string
-  pApps: IPAppClient[]
-  messages: IMessageInChat[]
-  // 这是一个栈（todo：森林？）
-  messageSnapshots: string[][]
-  selectedPAppId?: string
-}
+export type IConversationClient = Omit<IConversation, "fromUser">

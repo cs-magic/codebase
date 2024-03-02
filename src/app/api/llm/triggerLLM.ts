@@ -23,21 +23,26 @@ export const triggerLLM = async (context: {
   })
   // console.debug("[sse] manager added: ", { manager })
 
-  const successfullyCall = async () => {
-    const push = (e: ISSEEvent) => {
-      r.data.push(e)
-      r.clients.forEach((c) => c.onEvent(e))
-    }
+  const push = (e: ISSEEvent) => {
+    r.data.push(e)
+    r.clients.forEach((c) => c.onEvent(e))
+  }
+
+  const start = async () => {
     try {
-      const res = await callChatGPT({
-        modelId,
-        messages,
-      })
-      for await (const chunk of res) {
-        // console.log("[llm] chunk: ", JSON.stringify(chunk))
-        const token = chunk.content as string
-        console.log("[llm] token: ", { requestId, token })
-        push({ event: "onData", data: token })
+      if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(modelId)) {
+        const res = await callChatGPT({
+          modelId,
+          messages,
+        })
+        for await (const chunk of res) {
+          // console.log("[llm] chunk: ", JSON.stringify(chunk))
+          const token = chunk.content as string
+          console.log("[llm] token: ", { requestId, token })
+          push({ event: "onData", data: token })
+        }
+      } else {
+        throw new Error("暂不支持该模型（研发小哥正在加🍗中！）")
       }
     } catch (e) {
       console.error("[call] error: ", e)
@@ -50,11 +55,6 @@ export const triggerLLM = async (context: {
     }
   }
 
-  if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(modelId)) {
-    // do not wait, o.w. frontend is blocked
-    void successfullyCall()
-    return true
-  }
-  // todo: more models
-  return false
+  void start()
+  return true
 }
