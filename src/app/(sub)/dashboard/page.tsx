@@ -7,11 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { SignoutButton } from "@/components/sign-out"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { DEFAULT_AVATAR } from "@/config/assets"
+import { Button } from "@/components/ui/button"
 
 export default function DashboardPage() {
   const session = useSession()
@@ -38,8 +38,20 @@ export default function DashboardPage() {
       </CardHeader>
 
       <CardFooter>
-        <SignoutButton />
+        <SignOutButton />
       </CardFooter>
     </Card>
+  )
+}
+
+const SignOutButton = () => {
+  return (
+    <Button
+      variant={"destructive"}
+      onClick={() => signOut()}
+      className={"w-full"}
+    >
+      退出登录
+    </Button>
   )
 }

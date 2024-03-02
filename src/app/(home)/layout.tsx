@@ -1,6 +1,6 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/layout/header"
 import { PropsWithChildren } from "react"
-import { BrandingFooter } from "@/components/footer"
+import { BrandingFooter } from "@/components/layout/footer"
 
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (

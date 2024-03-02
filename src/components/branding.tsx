@@ -1,14 +1,14 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { ImageEqualHeight } from "@/components/images"
+import { ImageEqualHeight } from "@/components/common/images"
 import { INDIES_AVATARS, SPONSORS_BANNERS } from "@/config/system"
 import { SeparatorContainer } from "@/components/containers"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { HTMLAttributes } from "react"
 import { BarChart } from "lucide-react"
 import { useSocketStore } from "@/store/socket"
-import { StatusIcon } from "@/components/icons"
+import { StatusIcon } from "@/components/common/icons"
 import Link from "next/link"
 
 export const BrandTitle = ({

@@ -1,6 +1,6 @@
 "use client"
 
-import { ButtonLink } from "@/components/buttons"
+import { ButtonLink } from "@/components/common/buttons"
 
 export default function TestPage() {
   return (

@@ -9,14 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { conversationStore } from "@/store/conversation"
+import { useDelConversation } from "@/store/conversation"
 
 export const ConversationListComp = ({
   basic,
 }: {
   basic: IConversationClient
 }) => {
-  const deleteConversation = conversationStore.useDelConversation()
+  const deleteConversation = useDelConversation()
 
   return (
     <Button

@@ -10,7 +10,7 @@ import { useEffect } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore, useDelPApp } from "@/store/conversation"
 import { IPAppClient } from "@/schema/conversation"
 
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
@@ -19,7 +19,7 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const session = useSession()
   const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
 
-  const { currentConversation, useDelPApp, currentConversationId, pApps } =
+  const { currentConversation, currentConversationId, pApps } =
     useSnapshot(conversationStore)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
     void fetchSSE(`/api/llm?r=${id}`, {
       onToken: (token) => {
         const { messages } = conversationStore.currentConversation!
-        console.log({ currentConversationId, messagesLen: messages.length })
+        // console.log({ currentConversationId, messagesLen: messages.length })
 
         const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
         const lastAssistantMessage = messages.find(

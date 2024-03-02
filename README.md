@@ -2,6 +2,10 @@
 
 ## Architecture
 
+### 要点
+
+- 后台静默流我们是不做的，因为这样，还需要维护一个进程池，没有必要，用户打断我们即中止
+
 ### conversation
 
 - conversation -- papp -- model -- company

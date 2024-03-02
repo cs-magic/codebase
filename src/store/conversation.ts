@@ -22,42 +22,6 @@ export interface IConversationStore {
   // computed
   currentConversation: IConversationClient | null
   pApps: IPAppClient[]
-
-  // // >> 2. actions
-  // /**
-  //  * 用户在弹窗界面增加一个pApp
-  //  * - 最多只能有3个，或者视窗口长度限制
-  //  * - 首页里增加要持久化
-  //  * - 会话里增加要与数据库同步
-  //  * @param pApp
-  //  */
-  // useAddPApp: () => (pApp: IPApp) => void
-  // /**
-  //  * 用户在首页或者会话里删除一个pApp
-  //  * - 最少要有1个
-  //  * - 首页里增加要持久化
-  //  * - 会话里增加要与数据库同步
-  //  * @param pAppId
-  //  */
-  // useDelPApp: () => (pAppId: string) => void
-  // /**
-  //  * 1. 用户在首页query后将自动触发新建一个会话
-  //  * 2. 用户在会话列表可以点击新增一个会话
-  //  * --
-  //  * 返回 id，用于其他的函数
-  //  */
-  // useAddConversation: () => () => Promise<string>
-  // /**
-  //  * 用户在会话列表页的展开工具里删除一个会话
-  //  * @param conversationId
-  //  */
-  // useDelConversation: () => (conversationId: string) => void
-  // /**
-  //  * 1. 用户在首页query
-  //  * 2. 用户在会话里query
-  //  * @param query
-  //  */
-  // useQuery: () => (query: string) => Promise<void>
 }
 
 export const conversationStore = proxy<IConversationStore>({
@@ -78,6 +42,13 @@ export const conversationStore = proxy<IConversationStore>({
   },
 })
 
+/**
+ * 用户在弹窗界面增加一个pApp
+ * - 最多只能有3个，或者视窗口长度限制
+ * - 首页里增加要持久化
+ * - 会话里增加要与数据库同步
+ * @param pApp
+ */
 export function useAddPApp() {
   const addPApp = api.llm.addPApp.useMutation()
   return async (pApp: IPAppClient) => {
@@ -96,6 +67,13 @@ export function useAddPApp() {
   }
 }
 
+/**
+ * 用户在首页或者会话里删除一个pApp
+ * - 最少要有1个
+ * - 首页里增加要持久化
+ * - 会话里增加要与数据库同步
+ * @param pAppId
+ */
 export function useDelPApp() {
   const delPApp = api.llm.delPApp.useMutation()
   return async (pAppId: string) => {
@@ -110,6 +88,12 @@ export function useDelPApp() {
   }
 }
 
+/**
+ * 1. 用户在首页query后将自动触发新建一个会话
+ * 2. 用户在会话列表可以点击新增一个会话
+ * --
+ * 返回 id，用于其他的函数
+ */
 export function useAddConversation() {
   const router = useRouter()
   const addConversation = api.llm.addConversation.useMutation({
@@ -117,25 +101,10 @@ export function useAddConversation() {
       // todo: more friendly alert dialog
       toast.error("不好意思，新建会话失败，请刷新后再试，该会话将被重置！")
     },
-    onSuccess: (data) => {
-      const conversation = conversationStore.conversations.find(
-        (c) => c.id === data.id,
-      )
-      // 若还在的话
-      if (conversation) conversation.pApps = data.pApps
-      conversationStore.conversationsValid = true // final valid
-    },
   })
   return async () => {
     conversationStore.conversationsValid = false
     const conversationId = nanoid()
-    // optimistic update
-    conversationStore.currentConversationId = conversationId
-    // 这个不是立即生效的，它会最后执行。。。
-    router.push(`/tt/${conversationId}`)
-    console.log(
-      `-- added Conversation(id: ${conversationStore.currentConversationId} --> ${conversationId})`,
-    )
 
     const pApps = conversationStore.pApps.map((p) => ({
       ...p,
@@ -146,15 +115,27 @@ export function useAddConversation() {
       pApps,
       messages: [],
     })
-    await addConversation.mutateAsync({
+    const data = await addConversation.mutateAsync({
       id: conversationId,
       pApps,
       type: "LLM",
     })
+    const conversation = conversationStore.conversations.find(
+      (c) => c.id === data.id,
+    )
+    // 若还在的话
+    if (conversation) conversation.pApps = data.pApps
+    conversationStore.currentConversationId = conversationId
+    conversationStore.conversationsValid = true // final valid
+    router.push(`/tt/${conversationId}`) // 异步
     return conversationId
   }
 }
 
+/**
+ * 用户在会话列表页的展开工具里删除一个会话
+ * @param conversationId
+ */
 export function useDelConversation() {
   const router = useRouter()
   const delConversation = api.llm.delConversation.useMutation({
@@ -174,6 +155,11 @@ export function useDelConversation() {
   }
 }
 
+/**
+ * 1. 用户在首页query
+ * 2. 用户在会话里query
+ * @param query
+ */
 export function useQuery() {
   const addConversation = useAddConversation()
   const queryLLM = api.llm.queryConversation.useMutation({

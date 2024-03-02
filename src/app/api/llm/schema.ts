@@ -1,4 +1,19 @@
 export type IClient = {
-  onEvent: (event: string) => Promise<void>
+  onEvent: (event: ISSEEvent) => Promise<void>
 }
-export type IRequest = { data: string; finished: boolean; clients: IClient[] }
+export type IRequest = {
+  data: ISSEEvent[]
+  finished: boolean
+  clients: IClient[]
+}
+
+export type ISSEEventType = "data" | "close"
+
+export type ISSEEvent<T extends ISSEEventType = any> = T extends "data"
+  ? {
+      event: "data"
+      data: string
+    }
+  : {
+      event: "close"
+    }

@@ -1,5 +1,5 @@
 import { SokkaBrand, V2AGIBrand } from "@/config/assets"
-import { ImageEqualHeight } from "@/components/images"
+import { ImageEqualHeight } from "@/components/common/images"
 import { SHOW_PARTNERS } from "@/config/system"
 import { AppStatus, Partners } from "@/components/branding"
 

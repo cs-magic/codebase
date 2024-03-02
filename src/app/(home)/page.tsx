@@ -1,6 +1,6 @@
 import { Container } from "@/components/containers"
 import { getServerSession } from "next-auth"
-import { ConfigApp } from "@/components/model/config-app"
+import { ConfigApp } from "@/components/config-app"
 import { BrandTitle } from "@/components/branding"
 import { QueryInHomePage } from "@/components/query-in-home-page"
 

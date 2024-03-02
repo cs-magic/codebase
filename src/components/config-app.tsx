@@ -1,11 +1,11 @@
 "use client"
 
-import { SelectScenario } from "@/components/model/select-scenario"
+import { SelectScenario } from "@/components/select-scenario"
 import { Button } from "@/components/ui/button"
 import { ChevronDownIcon } from "lucide-react"
 import React from "react"
 import { openSelectPApps } from "@/store/ui"
-import JoinComponents from "../join-components"
+import JoinComponents from "./join-components"
 import { useSnapshot } from "valtio"
 import { conversationStore } from "@/store/conversation"
 

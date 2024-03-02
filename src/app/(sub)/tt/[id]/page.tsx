@@ -21,7 +21,7 @@ export default function ConversationPage({
     if (isError) setOpen(true)
   }, [isSuccess, isError])
 
-  console.log({ isSuccess, isError })
+  // console.log({ isSuccess, isError })
 
   return (
     <>

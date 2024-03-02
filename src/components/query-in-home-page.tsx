@@ -1,6 +1,6 @@
 "use client"
 
-import { Textarea } from "@/components/textarea"
+import { Textarea } from "@/components/common/textarea"
 import { useState } from "react"
 import { useSession } from "next-auth/react"
 import { useSnapshot } from "valtio"
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { CheckAuth } from "./auth"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore, useQuery } from "@/store/conversation"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
@@ -22,7 +22,7 @@ export const QueryInHomePage = () => {
   const session = useSession()
   const [open, setOpen] = useState(false)
   const { pApps } = useSnapshot(conversationStore)
-  const query = conversationStore.useQuery()
+  const query = useQuery()
 
   const onSubmit = () => {
     console.log({ input })

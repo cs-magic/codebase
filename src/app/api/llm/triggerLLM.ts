@@ -3,7 +3,7 @@ import { callChatGPT } from "@/server/llm/openai"
 import { last } from "lodash"
 import { MessageRole } from "@prisma/client"
 import { manager } from "@/app/api/llm/init"
-import { IRequest } from "@/app/api/llm/schema"
+import { IRequest, ISSEEvent } from "@/app/api/llm/schema"
 
 export const triggerLLM = async (context: {
   requestId: string
@@ -15,7 +15,7 @@ export const triggerLLM = async (context: {
   const { requestId, modelId, messages } = context
   const r: IRequest = (manager[requestId] = {
     finished: false,
-    data: "",
+    data: [],
     clients: [],
   })
   console.log("[llm] triggered: ", {
@@ -25,19 +25,29 @@ export const triggerLLM = async (context: {
   // console.debug("[sse] manager added: ", { manager })
 
   const successfullyCall = async () => {
-    const res = await callChatGPT({
-      modelId,
-      // todo: context
-      prompt: last(messages)!.content,
-    })
-    for await (const chunk of res) {
-      // console.log("[llm] chunk: ", JSON.stringify(chunk))
-      const token = chunk.content as string
-      console.log("[llm] token: ", { requestId, token })
-      r.data += token
-      r.clients.forEach((c) => c.onEvent(token))
+    try {
+      const res = await callChatGPT({
+        modelId,
+        // todo: context
+        prompt: last(messages)!.content,
+      })
+      for await (const chunk of res) {
+        // console.log("[llm] chunk: ", JSON.stringify(chunk))
+        const token = chunk.content as string
+        console.log("[llm] token: ", { requestId, token })
+        const e: ISSEEvent = { event: "data", data: token }
+        r.data.push(e)
+        r.clients.forEach((c) => c.onEvent(e))
+      }
+    } catch (e) {
+      console.error("[call] error: ", e)
+    } finally {
+      // close
+      const e: ISSEEvent = { event: "close" }
+      r.data.push(e)
+      r.clients.forEach((c) => c.onEvent(e))
+      r.finished = true
     }
-    r.finished = true
   }
 
   if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(modelId)) {

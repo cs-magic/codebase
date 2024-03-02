@@ -1,9 +1,9 @@
 "use client"
-import { Textarea } from "@/components/textarea"
-import { conversationStore } from "@/store/conversation"
+import { Textarea } from "@/components/common/textarea"
+import { useQuery } from "@/store/conversation"
 
 export const QueryInChatLayout = () => {
-  const query = conversationStore.useQuery()
+  const query = useQuery()
 
   return (
     <div className={"p-2 flex justify-center shrink-0"}>

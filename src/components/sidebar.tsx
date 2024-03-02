@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./conversation-list"
 import { useSnapshot } from "valtio"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore, useAddConversation } from "@/store/conversation"
 import { api } from "@/lib/trpc/react"
 import { useRouter } from "next/navigation"
 
 export const Sidebar = () => {
   const { conversations } = useSnapshot(conversationStore)
-  const addConversation = conversationStore.useAddConversation()
+  const addConversation = useAddConversation()
   // console.log({ conversations })
   const router = useRouter()
   const deleteAllConversations = api.llm.deleteAllConversations.useMutation({

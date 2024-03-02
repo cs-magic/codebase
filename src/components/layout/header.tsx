@@ -1,5 +1,4 @@
 "use client"
-import { UserButton } from "@/components/user-button"
 import { IoApps } from "react-icons/io5"
 import { IconContainer } from "@/components/containers"
 import {
@@ -19,7 +18,21 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import { useSession } from "next-auth/react"
+import { CircleUser } from "lucide-react"
 
+export const UserButton = () => {
+  const session = useSession()
+  const user = session.data?.user
+
+  return (
+    <Link href={user ? "/dashboard" : "/auth"}>
+      <IconContainer size={"lg"}>
+        <CircleUser className={cn(user && "text-primary-foreground")} />
+      </IconContainer>
+    </Link>
+  )
+}
 export const Header = ({ withBrand }: { withBrand?: boolean }) => {
   return (
     <div className={"w-full flex gap-2 px-6 py-4"}>

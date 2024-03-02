@@ -1,6 +1,5 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/layout/header"
 import { PropsWithChildren } from "react"
-import { BrandingFooter } from "@/components/footer"
 
 export default function SubLayout({ children }: PropsWithChildren) {
   return (

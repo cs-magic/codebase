@@ -5,7 +5,7 @@ import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 import { IPApp } from "@/schema/conversation"
 import { useSnapshot } from "valtio"
 import { nanoid } from "nanoid"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore, useAddPApp, useDelPApp } from "@/store/conversation"
 
 export const SelectPApp = ({
   pApp,
@@ -14,7 +14,7 @@ export const SelectPApp = ({
   pApp: IPApp
   type: "toAdd" | "toDel"
 }) => {
-  const { pApps, useDelPApp, useAddPApp } = useSnapshot(conversationStore)
+  const { pApps } = useSnapshot(conversationStore)
   // console.log({ pApps, type, pApp })
   const addPApp = useAddPApp()
   const delPApp = useDelPApp()
