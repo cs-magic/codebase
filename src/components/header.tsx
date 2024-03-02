@@ -1,3 +1,4 @@
+"use client"
 import { UserButton } from "@/components/user-button"
 import { IoApps } from "react-icons/io5"
 import { IconContainer } from "@/components/containers"
@@ -16,6 +17,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { BrandTitle } from "@/components/branding"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 export const Header = ({ withBrand }: { withBrand?: boolean }) => {
   return (
@@ -40,21 +43,29 @@ const Apps = () => {
         </IconContainer>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className={"mr-2"}>
+      <DropdownMenuContent
+        className={"mr-2 p-4 flex flex-col gap-4 max-h-[480px] overflow-auto"}
+      >
         <div
           className={cn(
-            "grid max-h-[480px] overflow-auto p-4",
-            subAppsIcons.length >= 3
-              ? "grid-cols-3"
-              : subAppsIcons.length === 2
-                ? "grid-cols-2"
-                : "grid-cols-1",
+            "grid",
+            subAppsIcons.length >= 3 ? "grid-cols-3" : "grid-cols-2",
           )}
         >
           {subAppsIcons.map((subApp, index) => (
             <SubAppIcon subAppIcon={subApp} key={index} />
           ))}
         </div>
+
+        <Button
+          variant={"outline"}
+          className={"w-full"}
+          onClick={() => {
+            toast.info("敬请期待！")
+          }}
+        >
+          查看CS魔法社的更多产品
+        </Button>
       </DropdownMenuContent>
     </DropdownMenu>
   )
