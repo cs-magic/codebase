@@ -22,14 +22,14 @@ import { toast } from "sonner"
 
 export const Header = ({ withBrand }: { withBrand?: boolean }) => {
   return (
-    <div className={"w-full flex items-center gap-2 px-6 py-4"}>
+    <div className={"w-full flex gap-2 px-6 py-4"}>
       {withBrand && <BrandTitle className={"text-2xl"} withDescription />}
 
-      <div className={"grow"} />
+      <div className={"ml-auto flex items-center gap-2"}>
+        <Apps />
 
-      <Apps />
-
-      <UserButton />
+        <UserButton />
+      </div>
     </div>
   )
 }
