@@ -5,6 +5,13 @@ name: Deploy On My Machine
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+#  copied from github.com/markshawn2020/my-docusaurus/.github/workflows/mark-vercell-build.yml
+  repository_dispatch:
+    types: deploy
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
