@@ -1,8 +1,8 @@
-import { smsState } from "@/store/sms"
+import { sendCode, smsState } from "@/store/sms"
 import { useSnapshot } from "valtio"
 
 export const ResendVerifyCode = () => {
-  const { phone, downtime, sendCode } = useSnapshot(smsState)
+  const { phone, downtime } = useSnapshot(smsState)
 
   return (
     <div className={"text-muted-foreground text-xs flex items-center "}>
@@ -10,8 +10,7 @@ export const ResendVerifyCode = () => {
       {downtime <= 0 ? (
         <span
           onClick={() => {
-            // currently phone must exist
-            sendCode({ phone })
+            void sendCode({ phone })
           }}
           className={"hover:text-primary hover:underline cursor-pointer"}
         >
