@@ -1,4 +1,4 @@
-import { proxy, useSnapshot } from "valtio"
+import { proxy } from "valtio"
 import { IConversationBasic, IPApp } from "@/schema/conversation"
 import { api } from "@/lib/trpc/react"
 import { toast } from "sonner"
@@ -7,20 +7,26 @@ import { useEffect } from "react"
 import { IMessageInChat } from "@/schema/message"
 import { nanoid } from "nanoid"
 import { remove } from "lodash"
-import { UnexpectedError } from "@/schema/error"
 
 export type IPAppClient = IPApp & {
   needFetchLLM?: boolean
 }
 
-export const pAppsState = proxy<{ pApps: IPAppClient[] }>({
-  pApps: [],
-})
-export const conversationsState = proxy<{
+export interface IConversationState {
+  pApps: IPAppClient[]
+
   conversationId: string | null
   conversations: IConversationBasic[]
-}>({ conversations: [], conversationId: null })
-export const messagesState = proxy<IMessageInChat[]>([])
+
+  messages: IMessageInChat[]
+}
+
+export const conversationsState = proxy<IConversationState>({
+  pApps: [],
+  conversations: [],
+  conversationId: null,
+  messages: [],
+})
 
 export const useAddPApp = () => {
   const conversationId = conversationsState.conversationId
@@ -35,7 +41,7 @@ export const useAddPApp = () => {
         title: pApp.title,
       })
     }
-    pAppsState.pApps.push(pApp)
+    conversationsState.pApps.push(pApp)
   }
 }
 
@@ -44,11 +50,11 @@ export const useDelPApp = () => {
   const delPApp = api.llm.delPApp.useMutation()
   return async (pAppId: string) => {
     // 至少要有1个
-    if (pAppsState.pApps.length === 1) return
+    if (conversationsState.pApps.length === 1) return
     // 更新数据库
     if (conversationId) await delPApp.mutateAsync({ conversationId, pAppId })
     // 更新本地
-    remove(pAppsState.pApps, (i) => i.id === pAppId)
+    remove(conversationsState.pApps, (i) => i.id === pAppId)
   }
 }
 
@@ -56,7 +62,7 @@ export const useInitConversations = () => {
   const { data: conversations = [] } = api.llm.listConversations.useQuery()
 
   useEffect(() => {
-    console.log("inited conversations: ", conversations)
+    // console.log("inited conversations: ", conversations)
     conversationsState.conversations = conversations
   }, [
     // 自己确保只运行一次
@@ -72,7 +78,7 @@ export const useAddConversation = () => {
       conversationsState.conversations.splice(0, 0, conversation)
       toast.success("新建会话成功")
       router.push(`/tt/${conversation.id}`)
-      messagesState.length = 0 // clean array
+      conversationsState.messages = []
     },
     onError: (error) => {
       console.error(error)
@@ -81,7 +87,7 @@ export const useAddConversation = () => {
   })
 
   const addConversationWithoutPrompt = () =>
-    mutateAsync({ pApps: pAppsState.pApps, type: "LLM" })
+    mutateAsync({ pApps: conversationsState.pApps, type: "LLM" })
 
   return {
     addConversationWithoutPrompt,
@@ -107,7 +113,7 @@ export const useQueryInChatLayout = () => {
     onSuccess: (data) => {
       data.forEach(({ requestId, result }) => {
         if (result) {
-          const p = pAppsState.pApps.find((p) => p.id === requestId)
+          const p = conversationsState.pApps.find((p) => p.id === requestId)
           console.log({ p, requestId })
           if (p) p.needFetchLLM = true
         }
@@ -116,11 +122,12 @@ export const useQueryInChatLayout = () => {
   })
 
   const queryInChatLayout = (conversationId: string | null, query: string) => {
+    console.log("[query]: ", { conversationId, query })
     if (!conversationId) return
 
     doQuery.mutate({ conversationId, query })
 
-    messagesState.push({
+    conversationsState.messages.push({
       id: nanoid(),
       updatedAt: new Date(),
       content: query,

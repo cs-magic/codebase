@@ -7,10 +7,10 @@ import React from "react"
 import { openSelectPApps } from "@/store/ui"
 import JoinComponents from "../join-components"
 import { useSnapshot } from "valtio"
-import { pAppsState } from "@/store/conversation"
+import { conversationsState } from "@/store/conversation"
 
 export const ConfigApp = () => {
-  const { pApps } = useSnapshot(pAppsState)
+  const { pApps } = useSnapshot(conversationsState)
 
   return (
     <div className={"flex items-center gap-2"}>

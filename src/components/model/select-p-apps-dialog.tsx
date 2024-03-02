@@ -2,7 +2,7 @@
 
 import { api } from "@/lib/trpc/react"
 import { useSnapshot } from "valtio"
-import { pAppsState } from "@/store/conversation"
+import { conversationsState } from "@/store/conversation"
 import React, { useEffect, useState } from "react"
 import { uiState } from "@/store/ui"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 
 export const SelectPAppsDialog = () => {
   const { data: pAppsInDB = [] } = api.llm.listPApps.useQuery()
-  const { pApps } = useSnapshot(pAppsState)
+  const { pApps } = useSnapshot(conversationsState)
 
   const [filterPApps, setFilterPApps] = useState("")
 
@@ -22,7 +22,7 @@ export const SelectPAppsDialog = () => {
   useEffect(() => {
     if (!pApps.length && pAppsInDB.length) {
       const gptPApp = pAppsInDB.find((p) => p.model.id === "gpt-3.5-turbo")
-      if (gptPApp) pAppsState.pApps.push(gptPApp)
+      if (gptPApp) conversationsState.pApps.push(gptPApp)
     }
   }, [pAppsInDB, pApps])
   const { selectPAppsOpen, selectPAppsOnOpenChange } = useSnapshot(uiState)

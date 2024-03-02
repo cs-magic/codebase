@@ -1,6 +1,6 @@
 "use client"
 
-import { pAppsState, useQueryInHomePage } from "@/store/conversation"
+import { conversationsState, useQueryInHomePage } from "@/store/conversation"
 import { Textarea } from "@/components/textarea"
 import { useState } from "react"
 import { useSession } from "next-auth/react"
@@ -23,7 +23,7 @@ export const QueryInHomePage = () => {
 
   const session = useSession()
   const [open, setOpen] = useState(false)
-  const { pApps } = useSnapshot(pAppsState)
+  const { pApps } = useSnapshot(conversationsState)
 
   const onSubmit = () => {
     console.log({ input })

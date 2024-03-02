@@ -3,11 +3,8 @@
 import { api } from "@/lib/trpc/react"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
-import { conversationsState, pAppsState } from "@/store/conversation"
+import { conversationsState } from "@/store/conversation"
 import { PAppsComp } from "@/components/p-apps"
-import { useSession } from "next-auth/react"
-import { UnexpectedError } from "@/schema/error"
-import { SSE } from "@/server/sse"
 
 export default function ConversationPage({
   params: { id },
@@ -21,11 +18,11 @@ export default function ConversationPage({
     if (conversation) {
       // pessimistic update
       conversationsState.conversationId = id
-      pAppsState.pApps = conversation.pApps
+      conversationsState.pApps = conversation.pApps
     }
   }, [conversation])
 
-  const { pApps } = useSnapshot(pAppsState)
+  const { pApps } = useSnapshot(conversationsState)
 
   return <PAppsComp pApps={pApps} />
 }

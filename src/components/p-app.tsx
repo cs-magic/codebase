@@ -7,8 +7,6 @@ import { useSnapshot } from "valtio"
 import {
   conversationsState,
   IPAppClient,
-  messagesState,
-  pAppsState,
   useDelPApp,
 } from "@/store/conversation"
 import { cn } from "@/lib/utils"
@@ -24,22 +22,20 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const session = useSession()
   const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
 
-  const messages = useSnapshot(messagesState)
-  const { pApps } = useSnapshot(pAppsState)
-  const { conversationId } = useSnapshot(conversationsState)
+  const { conversationId, pApps, messages } = useSnapshot(conversationsState)
 
   useEffect(() => {
     if (!pApp.needFetchLLM) return
     void fetchSSE(`/api/llm?r=${id}`, {
       onToken: (token) => {
         const lastUserMessage = last(
-          messagesState.filter((m) => m.role === "user"),
+          conversationsState.messages.filter((m) => m.role === "user"),
         )!
-        const lastAssistantMessage = messagesState.find(
+        const lastAssistantMessage = conversationsState.messages.find(
           (m) => m.parentId === lastUserMessage.id && m.pAppId === id,
         )
         if (!lastAssistantMessage) {
-          messagesState.push({
+          conversationsState.messages.push({
             role: "assistant",
             content: token,
             id: nanoid(),
