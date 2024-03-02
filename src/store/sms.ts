@@ -8,8 +8,25 @@ import { uiState } from "@/store/ui"
 import { $sendSms } from "@/server/sms/functions"
 import { toast } from "sonner"
 import { SMS_CODE_DOWNTIME, SMS_PROVIDER_ID } from "@/config/system"
+import { proxy } from "valtio"
 
 type SmsStage = "toSendSms" | "toAuth"
+
+export const smsState = proxy<{
+  stage: SmsStage
+  phone: string
+  code: string
+  downtime: number
+  sentOk?: boolean
+  signInOk?: boolean
+}>({
+  phone: "",
+  code: "",
+  stage: "toSendSms",
+  downtime: 0,
+  sentOk: false,
+  signInOk: false,
+})
 
 // 不需要 persist，用户刷新就全部重置（包括手机号要重新输入，验证码重新发送等）
 export interface SmsSlice {

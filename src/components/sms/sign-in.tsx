@@ -1,9 +1,9 @@
-import { useSmsStore } from "@/store/sms"
 import { Label } from "@/components/ui/label"
-import { EditIcon } from "lucide-react"
-import { DigitContainer } from "@/components/containers"
 import { useInputVerifyCodes } from "@/hooks/use-input-verify-codes"
 import { useSignInResult } from "@/hooks/use-sms-sign-in-result"
+import { InputVerifyCode } from "@/components/sms/input-verify-code"
+import { ResendVerifyCode } from "@/components/sms/resend-verify-code"
+import { ReInputPhone } from "@/components/sms/re-input-phone"
 
 export const SmsSignIn = () => {
   useInputVerifyCodes()
@@ -26,75 +26,6 @@ export const SmsSignIn = () => {
       <InputVerifyCode />
 
       <ResendVerifyCode />
-    </div>
-  )
-}
-
-const ReInputPhone = () => {
-  const { phone, setStage } = useSmsStore((state) => ({
-    phone: state.phone,
-    setStage: state.setStage,
-  }))
-
-  return (
-    <div className={"font-semibold inline-flex items-center gap-1"}>
-      {phone}
-      <EditIcon
-        className={"w-4 h-4 cursor-pointer"}
-        onClick={() => {
-          setStage("toSendSms")
-        }}
-      />
-    </div>
-  )
-}
-
-const InputVerifyCode = () => {
-  const { code } = useSmsStore((state) => ({
-    code: state.code,
-  }))
-
-  return (
-    <div className={"flex justify-center gap-2"}>
-      {[...Array(6)].map((value, index) => (
-        <DigitContainer
-          key={index}
-          focus={index === code.length}
-          value={index < code.length ? code[index] : ""}
-          onKeyDown={(event) => {
-            event.preventDefault()
-          }}
-          // suppress (un)control
-          onChange={(event) => null}
-        />
-      ))}
-    </div>
-  )
-}
-
-const ResendVerifyCode = () => {
-  const { phone, downtime, sendCode } = useSmsStore((state) => ({
-    phone: state.phone,
-    downtime: state.downtime,
-    sendCode: state.sendCode,
-  }))
-
-  return (
-    <div className={"text-muted-foreground text-xs flex items-center "}>
-      没有收到验证码？
-      {downtime <= 0 ? (
-        <span
-          onClick={() => {
-            // currently phone must exist
-            sendCode({ phone })
-          }}
-          className={"hover:text-primary hover:underline cursor-pointer"}
-        >
-          重新发送
-        </span>
-      ) : (
-        `(${downtime}秒)`
-      )}
     </div>
   )
 }
