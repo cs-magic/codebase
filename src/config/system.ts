@@ -22,3 +22,7 @@ export const INDIES_AVATARS: string[] = [
 export const SPONSORS_BANNERS: string[] = []
 
 export const REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED = false
+/////////////////////////
+// states
+/////////////////////////
+export const MSG_UNEXPECTED_ERROR = "Unexpected Error !"

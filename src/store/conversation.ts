@@ -8,6 +8,10 @@ import { IMessageInChat } from "@/schema/message"
 import { nanoid } from "nanoid"
 import { remove } from "lodash"
 
+/////////////////////////
+// interface
+/////////////////////////
+
 export type IPAppClient = IPApp & {
   needFetchLLM?: boolean
 }
@@ -21,6 +25,10 @@ export interface IConversationState {
   messages: IMessageInChat[]
 }
 
+/////////////////////////
+// states
+/////////////////////////
+
 export const conversationsState = proxy<IConversationState>({
   pApps: [],
   conversations: [],
@@ -28,9 +36,35 @@ export const conversationsState = proxy<IConversationState>({
   messages: [],
 })
 
+/////////////////////////
+// Actions (code split)
+/////////////////////////
+
+export interface IConversationActions {
+  /**
+   * 用户在弹窗界面增加一个pApp
+   * - 最多只能有3个，或者视窗口长度限制
+   * - 首页增加要
+   * - 会话里增加要与数据库同步
+   * @param pApp
+   */
+  addApp: (pApp: IPApp) => void
+  delApp: (pAppId: string) => void
+
+  addConversation: () => void
+  delConversation: (conversationId: string) => void
+
+  queryInHomePage: (query: string) => void
+  queryInChatLayout: (conversationId: string | null, query: string) => void
+}
+
+/**
+ * 增加 pApp 时，要与数据库同步
+ */
 export const useAddPApp = () => {
   const conversationId = conversationsState.conversationId
   const addPApp = api.llm.addPApp.useMutation()
+
   return async (pApp: IPApp) => {
     console.log("adding pApp: ", { conversationId, pApp })
     if (conversationId) {
@@ -45,6 +79,11 @@ export const useAddPApp = () => {
   }
 }
 
+/**
+ * 减少 pApp 时：
+ * 1. 要确保至少有1个
+ * 2. 要与数据库同步
+ */
 export const useDelPApp = () => {
   const conversationId = conversationsState.conversationId
   const delPApp = api.llm.delPApp.useMutation()
@@ -105,9 +144,6 @@ export const useQueryInHomePage = () => {
   return { queryInHomePage, isLoading }
 }
 
-/**
- * todo: core logic
- */
 export const useQueryInChatLayout = () => {
   const doQuery = api.llm.queryConversation.useMutation({
     onSuccess: (data) => {
