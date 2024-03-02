@@ -2,6 +2,7 @@
 
 import {
   ComponentProps,
+  ForwardedRef,
   forwardRef,
   HTMLAttributes,
   PropsWithChildren,
@@ -20,13 +21,13 @@ import {
 
 export type Orientation = "horizontal" | "vertical"
 
-export const Container = ({
-  className,
-  orientation,
-  ...props
-}: HTMLAttributes<HTMLDivElement> & { orientation?: Orientation }) => {
+export const Container = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement> & { orientation?: Orientation }
+>(({ className, orientation, ...props }, ref) => {
   return (
     <div
+      ref={ref}
       className={cn(
         "relative",
         "p-2 sm:p-4",
@@ -37,7 +38,8 @@ export const Container = ({
       {...props}
     />
   )
-}
+})
+Container.displayName = "Container"
 
 export const IconContainer = forwardRef<
   HTMLButtonElement,

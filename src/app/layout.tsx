@@ -9,13 +9,12 @@ import { SessionProvider } from "@/providers/session"
 import { LoadingAlertDialog } from "@/components/common/dialogs"
 import { type Viewport } from "next"
 import AutoHeightProvider from "@/providers/AutoHeightProvider"
-import { Header } from "@/components/layout/header"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import SocketProvider from "@/providers/socket"
-import { BrandingFooter } from "@/components/layout/footer"
 import { AppStatus } from "@/components/branding"
 import { SelectPAppsDialog } from "@/components/select-p-apps-dialog"
+import ScreenProvider from "@/providers/screen-provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,21 +51,23 @@ export default function RootLayout({
               <AutoHeightProvider>
                 <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
                   <TooltipProvider>
-                    <main className={"w-full flex flex-col h-screen relative"}>
-                      {children}
+                    <ScreenProvider>
+                      <main className={"w-full h-full flex flex-col relative"}>
+                        {children}
 
-                      <Toaster
-                        richColors
-                        position={"top-right"}
-                        duration={3000}
-                      />
+                        <Toaster
+                          richColors
+                          position={"top-right"}
+                          duration={3000}
+                        />
 
-                      <LoadingAlertDialog />
+                        <LoadingAlertDialog />
 
-                      <SelectPAppsDialog />
+                        <SelectPAppsDialog />
 
-                      <AppStatus />
-                    </main>
+                        <AppStatus />
+                      </main>
+                    </ScreenProvider>
                   </TooltipProvider>
                 </ThemeProvider>
               </AutoHeightProvider>

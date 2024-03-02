@@ -35,8 +35,7 @@ import {
 export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
   const { id } = pApp
 
-  const { currentConversation, currentConversationId } =
-    useSnapshot(conversationStore)
+  const { currentConversationId } = useSnapshot(conversationStore)
 
   const [error, setError] = useState("")
   const [fetching, setFetching] = useState(false)
@@ -58,6 +57,7 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
         // console.log({ onData: data })
 
         const { messages } = conversationStore.currentConversation!
+        console.log("onData: ", { data, messages })
 
         const lastUserMessage = last(messages.filter((m) => m.role === "user"))!
         const lastAssistantMessage = messages.find(
@@ -186,6 +186,7 @@ const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
       }
     }
   })
+  console.log({ currentSnapshot, currentMessages, theMessages })
 
   // currentConversation?.messages
   // .filter(

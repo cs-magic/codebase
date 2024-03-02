@@ -6,6 +6,7 @@ import { last, remove } from "lodash"
 import { useRouter } from "next/navigation"
 import { nanoid } from "nanoid"
 import { IMessageInChat } from "@/schema/message"
+import { NANOID_LEN } from "@/config/system"
 
 export interface IConversationStore {
   // >> 1. state
@@ -133,7 +134,7 @@ export function useAddConversation() {
   })
   return async () => {
     conversationStore.conversationsValid = false
-    const conversationId = nanoid()
+    const conversationId = nanoid(NANOID_LEN)
 
     const pApps = conversationStore.pApps.map((p) => ({
       ...p,
