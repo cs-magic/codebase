@@ -5,11 +5,16 @@ import { conversationStore } from "@/store/conversation"
 import { useSnapshot } from "valtio"
 import { cn } from "@/lib/utils"
 import { uiState } from "@/store/ui"
+import { BEST_VIEWPOINT } from "@/config/system"
 
 export const PAppsComp = () => {
   const { pApps } = useSnapshot(conversationStore)
-  const { gridCols } = useSnapshot(uiState)
-  console.log({ gridCols })
+  const {
+    mainArea: { width },
+  } = useSnapshot(uiState)
+  const cnt = conversationStore.pApps.length
+  console.log({ cnt })
+  const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), cnt)
 
   return (
     <div

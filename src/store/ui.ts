@@ -1,8 +1,7 @@
 import { proxy } from "valtio"
 import { BEST_VIEWPOINT } from "@/config/system"
-import { conversationStore } from "@/store/conversation"
 
-export const uiState = proxy<{
+export interface UIState {
   mainArea: {
     width: number
     height: number
@@ -13,8 +12,9 @@ export const uiState = proxy<{
 
   // compute
   maxToAdd: number
-  gridCols: number
-}>({
+}
+
+export const uiState = proxy<UIState>({
   mainArea: {
     width: 0,
     height: 0,
@@ -34,13 +34,6 @@ export const uiState = proxy<{
           2,
       ),
       2, // se: 375x667
-    )
-  },
-
-  get gridCols() {
-    return Math.min(
-      Math.floor(this.mainArea.width / BEST_VIEWPOINT),
-      conversationStore.pApps.length,
     )
   },
 })
