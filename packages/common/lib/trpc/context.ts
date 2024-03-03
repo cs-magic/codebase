@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "../../packages/common/lib/auth"
+import { getServerAuthSession } from "../auth"
 
 /**
  * 1. CONTEXT

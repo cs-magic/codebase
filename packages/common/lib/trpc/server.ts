@@ -10,9 +10,9 @@ import { observable } from "@trpc/server/observable"
 import { type TRPCErrorResponse } from "@trpc/server/rpc"
 import { headers } from "next/headers"
 import { cache } from "react"
-import { transformer } from "@/api/shared"
-import { createTRPCContext } from "@/api/context"
-import { appRouter } from "@/api/routers/__root"
+import { transformer } from "./shared"
+import { createTRPCContext } from "./context"
+import { appRouter } from "@/api/__root"
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

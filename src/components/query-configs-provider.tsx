@@ -1,7 +1,7 @@
 "use client"
 
 import { PropsWithChildren, useEffect } from "react"
-import { api } from "@/api/react"
+import { api } from "../../packages/common/lib/trpc/react"
 import { useAtom } from "jotai"
 
 import { allQueryConfigsAtom } from "@/store/query-config.atom"

@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "../trpc"
-import { queryLLMRouter } from "@/api/routers/query-llm-router"
+import { createTRPCRouter } from "../../packages/common/lib/trpc/trpc"
+import { queryLLMRouter } from "@/api/query-llm-router"
 
 /**
  * This is the primary router for your server.

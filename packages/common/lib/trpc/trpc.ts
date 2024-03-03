@@ -9,8 +9,10 @@
 
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
-import { ZodError } from "zod"
+import { z, ZodError } from "zod"
 import { Context } from "./context"
+import { db } from "../db"
+import { queryConvDetailViewSchema } from "@/schema/query-conv"
 
 /**
  * 2. INITIALIZATION
@@ -76,3 +78,21 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   })
 })
+
+export const queryConvProcedure = protectedProcedure
+  .input(z.object({ conversationId: z.string() }))
+  .use(async ({ ctx, next, input }) => {
+    const conversation = await db.queryConv.findUniqueOrThrow({
+      where: {
+        id: input.conversationId,
+        fromUserId: ctx.user.id,
+      },
+      ...queryConvDetailViewSchema,
+    })
+
+    return next({
+      ctx: {
+        conversation,
+      },
+    })
+  })
