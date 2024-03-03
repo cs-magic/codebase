@@ -5,6 +5,3 @@ export const resetPAppSSE = (pAppId: string) => {
   const pApp = conversationStore.apps.find((p) => p.id === pAppId)
   if (pApp) pApp.needFetchLLM = false
 }
-export const selectPApp = (pApp: IAppInChat) => {
-  conversationStore.curPApp = pApp
-}

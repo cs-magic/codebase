@@ -79,12 +79,12 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   })
 })
 
-export const queryConvProcedure = protectedProcedure
-  .input(z.object({ conversationId: z.string() }))
+export const convProcedure = protectedProcedure
+  .input(z.object({ convId: z.string() }))
   .use(async ({ ctx, next, input }) => {
-    const conversation = await db.queryConv.findUniqueOrThrow({
+    const conv = await db.conv.findUniqueOrThrow({
       where: {
-        id: input.conversationId,
+        id: input.convId,
         fromUserId: ctx.user.id,
       },
       ...convDetailSchema,
@@ -92,7 +92,7 @@ export const queryConvProcedure = protectedProcedure
 
     return next({
       ctx: {
-        conversation,
+        conv,
       },
     })
   })

@@ -11,24 +11,21 @@ import {
   SystemMessage,
 } from "@langchain/core/messages"
 import { ILLMMessage } from "@/schema/message"
+import { App } from ".prisma/client"
 
+/**
+ * todo: 用更好的接口，langchain 这个不太对齐（但兼容性应该是最好的）
+ */
 export const callChatGPT = async ({
-  modelId,
-  temperature = 0.9,
-  messages,
+  app,
+  context,
 }: {
-  modelId: string // https://github.com/openai/openai-python/issues/952#issuecomment-1857207339
-  temperature?: number
-  messages: ILLMMessage[]
+  app: App
+  context: ILLMMessage[]
 }) => {
-  const model = new ChatOpenAI({
-    modelName: modelId, // Defaults to "gpt-3.5-turbo-instruct" if no model provided.
-    temperature,
-
-    timeout: 3000,
-  })
+  const model = new ChatOpenAI(app)
   return model.stream(
-    messages.map((m) => {
+    context.map((m) => {
       // ref: https://js.langchain.com/docs/modules/model_io/chat/quick_start#messages
       const Message =
         m.role === "system"

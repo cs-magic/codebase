@@ -19,7 +19,7 @@ import {
   AlertDialogFooter,
   AlertDialogTitle,
 } from "../../packages/common/components/ui/alert-dialog"
-import { useQueryOnEnter } from "@/hooks/use-query-conv"
+import { useQueryOnEnter } from "@/hooks/use-conv-query"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 import { useAtom } from "jotai"

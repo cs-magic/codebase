@@ -1,13 +1,20 @@
 import { z } from "zod"
 import { pusherServerIdSchema } from "../../packages/common/lib/puser/config"
-import { Message, MessageRole } from "@prisma/client"
+
+export const messageRoleSchema = z.union([
+  z.literal("user"),
+  z.literal("assistant"),
+  z.literal("system"),
+  z.literal("function"),
+])
+export type MessageRole = z.infer<typeof messageRoleSchema>
 
 /**
  * todo: ensure it is consistent with Prisma.Message
  */
 export const llmMessageSchema = z.object({
   content: z.string(),
-  role: z.nativeEnum(MessageRole),
+  role: messageRoleSchema,
 })
 export type ILLMMessage = z.infer<typeof llmMessageSchema>
 
@@ -16,17 +23,3 @@ export const createMessageSchema = z.object({
   id: z.string().nullable(),
   text: z.string(),
 })
-export type ICreateMessage = z.infer<typeof createMessageSchema>
-
-export type IMessageInChat = Pick<
-  Message,
-  | "id"
-  | "updatedAt"
-  | "content"
-  | "role"
-  | "appId"
-  | "conversationId"
-  | "parentId"
-> & {
-  isError?: boolean
-}

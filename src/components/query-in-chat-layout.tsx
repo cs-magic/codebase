@@ -1,6 +1,6 @@
 "use client"
 
-import { useQueryOnEnter } from "@/hooks/use-query-conv"
+import { useQueryOnEnter } from "@/hooks/use-conv-query"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 
 export const QueryInChatLayout = () => {

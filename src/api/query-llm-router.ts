@@ -1,4 +1,5 @@
 import {
+  convProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -8,6 +9,8 @@ import { z } from "zod"
 import { modelViewSchema } from "@/schema/model"
 import { convDetailSchema, convSummarySchema } from "@/schema/conv"
 import { AppInDBSchema } from "@/schema/app"
+import { llmMessageSchema } from "@/schema/message"
+import { triggerLLM } from "@/app/api/llm/triggerLLM"
 
 export const queryLLMRouter = createTRPCRouter({
   listModels: publicProcedure.query(() =>
@@ -20,7 +23,7 @@ export const queryLLMRouter = createTRPCRouter({
     }),
   ),
 
-  listQueryConfigs: publicProcedure.query(() =>
+  listApps: publicProcedure.query(() =>
     db.app.findMany({
       ...AppInDBSchema,
       orderBy: {
@@ -65,4 +68,54 @@ export const queryLLMRouter = createTRPCRouter({
   deleteAllQueryConvs: protectedProcedure.mutation(({ ctx }) =>
     db.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
   ),
+
+  query: convProcedure
+    .input(
+      z.object({
+        context: llmMessageSchema.array(),
+        apps: z
+          .object({
+            id: z.string(),
+            modelName: z.string(),
+            title: z.string().nullable(),
+            systemPrompt: z.string().nullable(),
+            temperature: z.number().nullable(),
+          })
+          .array(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const context = input.context
+      const request = await db.request.create({
+        data: {
+          conv: {
+            connect: {
+              id: ctx.conv.id,
+            },
+          },
+          context,
+          apps: {
+            connectOrCreate: input.apps.map((app) => ({
+              where: {
+                id: app.id,
+              },
+              create: {
+                ...app,
+                user: ctx.user.id,
+              },
+            })),
+          },
+        },
+        include: {
+          apps: true,
+        },
+      })
+
+      return Promise.all(
+        request.apps.map(async (app) => {
+          const requestId = `${input.convId}-${request.id}-${app.id}`
+          return await triggerLLM({ app, context, requestId })
+        }),
+      )
+    }),
 })

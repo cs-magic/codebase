@@ -19,12 +19,21 @@ import {
 } from "@/store/app.atom"
 
 export const AppsSelector = () => {
-  const [allQueryConfigs] = useAtom(allAppsAtom)
-  const [persistedQueryConfigs] = useAtom(persistedAppsAtom)
+  const [allApps] = useAtom(allAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
 
-  const [filterPApps, setFilterPApps] = useState("")
+  const [appFilter, setAppFilter] = useState("")
   const [open, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
   const [maxToAdd] = useAtom(uiMaxAppsAtom)
+
+  const filteredApps = allApps.filter(
+    (m) =>
+      m.title?.toLowerCase().includes(appFilter.toLowerCase()) ??
+      (m.model.title.toLowerCase().includes(appFilter.toLowerCase()) ||
+        m.model.company.title.toLowerCase().includes(appFilter)),
+  )
+
+  console.log({ allApps, appFilter, filteredApps, maxToAdd })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -32,12 +41,12 @@ export const AppsSelector = () => {
         <div className={"flex flex-col gap-2"}>
           <div>
             <Label className={"px-2 text-muted-foreground"}>
-              <span>已选择</span>
-              {/*<span className={"text-xs"}>（1-3个）</span>*/}
+              <span>已选择的 App</span>
+              <span className={"text-xs"}>（至少选择1个）</span>
             </Label>
 
-            {persistedQueryConfigs.map((m, index) => (
-              <AppSelector key={index} queryConfig={m} type={"toDel"} />
+            {persistedApps.map((m, index) => (
+              <AppSelector key={index} app={m} type={"toDel"} />
             ))}
           </div>
 
@@ -45,31 +54,22 @@ export const AppsSelector = () => {
 
           <Input
             className={"my-4"}
-            value={filterPApps}
+            value={appFilter}
             onChange={(event) => {
-              setFilterPApps(event.currentTarget.value)
+              setAppFilter(event.currentTarget.value)
             }}
           />
 
           <div>
             <Label className={"px-2 text-muted-foreground"}>
-              全部
+              全部 App
               <span className={"text-xs"}>
                 （您的屏幕最多只能添加{maxToAdd}个App）
               </span>
             </Label>
-            {allQueryConfigs
-              .filter(
-                (m) =>
-                  m.title?.toLowerCase().includes(filterPApps.toLowerCase()) ??
-                  (m.model.title
-                    .toLowerCase()
-                    .includes(filterPApps.toLowerCase()) ||
-                    m.model.company.title.toLowerCase().includes(filterPApps)),
-              )
-              .map((m, index) => (
-                <AppSelector key={index} queryConfig={m} type={"toAdd"} />
-              ))}
+            {filteredApps.map((m, index) => (
+              <AppSelector key={index} app={m} type={"toAdd"} />
+            ))}
           </div>
         </div>
       </DialogContent>

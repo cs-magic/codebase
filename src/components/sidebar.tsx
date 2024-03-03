@@ -1,18 +1,16 @@
 "use client"
-import { Button } from "../../../packages/common/components/ui/button"
+import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation-item"
 import { useAtom } from "jotai"
-import {
-  useAddQueryConvAtom,
-  useDeleteAllQueryConvsAtom,
-} from "@/hooks/use-query-conv"
 import { convsAtom } from "@/store/conv.atom"
+import { useDelAllConvs } from "@/hooks/use-conv-del"
+import { useAddConv } from "@/hooks/use-conv-add"
 
 export const Sidebar = () => {
   const [conversations] = useAtom(convsAtom)
-  const addConversation = useAddQueryConvAtom()
-  const deleteAllConversations = useDeleteAllQueryConvsAtom()
+  const addConversation = useAddConv()
+  const deleteAllConversations = useDelAllConvs()
 
   return (
     <div className={"hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col"}>

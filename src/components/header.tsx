@@ -4,22 +4,22 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../../../packages/common/components/ui/dropdown-menu"
+} from "../../packages/common/components/ui/dropdown-menu"
 import Image from "next/image"
 import {
   DEFAULT_AVATAR,
   Text2ImageAppSVG,
   Text2TextAppSVG,
 } from "@/config/assets"
-import { AspectRatio } from "../../../packages/common/components/ui/aspect-ratio"
+import { AspectRatio } from "../../packages/common/components/ui/aspect-ratio"
 import { BrandTitle } from "@/components/branding"
 import Link from "next/link"
-import { cn } from "../../../packages/common/lib/utils"
-import { Button } from "../../../packages/common/components/ui/button"
+import { cn } from "../../packages/common/lib/utils"
+import { Button } from "../../packages/common/components/ui/button"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { CircleUser } from "lucide-react"
-import { IconContainer } from "../../../packages/common/components/icon-container"
+import { IconContainer } from "../../packages/common/components/icon-container"
 
 export const UserButton = () => {
   const session = useSession()

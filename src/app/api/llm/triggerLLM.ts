@@ -4,15 +4,20 @@ import { manager } from "@/app/api/llm/init"
 
 import { ILLMMessage } from "@/schema/message"
 import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
+import { App } from ".prisma/client"
 
-export const triggerLLM = async (context: {
+export const triggerLLM = async ({
+  requestId,
+  app,
+  context,
+}: {
   requestId: string
-  modelId: string
-  messages: ILLMMessage[]
+  app: App
+  context: ILLMMessage[]
   // todo: more args
 }) => {
   // register into manger for later requests to read
-  const { requestId, modelId, messages } = context
+
   const r: IRequest = (manager[requestId] = {
     finished: false,
     data: [],
@@ -31,10 +36,10 @@ export const triggerLLM = async (context: {
 
   const start = async () => {
     try {
-      if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(modelId)) {
+      if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(app.modelName)) {
         const res = await callChatGPT({
-          modelId,
-          messages,
+          app,
+          context,
         })
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))

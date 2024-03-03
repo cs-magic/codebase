@@ -19,9 +19,13 @@ import { Label } from "../../../packages/common/components/ui/label"
 import { smsProviderAtom } from "../../../packages/common/lib/sms/atom-state"
 import { SmsProviderType } from "../../../packages/common/lib/sms/schema"
 import { IconContainer } from "../../../packages/common/components/icon-container"
+import { api } from "../../../packages/common/lib/trpc/react"
+import { Button } from "../../../packages/common/components/ui/button"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderAtom)
+
+  const utils = api.useUtils()
 
   return (
     <Dialog>
@@ -52,6 +56,15 @@ export const Devtool = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
+
+        <Label>Invalidate all</Label>
+        <Button
+          onClick={() => {
+            utils.invalidate()
+          }}
+        >
+          Invalidate
+        </Button>
       </DialogContent>
     </Dialog>
   )

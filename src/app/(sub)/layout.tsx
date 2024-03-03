@@ -1,4 +1,4 @@
-import { Header } from "@/components/layout/header"
+import { Header } from "@/components/header"
 import { PropsWithChildren } from "react"
 
 export default function SubLayout({ children }: PropsWithChildren) {

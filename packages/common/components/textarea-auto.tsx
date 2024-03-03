@@ -6,7 +6,7 @@ import { useMounted } from "../hooks/use-mounted"
 import { cn } from "../lib/utils"
 import { useAtom } from "jotai"
 
-import { userQueryAtom } from "../store/user"
+import { userPromptAtom } from "../store/user"
 import { convIdAtom } from "@/store/conv.atom"
 
 export const TextareaAuto = forwardRef<
@@ -18,7 +18,7 @@ export const TextareaAuto = forwardRef<
   const mounted = useMounted()
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
-  const [, setUserQuery] = useAtom(userQueryAtom)
+  const [, setUserQuery] = useAtom(userPromptAtom)
   const [convId] = useAtom(convIdAtom)
 
   return (

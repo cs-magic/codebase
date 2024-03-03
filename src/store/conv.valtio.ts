@@ -1,5 +1,4 @@
 import { proxy } from "valtio"
-import { IListConversation } from "@/schema/conv"
 import { last } from "lodash"
 import { IMessageInChat } from "@/schema/message"
 import { IAppInChat } from "@/schema/app"

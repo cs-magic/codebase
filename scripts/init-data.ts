@@ -69,12 +69,12 @@ const initLLM = async () => {
   const user = await db.user.findFirst()
   if (user) {
     const models = await db.model.findMany()
-    const createdQueryConfigs = await db.queryConfig.createMany({
+    const createdQueryConfigs = await db.app.createMany({
       data: models.map((m) => ({
         id: m.id,
-        modelId: m.id,
+        modelName: m.id,
         title: m.title,
-        fromUserId: user.id,
+        user: user.id,
       })),
     })
 

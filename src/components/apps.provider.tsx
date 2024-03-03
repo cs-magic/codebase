@@ -12,13 +12,12 @@ import { allAppsAtom } from "@/store/app.atom"
  * @constructor
  */
 export default function AppsProvider({ children }: PropsWithChildren) {
-  const { data: queryConfigs } = api.queryLLM.listQueryConfigs.useQuery()
-  const [, setQueryConfigs] = useAtom(allAppsAtom)
+  const { data: apps } = api.queryLLM.listApps.useQuery()
+  const [, setAllApps] = useAtom(allAppsAtom)
 
   useEffect(() => {
-    if (!queryConfigs) return
-    setQueryConfigs(queryConfigs)
-  }, [queryConfigs])
+    if (apps) setAllApps(apps)
+  }, [apps])
 
   return <>{children}</>
 }

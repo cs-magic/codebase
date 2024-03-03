@@ -7,4 +7,6 @@ export const convDetailAtom = atom<IConvDetail | null>(null)
 export const convIdAtom = atom((get) => get(convDetailAtom)?.id)
 
 // requests 是倒序的，所以最新的是在第一个
-export const latestRequestAtom = atom((get) => get(convDetailAtom)?.requests[0])
+export const contextAtom = atom(
+  (get) => get(convDetailAtom)?.requests[0]?.context ?? [],
+)

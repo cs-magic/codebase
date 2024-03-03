@@ -1,5 +1,5 @@
 "use client"
-import { Sidebar } from "@/components/layout/sidebar"
+import { Sidebar } from "@/components/sidebar"
 import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
@@ -8,11 +8,11 @@ import {
   convDetailAtom,
   convIdAtom,
   convsAtom,
-  latestRequestAtom,
+  contextAtom,
 } from "@/store/conv.atom"
 import { persistedAppsAtom } from "@/store/app.atom"
-import { userQueryAtom } from "../../../../packages/common/store/user"
-import { useQueryInChat } from "@/hooks/use-query-conv"
+import { userPromptAtom } from "../../../../packages/common/store/user"
+import { useQueryInChat } from "@/hooks/use-conv-query"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
@@ -20,9 +20,9 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
   const [convId] = useAtom(convIdAtom)
-  const [latestRequest] = useAtom(latestRequestAtom)
+  const [latestRequest] = useAtom(contextAtom)
   const [, setPersistedApps] = useAtom(persistedAppsAtom)
-  const [query] = useAtom(userQueryAtom)
+  const [query] = useAtom(userPromptAtom)
 
   const queryInChat = useQueryInChat()
 

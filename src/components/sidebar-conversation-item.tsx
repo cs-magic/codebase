@@ -1,5 +1,5 @@
 "use client"
-import { buttonVariants } from "../../../packages/common/components/ui/button"
+import { buttonVariants } from "../../packages/common/components/ui/button"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import {
@@ -7,20 +7,24 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../../packages/common/components/ui/dropdown-menu"
-import { cn } from "../../../packages/common/lib/utils"
+} from "../../packages/common/components/ui/dropdown-menu"
+import { cn } from "../../packages/common/lib/utils"
 
-import { useDelConv } from "@/hooks/use-query-conv"
-import { IconContainer } from "../../../packages/common/components/icon-container"
+import { IconContainer } from "../../packages/common/components/icon-container"
+import { useDelConv } from "@/hooks/use-conv-del"
+import { useAtom } from "jotai"
+import { convIdAtom } from "@/store/conv.atom"
 
 export const ConversationListComp = ({ conv }: { conv: { id: string } }) => {
   const deleteConv = useDelConv()
+  const [convId] = useAtom(convIdAtom)
 
   return (
     <div
       className={cn(
         "w-full justify-start group px-2 gap-1",
         buttonVariants({ variant: "ghost" }),
+        convId === conv.id && "bg-accent/50",
       )}
     >
       <Link href={`/tt/${conv.id}`} className={"grow truncate text-left py-2"}>
