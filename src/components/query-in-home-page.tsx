@@ -15,20 +15,21 @@ import {
 import { cn } from "@/lib/utils"
 import { CheckAuth } from "./auth"
 import { conversationStore } from "@/store/conversation"
-import { useQuery } from "@/store/use-query"
+
+import { useConvQuery } from "@/store/use-conv"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
 
   const session = useSession()
   const [open, setOpen] = useState(false)
-  const { pApps } = useSnapshot(conversationStore)
-  const query = useQuery()
+  const { apps } = useSnapshot(conversationStore)
+  const query = useConvQuery()
 
   const onSubmit = () => {
     console.log({ input })
     if (!input) return
-    if (!pApps.length) return toast.error("至少需要选中一种模型")
+    if (!apps.length) return toast.error("至少需要选中一种模型")
     if (session.status !== "authenticated") return setOpen(true)
     void query(input)
   }

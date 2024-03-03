@@ -87,7 +87,7 @@
 //  * 而且 nextjs 限制在组件没有 mount 之前就更新数据状态
 //  */
 // export const useInitConversationList = () => {
-//   const { data: conversations = [] } = api.llm.listConversations.useQuery()
+//   const { data: conversations = [] } = api.llm.listConversations.useConvQuery()
 //
 //   useEffect(() => {
 //     console.log("inited conversations: ", conversations)

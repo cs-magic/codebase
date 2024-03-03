@@ -1,31 +1,33 @@
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 
-import { IPApp } from "@/schema/conversation"
+import { IApp } from "@/schema/conversation"
 import { useSnapshot } from "valtio"
 import { nanoid } from "nanoid"
-import { conversationStore, useAddPApp, useDelPApp } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation"
 import { NANOID_LEN } from "@/config/system"
 import { cn } from "@/lib/utils"
 import { uiState } from "@/store/ui"
+import { useAddPApp, useDelPApp } from "@/store/use-app"
 
-export const SelectPApp = ({
+export const SelectApp = ({
   pApp,
   type,
 }: {
-  pApp: IPApp
+  pApp: IApp
   type: "toAdd" | "toDel"
 }) => {
-  const { pApps } = useSnapshot(conversationStore)
-  // console.log({ pApps, type, pApp })
+  const { apps } = useSnapshot(conversationStore)
   const addPApp = useAddPApp()
   const delPApp = useDelPApp()
-  const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
+
   const { maxToAdd } = useSnapshot(uiState)
   const disabled =
-    (type === "toAdd" && pApps.length >= maxToAdd) ||
-    (type === "toDel" && pApps.length <= 1)
+    (type === "toAdd" && apps.length >= maxToAdd) ||
+    (type === "toDel" && apps.length <= 1)
+
+  const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
 
   return (
     <div

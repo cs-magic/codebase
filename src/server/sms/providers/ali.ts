@@ -31,6 +31,8 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
     signName: "计算机魔法研究",
     templateCode: "SMS_462000847",
     templateParam: JSON.stringify({ code }),
+    to: "亲爱的你",
+    from: "南川",
   })
   try {
     console.log("[sms] sending: ", { phone, code })

@@ -9,7 +9,7 @@ import {
   conversationSchema,
   createConversationSchema,
   modelSchema,
-  pAppSchema,
+  appSchema,
 } from "@/schema/conversation"
 import { z } from "zod"
 
@@ -24,21 +24,21 @@ export const llmRouter = createTRPCRouter({
     })
   }),
 
-  listPApps: publicProcedure.query(async () => {
-    return db.pApp.findMany({
+  listApps: publicProcedure.query(async () => {
+    return db.app.findMany({
       // 只筛选官方p-app，不选自动生成的
       where: {
         id: {
-          equals: db.pApp.fields.modelId,
+          equals: db.app.fields.modelId,
         },
       },
-      ...pAppSchema,
+      ...appSchema,
       orderBy: { updatedAt: "desc" },
     })
   }),
 
   getPApp: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return db.pApp.findUniqueOrThrow({ where: { id: input }, ...pAppSchema })
+    return db.app.findUniqueOrThrow({ where: { id: input }, ...appSchema })
   }),
 
   listConversations: protectedProcedure.query(async () => {

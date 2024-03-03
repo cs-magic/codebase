@@ -3,25 +3,30 @@
 import { PropsWithChildren, useEffect } from "react"
 import { conversationStore } from "@/store/conversation"
 import { api } from "@/lib/trpc/react"
+import { useSession } from "next-auth/react"
 
 export default function LlmProvider({ children }: PropsWithChildren) {
-  const { data: pApps } = api.llm.listPApps.useQuery()
+  const { data: apps } = api.llm.listApps.useQuery()
 
   useEffect(() => {
-    if (pApps) {
-      conversationStore.allPApps = pApps
-      conversationStore.persistedPApps = pApps.filter((p) =>
-        /gpt/.test(p.modelId),
-      )
+    if (apps) {
+      conversationStore.allApps = apps
+      conversationStore.apps = apps.filter((p) => /gpt/.test(p.modelId))
     }
-  }, [pApps])
+  }, [apps])
 
-  const { data: conversations } = api.llm.listConversations.useQuery()
+  const session = useSession()
+  const { data: conversations } = api.llm.listConversations.useQuery(
+    undefined,
+    {
+      enabled: session.status === "authenticated",
+    },
+  )
   useEffect(() => {
     if (conversations) conversationStore.conversations = conversations
   }, [conversations])
 
-  console.log({ pApps, conversations })
+  console.log({ apps, conversations })
 
   return <>{children}</>
 }

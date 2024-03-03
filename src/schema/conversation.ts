@@ -1,12 +1,12 @@
 import { z } from "zod"
 import { ConversationType, Prisma } from "@prisma/client"
-import validator = Prisma.validator
 import ModelDefaultArgs = Prisma.ModelDefaultArgs
 import ModelGetPayload = Prisma.ModelGetPayload
 import ConversationDefaultArgs = Prisma.ConversationDefaultArgs
 import ConversationGetPayload = Prisma.ConversationGetPayload
-import PAppDefaultArgs = Prisma.PAppDefaultArgs
-import PAppGetPayload = Prisma.PAppGetPayload
+import validator = Prisma.validator
+import AppDefaultArgs = Prisma.AppDefaultArgs
+import AppGetPayload = Prisma.AppGetPayload
 
 export const createConversationSchema = z.object({
   id: z.string(),
@@ -27,24 +27,32 @@ export const modelSchema = validator<ModelDefaultArgs>()({
 })
 export type IModel = ModelGetPayload<typeof modelSchema>
 
-export const pAppSchema = validator<PAppDefaultArgs>()({
+export const appSchema = validator<AppDefaultArgs>()({
   include: {
     model: modelSchema,
   },
 })
-export type IPApp = PAppGetPayload<typeof pAppSchema>
+export type IApp = AppGetPayload<typeof appSchema>
 
 export const conversationSchema = validator<ConversationDefaultArgs>()({
   include: {
-    pApps: pAppSchema,
+    pApps: appSchema,
     fromUser: true,
     messages: true,
   },
 })
 export type IConversation = ConversationGetPayload<typeof conversationSchema>
 
-export type IPAppClient = IPApp & {
+export type IAppClient = IApp & {
   needFetchLLM?: boolean
 }
 
-export type IConversationClient = Omit<IConversation, "fromUser">
+export const conversationListViewSchema = validator<ConversationDefaultArgs>()({
+  select: {
+    id: true,
+    title: true,
+  },
+})
+export type IConversationListView = ConversationGetPayload<
+  typeof conversationListViewSchema
+>

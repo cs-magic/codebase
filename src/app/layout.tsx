@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import SocketProvider from "@/providers/socket"
 import { AppStatus } from "@/components/branding"
-import { SelectPAppsDialog } from "@/components/select-p-apps-dialog"
+import { SelectAppsDialog } from "@/components/select-apps-dialog"
 import LLMProvider from "@/providers/llm-provider"
 import { ScreenProvider } from "@/providers/screen-provider"
 import { AutoHeight } from "@/components/auto-height"
@@ -68,7 +68,7 @@ export default function RootLayout({
                         <LoadingAlertDialog />
                         <ContentAlertDialog />
 
-                        <SelectPAppsDialog />
+                        <SelectAppsDialog />
 
                         <AutoHeight />
 

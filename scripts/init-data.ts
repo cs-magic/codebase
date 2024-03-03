@@ -1,6 +1,5 @@
 import { Company, Prisma } from "@prisma/client"
 import { CompanyId } from "@/schema/llm"
-import CompanyCreateManyInput = Prisma.CompanyCreateManyInput
 import { db } from "@/server/db"
 
 export const supportedCompanies: Record<CompanyId, Company> = {
@@ -68,7 +67,7 @@ const initLLM = async () => {
   const createdPApps = await Promise.all(
     models.map(
       async (model) =>
-        await db.pApp.create({
+        await db.app.create({
           data: { id: model.id, modelId: model.id, title: model.title },
         }),
     ),

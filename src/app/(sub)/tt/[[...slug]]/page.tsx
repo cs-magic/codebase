@@ -1,10 +1,7 @@
 "use client"
 import { PAppsComp } from "@/components/p-apps"
 import { conversationStore } from "@/store/conversation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { api } from "@/lib/trpc/react"
 import { Sidebar } from "@/components/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -17,7 +14,7 @@ export default function ConversationPage({
   params: { slug?: string[] }
 }) {
   const id = slug ? slug[0] : slug
-  const { isSuccess, isError } = api.llm.getConversation.useQuery(
+  const { isError, data: conversation } = api.llm.getConversation.useQuery(
     {
       conversationId: id!,
     },
@@ -26,9 +23,9 @@ export default function ConversationPage({
 
   const openAlertDialog = useAlertDialog()
   useEffect(() => {
-    if (isSuccess && id) conversationStore.currentConversationId = id
+    if (conversation) conversationStore.conversation = conversation
     if (isError) openAlertDialog("没有此会话！")
-  }, [isSuccess, isError])
+  }, [conversation, isError])
 
   // console.log({ isSuccess, isError })
   console.log({ slug, id })

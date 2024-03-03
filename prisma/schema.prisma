@@ -44,6 +44,22 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model App {
+  id        String   @id @default(nanoid(5))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  model   Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  modelId String
+  title   String
+
+  conversations Conversation[]
+
+  prompt      String?
+  temperature Float?
+  messages    Message[]
+}
+
 model Company {
   id    String  @id @default(nanoid(5))
   title String
@@ -62,7 +78,7 @@ model Conversation {
   fromUserId String
 
   type         ConversationType
-  pApps        PApp[]
+  apps         App[]
   title        String?
   messages     Message[]
   // 主分支
@@ -85,7 +101,7 @@ model Message {
   conversationId String
 
   // 子app回答的时候也可以与子app相连
-  pApp   PApp?   @relation(fields: [pAppId], references: [id], onDelete: Cascade)
+  app    App?    @relation(fields: [pAppId], references: [id], onDelete: Cascade)
   pAppId String?
 
   content String
@@ -113,23 +129,7 @@ model Model {
 
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String
-  pApps     PApp[]
-}
-
-model PApp {
-  id        String   @id @default(nanoid(5))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  model   Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  modelId String
-  title   String
-
-  conversations Conversation[]
-
-  prompt      String?
-  temperature Float?
-  messages    Message[]
+  apps      App[]
 }
 
 model Post {

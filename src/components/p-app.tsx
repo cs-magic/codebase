@@ -17,73 +17,53 @@ import { useEffect, useRef, useState } from "react"
 import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
-import {
-  conversationStore,
-  resetPAppSSE,
-  selectPApp,
-  useDelPApp,
-} from "@/store/conversation"
-import { IPAppClient } from "@/schema/conversation"
+import { conversationStore } from "@/store/conversation"
+import { IAppClient } from "@/schema/conversation"
 import { IMessageInChat } from "@/schema/message"
+import { resetPAppSSE, selectPApp, useDelPApp } from "@/store/use-app"
 
-export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
-  const { id } = pApp
-
-  const { currentConversationId, currentMessages } =
-    useSnapshot(conversationStore)
+export const PAppComp = ({ app }: { app: IAppClient }) => {
+  const { id } = app
 
   const [, setError] = useState("")
   const [fetching, setFetching] = useState(false)
-  const lastUserMessage = last(
-    currentMessages.filter((m) => m.role === "user"),
-  )!
   const messageId = nanoid()
 
+  const { conversation, lastUserMessage } = useSnapshot(conversationStore)
+  const parentId = lastUserMessage?.id ?? null
+  const conversationId = conversation?.id
+
   useEffect(() => {
-    if (!pApp.needFetchLLM) return
+    if (!app.needFetchLLM || !conversationId) return
+    const message: IMessageInChat = {
+      role: "assistant",
+      content: "",
+      id: messageId,
+      updatedAt: new Date(),
+      conversationId,
+      pAppId: id,
+      parentId,
+    }
+
+    conversationStore.messages.push(message)
     void fetchSSE(`/api/llm?r=${id}`, {
       onOpen: () => {
         setFetching(true)
+      },
+      onData: (data) => {
+        message.content += data
+      },
+      onError: (data) => {
+        setError(data)
+        message.content = data
+        message.isError = true
       },
       onFinal: () => {
         setFetching(false)
         resetPAppSSE(id)
       },
-      onError: (data) => {
-        setError(data)
-        conversationStore.currentMessages.push({
-          role: "assistant",
-          content: data,
-          id: messageId,
-          updatedAt: new Date(),
-          conversationId: currentConversationId!,
-          pAppId: id,
-          parentId: lastUserMessage.id,
-          isError: true,
-        })
-      },
-      onData: (data) => {
-        // console.log({ onData: data })
-
-        const lastAssistantMessage = conversationStore.currentMessages.find(
-          (m) => m.parentId === lastUserMessage.id && m.pAppId === id,
-        )!
-        if (!lastAssistantMessage && currentConversationId) {
-          conversationStore.currentMessages.push({
-            role: "assistant",
-            content: data,
-            id: messageId,
-            updatedAt: new Date(),
-            conversationId: currentConversationId,
-            pAppId: id,
-            parentId: lastUserMessage.id,
-          })
-        } else {
-          lastAssistantMessage.content += data
-        }
-      },
     })
-  }, [pApp.needFetchLLM])
+  }, [app.needFetchLLM])
 
   // console.log({ error })
 
@@ -93,9 +73,9 @@ export const PAppComp = ({ pApp }: { pApp: IPAppClient }) => {
         "w-full h-full overflow-hidden flex flex-col relative border-t border-r",
       )}
     >
-      <TopBar id={id} title={pApp?.model.title} fetching={fetching} />
+      <TopBar id={id} title={app?.model.title} fetching={fetching} />
 
-      <MessagesComp id={id} logo={pApp?.model.logo} />
+      <MessagesComp id={id} logo={app?.model.logo} />
     </div>
   )
 }
@@ -110,8 +90,8 @@ const TopBar = ({
   fetching: boolean
 }) => {
   const delPApp = useDelPApp()
-  const { pApps, currentPAppId } = useSnapshot(conversationStore)
-  const selected = id === currentPAppId
+  const { apps, curPApp } = useSnapshot(conversationStore)
+  const selected = id === curPApp?.id
   const LockOrNot = selected ? Lock : Unlock
   // console.log({ id, currentPAppId })
 
@@ -134,7 +114,7 @@ const TopBar = ({
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          selectPApp(id)
+          selectPApp(apps.find((p) => p.id === id)!)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -151,7 +131,7 @@ const TopBar = ({
 
       <IconContainer
         tooltipContent={"删除一个App（注意，暂不可恢复）"}
-        className={cn(pApps.length === 1 && "text-muted-foreground")}
+        className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
           void delPApp(id)
         }}
@@ -174,27 +154,26 @@ const TopBar = ({
 }
 
 const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
-  const { currentMessages, currentConversation } =
-    useSnapshot(conversationStore)
+  const { messages, context } = useSnapshot(conversationStore)
 
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
     refScroll.current?.scrollIntoView({ behavior: "auto" })
-  }, [currentMessages])
+  }, [messages])
 
   const theMessages: IMessageInChat[] = []
-  let mainMessageIndex = 0
-  const mainMessages = currentConversation?.mainMessages ?? []
-  currentMessages.forEach((m) => {
-    if (mainMessageIndex >= mainMessages.length) {
+  let cIndex = 0
+  messages.forEach((m) => {
+    if (cIndex >= context.length) {
       if (m.pAppId === id) theMessages.push(m)
     } else {
-      if (m.id === mainMessages[mainMessageIndex]) {
+      if (m.id === context[cIndex]!.id) {
         theMessages.push(m)
-        ++mainMessageIndex
+        ++cIndex
       }
     }
   })
+  console.log({ messages, context, messageId: id })
   // console.log({ currentSnapshot, currentMessages, theMessages })
 
   return (

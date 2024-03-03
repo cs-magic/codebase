@@ -8,11 +8,11 @@ import { uiState } from "@/store/ui"
 import { BEST_VIEWPOINT } from "@/config/system"
 
 export const PAppsComp = () => {
-  const { pApps } = useSnapshot(conversationStore)
+  const { apps } = useSnapshot(conversationStore)
   const {
     mainArea: { width },
   } = useSnapshot(uiState)
-  const cnt = conversationStore.pApps.length
+  const cnt = conversationStore.apps.length
   const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), cnt)
 
   return (
@@ -23,8 +23,8 @@ export const PAppsComp = () => {
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {pApps.map((pApp) => (
-        <PAppComp pApp={pApp} key={pApp.id} />
+      {apps.map((app) => (
+        <PAppComp app={app} key={app.id} />
       ))}
     </div>
   )

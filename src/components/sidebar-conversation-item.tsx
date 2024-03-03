@@ -8,8 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useDelConversation } from "@/store/conversation"
 import { cn } from "@/lib/utils"
+
+import { useDelConversation } from "@/store/use-conv"
 
 export const ConversationListComp = ({
   conversation,
