@@ -4,7 +4,8 @@ import { conversationStore } from "@/store/conversation.valtio"
 import { useEffect } from "react"
 import { api } from "@/lib/trpc/react"
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"
-import { useAlertDialog } from "@/hooks/use-alert-dialog"
+import { useAtom } from "jotai"
+import { openAlertDialogAtom } from "@/store/ui.atom"
 
 export default function ConversationPage({
   params: { slug },
@@ -19,7 +20,8 @@ export default function ConversationPage({
     { enabled: !!id },
   )
 
-  const openAlertDialog = useAlertDialog()
+  const [, openAlertDialog] = useAtom(openAlertDialogAtom)
+
   useEffect(() => {
     if (conversation) conversationStore.conversation = conversation
     if (isError) openAlertDialog("没有此会话！")

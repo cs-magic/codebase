@@ -1,10 +1,11 @@
 "use client"
-import { smsState } from "@/lib/sms/store"
+import { smsPhoneAtom, smsStageAtom } from "@/lib/sms/store"
 import { EditIcon } from "lucide-react"
-import { useSnapshot } from "valtio"
+import { useAtom } from "jotai"
 
 export const ReInputPhone = () => {
-  const { phone } = useSnapshot(smsState)
+  const [phone] = useAtom(smsPhoneAtom)
+  const [, setStage] = useAtom(smsStageAtom)
 
   return (
     <div className={"font-semibold inline-flex items-center gap-1"}>
@@ -12,7 +13,7 @@ export const ReInputPhone = () => {
       <EditIcon
         className={"w-4 h-4 cursor-pointer"}
         onClick={() => {
-          smsState.stage = "toSendSms"
+          setStage("toSendSms")
         }}
       />
     </div>

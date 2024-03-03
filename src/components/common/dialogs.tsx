@@ -2,14 +2,18 @@
 
 import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog"
 import { LoaderIcon } from "lucide-react"
-import { uiState } from "@/store/ui"
-import { useSnapshot } from "valtio"
 import React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useAtom } from "jotai"
+import {
+  uiAlertDialogContent,
+  uiAlertDialogOpen,
+  uiLoadingAlertDialogAtom,
+} from "@/store/ui.atom"
 
 export const LoadingAlertDialog = () => {
-  const { loading } = useSnapshot(uiState)
+  const [loading] = useAtom(uiLoadingAlertDialogAtom)
 
   return (
     <AlertDialog open={loading}>
@@ -25,19 +29,14 @@ export const LoadingAlertDialog = () => {
 }
 
 export const ContentAlertDialog = () => {
-  const {
-    alertDialog: { open, content },
-  } = useSnapshot(uiState)
+  const [open, setOpen] = useAtom(uiAlertDialogOpen)
+  const [content] = useAtom(uiAlertDialogContent)
+
   return (
-    <AlertDialog
-      open={open}
-      onOpenChange={(open) => {
-        uiState.alertDialog.open = open
-      }}
-    >
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent
         onClick={() => {
-          uiState.alertDialog.open = false
+          setOpen(false)
         }}
       >
         <ReturnHomeAlertDialog content={content} />

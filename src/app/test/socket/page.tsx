@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useSocketStore } from "@/store/socket"
+import { useSocketStore } from "@/lib/socket"
 import { Container } from "@/components/containers"
 import { useEffect } from "react"
 import {

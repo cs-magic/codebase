@@ -5,7 +5,7 @@ import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client"
 import { createTRPCReact } from "@trpc/react-query"
 import { useState } from "react"
 
-import { type AppRouter } from "@/server/api/root"
+import { type AppRouter } from "@/lib/trpc/root"
 import { getUrl, transformer } from "./shared"
 import { REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED } from "@/config/system"
 
@@ -22,10 +22,10 @@ const createQueryClient = () =>
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
   if (typeof window === "undefined") {
-    // Server: always make a new query client
+    // Server: always make a new schema client
     return createQueryClient()
   }
-  // Browser: use singleton pattern to keep the same query client
+  // Browser: use singleton pattern to keep the same schema client
   return (clientQueryClientSingleton ??= createQueryClient())
 }
 

@@ -3,9 +3,9 @@ import "@/styles/globals.css"
 import { Inter } from "next/font/google"
 
 import { TRPCReactProvider } from "@/lib/trpc/react"
-import ThemeProvider from "@/providers/theme"
+import ThemeProvider from "@/components/providers/theme"
 import { Toaster } from "@/components/ui/sonner"
-import { SessionProvider } from "@/providers/session"
+import { SessionProvider } from "@/components/providers/session"
 import {
   ContentAlertDialog,
   LoadingAlertDialog,
@@ -13,11 +13,11 @@ import {
 import { type Viewport } from "next"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import SocketProvider from "@/providers/socket"
+import SocketProvider from "@/components/providers/socket"
 import { AppStatus } from "@/components/branding"
-import { SelectAppsDialog } from "@/components/select-apps-dialog"
-import LLMProvider from "@/providers/llm-provider"
-import { ScreenProvider } from "@/providers/screen-provider"
+import { SelectQueryConfigsDialog } from "@/core/query-llm/components/select-query-configs-dialog"
+import LLMProvider from "@/components/providers/llm-provider"
+import { ScreenProvider } from "@/components/providers/screen-provider"
 import { AutoHeight } from "@/components/auto-height"
 import { Devtool } from "@/components/devtool"
 import { env } from "@/env"
@@ -70,7 +70,7 @@ export default function RootLayout({
                         <LoadingAlertDialog />
                         <ContentAlertDialog />
 
-                        <SelectAppsDialog />
+                        <SelectQueryConfigsDialog />
 
                         <AutoHeight />
 

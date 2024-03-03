@@ -4,15 +4,15 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation-item"
 import { useAtom } from "jotai"
 import {
-  conversationsAtom,
-  useAddConversationAtom,
-  useDeleteAllConversationsAtom,
-} from "@/store/conversation.atom"
+  useAddQueryConvAtom,
+  useDeleteAllQueryConvsAtom,
+} from "@/core/query-llm/hook-actions"
+import { queryConvsAtom } from "@/core/query-llm/store/query-conv.atom"
 
 export const Sidebar = () => {
-  const [conversations] = useAtom(conversationsAtom)
-  const addConversation = useAddConversationAtom()
-  const deleteAllConversations = useDeleteAllConversationsAtom()
+  const [conversations] = useAtom(queryConvsAtom)
+  const addConversation = useAddQueryConvAtom()
+  const deleteAllConversations = useDeleteAllQueryConvsAtom()
 
   return (
     <div className={"hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col"}>

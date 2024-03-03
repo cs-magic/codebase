@@ -1,6 +1,11 @@
 "use client"
 
-import { smsState, useSendCode } from "@/lib/sms/store"
+import {
+  sendCodeAtom,
+  smsDowntimeAtom,
+  smsNameAtom,
+  smsPhoneAtom,
+} from "@/lib/sms/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -20,28 +25,35 @@ import { ButtonWithLoading } from "@/components/common/buttons"
 import { cn } from "@/lib/utils"
 import { useBrowserEnvironment } from "@/hooks/use-browser-environment"
 import { signIn } from "next-auth/react"
-import { WECHAT_PROVIDER_ID } from "@/server/wechat/auth/config"
+import { WECHAT_PROVIDER_ID } from "@/lib/wechat/auth/config"
 import { BrandTitle } from "@/components/branding"
-import { useSnapshot } from "valtio"
+import { useAtom } from "jotai"
 
 export const SmsSendCode = () => {
-  const { downtime } = useSnapshot(smsState)
+  const { isWechat } = useBrowserEnvironment()
+  const [downtime] = useAtom(smsDowntimeAtom)
+  const [, setPhone] = useAtom(smsPhoneAtom)
+  const [, setName] = useAtom(smsNameAtom)
+  const [, sendCode] = useAtom(sendCodeAtom)
+  const onSubmit = (values: ISendSms) => {
+    setPhone(values.phone)
+    setName(values.name)
+    sendCode()
+  }
 
   const form = useForm<ISendSms>({
     resolver: zodResolver(sendSmsSchema),
     // 如果不加的话，会导致 undefined --> value warning
     defaultValues: {
       phone: "17766091857",
+      name: "",
     },
   })
-
-  const { isWechat } = useBrowserEnvironment()
-  const sendCode = useSendCode()
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(sendCode)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className={"flex flex-col gap-4 w-full items-center"}
       >
         <div className={"text-semibold text-lg flex items-center gap-1"}>
@@ -76,6 +88,20 @@ export const SmsSendCode = () => {
           render={({ field }) => (
             <FormItem className={"w-full"}>
               <FormLabel>请输入手机号</FormLabel>
+              <FormControl>
+                <Input {...field} autoFocus />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name={"name"}
+          control={form.control}
+          render={({ field }) => (
+            <FormItem className={"w-full"}>
+              <FormLabel>请输入昵称</FormLabel>
               <FormControl>
                 <Input {...field} autoFocus />
               </FormControl>

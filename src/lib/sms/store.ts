@@ -1,99 +1,115 @@
 "use client"
 
-import { ISendSms, ISmsSignIn } from "@/schema/sms"
+import { ISmsSignIn } from "@/schema/sms"
 import { signIn } from "next-auth/react"
-import { uiState } from "@/store/ui"
 import { $sendSms } from "@/lib/sms/server-functions"
 import { toast } from "sonner"
 import { SMS_CODE_DOWNTIME, SMS_PROVIDER_ID } from "@/config/system"
-import { proxy } from "valtio"
-import { useAtom } from "jotai"
-import { smsProviderAtom } from "@/store/dev.atom"
+import { atom } from "jotai"
 import { $sendSmsViaAli } from "@/lib/sms/providers/ali"
 import { $sendSmsViaTencent } from "@/lib/sms/providers/tencent"
+import { Nullable } from "@/schema/common"
+import { lockUIAtom, unlockUIAtom } from "@/store/ui.atom"
+import { atomWithStorage } from "jotai/utils"
 
-type SmsStage = "toSendSms" | "toAuth"
+/**
+ * sms basic
+ */
 
-export interface ISmsState {
-  stage: SmsStage
-  phone: string
-  code: string
-  downtime: number
-  sentOk?: boolean
-  signInOk?: boolean
-}
+export type SmsStage = "toSendSms" | "toAuth"
 
-// 不需要 persist，用户刷新就全部重置（包括手机号要重新输入，验证码重新发送等）
-export const smsState = proxy<ISmsState>({
-  stage: "toSendSms",
-  phone: "",
-  code: "",
-  downtime: 0,
-  sentOk: false,
-  signInOk: false,
+export type SmsProviderType = "tencent" | "ali"
+export const smsProviderAtom = atomWithStorage<SmsProviderType>(
+  "sms.provider.type",
+  "tencent",
+)
+
+export const smsStageAtom = atom<SmsStage>("toSendSms")
+
+/**
+ * send code
+ */
+export const smsNameAtom = atom("")
+export const smsPhoneAtom = atom("")
+export const smsCodeAtom = atom("")
+export const inputSmsCodeAtom = atom(null, (get, set, char: string) => {
+  const code = get(smsCodeAtom)
+  if (code.length >= 6) return
+  set(smsCodeAtom, get(smsCodeAtom) + char)
+  const newCode = get(smsCodeAtom)
+  if (newCode.length === 6) set(smsSignInAtom)
 })
+export const resetSmsCodeAtom = atom(null, (get, set) => {
+  set(smsCodeAtom, "")
+})
+export const smsDowntimeAtom = atom(0)
+export const resetSmsDowntimeAtom = atom(null, (get, set) => {
+  set(smsDowntimeAtom, SMS_CODE_DOWNTIME)
+})
+export const decreaseSmsDowntimeAtom = atom(
+  (get) => get(smsDowntimeAtom),
+  (get, set) => {
+    set(smsDowntimeAtom, get(smsDowntimeAtom) - 1)
+  },
+)
+export const smsSentOKAtom = atom<Nullable>(null)
 
-export const useSendCode = () => {
-  const [smsProviderType] = useAtom(smsProviderAtom)
-
+export const sendCodeAtom = atom(null, async (get, set) => {
+  const smsProviderType = get(smsProviderAtom)
   const sendApproach =
     smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
 
-  return async (data: ISendSms) => {
-    const { phone } = data
+  set(lockUIAtom)
+  const phone = get(smsPhoneAtom)
+  const ok = await $sendSms(phone, sendApproach) // 异步
+  set(smsSentOKAtom, ok)
+  set(unlockUIAtom)
 
-    smsState.phone = phone
+  if (!ok) return toast.error("验证码发送失败！")
 
-    // UI 跨 store 同步
-    uiState.loading = true
-    const ok = await $sendSms(phone, sendApproach) // 异步
-    uiState.loading = false
+  toast.success("验证码发送成功，请及时查收！")
+  set(smsStageAtom, "toAuth")
+  set(resetSmsDowntimeAtom)
 
-    smsState.sentOk = ok
-    if (ok) toast.success("验证码发送成功，请及时查收！")
-    else toast.error("验证码发送失败！")
-
-    if (ok) {
-      smsState.stage = "toAuth"
-      smsState.downtime = SMS_CODE_DOWNTIME
-
-      const f = () => {
-        if (--smsState.downtime > 0) setTimeout(f, 1000)
-      }
-      setTimeout(f, 1000)
-    }
+  const f = () => {
+    console.log("downtime before decreasing: ", get(smsDowntimeAtom))
+    set(decreaseSmsDowntimeAtom)
+    const downtime = get(smsDowntimeAtom)
+    console.log("downtime after decreasing: ", downtime)
+    if (downtime > 0) setTimeout(f, 1000)
   }
-}
+  setTimeout(f, 1000)
+})
 
-export const addCode = (code: string) => {
-  smsState.code += code
-  if (smsState.code.length === 6) void smsSignIn()
-}
+/**
+ * sign in
+ */
 
-export const delCode = () => {
-  smsState.code = ""
-}
+export const smsSignOKAtom = atom<Nullable>(null)
 
-export const smsSignIn = async () => {
+export const smsSignInAtom = atom(null, async (get, set) => {
+  const name = get(smsNameAtom)
+  const phone = get(smsPhoneAtom)
+  const code = get(smsCodeAtom)
   const values: ISmsSignIn = {
-    phone: smsState.phone,
-    code: smsState.code,
+    phone,
+    code,
+    name,
   }
 
-  console.log("[components] sign in: ", values)
-  uiState.loading = true
+  set(lockUIAtom)
+  console.log("-- sign in: ", values)
   const res = await signIn(SMS_PROVIDER_ID, {
     ...values,
     redirect: false,
   })
-  uiState.loading = false
-
-  console.log("[components] sign in result: ", res)
+  console.log("-- sign in result: ", res)
 
   const ok = !!res?.ok
-  smsState.signInOk = ok
+  set(smsSignOKAtom, ok)
 
   if (ok) {
     toast.success("登录成功！")
   } else toast.error("登录失败！")
-}
+  set(unlockUIAtom)
+})

@@ -4,6 +4,7 @@ import { validatePhone } from "@/lib/utils"
 
 export const sendSmsSchema = z.object({
   phone: z.string().refine(validatePhone, "手机号格式不合法"),
+  name: z.string().refine((s) => s.length > 0, "至少要有一个字"),
 })
 export type ISendSms = z.infer<typeof sendSmsSchema>
 

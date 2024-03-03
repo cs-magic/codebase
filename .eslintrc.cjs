@@ -37,7 +37,9 @@ const config = {
         '@typescript-eslint/no-unsafe-assignment': 'warn',
         '@typescript-eslint/no-empty-interface': 'warn',
         '@typescript-eslint/no-unsafe-return': 'warn',
-        '@typescript-eslint/no-explicit-any': 'warn'
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/ban-ts-comment': 'warn',
+        '@typescript-eslint/no-floating-promises': 'warn'
     },
 };
 

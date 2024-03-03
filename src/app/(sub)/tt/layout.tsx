@@ -3,11 +3,11 @@ import { Sidebar } from "@/components/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
-import { conversationsAtom } from "@/store/conversation.atom"
 import { api } from "@/lib/trpc/react"
+import { queryConvsAtom } from "@/core/query-llm/store/query-conv.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
-  const [, setConversations] = useAtom(conversationsAtom)
+  const [, setConversations] = useAtom(queryConvsAtom)
   const { data: conversations } = api.llm.listConversations.useQuery()
   useEffect(() => {
     if (!conversations) return

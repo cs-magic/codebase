@@ -12,17 +12,18 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
 import { cn } from "@/lib/utils"
-import { openSelectPApps } from "@/store/ui"
 import { useEffect, useRef, useState } from "react"
-import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
 import { conversationStore } from "@/store/conversation.valtio"
-import { IMessageInChat } from "@/schema/core/message"
-import { resetPAppSSE, selectPApp, useDelPApp } from "@/store/use-app"
-import { IAppInChat } from "@/schema/core/app"
+import { IMessageInChat } from "@/core/query-llm/schema/message"
+import { resetPAppSSE, selectPApp, useDelQueryConfig } from "@/store/use-app"
+import { IQueryConfigInChat } from "@/core/query-llm/schema/config"
+import { useAtom } from "jotai"
 
-export const PAppComp = ({ app }: { app: IAppInChat }) => {
+import { uiSelectQueryConfigsDialogOpenAtom } from "@/core/query-llm/store/query-config.atom"
+
+export const PAppComp = ({ app }: { app: IQueryConfigInChat }) => {
   const { id } = app
 
   const [, setError] = useState("")
@@ -89,11 +90,12 @@ const TopBar = ({
   title: string
   fetching: boolean
 }) => {
-  const delPApp = useDelPApp()
+  const delPApp = useDelQueryConfig()
   const { apps, curPApp } = useSnapshot(conversationStore)
   const selected = appId === curPApp?.id
   const LockOrNot = selected ? Lock : Unlock
   // console.log({ appId, currentPAppId })
+  const [, setOpen] = useAtom(uiSelectQueryConfigsDialogOpenAtom)
 
   return (
     <div
@@ -141,7 +143,7 @@ const TopBar = ({
 
       <IconContainer
         tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
-        onClick={openSelectPApps}
+        onClick={() => setOpen(true)}
       >
         <PlusCircleIcon />
       </IconContainer>

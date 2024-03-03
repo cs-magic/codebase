@@ -11,9 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { smsProviderAtom, SmsProviderType } from "@/store/dev.atom"
 import { useAtom } from "jotai"
 import { Label } from "@/components/ui/label"
+import { smsProviderAtom, SmsProviderType } from "@/lib/sms/store"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderAtom)

@@ -1,19 +1,17 @@
 "use client"
-import { smsState, useSendCode } from "@/lib/sms/store"
-import { useSnapshot } from "valtio"
+import { sendCodeAtom, smsDowntimeAtom } from "@/lib/sms/store"
+import { useAtom, useSetAtom } from "jotai"
 
 export const ResendVerifyCode = () => {
-  const { phone, downtime } = useSnapshot(smsState)
-  const sendCode = useSendCode()
+  const [downtime] = useAtom(smsDowntimeAtom)
+  const sendCode = useSetAtom(sendCodeAtom)
 
   return (
     <div className={"text-muted-foreground text-xs flex items-center "}>
       没有收到验证码？
       {downtime <= 0 ? (
         <span
-          onClick={() => {
-            void sendCode({ phone })
-          }}
+          onClick={sendCode}
           className={"hover:text-primary hover:underline cursor-pointer"}
         >
           重新发送

@@ -5,7 +5,7 @@ import { nanoid } from "nanoid"
 import { NANOID_LEN } from "@/config/system"
 import { conversationStore } from "@/store/conversation.valtio"
 import { remove } from "lodash"
-import { IMessageInChat } from "@/schema/core/message"
+import { IMessageInChat } from "@/core/query-llm/schema/message"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话
@@ -127,7 +127,7 @@ export function useConvQuery() {
     // 4. 维护新的context，context只在发送时更新
     if (lastRepliedMessage) context.push(lastRepliedMessage)
     context.push(userMessage)
-    console.log("query: ", { context, messages })
+    console.log("schema: ", { context, messages })
 
     // 5. SSE
     const data = await queryLLM.mutateAsync({

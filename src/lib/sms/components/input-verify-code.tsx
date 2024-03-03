@@ -1,10 +1,10 @@
 "use client"
-import { smsState } from "@/lib/sms/store"
+import { smsCodeAtom } from "@/lib/sms/store"
 import { DigitContainer } from "@/components/containers"
-import { useSnapshot } from "valtio"
+import { useAtom } from "jotai"
 
 export const InputVerifyCode = () => {
-  const { code } = useSnapshot(smsState)
+  const [code] = useAtom(smsCodeAtom)
 
   return (
     <div className={"flex justify-center gap-2"}>

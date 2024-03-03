@@ -1,5 +1,5 @@
 import { Company } from "@prisma/client"
-import { db } from "@/server/db"
+import { db } from "@/lib/db"
 
 export type CompanyId = "openai" | "moonshot"
 export const supportedCompanies: Record<CompanyId, Company> = {
@@ -37,7 +37,7 @@ const initLLM = async () => {
     ],
   })
 
-  const createdOpenAIModels = await db.model.createMany({
+  const createdModels = await db.model.createMany({
     data: [
       {
         id: "gpt-3.5-turbo",
@@ -56,30 +56,30 @@ const initLLM = async () => {
         title: "ChatGPT 4 (32k)",
         companyId: "openai",
       },
+      { id: "kimi", title: "Kimi Chat", companyId: "moonshot" },
     ],
   })
-
-  const createdKimiModels = await db.model.createMany({
-    data: [{ id: "kimi", title: "Kimi Chat", companyId: "moonshot" }],
-  })
-
-  const models = await db.model.findMany()
-  const createdPApps = await Promise.all(
-    models.map(
-      async (model) =>
-        await db.app.create({
-          data: { id: model.id, modelId: model.id, title: model.title },
-        }),
-    ),
-  )
 
   console.log({
     deletedCompanies,
     createdCompanies,
-    createdOpenAIModels,
-    createdKimiModels,
-    createdPApps,
+    createdModels,
   })
+
+  const user = await db.user.findFirst()
+  if (user) {
+    const models = await db.model.findMany()
+    const createdQueryConfigs = await db.queryConfig.createMany({
+      data: models.map((m) => ({
+        id: m.id,
+        modelId: m.id,
+        title: m.title,
+        fromUserId: user.id,
+      })),
+    })
+
+    console.log({ createdQueryConfigs })
+  }
 }
 
 void initLLM()

@@ -1,4 +1,4 @@
-import { db } from "@/server/db"
+import { db } from "@/lib/db"
 
 const initUsers = async () => {
   const res = await db.user.deleteMany()

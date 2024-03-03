@@ -2,7 +2,7 @@ import { api } from "@/lib/trpc/react"
 import { conversationStore } from "@/store/conversation.valtio"
 import { last, remove } from "lodash"
 import { toast } from "sonner"
-import { IAppInChat } from "@/schema/core/app"
+import { IQueryConfigInChat } from "@/core/query-llm/schema/config"
 
 /**
  * 用户在弹窗界面增加一个pApp
@@ -11,11 +11,11 @@ import { IAppInChat } from "@/schema/core/app"
  * - 会话里增加要与数据库同步
  * @param pApp
  */
-export function useAddPApp() {
+export function useAddQueryConfig() {
   const addPApp = api.llm.addPApp.useMutation()
   const { apps, messages, conversation, curPApp } = conversationStore
 
-  return async (pApp: IAppInChat) => {
+  return async (pApp: IQueryConfigInChat) => {
     // optimistic update
     apps.push(pApp)
     const conversationId = conversation?.id
@@ -44,7 +44,7 @@ export function useAddPApp() {
  * - 会话里增加要与数据库同步
  * @param pAppId
  */
-export function useDelPApp() {
+export function useDelQueryConfig() {
   const delPApp = api.llm.delPApp.useMutation()
 
   return async (pAppId: string) => {
@@ -67,6 +67,6 @@ export const resetPAppSSE = (pAppId: string) => {
   const pApp = conversationStore.apps.find((p) => p.id === pAppId)
   if (pApp) pApp.needFetchLLM = false
 }
-export const selectPApp = (pApp: IAppInChat) => {
+export const selectPApp = (pApp: IQueryConfigInChat) => {
   conversationStore.curPApp = pApp
 }

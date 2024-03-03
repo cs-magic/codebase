@@ -7,7 +7,7 @@ import { SeparatorContainer } from "@/components/containers"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { HTMLAttributes } from "react"
 import { BarChart } from "lucide-react"
-import { useSocketStore } from "@/store/socket"
+import { useSocketStore } from "@/lib/socket"
 import { StatusIcon } from "@/components/common/icons"
 import Link from "next/link"
 

@@ -2,7 +2,7 @@
 
 import { ISmsSignIn } from "@/schema/sms"
 import { SMS_PROVIDER_ID } from "@/config/system"
-import { db } from "../../server/db"
+import { db } from "../db"
 
 export const $sendSms = async (
   phone: string,

@@ -2,7 +2,7 @@
 
 import { Textarea } from "@/components/common/textarea"
 import { useState } from "react"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useSnapshot } from "valtio"
 import { toast } from "sonner"
 import { IconContainer } from "@/components/containers"
@@ -13,10 +13,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { CheckAuth } from "./auth"
 import { conversationStore } from "@/store/conversation.valtio"
 
 import { useConvQuery } from "@/store/use-conv"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
@@ -71,3 +79,24 @@ export const QueryInHomePage = () => {
     </div>
   )
 }
+
+export const CheckAuth = ({
+  open,
+  setOpen,
+}: {
+  open: boolean
+  setOpen: (open: boolean) => void
+}) => (
+  <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialogContent>
+      <AlertDialogTitle>发送失败</AlertDialogTitle>
+      <AlertDialogDescription>您需要先登陆才能发送哦！</AlertDialogDescription>
+      <AlertDialogFooter>
+        <AlertDialogAction onClick={() => signIn()}>
+          点击跳转登录
+        </AlertDialogAction>
+        <AlertDialogCancel>放弃</AlertDialogCancel>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+)
