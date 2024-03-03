@@ -11,7 +11,7 @@ import { IMessageInChat } from "@/schema/core/message"
  * 1. 用户在首页query后将自动触发新建一个会话
  * 2. 用户在会话列表可以点击新增一个会话
  * --
- * 返回 id，用于其他的函数
+ * 返回 appId，用于其他的函数
  */
 export function useAddConversation() {
   const router = useRouter()

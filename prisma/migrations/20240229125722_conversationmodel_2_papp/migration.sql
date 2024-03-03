@@ -18,14 +18,14 @@ DROP TABLE "ConversationModel";
 
 -- CreateTable
 CREATE TABLE "PApp" (
-    "id" TEXT NOT NULL,
+    "appId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "modelId" TEXT NOT NULL,
     "prompt" TEXT,
     "temperature" DOUBLE PRECISION,
 
-    CONSTRAINT "PApp_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "PApp_pkey" PRIMARY KEY ("appId")
 );
 
 -- CreateTable
@@ -41,13 +41,13 @@ CREATE UNIQUE INDEX "_ConversationToPApp_AB_unique" ON "_ConversationToPApp"("A"
 CREATE INDEX "_ConversationToPApp_B_index" ON "_ConversationToPApp"("B");
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationModelId_fkey" FOREIGN KEY ("conversationModelId") REFERENCES "PApp"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationModelId_fkey" FOREIGN KEY ("conversationModelId") REFERENCES "PApp"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PApp" ADD CONSTRAINT "PApp_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "PApp" ADD CONSTRAINT "PApp_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_ConversationToPApp" ADD CONSTRAINT "_ConversationToPApp_A_fkey" FOREIGN KEY ("A") REFERENCES "Conversation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ConversationToPApp" ADD CONSTRAINT "_ConversationToPApp_A_fkey" FOREIGN KEY ("A") REFERENCES "Conversation"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_ConversationToPApp" ADD CONSTRAINT "_ConversationToPApp_B_fkey" FOREIGN KEY ("B") REFERENCES "PApp"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_ConversationToPApp" ADD CONSTRAINT "_ConversationToPApp_B_fkey" FOREIGN KEY ("B") REFERENCES "PApp"("appId") ON DELETE CASCADE ON UPDATE CASCADE;

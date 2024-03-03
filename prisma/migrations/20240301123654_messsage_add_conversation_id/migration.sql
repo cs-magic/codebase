@@ -9,4 +9,4 @@ ALTER TABLE "Message" ADD COLUMN     "conversationId" TEXT NOT NULL,
 ALTER COLUMN "pAppId" DROP NOT NULL;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationId_fkey" FOREIGN KEY ("conversationId") REFERENCES "Conversation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationId_fkey" FOREIGN KEY ("conversationId") REFERENCES "Conversation"("appId") ON DELETE CASCADE ON UPDATE CASCADE;

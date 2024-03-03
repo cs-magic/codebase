@@ -41,7 +41,7 @@ export const PAppComp = ({ app }: { app: IAppInChat }) => {
       id: messageId,
       updatedAt: new Date(),
       conversationId,
-      pAppId: id,
+      appId: id,
       parentId,
     }
 
@@ -73,7 +73,7 @@ export const PAppComp = ({ app }: { app: IAppInChat }) => {
         "w-full h-full overflow-hidden flex flex-col relative border-t border-r",
       )}
     >
-      <TopBar id={id} title={app?.model.title} fetching={fetching} />
+      <TopBar appId={id} title={app?.model.title} fetching={fetching} />
 
       <MessagesComp id={id} logo={app?.model.logo} />
     </div>
@@ -81,19 +81,19 @@ export const PAppComp = ({ app }: { app: IAppInChat }) => {
 }
 
 const TopBar = ({
-  id,
+  appId,
   title,
   fetching,
 }: {
-  id: string
+  appId: string
   title: string
   fetching: boolean
 }) => {
   const delPApp = useDelPApp()
   const { apps, curPApp } = useSnapshot(conversationStore)
-  const selected = id === curPApp?.id
+  const selected = appId === curPApp?.id
   const LockOrNot = selected ? Lock : Unlock
-  // console.log({ id, currentPAppId })
+  // console.log({ appId, currentPAppId })
 
   return (
     <div
@@ -106,7 +106,7 @@ const TopBar = ({
         <div className={"w-full flex gap-2 items-baseline"}>
           <span className={"truncate"}>{title}</span>
 
-          {/*<span className={"text-muted-foreground text-xs"}>{id}</span>*/}
+          <span className={"text-muted-foreground text-xs"}>{appId}</span>
         </div>
       </div>
       <div className={"grow"} />
@@ -114,7 +114,7 @@ const TopBar = ({
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          selectPApp(apps.find((p) => p.id === id)!)
+          selectPApp(apps.find((p) => p.id === appId)!)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -123,7 +123,7 @@ const TopBar = ({
       <IconContainer
         tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
         onClick={() => {
-          // selectPApp(id)
+          // selectPApp(appId)
         }}
       >
         <StopCircle className={cn(!fetching && "text-muted-foreground")} />
@@ -133,7 +133,7 @@ const TopBar = ({
         tooltipContent={"删除一个App（注意，暂不可恢复）"}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void delPApp(id)
+          void delPApp(appId)
         }}
       >
         <MinusCircleIcon />
@@ -165,7 +165,7 @@ const MessagesComp = ({ id, logo }: { id: string; logo: string | null }) => {
   let cIndex = 0
   messages.forEach((m) => {
     if (cIndex >= context.length) {
-      if (m.pAppId === id) theMessages.push(m)
+      if (m.appId === id) theMessages.push(m)
     } else {
       if (m.id === context[cIndex]!.id) {
         theMessages.push(m)

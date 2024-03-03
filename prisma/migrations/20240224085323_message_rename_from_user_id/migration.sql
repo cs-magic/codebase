@@ -13,4 +13,4 @@ ALTER TABLE "Message" DROP COLUMN "userId",
 ADD COLUMN     "fromUserId" TEXT NOT NULL;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("appId") ON DELETE CASCADE ON UPDATE CASCADE;

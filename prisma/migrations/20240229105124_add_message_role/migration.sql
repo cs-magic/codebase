@@ -23,4 +23,4 @@ ADD COLUMN     "conversationModelId" TEXT NOT NULL,
 ADD COLUMN     "role" "MessageRole" NOT NULL;
 
 -- AddForeignKey
-ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationModelId_fkey" FOREIGN KEY ("conversationModelId") REFERENCES "ConversationModel"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Message" ADD CONSTRAINT "Message_conversationModelId_fkey" FOREIGN KEY ("conversationModelId") REFERENCES "ConversationModel"("appId") ON DELETE CASCADE ON UPDATE CASCADE;

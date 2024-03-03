@@ -15,17 +15,17 @@ export const messageRouter = createTRPCRouter({
       //   data: {
       //     fromUser: {
       //       connect: {
-      //         id: userId,
+      //         appId: userId,
       //       },
       //     },
       //     content: text,
       //     toConversation: {
       //       connectOrCreate: {
-      //         where: { id: conversationId ?? "" },
+      //         where: { appId: conversationId ?? "" },
       //         create: {
       //           type: ConversationType.LLM,
       //           users: {
-      //             connect: [{ id: userId }],
+      //             connect: [{ appId: userId }],
       //           },
       //         },
       //       },

@@ -40,7 +40,7 @@
 //       // first
 //       state.data.splice(0, 0, newConversation)
 //     })
-//     router.push(`/tt/${newConversation.id}`)
+//     router.push(`/tt/${newConversation.appId}`)
 //   }
 // }
 // export const useAddConversationWithQuery = () => {
@@ -50,7 +50,7 @@
 //     void addConversationWithoutQuery()
 //     useConversationDetailStore.setState((state) => {
 //       state.messages.push({
-//         id: nanoid(),
+//         appId: nanoid(),
 //         content: prompt,
 //         createdAt: new Date(),
 //         updatedAt: new Date(),
@@ -77,7 +77,7 @@
 //       .then(() => {
 //         toast.success("删除成功")
 //         useConversationListStore.setState((state) => {
-//           state.data = state.data.filter((d) => d.id !== conversationId)
+//           state.data = state.data.filter((d) => d.appId !== conversationId)
 //         })
 //       })
 //   }

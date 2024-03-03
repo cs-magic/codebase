@@ -29,17 +29,17 @@ DROP TABLE "_ConversationToUser";
 
 -- CreateTable
 CREATE TABLE "Company" (
-    "id" TEXT NOT NULL,
+    "appId" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "url" TEXT,
     "logo" TEXT,
 
-    CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Company_pkey" PRIMARY KEY ("appId")
 );
 
 -- CreateTable
 CREATE TABLE "ConversationModel" (
-    "id" TEXT NOT NULL,
+    "appId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "modelId" TEXT NOT NULL,
@@ -47,12 +47,12 @@ CREATE TABLE "ConversationModel" (
     "prompt" TEXT,
     "temperature" DOUBLE PRECISION,
 
-    CONSTRAINT "ConversationModel_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ConversationModel_pkey" PRIMARY KEY ("appId")
 );
 
 -- CreateTable
 CREATE TABLE "Model" (
-    "id" TEXT NOT NULL,
+    "appId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "title" TEXT NOT NULL,
@@ -60,17 +60,17 @@ CREATE TABLE "Model" (
     "url" TEXT,
     "companyId" TEXT NOT NULL,
 
-    CONSTRAINT "Model_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Model_pkey" PRIMARY KEY ("appId")
 );
 
 -- AddForeignKey
-ALTER TABLE "Conversation" ADD CONSTRAINT "Conversation_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Conversation" ADD CONSTRAINT "Conversation_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ConversationModel" ADD CONSTRAINT "ConversationModel_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "ConversationModel" ADD CONSTRAINT "ConversationModel_modelId_fkey" FOREIGN KEY ("modelId") REFERENCES "Model"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ConversationModel" ADD CONSTRAINT "ConversationModel_conversationId_fkey" FOREIGN KEY ("conversationId") REFERENCES "Conversation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "ConversationModel" ADD CONSTRAINT "ConversationModel_conversationId_fkey" FOREIGN KEY ("conversationId") REFERENCES "Conversation"("appId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Model" ADD CONSTRAINT "Model_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Model" ADD CONSTRAINT "Model_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("appId") ON DELETE CASCADE ON UPDATE CASCADE;

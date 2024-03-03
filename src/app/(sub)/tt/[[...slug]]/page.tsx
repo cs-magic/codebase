@@ -29,7 +29,7 @@ export default function ConversationPage({
   console.log({ slug, id })
 
   return (
-    <div className={"flex flex-col overflow-hidden"}>
+    <div className={"w-full h-full flex flex-col overflow-hidden"}>
       <PAppsComp />
 
       <QueryInChatLayout />

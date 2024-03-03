@@ -47,7 +47,7 @@ export const SelectApp = ({
           else
             void addPApp({
               ...pApp,
-              // a new id, in case of duplication
+              // a new appId, in case of duplication
               id: nanoid(NANOID_LEN),
             })
         }}
