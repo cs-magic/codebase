@@ -100,19 +100,24 @@ export const queryLLMRouter = createTRPCRouter({
             },
           },
           context,
-          apps: {
-            connectOrCreate: input.apps.map((app) => ({
-              where: {
-                id: app.id,
-              },
-              create: {
-                ...app,
-                user: ctx.user.id,
+          responses: {
+            create: input.apps.map((app) => ({
+              tTrigger: new Date(),
+              app: {
+                connectOrCreate: {
+                  where: { id: app.id },
+                  create: {
+                    ...app,
+                    user: ctx.user.id,
+                  },
+                },
               },
             })),
           },
         },
       })
+
+      console.log("-- query LLM: ", { input, request })
 
       await Promise.all(
         request.responses.map(async (r) => {

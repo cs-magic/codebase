@@ -55,34 +55,33 @@ export const useQueryInChat = () => {
   const [convs] = useAtom(convsAtom)
   const [apps] = useAtom(persistedAppsAtom)
   const [context] = useAtom(contextAtom)
-  const [prompt] = useAtom(userPromptAtom)
-  const [convDetail, setConvDetail] = useAtom(convDetailAtom)
+  const [prompt, setPrompt] = useAtom(userPromptAtom)
+  const [conv, setConv] = useAtom(convDetailAtom)
   const [, setRequestID] = useAtom(requestIDAtom)
   const [, setAppsShouldSSE] = useAtom(appsShouldSSEAtom)
   const query = api.queryLLM.query.useMutation()
 
   return () => {
-    console.log("useQueryInChat: ", { convs, conv: convDetail, prompt })
-    if (!convDetail || !prompt) return console.error("不满足发送条件")
+    console.log("useQueryInChat: ", { convs, conv: conv, prompt })
+    if (!conv || !prompt) return console.error("不满足发送条件")
+    setPrompt("") // close
 
     query.mutate(
       {
-        convId: convDetail.id,
+        convId: conv.id,
         context: [...context, { content: prompt, role: "user" }],
         apps,
       },
       {
         onSuccess: (request) => {
           // 更新request
-          setConvDetail((conv) => ({ ...conv, request }))
+          setConv((conv) => ({ ...conv, request }))
           // 更新request id
           setRequestID(request.id)
           // 添加到请求池
           setAppsShouldSSE((old) => [
             ...old,
-            ...apps.map((app) =>
-              getTriggerID(convDetail.id, request.id, app.id),
-            ),
+            ...apps.map((app) => getTriggerID(conv.id, request.id, app.id)),
           ])
         },
         onError: (err) => {

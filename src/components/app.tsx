@@ -24,9 +24,8 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
   const [appsShouldSSE] = useAtom(appsShouldSSEAtom)
   const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
   const [requestID] = useAtom(requestIDAtom)
-  const shouldSSE = appsShouldSSE.includes(
-    getTriggerID(conv?.id ?? "", requestID, app.id),
-  )
+  const triggerID = getTriggerID(conv?.id ?? "", requestID, app.id)
+  const shouldSSE = appsShouldSSE.includes(triggerID)
 
   useEffect(() => {
     if (!shouldSSE) return
@@ -39,7 +38,7 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
     }
 
     console.log("-- fetching sse")
-    void fetchSSE(`/api/llm?r=${requestID}`, {
+    void fetchSSE(`/api/llm?r=${triggerID}`, {
       onOpen: () => {
         setFetching(true)
       },
