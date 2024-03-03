@@ -7,9 +7,7 @@ import { useAtom } from "jotai"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
 import { useSearchParams } from "next/navigation"
-import { convAtom, convIdAtom } from "@/store/conv.atom"
-import { userQueryAtom } from "../../../../../packages/common/store/user"
-import { useQueryInChat } from "@/hooks/use-query-conv"
+import { convIdAtom, convsAtom } from "@/store/conv.atom"
 
 export default function ConversationPage({
   params: { slug },
@@ -20,7 +18,15 @@ export default function ConversationPage({
   const hasFetched = useSearchParams().get("fetched")
 
   /**
-   * 1. 检查服务端数据，并决定是否更新本地的conv
+   * 1. 更新 id
+   */
+  const [, setConvId] = useAtom(convIdAtom)
+  useEffect(() => {
+    setConvId(id ?? "")
+  }, [id])
+
+  /**
+   * 2. 检查服务端是否id有效
    */
   const { isError, data: convInDB } = api.queryLLM.getQueryConv.useQuery(
     {
@@ -28,23 +34,22 @@ export default function ConversationPage({
     },
     { enabled: !!id && !hasFetched },
   )
-  const [, openAlertDialog] = useAtom(openAlertDialogAtom)
-  useEffect(() => {
-    if (convInDB) setConvId(convInDB.id)
-    if (isError) openAlertDialog("没有此会话！")
-  }, [convInDB, isError])
 
   /**
-   * 如果本地有conv，且有用户输入的话，则自动触发一次会话请求
+   * 2. 无效则跳转
    */
-  const [convId, setConvId] = useAtom(convIdAtom)
-  const [query] = useAtom(userQueryAtom)
-  const queryInChat = useQueryInChat()
+  const [, openAlertDialog] = useAtom(openAlertDialogAtom)
   useEffect(() => {
-    if (convId && query) queryInChat() // 用户带着问题来的
-  }, [convId])
+    if (isError) openAlertDialog("没有此会话！")
+  }, [isError])
 
-  // console.log({ slug, id, convInDB, convId, query })
+  /**
+   * 2.2 有效则更新列表数据
+   */
+  const [, setConvs] = useAtom(convsAtom)
+  useEffect(() => {
+    if (convInDB) setConvs((cs) => cs.map((c) => (c.id === id ? convInDB : c)))
+  }, [convInDB])
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

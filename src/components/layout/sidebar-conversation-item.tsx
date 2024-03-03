@@ -1,4 +1,5 @@
-import { Button, buttonVariants } from "../../../packages/common/components/ui/button"
+"use client"
+import { buttonVariants } from "../../../packages/common/components/ui/button"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import {
@@ -9,15 +10,11 @@ import {
 } from "../../../packages/common/components/ui/dropdown-menu"
 import { cn } from "../../../packages/common/lib/utils"
 
-import { useDelConversation } from "@/hooks/use-query-conv"
+import { useDelConv } from "@/hooks/use-query-conv"
 import { IconContainer } from "../../../packages/common/components/icon-container"
 
-export const ConversationListComp = ({
-  conversation,
-}: {
-  conversation: { id: string }
-}) => {
-  const deleteConversation = useDelConversation()
+export const ConversationListComp = ({ conv }: { conv: { id: string } }) => {
+  const deleteConv = useDelConv()
 
   return (
     <div
@@ -26,11 +23,8 @@ export const ConversationListComp = ({
         buttonVariants({ variant: "ghost" }),
       )}
     >
-      <Link
-        href={`/tt/${conversation.id}`}
-        className={"grow truncate text-left py-2"}
-      >
-        {conversation.id}
+      <Link href={`/tt/${conv.id}`} className={"grow truncate text-left py-2"}>
+        {conv.id}
       </Link>
 
       <DropdownMenu>
@@ -46,7 +40,7 @@ export const ConversationListComp = ({
           <DropdownMenuItem
             className={"gap-2"}
             onClick={(event) => {
-              void deleteConversation(conversation.id)
+              void deleteConv(conv.id)
             }}
           >
             <TrashIcon className={"w-4 h-4"} /> 删除会话

@@ -36,10 +36,7 @@ export const Sidebar = () => {
 
       <div className={"grow overflow-auto"}>
         {conversations.map((conversation) => (
-          <ConversationListComp
-            conversation={conversation}
-            key={conversation.id}
-          />
+          <ConversationListComp conv={conversation} key={conversation.id} />
         ))}
       </div>
     </div>

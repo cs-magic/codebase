@@ -9,8 +9,6 @@ import {
   convsAtom,
   latestQueryAtom,
 } from "@/store/conv.atom"
-import { conversationStore } from "@/store/conv.valtio"
-import { remove } from "lodash"
 import { persistedAppsAtom } from "@/store/app.atom"
 import { useSession } from "next-auth/react"
 
@@ -103,22 +101,26 @@ export function useAddQueryConv() {
  * 用户在会话列表页的展开工具里删除一个会话
  * @param conversationId
  */
-export function useDelConversation() {
+export function useDelConv() {
   const router = useRouter()
-  const delConversation = api.llm.delConversation.useMutation({
-    onError: (error) => {
-      console.error(error)
-      toast.error("删除失败！")
-    },
-  })
+  const delConversation = api.queryLLM.deleteQueryConvs.useMutation()
+  const [, setConvs] = useAtom(convsAtom)
+  const [convId] = useAtom(convIdAtom)
 
-  return (conversationId: string) => {
-    // optimistic update
-    remove(conversationStore.conversations, (c) => c.id === conversationId)
-    if (conversationId === conversationStore.conversation?.id)
-      router.push("/tt")
-
-    void delConversation.mutateAsync({ conversationId })
+  return (id: string) => {
+    void delConversation.mutate(
+      { id },
+      {
+        onError: (error) => {
+          console.error(error)
+          toast.error("删除失败！")
+        },
+        onSuccess: () => {
+          setConvs((cs) => cs.filter((c) => c.id !== id))
+          if (id === convId) router.push("/tt")
+        },
+      },
+    )
   }
 }
 
@@ -150,7 +152,7 @@ export function useQueryOnEnter() {
   const [query] = useAtom(userQueryAtom)
 
   return async () => {
-    console.log({ query })
+    console.log({ convId, query })
     if (!query) return toast.error("不能为空")
     if (!configs.length) return toast.error("至少需要选中一种模型")
     if (session.status !== "authenticated") return setOpen(true)
