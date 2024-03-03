@@ -1,9 +1,9 @@
 import { atom } from "jotai"
 import { getNewId } from "../../packages/common/lib/utils"
 import { atomWithStorage } from "jotai/utils"
-import { uiMainAreaAtom } from "@/store/ui.atom"
-import { BEST_VIEWPOINT } from "@/config/system"
 import { IQueryConfigInDB } from "@/schema/query-config"
+import { uiMainAreaAtom } from "../../packages/common/store/ui"
+import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 
 /**
  * server query configs

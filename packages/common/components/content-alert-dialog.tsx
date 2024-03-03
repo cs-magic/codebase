@@ -1,16 +1,11 @@
 "use client"
 import { useAtom } from "jotai"
-import { uiAlertDialogContent, uiAlertDialogOpen } from "@/store/ui.atom"
-import {
-  AlertDialog,
-  AlertDialogContent,
-} from "./ui/alert-dialog"
-import { ReturnHomeAlertDialog } from "@/components/return-home"
-import React from "react"
+import { AlertDialog, AlertDialogContent } from "./ui/alert-dialog"
+import React, { PropsWithChildren } from "react"
+import { uiAlertDialogOpen } from "../store/ui"
 
-export const ContentAlertDialog = () => {
+export const ContentAlertDialog = ({ children }: PropsWithChildren) => {
   const [open, setOpen] = useAtom(uiAlertDialogOpen)
-  const [content] = useAtom(uiAlertDialogContent)
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -19,7 +14,7 @@ export const ContentAlertDialog = () => {
           setOpen(false)
         }}
       >
-        <ReturnHomeAlertDialog content={content} />
+        {children}
       </AlertDialogContent>
     </AlertDialog>
   )

@@ -1,7 +1,8 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { nanoid } from "nanoid"
-import { NANOID_LEN } from "@/config/system"
+
+import { NANOID_LEN } from "../config/system"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

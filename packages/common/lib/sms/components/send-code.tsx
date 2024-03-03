@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  smsDowntimeAtom,
-  smsNameAtom,
-  smsPhoneAtom,
-} from "../atom-state"
+import { smsDowntimeAtom, smsNameAtom, smsPhoneAtom } from "../atom-state"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -23,14 +19,14 @@ import { cn } from "../../utils"
 import { useBrowserEnvironment } from "../../../hooks/use-browser-environment"
 import { signIn } from "next-auth/react"
 import { WECHAT_PROVIDER_ID } from "../../wechat/auth/config"
-import { BrandTitle } from "@/components/branding"
 import { useAtom } from "jotai"
 import { sendCodeAtom } from "../atom-actions"
 
 import { ButtonWithLoading } from "../../../components/button-with-loading"
 import { SeparatorContainer } from "../../../components/separator-container"
+import { ComponentType } from "react"
 
-export const SmsSendCode = () => {
+export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
   const { isWechat } = useBrowserEnvironment()
   const [downtime] = useAtom(smsDowntimeAtom)
   const [, setPhone] = useAtom(smsPhoneAtom)
@@ -59,7 +55,7 @@ export const SmsSendCode = () => {
       >
         <div className={"text-semibold text-lg flex items-center gap-1"}>
           登录
-          <BrandTitle className={"text-lg gap-2"} />
+          <BrandComp />
         </div>
         <Label className={"text-muted-foreground text-xs"}>
           欢迎回来！请登录以开启 <span className={"primary-gradient"}>A I</span>{" "}

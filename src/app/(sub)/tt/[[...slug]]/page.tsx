@@ -5,7 +5,8 @@ import { useEffect } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"
 import { useAtom } from "jotai"
-import { openAlertDialogAtom } from "@/store/ui.atom"
+
+import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
 
 export default function ConversationPage({
   params: { slug },

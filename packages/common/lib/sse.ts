@@ -1,4 +1,4 @@
-import { ISSEEventType } from "@/app/api/llm/schema"
+import { ISSEEventType } from "./sse/schema"
 
 export const fetchSSE = async (
   requestUrl: string,

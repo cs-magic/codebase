@@ -6,12 +6,10 @@ export type IRequest = {
   finished: boolean
   clients: IClient[]
 }
-
 /**
  * 不能用 error 这是 sse 默认的 event-type
  */
 export type ISSEEventType = "onData" | "onError" | "close"
-
 export type ISSEEvent<T extends ISSEEventType = any> = T extends "onData"
   ? {
       event: "onData"

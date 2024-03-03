@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server"
 import { manager } from "@/app/api/llm/init"
-import { ISSEEvent } from "@/app/api/llm/schema"
 
 import { UnexpectedError } from "../../../../packages/common/schema/errors"
+import { ISSEEvent } from "../../../../packages/common/lib/sse/schema"
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)

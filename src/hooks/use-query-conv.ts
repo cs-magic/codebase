@@ -5,10 +5,10 @@ import { toast } from "sonner"
 
 import { queryConvsAtom } from "@/store/query-conv.atom"
 import { nanoid } from "nanoid"
-import { NANOID_LEN } from "@/config/system"
 import { conversationStore } from "@/store/conversation.valtio"
 import { remove } from "lodash"
 import { IMessageInChat } from "@/schema/query-message"
+import { NANOID_LEN } from "../../packages/common/config/system"
 
 export const useDeleteAllQueryConvsAtom = () => {
   const router = useRouter()

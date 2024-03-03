@@ -1,15 +1,10 @@
 "use server"
 
 import { fetchWechatApi } from "../functions"
-import {
-  WECHAT_NONCE_STR,
-  WECHAT_TIMESTAMP,
-} from "./config"
+import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
 import { sha1 } from "js-sha1"
-import { WECHAT_APP_SECRET } from "../config"
+import { WECHAT_APP_ID, WECHAT_APP_SECRET } from "../config"
 import { IWechatSDKToken } from "../schema"
-
-import { WECHAT_APP_ID } from "@/config/system"
 
 /**
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html

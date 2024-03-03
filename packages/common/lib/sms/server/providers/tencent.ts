@@ -5,7 +5,7 @@
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
 import { env } from "@/env"
 
-import { SMS_EXPIRE_MINUTES } from "@/config/system"
+import { SMS_EXPIRE_MINUTES } from "../../coonfig"
 
 const tencentSmsConfig = {
   signName: "邢健的个人博客",

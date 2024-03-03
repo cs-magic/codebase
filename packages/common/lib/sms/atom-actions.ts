@@ -1,8 +1,6 @@
 import { atom } from "jotai"
-import { SMS_CODE_DOWNTIME, SMS_PROVIDER_ID } from "@/config/system"
 import { $sendSmsViaAli } from "./server/providers/ali"
 import { $sendSmsViaTencent } from "./server/providers/tencent"
-import { lockUIAtom, unlockUIAtom } from "@/store/ui.atom"
 import { $sendSms } from "./server/actions"
 import { toast } from "sonner"
 import {
@@ -17,6 +15,8 @@ import {
 } from "./atom-state"
 import { ISmsSignIn } from "./schema"
 import { signIn } from "next-auth/react"
+import { SMS_CODE_DOWNTIME, SMS_PROVIDER_ID } from "./coonfig"
+import { lockUIAtom, unlockUIAtom } from "../../store/ui"
 
 export const smsSignInAtom = atom(null, async (get, set) => {
   const name = get(smsNameAtom)

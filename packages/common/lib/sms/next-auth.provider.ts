@@ -1,7 +1,7 @@
 import { $smsSignIn } from "./server/actions"
-import { SMS_PROVIDER_ID } from "@/config/system"
 
 import Credentials from "next-auth/providers/credentials"
+import { SMS_PROVIDER_ID } from "./coonfig"
 
 // // sb tsx 需要用 default
 // import CredentialsModule from "next-auth/providers/credentials"

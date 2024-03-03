@@ -10,7 +10,7 @@ import { SmsProvider } from "./sms/next-auth.provider"
 import WechatProvider from "./wechat/auth/provider"
 import { env } from "@/env"
 
-import { WECHAT_APP_ID } from "@/config/system"
+import { WECHAT_APP_ID } from "./wechat/config"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

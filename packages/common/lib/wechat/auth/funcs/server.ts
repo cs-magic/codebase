@@ -1,4 +1,4 @@
-import { WECHAT_APP_SECRET } from "../../config"
+import { WECHAT_APP_ID, WECHAT_APP_SECRET } from "../../config"
 import {
   IWechatAdaptedToken,
   IWechatProfile,
@@ -6,8 +6,6 @@ import {
   IWechatToken,
 } from "../schema"
 import { fetchWechatApi } from "../../functions"
-
-import { WECHAT_APP_ID } from "@/config/system"
 
 /**
  * 这个函数是 unsafe 的，一旦出错，说明要重新从前端拿 code 了

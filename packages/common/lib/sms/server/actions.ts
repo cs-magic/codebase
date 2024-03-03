@@ -1,8 +1,8 @@
 "use server"
 
 import { ISmsSignIn } from "../schema"
-import { SMS_PROVIDER_ID } from "@/config/system"
 import { db } from "../../db"
+import { SMS_PROVIDER_ID } from "../coonfig"
 
 export const $sendSms = async (
   phone: string,

@@ -5,9 +5,9 @@ import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client"
 import { createTRPCReact } from "@trpc/react-query"
 import { useState } from "react"
 
-import { type AppRouter } from "@/api/routers/__root"
-import { getUrl, transformer } from "./shared"
-import { REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED } from "@/config/system"
+import { AppRouter, getUrl, transformer } from "./shared"
+
+import { REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED } from "./config"
 
 const createQueryClient = () =>
   new QueryClient({
