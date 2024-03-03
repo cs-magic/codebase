@@ -44,30 +44,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Company {
-  id    String  @id @default(nanoid(5))
-  title String
-  url   String?
-  logo  String?
-
-  models Model[]
-}
-
-model Model {
-  id        String   @id @default(nanoid(5))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  title String
-  logo  String?
-  url   String?
-
-  company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId String
-  models    QueryConfig[]
-}
-
-model QueryConfig {
+model App {
   id        String   @id @default(nanoid(5))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -81,10 +58,19 @@ model QueryConfig {
   systemPrompt String?
   temperature  Float?
 
-  responses QueryResponse[]
+  responses Response[]
 }
 
-model QueryConv {
+model Company {
+  id    String  @id @default(nanoid(5))
+  title String
+  url   String?
+  logo  String?
+
+  models Model[]
+}
+
+model Conv {
   id        String   @id @default(nanoid(7))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,11 +78,25 @@ model QueryConv {
   fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
   fromUserId String
 
-  title   String?
-  queries QueryRequest[]
+  title    String?
+  requests Request[]
 }
 
-model QueryRequest {
+model Model {
+  id        String   @id @default(nanoid(5))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  logo  String?
+  url   String?
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  apps      App[]
+}
+
+model Request {
   id        String   @id @default(nanoid(9))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -104,22 +104,22 @@ model QueryRequest {
   /// [QueryContex]
   context Json
 
-  conv   QueryConv @relation(fields: [convId], references: [id], onDelete: Cascade)
+  conv   Conv   @relation(fields: [convId], references: [id], onDelete: Cascade)
   convId String
 
-  responses QueryResponse[]
+  responses Response[]
 }
 
-model QueryResponse {
+model Response {
   id        String   @id @default(nanoid(9))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  request   QueryRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 
-  config   QueryConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
-  configId String
+  app   App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId String
 
   response String?
   error    String?
@@ -146,8 +146,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  queryConversations QueryConv[]
-  queryConfigs       QueryConfig[]
+  queryConversations Conv[]
+  queryConfigs       App[]
 }
 
 model VerificationToken {

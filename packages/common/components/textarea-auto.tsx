@@ -13,7 +13,7 @@ export const TextareaAuto = forwardRef<
   ComponentProps<typeof ReactTextareaAutoSize> & {
     onQuery?: (s: string) => void
   }
->(({ className, minRows = 1, onKeyDown, onQuery, ...props }, ref) => {
+>(({ className, minRows = 1, onKeyDown, onChange, onQuery, ...props }, ref) => {
   const mounted = useMounted()
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
@@ -31,10 +31,14 @@ export const TextareaAuto = forwardRef<
         "resize-none focus-visible:outline-none bg-transparent",
         className,
       )}
-      onKeyDown={(event) => {
+      onChange={(event) => {
         // 更新用户的输入
-        setUserQuery(event.currentTarget.value)
-
+        const value = event.currentTarget.value
+        setUserQuery(value)
+        console.log({ value })
+        if (onChange) onChange(event)
+      }}
+      onKeyDown={(event) => {
         if (onKeyDown) return onKeyDown(event)
         if (onQuery) {
           if (event.key === "Enter" && !event.nativeEvent.isComposing) {

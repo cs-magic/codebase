@@ -19,6 +19,7 @@ import { env } from "@/env"
 import { LoadingAlertDialog } from "../../packages/common/components/loading-alert-dialog"
 import { ContentAlertDialog } from "../../packages/common/components/content-alert-dialog"
 import JotaiProvider from "../../packages/common/components/jotai.provider"
+import { ReturnHomeAlertDialog } from "@/components/return-home"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -66,7 +67,8 @@ export default function RootLayout({
                         />
 
                         <LoadingAlertDialog />
-                        <ContentAlertDialog />
+
+                        <ReturnHomeAlertDialog />
 
                         <AppsSelector />
 

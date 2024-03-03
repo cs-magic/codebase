@@ -7,7 +7,7 @@ import {
   convAtom,
   convIdAtom,
   convsAtom,
-  latestQueryAtom,
+  latestRequestAtom,
 } from "@/store/conv.atom"
 import { persistedAppsAtom } from "@/store/app.atom"
 import { useSession } from "next-auth/react"
@@ -127,12 +127,12 @@ export function useDelConv() {
 export const useQueryInChat = () => {
   const [convs] = useAtom(convsAtom)
   const [configs] = useAtom(persistedAppsAtom)
-  const [queries] = useAtom(latestQueryAtom)
+  const [queries] = useAtom(latestRequestAtom)
   const [query] = useAtom(userQueryAtom)
   const [conv] = useAtom(convAtom)
 
   return () => {
-    console.log({ conv, query })
+    console.log("useQueryInChat: ", { conv, query })
     if (!conv || !query) return console.error("不满足发送条件")
   }
 }
@@ -152,7 +152,7 @@ export function useQueryOnEnter() {
   const [query] = useAtom(userQueryAtom)
 
   return async () => {
-    console.log({ convId, query })
+    console.log("useQueryOnEnter: ", { convId, query })
     if (!query) return toast.error("不能为空")
     if (!configs.length) return toast.error("至少需要选中一种模型")
     if (session.status !== "authenticated") return setOpen(true)

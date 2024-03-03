@@ -8,8 +8,8 @@ export const convAtom = atom((get) =>
   get(convsAtom).find((c) => c.id === get(convIdAtom)),
 )
 
-export const latestQueryAtom = atom((get) => {
+export const latestRequestAtom = atom((get) => {
   const conv = get(convAtom)
   // queries 是倒序拿的
-  if (conv && "queries" in conv) return conv.queries[0]
+  if (conv && "requests" in conv) return conv.requests[0]
 })

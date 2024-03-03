@@ -21,7 +21,7 @@ export const queryLLMRouter = createTRPCRouter({
   ),
 
   listQueryConfigs: publicProcedure.query(() =>
-    db.queryConfig.findMany({
+    db.app.findMany({
       ...AppInDBSchema,
       orderBy: {
         // todo: by hot or so
@@ -30,8 +30,8 @@ export const queryLLMRouter = createTRPCRouter({
     }),
   ),
 
-  listQueryConv: protectedProcedure.query(() =>
-    db.queryConv.findMany({
+  listConv: protectedProcedure.query(() =>
+    db.conv.findMany({
       orderBy: { updatedAt: "desc" },
       ...convListViewSchema,
     }),
@@ -40,8 +40,8 @@ export const queryLLMRouter = createTRPCRouter({
   getQueryConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) =>
-      db.queryConv.findUniqueOrThrow({
-        where: { id: input.id },
+      db.conv.findUniqueOrThrow({
+        where: input,
         ...convDetailViewSchema,
       }),
     ),
@@ -52,7 +52,7 @@ export const queryLLMRouter = createTRPCRouter({
       z.object({ id: z.string().optional(), title: z.string().optional() }),
     )
     .mutation(({ input, ctx }) =>
-      db.queryConv.create({
+      db.conv.create({
         data: { ...input, fromUserId: ctx.user.id },
         ...convDetailViewSchema,
       }),
@@ -60,9 +60,9 @@ export const queryLLMRouter = createTRPCRouter({
 
   deleteQueryConvs: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .mutation(({ ctx, input }) => db.queryConv.delete({ where: input })),
+    .mutation(({ ctx, input }) => db.conv.delete({ where: input })),
 
   deleteAllQueryConvs: protectedProcedure.mutation(({ ctx }) =>
-    db.queryConv.deleteMany({ where: { fromUserId: ctx.user.id } }),
+    db.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
   ),
 })

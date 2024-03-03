@@ -15,7 +15,6 @@ export default function ConversationPage({
   params: { slug?: string[] }
 }) {
   const id = slug ? slug[0] : slug
-  const hasFetched = useSearchParams().get("fetched")
 
   /**
    * 1. 更新 id
@@ -32,7 +31,7 @@ export default function ConversationPage({
     {
       id: id!,
     },
-    { enabled: !!id && !hasFetched },
+    { enabled: !!id },
   )
 
   /**
@@ -46,9 +45,11 @@ export default function ConversationPage({
   /**
    * 2.2 有效则更新列表数据
    */
+  const hasFetched = useSearchParams().get("fetched")
   const [, setConvs] = useAtom(convsAtom)
   useEffect(() => {
-    if (convInDB) setConvs((cs) => cs.map((c) => (c.id === id ? convInDB : c)))
+    if (!hasFetched && convInDB)
+      setConvs((cs) => cs.map((c) => (c.id === id ? convInDB : c)))
   }, [convInDB])
 
   return (
