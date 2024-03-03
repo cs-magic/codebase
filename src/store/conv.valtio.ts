@@ -1,22 +1,22 @@
 import { proxy } from "valtio"
-import { IListConversation } from "@/schema/query-conv"
+import { IListConversation } from "@/schema/conv"
 import { last } from "lodash"
-import { IMessageInChat } from "@/schema/query-message"
-import { IQueryConfigInChat } from "@/schema/query-config"
+import { IMessageInChat } from "@/schema/message"
+import { IAppInChat } from "@/schema/app"
 
 class ConversationStore {
   /**
    * 数据库里所有的 app，一次获取，然后持久化
    */
-  public allApps: IQueryConfigInChat[] = []
+  public allApps: IAppInChat[] = []
   /**
    * 当前选中的 apps，如果服务器有，就从服务器刷新
    */
-  public apps: IQueryConfigInChat[] = []
+  public apps: IAppInChat[] = []
   /**
    * 当前被选中的 app
    */
-  public curPApp: IQueryConfigInChat | null = null
+  public curPApp: IAppInChat | null = null
 
   /**
    * 从服务器加载的会话列表

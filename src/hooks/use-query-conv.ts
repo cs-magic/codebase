@@ -3,16 +3,25 @@ import { api } from "../../packages/common/lib/trpc/react"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 
-import { queryConvsAtom } from "@/store/query-conv.atom"
-import { nanoid } from "nanoid"
-import { conversationStore } from "@/store/conversation.valtio"
+import {
+  convAtom,
+  convIdAtom,
+  convsAtom,
+  latestQueryAtom,
+} from "@/store/conv.atom"
+import { conversationStore } from "@/store/conv.valtio"
 import { remove } from "lodash"
-import { IMessageInChat } from "@/schema/query-message"
-import { NANOID_LEN } from "../../packages/common/config/system"
+import { persistedAppsAtom } from "@/store/app.atom"
+import { useSession } from "next-auth/react"
+
+import {
+  uiCheckAuthAlertDialogOpen,
+  userQueryAtom,
+} from "../../packages/common/store/user"
 
 export const useDeleteAllQueryConvsAtom = () => {
   const router = useRouter()
-  const [, setConversations] = useAtom(queryConvsAtom)
+  const [, setConversations] = useAtom(convsAtom)
   const deleteAllQueryConvs = api.queryLLM.deleteAllQueryConvs.useMutation({
     onSuccess: () => {
       setConversations([])
@@ -31,7 +40,7 @@ export const useDeleteAllQueryConvsAtom = () => {
 export function useAddQueryConvAtom() {
   const router = useRouter()
   const addQueryConv = api.queryLLM.addQueryConv.useMutation()
-  const [, setConversations] = useAtom(queryConvsAtom)
+  const [, setConversations] = useAtom(convsAtom)
 
   return (title?: string) => {
     // pessimistic update
@@ -59,41 +68,34 @@ export function useAddQueryConvAtom() {
  * --
  * 返回 appId，用于其他的函数
  */
-export function useAddConversation() {
+export function useAddQueryConv() {
   const router = useRouter()
-  const addConversation = api.llm.addConversation.useMutation({
-    onError: () => {
-      // todo: more friendly alert dialog
-      toast.error("不好意思，新建会话失败，请刷新后再试，该会话将被重置！")
-    },
-  })
+  const addConversation = api.queryLLM.addQueryConv.useMutation()
+  const [, setConvs] = useAtom(convsAtom)
+  const [, setConvId] = useAtom(convIdAtom)
 
-  return async () => {
-    /**
-     * 本地新增
-     */
-    const conversationId = nanoid(NANOID_LEN)
-    conversationStore.conversations.splice(0, 0, {
-      id: conversationId,
-      title: "",
-      updatedAt: new Date(),
-    })
+  return (title?: string) => {
+    // 数据库新增
+    return addConversation.mutateAsync(
+      {
+        title,
+      },
+      {
+        onError: () => {
+          toast.error("新建会话失败")
+        },
+        onSuccess: (data) => {
+          // 会话列表更新，是超集
+          setConvs((convs) => [data, ...convs])
 
-    /**
-     * 数据库新增
-     */
-    const conversation = await addConversation.mutateAsync({
-      id: conversationId,
-      apps: conversationStore.apps,
-      type: "LLM",
-    })
-    conversationStore.conversation = conversation
+          // 会话详情更新
+          setConvId(data.id)
 
-    /**
-     * 路由跳转
-     */
-    router.push(`/tt/${conversationId}`) // 异步
-    return conversation
+          // 路由跳转，并且避免再拿数据
+          router.push(`/tt/${data.id}?fetched=true`) // 异步
+        },
+      },
+    )
   }
 }
 
@@ -120,59 +122,43 @@ export function useDelConversation() {
   }
 }
 
+export const useQueryInChat = () => {
+  const [convs] = useAtom(convsAtom)
+  const [configs] = useAtom(persistedAppsAtom)
+  const [queries] = useAtom(latestQueryAtom)
+  const [query] = useAtom(userQueryAtom)
+  const [conv] = useAtom(convAtom)
+
+  return () => {
+    console.log({ conv, query })
+    if (!conv || !query) return console.error("不满足发送条件")
+  }
+}
+
 /**
  * 1. 用户在首页query
  * 2. 用户在会话里query
  * @param query
  */
-export function useConvQuery() {
-  const addConversation = useAddConversation()
+export function useQueryOnEnter() {
+  const queryInChat = useQueryInChat()
+  const [convId] = useAtom(convIdAtom)
+  const [configs] = useAtom(persistedAppsAtom)
+  const session = useSession()
+  const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpen)
+  const addConversation = useAddQueryConv()
+  const [query] = useAtom(userQueryAtom)
 
-  const queryLLM = api.llm.queryConversation.useMutation({
-    onError: () => {
-      // todo: any rollback?
-      toast.error("消息回复出错，请刷新后重试！")
-    },
-  })
-
-  return async (query: string) => {
+  return async () => {
+    console.log({ query })
     if (!query) return toast.error("不能为空")
+    if (!configs.length) return toast.error("至少需要选中一种模型")
+    if (session.status !== "authenticated") return setOpen(true)
 
-    // 1. 若此时还没有会话，则先创建会话
-    if (!conversationStore.conversation) await addConversation()
+    // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
+    if (!convId) return await addConversation()
 
-    // 2. 现在有会话了
-    const { messages, context, lastRepliedMessage, conversation } =
-      conversationStore
-    const conversationId = conversation!.id
-
-    // 3. 创建新消息
-    const userMessageId = nanoid(NANOID_LEN)
-    const userMessage: IMessageInChat = {
-      id: userMessageId,
-      updatedAt: new Date(),
-      content: query,
-      role: "user",
-      conversationId,
-      appId: null,
-      parentId: null,
-    }
-    messages.push(userMessage)
-
-    // 4. 维护新的context，context只在发送时更新
-    if (lastRepliedMessage) context.push(lastRepliedMessage)
-    context.push(userMessage)
-    console.log("schema: ", { context, messages })
-
-    // 5. SSE
-    const data = await queryLLM.mutateAsync({
-      conversationId,
-      messages: context,
-    })
-    data.forEach(({ requestId }) => {
-      const pApp = conversationStore.apps.find((p) => p.id === requestId)
-      // 有可能已经换成新的pApp了
-      if (pApp) pApp.needFetchLLM = true
-    })
+    // 否则直接发起请求
+    return queryInChat()
   }
 }

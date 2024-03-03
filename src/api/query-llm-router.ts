@@ -5,12 +5,9 @@ import {
 } from "../../packages/common/lib/trpc/trpc"
 import { db } from "../../packages/common/lib/db"
 import { z } from "zod"
-import { modelViewSchema } from "@/schema/query-model"
-import {
-  queryConvDetailViewSchema,
-  queryConvListViewSchema,
-} from "@/schema/query-conv"
-import { queryConfigInDBSchema } from "@/schema/query-config"
+import { modelViewSchema } from "@/schema/model"
+import { convDetailViewSchema, convListViewSchema } from "@/schema/conv"
+import { AppInDBSchema } from "@/schema/app"
 
 export const queryLLMRouter = createTRPCRouter({
   listModels: publicProcedure.query(() =>
@@ -25,7 +22,7 @@ export const queryLLMRouter = createTRPCRouter({
 
   listQueryConfigs: publicProcedure.query(() =>
     db.queryConfig.findMany({
-      ...queryConfigInDBSchema,
+      ...AppInDBSchema,
       orderBy: {
         // todo: by hot or so
         updatedAt: "desc",
@@ -36,7 +33,7 @@ export const queryLLMRouter = createTRPCRouter({
   listQueryConv: protectedProcedure.query(() =>
     db.queryConv.findMany({
       orderBy: { updatedAt: "desc" },
-      ...queryConvListViewSchema,
+      ...convListViewSchema,
     }),
   ),
 
@@ -45,7 +42,7 @@ export const queryLLMRouter = createTRPCRouter({
     .query(async ({ input }) =>
       db.queryConv.findUniqueOrThrow({
         where: { id: input.id },
-        ...queryConvDetailViewSchema,
+        ...convDetailViewSchema,
       }),
     ),
 
@@ -57,7 +54,7 @@ export const queryLLMRouter = createTRPCRouter({
     .mutation(({ input, ctx }) =>
       db.queryConv.create({
         data: { ...input, fromUserId: ctx.user.id },
-        ...queryConvDetailViewSchema,
+        ...convDetailViewSchema,
       }),
     ),
 

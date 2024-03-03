@@ -6,21 +6,14 @@ import { Button } from "../../../packages/common/components/ui/button"
 import JoinComponents from "../../../packages/common/components/join-components"
 import { ChevronDownIcon } from "lucide-react"
 import React from "react"
-import { useSession } from "next-auth/react"
 import { Header } from "@/components/layout/header"
 import { BrandingFooter } from "@/components/layout/footer"
 import { useAtom } from "jotai"
 
-import {
-  persistedQueryConfigsAtom,
-  uiSelectQueryConfigsDialogOpenAtom,
-} from "@/store/query-config.atom"
+import { persistedAppsAtom, uiSelectAppsDialogOpenAtom } from "@/store/app.atom"
 import { FlexContainer } from "../../../packages/common/components/flex-container"
 
 export default function HomePage() {
-  const session = useSession()
-  console.log("[HomePage]: ", { session })
-
   return (
     <>
       <Header />
@@ -51,8 +44,8 @@ export default function HomePage() {
 }
 
 const ConfigApp = () => {
-  const [queryConfigs] = useAtom(persistedQueryConfigsAtom)
-  const [, setOpen] = useAtom(uiSelectQueryConfigsDialogOpenAtom)
+  const [queryConfigs] = useAtom(persistedAppsAtom)
+  const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   return (
     <div className={"flex items-center gap-2"}>

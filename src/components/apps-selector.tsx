@@ -6,25 +6,25 @@ import {
   DialogContent,
 } from "../../packages/common/components/ui/dialog"
 import { Label } from "../../packages/common/components/ui/label"
-import { QueryConfigSelector } from "@/components/query-config-selector"
+import { AppSelector } from "@/components/app-selector"
 import { Separator } from "../../packages/common/components/ui/separator"
 import { Input } from "../../packages/common/components/ui/input"
 import { useAtom } from "jotai"
 
 import {
-  allQueryConfigsAtom,
-  persistedQueryConfigsAtom,
-  uiMaxQueryConfigsAtom,
-  uiSelectQueryConfigsDialogOpenAtom,
-} from "@/store/query-config.atom"
+  allAppsAtom,
+  persistedAppsAtom,
+  uiMaxAppsAtom,
+  uiSelectAppsDialogOpenAtom,
+} from "@/store/app.atom"
 
-export const QueryConfigsSelector = () => {
-  const [allQueryConfigs] = useAtom(allQueryConfigsAtom)
-  const [persistedQueryConfigs] = useAtom(persistedQueryConfigsAtom)
+export const AppsSelector = () => {
+  const [allQueryConfigs] = useAtom(allAppsAtom)
+  const [persistedQueryConfigs] = useAtom(persistedAppsAtom)
 
   const [filterPApps, setFilterPApps] = useState("")
-  const [open, setOpen] = useAtom(uiSelectQueryConfigsDialogOpenAtom)
-  const [maxToAdd] = useAtom(uiMaxQueryConfigsAtom)
+  const [open, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
+  const [maxToAdd] = useAtom(uiMaxAppsAtom)
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -37,7 +37,7 @@ export const QueryConfigsSelector = () => {
             </Label>
 
             {persistedQueryConfigs.map((m, index) => (
-              <QueryConfigSelector key={index} queryConfig={m} type={"toDel"} />
+              <AppSelector key={index} queryConfig={m} type={"toDel"} />
             ))}
           </div>
 
@@ -68,11 +68,7 @@ export const QueryConfigsSelector = () => {
                     m.model.company.title.toLowerCase().includes(filterPApps)),
               )
               .map((m, index) => (
-                <QueryConfigSelector
-                  key={index}
-                  queryConfig={m}
-                  type={"toAdd"}
-                />
+                <AppSelector key={index} queryConfig={m} type={"toAdd"} />
               ))}
           </div>
         </div>

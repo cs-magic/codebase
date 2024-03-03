@@ -1,32 +1,30 @@
 import { buttonVariants } from "../../packages/common/components/ui/button"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 import { cn } from "../../packages/common/lib/utils"
-import { IQueryConfigInDB } from "@/schema/query-config"
+import { IAppInDB } from "@/schema/app"
 import { useAtom } from "jotai"
 
 import {
-  addQueryConfigAtom,
-  delQueryConfigAtom,
-  persistedQueryConfigsAtom,
-  uiMaxQueryConfigsAtom,
-} from "@/store/query-config.atom"
+  addAppAtom,
+  delAppAtom,
+  persistedAppsAtom,
+  uiMaxAppsAtom,
+} from "@/store/app.atom"
 import { IconContainer } from "../../packages/common/components/icon-container"
 
-export const QueryConfigSelector = ({
+export const AppSelector = ({
   queryConfig,
   type,
 }: {
-  queryConfig: IQueryConfigInDB
+  queryConfig: IAppInDB
   type: "toAdd" | "toDel"
 }) => {
-  const [queryConfigs] = useAtom(persistedQueryConfigsAtom)
-  const [, addQueryConfig] = useAtom(addQueryConfigAtom)
-  const [, delQueryConfig] = useAtom(delQueryConfigAtom)
+  const [queryConfigs] = useAtom(persistedAppsAtom)
+  const [, addQueryConfig] = useAtom(addAppAtom)
+  const [, delQueryConfig] = useAtom(delAppAtom)
 
-  const [maxToAdd] = useAtom(uiMaxQueryConfigsAtom)
-  const disabled =
-    (type === "toAdd" && queryConfigs.length >= maxToAdd) ||
-    (type === "toDel" && queryConfigs.length <= 1)
+  const [maxToAdd] = useAtom(uiMaxAppsAtom)
+  const disabled = type === "toAdd" && queryConfigs.length >= maxToAdd
 
   const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
 

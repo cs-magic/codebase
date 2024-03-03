@@ -1,10 +1,10 @@
 "use client"
 
-import { useConvQuery } from "@/hooks/use-query-conv"
+import { useQueryOnEnter } from "@/hooks/use-query-conv"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 
 export const QueryInChatLayout = () => {
-  const query = useConvQuery()
+  const query = useQueryOnEnter()
 
   return (
     <div className={"p-2 flex justify-center shrink-0"}>

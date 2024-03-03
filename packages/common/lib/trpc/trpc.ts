@@ -12,7 +12,7 @@ import superjson from "superjson"
 import { z, ZodError } from "zod"
 import { Context } from "./context"
 import { db } from "../db"
-import { queryConvDetailViewSchema } from "@/schema/query-conv"
+import { convDetailViewSchema } from "@/schema/conv"
 
 /**
  * 2. INITIALIZATION
@@ -87,7 +87,7 @@ export const queryConvProcedure = protectedProcedure
         id: input.conversationId,
         fromUserId: ctx.user.id,
       },
-      ...queryConvDetailViewSchema,
+      ...convDetailViewSchema,
     })
 
     return next({

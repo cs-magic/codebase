@@ -1,7 +1,12 @@
+"use client"
+
 import { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"
 import { useMounted } from "../hooks/use-mounted"
 import { cn } from "../lib/utils"
+import { useAtom } from "jotai"
+
+import { userQueryAtom } from "../store/user"
 
 export const TextareaAuto = forwardRef<
   HTMLTextAreaElement,
@@ -12,6 +17,7 @@ export const TextareaAuto = forwardRef<
   const mounted = useMounted()
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
+  const [, setUserQuery] = useAtom(userQueryAtom)
 
   return (
     <ReactTextareaAutoSize
@@ -26,6 +32,9 @@ export const TextareaAuto = forwardRef<
         className,
       )}
       onKeyDown={(event) => {
+        // 更新用户的输入
+        setUserQuery(event.currentTarget.value)
+
         if (onKeyDown) return onKeyDown(event)
         if (onQuery) {
           if (event.key === "Enter" && !event.nativeEvent.isComposing) {

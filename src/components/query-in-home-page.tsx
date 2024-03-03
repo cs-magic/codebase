@@ -1,9 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { signIn, useSession } from "next-auth/react"
-import { useSnapshot } from "valtio"
-import { toast } from "sonner"
+import { signIn } from "next-auth/react"
 import { ArrowUpIcon, Paperclip } from "lucide-react"
 import {
   Tooltip,
@@ -11,7 +9,6 @@ import {
   TooltipTrigger,
 } from "../../packages/common/components/ui/tooltip"
 import { cn } from "../../packages/common/lib/utils"
-import { conversationStore } from "@/store/conversation.valtio"
 
 import {
   AlertDialog,
@@ -22,29 +19,20 @@ import {
   AlertDialogFooter,
   AlertDialogTitle,
 } from "../../packages/common/components/ui/alert-dialog"
-import { useConvQuery } from "@/hooks/use-query-conv"
+import { useQueryOnEnter } from "@/hooks/use-query-conv"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
+import { useAtom } from "jotai"
+
+import { uiCheckAuthAlertDialogOpen } from "../../packages/common/store/user"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
-
-  const session = useSession()
-  const [open, setOpen] = useState(false)
-  const { apps } = useSnapshot(conversationStore)
-  const query = useConvQuery()
-
-  const onSubmit = () => {
-    console.log({ input })
-    if (!input) return
-    if (!apps.length) return toast.error("至少需要选中一种模型")
-    if (session.status !== "authenticated") return setOpen(true)
-    void query(input)
-  }
+  const query = useQueryOnEnter()
 
   return (
     <div className={"w-full"}>
-      <CheckAuth open={open} setOpen={setOpen} />
+      <CheckAuth />
 
       <div className={"flex rounded-3xl border p-2"}>
         <IconContainer className={"w-6 h-6 shrink-0 interactive"}>
@@ -56,7 +44,7 @@ export const QueryInHomePage = () => {
           autoFocus
           // value={input}
           onChange={(event) => setInput(event.currentTarget.value)}
-          onQuery={onSubmit}
+          onQuery={query}
         />
 
         <Tooltip delayDuration={100}>
@@ -67,7 +55,7 @@ export const QueryInHomePage = () => {
                 input &&
                   "bg-primary-foreground/90 hover:bg-primary-foreground/90 text-white rounded-full",
               )}
-              onClick={onSubmit}
+              onClick={query}
             >
               <ArrowUpIcon className={cn()} />
             </IconContainer>
@@ -80,23 +68,23 @@ export const QueryInHomePage = () => {
   )
 }
 
-export const CheckAuth = ({
-  open,
-  setOpen,
-}: {
-  open: boolean
-  setOpen: (open: boolean) => void
-}) => (
-  <AlertDialog open={open} onOpenChange={setOpen}>
-    <AlertDialogContent>
-      <AlertDialogTitle>发送失败</AlertDialogTitle>
-      <AlertDialogDescription>您需要先登陆才能发送哦！</AlertDialogDescription>
-      <AlertDialogFooter>
-        <AlertDialogAction onClick={() => signIn()}>
-          点击跳转登录
-        </AlertDialogAction>
-        <AlertDialogCancel>放弃</AlertDialogCancel>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
-)
+export const CheckAuth = () => {
+  const [open, setOpen] = useAtom(uiCheckAuthAlertDialogOpen)
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogTitle>发送失败</AlertDialogTitle>
+        <AlertDialogDescription>
+          您需要先登陆才能发送哦！
+        </AlertDialogDescription>
+        <AlertDialogFooter>
+          <AlertDialogAction onClick={() => signIn()}>
+            点击跳转登录
+          </AlertDialogAction>
+          <AlertDialogCancel>放弃</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}

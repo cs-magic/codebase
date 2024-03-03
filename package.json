@@ -52,6 +52,7 @@
     "eventsource": "^2.0.2",
     "immer": "^10.0.3",
     "jotai": "^2.7.0",
+    "jotai-valtio": "^0.4.0",
     "js-sha1": "^0.7.0",
     "langchain": "^0.1.21",
     "lodash": "^4.17.21",

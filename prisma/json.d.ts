@@ -1,6 +1,6 @@
 declare global {
   // 要放在里面
-  import { ILLMMessage } from "@/schema/query-message"
+  import { ILLMMessage } from "@/schema/message"
   import { ConversationType } from "@prisma/client"
 
   namespace PrismaJson {

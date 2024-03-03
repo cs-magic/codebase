@@ -7,10 +7,10 @@ import {
   useAddQueryConvAtom,
   useDeleteAllQueryConvsAtom,
 } from "@/hooks/use-query-conv"
-import { queryConvsAtom } from "@/store/query-conv.atom"
+import { convsAtom } from "@/store/conv.atom"
 
 export const Sidebar = () => {
-  const [conversations] = useAtom(queryConvsAtom)
+  const [conversations] = useAtom(convsAtom)
   const addConversation = useAddQueryConvAtom()
   const deleteAllConversations = useDeleteAllQueryConvsAtom()
 

@@ -10,7 +10,7 @@ import {
   HumanMessage,
   SystemMessage,
 } from "@langchain/core/messages"
-import { ILLMMessage } from "@/schema/query-message"
+import { ILLMMessage } from "@/schema/message"
 
 export const callChatGPT = async ({
   modelId,

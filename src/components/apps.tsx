@@ -1,16 +1,16 @@
 "use client"
 
-import { PAppComp } from "@/components/query-config"
-import { conversationStore } from "@/store/conversation.valtio"
-import { useSnapshot } from "valtio"
+import { AppComp } from "@/components/app"
+import { conversationStore } from "@/store/conv.valtio"
 import { cn } from "../../packages/common/lib/utils"
 import { useAtom } from "jotai"
 
 import { uiMainAreaAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
+import { persistedAppsAtom } from "@/store/app.atom"
 
-export const PAppsComp = () => {
-  const { apps } = useSnapshot(conversationStore)
+export const QueryConfigsComp = () => {
+  const [apps] = useAtom(persistedAppsAtom)
   const [mainArea] = useAtom(uiMainAreaAtom)
   const { width } = mainArea
   const cnt = conversationStore.apps.length
@@ -25,7 +25,7 @@ export const PAppsComp = () => {
       }}
     >
       {apps.map((app) => (
-        <PAppComp app={app} key={app.id} />
+        <AppComp app={app} key={app.id} />
       ))}
     </div>
   )

@@ -10,14 +10,15 @@ import { type Viewport } from "next"
 import { cn } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
 import { AppStatus } from "@/components/branding"
-import { QueryConfigsSelector } from "@/components/query-configs-selector"
-import LLMProvider from "@/components/query-configs-provider"
+import { AppsSelector } from "@/components/apps-selector"
+import LLMProvider from "@/components/apps.provider"
 import { ScreenProvider } from "../../packages/common/components/screen.provider"
 import { AutoHeight } from "@/components/toolkits/auto-height"
 import { Devtool } from "@/components/toolkits/devtool"
 import { env } from "@/env"
 import { LoadingAlertDialog } from "../../packages/common/components/loading-alert-dialog"
 import { ContentAlertDialog } from "../../packages/common/components/content-alert-dialog"
+import JotaiProvider from "../../packages/common/components/jotai.provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,39 +48,41 @@ export default function RootLayout({
     <html lang="zh" suppressHydrationWarning>
       <body className={cn(`font-sans`, inter.variable)}>
         {/*data layer*/}
-        <SessionProvider>
-          <TRPCReactProvider>
-            <LLMProvider>
-              {/*ui layer */}
-              <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                <TooltipProvider>
-                  <ScreenProvider>
-                    <main className={"w-full h-full flex flex-col relative"}>
-                      {children}
+        <JotaiProvider>
+          <SessionProvider>
+            <TRPCReactProvider>
+              <LLMProvider>
+                {/*ui layer */}
+                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                  <TooltipProvider>
+                    <ScreenProvider>
+                      <main className={"w-full h-full flex flex-col relative"}>
+                        {children}
 
-                      <Toaster
-                        richColors
-                        position={"top-right"}
-                        duration={3000}
-                      />
+                        <Toaster
+                          richColors
+                          position={"top-right"}
+                          duration={3000}
+                        />
 
-                      <LoadingAlertDialog />
-                      <ContentAlertDialog />
+                        <LoadingAlertDialog />
+                        <ContentAlertDialog />
 
-                      <QueryConfigsSelector />
+                        <AppsSelector />
 
-                      <AutoHeight />
+                        <AutoHeight />
 
-                      <AppStatus />
+                        <AppStatus />
 
-                      {env.NODE_ENV === "development" && <Devtool />}
-                    </main>
-                  </ScreenProvider>
-                </TooltipProvider>
-              </ThemeProvider>
-            </LLMProvider>
-          </TRPCReactProvider>
-        </SessionProvider>
+                        {env.NODE_ENV === "development" && <Devtool />}
+                      </main>
+                    </ScreenProvider>
+                  </TooltipProvider>
+                </ThemeProvider>
+              </LLMProvider>
+            </TRPCReactProvider>
+          </SessionProvider>
+        </JotaiProvider>
       </body>
     </html>
   )
