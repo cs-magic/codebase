@@ -52,7 +52,7 @@ class ConversationStore {
    * 被选中的回答
    */
   public get lastRepliedMessage(): IMessageInChat | null {
-    const replied = this.messages.filter((m) => m.pAppId === this.curPApp?.id)
+    const replied = this.messages.filter((m) => m.appId === this.curPApp?.id)
     return last(replied) ?? null
   }
 }

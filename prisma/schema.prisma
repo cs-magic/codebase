@@ -44,22 +44,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model App {
-  id        String   @id @default(nanoid(5))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  model   Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  modelId String
-  title   String
-
-  conversations Conversation[]
-
-  prompt      String?
-  temperature Float?
-  messages    Message[]
-}
-
 model Company {
   id    String  @id @default(nanoid(5))
   title String
@@ -78,7 +62,6 @@ model Conversation {
   fromUserId String
 
   type         ConversationType
-  apps         App[]
   title        String?
   messages     Message[]
   // 主分支
@@ -99,10 +82,6 @@ model Message {
   // 必与conversation相连
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   conversationId String
-
-  // 子app回答的时候也可以与子app相连
-  app   App?    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId String?
 
   content String
   role    MessageRole
@@ -127,9 +106,9 @@ model Model {
   logo  String?
   url   String?
 
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company   Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String
-  apps      App[]
+  apps      QueryConfig[]
 }
 
 model Post {
@@ -142,6 +121,52 @@ model Post {
   createdById String
 
   @@index([name])
+}
+
+model Query {
+  id        String   @id @default(nanoid(9))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  config   QueryConfig @relation(fields: [queryConfigId], references: [id], onDelete: Cascade)
+  /// [QueryContex]
+  context  Json
+  response String?
+  error    String?
+
+  tTrigger DateTime?
+  tStart   DateTime?
+  tEnd     DateTime?
+
+  conversation   QueryConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId String
+  queryConfigId  String
+}
+
+model QueryConfig {
+  id        String   @id @default(nanoid(5))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  model   Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  modelId String
+  title   String
+
+  systemPrompt String?
+  temperature  Float?
+
+  queries Query[]
+}
+
+model QueryConversation {
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  apps Query[]
+
+  fromUser User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
 }
 
 model Session {
@@ -162,7 +187,8 @@ model User {
   sessions      Session[]
   posts         Post[]
 
-  Conversation Conversation[]
+  Conversation      Conversation[]
+  QueryConversation QueryConversation[]
 }
 
 model VerificationToken {

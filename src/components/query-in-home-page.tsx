@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { CheckAuth } from "./auth"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 
 import { useConvQuery } from "@/store/use-conv"
 

@@ -1,18 +1,19 @@
 import { z } from "zod"
 import { ConversationType, Prisma } from "@prisma/client"
 import { appInDBSchema, IAppInChat } from "@/schema/core/app"
+import { IMessageInChat } from "@/schema/core/message"
 import ConversationDefaultArgs = Prisma.ConversationDefaultArgs
 import ConversationGetPayload = Prisma.ConversationGetPayload
 import validator = Prisma.validator
-import { IMessageInChat } from "@/schema/core/message"
 
 export const createConversationSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   title: z.string().optional(),
   apps: z
     .object({
       modelId: z.string(),
       title: z.string(),
+      id: z.string().optional(),
     })
     .array(),
   type: z.nativeEnum(ConversationType),

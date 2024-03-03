@@ -1,6 +1,6 @@
 "use client"
 import { PAppsComp } from "@/components/p-apps"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 import { useEffect } from "react"
 import { api } from "@/lib/trpc/react"
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"

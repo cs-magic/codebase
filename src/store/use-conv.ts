@@ -3,7 +3,7 @@ import { api } from "@/lib/trpc/react"
 import { toast } from "sonner"
 import { nanoid } from "nanoid"
 import { NANOID_LEN } from "@/config/system"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 import { remove } from "lodash"
 import { IMessageInChat } from "@/schema/core/message"
 

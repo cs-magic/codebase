@@ -1,5 +1,5 @@
 import { api } from "@/lib/trpc/react"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 import { last, remove } from "lodash"
 import { toast } from "sonner"
 import { IAppInChat } from "@/schema/core/app"
@@ -29,8 +29,8 @@ export function useAddPApp() {
       // 如果此时有pApp的话，更新它的最新条目
       if (curPApp) {
         messages.push({
-          ...last(messages.filter((m) => m.pAppId === curPApp.id))!,
-          pAppId: pApp.id,
+          ...last(messages.filter((m) => m.appId === curPApp.id))!,
+          appId: pApp.id,
         })
       }
     }

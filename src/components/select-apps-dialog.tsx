@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { SelectApp } from "@/components/select-app"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 
 export const SelectAppsDialog = () => {
   const { apps, allApps } = useSnapshot(conversationStore)

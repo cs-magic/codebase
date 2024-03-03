@@ -4,7 +4,7 @@ import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 
 import { useSnapshot } from "valtio"
 import { nanoid } from "nanoid"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 import { NANOID_LEN } from "@/config/system"
 import { cn } from "@/lib/utils"
 import { uiState } from "@/store/ui"

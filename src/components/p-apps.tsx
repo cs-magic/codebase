@@ -1,7 +1,7 @@
 "use client"
 
 import { PAppComp } from "@/components/p-app"
-import { conversationStore } from "@/store/conversation"
+import { conversationStore } from "@/store/conversation.valtio"
 import { useSnapshot } from "valtio"
 import { cn } from "@/lib/utils"
 import { uiState } from "@/store/ui"

@@ -27,7 +27,7 @@ export const llmRouter = createTRPCRouter({
 
   listApps: publicProcedure.query(async () => {
     return db.app.findMany({
-      // 只筛选官方p-app，不选自动生成的
+      // 只筛选官方app，不选自动生成的
       where: {
         id: {
           equals: db.app.fields.modelId,
