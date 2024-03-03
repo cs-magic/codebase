@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { db } from "../../packages/common/lib/db"
-import { protectedProcedure } from "../../packages/common/lib/trpc/trpc"
+import { protectedProcedure } from "./trpc"
 import { queryConvDetailViewSchema } from "@/schema/query-conv"
 
 export const queryConvProcedure = protectedProcedure

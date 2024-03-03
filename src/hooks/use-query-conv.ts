@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation"
-import { api } from "../../packages/common/lib/trpc/react"
+import { api } from "@/api/react"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 

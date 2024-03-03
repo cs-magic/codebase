@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/layout/sidebar"
 import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
-import { api } from "../../../../packages/common/lib/trpc/react"
+import { api } from "@/api/react"
 import { queryConvsAtom } from "@/store/query-conv.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {

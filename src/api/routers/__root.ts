@@ -1,4 +1,4 @@
-import { createTRPCRouter } from "../../../packages/common/lib/trpc/trpc"
+import { createTRPCRouter } from "../trpc"
 import { queryLLMRouter } from "@/api/routers/query-llm-router"
 
 /**
