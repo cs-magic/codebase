@@ -6,21 +6,20 @@ import { useAtom } from "jotai"
 import { convDetailAtom } from "@/store/conv.atom"
 import { TopBar } from "@/components/app-topbar"
 import { MessagesComp } from "@/components/app-messages"
-import { IMessageInChat } from "@/schema/message"
 import {
   appFinishedSSEAtom,
   appsShouldSSEAtom,
   getTriggerID,
   requestIDAtom,
 } from "@/store/request.atom"
+import { last } from "lodash"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app
 
-  const [, setError] = useState("")
   const [fetching, setFetching] = useState(false)
 
-  const [conv] = useAtom(convDetailAtom)
+  const [conv, setConv] = useAtom(convDetailAtom)
   const [appsShouldSSE] = useAtom(appsShouldSSEAtom)
   const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
   const [requestID] = useAtom(requestIDAtom)
@@ -29,37 +28,45 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
 
   useEffect(() => {
     if (!shouldSSE) return
-
-    // todo: update message
-    const message: IMessageInChat = {
-      role: "assistant",
-      content: "",
-      updatedAt: new Date(),
-    }
-
-    console.log("-- fetching sse")
     void fetchSSE(`/api/llm?r=${triggerID}`, {
       onOpen: () => {
         setFetching(true)
+        setConv((conv) => {
+          const s = last(conv?.requests)?.responses.find(
+            (r) => r.app.id === app.id,
+          )
+          if (!s) return
+          s.tStart = new Date()
+          s.response = ""
+        })
       },
       onData: (data) => {
-        message.content += data
+        setConv((conv) => {
+          const s = last(conv?.requests)?.responses.find(
+            (r) => r.app.id === app.id,
+          )
+          if (!s) return
+          s.response += data
+        })
       },
       onError: (data) => {
         console.error("-- fetched error: ", data)
-        setError(data)
-        message.content = data
-        message.isError = true
+        setConv((conv) => {
+          const s = last(conv?.requests)?.responses.find(
+            (r) => r.app.id === app.id,
+          )
+          if (!s) return
+          s.error = data
+        })
       },
       onFinal: () => {
+        // s.tEnd = new Date()
         // todo: 在服务端维护
         appFinishedSSE(app.id)
         setFetching(false)
       },
     })
   }, [shouldSSE])
-
-  console.log({ shouldSSE })
 
   return (
     <div

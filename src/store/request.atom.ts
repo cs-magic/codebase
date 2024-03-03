@@ -27,7 +27,8 @@ export const requestAtom = atom((get) =>
 export const contextAtom = atom((get) => get(requestAtom)?.context ?? [])
 export const getAppContextAtom = atom((get) => (appID: string) => {
   const request = get(requestAtom)
-  const context = (request?.context ?? []) as IMessageInChat[]
+  console.log({ request, requestID: get(requestIDAtom) })
+  const context = [...(request?.context ?? [])] as IMessageInChat[]
   const content = request?.responses.find((r) => r.appId === appID)?.response
   if (content)
     context.push({

@@ -75,7 +75,10 @@ export const useQueryInChat = () => {
       {
         onSuccess: (request) => {
           // 更新request
-          setConv((conv) => ({ ...conv, request }))
+          setConv((conv) => {
+            console.log("-- update request: ", { conv, request })
+            conv?.requests.push(request)
+          })
           // 更新request id
           setRequestID(request.id)
           // 添加到请求池
