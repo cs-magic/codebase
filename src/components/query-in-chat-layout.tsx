@@ -1,7 +1,7 @@
 "use client"
 
 import { useConvQuery } from "@/hooks/use-query-conv"
-import { TextareaAuto } from "@/common/components/textarea-auto"
+import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 
 export const QueryInChatLayout = () => {
   const query = useConvQuery()

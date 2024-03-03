@@ -1,5 +1,5 @@
 "use server"
-import { callChatGPT } from "@/server/models/openai"
+import { callChatGPT } from "../../../../packages/llm/models/openai"
 import { manager } from "@/app/api/llm/init"
 import { IRequest, ISSEEvent } from "@/app/api/llm/schema"
 

@@ -1,7 +1,7 @@
 import { atom } from "jotai"
 
-import { IDisplay } from "@/common/schema/ui"
-import { uiLoadingAlertDialogAtom } from "@/common/store/ui"
+import { IDisplay } from "../../packages/common/schema/ui"
+import { uiLoadingAlertDialogAtom } from "../../packages/common/store/ui"
 
 /**
  * main-area

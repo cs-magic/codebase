@@ -2,13 +2,13 @@ import "@/styles/globals.css"
 
 import { Inter } from "next/font/google"
 
-import { TRPCReactProvider } from "@/common/lib/trpc/react"
+import { TRPCReactProvider } from "../../packages/common/lib/trpc/react"
 import ThemeProvider from "@/components/providers/theme"
-import { Toaster } from "@/common/components/ui/sonner"
+import { Toaster } from "../../packages/common/components/ui/sonner"
 import { SessionProvider } from "@/components/providers/session"
 import { type Viewport } from "next"
-import { cn } from "@/common/lib/utils"
-import { TooltipProvider } from "@/common/components/ui/tooltip"
+import { cn } from "../../packages/common/lib/utils"
+import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
 import SocketProvider from "@/components/providers/socket"
 import { AppStatus } from "@/components/branding"
 import { SelectQueryConfigs } from "@/components/select-query-configs"
@@ -17,8 +17,8 @@ import { ScreenProvider } from "@/components/providers/screen-provider"
 import { AutoHeight } from "@/components/toolkits/auto-height"
 import { Devtool } from "@/components/toolkits/devtool"
 import { env } from "@/env"
-import { LoadingAlertDialog } from "@/common/components/loading-alert-dialog"
-import { ContentAlertDialog } from "@/common/components/content-alert-dialog"
+import { LoadingAlertDialog } from "../../packages/common/components/loading-alert-dialog"
+import { ContentAlertDialog } from "../../packages/common/components/content-alert-dialog"
 
 const inter = Inter({
   subsets: ["latin"],

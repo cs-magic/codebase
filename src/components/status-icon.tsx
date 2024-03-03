@@ -1,4 +1,4 @@
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { SVGProps } from "react"
 
 /**

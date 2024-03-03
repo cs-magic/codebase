@@ -2,7 +2,7 @@
 import { PAppsComp } from "@/components/query-configs"
 import { conversationStore } from "@/store/conversation.valtio"
 import { useEffect } from "react"
-import { api } from "@/common/lib/trpc/react"
+import { api } from "../../../../../packages/common/lib/trpc/react"
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"
 import { useAtom } from "jotai"
 import { openAlertDialogAtom } from "@/store/ui.atom"

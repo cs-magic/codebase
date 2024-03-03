@@ -1,5 +1,5 @@
 // import { nanoid } from "nanoid"
-// import { api } from "@/trpc/react"
+// import { api } from "@/api/react"
 // import { toast } from "sonner"
 // import { useEffect } from "react"
 // import { useRouter } from "next/navigation"

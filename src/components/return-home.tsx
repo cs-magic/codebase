@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Button } from "@/common/components/ui/button"
+import { Button } from "../../packages/common/components/ui/button"
 import React from "react"
 
 export const ReturnHomeAlertDialog = ({ content }: { content: string }) => (

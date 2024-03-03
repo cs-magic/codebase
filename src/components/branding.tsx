@@ -1,15 +1,15 @@
 "use client"
 
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { INDIES_AVATARS, SPONSORS_BANNERS } from "@/config/system"
-import { Avatar, AvatarImage } from "@/common/components/ui/avatar"
+import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
 import { HTMLAttributes } from "react"
 import { BarChart } from "lucide-react"
-import { useSocketStore } from "@/common/lib/puser/socket"
+import { useSocketStore } from "../../packages/common/lib/puser/socket"
 import { StatusIcon } from "@/components/status-icon"
 import Link from "next/link"
-import { SeparatorContainer } from "@/common/components/separator-container"
-import { ImageEqualHeight } from "@/common/components/image-equal-height"
+import { SeparatorContainer } from "../../packages/common/components/separator-container"
+import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
 
 export const BrandTitle = ({
   withDescription,

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { pusherServerIdSchema } from "@/common/lib/puser/config"
+import { pusherServerIdSchema } from "../../packages/common/lib/puser/config"
 import { Message, MessageRole } from "@prisma/client"
 
 /**

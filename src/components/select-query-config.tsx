@@ -1,6 +1,6 @@
-import { buttonVariants } from "@/common/components/ui/button"
+import { buttonVariants } from "../../packages/common/components/ui/button"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { IQueryConfigInDB } from "@/schema/query-config"
 import { useAtom } from "jotai"
 
@@ -10,7 +10,7 @@ import {
   persistedQueryConfigsAtom,
   uiMaxQueryConfigsAtom,
 } from "@/store/query-config.atom"
-import { IconContainer } from "@/common/components/icon-container"
+import { IconContainer } from "../../packages/common/components/icon-container"
 
 export const SelectQueryConfig = ({
   queryConfig,

@@ -2,8 +2,8 @@
 import { BrandTitle } from "@/components/branding"
 import { QueryInHomePage } from "@/components/query-in-home-page"
 import { SelectScenario } from "@/components/select-scenario"
-import { Button } from "@/common/components/ui/button"
-import JoinComponents from "@/common/components/join-components"
+import { Button } from "../../../packages/common/components/ui/button"
+import JoinComponents from "../../../packages/common/components/join-components"
 import { ChevronDownIcon } from "lucide-react"
 import React from "react"
 import { useSession } from "next-auth/react"
@@ -15,7 +15,7 @@ import {
   persistedQueryConfigsAtom,
   uiSelectQueryConfigsDialogOpenAtom,
 } from "@/store/query-config.atom"
-import { FlexContainer } from "@/common/components/flex-container"
+import { FlexContainer } from "../../../packages/common/components/flex-container"
 
 export default function HomePage() {
   const session = useSession()

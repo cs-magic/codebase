@@ -1,9 +1,9 @@
 "use client"
 
 import "@/components/toolkits/tv/tv.css"
-import { AspectRatio } from "@/common/components/ui/aspect-ratio"
+import { AspectRatio } from "../../../../packages/common/components/ui/aspect-ratio"
 import { forwardRef, HTMLAttributes } from "react"
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../../../packages/common/lib/utils"
 import { useMeasure } from "react-use"
 
 /**

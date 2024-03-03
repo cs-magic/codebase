@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/common/components/ui/button"
+import { Button } from "../../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation-item"
 import { useAtom } from "jotai"

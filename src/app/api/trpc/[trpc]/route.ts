@@ -2,9 +2,9 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 import { type NextRequest } from "next/server"
 
 import { env } from "@/env"
-import { appRouter } from "@/common/lib/trpc/root"
+import { appRouter } from "@/api/routers/__root"
 
-import { createTRPCContext } from "@/common/lib/trpc/context"
+import { createTRPCContext } from "../../../../../packages/common/lib/trpc/context"
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -18,7 +18,7 @@ const createContext = async (req: NextRequest) => {
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    endpoint: "/api/trpc",
+    endpoint: "/api/api",
     req,
     router: appRouter,
     createContext: () => createContext(req),

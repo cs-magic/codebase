@@ -4,7 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-} from "@/common/components/ui/dialog"
+} from "../../../packages/common/components/ui/dialog"
 import { SettingsIcon } from "lucide-react"
 import {
   Select,
@@ -13,12 +13,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/common/components/ui/select"
+} from "../../../packages/common/components/ui/select"
 import { useAtom } from "jotai"
-import { Label } from "@/common/components/ui/label"
-import { smsProviderAtom } from "@/common/lib/sms/atom-state"
-import { SmsProviderType } from "@/common/lib/sms/schema"
-import { IconContainer } from "@/common/components/icon-container"
+import { Label } from "../../../packages/common/components/ui/label"
+import { smsProviderAtom } from "../../../packages/common/lib/sms/atom-state"
+import { SmsProviderType } from "../../../packages/common/lib/sms/schema"
+import { IconContainer } from "../../../packages/common/components/icon-container"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderAtom)

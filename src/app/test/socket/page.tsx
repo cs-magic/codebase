@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/common/components/ui/button"
-import { useSocketStore } from "@/common/lib/puser/socket"
+import { Button } from "../../../../packages/common/components/ui/button"
+import { useSocketStore } from "../../../../packages/common/lib/puser/socket"
 import { useEffect } from "react"
 import {
   Select,
@@ -10,9 +10,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/common/components/ui/select"
-import { PusherServerId } from "@/common/lib/puser/config"
-import { FlexContainer } from "@/common/components/flex-container"
+} from "../../../../packages/common/components/ui/select"
+import { PusherServerId } from "../../../../packages/common/lib/puser/config"
+import { FlexContainer } from "../../../../packages/common/components/flex-container"
 
 export default function TestSocketPage() {
   const { client, init, clean, serverId, setServerId } = useSocketStore(

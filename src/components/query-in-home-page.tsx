@@ -9,8 +9,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/common/components/ui/tooltip"
-import { cn } from "@/common/lib/utils"
+} from "../../packages/common/components/ui/tooltip"
+import { cn } from "../../packages/common/lib/utils"
 import { conversationStore } from "@/store/conversation.valtio"
 
 import {
@@ -21,10 +21,10 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "@/common/components/ui/alert-dialog"
+} from "../../packages/common/components/ui/alert-dialog"
 import { useConvQuery } from "@/hooks/use-query-conv"
-import { IconContainer } from "@/common/components/icon-container"
-import { TextareaAuto } from "@/common/components/textarea-auto"
+import { IconContainer } from "../../packages/common/components/icon-container"
+import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")

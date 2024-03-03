@@ -7,13 +7,13 @@ import {
   StopCircle,
   Unlock,
 } from "lucide-react"
-import { Avatar, AvatarImage } from "@/common/components/ui/avatar"
+import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { useSnapshot } from "valtio"
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { useEffect, useRef, useState } from "react"
 import { nanoid } from "nanoid"
-import { fetchSSE } from "@/common/lib/sse"
+import { fetchSSE } from "../../packages/common/lib/sse"
 import { conversationStore } from "@/store/conversation.valtio"
 import { IMessageInChat } from "@/schema/query-message"
 import { resetPAppSSE, selectPApp } from "@/store/app.valtio"
@@ -24,7 +24,7 @@ import {
   delQueryConfigAtom,
   uiSelectQueryConfigsDialogOpenAtom,
 } from "@/store/query-config.atom"
-import { IconContainer } from "@/common/components/icon-container"
+import { IconContainer } from "../../packages/common/components/icon-container"
 
 export const PAppComp = ({ app }: { app: IQueryConfigInChat }) => {
   const { id } = app

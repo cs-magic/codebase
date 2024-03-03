@@ -1,7 +1,7 @@
 "use client"
 
 import { PropsWithChildren, useEffect } from "react"
-import { useSocketStore } from "@/common/lib/puser/socket"
+import { useSocketStore } from "../../../packages/common/lib/puser/socket"
 
 export default function SocketProvider({ children }: PropsWithChildren) {
   // const { init, clean } = useSocketStore((state) => ({

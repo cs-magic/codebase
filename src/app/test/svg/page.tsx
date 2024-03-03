@@ -1,8 +1,8 @@
 "use client"
 
 import { Text2ImageAppSVG, Text2TextAppSVG, V2AGIBrand } from "@/config/assets"
-import { Label } from "@/common/components/ui/label"
-import { FlexContainer } from "@/common/components/flex-container"
+import { Label } from "../../../../packages/common/components/ui/label"
+import { FlexContainer } from "../../../../packages/common/components/flex-container"
 
 export default function TestSVGPage() {
   return (

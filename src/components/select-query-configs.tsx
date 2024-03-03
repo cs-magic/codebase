@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
-import { Dialog, DialogContent } from "@/common/components/ui/dialog"
-import { Label } from "@/common/components/ui/label"
+import { Dialog, DialogContent } from "../../packages/common/components/ui/dialog"
+import { Label } from "../../packages/common/components/ui/label"
 import { SelectQueryConfig } from "@/components/select-query-config"
-import { Separator } from "@/common/components/ui/separator"
-import { Input } from "@/common/components/ui/input"
+import { Separator } from "../../packages/common/components/ui/separator"
+import { Input } from "../../packages/common/components/ui/input"
 import { useAtom } from "jotai"
 
 import {

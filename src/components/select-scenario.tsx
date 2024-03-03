@@ -2,7 +2,7 @@ import {
   Select,
   SelectContent,
   SelectValue,
-} from "@/common/components/ui/select"
+} from "../../packages/common/components/ui/select"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
 

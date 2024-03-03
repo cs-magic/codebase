@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/common/components/ui/button"
+import { Button, buttonVariants } from "../../../packages/common/components/ui/button"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import {
@@ -6,11 +6,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/common/components/ui/dropdown-menu"
-import { cn } from "@/common/lib/utils"
+} from "../../../packages/common/components/ui/dropdown-menu"
+import { cn } from "../../../packages/common/lib/utils"
 
 import { useDelConversation } from "@/hooks/use-query-conv"
-import { IconContainer } from "@/common/components/icon-container"
+import { IconContainer } from "../../../packages/common/components/icon-container"
 
 export const ConversationListComp = ({
   conversation,

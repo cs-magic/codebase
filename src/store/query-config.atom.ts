@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { getNewId } from "@/common/lib/utils"
+import { getNewId } from "../../packages/common/lib/utils"
 import { atomWithStorage } from "jotai/utils"
 import { uiMainAreaAtom } from "@/store/ui.atom"
 import { BEST_VIEWPOINT } from "@/config/system"

@@ -3,7 +3,7 @@
 import { PAppComp } from "@/components/query-config"
 import { conversationStore } from "@/store/conversation.valtio"
 import { useSnapshot } from "valtio"
-import { cn } from "@/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { BEST_VIEWPOINT } from "@/config/system"
 import { useAtom } from "jotai"
 import { uiMainAreaAtom } from "@/store/ui.atom"
