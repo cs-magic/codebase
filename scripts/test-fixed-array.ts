@@ -1,5 +1,6 @@
 import { sum } from "lodash"
-import { FixedArray } from "@/lib/utils"
+
+import { FixedArray } from "@/common/schema/algo"
 
 export const testFixedArray = () => {
   const arr = new FixedArray(10)

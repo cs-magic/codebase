@@ -5,7 +5,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/common/components/ui/select"
 
 export const SelectPrompt = () => {
   return (

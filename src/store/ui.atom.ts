@@ -1,5 +1,7 @@
 import { atom } from "jotai"
-import { IDisplay } from "@/schema/common"
+
+import { IDisplay } from "@/common/schema/ui"
+import { uiLoadingAlertDialogAtom } from "@/common/store/ui"
 
 /**
  * main-area
@@ -16,10 +18,6 @@ export const openAlertDialogAtom = atom(null, (get, set, content: string) => {
   set(uiAlertDialogContent, content)
 })
 
-/**
- * alert dialog for loading
- */
-export const uiLoadingAlertDialogAtom = atom(false)
 export const lockUIAtom = atom(null, (get, set) => {
   set(uiLoadingAlertDialogAtom, true)
 })

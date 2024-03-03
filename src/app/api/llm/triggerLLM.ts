@@ -1,9 +1,9 @@
 "use server"
-import { callChatGPT } from "@/core/query-llm/server/models/openai"
+import { callChatGPT } from "@/server/models/openai"
 import { manager } from "@/app/api/llm/init"
 import { IRequest, ISSEEvent } from "@/app/api/llm/schema"
 
-import { ILLMMessage } from "@/core/query-llm/schema/message"
+import { ILLMMessage } from "@/schema/query-message"
 
 export const triggerLLM = async (context: {
   requestId: string

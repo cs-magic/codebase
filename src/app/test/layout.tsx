@@ -1,6 +1,6 @@
-import { Container } from "@/components/containers"
 import { PropsWithChildren } from "react"
+import { FlexContainer } from "@/common/components/flex-container"
 
 export default function TestLayout({ children }: PropsWithChildren) {
-  return <Container orientation={"vertical"}>{children}</Container>
+  return <FlexContainer orientation={"vertical"}>{children}</FlexContainer>
 }

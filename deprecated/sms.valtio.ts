@@ -1,5 +1,6 @@
 import { proxy } from "valtio"
-import { SmsStage } from "@/lib/sms/store"
+
+import { SmsStage } from "@/common/lib/sms/schema"
 
 export interface ISmsState {
   stage: SmsStage

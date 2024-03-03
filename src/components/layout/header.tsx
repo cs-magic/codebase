@@ -1,25 +1,25 @@
 "use client"
 import { IoApps } from "react-icons/io5"
-import { IconContainer } from "@/components/containers"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/common/components/ui/dropdown-menu"
 import Image from "next/image"
 import {
   DEFAULT_AVATAR,
   Text2ImageAppSVG,
   Text2TextAppSVG,
 } from "@/config/assets"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { AspectRatio } from "@/common/components/ui/aspect-ratio"
 import { BrandTitle } from "@/components/branding"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/common/lib/utils"
+import { Button } from "@/common/components/ui/button"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
 import { CircleUser } from "lucide-react"
+import { IconContainer } from "@/common/components/icon-container"
 
 export const UserButton = () => {
   const session = useSession()

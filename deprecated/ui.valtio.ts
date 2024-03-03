@@ -1,6 +1,7 @@
 import { proxy } from "valtio"
 import { BEST_VIEWPOINT } from "@/config/system"
-import { IDisplay } from "@/schema/common"
+
+import { IDisplay } from "@/common/schema/ui"
 
 export interface UIState {
   mainArea: IDisplay

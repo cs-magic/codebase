@@ -1,8 +1,8 @@
 import { proxy } from "valtio"
-import { IListConversation } from "@/core/query-llm/schema/conversation"
+import { IListConversation } from "@/schema/query-conv"
 import { last } from "lodash"
-import { IMessageInChat } from "@/core/query-llm/schema/message"
-import { IQueryConfigInChat } from "@/core/query-llm/schema/config"
+import { IMessageInChat } from "@/schema/query-message"
+import { IQueryConfigInChat } from "@/schema/query-config"
 
 class ConversationStore {
   /**

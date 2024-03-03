@@ -1,10 +1,9 @@
 "use client"
-import { Container } from "@/components/containers"
 import { BrandTitle } from "@/components/branding"
 import { QueryInHomePage } from "@/components/query-in-home-page"
 import { SelectScenario } from "@/components/select-scenario"
-import { Button } from "@/components/ui/button"
-import JoinComponents from "@/components/join-components"
+import { Button } from "@/common/components/ui/button"
+import JoinComponents from "@/common/components/join-components"
 import { ChevronDownIcon } from "lucide-react"
 import React from "react"
 import { useSession } from "next-auth/react"
@@ -13,9 +12,10 @@ import { BrandingFooter } from "@/components/layout/footer"
 import { useAtom } from "jotai"
 
 import {
-  queryConfigsAtom,
+  persistedQueryConfigsAtom,
   uiSelectQueryConfigsDialogOpenAtom,
-} from "@/core/query-llm/store/query-config.atom"
+} from "@/store/query-config.atom"
+import { FlexContainer } from "@/common/components/flex-container"
 
 export default function HomePage() {
   const session = useSession()
@@ -26,7 +26,7 @@ export default function HomePage() {
       <Header />
 
       <div className={"grow flex flex-col justify-center items-center "}>
-        <Container
+        <FlexContainer
           id={"main-container"}
           orientation={"vertical"}
           className={
@@ -42,7 +42,7 @@ export default function HomePage() {
           <ConfigApp />
 
           <QueryInHomePage />
-        </Container>
+        </FlexContainer>
       </div>
 
       <BrandingFooter />
@@ -51,7 +51,7 @@ export default function HomePage() {
 }
 
 const ConfigApp = () => {
-  const [queryConfigs] = useAtom(queryConfigsAtom)
+  const [queryConfigs] = useAtom(persistedQueryConfigsAtom)
   const [, setOpen] = useAtom(uiSelectQueryConfigsDialogOpenAtom)
 
   return (

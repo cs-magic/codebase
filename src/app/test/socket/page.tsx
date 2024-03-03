@@ -1,8 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useSocketStore } from "@/lib/socket"
-import { Container } from "@/components/containers"
+import { Button } from "@/common/components/ui/button"
+import { useSocketStore } from "@/common/lib/puser/socket"
 import { useEffect } from "react"
 import {
   Select,
@@ -11,8 +10,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { PusherServerId } from "@/lib/puser/config"
+} from "@/common/components/ui/select"
+import { PusherServerId } from "@/common/lib/puser/config"
+import { FlexContainer } from "@/common/components/flex-container"
 
 export default function TestSocketPage() {
   const { client, init, clean, serverId, setServerId } = useSocketStore(
@@ -41,7 +41,7 @@ export default function TestSocketPage() {
   }, [])
 
   return (
-    <Container orientation={"vertical"}>
+    <FlexContainer orientation={"vertical"}>
       <Select value={serverId} onValueChange={setServerId}>
         <SelectTrigger>
           <SelectValue />
@@ -72,6 +72,6 @@ export default function TestSocketPage() {
       >
         发送数据
       </Button>
-    </Container>
+    </FlexContainer>
   )
 }

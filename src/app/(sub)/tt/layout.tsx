@@ -1,10 +1,10 @@
 "use client"
-import { Sidebar } from "@/components/sidebar"
-import { Separator } from "@/components/ui/separator"
+import { Sidebar } from "@/components/layout/sidebar"
+import { Separator } from "@/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
-import { api } from "@/lib/trpc/react"
-import { queryConvsAtom } from "@/core/query-llm/store/query-conv.atom"
+import { api } from "@/common/lib/trpc/react"
+import { queryConvsAtom } from "@/store/query-conv.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
   const [, setConversations] = useAtom(queryConvsAtom)

@@ -2,25 +2,23 @@ import "@/styles/globals.css"
 
 import { Inter } from "next/font/google"
 
-import { TRPCReactProvider } from "@/lib/trpc/react"
+import { TRPCReactProvider } from "@/common/lib/trpc/react"
 import ThemeProvider from "@/components/providers/theme"
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/common/components/ui/sonner"
 import { SessionProvider } from "@/components/providers/session"
-import {
-  ContentAlertDialog,
-  LoadingAlertDialog,
-} from "@/components/common/dialogs"
 import { type Viewport } from "next"
-import { cn } from "@/lib/utils"
-import { TooltipProvider } from "@/components/ui/tooltip"
+import { cn } from "@/common/lib/utils"
+import { TooltipProvider } from "@/common/components/ui/tooltip"
 import SocketProvider from "@/components/providers/socket"
 import { AppStatus } from "@/components/branding"
-import { SelectQueryConfigsDialog } from "@/core/query-llm/components/select-query-configs-dialog"
+import { SelectQueryConfigs } from "@/components/select-query-configs"
 import LLMProvider from "@/components/providers/llm-provider"
 import { ScreenProvider } from "@/components/providers/screen-provider"
-import { AutoHeight } from "@/components/auto-height"
-import { Devtool } from "@/components/devtool"
+import { AutoHeight } from "@/components/toolkits/auto-height"
+import { Devtool } from "@/components/toolkits/devtool"
 import { env } from "@/env"
+import { LoadingAlertDialog } from "@/common/components/loading-alert-dialog"
+import { ContentAlertDialog } from "@/common/components/content-alert-dialog"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -70,7 +68,7 @@ export default function RootLayout({
                         <LoadingAlertDialog />
                         <ContentAlertDialog />
 
-                        <SelectQueryConfigsDialog />
+                        <SelectQueryConfigs />
 
                         <AutoHeight />
 

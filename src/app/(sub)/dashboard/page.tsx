@@ -5,13 +5,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
+} from "@/common/components/ui/card"
+import { Avatar, AvatarImage } from "@/common/components/ui/avatar"
 import { signOut, useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { DEFAULT_AVATAR } from "@/config/assets"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/common/components/ui/button"
 
 export default function DashboardPage() {
   const session = useSession()

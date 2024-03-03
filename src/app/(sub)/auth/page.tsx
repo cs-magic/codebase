@@ -3,11 +3,11 @@
 /**
  * ui ref: https://clerk.com/
  */
-import { AuthContainer } from "@/components/containers"
-import { SmsSendCode } from "@/lib/sms/components/send-code"
-import { SmsSignIn } from "@/lib/sms/components/sign-in"
-import { smsStageAtom } from "@/lib/sms/store"
+import { SmsSendCode } from "@/common/lib/sms/components/send-code"
+import { SmsSignIn } from "@/common/lib/sms/components/sign-in"
+import { smsStageAtom } from "@/common/lib/sms/atom-state"
 import { useAtom } from "jotai"
+import { AuthContainer } from "@/components/auth-container"
 
 export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)

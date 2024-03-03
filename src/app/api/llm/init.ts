@@ -1,4 +1,4 @@
-import { staticCreate } from "@/lib/utils"
+import { staticCreate } from "@/common/lib/utils"
 
 import { IRequest } from "@/app/api/llm/schema"
 

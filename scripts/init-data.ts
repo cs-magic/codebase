@@ -1,5 +1,5 @@
 import { Company } from "@prisma/client"
-import { db } from "@/lib/db"
+import { db } from "@/common/lib/db"
 
 export type CompanyId = "openai" | "moonshot"
 export const supportedCompanies: Record<CompanyId, Company> = {

@@ -1,21 +1,18 @@
 "use client"
 
-import { Textarea } from "@/components/common/textarea"
 import { useState } from "react"
 import { signIn, useSession } from "next-auth/react"
 import { useSnapshot } from "valtio"
 import { toast } from "sonner"
-import { IconContainer } from "@/components/containers"
 import { ArrowUpIcon, Paperclip } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
+} from "@/common/components/ui/tooltip"
+import { cn } from "@/common/lib/utils"
 import { conversationStore } from "@/store/conversation.valtio"
 
-import { useConvQuery } from "@/store/use-conv"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +21,10 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from "@/common/components/ui/alert-dialog"
+import { useConvQuery } from "@/hooks/use-query-conv"
+import { IconContainer } from "@/common/components/icon-container"
+import { TextareaAuto } from "@/common/components/textarea-auto"
 
 export const QueryInHomePage = () => {
   const [input, setInput] = useState("")
@@ -51,7 +51,7 @@ export const QueryInHomePage = () => {
           <Paperclip />
         </IconContainer>
 
-        <Textarea
+        <TextareaAuto
           className={"px-2 grow"}
           autoFocus
           // value={input}
