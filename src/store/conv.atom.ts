@@ -1,15 +1,10 @@
 import { atom } from "jotai"
 
-import { IConvClient } from "@/schema/conv"
+import { IConvDetail, IConvSummary } from "@/schema/conv"
 
-export const convsAtom = atom<IConvClient[]>([])
-export const convIdAtom = atom("")
-export const convAtom = atom((get) =>
-  get(convsAtom).find((c) => c.id === get(convIdAtom)),
-)
+export const convsAtom = atom<IConvSummary[]>([])
+export const convDetailAtom = atom<IConvDetail | null>(null)
+export const convIdAtom = atom((get) => get(convDetailAtom)?.id)
 
-export const latestRequestAtom = atom((get) => {
-  const conv = get(convAtom)
-  // queries 是倒序拿的
-  if (conv && "requests" in conv) return conv.requests[0]
-})
+// requests 是倒序的，所以最新的是在第一个
+export const latestRequestAtom = atom((get) => get(convDetailAtom)?.requests[0])

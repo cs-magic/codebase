@@ -7,7 +7,7 @@ import { IMessageInChat } from "@/schema/message"
 import { resetPAppSSE } from "@/store/app.valtio"
 import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
-import { convAtom } from "@/store/conv.atom"
+import { convDetailAtom } from "@/store/conv.atom"
 import { TopBar } from "@/components/app-topbar"
 import { MessagesComp } from "@/components/app-messages"
 
@@ -18,7 +18,7 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
   const [fetching, setFetching] = useState(false)
   const messageId = nanoid()
 
-  const [conv] = useAtom(convAtom)
+  const [conv] = useAtom(convDetailAtom)
 
   useEffect(() => {
     if (!app.needFetchLLM || !conv) return

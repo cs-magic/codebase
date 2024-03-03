@@ -4,7 +4,7 @@ import { useAtom } from "jotai"
 import { toast } from "sonner"
 
 import {
-  convAtom,
+  convDetailAtom,
   convIdAtom,
   convsAtom,
   latestRequestAtom,
@@ -70,8 +70,8 @@ export function useAddQueryConv() {
   const router = useRouter()
   const addConversation = api.queryLLM.addQueryConv.useMutation()
   const [, setConvs] = useAtom(convsAtom)
-  const [, setConvId] = useAtom(convIdAtom)
 
+  const utils = api.useUtils()
   return (title?: string) => {
     // 数据库新增
     return addConversation.mutateAsync(
@@ -83,14 +83,9 @@ export function useAddQueryConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
-          // 会话列表更新，是超集
-          setConvs((convs) => [data, ...convs])
-
-          // 会话详情更新
-          setConvId(data.id)
-
+          void utils.queryLLM.listConv.invalidate()
           // 路由跳转，并且避免再拿数据
-          router.push(`/tt/${data.id}?fetched=true`) // 异步
+          router.push(`/tt/${data.id}`) // 异步
         },
       },
     )
@@ -116,8 +111,8 @@ export function useDelConv() {
           toast.error("删除失败！")
         },
         onSuccess: () => {
+          // 单删和多删都会导致自己受影响，所以去hook里写收尾动作
           setConvs((cs) => cs.filter((c) => c.id !== id))
-          if (id === convId) router.push("/tt")
         },
       },
     )
@@ -129,10 +124,11 @@ export const useQueryInChat = () => {
   const [configs] = useAtom(persistedAppsAtom)
   const [queries] = useAtom(latestRequestAtom)
   const [query] = useAtom(userQueryAtom)
-  const [conv] = useAtom(convAtom)
+  const [conv] = useAtom(convDetailAtom)
+  const [convId] = useAtom(convIdAtom)
 
   return () => {
-    console.log("useQueryInChat: ", { conv, query })
+    console.log("useQueryInChat: ", { convs, conv, convId, query })
     if (!conv || !query) return console.error("不满足发送条件")
   }
 }

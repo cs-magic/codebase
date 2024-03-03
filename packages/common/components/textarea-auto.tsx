@@ -7,6 +7,7 @@ import { cn } from "../lib/utils"
 import { useAtom } from "jotai"
 
 import { userQueryAtom } from "../store/user"
+import { convIdAtom } from "@/store/conv.atom"
 
 export const TextareaAuto = forwardRef<
   HTMLTextAreaElement,
@@ -18,6 +19,7 @@ export const TextareaAuto = forwardRef<
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
   const [, setUserQuery] = useAtom(userQueryAtom)
+  const [convId] = useAtom(convIdAtom)
 
   return (
     <ReactTextareaAutoSize
@@ -35,7 +37,7 @@ export const TextareaAuto = forwardRef<
         // 更新用户的输入
         const value = event.currentTarget.value
         setUserQuery(value)
-        console.log({ value })
+        console.log({ convId, value })
         if (onChange) onChange(event)
       }}
       onKeyDown={(event) => {

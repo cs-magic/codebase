@@ -6,7 +6,7 @@ import {
 import { db } from "../../packages/common/lib/db"
 import { z } from "zod"
 import { modelViewSchema } from "@/schema/model"
-import { convDetailViewSchema, convListViewSchema } from "@/schema/conv"
+import { convDetailSchema, convSummarySchema } from "@/schema/conv"
 import { AppInDBSchema } from "@/schema/app"
 
 export const queryLLMRouter = createTRPCRouter({
@@ -33,7 +33,7 @@ export const queryLLMRouter = createTRPCRouter({
   listConv: protectedProcedure.query(() =>
     db.conv.findMany({
       orderBy: { updatedAt: "desc" },
-      ...convListViewSchema,
+      ...convSummarySchema,
     }),
   ),
 
@@ -42,7 +42,7 @@ export const queryLLMRouter = createTRPCRouter({
     .query(async ({ input }) =>
       db.conv.findUniqueOrThrow({
         where: input,
-        ...convDetailViewSchema,
+        ...convDetailSchema,
       }),
     ),
 
@@ -54,7 +54,7 @@ export const queryLLMRouter = createTRPCRouter({
     .mutation(({ input, ctx }) =>
       db.conv.create({
         data: { ...input, fromUserId: ctx.user.id },
-        ...convDetailViewSchema,
+        ...convDetailSchema,
       }),
     ),
 
