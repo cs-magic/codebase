@@ -1,9 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
-import { Dialog, DialogContent } from "../../packages/common/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+} from "../../packages/common/components/ui/dialog"
 import { Label } from "../../packages/common/components/ui/label"
-import { SelectQueryConfig } from "@/components/select-query-config"
+import { QueryConfigSelector } from "@/components/query-config-selector"
 import { Separator } from "../../packages/common/components/ui/separator"
 import { Input } from "../../packages/common/components/ui/input"
 import { useAtom } from "jotai"
@@ -15,7 +18,7 @@ import {
   uiSelectQueryConfigsDialogOpenAtom,
 } from "@/store/query-config.atom"
 
-export const SelectQueryConfigs = () => {
+export const QueryConfigsSelector = () => {
   const [allQueryConfigs] = useAtom(allQueryConfigsAtom)
   const [persistedQueryConfigs] = useAtom(persistedQueryConfigsAtom)
 
@@ -34,7 +37,7 @@ export const SelectQueryConfigs = () => {
             </Label>
 
             {persistedQueryConfigs.map((m, index) => (
-              <SelectQueryConfig key={index} queryConfig={m} type={"toDel"} />
+              <QueryConfigSelector key={index} queryConfig={m} type={"toDel"} />
             ))}
           </div>
 
@@ -65,7 +68,11 @@ export const SelectQueryConfigs = () => {
                     m.model.company.title.toLowerCase().includes(filterPApps)),
               )
               .map((m, index) => (
-                <SelectQueryConfig key={index} queryConfig={m} type={"toAdd"} />
+                <QueryConfigSelector
+                  key={index}
+                  queryConfig={m}
+                  type={"toAdd"}
+                />
               ))}
           </div>
         </div>

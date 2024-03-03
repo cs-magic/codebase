@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "../../packages/common/components/ui/select"
 
-export const SelectPrompt = () => {
+export const PromptSelector = () => {
   return (
     <Select>
       <SelectTrigger>

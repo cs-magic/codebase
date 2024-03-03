@@ -12,7 +12,7 @@ import {
 } from "@/store/query-config.atom"
 import { IconContainer } from "../../packages/common/components/icon-container"
 
-export const SelectQueryConfig = ({
+export const QueryConfigSelector = ({
   queryConfig,
   type,
 }: {

@@ -6,12 +6,12 @@ import {
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
 
-import { SelectModelItem } from "@/components/select-model-item"
+import { ModelSelector } from "@/components/model-selector"
 import { useSnapshot } from "valtio"
 import { scenarioState } from "@/hooks/use-scenario"
 import { ScenarioType } from "@/schema/scenario"
 
-export const SelectScenario = () => {
+export const ScenarioSelector = () => {
   const { type } = useSnapshot(scenarioState)
   return (
     <Select
@@ -23,12 +23,12 @@ export const SelectScenario = () => {
       </SelectPrimitiveTrigger>
 
       <SelectContent>
-        <SelectModelItem
+        <ModelSelector
           value={"text2text"}
           Cover={Text2TextAppSVG}
           label={"文生文"}
         />
-        <SelectModelItem
+        <ModelSelector
           value={"text2image"}
           Cover={Text2ImageAppSVG}
           label={"文生图"}

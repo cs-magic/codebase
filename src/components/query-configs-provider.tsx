@@ -1,7 +1,7 @@
 "use client"
 
 import { PropsWithChildren, useEffect } from "react"
-import { api } from "../../../packages/common/lib/trpc/react"
+import { api } from "../../packages/common/lib/trpc/react"
 import { useAtom } from "jotai"
 
 import { allQueryConfigsAtom } from "@/store/query-config.atom"
@@ -11,7 +11,7 @@ import { allQueryConfigsAtom } from "@/store/query-config.atom"
  * @param children
  * @constructor
  */
-export default function LlmProvider({ children }: PropsWithChildren) {
+export default function QueryConfigsProvider({ children }: PropsWithChildren) {
   const { data: queryConfigs } = api.queryLLM.listQueryConfigs.useQuery()
   const [, setQueryConfigs] = useAtom(allQueryConfigsAtom)
 

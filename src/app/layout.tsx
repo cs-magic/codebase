@@ -3,17 +3,16 @@ import "@/styles/globals.css"
 import { Inter } from "next/font/google"
 
 import { TRPCReactProvider } from "../../packages/common/lib/trpc/react"
-import ThemeProvider from "@/components/providers/theme"
+import ThemeProvider from "../../packages/common/components/theme.provider"
 import { Toaster } from "../../packages/common/components/ui/sonner"
-import { SessionProvider } from "@/components/providers/session"
+import { SessionProvider } from "../../packages/common/components/session.provider"
 import { type Viewport } from "next"
 import { cn } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
-import SocketProvider from "@/components/providers/socket"
 import { AppStatus } from "@/components/branding"
-import { SelectQueryConfigs } from "@/components/select-query-configs"
-import LLMProvider from "@/components/providers/llm-provider"
-import { ScreenProvider } from "@/components/providers/screen-provider"
+import { QueryConfigsSelector } from "@/components/query-configs-selector"
+import LLMProvider from "@/components/query-configs-provider"
+import { ScreenProvider } from "../../packages/common/components/screen.provider"
 import { AutoHeight } from "@/components/toolkits/auto-height"
 import { Devtool } from "@/components/toolkits/devtool"
 import { env } from "@/env"
@@ -48,41 +47,39 @@ export default function RootLayout({
     <html lang="zh" suppressHydrationWarning>
       <body className={cn(`font-sans`, inter.variable)}>
         {/*data layer*/}
-        <SocketProvider>
-          <SessionProvider>
-            <TRPCReactProvider>
-              <LLMProvider>
-                {/*ui layer */}
-                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                  <TooltipProvider>
-                    <ScreenProvider>
-                      <main className={"w-full h-full flex flex-col relative"}>
-                        {children}
+        <SessionProvider>
+          <TRPCReactProvider>
+            <LLMProvider>
+              {/*ui layer */}
+              <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                <TooltipProvider>
+                  <ScreenProvider>
+                    <main className={"w-full h-full flex flex-col relative"}>
+                      {children}
 
-                        <Toaster
-                          richColors
-                          position={"top-right"}
-                          duration={3000}
-                        />
+                      <Toaster
+                        richColors
+                        position={"top-right"}
+                        duration={3000}
+                      />
 
-                        <LoadingAlertDialog />
-                        <ContentAlertDialog />
+                      <LoadingAlertDialog />
+                      <ContentAlertDialog />
 
-                        <SelectQueryConfigs />
+                      <QueryConfigsSelector />
 
-                        <AutoHeight />
+                      <AutoHeight />
 
-                        <AppStatus />
+                      <AppStatus />
 
-                        {env.NODE_ENV === "development" && <Devtool />}
-                      </main>
-                    </ScreenProvider>
-                  </TooltipProvider>
-                </ThemeProvider>
-              </LLMProvider>
-            </TRPCReactProvider>
-          </SessionProvider>
-        </SocketProvider>
+                      {env.NODE_ENV === "development" && <Devtool />}
+                    </main>
+                  </ScreenProvider>
+                </TooltipProvider>
+              </ThemeProvider>
+            </LLMProvider>
+          </TRPCReactProvider>
+        </SessionProvider>
       </body>
     </html>
   )

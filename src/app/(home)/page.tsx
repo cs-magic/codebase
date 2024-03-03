@@ -1,7 +1,7 @@
 "use client"
 import { BrandTitle } from "@/components/branding"
 import { QueryInHomePage } from "@/components/query-in-home-page"
-import { SelectScenario } from "@/components/select-scenario"
+import { ScenarioSelector } from "@/components/scenario-selector"
 import { Button } from "../../../packages/common/components/ui/button"
 import JoinComponents from "../../../packages/common/components/join-components"
 import { ChevronDownIcon } from "lucide-react"
@@ -56,7 +56,7 @@ const ConfigApp = () => {
 
   return (
     <div className={"flex items-center gap-2"}>
-      <SelectScenario />
+      <ScenarioSelector />
 
       <Button variant={"outline"} onClick={() => setOpen(true)}>
         <span className={"text-muted-foreground"}>模型对比：</span>
@@ -75,7 +75,7 @@ const ConfigApp = () => {
 
         <ChevronDownIcon className={"w-4 h-4 text-muted-foreground ml-1"} />
       </Button>
-      {/*<SelectPrompt/>*/}
+      {/*<PromptSelector/>*/}
     </div>
   )
 }
