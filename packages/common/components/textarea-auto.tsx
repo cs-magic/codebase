@@ -18,7 +18,7 @@ export const TextareaAuto = forwardRef<
   const mounted = useMounted()
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
-  const [, setUserQuery] = useAtom(userPromptAtom)
+  const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [convId] = useAtom(convIdAtom)
 
   return (
@@ -33,10 +33,11 @@ export const TextareaAuto = forwardRef<
         "resize-none focus-visible:outline-none bg-transparent",
         className,
       )}
+      value={prompt}
       onChange={(event) => {
         // 更新用户的输入
         const value = event.currentTarget.value
-        setUserQuery(value)
+        setPrompt(value)
         console.log({ convId, value })
         if (onChange) onChange(event)
       }}
