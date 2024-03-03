@@ -1,5 +1,9 @@
 # Sokka AI !
 
+## Todo
+
+- [ ] 研究怎么把 trpc 静态编译那玩意给 generic 了
+
 ## Architecture
 
 ### 要点
@@ -7,11 +11,14 @@
 - 后台静默流是可以不做的（或者高级版？），因为需要维护一个进程池，没有必要，用户打断我们即中止
 - 消息的回溯是可以不做的（或者高级版？），因为要考虑数据库同步问题，以及组装上下文到底是在客户端还是服务端
 - 【乐观刷新】前期为了保证开发速度与质量，可以暂时先不用
+- 【状态管理】jotai vs zustand vs vs valtio
 
-### conversation
 
-- conversation -- papp -- model -- company
-- papp -- message
+### Conversation
+
+- queryConv --> queryRequest --> queryResponse
+- queryRequest = queryContext + n * queryConfig
+- queryConfig -- queryResponse
 
 ### api ref
 
@@ -77,9 +84,14 @@ const Credentials = (
 
 ## BUGFIX
 
-- [ ] `import sum from "lodash/sum"`
+### - [x] `import sum from "lodash/sum"`
 
-这个会导致 `yarn update` 在 `spawn` 里编译时失败
+问题： 这个会导致 `yarn update` 在 `spawn` 里编译时失败。
+
+解决：将 `@types/lodash` 加入 prod 依赖即可。
+
+原因分析：还没有完全明白，就是在全新的shell里编译好像会导致node_modules不符合预期，这个可以做一个新的todo。
+
 
 ## How do I deploy this?
 
