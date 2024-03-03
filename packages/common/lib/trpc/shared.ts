@@ -12,7 +12,7 @@ function getBaseUrl() {
 }
 
 export function getUrl() {
-  return getBaseUrl() + "/api/api"
+  return getBaseUrl() + "/api/trpc"
 }
 
 export type AppRouter = _AppRouter

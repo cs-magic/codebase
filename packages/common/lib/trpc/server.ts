@@ -19,7 +19,7 @@ import { createTRPCContext } from "./context"
  */
 const createContext = cache(() => {
   const heads = new Headers(headers())
-  heads.set("x-api-source", "rsc")
+  heads.set("x-trpc-source", "rsc")
 
   return createTRPCContext({
     headers: heads,
