@@ -7,18 +7,18 @@ import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
 import { App } from ".prisma/client"
 
 export const triggerLLM = async ({
-  requestId,
+  triggerID,
   app,
   context,
 }: {
-  requestId: string
+  triggerID: string
   app: App
   context: ILLMMessage[]
   // todo: more args
 }) => {
   // register into manger for later requests to read
 
-  const r: IRequest = (manager[requestId] = {
+  const r: IRequest = (manager[triggerID] = {
     finished: false,
     data: [],
     clients: [],
@@ -44,7 +44,7 @@ export const triggerLLM = async ({
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string
-          console.log("[llm] token: ", { requestId, token })
+          console.log("[llm] token: ", { triggerID: triggerID, token })
           push({ event: "onData", data: token })
         }
       } else {

@@ -1,39 +1,26 @@
-import { useSnapshot } from "valtio"
-import { conversationStore } from "@/store/conv.valtio"
 import { useEffect, useRef } from "react"
-import { IMessageInChat } from "@/schema/message"
 import { MessageComp } from "./app-message"
+import { useAtom } from "jotai/index"
+import { getAppContextAtom } from "@/store/request.atom"
 
 export const MessagesComp = ({
-  id,
+  appId,
   logo,
 }: {
-  id: string
+  appId: string
   logo: string | null
 }) => {
-  const { messages, context } = useSnapshot(conversationStore)
+  const [getAppContext] = useAtom(getAppContextAtom)
+  const context = getAppContext(appId)
 
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
     refScroll.current?.scrollIntoView({ behavior: "auto" })
-  }, [messages])
-
-  const theMessages: IMessageInChat[] = []
-  let cIndex = 0
-  messages.forEach((m) => {
-    if (cIndex >= context.length) {
-      if (m.id === id) theMessages.push(m)
-    } else {
-      if (m.id === context[cIndex]!.id) {
-        theMessages.push(m)
-        ++cIndex
-      }
-    }
-  })
+  }, [context])
 
   return (
     <div className={"grow overflow-auto"}>
-      {theMessages.map((m, index) => (
+      {context.map((m, index) => (
         <MessageComp m={m} logo={logo} key={index} />
       ))}
 

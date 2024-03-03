@@ -7,10 +7,15 @@ import {
 import { db } from "../../packages/common/lib/db"
 import { z } from "zod"
 import { modelViewSchema } from "@/schema/model"
-import { convDetailSchema, convSummarySchema } from "@/schema/conv"
+import {
+  convDetailSchema,
+  convSummarySchema,
+  requestSchema,
+} from "@/schema/conv"
 import { AppInDBSchema } from "@/schema/app"
 import { llmMessageSchema } from "@/schema/message"
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
+import { getTriggerID } from "@/store/request.atom"
 
 export const queryLLMRouter = createTRPCRouter({
   listModels: publicProcedure.query(() =>
@@ -87,6 +92,7 @@ export const queryLLMRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const context = input.context
       const request = await db.request.create({
+        ...requestSchema,
         data: {
           conv: {
             connect: {
@@ -106,16 +112,14 @@ export const queryLLMRouter = createTRPCRouter({
             })),
           },
         },
-        include: {
-          apps: true,
-        },
       })
 
-      return Promise.all(
-        request.apps.map(async (app) => {
-          const requestId = `${input.convId}-${request.id}-${app.id}`
-          return await triggerLLM({ app, context, requestId })
+      await Promise.all(
+        request.responses.map(async (r) => {
+          const triggerID = getTriggerID(input.convId, request.id, r.app.id)
+          await triggerLLM({ app: r.app, context, triggerID })
         }),
       )
+      return request
     }),
 })

@@ -1,39 +1,45 @@
 import { cn } from "../../packages/common/lib/utils"
 import { useEffect, useState } from "react"
-import { nanoid } from "nanoid"
 import { fetchSSE } from "../../packages/common/lib/sse"
-import { conversationStore } from "@/store/conv.valtio"
-import { IMessageInChat } from "@/schema/message"
-import { resetPAppSSE } from "@/store/app.valtio"
 import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
 import { convDetailAtom } from "@/store/conv.atom"
 import { TopBar } from "@/components/app-topbar"
 import { MessagesComp } from "@/components/app-messages"
+import { IMessageInChat } from "@/schema/message"
+import {
+  appFinishedSSEAtom,
+  appsShouldSSEAtom,
+  getTriggerID,
+  requestIDAtom,
+} from "@/store/request.atom"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app
 
   const [, setError] = useState("")
   const [fetching, setFetching] = useState(false)
-  const messageId = nanoid()
 
   const [conv] = useAtom(convDetailAtom)
+  const [appsShouldSSE] = useAtom(appsShouldSSEAtom)
+  const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
+  const [requestID] = useAtom(requestIDAtom)
+  const shouldSSE = appsShouldSSE.includes(
+    getTriggerID(conv?.id ?? "", requestID, app.id),
+  )
 
   useEffect(() => {
-    if (!app.needFetchLLM || !conv) return
+    if (!shouldSSE) return
+
+    // todo: update message
     const message: IMessageInChat = {
       role: "assistant",
       content: "",
-      id: messageId,
       updatedAt: new Date(),
-      conversationId: conv.id,
-      appId: id,
-      parentId: null, // todo
     }
 
-    conversationStore.messages.push(message)
-    void fetchSSE(`/api/llm?r=${id}`, {
+    console.log("-- fetching sse")
+    void fetchSSE(`/api/llm?r=${requestID}`, {
       onOpen: () => {
         setFetching(true)
       },
@@ -41,18 +47,20 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
         message.content += data
       },
       onError: (data) => {
+        console.error("-- fetched error: ", data)
         setError(data)
         message.content = data
         message.isError = true
       },
       onFinal: () => {
+        // todo: 在服务端维护
+        appFinishedSSE(app.id)
         setFetching(false)
-        resetPAppSSE(id)
       },
     })
-  }, [app.needFetchLLM])
+  }, [shouldSSE])
 
-  // console.log({ error })
+  console.log({ shouldSSE })
 
   return (
     <div
@@ -60,9 +68,9 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
         "w-full h-full overflow-hidden flex flex-col relative border-t border-r",
       )}
     >
-      <TopBar queryConfigId={id} title={app?.model.title} fetching={fetching} />
+      <TopBar appID={id} title={app?.model.title} fetching={fetching} />
 
-      <MessagesComp id={id} logo={app?.model.logo} />
+      <MessagesComp appId={id} logo={app?.model.logo} />
     </div>
   )
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import { AppComp } from "@/components/app"
-import { conversationStore } from "@/store/conv.valtio"
 import { cn } from "../../packages/common/lib/utils"
 import { useAtom } from "jotai"
 
@@ -13,8 +12,7 @@ export const QueryConfigsComp = () => {
   const [apps] = useAtom(persistedAppsAtom)
   const [mainArea] = useAtom(uiMainAreaAtom)
   const { width } = mainArea
-  const cnt = conversationStore.apps.length
-  const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), cnt)
+  const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), apps.length)
 
   return (
     <div

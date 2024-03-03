@@ -13,7 +13,8 @@ export const allAppsAtom = atom<IAppInDB[]>([])
 /**
  * user query configs in local
  */
-export const persistedAppsAtom = atomWithStorage<IAppInDB[]>("apps", [])
+export const persistedAppsAtom = atomWithStorage<IAppInDB[]>("conv.apps", [])
+export const selectedAppIDAtom = atomWithStorage("conv.apps.selected", "")
 
 export const uiSelectAppsDialogOpenAtom = atom(false)
 

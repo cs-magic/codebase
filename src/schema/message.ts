@@ -1,5 +1,4 @@
 import { z } from "zod"
-import { pusherServerIdSchema } from "../../packages/common/lib/puser/config"
 
 export const messageRoleSchema = z.union([
   z.literal("user"),
@@ -18,8 +17,7 @@ export const llmMessageSchema = z.object({
 })
 export type ILLMMessage = z.infer<typeof llmMessageSchema>
 
-export const createMessageSchema = z.object({
-  pusherServerId: pusherServerIdSchema.optional(),
-  id: z.string().nullable(),
-  text: z.string(),
-})
+export type IMessageInChat = ILLMMessage & {
+  updatedAt: Date
+  isError?: boolean
+}

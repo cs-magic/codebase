@@ -4,15 +4,11 @@ import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import {
-  convDetailAtom,
-  convIdAtom,
-  convsAtom,
-  contextAtom,
-} from "@/store/conv.atom"
+import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv.atom"
 import { persistedAppsAtom } from "@/store/app.atom"
 import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useQueryInChat } from "@/hooks/use-conv-query"
+import { contextAtom } from "@/store/request.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()

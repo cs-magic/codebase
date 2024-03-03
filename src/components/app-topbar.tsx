@@ -1,7 +1,10 @@
 import { useAtom } from "jotai"
-import { delAppAtom, uiSelectAppsDialogOpenAtom } from "@/store/app.atom"
-import { useSnapshot } from "valtio"
-import { conversationStore } from "@/store/conv.valtio"
+import {
+  delAppAtom,
+  persistedAppsAtom,
+  selectedAppIDAtom,
+  uiSelectAppsDialogOpenAtom,
+} from "@/store/app.atom"
 import {
   Lock,
   MinusCircleIcon,
@@ -14,17 +17,18 @@ import { cn } from "../../packages/common/lib/utils"
 import { IconContainer } from "../../packages/common/components/icon-container"
 
 export const TopBar = ({
-  queryConfigId,
+  appID,
   title,
   fetching,
 }: {
-  queryConfigId: string
+  appID: string
   title: string
   fetching: boolean
 }) => {
-  const [, delQueryConfig] = useAtom(delAppAtom)
-  const { apps, curPApp } = useSnapshot(conversationStore)
-  const selected = queryConfigId === curPApp?.id
+  const [, delApp] = useAtom(delAppAtom)
+  const [apps] = useAtom(persistedAppsAtom)
+  const [selectdAppID] = useAtom(selectedAppIDAtom)
+  const selected = appID === selectdAppID
   const LockOrNot = selected ? Lock : Unlock
   // console.log({ appId, currentPAppId })
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
@@ -40,9 +44,7 @@ export const TopBar = ({
         <div className={"w-full flex gap-2 items-baseline"}>
           <span className={"truncate"}>{title}</span>
 
-          <span className={"text-muted-foreground text-xs"}>
-            {queryConfigId}
-          </span>
+          <span className={"text-muted-foreground text-xs"}>{appID}</span>
         </div>
       </div>
       <div className={"grow"} />
@@ -70,7 +72,7 @@ export const TopBar = ({
         tooltipContent={"删除一个App（注意，暂不可恢复）"}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void delQueryConfig(queryConfigId)
+          void delApp(appID)
         }}
       >
         <MinusCircleIcon />

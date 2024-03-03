@@ -10,18 +10,22 @@ export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   },
 })
 export type IConvSummary = Prisma.ConvGetPayload<typeof convSummarySchema>
+
+export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
+  include: {
+    responses: {
+      include: {
+        app: AppInDBSchema,
+      },
+    },
+  },
+})
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
     requests: {
+      ...requestSchema,
       orderBy: {
         updatedAt: "desc",
-      },
-      include: {
-        responses: {
-          include: {
-            app: AppInDBSchema,
-          },
-        },
       },
     },
   },

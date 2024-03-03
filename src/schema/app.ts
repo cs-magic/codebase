@@ -10,6 +10,4 @@ export const AppInDBSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
 })
 export type IAppInDB = Prisma.AppGetPayload<typeof AppInDBSchema>
 
-export type IAppInChat = IAppInDB & {
-  needFetchLLM?: boolean
-}
+export type IAppInChat = IAppInDB

@@ -85,7 +85,7 @@ export const convProcedure = protectedProcedure
     const conv = await db.conv.findUniqueOrThrow({
       where: {
         id: input.convId,
-        fromUserId: ctx.user.id,
+        fromUserId: ctx.user.appId,
       },
       ...convDetailSchema,
     })
