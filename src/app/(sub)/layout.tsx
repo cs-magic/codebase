@@ -6,13 +6,7 @@ export default function SubLayout({ children }: PropsWithChildren) {
     <>
       <Header withBrand />
 
-      <div
-        className={
-          "grow flex flex-col overflow-auto justify-center items-center "
-        }
-      >
-        {children}
-      </div>
+      <div className={"grow flex flex-col overflow-hidden"}>{children}</div>
 
       {/*<BrandingFooter />*/}
     </>

@@ -1,10 +1,16 @@
+"use client"
+
 import { ISendSms, ISmsSignIn } from "@/schema/sms"
 import { signIn } from "next-auth/react"
 import { uiState } from "@/store/ui"
-import { $sendSms } from "@/server/sms/functions"
+import { $sendSms } from "@/lib/sms/server-functions"
 import { toast } from "sonner"
 import { SMS_CODE_DOWNTIME, SMS_PROVIDER_ID } from "@/config/system"
 import { proxy } from "valtio"
+import { useAtom } from "jotai"
+import { smsProviderAtom } from "@/store/dev.atom"
+import { $sendSmsViaAli } from "@/lib/sms/providers/ali"
+import { $sendSmsViaTencent } from "@/lib/sms/providers/tencent"
 
 type SmsStage = "toSendSms" | "toAuth"
 
@@ -27,28 +33,35 @@ export const smsState = proxy<ISmsState>({
   signInOk: false,
 })
 
-export const sendCode = async (data: ISendSms) => {
-  const { phone } = data
+export const useSendCode = () => {
+  const [smsProviderType] = useAtom(smsProviderAtom)
 
-  smsState.phone = phone
+  const sendApproach =
+    smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
 
-  // UI 跨 store 同步
-  uiState.loading = true
-  const ok = await $sendSms(phone) // 异步
-  uiState.loading = false
+  return async (data: ISendSms) => {
+    const { phone } = data
 
-  smsState.sentOk = ok
-  if (ok) toast.success("验证码发送成功，请及时查收！")
-  else toast.error("验证码发送失败！")
+    smsState.phone = phone
 
-  if (ok) {
-    smsState.stage = "toAuth"
-    smsState.downtime = SMS_CODE_DOWNTIME
+    // UI 跨 store 同步
+    uiState.loading = true
+    const ok = await $sendSms(phone, sendApproach) // 异步
+    uiState.loading = false
 
-    const f = () => {
-      if (--smsState.downtime > 0) setTimeout(f, 1000)
+    smsState.sentOk = ok
+    if (ok) toast.success("验证码发送成功，请及时查收！")
+    else toast.error("验证码发送失败！")
+
+    if (ok) {
+      smsState.stage = "toAuth"
+      smsState.downtime = SMS_CODE_DOWNTIME
+
+      const f = () => {
+        if (--smsState.downtime > 0) setTimeout(f, 1000)
+      }
+      setTimeout(f, 1000)
     }
-    setTimeout(f, 1000)
   }
 }
 
@@ -67,7 +80,7 @@ export const smsSignIn = async () => {
     code: smsState.code,
   }
 
-  console.log("[sms] sign in: ", values)
+  console.log("[components] sign in: ", values)
   uiState.loading = true
   const res = await signIn(SMS_PROVIDER_ID, {
     ...values,
@@ -75,7 +88,7 @@ export const smsSignIn = async () => {
   })
   uiState.loading = false
 
-  console.log("[sms] sign in result: ", res)
+  console.log("[components] sign in result: ", res)
 
   const ok = !!res?.ok
   smsState.signInOk = ok

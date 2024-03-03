@@ -2,21 +2,24 @@
 import { Button } from "@/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation-item"
-import { useSnapshot } from "valtio"
-import { conversationStore } from "@/store/conversation"
-import { useAddConversation, useDeleteAllConversations } from "@/store/use-conv"
+import { useAtom } from "jotai"
+import {
+  conversationsAtom,
+  useAddConversationAtom,
+  useDeleteAllConversationsAtom,
+} from "@/store/conversation.atom"
 
 export const Sidebar = () => {
-  const { conversations } = useSnapshot(conversationStore)
-  const addConversation = useAddConversation()
-  const deleteAllConversations = useDeleteAllConversations()
+  const [conversations] = useAtom(conversationsAtom)
+  const addConversation = useAddConversationAtom()
+  const deleteAllConversations = useDeleteAllConversationsAtom()
 
   return (
     <div className={"hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col"}>
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
-        onClick={addConversation}
+        onClick={() => addConversation()}
       >
         <PlusIcon className={"w-4 h-4"} />
         新建会话

@@ -101,8 +101,8 @@ model Message {
   conversationId String
 
   // 子app回答的时候也可以与子app相连
-  app    App?    @relation(fields: [pAppId], references: [id], onDelete: Cascade)
-  pAppId String?
+  app   App?    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId String?
 
   content String
   role    MessageRole

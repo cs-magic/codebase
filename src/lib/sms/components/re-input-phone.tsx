@@ -1,4 +1,5 @@
-import { smsState } from "@/store/sms"
+"use client"
+import { smsState } from "@/lib/sms/store"
 import { EditIcon } from "lucide-react"
 import { useSnapshot } from "valtio"
 

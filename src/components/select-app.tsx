@@ -2,7 +2,6 @@ import { buttonVariants } from "@/components/ui/button"
 import { IconContainer } from "@/components/containers"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 
-import { IApp } from "@/schema/conversation"
 import { useSnapshot } from "valtio"
 import { nanoid } from "nanoid"
 import { conversationStore } from "@/store/conversation"
@@ -10,12 +9,13 @@ import { NANOID_LEN } from "@/config/system"
 import { cn } from "@/lib/utils"
 import { uiState } from "@/store/ui"
 import { useAddPApp, useDelPApp } from "@/store/use-app"
+import { IAppInDB } from "@/schema/core/app"
 
 export const SelectApp = ({
   pApp,
   type,
 }: {
-  pApp: IApp
+  pApp: IAppInDB
   type: "toAdd" | "toDel"
 }) => {
   const { apps } = useSnapshot(conversationStore)

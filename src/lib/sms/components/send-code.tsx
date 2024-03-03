@@ -1,6 +1,6 @@
 "use client"
 
-import { sendCode, smsState } from "@/store/sms"
+import { smsState, useSendCode } from "@/lib/sms/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -36,6 +36,7 @@ export const SmsSendCode = () => {
   })
 
   const { isWechat } = useBrowserEnvironment()
+  const sendCode = useSendCode()
 
   return (
     <Form {...form}>

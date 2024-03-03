@@ -26,12 +26,12 @@
 //   const router = useRouter()
 //
 //   return async () => {
-//     const pApps = useSnapshot(pAppsState)
-//     console.log({ pApps })
+//     const apps = useSnapshot(pAppsState)
+//     console.log({ apps })
 //
 //     const { mutateAsync } = api.llm.createConversation.useMutation()
 //     const newConversation = await mutateAsync({
-//       pAppIds: pApps,
+//       pAppIds: apps,
 //       type: "LLM",
 //     })
 //     console.log({ newConversation })

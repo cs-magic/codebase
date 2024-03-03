@@ -1,4 +1,4 @@
-import { smsState } from "@/store/sms"
+import { smsState } from "@/lib/sms/store"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"

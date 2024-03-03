@@ -6,7 +6,7 @@ import {
 } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { db } from "@/server/db"
-import { SmsProvider } from "@/server/sms/provider"
+import { SmsProvider } from "@/lib/sms/provider"
 import WechatProvider from "@/server/wechat/auth/provider"
 import { env } from "@/env"
 

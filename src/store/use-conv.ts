@@ -5,7 +5,7 @@ import { nanoid } from "nanoid"
 import { NANOID_LEN } from "@/config/system"
 import { conversationStore } from "@/store/conversation"
 import { remove } from "lodash"
-import { IMessageInChat } from "@/schema/message"
+import { IMessageInChat } from "@/schema/core/message"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话
@@ -30,6 +30,7 @@ export function useAddConversation() {
     conversationStore.conversations.splice(0, 0, {
       id: conversationId,
       title: "",
+      updatedAt: new Date(),
     })
 
     /**
@@ -37,7 +38,7 @@ export function useAddConversation() {
      */
     const conversation = await addConversation.mutateAsync({
       id: conversationId,
-      pApps: conversationStore.apps,
+      apps: conversationStore.apps,
       type: "LLM",
     })
     conversationStore.conversation = conversation
@@ -73,7 +74,7 @@ export function useDelConversation() {
   }
 }
 
-export const useDeleteAllConversations = () => {
+export const useDeleteAllConversationsValtio = () => {
   const router = useRouter()
   const deleteAllConversations = api.llm.deleteAllConversations.useMutation({
     onSuccess: () => {
@@ -118,7 +119,7 @@ export function useConvQuery() {
       content: query,
       role: "user",
       conversationId,
-      pAppId: null,
+      appId: null,
       parentId: null,
     }
     messages.push(userMessage)
@@ -133,7 +134,7 @@ export function useConvQuery() {
       conversationId,
       messages: context,
     })
-    data.forEach(({ requestId, result /*true*/ }) => {
+    data.forEach(({ requestId }) => {
       const pApp = conversationStore.apps.find((p) => p.id === requestId)
       // 有可能已经换成新的pApp了
       if (pApp) pApp.needFetchLLM = true

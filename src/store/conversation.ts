@@ -1,26 +1,27 @@
 import { proxy } from "valtio"
-import { IAppClient, IConversationListView } from "@/schema/conversation"
+import { IListConversation } from "@/schema/core/conversation"
 import { last } from "lodash"
-import { IMessageInChat } from "@/schema/message"
+import { IMessageInChat } from "@/schema/core/message"
+import { IAppInChat } from "@/schema/core/app"
 
 class ConversationStore {
   /**
    * 数据库里所有的 app，一次获取，然后持久化
    */
-  public allApps: IAppClient[] = []
+  public allApps: IAppInChat[] = []
   /**
-   * 当前选中的 pApps，如果服务器有，就从服务器刷新
+   * 当前选中的 apps，如果服务器有，就从服务器刷新
    */
-  public apps: IAppClient[] = []
+  public apps: IAppInChat[] = []
   /**
    * 当前被选中的 app
    */
-  public curPApp: IAppClient | null = null
+  public curPApp: IAppInChat | null = null
 
   /**
    * 从服务器加载的会话列表
    */
-  public conversations: IConversationListView[] = []
+  public conversations: IListConversation[] = []
   /**
    * 会话列表是否在拉取
    */
@@ -28,7 +29,7 @@ class ConversationStore {
   /**
    * 当前选中的会话
    */
-  public conversation: IConversationListView | null = null
+  public conversation: IListConversation | null = null
 
   /**
    * 当前会话的所有消息

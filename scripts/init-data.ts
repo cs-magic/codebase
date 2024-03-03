@@ -1,7 +1,7 @@
-import { Company, Prisma } from "@prisma/client"
-import { CompanyId } from "@/schema/llm"
+import { Company } from "@prisma/client"
 import { db } from "@/server/db"
 
+export type CompanyId = "openai" | "moonshot"
 export const supportedCompanies: Record<CompanyId, Company> = {
   openai: {
     id: "openai",

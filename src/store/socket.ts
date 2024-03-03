@@ -7,7 +7,8 @@ import { immer } from "zustand/middleware/immer"
 import PusherJS from "pusher-js"
 import { toast } from "sonner"
 import sum from "lodash/sum"
-import { FixedArray } from "@/schema/array"
+
+import { FixedArray } from "@/lib/utils"
 
 export interface ISocket {
   serverId: PusherServerId

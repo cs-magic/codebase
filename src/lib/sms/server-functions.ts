@@ -1,23 +1,16 @@
 "use server"
 
-import { db } from "@/server/db"
 import { ISmsSignIn } from "@/schema/sms"
-import { $sendSmsViaTencent } from "./providers/tencent"
-import { $sendSmsViaAli } from "./providers/ali"
-import { SMS_PROVIDER_ID, USE_ALI_SMS, USE_TENCENT_SMS } from "@/config/system"
+import { SMS_PROVIDER_ID } from "@/config/system"
+import { db } from "../../server/db"
 
-export const $sendSms = async (phone: string) => {
+export const $sendSms = async (
+  phone: string,
+  sendApproach: (phone: string, code: string) => Promise<boolean>,
+) => {
   const code = Math.random().toString().slice(2, 8)
 
-  let smsClientSendCode
-  if (USE_ALI_SMS) smsClientSendCode = $sendSmsViaAli
-  else if (USE_TENCENT_SMS) smsClientSendCode = $sendSmsViaTencent
-  else {
-    console.error("[sms] no sms client enabled")
-    return false
-  }
-
-  const ok = await smsClientSendCode(phone, code)
+  const ok = await sendApproach(phone, code)
 
   if (ok) {
     // todo: link account
@@ -55,7 +48,7 @@ export const $sendSms = async (phone: string) => {
       },
       update: update,
     })
-    console.log("[sms] account: ", account)
+    console.log("[components] account: ", account)
   }
   return ok
 }
@@ -77,6 +70,6 @@ export const $smsSignIn = async (values: ISmsSignIn) => {
 
   const user = account.user
 
-  console.log("[sms] signed in user: ", user)
+  console.log("[components] signed in user: ", user)
   return user
 }

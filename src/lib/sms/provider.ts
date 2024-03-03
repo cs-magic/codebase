@@ -1,4 +1,4 @@
-import { $smsSignIn } from "@/server/sms/functions"
+import { $smsSignIn } from "@/lib/sms/server-functions"
 import { SMS_PROVIDER_ID } from "@/config/system"
 
 import Credentials from "next-auth/providers/credentials"

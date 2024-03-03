@@ -5,7 +5,7 @@ import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
 import { SelectModelItem } from "@/components/select-model-item"
 import { useSnapshot } from "valtio"
 import { scenarioState } from "@/hooks/use-scenario"
-import { ScenarioType } from "@/schema/llm"
+import { ScenarioType } from "@/schema/scenario"
 
 export const SelectScenario = () => {
   const { type } = useSnapshot(scenarioState)

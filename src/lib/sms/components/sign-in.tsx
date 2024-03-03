@@ -1,9 +1,10 @@
+"use-client"
 import { Label } from "@/components/ui/label"
 import { useInputVerifyCodes } from "@/hooks/use-input-verify-codes"
 import { useSignInResult } from "@/hooks/use-sms-sign-in-result"
-import { InputVerifyCode } from "@/components/sms/input-verify-code"
-import { ResendVerifyCode } from "@/components/sms/resend-verify-code"
-import { ReInputPhone } from "@/components/sms/re-input-phone"
+import { InputVerifyCode } from "@/lib/sms/components/input-verify-code"
+import { ResendVerifyCode } from "@/lib/sms/components/resend-verify-code"
+import { ReInputPhone } from "@/lib/sms/components/re-input-phone"
 
 export const SmsSignIn = () => {
   useInputVerifyCodes()

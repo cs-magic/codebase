@@ -5,12 +5,12 @@
  */
 
 import { ChatOpenAI } from "@langchain/openai"
-import { ILLMMessage } from "@/schema/llm"
 import {
   AIMessage,
   HumanMessage,
   SystemMessage,
 } from "@langchain/core/messages"
+import { ILLMMessage } from "@/schema/core/message"
 
 export const callChatGPT = async ({
   modelId,

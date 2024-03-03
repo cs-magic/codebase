@@ -1,7 +1,7 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc"
 import { db } from "@/server/db"
 import { $Enums } from "@prisma/client"
-import { createMessageSchema } from "@/schema/message"
+import { createMessageSchema } from "@/schema/core/message"
 import { pusherSend } from "@/lib/puser/server/actions"
 import ConversationType = $Enums.ConversationType
 

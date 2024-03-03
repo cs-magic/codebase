@@ -1,5 +1,5 @@
 import { useKey } from "react-use"
-import { addCode, delCode } from "@/store/sms"
+import { addCode, delCode } from "@/lib/sms/store"
 
 /**
  * 输入六位验证码，并自动触发登录验证

@@ -6,20 +6,21 @@ import {
 } from "@/server/api/trpc"
 import { db } from "@/server/db"
 import {
-  conversationSchema,
+  conversationInDBSchema,
   createConversationSchema,
-  modelSchema,
-  appSchema,
-} from "@/schema/conversation"
+} from "@/schema/core/conversation"
 import { z } from "zod"
 
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
-import { llmMessageSchema } from "@/schema/llm"
+
+import { llmMessageSchema } from "@/schema/core/message"
+import { modelInDBSchema } from "@/schema/core/model"
+import { appInDBSchema } from "@/schema/core/app"
 
 export const llmRouter = createTRPCRouter({
   listModels: publicProcedure.query(async () => {
     return db.model.findMany({
-      ...modelSchema,
+      ...modelInDBSchema,
       ...{ orderBy: { updatedAt: "desc" } },
     })
   }),
@@ -32,18 +33,18 @@ export const llmRouter = createTRPCRouter({
           equals: db.app.fields.modelId,
         },
       },
-      ...appSchema,
+      ...appInDBSchema,
       orderBy: { updatedAt: "desc" },
     })
   }),
 
   getPApp: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return db.app.findUniqueOrThrow({ where: { id: input }, ...appSchema })
+    return db.app.findUniqueOrThrow({ where: { id: input }, ...appInDBSchema })
   }),
 
   listConversations: protectedProcedure.query(async () => {
     return db.conversation.findMany({
-      ...conversationSchema,
+      ...conversationInDBSchema,
       orderBy: { updatedAt: "desc" },
     })
   }),
@@ -72,11 +73,11 @@ export const llmRouter = createTRPCRouter({
           id: input.id,
           fromUserId: ctx.user.id,
           type: input.type,
-          pApps: {
-            create: input.pApps,
+          apps: {
+            create: input.apps,
           },
         },
-        ...conversationSchema,
+        ...conversationInDBSchema,
       })
       console.log("[add-conv] conv: ", JSON.stringify(conversation, null, 2))
       return conversation
@@ -93,7 +94,7 @@ export const llmRouter = createTRPCRouter({
       const { conversation } = ctx
 
       return Promise.all(
-        conversation.pApps.map(async (p) => {
+        conversation.apps.map(async (p) => {
           const requestId = p.id
           const result = await triggerLLM({
             requestId,
@@ -119,7 +120,7 @@ export const llmRouter = createTRPCRouter({
       return db.conversation.update({
         where: { id: ctx.conversation.id },
         data: {
-          pApps: {
+          apps: {
             create: {
               id: input.id,
               modelId: input.modelId,
@@ -136,7 +137,7 @@ export const llmRouter = createTRPCRouter({
       return db.conversation.update({
         where: { id: ctx.conversation.id },
         data: {
-          pApps: {
+          apps: {
             delete: {
               id: input.pAppId,
             },

@@ -1,8 +1,8 @@
 import { api } from "@/lib/trpc/react"
 import { conversationStore } from "@/store/conversation"
-import { IAppClient } from "@/schema/conversation"
 import { last, remove } from "lodash"
 import { toast } from "sonner"
+import { IAppInChat } from "@/schema/core/app"
 
 /**
  * 用户在弹窗界面增加一个pApp
@@ -15,7 +15,7 @@ export function useAddPApp() {
   const addPApp = api.llm.addPApp.useMutation()
   const { apps, messages, conversation, curPApp } = conversationStore
 
-  return async (pApp: IAppClient) => {
+  return async (pApp: IAppInChat) => {
     // optimistic update
     apps.push(pApp)
     const conversationId = conversation?.id
@@ -67,6 +67,6 @@ export const resetPAppSSE = (pAppId: string) => {
   const pApp = conversationStore.apps.find((p) => p.id === pAppId)
   if (pApp) pApp.needFetchLLM = false
 }
-export const selectPApp = (pApp: IAppClient) => {
+export const selectPApp = (pApp: IAppInChat) => {
   conversationStore.curPApp = pApp
 }

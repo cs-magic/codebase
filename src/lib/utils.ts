@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { nanoid } from "nanoid"
+import { NANOID_LEN } from "@/config/system"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -25,3 +27,28 @@ export function getRecordKeys<K extends string, T extends Record<K, any> = any>(
 ): K[] {
   return Object.keys(record) as K[]
 }
+
+export class FixedArray<T> extends Array<T> {
+  private maxSize: number
+
+  constructor(size = 8) {
+    // the Array default size
+    super(size)
+    this.maxSize = size
+  }
+
+  public push(...items: T[]): number {
+    super.push(...items)
+    while (this.length > this.maxSize) this.shift()
+    // console.log("pushed: ", this.toString())
+    return this.length
+  }
+}
+
+export class UnexpectedError extends Error {
+  constructor() {
+    super("Unexpected!")
+  }
+}
+
+export const getNewId = (): string => nanoid(NANOID_LEN)

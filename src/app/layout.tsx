@@ -19,6 +19,8 @@ import { SelectAppsDialog } from "@/components/select-apps-dialog"
 import LLMProvider from "@/providers/llm-provider"
 import { ScreenProvider } from "@/providers/screen-provider"
 import { AutoHeight } from "@/components/auto-height"
+import { Devtool } from "@/components/devtool"
+import { env } from "@/env"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,6 +75,8 @@ export default function RootLayout({
                         <AutoHeight />
 
                         <AppStatus />
+
+                        {env.NODE_ENV === "development" && <Devtool />}
                       </main>
                     </ScreenProvider>
                   </TooltipProvider>

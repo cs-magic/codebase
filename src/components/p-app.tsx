@@ -18,11 +18,11 @@ import { last } from "lodash"
 import { nanoid } from "nanoid"
 import { fetchSSE } from "@/lib/sse"
 import { conversationStore } from "@/store/conversation"
-import { IAppClient } from "@/schema/conversation"
-import { IMessageInChat } from "@/schema/message"
+import { IMessageInChat } from "@/schema/core/message"
 import { resetPAppSSE, selectPApp, useDelPApp } from "@/store/use-app"
+import { IAppInChat } from "@/schema/core/app"
 
-export const PAppComp = ({ app }: { app: IAppClient }) => {
+export const PAppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app
 
   const [, setError] = useState("")

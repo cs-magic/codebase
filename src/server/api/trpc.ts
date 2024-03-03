@@ -12,7 +12,7 @@ import superjson from "superjson"
 import { z, ZodError } from "zod"
 import { Context } from "@/server/api/context"
 import { db } from "../db"
-import { conversationSchema } from "@/schema/conversation"
+import { conversationInDBSchema } from "@/schema/core/conversation"
 
 /**
  * 2. INITIALIZATION
@@ -87,7 +87,7 @@ export const conversationProcedure = protectedProcedure
         id: input.conversationId,
         fromUserId: ctx.user.slug,
       },
-      ...conversationSchema,
+      ...conversationInDBSchema,
     })
 
     return next({

@@ -1,5 +1,5 @@
-import { FixedArray } from "@/schema/array"
-import {sum} from "lodash"
+import { sum } from "lodash"
+import { FixedArray } from "@/lib/utils"
 
 export const testFixedArray = () => {
   const arr = new FixedArray(10)
