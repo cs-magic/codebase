@@ -8,7 +8,7 @@ export const uiLoadingAlertDialogAtom = atom(false)
 /**
  * main-area
  */
-export const uiMainAreaAtom = atom<IDisplay>({ width: 0, height: 0 })
+export const uiScreenAtom = atom<IDisplay>({ width: 0, height: 0 })
 
 /**
  * alert dialog with content

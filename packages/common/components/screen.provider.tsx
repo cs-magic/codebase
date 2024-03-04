@@ -3,11 +3,11 @@ import { PropsWithChildren, useEffect } from "react"
 import { useMeasure } from "react-use"
 import { useAtom } from "jotai"
 
-import { uiMainAreaAtom } from "../store/ui"
+import { uiScreenAtom } from "../store/ui"
 
 export const ScreenProvider = ({ children }: PropsWithChildren) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
-  const [, setMainArea] = useAtom(uiMainAreaAtom)
+  const [, setMainArea] = useAtom(uiScreenAtom)
 
   useEffect(() => {
     setMainArea({ width, height })

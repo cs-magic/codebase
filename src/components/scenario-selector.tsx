@@ -16,7 +16,7 @@ export const ScenarioSelector = () => {
 
   return (
     <Select value={type} onValueChange={(s) => setType(s as ScenarioType)}>
-      <SelectPrimitiveTrigger>
+      <SelectPrimitiveTrigger className={"shrink-0"}>
         <SelectValue />
       </SelectPrimitiveTrigger>
 

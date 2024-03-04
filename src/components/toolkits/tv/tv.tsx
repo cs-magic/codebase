@@ -5,6 +5,8 @@ import { AspectRatio } from "../../../../packages/common/components/ui/aspect-ra
 import { forwardRef, HTMLAttributes } from "react"
 import { cn } from "../../../../packages/common/lib/utils"
 import { useMeasure } from "react-use"
+import { useAtom } from "jotai"
+import { uiScreenAtom } from "../../../../packages/common/store/ui"
 
 /**
  * tv, ref: https://codepen.io/manz/pen/MWoRMja
@@ -169,18 +171,24 @@ export const TVInner = forwardRef<
 TVInner.displayName = "TVInner"
 
 export const TV = () => {
-  const [oRef, { width: ow, height: oh }] = useMeasure<HTMLDivElement>()
-  const [iRef, { width: iw, height: ih }] = useMeasure<HTMLDivElement>()
+  const [{ width: w, height: h }] = useAtom(uiScreenAtom)
+
+  // width height 短边除以2
+  const targetWidth =
+    w > h
+      ? // pc
+        h / 4
+      : // mobile
+        w / 2
+  const tvWidth = 420
+  const scale = targetWidth / tvWidth
+  console.log({ w, h, targetWidth, tvWidth, scale })
 
   return (
-    <div className={"w-full p-4"} ref={oRef}>
+    <div style={{ width: targetWidth }} className={"mx-auto"}>
       <AspectRatio ratio={1}>
         <div className={"w-full h-full flex items-center justify-center"}>
-          <TVInner
-            className={"origin-center"}
-            style={{ scale: oh / ih }}
-            ref={iRef}
-          />
+          <TVInner className={"origin-center"} style={{ scale }} />
         </div>
       </AspectRatio>
     </div>

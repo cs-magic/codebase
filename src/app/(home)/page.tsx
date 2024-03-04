@@ -3,17 +3,27 @@ import React from "react"
 import { BrandTitle } from "@/components/branding"
 import { HomeQueryArea } from "@/components/home-query-area"
 import { FlexContainer } from "../../../packages/common/components/flex-container"
+import { cn } from "../../../packages/common/lib/utils"
+import { TV } from "@/components/toolkits/tv/tv"
 
 export default function HomePage() {
   return (
     <FlexContainer
       orientation={"vertical"}
-      className={"w-full sm:w-3/5 mx-auto justify-start"}
+      className={cn(
+        // 水平方向确保居中，且不要过宽
+        "w-full sm:w-3/5 mx-auto",
+        // 垂直方向不要居中，参考谷歌允许上部固定，保证下拉框增长时不要有 layout shift
+        "justify-start",
+      )}
     >
-      <div className={"h-1/5"} />
-      <BrandTitle className={"py-4 sm:py-8"} />
+      <div className={"h-1/4 sm:h-1/5 w-full "} />
 
-      {/*<TV />*/}
+      {/*<BrandTitle className={"py-4 sm:py-8"} />*/}
+
+      <TV />
+
+      <div className={"h-[20px]"} />
 
       <HomeQueryArea />
     </FlexContainer>

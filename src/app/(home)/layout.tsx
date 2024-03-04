@@ -8,7 +8,7 @@ export default function HomeLayout({ children }: PropsWithChildren) {
     <FlexContainer orientation={"vertical"} className={"!p-0"}>
       <Header />
 
-      <div className={"grow w-full"}>{children}</div>
+      <div className={"grow w-full overflow-auto"}>{children}</div>
 
       <BrandingFooter />
     </FlexContainer>

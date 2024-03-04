@@ -1,7 +1,7 @@
 import { atom } from "jotai"
 import { getNewId } from "../../packages/common/lib/utils"
 import { IAppInDB } from "@/schema/app"
-import { uiMainAreaAtom } from "../../packages/common/store/ui"
+import { uiScreenAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { requestAtom } from "@/store/request"
 import { persistedAppsAtom } from "@/store/app.persisted"
@@ -34,7 +34,7 @@ export const delAppAtom = atom(null, (get, set, id: string) => {
 export const uiMaxAppsAtom = atom((get) =>
   Math.max(
     Math.floor(
-      (get(uiMainAreaAtom).height * get(uiMainAreaAtom).width) /
+      (get(uiScreenAtom).height * get(uiScreenAtom).width) /
         BEST_VIEWPOINT /
         BEST_VIEWPOINT /
         2,

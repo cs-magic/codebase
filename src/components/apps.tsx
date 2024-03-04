@@ -4,14 +4,14 @@ import { AppComp } from "@/components/app"
 import { cn } from "../../packages/common/lib/utils"
 import { useAtom } from "jotai"
 
-import { uiMainAreaAtom } from "../../packages/common/store/ui"
+import { uiScreenAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 
 import { persistedAppsAtom } from "@/store/app.persisted"
 
 export const AppsComp = () => {
   const [persistedApps] = useAtom(persistedAppsAtom)
-  const [mainArea] = useAtom(uiMainAreaAtom)
+  const [mainArea] = useAtom(uiScreenAtom)
   const { width } = mainArea
   const gridCols = width // 未初始化时避免闪烁
     ? Math.min(Math.floor(width / BEST_VIEWPOINT), persistedApps.length)

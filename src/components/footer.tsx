@@ -1,16 +1,18 @@
 import { SokkaBrand, V2AGIBrand } from "@/config/assets"
 import { SHOW_PARTNERS } from "@/config/system"
-import { AppStatus, Partners } from "@/components/branding"
+import { Partners } from "@/components/branding"
 import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
 
 export const BrandingFooter = () => {
   const enterprises: string[] = []
 
   return (
-    <div className={"flex flex-col items-center gap-2 mt-auto p-4"}>
+    <div className={"shrink-0 flex flex-col items-center gap-2 mt-auto p-4"}>
       {/*  founders */}
       <div
-        className={"w-full flex justify-center items-center gap-4 mt-auto h-8"}
+        className={
+          "w-full flex justify-center items-center gap-4 mt-auto h-4 sm:h-8"
+        }
       >
         <SokkaBrand className={"h-full w-auto"} />
 

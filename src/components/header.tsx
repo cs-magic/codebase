@@ -35,7 +35,7 @@ export const UserButton = () => {
 }
 export const Header = ({ withBrand }: { withBrand?: boolean }) => {
   return (
-    <div className={"w-full flex gap-2 px-6 py-4"}>
+    <div className={"shrink-0 w-full flex gap-2 px-6 py-4"}>
       {withBrand && <BrandTitle className={"text-2xl"} withDescription />}
 
       <div className={"ml-auto flex items-center gap-2"}>
