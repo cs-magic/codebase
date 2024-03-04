@@ -1,15 +1,16 @@
 import { PrismaClient } from "@prisma/client"
-import { isProd } from "./utils"
+import { env } from "@/env"
 
 const createPrismaClient = () =>
   new PrismaClient({
-    log: !isProd
-      ? [
-          // "schema",
-          "error",
-          "warn",
-        ]
-      : ["error"],
+    log:
+      env.NODE_ENV !== "production"
+        ? [
+            // "schema",
+            "error",
+            "warn",
+          ]
+        : ["error"],
   })
 
 const globalForPrisma = globalThis as unknown as {
@@ -18,4 +19,5 @@ const globalForPrisma = globalThis as unknown as {
 
 export const db = globalForPrisma.prisma ?? createPrismaClient()
 
-if (!isProd) globalForPrisma.prisma = db
+// 开发模式下，每次复用连接
+if (env.NODE_ENV !== "production") globalForPrisma.prisma = db

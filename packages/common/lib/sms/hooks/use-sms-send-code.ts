@@ -1,5 +1,7 @@
 import { useAtom } from "jotai"
 import {
+  smsCodeExpireMinutesAtom,
+  smsCodeCountdownSecondsAtom,
   smsDowntimeAtom,
   smsProviderTypeAtom,
   smsSendCodePayloadAtom,
@@ -11,7 +13,6 @@ import { $sendSmsViaTencent } from "../server/providers/tencent"
 import { uiLoadingAlertDialogAtom } from "../../../store/ui"
 import { $sendSms } from "../server/actions"
 import { toast } from "sonner"
-import { SMS_CODE_DOWNTIME } from "../coonfig"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)
@@ -23,11 +24,13 @@ export const useSmsSendCode = () => {
   const [, setSmsStage] = useAtom(smsStageAtom)
   const [smsDowntime, setSmsDowntime] = useAtom(smsDowntimeAtom)
   const [smsSendPayload] = useAtom(smsSendCodePayloadAtom)
+  const [smsCountdownSeconds] = useAtom(smsCodeCountdownSecondsAtom)
+  const [smsExpireMinutes] = useAtom(smsCodeExpireMinutesAtom)
 
   return async () => {
     const { phone, name } = smsSendPayload
     setLoading(true)
-    const ok = await $sendSms(phone, sendApproach) // 异步
+    const ok = await $sendSms(phone, smsExpireMinutes, sendApproach) // 异步
     setSmsSentOk(ok)
     setLoading(false)
 
@@ -36,7 +39,7 @@ export const useSmsSendCode = () => {
     toast.success("验证码发送成功，请及时查收！")
 
     setSmsStage("toAuth")
-    setSmsDowntime(SMS_CODE_DOWNTIME)
+    setSmsDowntime(smsCountdownSeconds)
 
     const f = () => {
       setSmsDowntime((v) => v - 1)

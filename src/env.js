@@ -36,7 +36,7 @@ export const env = createEnv({
     PUSHER_APP_ID: z.string(),
     PUSHER_APP_SECRET: z.string(),
     NODE_ENV: z
-      .enum(["development", "test", "production"])
+      .enum(["development", "production", "test"])
       .default("development"),
   },
 

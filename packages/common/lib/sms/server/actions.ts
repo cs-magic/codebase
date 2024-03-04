@@ -2,15 +2,20 @@
 
 import { ISmsSignIn } from "../schema"
 import { db } from "../../db"
-import { SMS_PROVIDER_ID } from "../coonfig"
+import { SMS_PROVIDER_ID } from "../const"
 
 export const $sendSms = async (
   phone: string,
-  sendApproach: (phone: string, code: string) => Promise<boolean>,
+  expire: number,
+  sendApproach: (
+    phone: string,
+    code: string,
+    expire: number,
+  ) => Promise<boolean>,
 ) => {
   const code = Math.random().toString().slice(2, 8)
 
-  const ok = await sendApproach(phone, code)
+  const ok = await sendApproach(phone, code, expire)
 
   if (ok) {
     // todo: link account

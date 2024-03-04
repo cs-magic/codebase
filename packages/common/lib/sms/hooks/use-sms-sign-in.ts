@@ -2,7 +2,7 @@ import { useAtom } from "jotai"
 import { uiLoadingAlertDialogAtom } from "../../../store/ui"
 import { smsSignInPayloadAtom, smsSignOKAtom } from "../store"
 import { signIn } from "next-auth/react"
-import { SMS_PROVIDER_ID } from "../coonfig"
+import { SMS_PROVIDER_ID } from "../const"
 import { toast } from "sonner"
 
 export const useSmsSignIn = () => {

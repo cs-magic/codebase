@@ -8,7 +8,6 @@ import { useState } from "react"
 import { AppRouter, getUrl, transformer } from "./shared"
 
 import { REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED } from "./config"
-import { isProd } from "../utils"
 
 const createQueryClient = () =>
   new QueryClient({
@@ -42,7 +41,9 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
       links: [
         loggerLink({
           enabled: (op) =>
-            !isProd || (op.direction === "down" && op.result instanceof Error),
+            // in client, we cannot directly use env.xxx
+            process.env.NODE_ENV !== "production" ||
+            (op.direction === "down" && op.result instanceof Error),
         }),
 
         unstable_httpBatchStreamLink({

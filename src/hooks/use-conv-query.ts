@@ -6,7 +6,7 @@ import { uiSelectAppsDialogOpenAtom } from "@/store/app"
 import { useSession } from "next-auth/react"
 
 import {
-  uiCheckAuthAlertDialogOpen,
+  uiCheckAuthAlertDialogOpenAtom,
   userPromptAtom,
 } from "../../packages/common/store/user"
 import { useAddConv } from "@/hooks/use-conv-add"
@@ -31,7 +31,7 @@ export function useQueryOnEnter() {
   const [convId] = useAtom(convIdAtom)
   const [persistedApps] = useAtom(persistedAppsAtom)
   const session = useSession()
-  const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpen)
+  const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const addConversation = useAddConv()
   const [query] = useAtom(userPromptAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)

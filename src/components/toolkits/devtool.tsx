@@ -16,14 +16,22 @@ import {
 } from "../../../packages/common/components/ui/select"
 import { useAtom } from "jotai"
 import { Label } from "../../../packages/common/components/ui/label"
-import { smsProviderTypeAtom } from "../../../packages/common/lib/sms/store"
+import {
+  smsCodeCountdownSecondsAtom,
+  smsProviderTypeAtom,
+} from "../../../packages/common/lib/sms/store"
 import { SmsProviderType } from "../../../packages/common/lib/sms/schema"
 import { IconContainer } from "../../../packages/common/components/icon-container"
 import { api } from "../../../packages/common/lib/trpc/react"
 import { Button } from "../../../packages/common/components/ui/button"
+import { Separator } from "../../../packages/common/components/ui/separator"
+import { Input } from "../../../packages/common/components/ui/input"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
+  const [smsCountdownSeconds, setSmsCountdownSeconds] = useAtom(
+    smsCodeCountdownSecondsAtom,
+  )
 
   const utils = api.useUtils()
 
@@ -36,7 +44,9 @@ export const Devtool = () => {
       </DialogTrigger>
 
       <DialogContent>
-        <Label>SMS Provider Type</Label>
+        <Label>SMS </Label>
+
+        <Label>Provider Type</Label>
         <Select
           value={smsProvider}
           onValueChange={(s: SmsProviderType) => setSmsProvider(s)}
@@ -56,6 +66,17 @@ export const Devtool = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
+
+        <Label>Countdown Time</Label>
+        <Input
+          value={smsCountdownSeconds}
+          onChange={(event) =>
+            setSmsCountdownSeconds(Number(event.currentTarget.value))
+          }
+          type={"number"}
+        />
+
+        <Separator orientation={"horizontal"} />
 
         <Label>Invalidate all</Label>
         <Button

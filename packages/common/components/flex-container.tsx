@@ -11,7 +11,7 @@ export const FlexContainer = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative",
+        "relative w-full h-full",
         "p-2 sm:p-4",
         "flex gap-2 sm:gap-4 items-center justify-center",
         orientation === "vertical" && "flex-col",

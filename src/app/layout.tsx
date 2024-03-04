@@ -7,7 +7,7 @@ import ThemeProvider from "../../packages/common/components/theme.provider"
 import { Toaster } from "../../packages/common/components/ui/sonner"
 import { SessionProvider } from "../../packages/common/components/session.provider"
 import { type Viewport } from "next"
-import { cn, isDev } from "../../packages/common/lib/utils"
+import { cn } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
 import { AppStatus } from "@/components/branding"
 import { AppsDialog } from "@/components/apps-selector"
@@ -19,6 +19,7 @@ import { env } from "@/env"
 import { LoadingAlertDialog } from "../../packages/common/components/loading-alert-dialog"
 import JotaiProvider from "../../packages/common/components/jotai.provider"
 import { ReturnHomeAlertDialog } from "@/components/return-home"
+import { CheckAuthAlertDialog } from "@/components/auth-checker"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,18 +46,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    // html should be at the top, for providing context
     <html lang="zh" suppressHydrationWarning>
       <body className={cn(`font-sans`, inter.variable)}>
-        {/*data layer*/}
-        <JotaiProvider>
-          <SessionProvider>
-            <TRPCReactProvider>
-              <LLMProvider>
-                {/*ui layer */}
-                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                  <TooltipProvider>
-                    <ScreenProvider>
-                      <main className={"w-full h-full flex flex-col relative"}>
+        <main className={"w-screen h-screen relative"}>
+          {/* 1. data layer */}
+          <JotaiProvider>
+            <SessionProvider>
+              <TRPCReactProvider>
+                <LLMProvider>
+                  {/* 2. ui layer */}
+                  <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                    <TooltipProvider>
+                      <ScreenProvider>
                         {children}
 
                         <Toaster
@@ -67,6 +69,8 @@ export default function RootLayout({
 
                         <LoadingAlertDialog />
 
+                        <CheckAuthAlertDialog />
+
                         <ReturnHomeAlertDialog />
 
                         <AppsDialog />
@@ -75,15 +79,15 @@ export default function RootLayout({
 
                         <AppStatus />
 
-                        {isDev && <Devtool />}
-                      </main>
-                    </ScreenProvider>
-                  </TooltipProvider>
-                </ThemeProvider>
-              </LLMProvider>
-            </TRPCReactProvider>
-          </SessionProvider>
-        </JotaiProvider>
+                        {env.NODE_ENV !== "production" && <Devtool />}
+                      </ScreenProvider>
+                    </TooltipProvider>
+                  </ThemeProvider>
+                </LLMProvider>
+              </TRPCReactProvider>
+            </SessionProvider>
+          </JotaiProvider>
+        </main>
       </body>
     </html>
   )

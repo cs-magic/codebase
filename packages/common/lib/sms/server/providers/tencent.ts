@@ -5,8 +5,6 @@
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
 import { env } from "@/env"
 
-import { SMS_EXPIRE_MINUTES } from "../../coonfig"
-
 const tencentSmsConfig = {
   signName: "邢健的个人博客",
   appId: "1400518792",
@@ -36,13 +34,17 @@ const smsTencentClient = new v20210111.Client({
   },
 })
 
-export const $sendSmsViaTencent = async (phone: string, code: string) => {
+export const $sendSmsViaTencent = async (
+  phone: string,
+  code: string,
+  expire: number,
+) => {
   const params = {
     PhoneNumberSet: [phone],
     SmsSdkAppId: tencentSmsConfig.appId,
     SignName: tencentSmsConfig.signName,
     TemplateId: tencentSmsConfig.templateId,
-    TemplateParamSet: [code, `${SMS_EXPIRE_MINUTES}`],
+    TemplateParamSet: [code, expire.toString()],
   }
   console.log("[sms-tencent] request: ", params)
   const res = await smsTencentClient.SendSms(params)
