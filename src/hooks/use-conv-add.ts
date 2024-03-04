@@ -15,6 +15,7 @@ export function useAddConv() {
   const addConv = api.queryLLM.addConv.useMutation()
   const [persistedApps] = useAtom(persistedAppsAtom)
 
+  const utils = api.useUtils()
   return (title?: string) => {
     // 数据库新增
     return addConv.mutateAsync(
@@ -27,6 +28,7 @@ export function useAddConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
+          utils.queryLLM.listConv.invalidate()
           // 路由跳转，并且避免再拿数据
           router.push(`/tt/${data.id}`) // 异步
         },

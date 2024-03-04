@@ -10,7 +10,7 @@ import { toast } from "sonner"
  */
 export function useDelConv() {
   const delConv = api.queryLLM.delConv.useMutation()
-  const [, setConvs] = useAtom(convsAtom)
+  const utils = api.useUtils()
 
   return (id: string) => {
     void delConv.mutate(
@@ -21,8 +21,7 @@ export function useDelConv() {
           toast.error("删除失败！")
         },
         onSuccess: () => {
-          // 单删和多删都会导致自己受影响，所以去hook里写收尾动作
-          setConvs((cs) => cs.filter((c) => c.id !== id))
+          utils.queryLLM.listConv.invalidate()
         },
       },
     )
@@ -31,7 +30,7 @@ export function useDelConv() {
 
 export const useDelAllConvs = () => {
   const router = useRouter()
-  const [, setConvs] = useAtom(convsAtom)
+  const utils = api.useUtils()
 
   const delAllConvs = api.queryLLM.delAllConvs.useMutation({
     onError: (error) => {
@@ -39,8 +38,8 @@ export const useDelAllConvs = () => {
       toast.error("删除失败！")
     },
     onSuccess: (data) => {
+      utils.queryLLM.listConv.invalidate()
       console.log("deleted all: ", { data })
-      setConvs([])
       router.push("/tt")
     },
   })
