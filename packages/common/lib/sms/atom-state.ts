@@ -2,7 +2,7 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { SmsProviderType, SmsStage } from "./schema"
 import { Nullable } from "../../schema/base"
-import { atomWithImmer } from "jotai-immer"
+// import { atomWithImmer } from "jotai-immer"
 
 /**
  * general
@@ -20,7 +20,7 @@ export const smsNameAtom = atom("")
 export const smsPhoneAtom = atom("")
 export const smsCodeAtom = atom("")
 export const smsSentOKAtom = atom<Nullable>(null)
-export const smsDowntimeAtom = atomWithImmer(0)
+export const smsDowntimeAtom = atom(0)
 
 /**
  * sign in

@@ -7,17 +7,15 @@ import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
 
 import { ModelSelector } from "@/components/model-selector"
-import { useSnapshot } from "valtio"
-import { scenarioState } from "@/hooks/use-scenario"
+import { useAtom } from "jotai"
 import { ScenarioType } from "@/schema/scenario"
+import { scenarioTypeAtom } from "@/store/scenario"
 
 export const ScenarioSelector = () => {
-  const { type } = useSnapshot(scenarioState)
+  const [type, setType] = useAtom(scenarioTypeAtom)
+
   return (
-    <Select
-      value={type}
-      onValueChange={(v: ScenarioType) => (scenarioState.type = v)}
-    >
+    <Select value={type} onValueChange={(s) => setType(s as ScenarioType)}>
       <SelectPrimitiveTrigger>
         <SelectValue />
       </SelectPrimitiveTrigger>

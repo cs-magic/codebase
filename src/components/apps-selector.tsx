@@ -34,7 +34,7 @@ export const AppsDialog = () => {
   )
 
   // console.log({ allApps, appFilter, filteredApps, maxToAdd })
-  console.log({ persistedApps })
+  // console.log({ persistedApps })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

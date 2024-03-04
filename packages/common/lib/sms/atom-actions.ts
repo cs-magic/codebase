@@ -76,7 +76,7 @@ export const sendCodeAtom = atom(null, async (get, set) => {
 
   const f = () => {
     console.log("downtime before decreasing: ", get(smsDowntimeAtom))
-    set(smsDowntimeAtom, (v) => --v)
+    set(smsDowntimeAtom, (v) => v - 1)
     const downtime = get(smsDowntimeAtom)
     console.log("downtime after decreasing: ", downtime)
     if (downtime > 0) setTimeout(f, 1000)

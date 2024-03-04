@@ -1,7 +1,12 @@
 "use client"
 
 import { Button } from "../../../../packages/common/components/ui/button"
-import { useSocketStore } from "../../../../packages/common/lib/puser/socket"
+import {
+  cleanSocketAtom,
+  initSocketAtom,
+  socketClientAtom,
+  socketServerIdAtom,
+} from "../../../../packages/common/lib/puser/socket.atom"
 import { useEffect } from "react"
 import {
   Select,
@@ -13,17 +18,13 @@ import {
 } from "../../../../packages/common/components/ui/select"
 import { PusherServerId } from "../../../../packages/common/lib/puser/config"
 import { FlexContainer } from "../../../../packages/common/components/flex-container"
+import { useAtom } from "jotai"
 
 export default function TestSocketPage() {
-  const { client, init, clean, serverId, setServerId } = useSocketStore(
-    (state) => ({
-      client: state.client,
-      init: state.init,
-      clean: state.clean,
-      serverId: state.serverId,
-      setServerId: state.setServerId,
-    }),
-  )
+  const [serverId, setServerId] = useAtom(socketServerIdAtom)
+  const [client] = useAtom(socketClientAtom)
+  const [, init] = useAtom(initSocketAtom)
+  const [, clean] = useAtom(cleanSocketAtom)
 
   console.log({ client })
 
@@ -42,7 +43,10 @@ export default function TestSocketPage() {
 
   return (
     <FlexContainer orientation={"vertical"}>
-      <Select value={serverId} onValueChange={setServerId}>
+      <Select
+        value={serverId}
+        onValueChange={(s) => setServerId(s as PusherServerId)}
+      >
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
