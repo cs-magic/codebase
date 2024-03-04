@@ -14,9 +14,7 @@ export const env = createEnv({
         (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
         "You forgot to change the default URL",
       ),
-    NODE_ENV: z
-      .enum(["development", "test", "production"])
-      .default("development"),
+
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string()
@@ -37,6 +35,9 @@ export const env = createEnv({
     WECHAT_APP_SECRET: z.string(),
     PUSHER_APP_ID: z.string(),
     PUSHER_APP_SECRET: z.string(),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
   },
 
   /**

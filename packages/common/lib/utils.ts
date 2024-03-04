@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge"
 import { customAlphabet } from "nanoid"
 
 import { NANOID_LEN } from "../config/system"
+import { env } from "@/env"
+import { getNodeEnv } from "../actions"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -16,11 +18,18 @@ export const PHONE_REGEX =
 
 export const validatePhone = (s: string) => PHONE_REGEX.test(s)
 
-export const staticCreate = <T = any>(f: () => T) => {
-  const g = globalThis as unknown as {
+export const staticCreate = <T = any>(f: () => Promise<T>, initial?: T) => {
+  const g = {
+    data: initial,
+  } as unknown as {
     data: T | undefined
   }
-  return (g.data ??= f())
+  if (!g.data) {
+    void f().then((data) => {
+      g.data = data
+    })
+  }
+  return g.data
 }
 
 export function getRecordKeys<K extends string, T extends Record<K, any> = any>(
@@ -37,3 +46,8 @@ export const getNewId = (n = NANOID_LEN) =>
 
 export const isServer = typeof localStorage === "undefined"
 export const isClient = !isServer
+
+const nodeEnv = staticCreate(getNodeEnv)
+export const isProd = nodeEnv === "production"
+export const isDev = nodeEnv === "development"
+export const isTest = nodeEnv === "test"

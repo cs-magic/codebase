@@ -7,7 +7,7 @@ import ThemeProvider from "../../packages/common/components/theme.provider"
 import { Toaster } from "../../packages/common/components/ui/sonner"
 import { SessionProvider } from "../../packages/common/components/session.provider"
 import { type Viewport } from "next"
-import { cn } from "../../packages/common/lib/utils"
+import { cn, isDev } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
 import { AppStatus } from "@/components/branding"
 import { AppsDialog } from "@/components/apps-selector"
@@ -75,7 +75,7 @@ export default function RootLayout({
 
                         <AppStatus />
 
-                        {env.NODE_ENV === "development" && <Devtool />}
+                        {isDev && <Devtool />}
                       </main>
                     </ScreenProvider>
                   </TooltipProvider>
