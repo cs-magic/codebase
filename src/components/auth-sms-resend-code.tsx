@@ -1,11 +1,11 @@
 "use client"
-import { useAtom, useSetAtom } from "jotai"
-import { sendCodeAtom } from "../atom-actions"
-import { smsDowntimeAtom } from "../atom-state"
+import { useAtom } from "jotai"
+import { smsDowntimeAtom } from "../../packages/common/lib/sms/store"
+import { useSmsSendCode } from "../../packages/common/lib/sms/hooks/use-sms-send-code"
 
-export const ResendVerifyCode = () => {
+export const AuthSmsResendCode = () => {
   const [downtime] = useAtom(smsDowntimeAtom)
-  const sendCode = useSetAtom(sendCodeAtom)
+  const sendCode = useSmsSendCode()
 
   return (
     <div className={"text-muted-foreground text-xs flex items-center "}>

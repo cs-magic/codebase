@@ -3,9 +3,9 @@
 /**
  * ui ref: https://clerk.com/
  */
-import { SmsSendCode } from "../../../../packages/common/lib/sms/components/send-code"
-import { SmsSignIn } from "../../../../packages/common/lib/sms/components/sign-in"
-import { smsStageAtom } from "../../../../packages/common/lib/sms/atom-state"
+import { SmsSendCode } from "../../../components/auth-sms-stage-1-send-code"
+import { SmsSignIn } from "../../../components/auth-sms-stage-2-sign-in"
+import { smsStageAtom } from "../../../../packages/common/lib/sms/store"
 import { useAtom } from "jotai"
 import { AuthContainer } from "@/components/auth-container"
 import { BrandTitle } from "@/components/branding"

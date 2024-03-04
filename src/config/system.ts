@@ -13,3 +13,4 @@ export const SPONSORS_BANNERS: string[] = []
 
 export const MSG_UNEXPECTED_ERROR = "Unexpected Error !"
 export const MSG_TODO = "研发小哥正在加🍗中！"
+export const SMS_DIGIT_SIZE = "text-xl sm:text-3xl"

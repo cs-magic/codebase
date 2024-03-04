@@ -1,6 +1,10 @@
 "use client"
 
-import { smsDowntimeAtom, smsNameAtom, smsPhoneAtom } from "../atom-state"
+import {
+  smsDowntimeAtom,
+  smsNameAtom,
+  smsPhoneAtom,
+} from "../../packages/common/lib/sms/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -10,39 +14,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form"
-import { Label } from "../../../components/ui/label"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
-import { ISendSms, sendSmsSchema } from "../schema"
-import { cn } from "../../utils"
-import { useBrowserEnvironment } from "../../../hooks/use-browser-environment"
+} from "../../packages/common/components/ui/form"
+import { Label } from "../../packages/common/components/ui/label"
+import { Button } from "../../packages/common/components/ui/button"
+import { Input } from "../../packages/common/components/ui/input"
+import { ISendSms, sendSmsSchema } from "../../packages/common/lib/sms/schema"
+import { cn } from "../../packages/common/lib/utils"
+import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
 import { signIn } from "next-auth/react"
-import { WECHAT_PROVIDER_ID } from "../../wechat/auth/config"
+import { WECHAT_PROVIDER_ID } from "../../packages/common/lib/wechat/auth/config"
 import { useAtom } from "jotai"
-import { sendCodeAtom } from "../atom-actions"
 
-import { ButtonWithLoading } from "../../../components/button-with-loading"
-import { SeparatorContainer } from "../../../components/separator-container"
+import { ButtonWithLoading } from "../../packages/common/components/button-with-loading"
+import { SeparatorContainer } from "../../packages/common/components/separator-container"
 import { ComponentType } from "react"
+import { useSmsSendCode } from "../../packages/common/lib/sms/hooks/use-sms-send-code"
 
 export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
   const { isWechat } = useBrowserEnvironment()
   const [downtime] = useAtom(smsDowntimeAtom)
   const [, setPhone] = useAtom(smsPhoneAtom)
   const [, setName] = useAtom(smsNameAtom)
-  const [, sendCode] = useAtom(sendCodeAtom)
-  const onSubmit = (values: ISendSms) => {
-    setPhone(values.phone)
-    setName(values.name)
-    sendCode()
-  }
+  const sendCode = useSmsSendCode()
 
   const form = useForm<ISendSms>({
     resolver: zodResolver(sendSmsSchema),
     // 如果不加的话，会导致 undefined --> value warning
     defaultValues: {
-      phone: "17766091857",
+      phone: "",
       name: "",
     },
   })
@@ -50,7 +49,7 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(sendCode)}
         className={"flex flex-col gap-4 w-full items-center"}
       >
         <div className={"text-semibold text-lg flex items-center gap-1"}>
@@ -80,13 +79,20 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
         )}
 
         <FormField
-          name={"phone"}
+          name={"name"}
           control={form.control}
           render={({ field }) => (
             <FormItem className={"w-full"}>
-              <FormLabel>请输入手机号</FormLabel>
+              <FormLabel>请输入阁下的昵称</FormLabel>
               <FormControl>
-                <Input {...field} autoFocus />
+                <Input
+                  {...field}
+                  onChange={(event) => {
+                    field.onChange(event)
+                    setName(event.currentTarget.value)
+                  }}
+                  autoFocus
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,13 +100,19 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
         />
 
         <FormField
-          name={"name"}
+          name={"phone"}
           control={form.control}
           render={({ field }) => (
             <FormItem className={"w-full"}>
-              <FormLabel>请输入昵称</FormLabel>
+              <FormLabel>请输入阁下的手机号</FormLabel>
               <FormControl>
-                <Input {...field} autoFocus />
+                <Input
+                  {...field}
+                  onChange={(event) => {
+                    field.onChange(event)
+                    setPhone(event.currentTarget.value)
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

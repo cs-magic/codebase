@@ -16,14 +16,14 @@ import {
 } from "../../../packages/common/components/ui/select"
 import { useAtom } from "jotai"
 import { Label } from "../../../packages/common/components/ui/label"
-import { smsProviderAtom } from "../../../packages/common/lib/sms/atom-state"
+import { smsProviderTypeAtom } from "../../../packages/common/lib/sms/store"
 import { SmsProviderType } from "../../../packages/common/lib/sms/schema"
 import { IconContainer } from "../../../packages/common/components/icon-container"
 import { api } from "../../../packages/common/lib/trpc/react"
 import { Button } from "../../../packages/common/components/ui/button"
 
 export const Devtool = () => {
-  const [smsProvider, setSmsProvider] = useAtom(smsProviderAtom)
+  const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
 
   const utils = api.useUtils()
 
