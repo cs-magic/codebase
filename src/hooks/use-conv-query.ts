@@ -1,8 +1,8 @@
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 
-import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv.atom"
-import { persistedAppsAtom, uiSelectAppsDialogOpenAtom } from "@/store/app.atom"
+import { convIdAtom, convsAtom } from "@/store/conv"
+import { uiSelectAppsDialogOpenAtom } from "@/store/app"
 import { useSession } from "next-auth/react"
 
 import {
@@ -11,12 +11,14 @@ import {
 } from "../../packages/common/store/user"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { api } from "../../packages/common/lib/trpc/react"
+import { currentContextAtom, getTriggerID, requestAtom } from "@/store/request"
+import { IMessageInChat } from "@/schema/message"
 import {
-  appsShouldSSEAtom,
-  currentContextAtom,
-  getTriggerID,
-  requestIDAtom,
-} from "@/store/request.atom"
+  persistedAppsAtom,
+  persistedSelectedAppIDAtom,
+} from "@/store/app.persisted"
+import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import { convDetailAtom } from "@/store/conv.immer"
 
 /**
  * 1. 用户在首页query
@@ -52,25 +54,46 @@ export function useQueryOnEnter() {
 }
 
 export const useQueryInChat = () => {
-  const [convs] = useAtom(convsAtom)
   const [persistedApps] = useAtom(persistedAppsAtom)
-  const [currentContext] = useAtom(currentContextAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
   const [, setRequestID] = useAtom(requestIDAtom)
   const [, setAppsShouldSSE] = useAtom(appsShouldSSEAtom)
 
+  const [currentContext] = useAtom(currentContextAtom)
+
+  const [request] = useAtom(requestAtom)
+
   const query = api.queryLLM.query.useMutation()
 
+  const contextInRequest = request?.context ?? []
+  const [selectedAppId] = useAtom(persistedSelectedAppIDAtom)
+  const responseInRequest = request?.responses.find(
+    (r) => r.appId === selectedAppId,
+  )?.response
+
   return () => {
-    console.log("useQueryInChat: ", { convs, conv, prompt })
     if (!conv || !prompt) return console.error("不满足发送条件")
     setPrompt("") // reset
+    const newContext = [
+      ...currentContext,
+      { content: prompt, role: "user" },
+    ] as IMessageInChat[]
+    console.log("querying: ", {
+      convId: conv.id,
+      newContext,
+      persistedApps,
+      request,
+      selectedAppId,
+      contextInRequest,
+      responseInRequest,
+      currentContext,
+    })
 
     query.mutate(
       {
         convId: conv.id,
-        context: [...currentContext, { content: prompt, role: "user" }],
+        context: newContext,
         apps: persistedApps,
       },
       {

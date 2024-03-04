@@ -13,10 +13,10 @@ import { useAtom } from "jotai"
 
 import {
   allAppsAtom,
-  persistedAppsAtom,
   uiMaxAppsAtom,
   uiSelectAppsDialogOpenAtom,
-} from "@/store/app.atom"
+} from "@/store/app"
+import { persistedAppsAtom } from "@/store/app.persisted"
 
 export const AppsDialog = () => {
   const [allApps] = useAtom(allAppsAtom)
@@ -34,6 +34,7 @@ export const AppsDialog = () => {
   )
 
   // console.log({ allApps, appFilter, filteredApps, maxToAdd })
+  console.log({ persistedApps })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -2349,6 +2349,16 @@
     "@svgr/plugin-jsx" "8.1.0"
     "@svgr/plugin-svgo" "8.1.0"
 
+"@swc-jotai/debug-label@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@swc-jotai/debug-label/-/debug-label-0.1.0.tgz#9b32b8e94bbf950dca6571518d0531f732adad63"
+  integrity sha512-Fe0ag02uBaVBIS/ySKkLSyiMhTUKyw3F0pTAcH+Yc29wZgIt//yFuPv1+p0QrlV6n411BJ0sxq2ei89tvwpFXQ==
+
+"@swc-jotai/react-refresh@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@swc-jotai/react-refresh/-/react-refresh-0.1.0.tgz#edeb8ee41e87ce56258a4f2d8f855ab03c912cf0"
+  integrity sha512-CWV4W06GdfQo3cW3CoUM2fp7avH4Z/suR7SvECNJnQbr6Sa9U3p7o10nXjNv2zT6z09bbNUPM55HBw5Nwd24Iw==
+
 "@swc/helpers@0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.2.tgz#85ea0c76450b61ad7d10a37050289eded783c27d"

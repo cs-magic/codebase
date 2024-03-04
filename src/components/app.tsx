@@ -1,18 +1,16 @@
+"use client"
+
 import { cn } from "../../packages/common/lib/utils"
 import { useEffect, useState } from "react"
 import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
 import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
-import { convDetailAtom } from "@/store/conv.atom"
 import { TopBar } from "@/components/app-top-bar"
 import { MessagesComp } from "@/components/app-messages"
-import {
-  appFinishedSSEAtom,
-  appsShouldSSEAtom,
-  getTriggerID,
-  requestIDAtom,
-} from "@/store/request.atom"
+import { appFinishedSSEAtom, getTriggerID } from "@/store/request"
 import { last } from "lodash"
+import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import { convDetailAtom } from "@/store/conv.immer"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app

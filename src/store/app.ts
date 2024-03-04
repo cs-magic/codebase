@@ -1,22 +1,16 @@
 import { atom } from "jotai"
 import { getNewId } from "../../packages/common/lib/utils"
-import { atomWithStorage } from "jotai/utils"
 import { IAppInDB } from "@/schema/app"
 import { uiMainAreaAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
-import { convDetailAtom } from "@/store/conv.atom"
-import { requestAtom } from "@/store/request.atom"
+import { requestAtom } from "@/store/request"
+import { persistedAppsAtom } from "@/store/app.persisted"
+import { convDetailAtom } from "@/store/conv.immer"
 
 /**
  * server query configs
  */
 export const allAppsAtom = atom<IAppInDB[]>([])
-
-/**
- * user query configs in local
- */
-export const persistedAppsAtom = atomWithStorage<IAppInDB[]>("conv.apps", [])
-export const selectedAppIDAtom = atomWithStorage("conv.apps.selected", "")
 
 export const uiSelectAppsDialogOpenAtom = atom(false)
 

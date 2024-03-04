@@ -1,13 +1,14 @@
 "use client"
-import { QueryConfigsComp } from "@/components/apps"
+import { AppsComp } from "@/components/apps"
 import { useEffect } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
 import { QueryInChatLayout } from "@/components/query-in-chat-layout"
 import { useAtom } from "jotai"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
-import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv.atom"
+import { convIdAtom, convsAtom } from "@/store/conv"
 import { useRouter } from "next/navigation"
+import { convDetailAtom } from "@/store/conv.immer"
 
 export default function ConversationPage({
   params: { slug },
@@ -53,7 +54,7 @@ export default function ConversationPage({
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
-      <QueryConfigsComp />
+      <AppsComp />
 
       <QueryInChatLayout />
     </div>

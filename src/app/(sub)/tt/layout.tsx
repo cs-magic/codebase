@@ -4,22 +4,23 @@ import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import { convDetailAtom, convsAtom } from "@/store/conv.atom"
-import {
-  convAppsAtom,
-  persistedAppsAtom,
-  selectedAppIDAtom,
-} from "@/store/app.atom"
+import { convsAtom } from "@/store/conv"
+import { convAppsAtom } from "@/store/app"
 import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useQueryInChat } from "@/hooks/use-conv-query"
+import {
+  persistedAppsAtom,
+  persistedSelectedAppIDAtom,
+} from "@/store/app.persisted"
+import { convDetailAtom } from "@/store/conv.immer"
 
-export default function ConversationLayout({ children }: PropsWithChildren) {
+export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
 
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
   const [persistedApps, setPersistedApps] = useAtom(persistedAppsAtom)
-  const [selectedAppID, setSelectedAppID] = useAtom(selectedAppIDAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(persistedSelectedAppIDAtom)
   const [query] = useAtom(userPromptAtom)
   const [convApps] = useAtom(convAppsAtom)
 
@@ -34,7 +35,9 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
   // 2. 当 conv 更新后，用 conv 里的 app 覆盖本地的 app
   useEffect(() => {
     // 不能清空
-    if (convApps.length) setPersistedApps(convApps)
+    if (!convApps.length) return
+    console.log("-- apps (conv --> persisted): ", { convApps })
+    setPersistedApps(convApps)
   }, [convApps])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个
@@ -51,8 +54,8 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
 
   // 4. 如果本地有conv，且有用户输入的话，则自动触发一次会话请求
   useEffect(() => {
-    if (conv && query) queryInChat() // 用户带着问题来的
-  }, [conv])
+    if (conv?.id && query) queryInChat() // 用户带着问题来的
+  }, [conv?.id])
 
   // 5. 当离开会话的时候，置空
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
 
   // 6. 当 conv 个数变化时，重置
   useEffect(() => {
-    utils.queryLLM.listConv.invalidate()
+    void utils.queryLLM.listConv.invalidate()
   }, [convs.length])
 
   return (

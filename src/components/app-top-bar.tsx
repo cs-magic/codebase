@@ -1,10 +1,5 @@
 import { useAtom } from "jotai"
-import {
-  delAppAtom,
-  persistedAppsAtom,
-  selectedAppIDAtom,
-  uiSelectAppsDialogOpenAtom,
-} from "@/store/app.atom"
+import { delAppAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import {
   Lock,
   MinusCircleIcon,
@@ -15,6 +10,10 @@ import {
 } from "lucide-react"
 import { cn } from "../../packages/common/lib/utils"
 import { IconContainer } from "../../packages/common/components/icon-container"
+import {
+  persistedAppsAtom,
+  persistedSelectedAppIDAtom,
+} from "@/store/app.persisted"
 
 export const TopBar = ({
   appID,
@@ -27,7 +26,7 @@ export const TopBar = ({
 }) => {
   const [, delApp] = useAtom(delAppAtom)
   const [persistedApps] = useAtom(persistedAppsAtom)
-  const [selectedAppID, setSelectedAppID] = useAtom(selectedAppIDAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(persistedSelectedAppIDAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   const selected = appID === selectedAppID

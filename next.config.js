@@ -49,6 +49,12 @@ const config = {
 
   // ref: https://jotai.org/docs/tools/devtools#next-js-setup
   transpilePackages: ["jotai-devtools"],
+  experimental: {
+    swcPlugins: [
+      ["@swc-jotai/debug-label", {}],
+      ["@swc-jotai/react-refresh", {}],
+    ],
+  },
 }
 
 export default config

@@ -13,7 +13,7 @@ import { cn } from "../../packages/common/lib/utils"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { useDelConv } from "@/hooks/use-conv-del"
 import { useAtom } from "jotai"
-import { convIdAtom } from "@/store/conv.atom"
+import { convIdAtom } from "@/store/conv"
 
 export const ConversationListComp = ({ conv }: { conv: { id: string } }) => {
   const deleteConv = useDelConv()

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { MessageComp } from "./app-message"
-import { useAtom } from "jotai/index"
-import { getAppContextAtom } from "@/store/request.atom"
+import { useAtom } from "jotai"
+import { getAppContextAtom } from "@/store/request"
 
 export const MessagesComp = ({
   appId,

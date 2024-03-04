@@ -1,8 +1,9 @@
 import { useRouter } from "next/navigation"
 import { api } from "../../packages/common/lib/trpc/react"
 import { toast } from "sonner"
-import { useAtom } from "jotai/index"
-import { persistedAppsAtom } from "@/store/app.atom"
+import { useAtom } from "jotai"
+
+import { persistedAppsAtom } from "@/store/app.persisted"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话

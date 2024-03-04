@@ -7,7 +7,7 @@ import { cn } from "../lib/utils"
 import { useAtom } from "jotai"
 
 import { userPromptAtom } from "../store/user"
-import { convIdAtom } from "@/store/conv.atom"
+import { convIdAtom } from "@/store/conv"
 
 export const TextareaAuto = forwardRef<
   HTMLTextAreaElement,

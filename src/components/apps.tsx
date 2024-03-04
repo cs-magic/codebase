@@ -6,9 +6,10 @@ import { useAtom } from "jotai"
 
 import { uiMainAreaAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
-import { persistedAppsAtom } from "@/store/app.atom"
 
-export const QueryConfigsComp = () => {
+import { persistedAppsAtom } from "@/store/app.persisted"
+
+export const AppsComp = () => {
   const [persistedApps] = useAtom(persistedAppsAtom)
   const [mainArea] = useAtom(uiMainAreaAtom)
   const { width } = mainArea
@@ -24,9 +25,7 @@ export const QueryConfigsComp = () => {
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {persistedApps.map((app) => (
-        <AppComp app={app} key={app.id} />
-      ))}
+      {persistedApps?.map((app) => <AppComp app={app} key={app.id} />)}
     </div>
   )
 }

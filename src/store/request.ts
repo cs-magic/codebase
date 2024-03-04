@@ -1,17 +1,10 @@
-import { atomWithStorage } from "jotai/utils"
 import { atom } from "jotai"
-import { convDetailAtom } from "@/store/conv.atom"
 import { IMessageInChat } from "@/schema/message"
-import { selectedAppIDAtom } from "@/store/app.atom"
 
-export const requestIDAtom = atomWithStorage("conv.requestID", "")
-/**
- * 持久化监听，直到服务端已经发完为止
- */
-export const appsShouldSSEAtom = atomWithStorage<string[]>(
-  "conv.apps.shouldSSE",
-  [],
-)
+import { persistedSelectedAppIDAtom } from "@/store/app.persisted"
+import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import { convDetailAtom } from "@/store/conv.immer"
+
 export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
   set(appsShouldSSEAtom, (draft) =>
     draft.filter((d) => d !== getTriggerID(get(requestIDAtom), appID)),
@@ -25,9 +18,14 @@ export const requestAtom = atom((get) =>
 export const baseContextAtom = atom((get) => get(requestAtom)?.context ?? [])
 export const getAppContextAtom = atom((get) => (appID: string) => {
   const request = get(requestAtom)
-  // console.log({ request, requestID: get(requestIDAtom) })
+
+  // 1. 先获取最近一次请求里的上下文
   const context = [...(request?.context ?? [])] as IMessageInChat[]
+  console.log({ context })
+
+  // 2. 再拼接回复里的内容
   const content = request?.responses.find((r) => r.appId === appID)?.response
+  console.log({ content })
   if (content)
     context.push({
       role: "assistant",
@@ -35,10 +33,11 @@ export const getAppContextAtom = atom((get) => (appID: string) => {
       updatedAt: new Date(),
       isError: false,
     })
+  console.log({ contextFinal: context })
   return context
 })
 export const currentContextAtom = atom((get) =>
-  get(getAppContextAtom)(get(selectedAppIDAtom)),
+  get(getAppContextAtom)(get(persistedSelectedAppIDAtom)),
 )
 
 /**

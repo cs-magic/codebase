@@ -10,8 +10,9 @@ import { Header } from "@/components/header"
 import { BrandingFooter } from "@/components/footer"
 import { useAtom } from "jotai"
 
-import { persistedAppsAtom, uiSelectAppsDialogOpenAtom } from "@/store/app.atom"
+import { uiSelectAppsDialogOpenAtom } from "@/store/app"
 import { FlexContainer } from "../../../packages/common/components/flex-container"
+import { persistedAppsAtom } from "@/store/app.persisted"
 
 export default function HomePage() {
   return (
