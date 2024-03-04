@@ -15,7 +15,6 @@ import {
 import { appInDBSchema, createAppSchema } from "@/schema/app"
 import { llmMessageSchema } from "@/schema/message"
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
-import { getTriggerID } from "@/store/request.atom"
 
 export const queryLLMRouter = createTRPCRouter({
   listModels: publicProcedure.query(() =>
@@ -127,8 +126,7 @@ export const queryLLMRouter = createTRPCRouter({
 
       await Promise.all(
         request.responses.map(async (r) => {
-          const triggerID = getTriggerID(request.id, r.app.id)
-          await triggerLLM({ app: r.app, context, triggerID })
+          await triggerLLM({ app: r.app, context, requestId: request.id })
         }),
       )
       return request

@@ -18,7 +18,7 @@ import {
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app.atom"
 
-export const AppsSelector = () => {
+export const AppsDialog = () => {
   const [allApps] = useAtom(allAppsAtom)
   const [persistedApps] = useAtom(persistedAppsAtom)
 

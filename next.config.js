@@ -46,6 +46,9 @@ const config = {
       { protocol: "https", hostname: "**" },
     ],
   },
+
+  // ref: https://jotai.org/docs/tools/devtools#next-js-setup
+  transpilePackages: ["jotai-devtools"],
 }
 
 export default config

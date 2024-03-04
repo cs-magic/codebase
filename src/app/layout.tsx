@@ -10,14 +10,13 @@ import { type Viewport } from "next"
 import { cn } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
 import { AppStatus } from "@/components/branding"
-import { AppsSelector } from "@/components/apps-selector"
+import { AppsDialog } from "@/components/apps-selector"
 import LLMProvider from "@/components/apps.provider"
 import { ScreenProvider } from "../../packages/common/components/screen.provider"
 import { AutoHeight } from "@/components/toolkits/auto-height"
 import { Devtool } from "@/components/toolkits/devtool"
 import { env } from "@/env"
 import { LoadingAlertDialog } from "../../packages/common/components/loading-alert-dialog"
-import { ContentAlertDialog } from "../../packages/common/components/content-alert-dialog"
 import JotaiProvider from "../../packages/common/components/jotai.provider"
 import { ReturnHomeAlertDialog } from "@/components/return-home"
 
@@ -70,7 +69,7 @@ export default function RootLayout({
 
                         <ReturnHomeAlertDialog />
 
-                        <AppsSelector />
+                        <AppsDialog />
 
                         <AutoHeight />
 

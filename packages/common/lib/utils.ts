@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { nanoid } from "nanoid"
+import { nanoid, customAlphabet } from "nanoid"
 
 import { NANOID_LEN } from "../config/system"
 
@@ -29,4 +29,8 @@ export function getRecordKeys<K extends string, T extends Record<K, any> = any>(
   return Object.keys(record) as K[]
 }
 
-export const getNewId = (): string => nanoid(NANOID_LEN)
+export const getNewId = (n = NANOID_LEN) =>
+  customAlphabet(
+    "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
+    NANOID_LEN,
+  )(n)

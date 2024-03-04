@@ -4,6 +4,8 @@ import { atomWithStorage } from "jotai/utils"
 import { IAppInDB } from "@/schema/app"
 import { uiMainAreaAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
+import { convDetailAtom } from "@/store/conv.atom"
+import { requestAtom } from "@/store/request.atom"
 
 /**
  * server query configs
@@ -43,4 +45,11 @@ export const uiMaxAppsAtom = atom((get) =>
     ),
     2, // se: 375x667
   ),
+)
+
+export const convAppsAtom = atom<IAppInDB[]>(
+  (get) =>
+    get(requestAtom)?.responses.map((r) => r.app) ??
+    get(convDetailAtom)?.apps ??
+    [],
 )

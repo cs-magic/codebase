@@ -1,10 +1,8 @@
 import { atomWithStorage } from "jotai/utils"
 import { atom } from "jotai"
-import { convDetailAtom, convIdAtom } from "@/store/conv.atom"
+import { convDetailAtom } from "@/store/conv.atom"
 import { IMessageInChat } from "@/schema/message"
-import { IAppInDB } from "@/schema/app"
 import { selectedAppIDAtom } from "@/store/app.atom"
-import { convDetailSchema } from "@/schema/conv"
 
 export const requestIDAtom = atomWithStorage("conv.requestID", "")
 /**
@@ -22,12 +20,6 @@ export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
 
 export const requestAtom = atom((get) =>
   get(convDetailAtom)?.requests?.find((r) => r.id === get(requestIDAtom)),
-)
-export const convAppsAtom = atom<IAppInDB[]>(
-  (get) =>
-    get(requestAtom)?.responses.map((r) => r.app) ??
-    get(convDetailAtom)?.apps ??
-    [],
 )
 
 export const baseContextAtom = atom((get) => get(requestAtom)?.context ?? [])
@@ -49,9 +41,13 @@ export const currentContextAtom = atom((get) =>
   get(getAppContextAtom)(get(selectedAppIDAtom)),
 )
 
+/**
+ * triggerID 合并没问题，但是谨慎分隔，因为字符串可能由prisma控制的
+ * @param requestID
+ * @param appID
+ */
+export const TRIGGER_SEPARATOR = "__"
 export const getTriggerID = (requestID: string, appID: string) =>
-  [requestID, appID].join("-")
-export const parseTriggerID = (id: string) => {
-  const [a, b] = id.split("-")
-  return { requestID: a, appID: b } as { requestID: string; appID: string }
-}
+  [requestID, appID].join(TRIGGER_SEPARATOR)
+
+currentContextAtom.debugLabel = "current-context"

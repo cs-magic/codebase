@@ -13,7 +13,6 @@ import { useAddConv } from "@/hooks/use-conv-add"
 import { api } from "../../packages/common/lib/trpc/react"
 import {
   appsShouldSSEAtom,
-  baseContextAtom,
   currentContextAtom,
   getTriggerID,
   requestIDAtom,
@@ -60,12 +59,13 @@ export const useQueryInChat = () => {
   const [conv, setConv] = useAtom(convDetailAtom)
   const [, setRequestID] = useAtom(requestIDAtom)
   const [, setAppsShouldSSE] = useAtom(appsShouldSSEAtom)
+
   const query = api.queryLLM.query.useMutation()
 
   return () => {
-    console.log("useQueryInChat: ", { convs, conv: conv, prompt })
+    console.log("useQueryInChat: ", { convs, conv, prompt })
     if (!conv || !prompt) return console.error("不满足发送条件")
-    setPrompt("") // close
+    setPrompt("") // reset
 
     query.mutate(
       {
@@ -75,13 +75,17 @@ export const useQueryInChat = () => {
       },
       {
         onSuccess: (request) => {
+          // todo: invalidate also ?
           // 更新request
           setConv((conv) => {
             // console.log("-- update request: ", { conv, request })
             conv?.requests?.push(request)
           })
+
+          // todo: derived
           // 更新request id
           setRequestID(request.id)
+
           // 添加到请求池
           setAppsShouldSSE((old) => [
             ...old,

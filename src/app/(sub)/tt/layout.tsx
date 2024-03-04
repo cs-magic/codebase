@@ -5,10 +5,13 @@ import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
 import { convDetailAtom, convsAtom } from "@/store/conv.atom"
-import { persistedAppsAtom, selectedAppIDAtom } from "@/store/app.atom"
+import {
+  convAppsAtom,
+  persistedAppsAtom,
+  selectedAppIDAtom,
+} from "@/store/app.atom"
 import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useQueryInChat } from "@/hooks/use-conv-query"
-import { convAppsAtom } from "@/store/request.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
