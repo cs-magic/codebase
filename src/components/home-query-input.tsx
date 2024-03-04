@@ -1,7 +1,7 @@
 "use client"
 
 import { useQueryOnEnter } from "@/hooks/use-conv-query"
-import { useAtom } from "jotai/index"
+import { useAtom } from "jotai"
 import { userPromptAtom } from "../../packages/common/store/user"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { ArrowUpIcon, Paperclip } from "lucide-react"

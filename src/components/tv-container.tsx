@@ -1,13 +1,8 @@
 "use client"
 import { PropsWithChildren, useRef } from "react"
-import { useAtom } from "jotai/index"
-import {
-  tvFullScreenAtom,
-  tvScaleAtom,
-  tvScreenOnAtom,
-  tvTargetWidthAtom,
-} from "@/store/tv"
-import { useFullscreen } from "react-use"
+import { useAtom } from "jotai"
+import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@/store/tv"
+import { useFullscreen, useMeasure } from "react-use"
 import { cn } from "../../packages/common/lib/utils"
 import { FlexContainer } from "../../packages/common/components/flex-container"
 import { range } from "lodash"
@@ -21,8 +16,6 @@ import "@/styles/tv.css"
 export const TVContainer = ({ children }: PropsWithChildren) => {
   const [isScreenOn] = useAtom(tvScreenOnAtom)
   const [isFullScreen, setFullScreen] = useAtom(tvFullScreenAtom)
-  const [width] = useAtom(tvTargetWidthAtom)
-  const [scale] = useAtom(tvScaleAtom)
 
   const ref = useRef<HTMLDivElement>(null)
   useFullscreen(ref, isFullScreen, {
@@ -32,12 +25,15 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
   const channelDeg = 0
   const volumeDeg = 0
 
+  const [refViewport, viewport] = useMeasure<HTMLDivElement>()
+  const scale = getTvScale(viewport)
+
   console.log({ scale, isScreenOn, isFullScreen })
 
   return (
     <div
-      style={{ width, height: width }}
-      className={"flex items-center justify-center"}
+      className={"w-full h-full flex items-center justify-center"}
+      ref={refViewport}
     >
       <div
         className={cn(

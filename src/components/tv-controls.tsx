@@ -1,6 +1,6 @@
 import { tvScreenOnAtom } from "@/store/tv"
 import { tvFullScreenAtom } from "@/store/tv"
-import { useAtom } from "jotai/index"
+import { useAtom } from "jotai"
 
 export const Controls = () => {
   const [, toggleFullscreen] = useAtom(tvFullScreenAtom)

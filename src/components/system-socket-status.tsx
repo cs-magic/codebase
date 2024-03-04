@@ -1,4 +1,6 @@
-import { useAtom } from "jotai/index"
+"use client"
+
+import { useAtom } from "jotai"
 import { socketLatencyAtom } from "../../packages/common/lib/puser/socket.atom"
 import { cn } from "../../packages/common/lib/utils"
 import { BarChart } from "lucide-react"
