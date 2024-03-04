@@ -18,7 +18,7 @@ export const MessagesComp = ({
     refScroll.current?.scrollIntoView({ behavior: "auto" })
   }, [context])
 
-  console.log({ appId, context })
+  // console.log({ appId, context })
 
   return (
     <div className={"grow overflow-auto"}>

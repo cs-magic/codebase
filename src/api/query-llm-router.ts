@@ -51,6 +51,7 @@ export const queryLLMRouter = createTRPCRouter({
     .query(async ({ input }) =>
       db.conv.findUniqueOrThrow({
         where: input,
+        ...convDetailSchema,
       }),
     ),
 

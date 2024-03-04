@@ -33,7 +33,7 @@ export const AppsSelector = () => {
         m.model.company.title.toLowerCase().includes(appFilter)),
   )
 
-  console.log({ allApps, appFilter, filteredApps, maxToAdd })
+  // console.log({ allApps, appFilter, filteredApps, maxToAdd })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

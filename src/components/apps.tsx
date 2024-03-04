@@ -12,10 +12,9 @@ export const QueryConfigsComp = () => {
   const [persistedApps] = useAtom(persistedAppsAtom)
   const [mainArea] = useAtom(uiMainAreaAtom)
   const { width } = mainArea
-  const gridCols = Math.min(
-    Math.floor(width / BEST_VIEWPOINT),
-    persistedApps.length,
-  )
+  const gridCols = width // 未初始化时避免闪烁
+    ? Math.min(Math.floor(width / BEST_VIEWPOINT), persistedApps.length)
+    : persistedApps.length
 
   return (
     <div

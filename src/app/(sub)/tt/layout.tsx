@@ -28,9 +28,10 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
     if (convsInDB) setConvs(convsInDB)
   }, [convsInDB])
 
-  // 2. 当 conv 更新后，用 conv 里的 config 覆盖本地的 config
+  // 2. 当 conv 更新后，用 conv 里的 app 覆盖本地的 app
   useEffect(() => {
-    if (convApps) setPersistedApps(convApps)
+    // 不能清空
+    if (convApps.length) setPersistedApps(convApps)
   }, [convApps])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个

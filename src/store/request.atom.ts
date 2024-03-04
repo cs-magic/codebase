@@ -4,6 +4,7 @@ import { convDetailAtom, convIdAtom } from "@/store/conv.atom"
 import { IMessageInChat } from "@/schema/message"
 import { IAppInDB } from "@/schema/app"
 import { selectedAppIDAtom } from "@/store/app.atom"
+import { convDetailSchema } from "@/schema/conv"
 
 export const requestIDAtom = atomWithStorage("conv.requestID", "")
 /**
@@ -26,13 +27,16 @@ export const requestAtom = atom((get) =>
   get(convDetailAtom)?.requests?.find((r) => r.id === get(requestIDAtom)),
 )
 export const convAppsAtom = atom<IAppInDB[]>(
-  (get) => get(requestAtom)?.responses.map((r) => r.app) ?? [],
+  (get) =>
+    get(requestAtom)?.responses.map((r) => r.app) ??
+    get(convDetailAtom)?.apps ??
+    [],
 )
 
 export const baseContextAtom = atom((get) => get(requestAtom)?.context ?? [])
 export const getAppContextAtom = atom((get) => (appID: string) => {
   const request = get(requestAtom)
-  console.log({ request, requestID: get(requestIDAtom) })
+  // console.log({ request, requestID: get(requestIDAtom) })
   const context = [...(request?.context ?? [])] as IMessageInChat[]
   const content = request?.responses.find((r) => r.appId === appID)?.response
   if (content)

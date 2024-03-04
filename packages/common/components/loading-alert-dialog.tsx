@@ -7,7 +7,7 @@ import React from "react"
 
 export const LoadingAlertDialog = () => {
   const [loading] = useAtom(uiLoadingAlertDialogAtom)
-  console.log("LoadingAlertDialog: ", { loading })
+  // console.log("LoadingAlertDialog: ", { loading })
 
   return (
     <AlertDialog open={loading}>
