@@ -30,6 +30,7 @@ export const queryLLMRouter = createTRPCRouter({
 
   listApps: publicProcedure.query(() =>
     db.app.findMany({
+      where: { granted: true },
       ...AppInDBSchema,
       orderBy: {
         // todo: by hot or so

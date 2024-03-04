@@ -9,10 +9,13 @@ import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { persistedAppsAtom } from "@/store/app.atom"
 
 export const QueryConfigsComp = () => {
-  const [apps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
   const [mainArea] = useAtom(uiMainAreaAtom)
   const { width } = mainArea
-  const gridCols = Math.min(Math.floor(width / BEST_VIEWPOINT), apps.length)
+  const gridCols = Math.min(
+    Math.floor(width / BEST_VIEWPOINT),
+    persistedApps.length,
+  )
 
   return (
     <div
@@ -22,7 +25,7 @@ export const QueryConfigsComp = () => {
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {apps.map((app) => (
+      {persistedApps.map((app) => (
         <AppComp app={app} key={app.id} />
       ))}
     </div>

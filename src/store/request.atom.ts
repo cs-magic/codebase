@@ -2,6 +2,7 @@ import { atomWithStorage } from "jotai/utils"
 import { atom } from "jotai"
 import { convDetailAtom, convIdAtom } from "@/store/conv.atom"
 import { IMessageInChat } from "@/schema/message"
+import { IAppInDB } from "@/schema/app"
 
 export const requestIDAtom = atomWithStorage("conv.requestID", "")
 /**
@@ -22,6 +23,9 @@ export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
 
 export const requestAtom = atom((get) =>
   get(convDetailAtom)?.requests.find((r) => r.id === get(requestIDAtom)),
+)
+export const convAppsAtom = atom<IAppInDB[]>(
+  (get) => get(requestAtom)?.responses.map((r) => r.app) ?? [],
 )
 
 export const contextAtom = atom((get) => get(requestAtom)?.context ?? [])

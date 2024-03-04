@@ -4,21 +4,21 @@ import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv.atom"
-import { persistedAppsAtom } from "@/store/app.atom"
+import { convDetailAtom, convsAtom } from "@/store/conv.atom"
+import { persistedAppsAtom, selectedAppIDAtom } from "@/store/app.atom"
 import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useQueryInChat } from "@/hooks/use-conv-query"
-import { contextAtom } from "@/store/request.atom"
+import { convAppsAtom } from "@/store/request.atom"
 
 export default function ConversationLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
 
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
-  const [convId] = useAtom(convIdAtom)
-  const [latestRequest] = useAtom(contextAtom)
-  const [, setPersistedApps] = useAtom(persistedAppsAtom)
+  const [persistedApps, setPersistedApps] = useAtom(persistedAppsAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(selectedAppIDAtom)
   const [query] = useAtom(userPromptAtom)
+  const [convApps] = useAtom(convAppsAtom)
 
   const queryInChat = useQueryInChat()
 
@@ -29,16 +29,27 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
 
   // 2. 当 conv 更新后，用 conv 里的 config 覆盖本地的 config
   useEffect(() => {
-    if (latestRequest?.responses)
-      setPersistedApps(latestRequest.responses.map((r) => r.app))
-  }, [latestRequest])
+    if (convApps) setPersistedApps(convApps)
+  }, [convApps])
 
-  // 3. 如果本地有conv，且有用户输入的话，则自动触发一次会话请求
+  // 3. 当有persisted app 但没有selected app时，自动选第一个
+  useEffect(() => {
+    if (!persistedApps.length) return
+    if (
+      // 没有
+      !selectedAppID ||
+      // 丢了
+      !persistedApps.find((p) => p.id === selectedAppID)
+    )
+      setSelectedAppID(persistedApps[0]!.id)
+  }, [persistedApps.length])
+
+  // 4. 如果本地有conv，且有用户输入的话，则自动触发一次会话请求
   useEffect(() => {
     if (conv && query) queryInChat() // 用户带着问题来的
   }, [conv])
 
-  // 4. 当离开会话的时候，置空
+  // 5. 当离开会话的时候，置空
   useEffect(() => {
     return () => {
       setConv(null)

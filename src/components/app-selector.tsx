@@ -19,12 +19,12 @@ export const AppSelector = ({
   app: IAppInDB
   type: "toAdd" | "toDel"
 }) => {
-  const [queryConfigs] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
   const [, addApp] = useAtom(addAppAtom)
   const [, delApp] = useAtom(delAppAtom)
 
   const [maxToAdd] = useAtom(uiMaxAppsAtom)
-  const disabled = type === "toAdd" && queryConfigs.length >= maxToAdd
+  const disabled = type === "toAdd" && persistedApps.length >= maxToAdd
 
   const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
 

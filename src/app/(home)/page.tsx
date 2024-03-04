@@ -44,7 +44,7 @@ export default function HomePage() {
 }
 
 const ConfigApp = () => {
-  const [queryConfigs] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   return (
@@ -53,11 +53,11 @@ const ConfigApp = () => {
 
       <Button variant={"outline"} onClick={() => setOpen(true)}>
         <span className={"text-muted-foreground"}>模型对比：</span>
-        {!queryConfigs.length ? (
+        {!persistedApps.length ? (
           "请选择"
         ) : (
           <JoinComponents
-            components={queryConfigs.map((p) => (
+            components={persistedApps.map((p) => (
               <span key={p.id}>{p.title}</span>
             ))}
             separator={

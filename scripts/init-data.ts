@@ -69,16 +69,18 @@ const initLLM = async () => {
   const user = await db.user.findFirst()
   if (user) {
     const models = await db.model.findMany()
-    const createdQueryConfigs = await db.app.createMany({
+    const createdApps = await db.app.createMany({
       data: models.map((m) => ({
         id: m.id,
         modelName: m.id,
         title: m.title,
         user: user.id,
+        // 商店上架
+        granted: true,
       })),
     })
 
-    console.log({ createdQueryConfigs })
+    console.log({ createdApps })
   }
 }
 

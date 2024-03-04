@@ -65,6 +65,9 @@ model App {
   systemPrompt String?
   title        String?
 
+  // 授权上架后的才可以展示在选择框内
+  granted Boolean @default(false)
+
   // -------
   // langchain的代码 OpenAIBaseInput
   // todo: nai doc: https://platform.openai.com/docs/api-reference/chat/create

@@ -24,8 +24,8 @@ export const uiSelectAppsDialogOpenAtom = atom(false)
 
 export const addAppAtom = atom(null, (get, set, app: IAppInDB) => {
   set(persistedAppsAtom, (p) => [
-    { ...app, id: getNewId() }, // new id
     ...p,
+    { ...app, id: getNewId() }, // new id
   ])
 })
 

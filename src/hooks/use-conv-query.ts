@@ -26,7 +26,7 @@ import {
 export function useQueryOnEnter() {
   const queryInChat = useQueryInChat()
   const [convId] = useAtom(convIdAtom)
-  const [configs] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
   const session = useSession()
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpen)
   const addConversation = useAddConv()
@@ -36,7 +36,7 @@ export function useQueryOnEnter() {
   return async () => {
     console.log("useQueryOnEnter: ", { convId, query })
     if (!query) return toast.error("不能为空")
-    if (!configs.length) {
+    if (!persistedApps.length) {
       setSelectAppsOpen(true)
       toast.error("至少需要选中一种模型")
       return
@@ -53,7 +53,7 @@ export function useQueryOnEnter() {
 
 export const useQueryInChat = () => {
   const [convs] = useAtom(convsAtom)
-  const [apps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(persistedAppsAtom)
   const [context] = useAtom(contextAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
@@ -70,7 +70,7 @@ export const useQueryInChat = () => {
       {
         convId: conv.id,
         context: [...context, { content: prompt, role: "user" }],
-        apps,
+        apps: persistedApps,
       },
       {
         onSuccess: (request) => {
@@ -84,7 +84,9 @@ export const useQueryInChat = () => {
           // 添加到请求池
           setAppsShouldSSE((old) => [
             ...old,
-            ...apps.map((app) => getTriggerID(conv.id, request.id, app.id)),
+            ...persistedApps.map((app) =>
+              getTriggerID(conv.id, request.id, app.id),
+            ),
           ])
         },
         onError: (err) => {

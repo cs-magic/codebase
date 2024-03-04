@@ -26,12 +26,13 @@ export const TopBar = ({
   fetching: boolean
 }) => {
   const [, delApp] = useAtom(delAppAtom)
-  const [apps] = useAtom(persistedAppsAtom)
-  const [selectdAppID] = useAtom(selectedAppIDAtom)
-  const selected = appID === selectdAppID
+  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(selectedAppIDAtom)
+  const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
+
+  const selected = appID === selectedAppID
   const LockOrNot = selected ? Lock : Unlock
   // console.log({ appId, currentPAppId })
-  const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   return (
     <div
@@ -52,8 +53,7 @@ export const TopBar = ({
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          //   todo: switch persisted app
-          // selectPApp(apps.find((p) => p.id === queryConfigId)!)
+          setSelectedAppID(appID)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -70,7 +70,7 @@ export const TopBar = ({
 
       <IconContainer
         tooltipContent={"删除一个App（注意，暂不可恢复）"}
-        className={cn(apps.length === 1 && "text-muted-foreground")}
+        className={cn(persistedApps.length === 1 && "text-muted-foreground")}
         onClick={() => {
           void delApp(appID)
         }}

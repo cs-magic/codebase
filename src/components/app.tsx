@@ -4,7 +4,7 @@ import { fetchSSE } from "../../packages/common/lib/sse"
 import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
 import { convDetailAtom } from "@/store/conv.atom"
-import { TopBar } from "@/components/app-topbar"
+import { TopBar } from "@/components/app-top-bar"
 import { MessagesComp } from "@/components/app-messages"
 import {
   appFinishedSSEAtom,
