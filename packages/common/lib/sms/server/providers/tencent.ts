@@ -11,7 +11,7 @@ const tencentSmsConfig = {
   signName: "邢健的个人博客",
   appId: "1400518792",
   templateId: "2064119",
-  endpoint: "components.tencentcloudapi.com",
+  endpoint: "sms.tencentcloudapi.com",
   region: "ap-beijing",
 }
 

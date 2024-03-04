@@ -11,7 +11,7 @@ import { atomWithImmer } from "jotai-immer"
  */
 export const smsProviderAtom = atomWithStorage<SmsProviderType>(
   "sms.provider.type",
-  "tencent",
+  "ali",
 )
 export const smsStageAtom = atom<SmsStage>("toSendSms")
 
