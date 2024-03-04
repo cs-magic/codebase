@@ -127,7 +127,7 @@ export const queryLLMRouter = createTRPCRouter({
 
       await Promise.all(
         request.responses.map(async (r) => {
-          const triggerID = getTriggerID(input.convId, request.id, r.app.id)
+          const triggerID = getTriggerID(request.id, r.app.id)
           await triggerLLM({ app: r.app, context, triggerID })
         }),
       )

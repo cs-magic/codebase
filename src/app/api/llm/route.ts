@@ -1,7 +1,5 @@
 import { NextRequest } from "next/server"
 import { manager } from "@/app/api/llm/init"
-
-import { UnexpectedError } from "../../../../packages/common/schema/errors"
 import { ISSEEvent } from "../../../../packages/common/lib/sse/schema"
 
 export async function GET(req: NextRequest) {

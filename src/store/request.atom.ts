@@ -16,10 +16,7 @@ export const appsShouldSSEAtom = atomWithStorage<string[]>(
 )
 export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
   set(appsShouldSSEAtom, (draft) =>
-    draft.filter(
-      (d) =>
-        d !== getTriggerID(get(convIdAtom) ?? "", get(requestIDAtom), appID),
-    ),
+    draft.filter((d) => d !== getTriggerID(get(requestIDAtom), appID)),
   )
 })
 
@@ -52,8 +49,9 @@ export const currentContextAtom = atom((get) =>
   get(getAppContextAtom)(get(selectedAppIDAtom)),
 )
 
-export const getTriggerID = (
-  convID: string,
-  requestID: string,
-  appID: string,
-) => [convID, requestID, appID].join("-")
+export const getTriggerID = (requestID: string, appID: string) =>
+  [requestID, appID].join("-")
+export const parseTriggerID = (id: string) => {
+  const [a, b] = id.split("-")
+  return { requestID: a, appID: b } as { requestID: string; appID: string }
+}

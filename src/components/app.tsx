@@ -1,6 +1,6 @@
 import { cn } from "../../packages/common/lib/utils"
 import { useEffect, useState } from "react"
-import { fetchSSE } from "../../packages/common/lib/sse"
+import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
 import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
 import { convDetailAtom } from "@/store/conv.atom"
@@ -23,7 +23,7 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
   const [appsShouldSSE] = useAtom(appsShouldSSEAtom)
   const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
   const [requestID] = useAtom(requestIDAtom)
-  const triggerID = getTriggerID(conv?.id ?? "", requestID, app.id)
+  const triggerID = getTriggerID(requestID, app.id)
   const shouldSSE = appsShouldSSE.includes(triggerID)
 
   useEffect(() => {

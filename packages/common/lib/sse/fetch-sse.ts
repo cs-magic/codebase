@@ -1,4 +1,4 @@
-import { ISSEEventType } from "./sse/schema"
+import { ISSEEventType } from "./schema"
 
 export const fetchSSE = async (
   requestUrl: string,

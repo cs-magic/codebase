@@ -77,7 +77,7 @@ export const useQueryInChat = () => {
         onSuccess: (request) => {
           // 更新request
           setConv((conv) => {
-            console.log("-- update request: ", { conv, request })
+            // console.log("-- update request: ", { conv, request })
             conv?.requests?.push(request)
           })
           // 更新request id
@@ -85,9 +85,7 @@ export const useQueryInChat = () => {
           // 添加到请求池
           setAppsShouldSSE((old) => [
             ...old,
-            ...persistedApps.map((app) =>
-              getTriggerID(conv.id, request.id, app.id),
-            ),
+            ...persistedApps.map((app) => getTriggerID(request.id, app.id)),
           ])
         },
         onError: (err) => {

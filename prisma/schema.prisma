@@ -207,7 +207,6 @@ model Request {
 }
 
 model Response {
-  id        String   @id @default(nanoid(9))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -223,6 +222,8 @@ model Response {
   tTrigger DateTime?
   tStart   DateTime?
   tEnd     DateTime?
+
+  @@id([requestId, appId])
 }
 
 model Session {

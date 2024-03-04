@@ -5,6 +5,8 @@ import { manager } from "@/app/api/llm/init"
 import { ILLMMessage } from "@/schema/message"
 import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
 import { App } from ".prisma/client"
+import { db } from "../../../../packages/common/lib/db"
+import { parseTriggerID } from "@/store/request.atom"
 
 export const triggerLLM = async ({
   triggerID,
@@ -17,6 +19,7 @@ export const triggerLLM = async ({
   // todo: more args
 }) => {
   // register into manger for later requests to read
+  const { requestID, appID } = parseTriggerID(triggerID)
 
   const r: IRequest = (manager[triggerID] = {
     finished: false,
@@ -35,6 +38,19 @@ export const triggerLLM = async ({
   }
 
   const start = async () => {
+    let output = ""
+    void db.response.update({
+      where: {
+        requestId_appId: {
+          requestId: requestID,
+          appId: appID,
+        },
+      },
+      data: {
+        tStart: new Date(),
+      },
+    })
+
     try {
       if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(app.modelName)) {
         const res = await callChatGPT({
@@ -44,6 +60,7 @@ export const triggerLLM = async ({
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string
+          output += token
           console.log("[llm] token: ", { triggerID: triggerID, token })
           push({ event: "onData", data: token })
         }
@@ -54,10 +71,33 @@ export const triggerLLM = async ({
       console.error("[call] error: ", e)
       const err = e as { message: string }
       push({ event: "onError", data: err.message })
+      void db.response.update({
+        where: {
+          requestId_appId: {
+            requestId: requestID,
+            appId: appID,
+          },
+        },
+        data: {
+          error: err.message,
+        },
+      })
     } finally {
       // close
       push({ event: "close" })
       r.finished = true
+      void db.response.update({
+        where: {
+          requestId_appId: {
+            requestId: requestID,
+            appId: appID,
+          },
+        },
+        data: {
+          tEnd: new Date(),
+          response: output,
+        },
+      })
     }
   }
 

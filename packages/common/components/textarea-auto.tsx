@@ -38,7 +38,7 @@ export const TextareaAuto = forwardRef<
         // 更新用户的输入
         const value = event.currentTarget.value
         setPrompt(value)
-        console.log({ convId, value })
+        // console.log({ convId, value })
         if (onChange) onChange(event)
       }}
       onKeyDown={(event) => {
