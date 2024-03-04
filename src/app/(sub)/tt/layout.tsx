@@ -43,13 +43,14 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   // 3. 当有persisted app 但没有selected app时，自动选第一个
   useEffect(() => {
     if (!persistedApps.length) return
-    if (
-      // 没有
-      !selectedAppID ||
-      // 丢了
-      !persistedApps.find((p) => p.id === selectedAppID)
-    )
-      setSelectedAppID(persistedApps[0]!.id)
+    // 确保当前选中的app还在列表内
+    if (selectedAppID && persistedApps.find((p) => p.id === selectedAppID))
+      return
+    const firstAppId = persistedApps[0]!.id
+    console.log("-- setting selected app id to be the first one: ", {
+      firstAppId,
+    })
+    setSelectedAppID(firstAppId)
   }, [persistedApps.length])
 
   // 4. 如果本地有conv，且有用户输入的话，则自动触发一次会话请求

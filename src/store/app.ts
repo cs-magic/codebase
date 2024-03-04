@@ -6,6 +6,8 @@ import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { requestAtom } from "@/store/request"
 import { persistedAppsAtom } from "@/store/app.persisted"
 import { convDetailAtom } from "@/store/conv.immer"
+import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import { getTriggerID } from "@/lib/utils"
 
 /**
  * server query configs
@@ -47,3 +49,9 @@ export const convAppsAtom = atom<IAppInDB[]>(
     get(convDetailAtom)?.apps ??
     [],
 )
+
+export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
+  set(appsShouldSSEAtom, (draft) =>
+    draft.filter((d) => d !== getTriggerID(get(requestIDAtom), appID)),
+  )
+})

@@ -1,18 +1,17 @@
 import { atomWithStorage } from "jotai/utils"
 import { IAppInDB } from "@/schema/app"
+import { atomWithStorageMark } from "../../packages/common/lib/atom"
 
 /**
- * user query configs in local
+ * todo :avoid persisting these
  */
+
 export const persistedAppsAtom = atomWithStorage<IAppInDB[]>(
   "conv.apps.list",
   [],
-  // 主要是 .next 坏了， 清楚了就好了
-  //  ref: https://github.com/pmndrs/jotai/issues/1689#issuecomment-1383844588
-  // { ...createJSONStorage(() => localStorage) },
 )
 
-export const persistedSelectedAppIDAtom = atomWithStorage(
+export const persistedSelectedAppIDAtom = atomWithStorageMark(
   "conv.apps.selected",
   "",
 )

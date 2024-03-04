@@ -7,10 +7,11 @@ import { IAppInChat } from "@/schema/app"
 import { useAtom } from "jotai"
 import { TopBar } from "@/components/app-top-bar"
 import { MessagesComp } from "@/components/app-messages"
-import { appFinishedSSEAtom, getTriggerID } from "@/store/request"
 import { last } from "lodash"
 import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
 import { convDetailAtom } from "@/store/conv.immer"
+import { appFinishedSSEAtom } from "@/store/app"
+import { getTriggerID } from "@/lib/utils"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app

@@ -2,14 +2,8 @@ import { atom } from "jotai"
 import { IMessageInChat } from "@/schema/message"
 
 import { persistedSelectedAppIDAtom } from "@/store/app.persisted"
-import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import { requestIDAtom } from "@/store/request.persisted"
 import { convDetailAtom } from "@/store/conv.immer"
-
-export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
-  set(appsShouldSSEAtom, (draft) =>
-    draft.filter((d) => d !== getTriggerID(get(requestIDAtom), appID)),
-  )
-})
 
 export const requestAtom = atom((get) =>
   get(convDetailAtom)?.requests?.find((r) => r.id === get(requestIDAtom)),
@@ -36,17 +30,18 @@ export const getAppContextAtom = atom((get) => (appID: string) => {
   console.log({ contextFinal: context })
   return context
 })
-export const currentContextAtom = atom((get) =>
-  get(getAppContextAtom)(get(persistedSelectedAppIDAtom)),
-)
+export const currentContextAtom = atom((get) => {
+  const selectedAppId = get(persistedSelectedAppIDAtom)
+  console.log({ selectedAppId })
+  if (typeof selectedAppId !== "string")
+    throw new Error("selected app id should be string type")
 
-/**
- * triggerID 合并没问题，但是谨慎分隔，因为字符串可能由prisma控制的
- * @param requestID
- * @param appID
- */
-export const TRIGGER_SEPARATOR = "__"
-export const getTriggerID = (requestID: string, appID: string) =>
-  [requestID, appID].join(TRIGGER_SEPARATOR)
-
-currentContextAtom.debugLabel = "current-context"
+  const getContext = get(getAppContextAtom)
+  const context = getContext(selectedAppId)
+  console.log("-- ✅ currentContextAtom: ", {
+    selectedAppId,
+    context,
+    typeOfAppId: typeof selectedAppId,
+  })
+  return context
+})

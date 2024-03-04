@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { nanoid, customAlphabet } from "nanoid"
+import { customAlphabet } from "nanoid"
 
 import { NANOID_LEN } from "../config/system"
 
@@ -34,3 +34,6 @@ export const getNewId = (n = NANOID_LEN) =>
     "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
     NANOID_LEN,
   )(n)
+
+export const isServer = typeof localStorage === "undefined"
+export const isClient = !isServer

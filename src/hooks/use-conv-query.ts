@@ -11,7 +11,7 @@ import {
 } from "../../packages/common/store/user"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { api } from "../../packages/common/lib/trpc/react"
-import { currentContextAtom, getTriggerID, requestAtom } from "@/store/request"
+import { currentContextAtom, requestAtom } from "@/store/request"
 import { IMessageInChat } from "@/schema/message"
 import {
   persistedAppsAtom,
@@ -19,6 +19,7 @@ import {
 } from "@/store/app.persisted"
 import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
 import { convDetailAtom } from "@/store/conv.immer"
+import { getTriggerID } from "@/lib/utils"
 
 /**
  * 1. 用户在首页query

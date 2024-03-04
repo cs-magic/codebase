@@ -7,7 +7,8 @@ import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
 import { App } from ".prisma/client"
 import { db } from "../../../../packages/common/lib/db"
 import { Prisma } from "@prisma/client"
-import { getTriggerID } from "@/store/request"
+
+import { getTriggerID } from "@/lib/utils"
 
 export const triggerLLM = async ({
   requestId,
