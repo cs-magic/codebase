@@ -35,14 +35,14 @@ export const HomeMain = () => {
       }
     >
       <div className={"h-1/3 flex flex-col justify-end mb-8"}>
-        <BrandTitle />
+        {/*<BrandTitle />*/}
       </div>
 
       {/*<TV />*/}
 
-      <HomeSelector />
+      {/*<HomeSelector />*/}
 
-      <QueryInHomePage />
+      {/*<QueryInHomePage />*/}
     </div>
   )
 }

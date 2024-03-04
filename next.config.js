@@ -6,7 +6,7 @@ await import("./src/env.js")
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: false,
+  reactStrictMode: true,
 
   distDir: process.env.DIST ?? ".next",
 
@@ -61,7 +61,9 @@ const config = {
   experimental: {
     swcPlugins: [
       ["@swc-jotai/debug-label", {}],
-      ["@swc-jotai/react-refresh", {}],
+
+      // WARNING: 这个不能加！加了之后 atomWithStorage 会完蛋！（调了两天！）
+      // ["@swc-jotai/react-refresh", {}],
     ],
   },
 }
