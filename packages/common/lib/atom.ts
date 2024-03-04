@@ -1,4 +1,4 @@
-import { atom } from "jotai/index"
+import { atom } from "jotai"
 import { isServer } from "./utils"
 
 /**
@@ -7,8 +7,9 @@ import { isServer } from "./utils"
  * --
  * 做了各种类型校验
  *
- * ref: https://jotai.org/docs/guides/persistence#a-helper-function-with-localstorage-and-json-parse
- *
+ * ref:
+ * - storage: https://jotai.org/docs/guides/persistence#a-helper-function-with-localstorage-and-json-parse
+ * - type infer: https://chat.openai.com/c/30650190-d2b1-4504-8b32-377085be080f
  * @param key
  * @param initialValue
  */

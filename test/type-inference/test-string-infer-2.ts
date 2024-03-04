@@ -1,7 +1,17 @@
 const inferStringGeneric = <T extends string | number | boolean | object>(
   v: T,
 ) => {
-  return (s: T) => {
+  type BroadType = T extends string
+    ? string
+    : T extends number
+      ? number
+      : T extends boolean
+        ? boolean
+        : T extends object
+          ? object
+          : never
+
+  return (s: BroadType) => {
     console.log({ s })
   }
 }
@@ -12,6 +22,9 @@ inferStringGeneric("foo")("foo")
 // I want this to pass, if the function accepts a string input, so it can be inferred as accepting any string
 // TS2345: Argument of type  "bar"  is not assignable to parameter of type  "foo"
 inferStringGeneric("foo")("bar")
+
+// fail
+// inferStringGeneric("foo")(0)
 
 // ok
 inferStringGeneric(0)(0)

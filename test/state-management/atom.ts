@@ -1,8 +1,8 @@
 import { atomWithStorage } from "jotai/utils"
 import { isServer } from "../../packages/common/lib/utils"
 
-export const testPersistedStringStorage = atomWithStorage(
-  "test.aotomWithStorage.string",
+export const testPersistedStringStorageStrEmptyAtom = atomWithStorage(
+  "test.str-empty",
   "",
   {
     getItem: (key, initialValue) => {
@@ -19,4 +19,20 @@ export const testPersistedStringStorage = atomWithStorage(
       localStorage.removeItem(key)
     },
   },
+)
+
+export const testPersistedStringStorageStrNotEmptyAtom = atomWithStorage(
+  "test.str-not-empty",
+  "abs",
+)
+
+export const testPersistedStringStorageStrNotEmptyWithDeclarationAtom =
+  atomWithStorage<string>("test.str-not-empty-with-declaration", "abs")
+export const testPersistedStringStorageArrEmptyAtom = atomWithStorage(
+  "test.arr-empty",
+  [],
+)
+export const testPersistedStringStorageArrNotEmptyAtom = atomWithStorage(
+  "test.arr-not-empty",
+  [1],
 )

@@ -10,7 +10,16 @@ const config = {
 
   distDir: process.env.DIST ?? ".next",
 
-  webpack(config) {
+  webpack(config, { dev, isServer }) {
+    // ref: https://www.bugpilot.com/guides/en/debug-nextjs-projects-source-maps-d506
+    // Enable source maps in development mode and for server-side rendering
+    if (
+      dev
+      // || isServer
+    ) {
+      config.devtool = "source-map"
+    }
+
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg"),

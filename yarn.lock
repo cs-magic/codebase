@@ -4699,16 +4699,6 @@ jotai-devtools@^0.8.0:
     react-json-tree "^0.18.0"
     react-resizable-panels "^0.0.54"
 
-jotai-immer@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/jotai-immer/-/jotai-immer-0.3.0.tgz#f8bc0cc35bedf736471e96807f6dfae65c5fb04d"
-  integrity sha512-k+o4rWfWWLyHfucHAdoiN+l8flxMrKC/bEFvJA98znj+kbPW5R90EPa1u8mhWLJTABW3xjAp7Z3kyD3FVi0Hgw==
-
-jotai-valtio@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/jotai-valtio/-/jotai-valtio-0.4.0.tgz#ceb251a03691d1f18be595a90a2b7adf8e22d989"
-  integrity sha512-j19IjUHjlbIzwM3I5dE8Me9nVGa/uJMQrnprg+wnR9xxdB7uXf4b+fldlTyNFgDN6HP8XSdIztKTMHlIp1365Q==
-
 jotai@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.7.0.tgz#50efe98b94ec742e1c4cf3f4307c2cac4766392c"
