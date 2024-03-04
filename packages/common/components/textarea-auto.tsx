@@ -30,7 +30,7 @@ export const TextareaAuto = forwardRef<
       cacheMeasurements
       className={cn(
         "block", // 不加这个会导致高度超标
-        "resize-none focus-visible:outline-none bg-transparent p-2",
+        "resize-none focus-visible:outline-none bg-transparent",
         className,
       )}
       value={prompt}

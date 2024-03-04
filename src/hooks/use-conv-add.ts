@@ -13,7 +13,6 @@ import { persistedAppsAtom } from "@/store/app.atom"
 export function useAddConv() {
   const router = useRouter()
   const addConv = api.queryLLM.addConv.useMutation()
-  const utils = api.useUtils()
   const [persistedApps] = useAtom(persistedAppsAtom)
 
   return (title?: string) => {
@@ -28,7 +27,6 @@ export function useAddConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
-          void utils.queryLLM.listConv.invalidate()
           // 路由跳转，并且避免再拿数据
           router.push(`/tt/${data.id}`) // 异步
         },

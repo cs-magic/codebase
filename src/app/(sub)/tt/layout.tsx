@@ -20,6 +20,7 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
   const [query] = useAtom(userPromptAtom)
   const [convApps] = useAtom(convAppsAtom)
 
+  const utils = api.useUtils()
   const queryInChat = useQueryInChat()
 
   // 1. 获取列表数据
@@ -55,6 +56,11 @@ export default function ConversationLayout({ children }: PropsWithChildren) {
       setConv(null)
     }
   }, [])
+
+  // 6. 当 conv 个数变化时，重置
+  useEffect(() => {
+    utils.queryLLM.listConv.invalidate()
+  }, [convs.length])
 
   return (
     <div className={"w-full h-full overflow-hidden flex border-y"}>

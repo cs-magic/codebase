@@ -9,7 +9,7 @@ import { toast } from "sonner"
  * @param conversationId
  */
 export function useDelConv() {
-  const delConv = api.queryLLM.deleteQueryConvs.useMutation()
+  const delConv = api.queryLLM.delConv.useMutation()
   const [, setConvs] = useAtom(convsAtom)
 
   return (id: string) => {
@@ -31,12 +31,18 @@ export function useDelConv() {
 
 export const useDelAllConvs = () => {
   const router = useRouter()
-  const [, setConversations] = useAtom(convsAtom)
-  const deleteAllQueryConvs = api.queryLLM.deleteAllQueryConvs.useMutation({
-    onSuccess: () => {
-      setConversations([])
+  const [, setConvs] = useAtom(convsAtom)
+
+  const delAllConvs = api.queryLLM.delAllConvs.useMutation({
+    onError: (error) => {
+      console.error(error)
+      toast.error("删除失败！")
+    },
+    onSuccess: (data) => {
+      console.log("deleted all: ", { data })
+      setConvs([])
       router.push("/tt")
     },
   })
-  return () => deleteAllQueryConvs.mutate()
+  return () => delAllConvs.mutate()
 }

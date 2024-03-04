@@ -79,11 +79,11 @@ export const queryLLMRouter = createTRPCRouter({
       }),
     ),
 
-  deleteQueryConvs: protectedProcedure
+  delConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => db.conv.delete({ where: input })),
 
-  deleteAllQueryConvs: protectedProcedure.mutation(({ ctx }) =>
+  delAllConvs: protectedProcedure.mutation(({ ctx }) =>
     db.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
   ),
 
