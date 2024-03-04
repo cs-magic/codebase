@@ -1,7 +1,8 @@
 import { ComponentProps, useEffect, useRef } from "react"
 import { Input } from "./ui/input"
 import { cn } from "../lib/utils"
-import { SMS_DIGIT_SIZE } from "@/config/system"
+
+import { SMS_DIGIT_SIZE } from "@/config/sms"
 
 export const DigitContainer = ({
   className,

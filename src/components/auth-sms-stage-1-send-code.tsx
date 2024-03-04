@@ -53,7 +53,7 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
         className={"flex flex-col gap-4 w-full items-center"}
       >
         <div className={"text-semibold text-lg flex items-center gap-1"}>
-          登录
+          <span className={"shrink-0"}>登录</span>
           <BrandComp />
         </div>
         <Label className={"text-muted-foreground text-xs"}>

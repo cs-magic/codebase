@@ -1,7 +1,6 @@
 "use client"
 
 import { cn } from "../../packages/common/lib/utils"
-import { INDIES_AVATARS, SPONSORS_BANNERS } from "@/config/system"
 import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
 import { HTMLAttributes } from "react"
 import { BarChart } from "lucide-react"
@@ -11,6 +10,7 @@ import Link from "next/link"
 import { SeparatorContainer } from "../../packages/common/components/separator-container"
 import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
 import { useAtom } from "jotai"
+import { INDIES_AVATARS, SPONSORS_BANNERS } from "@/config/branding"
 
 export const BrandTitle = ({
   withDescription,
@@ -21,8 +21,11 @@ export const BrandTitle = ({
     <Link
       href={"/"}
       className={cn(
-        "w-full flex justify-center",
-        // "w-[240px] "
+        "flex justify-center",
+        // "w-full" ,
+        // "w-[240px]",
+        "shrink-0",
+        // " bg-cyan-800",
       )}
     >
       <h1

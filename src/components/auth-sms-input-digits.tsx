@@ -3,7 +3,8 @@ import { smsCodeAtom } from "../../packages/common/lib/sms/store"
 import { useAtom } from "jotai"
 import { DigitContainer } from "../../packages/common/components/digit-container"
 import { cn } from "../../packages/common/lib/utils"
-import { SMS_DIGIT_SIZE } from "@/config/system"
+
+import { SMS_DIGIT_SIZE } from "@/config/sms"
 
 export const AuthSmsInputDigits = () => {
   const [code] = useAtom(smsCodeAtom)

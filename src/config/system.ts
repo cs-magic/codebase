@@ -1,16 +1,29 @@
-import { BRANDING_IDOUBI_AVATAR, BRANDING_MARK_AVATAR } from "@/config/assets"
+import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
+import { IMode, ModeType } from "@/schema/scenario"
+import { ISubAppIcon } from "@/components/header-app"
 
-export const DATETIME_FORMAT = "YYYY-MM-DDThh:mm" // 根据MDN，日期选择组件只能精确到分钟，否则舒昱的iPhone 15 safari上会报错
-
-export const SHOW_PARTNERS = false
-// 独立开发者，要圆形的
-export const INDIES_AVATARS: string[] = [
-  BRANDING_MARK_AVATAR,
-  BRANDING_IDOUBI_AVATAR,
+export const modes: Record<ModeType, IMode> = {
+  text: { id: "text", label: "文" },
+  image: { id: "image", label: "图" },
+  sound: { id: "sound", label: "音" },
+  video: { id: "video", label: "视频" },
+}
+/**
+ * todo: images
+ */
+export const subAppsIcons: ISubAppIcon[] = [
+  { id: "tt", fromMode: "text", toMode: "text", Cover: Text2TextAppSVG },
+  { id: "ti", fromMode: "text", toMode: "image", Cover: Text2ImageAppSVG },
+  // { fromMode: "image", toMode: "text" },
+  // { fromMode: "text", toMode: "sound" },
+  // { fromMode: "image", toMode: "sound" },
+  // { fromMode: "sound", toMode: "text" },
+  // { fromMode: "sound", toMode: "image" },
+  // { fromMode: "text", toMode: "video" },
+  // { fromMode: "image", toMode: "video" },
+  // { fromMode: "sound", toMode: "video" },
+  // { fromMode: "video", toMode: "text" },
+  // { fromMode: "video", toMode: "image" },
+  // { fromMode: "video", toMode: "sound" },
+  // { fromMode: "video", toMode: "video" },
 ]
-// 企业banner
-export const SPONSORS_BANNERS: string[] = []
-
-export const MSG_UNEXPECTED_ERROR = "Unexpected Error !"
-export const MSG_TODO = "研发小哥正在加🍗中！"
-export const SMS_DIGIT_SIZE = "text-xl sm:text-3xl"

@@ -5,7 +5,7 @@ export const AuthContainer = ({ children }: PropsWithChildren) => {
   return (
     <div
       className={
-        "grow w-full flex items-center justify-center gap-4 bg-muted p-4"
+        "w-full h-full flex items-center justify-center gap-4 bg-muted p-4"
       }
     >
       <div

@@ -6,7 +6,7 @@ import { FlexContainer } from "../../../packages/common/components/flex-containe
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (
     <FlexContainer orientation={"vertical"} className={"!p-0"}>
-      <Header />
+      <Header withBrand />
 
       <div className={"grow w-full overflow-auto"}>{children}</div>
 

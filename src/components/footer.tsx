@@ -1,7 +1,7 @@
 import { SokkaBrand, V2AGIBrand } from "@/config/assets"
-import { SHOW_PARTNERS } from "@/config/system"
 import { Partners } from "@/components/branding"
 import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
+import { SHOW_PARTNERS } from "@/config/branding"
 
 export const BrandingFooter = () => {
   const enterprises: string[] = []

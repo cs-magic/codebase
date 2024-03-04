@@ -4,7 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-} from "../../../packages/common/components/ui/dialog"
+} from "../../packages/common/components/ui/dialog"
 import { SettingsIcon } from "lucide-react"
 import {
   Select,
@@ -13,19 +13,19 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../packages/common/components/ui/select"
+} from "../../packages/common/components/ui/select"
 import { useAtom } from "jotai"
-import { Label } from "../../../packages/common/components/ui/label"
+import { Label } from "../../packages/common/components/ui/label"
 import {
   smsCodeCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../../packages/common/lib/sms/store"
-import { SmsProviderType } from "../../../packages/common/lib/sms/schema"
-import { IconContainer } from "../../../packages/common/components/icon-container"
-import { api } from "../../../packages/common/lib/trpc/react"
-import { Button } from "../../../packages/common/components/ui/button"
-import { Separator } from "../../../packages/common/components/ui/separator"
-import { Input } from "../../../packages/common/components/ui/input"
+} from "../../packages/common/lib/sms/store"
+import { SmsProviderType } from "../../packages/common/lib/sms/schema"
+import { IconContainer } from "../../packages/common/components/icon-container"
+import { api } from "../../packages/common/lib/trpc/react"
+import { Button } from "../../packages/common/components/ui/button"
+import { Separator } from "../../packages/common/components/ui/separator"
+import { Input } from "../../packages/common/components/ui/input"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
