@@ -3,22 +3,42 @@ import { getNewId } from "../../packages/common/lib/utils"
 import { IAppInDB } from "@/schema/app"
 import { uiScreenAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
-import { requestAtom } from "@/store/request"
-import { persistedAppsAtom } from "@/store/app.persisted"
-import { convDetailAtom } from "@/store/conv.immer"
-import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
+import {
+  appsShouldSSEPersistedAtom,
+  requestIdPersistedAtom,
+  requestAtom,
+} from "@/store/request"
 import { getTriggerID } from "@/lib/utils"
+import { atomWithStorage } from "jotai/utils"
+import { atomWithStorageMark } from "../../packages/common/lib/atom"
+import { convDetailAtom } from "@/store/conv"
+
+//////////////////////////////
+// base
+//////////////////////////////
 
 /**
- * server query configs
+ * apps queried from server, and then be used crossing components
  */
 export const allAppsAtom = atom<IAppInDB[]>([])
 
+/**
+ * 用户选择app的弹窗，允许多个地方触发
+ */
 export const uiSelectAppsDialogOpenAtom = atom(false)
 
-/**
- * --- actions
- */
+// todo :avoid persist apps
+export const persistedAppsAtom = atomWithStorage<IAppInDB[]>(
+  "conv.apps.list",
+  [],
+)
+
+// todo :avoid persist the cur app
+export const persistedCurAppIdAtom = atomWithStorageMark("conv.apps.cur", "")
+
+//////////////////////////////
+// derived
+//////////////////////////////
 
 export const addAppAtom = atom(null, (get, set, app: IAppInDB) => {
   set(persistedAppsAtom, (p) => [
@@ -51,7 +71,7 @@ export const convAppsAtom = atom<IAppInDB[]>(
 )
 
 export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
-  set(appsShouldSSEAtom, (draft) =>
-    draft.filter((d) => d !== getTriggerID(get(requestIDAtom), appID)),
+  set(appsShouldSSEPersistedAtom, (draft) =>
+    draft.filter((d) => d !== getTriggerID(get(requestIdPersistedAtom), appID)),
   )
 })

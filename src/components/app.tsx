@@ -8,10 +8,13 @@ import { useAtom } from "jotai"
 import { TopBar } from "@/components/app-top-bar"
 import { MessagesComp } from "@/components/app-messages"
 import { last } from "lodash"
-import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
-import { convDetailAtom } from "@/store/conv.immer"
 import { appFinishedSSEAtom } from "@/store/app"
 import { getTriggerID } from "@/lib/utils"
+import { convDetailAtom } from "@/store/conv"
+import {
+  appsShouldSSEPersistedAtom,
+  requestIdPersistedAtom,
+} from "@/store/request"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
   const { id } = app
@@ -19,9 +22,9 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
   const [fetching, setFetching] = useState(false)
 
   const [conv, setConv] = useAtom(convDetailAtom)
-  const [appsShouldSSE] = useAtom(appsShouldSSEAtom)
+  const [appsShouldSSE] = useAtom(appsShouldSSEPersistedAtom)
   const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
-  const [requestID] = useAtom(requestIDAtom)
+  const [requestID] = useAtom(requestIdPersistedAtom)
   const triggerID = getTriggerID(requestID, app.id)
   const shouldSSE = appsShouldSSE.includes(triggerID)
 

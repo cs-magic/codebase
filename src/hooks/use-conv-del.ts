@@ -1,6 +1,4 @@
 import { useRouter } from "next/navigation"
-import { useAtom } from "jotai"
-import { convsAtom } from "@/store/conv"
 import { api } from "../../packages/common/lib/trpc/react"
 import { toast } from "sonner"
 

@@ -1,6 +1,5 @@
 "use client"
 import React from "react"
-import { BrandTitle } from "@/components/branding"
 import { HomeQueryArea } from "@/components/home-query-area"
 import { FlexContainer } from "../../../packages/common/components/flex-container"
 import { cn } from "../../../packages/common/lib/utils"
@@ -8,6 +7,7 @@ import { cn } from "../../../packages/common/lib/utils"
 import { TVContainer } from "@/components/tv-container"
 import { useAtom } from "jotai"
 import { userPromptAtom } from "../../../packages/common/store/user"
+import { BrandingTitle } from "@/components/branding-title"
 
 export default function HomePage() {
   const [prompt] = useAtom(userPromptAtom)
@@ -24,7 +24,7 @@ export default function HomePage() {
     >
       {/*<div className={"h-1/4 sm:h-1/5 w-full "} />*/}
 
-      {/*<BrandTitle className={"py-4 sm:py-8"} />*/}
+      {/*<BrandingTitle className={"py-4 sm:py-8"} />*/}
 
       <TVContainer>{prompt || "hello world !"}</TVContainer>
 

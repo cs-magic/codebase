@@ -13,10 +13,10 @@ import { useAtom } from "jotai"
 
 import {
   allAppsAtom,
+  persistedAppsAtom,
   uiMaxAppsAtom,
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
-import { persistedAppsAtom } from "@/store/app.persisted"
 
 export const AppsDialog = () => {
   const [allApps] = useAtom(allAppsAtom)

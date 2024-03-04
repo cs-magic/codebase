@@ -4,9 +4,13 @@ import { cn } from "../../packages/common/lib/utils"
 import { IAppInDB } from "@/schema/app"
 import { useAtom } from "jotai"
 
-import { addAppAtom, delAppAtom, uiMaxAppsAtom } from "@/store/app"
+import {
+  addAppAtom,
+  delAppAtom,
+  persistedAppsAtom,
+  uiMaxAppsAtom,
+} from "@/store/app"
 import { IconContainer } from "../../packages/common/components/icon-container"
-import { persistedAppsAtom } from "@/store/app.persisted"
 
 export const AppSelector = ({
   app,

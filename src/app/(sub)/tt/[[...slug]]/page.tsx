@@ -2,13 +2,12 @@
 import { AppsComp } from "@/components/apps"
 import { useEffect } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
-import { QueryInChatLayout } from "@/components/query-in-chat-layout"
+import { ChatQuery } from "@/components/chat-query"
 import { useAtom } from "jotai"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
-import { convIdAtom, convsAtom } from "@/store/conv"
+import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv"
 import { useRouter } from "next/navigation"
-import { convDetailAtom } from "@/store/conv.immer"
 
 export default function ConversationPage({
   params: { slug },
@@ -56,7 +55,7 @@ export default function ConversationPage({
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
       <AppsComp />
 
-      <QueryInChatLayout />
+      <ChatQuery />
     </div>
   )
 }

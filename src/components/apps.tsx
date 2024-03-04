@@ -7,7 +7,7 @@ import { useAtom } from "jotai"
 import { uiScreenAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 
-import { persistedAppsAtom } from "@/store/app.persisted"
+import { persistedAppsAtom } from "@/store/app"
 
 export const AppsComp = () => {
   const [persistedApps] = useAtom(persistedAppsAtom)

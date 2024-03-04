@@ -8,7 +8,8 @@ import { SmsSignIn } from "../../../components/auth-sms-stage-2-sign-in"
 import { smsStageAtom } from "../../../../packages/common/lib/sms/store"
 import { useAtom } from "jotai"
 import { AuthContainer } from "@/components/auth-container"
-import { BrandTitle } from "@/components/branding"
+
+import { BrandingTitle } from "@/components/branding-title"
 
 export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)
@@ -24,4 +25,4 @@ export default function AuthPage() {
   )
 }
 
-const BrandComp = () => <BrandTitle className={"text-lg gap-2"} />
+const BrandComp = () => <BrandingTitle className={"text-lg gap-2"} />

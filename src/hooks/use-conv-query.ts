@@ -1,8 +1,12 @@
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 
-import { convIdAtom, convsAtom } from "@/store/conv"
-import { uiSelectAppsDialogOpenAtom } from "@/store/app"
+import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv"
+import {
+  persistedAppsAtom,
+  persistedCurAppIdAtom,
+  uiSelectAppsDialogOpenAtom,
+} from "@/store/app"
 import { useSession } from "next-auth/react"
 
 import {
@@ -11,14 +15,13 @@ import {
 } from "../../packages/common/store/user"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { api } from "../../packages/common/lib/trpc/react"
-import { currentContextAtom, requestAtom } from "@/store/request"
-import { IMessageInChat } from "@/schema/message"
 import {
-  persistedAppsAtom,
-  persistedSelectedAppIDAtom,
-} from "@/store/app.persisted"
-import { appsShouldSSEAtom, requestIDAtom } from "@/store/request.persisted"
-import { convDetailAtom } from "@/store/conv.immer"
+  currentContextAtom,
+  appsShouldSSEPersistedAtom,
+  requestIdPersistedAtom,
+  requestAtom,
+} from "@/store/request"
+import { IMessageInChat } from "@/schema/message"
 import { getTriggerID } from "@/lib/utils"
 
 /**
@@ -58,8 +61,8 @@ export const useQueryInChat = () => {
   const [persistedApps] = useAtom(persistedAppsAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
-  const [, setRequestID] = useAtom(requestIDAtom)
-  const [, setAppsShouldSSE] = useAtom(appsShouldSSEAtom)
+  const [, setRequestID] = useAtom(requestIdPersistedAtom)
+  const [, setAppsShouldSSE] = useAtom(appsShouldSSEPersistedAtom)
 
   const [currentContext] = useAtom(currentContextAtom)
 
@@ -68,7 +71,7 @@ export const useQueryInChat = () => {
   const query = api.queryLLM.query.useMutation()
 
   const contextInRequest = request?.context ?? []
-  const [selectedAppId] = useAtom(persistedSelectedAppIDAtom)
+  const [selectedAppId] = useAtom(persistedCurAppIdAtom)
   const responseInRequest = request?.responses.find(
     (r) => r.appId === selectedAppId,
   )?.response

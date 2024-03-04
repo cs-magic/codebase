@@ -11,7 +11,7 @@ export default function SubLayout({ children }: PropsWithChildren) {
         {children}
       </div>
 
-      {/*<BrandingFooter />*/}
+      {/*<Footer />*/}
     </FlexContainer>
   )
 }

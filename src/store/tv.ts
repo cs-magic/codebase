@@ -1,8 +1,17 @@
 import { atom } from "jotai/index"
 import { uiScreenAtom } from "../../packages/common/store/ui"
 
+//////////////////////////////
+// base
+//////////////////////////////
+
 export const tvFullScreenAtom = atom(false)
 export const tvScreenOnAtom = atom(true)
+
+//////////////////////////////
+// derived
+//////////////////////////////
+
 export const tvTargetWidthAtom = atom((get) => {
   const { width: w, height: h } = get(uiScreenAtom)
   return get(tvFullScreenAtom)

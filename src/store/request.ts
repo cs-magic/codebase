@@ -1,12 +1,33 @@
 import { atom } from "jotai"
 import { IMessageInChat } from "@/schema/message"
 
-import { persistedSelectedAppIDAtom } from "@/store/app.persisted"
-import { requestIDAtom } from "@/store/request.persisted"
-import { convDetailAtom } from "@/store/conv.immer"
+import { persistedCurAppIdAtom } from "@/store/app"
+import { convDetailAtom } from "@/store/conv"
+import { atomWithStorage } from "jotai/utils"
+
+//////////////////////////////
+// base
+//////////////////////////////
+
+// todo: from server
+export const requestIdPersistedAtom = atomWithStorage("conv.requestID", "")
+/**
+ * 持久化监听，直到服务端已经发完为止
+ * todo: from server
+ */
+export const appsShouldSSEPersistedAtom = atomWithStorage<string[]>(
+  "conv.apps.shouldSSE",
+  [],
+)
+
+//////////////////////////////
+// derived
+//////////////////////////////
 
 export const requestAtom = atom((get) =>
-  get(convDetailAtom)?.requests?.find((r) => r.id === get(requestIDAtom)),
+  get(convDetailAtom)?.requests?.find(
+    (r) => r.id === get(requestIdPersistedAtom),
+  ),
 )
 
 export const baseContextAtom = atom((get) => get(requestAtom)?.context ?? [])
@@ -31,7 +52,7 @@ export const getAppContextAtom = atom((get) => (appID: string) => {
   return context
 })
 export const currentContextAtom = atom((get) => {
-  const currentAppId = get(persistedSelectedAppIDAtom)
+  const currentAppId = get(persistedCurAppIdAtom)
   if (typeof currentAppId !== "string")
     throw new Error("selected app id should be string type")
 

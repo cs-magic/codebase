@@ -1,6 +1,5 @@
 import { useAtom } from "jotai"
-import { persistedAppsAtom } from "@/store/app.persisted"
-import { uiSelectAppsDialogOpenAtom } from "@/store/app"
+import { persistedAppsAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import { ScenarioSelector } from "@/components/scenario-selector"
 import { Button } from "../../packages/common/components/ui/button"
 import JoinComponents from "../../packages/common/components/join-components"

@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
-import { ConversationListComp } from "./sidebar-conversation-item"
+import { ConversationListComp } from "./sidebar-conversation"
 import { useAtom } from "jotai"
 import { convsAtom } from "@/store/conv"
 import { useDelAllConvs } from "@/hooks/use-conv-del"

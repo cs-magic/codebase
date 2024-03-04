@@ -4,15 +4,14 @@ import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import { convsAtom } from "@/store/conv"
-import { convAppsAtom } from "@/store/app"
+import { convDetailAtom, convsAtom } from "@/store/conv"
+import {
+  convAppsAtom,
+  persistedAppsAtom,
+  persistedCurAppIdAtom,
+} from "@/store/app"
 import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useQueryInChat } from "@/hooks/use-conv-query"
-import {
-  persistedAppsAtom,
-  persistedSelectedAppIDAtom,
-} from "@/store/app.persisted"
-import { convDetailAtom } from "@/store/conv.immer"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
@@ -20,7 +19,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
   const [persistedApps, setPersistedApps] = useAtom(persistedAppsAtom)
-  const [selectedAppID, setSelectedAppID] = useAtom(persistedSelectedAppIDAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(persistedCurAppIdAtom)
   const [query] = useAtom(userPromptAtom)
   const [convApps] = useAtom(convAppsAtom)
 
