@@ -59,6 +59,7 @@ model App {
   // ID of the model to use. See the model endpoint compatibility table for details on which models work with the Chat API.
   modelName String
 
+  convs     Conv[]
   requests  Request[]
   responses Response[]
 
@@ -171,6 +172,8 @@ model Conv {
 
   title    String?
   requests Request[]
+
+  apps App[]
 }
 
 model Model {

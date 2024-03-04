@@ -19,9 +19,3 @@ export const openAlertDialogAtom = atom(null, (get, set, content: string) => {
   set(uiAlertDialogOpen, true)
   set(uiAlertDialogContent, content)
 })
-export const lockUIAtom = atom(null, (get, set) => {
-  set(uiLoadingAlertDialogAtom, true)
-})
-export const unlockUIAtom = atom(null, (get, set) => {
-  set(uiLoadingAlertDialogAtom, false)
-})

@@ -1,6 +1,8 @@
 import { useRouter } from "next/navigation"
 import { api } from "../../packages/common/lib/trpc/react"
 import { toast } from "sonner"
+import { useAtom } from "jotai/index"
+import { persistedAppsAtom } from "@/store/app.atom"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话
@@ -10,14 +12,16 @@ import { toast } from "sonner"
  */
 export function useAddConv() {
   const router = useRouter()
-  const addConversation = api.queryLLM.addQueryConv.useMutation()
-
+  const addConv = api.queryLLM.addConv.useMutation()
   const utils = api.useUtils()
+  const [persistedApps] = useAtom(persistedAppsAtom)
+
   return (title?: string) => {
     // 数据库新增
-    return addConversation.mutateAsync(
+    return addConv.mutateAsync(
       {
         title,
+        apps: persistedApps,
       },
       {
         onError: () => {

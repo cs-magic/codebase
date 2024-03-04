@@ -84,6 +84,14 @@ const Credentials = (
 
 ## BUGFIX
 
+### jotai 不可以 在 set 里 set writable variable， 那是用于 useAtom 的，见：
+
+![img.png](docs/jotai-writeable.png)
+
+ref:
+- https://jotai.org/docs/core/atom
+- https://chat.openai.com/c/52cf8ab1-de90-4249-8239-322d2f860d33
+
 ### - [x] `import sum from "lodash/sum"`
 
 问题： 这个会导致 `yarn update` 在 `spawn` 里编译时失败。

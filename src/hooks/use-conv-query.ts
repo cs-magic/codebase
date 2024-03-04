@@ -13,7 +13,8 @@ import { useAddConv } from "@/hooks/use-conv-add"
 import { api } from "../../packages/common/lib/trpc/react"
 import {
   appsShouldSSEAtom,
-  contextAtom,
+  baseContextAtom,
+  currentContextAtom,
   getTriggerID,
   requestIDAtom,
 } from "@/store/request.atom"
@@ -54,7 +55,7 @@ export function useQueryOnEnter() {
 export const useQueryInChat = () => {
   const [convs] = useAtom(convsAtom)
   const [persistedApps] = useAtom(persistedAppsAtom)
-  const [context] = useAtom(contextAtom)
+  const [currentContext] = useAtom(currentContextAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
   const [, setRequestID] = useAtom(requestIDAtom)
@@ -69,7 +70,7 @@ export const useQueryInChat = () => {
     query.mutate(
       {
         convId: conv.id,
-        context: [...context, { content: prompt, role: "user" }],
+        context: [...currentContext, { content: prompt, role: "user" }],
         apps: persistedApps,
       },
       {
@@ -77,7 +78,7 @@ export const useQueryInChat = () => {
           // 更新request
           setConv((conv) => {
             console.log("-- update request: ", { conv, request })
-            conv?.requests.push(request)
+            conv?.requests?.push(request)
           })
           // 更新request id
           setRequestID(request.id)

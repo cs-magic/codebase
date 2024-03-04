@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 
-import { AppInDBSchema } from "@/schema/app"
+import { appInDBSchema } from "@/schema/app"
 
 export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   select: {
@@ -15,13 +15,14 @@ export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
   include: {
     responses: {
       include: {
-        app: AppInDBSchema,
+        app: appInDBSchema,
       },
     },
   },
 })
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
+    apps: appInDBSchema,
     requests: {
       ...requestSchema,
       orderBy: {

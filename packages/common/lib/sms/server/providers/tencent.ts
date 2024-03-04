@@ -44,8 +44,9 @@ export const $sendSmsViaTencent = async (phone: string, code: string) => {
     TemplateId: tencentSmsConfig.templateId,
     TemplateParamSet: [code, `${SMS_EXPIRE_MINUTES}`],
   }
+  console.log("[sms-tencent] request: ", params)
   const res = await smsTencentClient.SendSms(params)
-  console.log("[components] response: ", res)
+  console.log("[sms-tencent] response: ", res)
 
   const message = res?.SendStatusSet![0]!.Code
   return message === "Ok"

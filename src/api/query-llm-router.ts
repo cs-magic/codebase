@@ -12,7 +12,7 @@ import {
   convSummarySchema,
   requestSchema,
 } from "@/schema/conv"
-import { AppInDBSchema } from "@/schema/app"
+import { appInDBSchema, createAppSchema } from "@/schema/app"
 import { llmMessageSchema } from "@/schema/message"
 import { triggerLLM } from "@/app/api/llm/triggerLLM"
 import { getTriggerID } from "@/store/request.atom"
@@ -31,7 +31,7 @@ export const queryLLMRouter = createTRPCRouter({
   listApps: publicProcedure.query(() =>
     db.app.findMany({
       where: { granted: true },
-      ...AppInDBSchema,
+      ...appInDBSchema,
       orderBy: {
         // todo: by hot or so
         updatedAt: "desc",
@@ -46,23 +46,35 @@ export const queryLLMRouter = createTRPCRouter({
     }),
   ),
 
-  getQueryConv: protectedProcedure
+  getConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) =>
       db.conv.findUniqueOrThrow({
         where: input,
-        ...convDetailSchema,
       }),
     ),
 
-  addQueryConv: protectedProcedure
+  addConv: protectedProcedure
     // 不用加 queryConfig，这是后续本地生成，再上传的，在query的时候才会触发
     .input(
-      z.object({ id: z.string().optional(), title: z.string().optional() }),
+      z.object({
+        id: z.string().optional(),
+        title: z.string().optional(),
+        apps: createAppSchema.array(),
+      }),
     )
     .mutation(({ input, ctx }) =>
       db.conv.create({
-        data: { ...input, fromUserId: ctx.user.id },
+        data: {
+          ...input,
+          fromUserId: ctx.user.id,
+          apps: {
+            connectOrCreate: input.apps.map((app) => ({
+              where: { id: app.id },
+              create: { ...app, user: ctx.user.id },
+            })),
+          },
+        },
         ...convDetailSchema,
       }),
     ),
@@ -79,15 +91,7 @@ export const queryLLMRouter = createTRPCRouter({
     .input(
       z.object({
         context: llmMessageSchema.array(),
-        apps: z
-          .object({
-            id: z.string(),
-            modelName: z.string(),
-            title: z.string().nullable(),
-            systemPrompt: z.string().nullable(),
-            temperature: z.number().nullable(),
-          })
-          .array(),
+        apps: createAppSchema.array(),
       }),
     )
     .mutation(async ({ input, ctx }) => {

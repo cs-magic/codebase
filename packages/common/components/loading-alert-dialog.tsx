@@ -1,15 +1,13 @@
 "use client"
 import { useAtom } from "jotai"
 import { uiLoadingAlertDialogAtom } from "../store/ui"
-import {
-  AlertDialog,
-  AlertDialogContent,
-} from "./ui/alert-dialog"
+import { AlertDialog, AlertDialogContent } from "./ui/alert-dialog"
 import { LoaderIcon } from "lucide-react"
 import React from "react"
 
 export const LoadingAlertDialog = () => {
   const [loading] = useAtom(uiLoadingAlertDialogAtom)
+  console.log("LoadingAlertDialog: ", { loading })
 
   return (
     <AlertDialog open={loading}>

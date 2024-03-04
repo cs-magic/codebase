@@ -23,7 +23,7 @@ export default function ConversationPage({
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
 
   // 2. 检查服务端是否id有效
-  const { isError, data: convInDB } = api.queryLLM.getQueryConv.useQuery(
+  const { isError, data: convInDB } = api.queryLLM.getConv.useQuery(
     {
       id: id!,
     },

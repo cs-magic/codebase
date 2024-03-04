@@ -3,6 +3,7 @@ import { atom } from "jotai"
 import { convDetailAtom, convIdAtom } from "@/store/conv.atom"
 import { IMessageInChat } from "@/schema/message"
 import { IAppInDB } from "@/schema/app"
+import { selectedAppIDAtom } from "@/store/app.atom"
 
 export const requestIDAtom = atomWithStorage("conv.requestID", "")
 /**
@@ -22,13 +23,13 @@ export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
 })
 
 export const requestAtom = atom((get) =>
-  get(convDetailAtom)?.requests.find((r) => r.id === get(requestIDAtom)),
+  get(convDetailAtom)?.requests?.find((r) => r.id === get(requestIDAtom)),
 )
 export const convAppsAtom = atom<IAppInDB[]>(
   (get) => get(requestAtom)?.responses.map((r) => r.app) ?? [],
 )
 
-export const contextAtom = atom((get) => get(requestAtom)?.context ?? [])
+export const baseContextAtom = atom((get) => get(requestAtom)?.context ?? [])
 export const getAppContextAtom = atom((get) => (appID: string) => {
   const request = get(requestAtom)
   console.log({ request, requestID: get(requestIDAtom) })
@@ -43,6 +44,9 @@ export const getAppContextAtom = atom((get) => (appID: string) => {
     })
   return context
 })
+export const currentContextAtom = atom((get) =>
+  get(getAppContextAtom)(get(selectedAppIDAtom)),
+)
 
 export const getTriggerID = (
   convID: string,
