@@ -23,7 +23,20 @@ export const callChatGPT = async ({
   app: App
   context: ILLMMessage[]
 }) => {
-  const model = new ChatOpenAI(app)
+  const model = new ChatOpenAI({
+    modelName: app.modelName,
+    user: app.user ?? undefined,
+    openAIApiKey: app.openAIApiKey ?? undefined,
+    temperature: app.temperature ?? undefined,
+    maxTokens: app.maxTokens ?? undefined,
+    topP: app.topP ?? undefined,
+    frequencyPenalty: app.frequencyPenalty ?? undefined,
+    presencePenalty: app.presencePenalty ?? undefined,
+    n: app.n ?? undefined,
+    streaming: app.streaming ?? undefined,
+    timeout: app.timeout ?? undefined,
+    stop: app.stop ?? undefined,
+  })
   return model.stream(
     context.map((m) => {
       // ref: https://js.langchain.com/docs/modules/model_io/chat/quick_start#messages

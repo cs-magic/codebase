@@ -1,7 +1,6 @@
-import { $smsSignIn } from "./server/actions"
-
 import Credentials from "next-auth/providers/credentials"
 import { SMS_PROVIDER_ID } from "./const"
+import { $smsSignIn } from "./server/actions"
 
 // // sb tsx 需要用 default
 // import CredentialsModule from "next-auth/providers/credentials"
@@ -14,6 +13,7 @@ import { SMS_PROVIDER_ID } from "./const"
 export const SmsProvider = Credentials({
   id: SMS_PROVIDER_ID,
   credentials: {
+    name: { type: "string" },
     phone: { type: "string" },
     code: { type: "string" },
   },
