@@ -1,8 +1,9 @@
 import { useAtom } from "jotai"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
 import { getTriggerID } from "../lib/utils"
 import { IUpdateResponse } from "../schema/conv"
+import { stopGeneratingAtom } from "../store/app"
 import {
   checkRespondingAtom,
   requestIdAtom,
@@ -13,15 +14,26 @@ export const useConvSSE = (appId: string) => {
   const [checkResponding] = useAtom(checkRespondingAtom)
   const [requestId] = useAtom(requestIdAtom)
   const [, updateResponse] = useAtom(updateResponseAtom)
+  const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
 
   const isResponding = checkResponding(appId)
   const update = (func: IUpdateResponse) =>
     updateResponse(requestId, appId, func)
 
+  const onFinal = () => {
+    console.log("-- DONE")
+    // 这个不重要
+    update((s) => {
+      s.tEnd = new Date()
+    })
+  }
+
+  const refSSE = useRef<EventSource>()
+
   useEffect(() => {
     if (!isResponding || !requestId) return
 
-    void fetchSSE(`/api/llm?r=${getTriggerID(requestId, appId)}`, {
+    refSSE.current = fetchSSE(`/api/llm?r=${getTriggerID(requestId, appId)}`, {
       onOpen: () => {
         console.log("-- STARTED")
         update((s) => {
@@ -41,13 +53,18 @@ export const useConvSSE = (appId: string) => {
           s.error = error
         })
       },
-      onFinal: () => {
-        console.log("-- DONE")
-        // 这个不重要
-        update((s) => {
-          s.tEnd = new Date()
-        })
-      },
+      onFinal,
     })
   }, [isResponding])
+
+  useEffect(() => {
+    const sse = refSSE.current
+    console.log({ sse, stoppedGenerating })
+    if (stoppedGenerating && sse && sse.readyState !== sse.CLOSED) {
+      sse.close()
+      onFinal()
+    }
+    // 复原
+    stopGenerating(false)
+  }, [stoppedGenerating])
 }

@@ -40,6 +40,7 @@ export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
 
 // 因为我们可以直接基于服务端的responding信息确认我们需不需要手动拉起sse，因此不需要额外记录信息了
 // export const appIsFetchingAtom = atom(false)
+export const stopGeneratingAtom = atom(false)
 
 //////////////////////////////
 // derived

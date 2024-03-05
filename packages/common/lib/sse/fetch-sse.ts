@@ -1,7 +1,7 @@
 import ansiColors from "ansi-colors"
 import { ISSEEventType } from "./schema"
 
-export const fetchSSE = async (
+export const fetchSSE = (
   requestUrl: string,
   options?: {
     onOpen?: () => void
@@ -50,7 +50,5 @@ export const fetchSSE = async (
     doEnd()
   }
 
-  return () => {
-    doEnd()
-  }
+  return sse
 }

@@ -12,6 +12,9 @@ export async function GET(req: NextRequest) {
   req.signal.onabort = async () => {
     console.log(`Client(id=${clientId}) aborted connection.`)
     remove(llmManager[triggerId]?.clients ?? [], (c) => c.id === clientId)
+
+    // 这个没用的，刷新会让用户重新取流
+    await llmWrite(writer, { event: "onError", data: "您已中止" })
     await writer.close()
   }
 

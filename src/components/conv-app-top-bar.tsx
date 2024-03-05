@@ -2,6 +2,7 @@ import {
   appIdPersistedAtom,
   appsPersistedAtom,
   delAppAtom,
+  stopGeneratingAtom,
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
 import { useAtom } from "jotai"
@@ -33,6 +34,7 @@ export const ConvAppTopBar = ({
   const LockOrNot = selected ? Lock : Unlock
   const [checkResponding] = useAtom(checkRespondingAtom)
   const fetching = checkResponding(appId)
+  const [, stopGenerating] = useAtom(stopGeneratingAtom)
 
   return (
     <div
@@ -52,21 +54,21 @@ export const ConvAppTopBar = ({
       <div className={"grow"} />
 
       <IconContainer
+        tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
+        onClick={() => {
+          stopGenerating(true)
+        }}
+      >
+        <StopCircle className={cn(!fetching && "text-muted-foreground")} />
+      </IconContainer>
+
+      <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
           setSelectedAppID(appId)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
-      </IconContainer>
-
-      <IconContainer
-        tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
-        onClick={() => {
-          // selectPApp(appId)
-        }}
-      >
-        <StopCircle className={cn(!fetching && "text-muted-foreground")} />
       </IconContainer>
 
       <IconContainer

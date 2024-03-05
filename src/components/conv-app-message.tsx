@@ -15,7 +15,7 @@ export const ConvAppMessage = ({
   const userAvatar = session.data?.user?.image ?? DEFAULT_AVATAR
 
   return (
-    <div className={"w-full flex gap-2 p-2"}>
+    <div className={"w-full flex gap-2 p-2 sm:p-4 hover:bg-accent/50"}>
       <Avatar className={"shrink-0"}>
         <AvatarImage
           src={m.role === "user" ? userAvatar : logo ?? DEFAULT_AVATAR}
