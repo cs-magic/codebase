@@ -17,9 +17,10 @@ const ConvRequestsSlider = React.forwardRef<
   return (
     <div className={"w-full flex items-center gap-2 text-muted-foreground"}>
       <SliderPrimitive.Root
+        min={1}
         max={total}
         value={[current + 1]}
-        onValueChange={(vs) => setN(vs[0]!)}
+        onValueChange={(vs) => setN(vs[0]! - 1)}
         ref={ref}
         className={cn(
           "grow relative flex touch-none select-none items-center",

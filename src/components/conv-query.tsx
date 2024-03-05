@@ -8,6 +8,7 @@ export const ConvQuery = () => {
 
   return (
     <TextareaAuto
+      autoFocus
       minRows={2}
       className={"w-full rounded-lg border p-2"}
       onQuery={query}

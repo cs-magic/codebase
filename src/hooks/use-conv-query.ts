@@ -2,7 +2,7 @@ import { IMessageInChat } from "@/schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
 
 import {
-  contextAtom,
+  bestContextAtom,
   convDetailFromServerAtom,
   requestIdAtom,
 } from "@/store/conv"
@@ -20,7 +20,7 @@ export const useConvQuery = () => {
   const [conv, setConv] = useAtom(convDetailFromServerAtom)
   const [reqId, setRequestID] = useAtom(requestIdAtom)
   const [appId] = useAtom(appIdPersistedAtom)
-  const [context] = useAtom(contextAtom)
+  const [context] = useAtom(bestContextAtom)
 
   const utils = api.useUtils()
   const query = api.core.query.useMutation()

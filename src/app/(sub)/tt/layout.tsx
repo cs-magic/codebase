@@ -2,7 +2,11 @@
 import { Sidebar } from "@/components/sidebar"
 import { useConvQuery } from "@/hooks/use-conv-query"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
-import { convDetailFromServerAtom, convsFromServerAtom } from "@/store/conv"
+import {
+  convAppsAtom,
+  convDetailFromServerAtom,
+  convsFromServerAtom,
+} from "@/store/conv"
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { Separator } from "../../../../packages/common/components/ui/separator"
@@ -17,6 +21,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)
+  const [convApps] = useAtom(convAppsAtom)
 
   const utils = api.useUtils()
   const queryInChat = useConvQuery()
@@ -28,8 +33,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
 
   // 2. 当 conv 更新后，用 conv 里的 app 覆盖本地的 app
   useEffect(() => {
-    if (!conv?.apps.length) return // todo: 支持清空
-    setPersistedApps(conv.apps)
+    if (convApps.length) setPersistedApps(convApps)
   }, [conv])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个

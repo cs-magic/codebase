@@ -2,12 +2,13 @@ import {
   IConvDetail,
   IConvSummary,
   IRequest,
+  IResponse,
   IUpdateResponse,
 } from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
 import { ISSERequest } from "../../packages/common/lib/sse/schema"
-import { IMessageInChat } from "../schema/message"
+import { IContext, IMessageInChat } from "../schema/message"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 
 //////////////////////////////
@@ -61,20 +62,40 @@ export const requestAtom = atom((get) =>
     (r) => r.id === get(requestIdAtom),
   ),
 )
-export const contextsAtom = atom((get) => {
-  const contextMap: Record<string, IMessageInChat[]> = {}
+
+export const convAppsAtom = atom((get) => {
   const request = get(requestAtom)
-  request?.responses.forEach((r) => {
-    contextMap[r.appId] = [
-      ...request.context,
-      { content: r.response /*possible null*/ ?? "", role: "assistant" },
-    ]
-  })
-  return contextMap
+  if (request) return request.responses.map((r) => r.app)
+  return get(convDetailFromServerAtom)?.apps ?? []
 })
-export const contextAtom = atom(
-  (get) => get(contextsAtom)[get(appIdPersistedAtom)] ?? [],
+
+export const commonContextAtom = atom<IContext>(
+  (get) => get(requestAtom)?.context ?? [],
 )
+
+export const bestResponseAtom = atom<IResponse | undefined>((get) =>
+  get(requestAtom)?.responses.find((r) => r.appId === get(appIdPersistedAtom)),
+)
+
+export const bestContextAtom = atom<IContext>((get) => {
+  const commonContext = get(commonContextAtom)
+  const bestResponse = get(bestResponseAtom)
+  if (!bestResponse) return commonContext
+  const { response, error, updatedAt } = bestResponse
+  return [
+    ...commonContext,
+    {
+      content: error ?? response ?? "",
+      role: "assistant",
+      isError: !!error,
+      updatedAt,
+    },
+  ]
+})
+
+// export const responseAtom = atom(
+//     (get) => get(requestAtom)?.responses.find((r) => r.appId === get(appIdPersistedAtom))
+// )
 
 export const checkRespondingAtom = atom((get) => (appId: string) => {
   const response = get(requestAtom)?.responses.find((r) => r.appId === appId)

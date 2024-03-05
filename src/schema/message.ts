@@ -6,7 +6,7 @@ export const messageRoleSchema = z.union([
   z.literal("system"),
   z.literal("function"),
 ])
-export type MessageRole = z.infer<typeof messageRoleSchema>
+export type RoleType = z.infer<typeof messageRoleSchema>
 
 /**
  * todo: ensure it is consistent with Prisma.Message

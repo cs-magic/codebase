@@ -1,6 +1,6 @@
 import { IAppInDB } from "@/schema/app"
 import { convDetailFromServerAtom, requestAtom } from "@/store/conv"
-import { atom } from "jotai"
+import { atom, createStore } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { getNewId } from "../../packages/common/lib/utils"
@@ -25,6 +25,11 @@ export const appsPersistedAtom = atomWithStorage<IAppInDB[]>(
   "conv.apps.list",
   [],
 )
+
+const store = createStore()
+store.sub(appsPersistedAtom, () => {
+  console.log({ appsPersistedAtom })
+})
 
 // todo: avoid persist the cur app
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")

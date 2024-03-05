@@ -78,7 +78,7 @@ export const triggerLLM = async ({
       })
 
       pushToClients({ event: "close" })
-      delete llmManager[requestId] // clean manager
+      delete llmManager[triggerId] // clean manager
       console.log("[sse] closed: ", responseInDB)
     }
   }
