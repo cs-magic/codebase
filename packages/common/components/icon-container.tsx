@@ -1,9 +1,5 @@
 import { ComponentProps, forwardRef } from "react"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { cn } from "../lib/utils"
 
 export const IconContainer = forwardRef<
@@ -22,7 +18,8 @@ export const IconContainer = forwardRef<
           " w-6 h-6",
           size === "lg" && "w-8 h-8",
           " p-1 [&>*]:w-full [&>*]:h-full center",
-          "cursor-pointer hover:bg-muted",
+          "cursor-pointer",
+          // "hover:bg-muted",
           className,
         )}
         {...props}
