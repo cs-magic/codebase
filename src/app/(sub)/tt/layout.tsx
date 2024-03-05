@@ -6,7 +6,10 @@ import {
   convAppsAtom,
   convDetailFromServerAtom,
   convsFromServerAtom,
+  requestAtom,
+  requestIdAtom,
 } from "@/store/conv"
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { Separator } from "../../../../packages/common/components/ui/separator"
@@ -22,6 +25,8 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)
   const [convApps] = useAtom(convAppsAtom)
+  const [request] = useAtom(requestAtom)
+  const [requestId] = useAtom(requestIdAtom)
 
   const utils = api.useUtils()
   const queryInChat = useConvQuery()
@@ -31,10 +36,17 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     if (convsInDB) setConvs(convsInDB)
   }, [convsInDB])
 
-  // 2. 当 conv 更新后，用 conv 里的 app 覆盖本地的 app
+  // note：应该要request_id变，再决定apps变！conv变是不行的，因为request可能不同步
   useEffect(() => {
-    if (convApps.length) setPersistedApps(convApps)
-  }, [conv])
+    if (!request) return
+    const newApps = request.responses.map((r) => r.app)
+    console.log(ansiColors.red("setting apps: "), {
+      request,
+      persistedApps,
+      newApps,
+    })
+    setPersistedApps(newApps)
+  }, [requestId])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个
   useEffect(() => {

@@ -14,10 +14,12 @@ export const ConvApp = ({ app }: { app: IAppInChat }) => {
   useConvSSE(app.id)
 
   const [commonContext] = useAtom(commonContextAtom)
-  const [apps] = useAtom(appsPersistedAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppId] = useAtom(appIdPersistedAtom)
   const [request] = useAtom(requestAtom)
-  const targetAppId = apps.some((a) => a.id === app.id) ? app.id : selectedAppId
+  const targetAppId = persistedApps.some((a) => a.id === app.id)
+    ? app.id
+    : selectedAppId
   const response = request?.responses.find((r) => r.appId === targetAppId)
   const context = !response
     ? commonContext

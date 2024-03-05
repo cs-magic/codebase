@@ -20,7 +20,6 @@ export const ConvApps = () => {
       style={{
         // ref: https://tailwindcss.com/docs/grid-template-columns
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-        // gridTemplateColumns: `auto`,
       }}
     >
       {persistedApps?.map((app) => (

@@ -47,7 +47,6 @@ export default function ConversationPage({
 
   // 2.2 有效则更新详情数据
   useEffect(() => {
-    console.log({ convFromServer })
     if (convFromServer) setConvDetail(convFromServer)
   }, [convFromServer])
 
