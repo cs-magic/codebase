@@ -40,12 +40,12 @@ export const fetchSSE = async (
 
   sse.onopen = () => {
     if (options?.onOpen) options.onOpen()
-    console.log("event source opened")
+    // console.log("event source opened")
   }
   sse.onerror = (err) => {
     // 2 是结束
-    if (err.eventPhase !== 2) console.log(`event source error: `, err)
-    else console.log("event source closed")
+    // if (err.eventPhase !== 2) console.log(`event source error: `, err)
+    // else console.log("event source closed")
 
     doEnd()
   }

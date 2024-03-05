@@ -1,13 +1,12 @@
 "use client"
 
+import { useAtom } from "jotai"
 import { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"
 import { useMounted } from "../hooks/use-mounted"
 import { cn } from "../lib/utils"
-import { useAtom } from "jotai"
 
 import { userPromptAtom } from "../store/user"
-import { convIdAtom } from "@/store/conv"
 
 export const TextareaAuto = forwardRef<
   HTMLTextAreaElement,
@@ -19,7 +18,6 @@ export const TextareaAuto = forwardRef<
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
   const [prompt, setPrompt] = useAtom(userPromptAtom)
-  const [convId] = useAtom(convIdAtom)
 
   return (
     <ReactTextareaAutoSize
