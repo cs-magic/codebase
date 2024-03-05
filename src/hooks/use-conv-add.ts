@@ -3,7 +3,7 @@ import { api } from "../../packages/common/lib/trpc/react"
 import { toast } from "sonner"
 import { useAtom } from "jotai"
 
-import { persistedAppsAtom } from "@/store/app"
+import { appsPersistedAtom } from "@/store/app"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话
@@ -14,7 +14,7 @@ import { persistedAppsAtom } from "@/store/app"
 export function useAddConv() {
   const router = useRouter()
   const addConv = api.queryLLM.addConv.useMutation()
-  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
 
   const utils = api.useUtils()
   return (title?: string) => {

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai"
-import { persistedAppsAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
+import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import { ScenarioSelector } from "@/components/scenario-selector"
 import { Button } from "../../packages/common/components/ui/button"
 import JoinComponents from "../../packages/common/components/join-components"
@@ -7,7 +7,7 @@ import { ChevronDownIcon } from "lucide-react"
 import React from "react"
 
 export const HomeSelector = () => {
-  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   return (

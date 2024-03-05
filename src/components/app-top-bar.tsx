@@ -1,8 +1,8 @@
 import { useAtom } from "jotai"
 import {
   delAppAtom,
-  persistedAppsAtom,
-  persistedCurAppIdAtom,
+  appsPersistedAtom,
+  appIdPersistedAtom,
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
 import {
@@ -26,8 +26,8 @@ export const TopBar = ({
   fetching: boolean
 }) => {
   const [, delApp] = useAtom(delAppAtom)
-  const [persistedApps] = useAtom(persistedAppsAtom)
-  const [selectedAppID, setSelectedAppID] = useAtom(persistedCurAppIdAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   const selected = appID === selectedAppID

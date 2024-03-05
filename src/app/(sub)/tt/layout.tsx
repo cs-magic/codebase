@@ -7,24 +7,24 @@ import { api } from "../../../../packages/common/lib/trpc/react"
 import { convDetailAtom, convsAtom } from "@/store/conv"
 import {
   convAppsAtom,
-  persistedAppsAtom,
-  persistedCurAppIdAtom,
+  appsPersistedAtom,
+  appIdPersistedAtom,
 } from "@/store/app"
 import { userPromptAtom } from "../../../../packages/common/store/user"
-import { useQueryInChat } from "@/hooks/use-conv-query"
+import { useConvQuery } from "@/hooks/use-conv-query"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.queryLLM.listConv.useQuery()
 
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
-  const [persistedApps, setPersistedApps] = useAtom(persistedAppsAtom)
-  const [selectedAppID, setSelectedAppID] = useAtom(persistedCurAppIdAtom)
+  const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
+  const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)
   const [convApps] = useAtom(convAppsAtom)
 
   const utils = api.useUtils()
-  const queryInChat = useQueryInChat()
+  const queryInChat = useConvQuery()
 
   // 1. 获取列表数据
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   useEffect(() => {
     // 不能清空
     if (!convApps.length) return
-    console.log("-- apps (conv --> persisted): ", { convApps })
+    // console.log("-- apps (conv --> persisted): ", { convApps })
     setPersistedApps(convApps)
   }, [convApps])
 

@@ -7,10 +7,10 @@ import { useAtom } from "jotai"
 import { uiScreenAtom } from "../../packages/common/store/ui"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 
-import { persistedAppsAtom } from "@/store/app"
+import { appsPersistedAtom } from "@/store/app"
 
 export const AppsComp = () => {
-  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
   const [mainArea] = useAtom(uiScreenAtom)
   const { width } = mainArea
   const gridCols = width // 未初始化时避免闪烁

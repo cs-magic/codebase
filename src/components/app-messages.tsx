@@ -1,18 +1,16 @@
 import { useEffect, useRef } from "react"
+import { IMessageInChat } from "../schema/message"
 import { MessageComp } from "./app-message"
-import { useAtom } from "jotai"
-import { getAppContextAtom } from "@/store/request"
 
 export const MessagesComp = ({
   appId,
   logo,
+  context,
 }: {
   appId: string
   logo: string | null
+  context: IMessageInChat[]
 }) => {
-  const [getAppContext] = useAtom(getAppContextAtom)
-  const context = getAppContext(appId)
-
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
     refScroll.current?.scrollIntoView({ behavior: "auto" })

@@ -1,6 +1,5 @@
 "use client"
 
-import { useQueryOnEnter } from "@/hooks/use-conv-query"
 import { useAtom } from "jotai"
 import { userPromptAtom } from "../../packages/common/store/user"
 import { IconContainer } from "../../packages/common/components/icon-container"
@@ -12,9 +11,10 @@ import {
   TooltipTrigger,
 } from "../../packages/common/components/ui/tooltip"
 import { cn } from "../../packages/common/lib/utils"
+import { useConvQueryOnEnter } from "@/hooks/use-conv-query-on-enter"
 
 export const HomeQueryInput = () => {
-  const query = useQueryOnEnter()
+  const query = useConvQueryOnEnter()
   const [prompt] = useAtom(userPromptAtom)
 
   return (

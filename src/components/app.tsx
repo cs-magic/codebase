@@ -1,30 +1,31 @@
 "use client"
 
-import { cn } from "../../packages/common/lib/utils"
-import { useEffect, useState } from "react"
-import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
-import { IAppInChat } from "@/schema/app"
-import { useAtom } from "jotai"
-import { TopBar } from "@/components/app-top-bar"
 import { MessagesComp } from "@/components/app-messages"
-import { last } from "lodash"
-import { appFinishedSSEAtom } from "@/store/app"
+import { TopBar } from "@/components/app-top-bar"
 import { getTriggerID } from "@/lib/utils"
+import { IAppInChat } from "@/schema/app"
+import { appFinishedSSEAtom } from "@/store/app"
 import { convDetailAtom } from "@/store/conv"
 import {
   appsShouldSSEPersistedAtom,
+  contextsAtom,
   requestIdPersistedAtom,
 } from "@/store/request"
+import { useAtom } from "jotai"
+import { last } from "lodash"
+import { useEffect, useState } from "react"
+import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
+import { cn } from "../../packages/common/lib/utils"
 
 export const AppComp = ({ app }: { app: IAppInChat }) => {
-  const { id } = app
-
-  const [fetching, setFetching] = useState(false)
-
   const [conv, setConv] = useAtom(convDetailAtom)
   const [appsShouldSSE] = useAtom(appsShouldSSEPersistedAtom)
   const [, appFinishedSSE] = useAtom(appFinishedSSEAtom)
   const [requestID] = useAtom(requestIdPersistedAtom)
+  const [contexts] = useAtom(contextsAtom)
+
+  const { id } = app
+  const [fetching, setFetching] = useState(false)
   const triggerID = getTriggerID(requestID, app.id)
   const shouldSSE = appsShouldSSE.includes(triggerID)
 
@@ -78,7 +79,11 @@ export const AppComp = ({ app }: { app: IAppInChat }) => {
     >
       <TopBar appID={id} title={app?.model.title} fetching={fetching} />
 
-      <MessagesComp appId={id} logo={app?.model.logo} />
+      <MessagesComp
+        appId={id}
+        logo={app?.model.logo}
+        context={contexts[app.id] ?? []}
+      />
     </div>
   )
 }

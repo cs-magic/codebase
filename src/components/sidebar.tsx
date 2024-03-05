@@ -4,8 +4,8 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation"
 import { useAtom } from "jotai"
 import { convsAtom } from "@/store/conv"
-import { useDelAllConvs } from "@/hooks/use-conv-del"
 import { useAddConv } from "@/hooks/use-conv-add"
+import { useDelAllConvs } from "@/hooks/use-conv-del-all"
 
 export const Sidebar = () => {
   const [conversations] = useAtom(convsAtom)

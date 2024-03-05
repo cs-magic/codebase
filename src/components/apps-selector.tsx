@@ -12,15 +12,15 @@ import { Input } from "../../packages/common/components/ui/input"
 import { useAtom } from "jotai"
 
 import {
-  allAppsAtom,
-  persistedAppsAtom,
+  serverAppsAtom,
+  appsPersistedAtom,
   uiMaxAppsAtom,
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
 
 export const AppsDialog = () => {
-  const [allApps] = useAtom(allAppsAtom)
-  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [allApps] = useAtom(serverAppsAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
 
   const [appFilter, setAppFilter] = useState("")
   const [open, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)

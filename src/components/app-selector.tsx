@@ -7,7 +7,7 @@ import { useAtom } from "jotai"
 import {
   addAppAtom,
   delAppAtom,
-  persistedAppsAtom,
+  appsPersistedAtom,
   uiMaxAppsAtom,
 } from "@/store/app"
 import { IconContainer } from "../../packages/common/components/icon-container"
@@ -19,7 +19,7 @@ export const AppSelector = ({
   app: IAppInDB
   type: "toAdd" | "toDel"
 }) => {
-  const [persistedApps] = useAtom(persistedAppsAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
   const [, addApp] = useAtom(addAppAtom)
   const [, delApp] = useAtom(delAppAtom)
 
