@@ -3,12 +3,12 @@ import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { ConversationListComp } from "./sidebar-conversation"
 import { useAtom } from "jotai"
-import { convsAtom } from "@/store/conv"
+import { convsFromServerAtom } from "@/store/conv"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
 
 export const Sidebar = () => {
-  const [conversations] = useAtom(convsAtom)
+  const [conversations] = useAtom(convsFromServerAtom)
   const addConversation = useAddConv()
   const deleteAllConversations = useDelAllConvs()
 

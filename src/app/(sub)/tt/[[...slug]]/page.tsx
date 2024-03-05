@@ -1,12 +1,17 @@
 "use client"
-import { ConvApps } from "../../../../components/conv-apps"
-import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv"
+import {
+  convDetailFromServerAtom,
+  convIdAtom,
+  convsFromServerAtom,
+  requestIdAtom,
+} from "@/store/conv"
 import { useAtom } from "jotai"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
+import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
 
@@ -15,16 +20,18 @@ export default function ConversationPage({
 }: {
   params: { slug?: string[] }
 }) {
-  const router = useRouter()
-
-  const id = slug ? slug[0] : slug
-  const [convs] = useAtom(convsAtom)
+  const [convs] = useAtom(convsFromServerAtom)
   const [convId] = useAtom(convIdAtom)
-  const [, setConvDetail] = useAtom(convDetailAtom)
+  const [, setConvDetail] = useAtom(convDetailFromServerAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
+  const [, setRequestId] = useAtom(requestIdAtom)
+
+  const router = useRouter()
+  const id = slug ? slug[0] : slug
+  const reqIdFromUrl = useSearchParams().get("r")
 
   // 2. 检查服务端是否id有效
-  const { isError, data: convInDB } = api.core.getConv.useQuery(
+  const { isError, data: convFromServer } = api.core.getConv.useQuery(
     {
       id: id!,
     },
@@ -40,8 +47,8 @@ export default function ConversationPage({
 
   // 2.2 有效则更新详情数据
   useEffect(() => {
-    if (convInDB) setConvDetail(convInDB)
-  }, [convInDB])
+    if (convFromServer) setConvDetail(convFromServer)
+  }, [convFromServer])
 
   // 3. 当会话列表变动后（比如清除或者清空），如果命中了当前会话，则清除，可以涵盖单删或者多删
   useEffect(() => {
@@ -51,6 +58,11 @@ export default function ConversationPage({
       if (id) router.push("/tt") // 如果不在列表页，还要退回去
     }
   }, [convs])
+
+  // 4. 更新 request id
+  useEffect(() => {
+    setRequestId(reqIdFromUrl)
+  }, [reqIdFromUrl])
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

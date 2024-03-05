@@ -1,3 +1,4 @@
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { convIdAtom } from "@/store/conv"
 import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
@@ -26,7 +27,7 @@ export function useConvQueryOnEnter() {
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   return async () => {
-    console.log("useQueryOnEnter: ", { convId, query })
+    console.log(ansiColors.red("useQueryOnEnter: "), { convId, query })
 
     if (!query) return toast.error("不能为空")
 

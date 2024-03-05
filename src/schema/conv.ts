@@ -1,6 +1,5 @@
-import { Prisma } from "@prisma/client"
-
 import { appInDBSchema } from "@/schema/app"
+import { Prisma, Response } from "@prisma/client"
 
 export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   select: {
@@ -32,3 +31,5 @@ export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   },
 })
 export type IConvDetail = Prisma.ConvGetPayload<typeof convDetailSchema>
+
+export type IUpdateResponse = (s: Response) => void

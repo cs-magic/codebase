@@ -1,3 +1,4 @@
+import ansiColors from "ansi-colors"
 import { ISSEEventType } from "./schema"
 
 export const fetchSSE = async (
@@ -10,7 +11,7 @@ export const fetchSSE = async (
     onFinal?: (sse: EventSource) => void
   },
 ) => {
-  console.log({ requestUrl })
+  console.log(ansiColors.bgRed.white(`fetching SSE: ${requestUrl}`))
 
   /**
    * sse 要自己控制关闭，https://stackoverflow.com/a/54385424/9422455

@@ -1,11 +1,11 @@
 "use client"
 
+import { appsGridColsAtom, appsPersistedAtom } from "@/store/app"
+import { useAtom } from "jotai"
+import { ScopeProvider } from "jotai-scope"
+import { cn } from "../../packages/common/lib/utils"
 import { contextsAtom } from "../store/conv"
 import { ConvApp } from "./conv-app"
-
-import { appsGridColsAtom, appsPersistedAtom, appStore } from "@/store/app"
-import { Provider, useAtom } from "jotai"
-import { cn } from "../../packages/common/lib/utils"
 
 export const ConvApps = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
@@ -21,9 +21,9 @@ export const ConvApps = () => {
       }}
     >
       {persistedApps?.map((app) => (
-        // <Provider store={appStore} key={app.id}>
-        <ConvApp app={app} key={app.id} context={contexts[app.id] ?? []} />
-        // </Provider>
+        <ScopeProvider key={app.id} atoms={[]}>
+          <ConvApp app={app} key={app.id} context={contexts[app.id] ?? []} />
+        </ScopeProvider>
       ))}
     </div>
   )

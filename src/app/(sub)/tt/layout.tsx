@@ -4,7 +4,7 @@ import { Separator } from "../../../../packages/common/components/ui/separator"
 import { PropsWithChildren, useEffect } from "react"
 import { useAtom } from "jotai"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import { convDetailAtom, convsAtom } from "@/store/conv"
+import { convDetailFromServerAtom, convsFromServerAtom } from "@/store/conv"
 import {
   convAppsAtom,
   appsPersistedAtom,
@@ -16,8 +16,8 @@ import { useConvQuery } from "@/hooks/use-conv-query"
 export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.core.listConv.useQuery()
 
-  const [convs, setConvs] = useAtom(convsAtom)
-  const [conv, setConv] = useAtom(convDetailAtom)
+  const [convs, setConvs] = useAtom(convsFromServerAtom)
+  const [conv, setConv] = useAtom(convDetailFromServerAtom)
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)

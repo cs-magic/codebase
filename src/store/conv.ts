@@ -1,28 +1,31 @@
-import { IConvDetail, IConvSummary } from "@/schema/conv"
+import { IConvDetail, IConvSummary, IUpdateResponse } from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
-import { atomWithStorage } from "jotai/utils"
 import { IMessageInChat } from "../schema/message"
-import { appIdPersistedAtom } from "./app"
+import { appIdPersistedAtom } from "./app" //////////////////////////////
 
 //////////////////////////////
 // base
 //////////////////////////////
 
-export const convsAtom = atom<IConvSummary[]>([])
-export const convDetailAtom = atomWithImmer<IConvDetail | null>(null)
-export const convIdAtom = atom((get) => get(convDetailAtom)?.id)
+export const convsFromServerAtom = atom<IConvSummary[]>([])
 
-// todo: from server
-export const requestIdPersistedAtom = atomWithStorage("conv.request.id", "")
+export const convDetailFromServerAtom = atomWithImmer<IConvDetail | null>(null)
+
+/**
+ * 用户选择哪条request，这个信息不在数据库存储，所以需要用户自己维护
+ */
+export const requestIdAtom = atom<string | null>(null)
 
 //////////////////////////////
 // derived
 //////////////////////////////
 
+export const convIdAtom = atom((get) => get(convDetailFromServerAtom)?.id)
+
 export const requestAtom = atom((get) =>
-  get(convDetailAtom)?.requests.find(
-    (r) => r.id === get(requestIdPersistedAtom),
+  get(convDetailFromServerAtom)?.requests.find(
+    (r) => r.id === get(requestIdAtom),
   ),
 )
 export const contextsAtom = atom((get) => {
@@ -38,4 +41,33 @@ export const contextsAtom = atom((get) => {
 })
 export const contextAtom = atom(
   (get) => get(contextsAtom)[get(appIdPersistedAtom)] ?? [],
+)
+
+export const checkRespondingAtom = atom((get) => (appId: string) => {
+  const response = get(requestAtom)?.responses.find((r) => r.appId === appId)
+  return !!response && !response.tEnd
+})
+
+/**
+ * 客户端在线同步
+ */
+export const updateResponseAtom = atom(
+  null,
+  (
+    get,
+    set,
+    requestId: string | null,
+    appId: string,
+    func: IUpdateResponse,
+  ) => {
+    set(convDetailFromServerAtom, (conv) => {
+      const s = conv?.requests
+        ?.find((r) => r.id === requestId)
+        ?.responses.find((r) => r.appId === appId)
+
+      if (!s) return
+
+      func(s)
+    })
+  },
 )

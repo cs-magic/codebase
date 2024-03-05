@@ -1,16 +1,10 @@
 import { IAppInDB } from "@/schema/app"
-import { convDetailAtom, requestAtom } from "@/store/conv"
-import { atom, createStore } from "jotai"
+import { convDetailFromServerAtom, requestAtom } from "@/store/conv"
+import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { getNewId } from "../../packages/common/lib/utils"
-import { uiScreenAtom } from "../../packages/common/store/ui" //////////////////////////////
-
-//////////////////////////////
-// store
-//////////////////////////////
-export const appStore = createStore()
-export const appIsFetchingAtom = atom(false)
+import { uiScreenAtom } from "../../packages/common/store/ui"
 
 //////////////////////////////
 // base
@@ -34,6 +28,13 @@ export const appsPersistedAtom = atomWithStorage<IAppInDB[]>(
 
 // todo: avoid persist the cur app
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
+
+//////////////////////////////
+// scope
+//////////////////////////////
+
+// 因为我们可以直接基于服务端的responding信息确认我们需不需要手动拉起sse，因此不需要额外记录信息了
+// export const appIsFetchingAtom = atom(false)
 
 //////////////////////////////
 // derived
@@ -65,7 +66,7 @@ export const uiMaxAppsAtom = atom((get) =>
 export const convAppsAtom = atom<IAppInDB[]>(
   (get) =>
     get(requestAtom)?.responses.map((r) => r.app) ??
-    get(convDetailAtom)?.apps ??
+    get(convDetailFromServerAtom)?.apps ??
     [],
 )
 

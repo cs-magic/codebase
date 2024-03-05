@@ -1,7 +1,6 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { FlexContainer } from "../../packages/common/components/flex-container"
 import {
   Select,
   SelectContent,
@@ -10,16 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../packages/common/components/ui/select"
-import { convDetailAtom, convsAtom, requestAtom } from "../store/conv"
+import { convDetailFromServerAtom, requestIdAtom } from "../store/conv"
 
 export const ConvControl = () => {
-  const [conv] = useAtom(convDetailAtom)
-  const [request] = useAtom(requestAtom)
-  const requestId = request?.id ?? "unknown"
+  const [conv] = useAtom(convDetailFromServerAtom)
+  const [requestId, setRequestId] = useAtom(requestIdAtom)
 
   return (
     <div className={"m-2"}>
-      <Select value={requestId}>
+      <Select value={requestId ?? undefined} onValueChange={setRequestId}>
         <SelectTrigger className={"w-36"}>
           <SelectValue placeholder={"request-id"} />
         </SelectTrigger>

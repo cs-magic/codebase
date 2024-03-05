@@ -1,6 +1,5 @@
 import {
   appIdPersistedAtom,
-  appIsFetchingAtom,
   appsPersistedAtom,
   delAppAtom,
   uiSelectAppsDialogOpenAtom,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { cn } from "../../packages/common/lib/utils"
+import { checkRespondingAtom } from "../store/conv"
 
 export const ConvAppTopBar = ({
   appId,
@@ -31,7 +31,8 @@ export const ConvAppTopBar = ({
 
   const selected = appId === selectedAppID
   const LockOrNot = selected ? Lock : Unlock
-  const [fetching] = useAtom(appIsFetchingAtom)
+  const [checkResponding] = useAtom(checkRespondingAtom)
+  const fetching = checkResponding(appId)
 
   return (
     <div

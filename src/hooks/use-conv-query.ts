@@ -3,11 +3,12 @@ import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
 
 import {
   contextAtom,
-  convDetailAtom,
-  requestIdPersistedAtom,
+  convDetailFromServerAtom,
+  requestIdAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { api } from "../../packages/common/lib/trpc/react"
 
@@ -16,14 +17,15 @@ import { userPromptAtom } from "../../packages/common/store/user"
 export const useConvQuery = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
-  const [conv, setConv] = useAtom(convDetailAtom)
-
-  const [reqId, setRequestID] = useAtom(requestIdPersistedAtom)
+  const [conv, setConv] = useAtom(convDetailFromServerAtom)
+  const [reqId, setRequestID] = useAtom(requestIdAtom)
   const [appId] = useAtom(appIdPersistedAtom)
+  const [context] = useAtom(contextAtom)
 
+  const utils = api.useUtils()
   const query = api.core.query.useMutation()
 
-  const [context] = useAtom(contextAtom)
+  const router = useRouter()
 
   return () => {
     console.log(ansiColors.red("[useConvQuery] inner "), {
@@ -49,20 +51,14 @@ export const useConvQuery = () => {
       },
       {
         onSuccess: (request) => {
-          // todo: invalidate also ?
-          // 更新request
-          setConv((conv) => {
-            // console.log("-- update request: ", { conv, request })
-            conv?.requests?.push(request)
-          })
+          // 重置以拿到最新的数据
+          utils.core.getConv.invalidate()
 
-          // todo: derived
-          // 更新request id
-          setRequestID(request.id)
+          const reqIdNew = request.id
+          router.push(`?r=${reqIdNew}`)
+
           console.log(
-            ansiColors.red(
-              `[useConvQuery] req-id: ${reqId} --> ${request.id} `,
-            ),
+            ansiColors.red(`[useConvQuery] req-id: ${reqId} --> ${reqIdNew} `),
           )
         },
         onError: (err) => {
