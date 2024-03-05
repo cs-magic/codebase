@@ -23,7 +23,7 @@ export const CheckAuthAlertDialog = () => {
         <AlertDialogDescription>
           您需要先登陆才能发送哦！
         </AlertDialogDescription>
-        <AlertDialogFooter>
+        <AlertDialogFooter className={"gap-4"}>
           <AlertDialogAction onClick={() => signIn()}>
             点击跳转登录
           </AlertDialogAction>
