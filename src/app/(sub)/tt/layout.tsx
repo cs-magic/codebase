@@ -57,10 +57,9 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     }
   }, [])
 
-  // 6. 当 conv 个数变化时，重置
-  useEffect(() => {
-    void utils.core.listConv.invalidate()
-  }, [convs.length])
+  // ~~ 6. 当 conv 个数变化时，重置 ~~
+  // 不需要重置，现在是服务器向客户端单向更新 convs
+  // useEffect(() => void utils.core.listConv.invalidate(), [convs.length])
 
   return (
     <div className={"w-full h-full overflow-hidden flex border-y"}>
