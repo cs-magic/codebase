@@ -11,6 +11,7 @@ import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { api } from "../../packages/common/lib/trpc/react"
+import { llmDelayAtom } from "../../packages/common/store"
 
 import { userPromptAtom } from "../../packages/common/store/user"
 
@@ -21,6 +22,7 @@ export const useConvQuery = () => {
   const [reqId, setRequestID] = useAtom(requestIdAtom)
   const [appId] = useAtom(appIdPersistedAtom)
   const [context] = useAtom(bestContextAtom)
+  const [llmDelay] = useAtom(llmDelayAtom)
 
   const utils = api.useUtils()
   const query = api.core.query.useMutation()
@@ -48,6 +50,7 @@ export const useConvQuery = () => {
         convId: conv.id,
         context: newContext,
         apps: persistedApps,
+        llmDelay,
       },
       {
         onSuccess: (request) => {

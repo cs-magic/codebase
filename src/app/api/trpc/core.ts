@@ -92,6 +92,7 @@ export const coreRouter = createTRPCRouter({
       z.object({
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
+        llmDelay: z.number().default(0),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -126,7 +127,12 @@ export const coreRouter = createTRPCRouter({
 
       await Promise.all(
         request.responses.map(async (r) => {
-          await triggerLLM({ app: r.app, context, requestId: request.id })
+          await triggerLLM({
+            app: r.app,
+            context,
+            requestId: request.id,
+            llmDelay: input.llmDelay,
+          })
         }),
       )
       return request

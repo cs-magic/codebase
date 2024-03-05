@@ -8,6 +8,7 @@ import {
   ISSEEvent,
   ISSERequest,
 } from "../../../../packages/common/lib/sse/schema"
+import { sleep } from "../../../../packages/common/lib/utils"
 import { callChatGPT } from "../../../../packages/llm/models/openai"
 import { llmManager } from "./manager"
 import { App } from ".prisma/client"
@@ -16,10 +17,12 @@ export const triggerLLM = async ({
   requestId,
   app,
   context,
+  llmDelay = 0,
 }: {
   requestId: string
   app: App
   context: ILLMMessage[]
+  llmDelay?: number
   // todo: more args
 }) => {
   const appId = app.id
@@ -55,6 +58,7 @@ export const triggerLLM = async ({
           r.response.response += token
           // console.debug("[llm] token: ", { triggerID: requestId, token })
           pushToClients({ event: "onData", data: token })
+          await sleep(llmDelay)
         }
       } else {
         throw new Error("暂不支持该模型（研发小哥正在加🍗中！）")

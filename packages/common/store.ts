@@ -1,5 +1,3 @@
-import { atom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
 
-export const nodeEnvAtom = atom<"development" | "test" | "production">(
-  "production",
-)
+export const llmDelayAtom = atomWithStorage("llm.delay", 100) // ms

@@ -26,12 +26,14 @@ import { api } from "../../packages/common/lib/trpc/react"
 import { Button } from "../../packages/common/components/ui/button"
 import { Separator } from "../../packages/common/components/ui/separator"
 import { Input } from "../../packages/common/components/ui/input"
+import { llmDelayAtom } from "packages/common/store"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
   const [smsCountdownSeconds, setSmsCountdownSeconds] = useAtom(
     smsCodeCountdownSecondsAtom,
   )
+  const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
 
   const utils = api.useUtils()
 
@@ -86,6 +88,18 @@ export const Devtool = () => {
         >
           Invalidate
         </Button>
+
+        <Label>LLM</Label>
+        <div className={"flex items-center gap-2"}>
+          <Label>Delay</Label>
+          <Input
+            value={llmDelay}
+            type={"number"}
+            onChange={(event) => {
+              setLlmDelay(Number(event.currentTarget.value))
+            }}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   )
