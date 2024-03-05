@@ -6,7 +6,7 @@ import { toast } from "sonner"
  * @param conversationId
  */
 export function useDelConv() {
-  const delConv = api.queryLLM.delConv.useMutation()
+  const delConv = api.core.delConv.useMutation()
   const utils = api.useUtils()
 
   return (id: string) => {
@@ -18,7 +18,7 @@ export function useDelConv() {
           toast.error("删除失败！")
         },
         onSuccess: () => {
-          utils.queryLLM.listConv.invalidate()
+          utils.core.listConv.invalidate()
         },
       },
     )

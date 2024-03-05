@@ -1,10 +1,11 @@
-import { useAtom } from "jotai"
 import {
-  delAppAtom,
-  appsPersistedAtom,
   appIdPersistedAtom,
+  appIsFetchingAtom,
+  appsPersistedAtom,
+  delAppAtom,
   uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
+import { useAtom } from "jotai"
 import {
   Lock,
   MinusCircleIcon,
@@ -13,26 +14,24 @@ import {
   StopCircle,
   Unlock,
 } from "lucide-react"
-import { cn } from "../../packages/common/lib/utils"
 import { IconContainer } from "../../packages/common/components/icon-container"
+import { cn } from "../../packages/common/lib/utils"
 
-export const TopBar = ({
-  appID,
+export const ConvAppTopBar = ({
+  appId,
   title,
-  fetching,
 }: {
-  appID: string
+  appId: string
   title: string
-  fetching: boolean
 }) => {
   const [, delApp] = useAtom(delAppAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
-  const selected = appID === selectedAppID
+  const selected = appId === selectedAppID
   const LockOrNot = selected ? Lock : Unlock
-  // console.log({ appId, currentPAppId })
+  const [fetching] = useAtom(appIsFetchingAtom)
 
   return (
     <div
@@ -45,7 +44,7 @@ export const TopBar = ({
         <div className={"w-full flex gap-2 items-baseline"}>
           <span className={"truncate"}>{title}</span>
 
-          <span className={"text-muted-foreground text-xs"}>{appID}</span>
+          <span className={"text-muted-foreground text-xs"}>{appId}</span>
         </div>
       </div>
       <div className={"grow"} />
@@ -53,7 +52,7 @@ export const TopBar = ({
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          setSelectedAppID(appID)
+          setSelectedAppID(appId)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -72,7 +71,7 @@ export const TopBar = ({
         tooltipContent={"删除一个App（注意，暂不可恢复）"}
         className={cn(persistedApps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void delApp(appID)
+          void delApp(appId)
         }}
       >
         <MinusCircleIcon />

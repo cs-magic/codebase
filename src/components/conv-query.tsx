@@ -3,7 +3,7 @@
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 import { useConvQueryOnEnter } from "@/hooks/use-conv-query-on-enter"
 
-export const ChatQuery = () => {
+export const ConvQuery = () => {
   const query = useConvQueryOnEnter()
 
   return (

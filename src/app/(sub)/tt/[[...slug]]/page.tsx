@@ -1,13 +1,14 @@
 "use client"
-import { AppsComp } from "@/components/apps"
+import { ConvApps } from "../../../../components/conv-apps"
+import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv"
+import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
-import { ChatQuery } from "@/components/chat-query"
-import { useAtom } from "jotai"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
-import { convDetailAtom, convIdAtom, convsAtom } from "@/store/conv"
-import { useRouter } from "next/navigation"
+import { ConvControl } from "../../../../components/conv-control"
+import { ConvQuery } from "../../../../components/conv-query"
 
 export default function ConversationPage({
   params: { slug },
@@ -23,7 +24,7 @@ export default function ConversationPage({
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
 
   // 2. 检查服务端是否id有效
-  const { isError, data: convInDB } = api.queryLLM.getConv.useQuery(
+  const { isError, data: convInDB } = api.core.getConv.useQuery(
     {
       id: id!,
     },
@@ -53,9 +54,11 @@ export default function ConversationPage({
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
-      <AppsComp />
+      <ConvApps />
 
-      <ChatQuery />
+      <ConvControl />
+
+      <ConvQuery />
     </div>
   )
 }

@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "../../packages/common/lib/trpc/trpc"
-import { queryLLMRouter } from "@/api/query-llm-router"
+import { createTRPCRouter } from "../../../../packages/common/lib/trpc/trpc"
+import { coreRouter } from "./core"
 
 /**
  * This is the primary router for your server.
@@ -7,7 +7,7 @@ import { queryLLMRouter } from "@/api/query-llm-router"
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  queryLLM: queryLLMRouter,
+  core: coreRouter,
 })
 
 // export type definition of API

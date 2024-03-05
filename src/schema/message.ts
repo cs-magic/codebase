@@ -21,3 +21,4 @@ export type IMessageInChat = ILLMMessage & {
   updatedAt: Date
   isError?: boolean
 }
+export type IContext = IMessageInChat[]

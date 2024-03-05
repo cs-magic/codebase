@@ -6,7 +6,7 @@ import {
   DialogContent,
 } from "../../packages/common/components/ui/dialog"
 import { Label } from "../../packages/common/components/ui/label"
-import { AppSelector } from "@/components/app-selector"
+import { SelectApp } from "./select-app"
 import { Separator } from "../../packages/common/components/ui/separator"
 import { Input } from "../../packages/common/components/ui/input"
 import { useAtom } from "jotai"
@@ -47,7 +47,7 @@ export const AppsDialog = () => {
             </Label>
 
             {persistedApps.map((m, index) => (
-              <AppSelector key={index} app={m} type={"toDel"} />
+              <SelectApp key={index} app={m} type={"toDel"} />
             ))}
           </div>
 
@@ -69,7 +69,7 @@ export const AppsDialog = () => {
               </span>
             </Label>
             {filteredApps.map((m, index) => (
-              <AppSelector key={index} app={m} type={"toAdd"} />
+              <SelectApp key={index} app={m} type={"toAdd"} />
             ))}
           </div>
         </div>

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
 import { IMessageInChat } from "../schema/message"
-import { MessageComp } from "./app-message"
+import { ConvAppMessage } from "./conv-app-message"
 
-export const MessagesComp = ({
+export const ConvAppMessages = ({
   appId,
   logo,
   context,
@@ -21,7 +21,7 @@ export const MessagesComp = ({
   return (
     <div className={"grow overflow-auto"}>
       {context.map((m, index) => (
-        <MessageComp m={m} logo={logo} key={index} />
+        <ConvAppMessage m={m} logo={logo} key={index} />
       ))}
 
       <div ref={refScroll} />

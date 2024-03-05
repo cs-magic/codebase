@@ -1,9 +1,9 @@
 "use server"
 import { callChatGPT } from "../../../../packages/llm/models/openai"
-import { manager } from "@/app/api/llm/init"
 
 import { ILLMMessage } from "@/schema/message"
 import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
+import { llmManager } from "./llm-manager"
 import { App } from ".prisma/client"
 import { db } from "../../../../packages/common/lib/db"
 import { Prisma } from "@prisma/client"
@@ -23,17 +23,12 @@ export const triggerLLM = async ({
   const appId = app.id
   const triggerId = getTriggerID(requestId, appId)
 
-  console.log("[sse] triggered: ", {
-    ...context,
-    manager: { size: Object.keys(manager).length },
-    triggerId,
-  })
-
-  const r: IRequest = (manager[triggerId] = {
+  const r: IRequest = (llmManager[triggerId] = {
     finished: false,
     data: [],
     clients: [],
   })
+  console.log("[sse] triggered: ", { triggerId, context, llmManager })
 
   const push = (e: ISSEEvent) => {
     r.data.push(e)
@@ -78,7 +73,7 @@ export const triggerLLM = async ({
         error: err.message,
       })
     } finally {
-      // close
+      // todo: without finish?
       r.finished = true
 
       push({ event: "close" })
@@ -86,7 +81,7 @@ export const triggerLLM = async ({
         tEnd: new Date(),
         response: output,
       })
-      console.log("-- closing: ", { triggerId, output })
+      console.log("[LLM] closed: ", { triggerId, output })
     }
   }
 

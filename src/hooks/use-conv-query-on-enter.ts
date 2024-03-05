@@ -27,12 +27,15 @@ export function useConvQueryOnEnter() {
 
   return async () => {
     console.log("useQueryOnEnter: ", { convId, query })
+
     if (!query) return toast.error("不能为空")
+
     if (!persistedApps.length) {
       setSelectAppsOpen(true)
       toast.error("至少需要选中一种模型")
       return
     }
+
     if (session.status !== "authenticated") return setOpen(true)
 
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求

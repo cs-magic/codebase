@@ -9,8 +9,7 @@ import { SessionProvider } from "../../packages/common/components/session.provid
 import { type Viewport } from "next"
 import { cn } from "../../packages/common/lib/utils"
 import { TooltipProvider } from "../../packages/common/components/ui/tooltip"
-import { AppsDialog } from "@/components/apps-selector"
-import LLMProvider from "@/components/apps.provider"
+import { AppsDialog } from "../components/select-apps"
 import { ScreenProvider } from "../../packages/common/components/screen.provider"
 import { AutoHeight } from "@/components/_auto-height"
 import { Devtool } from "@/components/_devtool"
@@ -20,6 +19,7 @@ import JotaiProvider from "../../packages/common/components/jotai.provider"
 import { ReturnHomeAlertDialog } from "@/components/_return-home"
 import { CheckAuthAlertDialog } from "@/components/auth-checker"
 import { SystemSocketStatus } from "@/components/system-socket-status"
+import LLMProvider from "../providers/app"
 
 const inter = Inter({
   subsets: ["latin"],

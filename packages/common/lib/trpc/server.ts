@@ -12,7 +12,7 @@ import { headers } from "next/headers"
 import { cache } from "react"
 import { transformer } from "./shared"
 import { createTRPCContext } from "./context"
-import { appRouter } from "@/api/__root"
+import { appRouter } from "@/app/api/trpc"
 import { env } from "@/env"
 
 /**

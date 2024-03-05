@@ -12,7 +12,7 @@ import {
 } from "@/store/app"
 import { IconContainer } from "../../packages/common/components/icon-container"
 
-export const AppSelector = ({
+export const SelectApp = ({
   app,
   type,
 }: {

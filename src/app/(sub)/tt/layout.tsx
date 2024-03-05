@@ -14,7 +14,7 @@ import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useConvQuery } from "@/hooks/use-conv-query"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
-  const { data: convsInDB } = api.queryLLM.listConv.useQuery()
+  const { data: convsInDB } = api.core.listConv.useQuery()
 
   const [convs, setConvs] = useAtom(convsAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
@@ -66,7 +66,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
 
   // 6. 当 conv 个数变化时，重置
   useEffect(() => {
-    void utils.queryLLM.listConv.invalidate()
+    void utils.core.listConv.invalidate()
   }, [convs.length])
 
   return (

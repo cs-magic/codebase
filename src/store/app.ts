@@ -1,16 +1,16 @@
-import { atom } from "jotai"
-import { getNewId } from "../../packages/common/lib/utils"
 import { IAppInDB } from "@/schema/app"
-import { uiScreenAtom } from "../../packages/common/store/ui"
-import { BEST_VIEWPOINT } from "../../packages/common/config/system"
-import {
-  appsShouldSSEPersistedAtom,
-  requestAtom,
-  requestIdPersistedAtom,
-} from "@/store/request"
-import { getTriggerID } from "@/lib/utils"
+import { convDetailAtom, requestAtom } from "@/store/conv"
+import { atom, createStore } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { convDetailAtom } from "@/store/conv"
+import { BEST_VIEWPOINT } from "../../packages/common/config/system"
+import { getNewId } from "../../packages/common/lib/utils"
+import { uiScreenAtom } from "../../packages/common/store/ui" //////////////////////////////
+
+//////////////////////////////
+// store
+//////////////////////////////
+export const appStore = createStore()
+export const appIsFetchingAtom = atom(false)
 
 //////////////////////////////
 // base
@@ -26,13 +26,13 @@ export const serverAppsAtom = atom<IAppInDB[]>([])
  */
 export const uiSelectAppsDialogOpenAtom = atom(false)
 
-// todo :avoid persist apps
+// todo: avoid persist apps
 export const appsPersistedAtom = atomWithStorage<IAppInDB[]>(
   "conv.apps.list",
   [],
 )
 
-// todo :avoid persist the cur app
+// todo: avoid persist the cur app
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
 
 //////////////////////////////
@@ -69,8 +69,10 @@ export const convAppsAtom = atom<IAppInDB[]>(
     [],
 )
 
-export const appFinishedSSEAtom = atom(null, (get, set, appID: string) => {
-  set(appsShouldSSEPersistedAtom, (draft) =>
-    draft.filter((d) => d !== getTriggerID(get(requestIdPersistedAtom), appID)),
-  )
+export const appsGridColsAtom = atom((get) => {
+  const { width } = get(uiScreenAtom)
+  const nApps = get(appsPersistedAtom).length
+  return width // 未初始化时避免闪烁
+    ? Math.min(Math.floor(width / BEST_VIEWPOINT), nApps)
+    : nApps
 })

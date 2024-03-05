@@ -6,13 +6,13 @@ export const useDelAllConvs = () => {
   const router = useRouter()
   const utils = api.useUtils()
 
-  const delAllConvs = api.queryLLM.delAllConvs.useMutation({
+  const delAllConvs = api.core.delAllConvs.useMutation({
     onError: (error) => {
       console.error(error)
       toast.error("删除失败！")
     },
     onSuccess: (data) => {
-      utils.queryLLM.listConv.invalidate()
+      utils.core.listConv.invalidate()
       console.log("deleted all: ", { data })
       router.push("/tt")
     },

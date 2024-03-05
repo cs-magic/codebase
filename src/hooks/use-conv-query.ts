@@ -1,13 +1,11 @@
-import { getTriggerID } from "@/lib/utils"
 import { IMessageInChat } from "@/schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
 
-import { convDetailAtom } from "@/store/conv"
 import {
-  appsShouldSSEPersistedAtom,
   contextAtom,
+  convDetailAtom,
   requestIdPersistedAtom,
-} from "@/store/request"
+} from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
@@ -19,28 +17,27 @@ export const useConvQuery = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
   const [conv, setConv] = useAtom(convDetailAtom)
-  const [, setAppsShouldSSE] = useAtom(appsShouldSSEPersistedAtom)
 
   const [reqId, setRequestID] = useAtom(requestIdPersistedAtom)
   const [appId] = useAtom(appIdPersistedAtom)
 
-  const query = api.queryLLM.query.useMutation()
+  const query = api.core.query.useMutation()
 
-  const [context2] = useAtom(contextAtom)
+  const [context] = useAtom(contextAtom)
 
   return () => {
     console.log(ansiColors.red("[useConvQuery] inner "), {
       conv,
       reqId,
       appId,
-      context2,
+      context,
     })
     if (!conv || !prompt) return console.error("不满足发送条件")
 
     setPrompt("") // reset
 
     const newContext = [
-      ...context2,
+      ...context,
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
@@ -62,12 +59,11 @@ export const useConvQuery = () => {
           // todo: derived
           // 更新request id
           setRequestID(request.id)
-
-          // 添加到请求池
-          setAppsShouldSSE((old) => [
-            ...old,
-            ...persistedApps.map((app) => getTriggerID(request.id, app.id)),
-          ])
+          console.log(
+            ansiColors.red(
+              `[useConvQuery] req-id: ${reqId} --> ${request.id} `,
+            ),
+          )
         },
         onError: (err) => {
           console.error(err)

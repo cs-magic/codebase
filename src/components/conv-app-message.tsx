@@ -4,7 +4,7 @@ import { DEFAULT_AVATAR } from "@/config/assets"
 import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
 import { cn } from "../../packages/common/lib/utils"
 
-export const MessageComp = ({
+export const ConvAppMessage = ({
   m,
   logo,
 }: {

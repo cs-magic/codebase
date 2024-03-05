@@ -6,12 +6,12 @@ import {
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
 
-import { ModelSelector } from "@/components/model-selector"
+import { SelctModel } from "./selct-model"
 import { useAtom } from "jotai"
 import { ScenarioType } from "@/schema/scenario"
 import { scenarioTypeAtom } from "@/store/scenario"
 
-export const ScenarioSelector = () => {
+export const SelectScenario = () => {
   const [type, setType] = useAtom(scenarioTypeAtom)
 
   return (
@@ -21,12 +21,12 @@ export const ScenarioSelector = () => {
       </SelectPrimitiveTrigger>
 
       <SelectContent>
-        <ModelSelector
+        <SelctModel
           value={"text2text"}
           Cover={Text2TextAppSVG}
           label={"文生文"}
         />
-        <ModelSelector
+        <SelctModel
           value={"text2image"}
           Cover={Text2ImageAppSVG}
           label={"文生图"}

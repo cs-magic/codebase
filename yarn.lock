@@ -4699,6 +4699,11 @@ jotai-immer@^0.3.0:
   resolved "https://registry.yarnpkg.com/jotai-immer/-/jotai-immer-0.3.0.tgz#f8bc0cc35bedf736471e96807f6dfae65c5fb04d"
   integrity sha512-k+o4rWfWWLyHfucHAdoiN+l8flxMrKC/bEFvJA98znj+kbPW5R90EPa1u8mhWLJTABW3xjAp7Z3kyD3FVi0Hgw==
 
+jotai-scope@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/jotai-scope/-/jotai-scope-0.5.1.tgz#a0eee96435262ff195901c420ca55b411639d8ef"
+  integrity sha512-GKaqtCj1Hv36nyl63PVm+s5jo+hQqz+wAb81iqA8VuUXp5ot4eXGOZt4Hc66lFZMP0N/yEOISMlazprmDI6kFA==
+
 jotai@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.7.0.tgz#50efe98b94ec742e1c4cf3f4307c2cac4766392c"
