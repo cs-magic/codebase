@@ -68,9 +68,11 @@ export default function ConversationPage({
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
       <ConvApps />
 
-      <ConvControl />
+      <div className={"w-full max-w-[720px] mx-auto p-2 shrink-0"}>
+        <ConvControl />
 
-      <ConvQuery />
+        <ConvQuery />
+      </div>
     </div>
   )
 }

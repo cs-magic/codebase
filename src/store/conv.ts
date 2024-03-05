@@ -36,7 +36,7 @@ export const requestSliderAtom = atom(
     const requests = get(requestsAtom)
     return {
       current: requests.findIndex((r) => r.id === get(requestIdAtom)),
-      max: requests.length,
+      total: requests.length,
     }
   },
   (get, set) => {
