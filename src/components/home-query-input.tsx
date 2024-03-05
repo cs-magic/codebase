@@ -18,7 +18,7 @@ export const HomeQueryInput = () => {
   const [prompt] = useAtom(userPromptAtom)
 
   return (
-    <div className={"grow flex rounded-3xl border p-2"}>
+    <div className={"grow flex rounded-3xl border p-2 my-8"}>
       <IconContainer className={"w-6 h-6 shrink-0 interactive"}>
         <Paperclip />
       </IconContainer>

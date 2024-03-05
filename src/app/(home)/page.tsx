@@ -1,12 +1,11 @@
 "use client"
-import React from "react"
-import { HomeQueryArea } from "@/components/home-query-area"
-import { FlexContainer } from "../../../packages/common/components/flex-container"
-import { cn } from "../../../packages/common/lib/utils"
-
 import { TVContainer } from "@/components/tv-container"
 import { useAtom } from "jotai"
+import React from "react"
+import { FlexContainer } from "../../../packages/common/components/flex-container"
+import { cn } from "../../../packages/common/lib/utils"
 import { userPromptAtom } from "../../../packages/common/store/user"
+import { HomeQueryInput } from "../../components/home-query-input"
 
 export default function HomePage() {
   const [prompt] = useAtom(userPromptAtom)
@@ -30,7 +29,7 @@ export default function HomePage() {
       </div>
 
       <div className={"w-full h-1/2 shrink-0"}>
-        <HomeQueryArea />
+        <HomeQueryInput />
       </div>
     </FlexContainer>
   )
