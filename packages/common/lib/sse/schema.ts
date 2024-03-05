@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client"
 
 export type IClient = {
+  id: string
   onEvent: (event: ISSEEvent) => Promise<void>
 }
 export type ISSERequest = {

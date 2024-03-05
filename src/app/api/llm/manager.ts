@@ -25,30 +25,22 @@ export const llmWrite = async (
   )
 }
 
-/**
- * // todo: ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
- * req.signal.onabort = async () => {
- *   const index = m.endpoints.findIndex((e) => e === endpoint)
- *   console.log(`[sse] client[${index}] ABORTED`)
- *   await writer.close() // unnecessary but better
- *   m.endpoints.splice(index, 1)
- * }
- * @param sseEvent
- */
 export const llmInit = async (
+  clientId: string,
   writer: WritableStreamDefaultWriter,
-  requestId: string,
+  triggerId: string,
 ) => {
-  const request = llmManager[requestId]
-  if (!request) return
+  const trigger = llmManager[triggerId]
+  if (!trigger) return
 
   // 1. old (request.data 也在持续增加)
-  const { response, error } = request.response
+  const { response, error } = trigger.response
   if (response) await llmWrite(writer, { event: "onData", data: response })
   if (error) await llmWrite(writer, { event: "onError", data: error })
 
   // 2. new
-  request.clients.push({
+  trigger.clients.push({
+    id: clientId,
     onEvent: (e) => llmWrite(writer, e),
   })
 }
