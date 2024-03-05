@@ -37,7 +37,8 @@ export const ConvAppTopBar = ({
   return (
     <div
       className={cn(
-        "w-full overflow-hidden flex items-center p-2 border-b",
+        "w-full overflow-hidden flex items-center p-2 border-b ",
+        "shrink-0",
         selected && "border-b border-primary-foreground/50",
       )}
     >

@@ -63,13 +63,6 @@ export const uiMaxAppsAtom = atom((get) =>
   ),
 )
 
-export const convAppsAtom = atom<IAppInDB[]>(
-  (get) =>
-    get(requestAtom)?.responses.map((r) => r.app) ??
-    get(convDetailFromServerAtom)?.apps ??
-    [],
-)
-
 export const appsGridColsAtom = atom((get) => {
   const { width } = get(uiScreenAtom)
   const nApps = get(appsPersistedAtom).length

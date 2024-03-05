@@ -16,6 +16,11 @@ export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
       include: {
         app: appInDBSchema,
       },
+      orderBy: {
+        app: {
+          createdAt: "asc",
+        },
+      },
     },
   },
 })
@@ -23,7 +28,12 @@ export type IRequest = Prisma.RequestGetPayload<typeof requestSchema>
 
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
-    apps: appInDBSchema,
+    apps: {
+      ...appInDBSchema,
+      orderBy: {
+        createdAt: "asc",
+      },
+    },
     requests: {
       ...requestSchema,
       orderBy: {

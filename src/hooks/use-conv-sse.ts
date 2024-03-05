@@ -23,6 +23,7 @@ export const useConvSSE = (appId: string) => {
 
     void fetchSSE(`/api/llm?r=${getTriggerID(requestId, appId)}`, {
       onOpen: () => {
+        console.log("-- STARTED")
         update((s) => {
           s.tStart = new Date()
           s.response = ""
@@ -34,12 +35,14 @@ export const useConvSSE = (appId: string) => {
           s.response += data
         })
       },
-      onError: (data) => {
+      onError: (error) => {
+        console.log({ error })
         update((s) => {
-          s.error = data
+          s.error = error
         })
       },
       onFinal: () => {
+        console.log("-- DONE")
         // todo: 在服务端维护
         update((s) => {
           s.tEnd = new Date()

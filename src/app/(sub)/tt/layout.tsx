@@ -1,17 +1,13 @@
 "use client"
 import { Sidebar } from "@/components/sidebar"
-import { Separator } from "../../../../packages/common/components/ui/separator"
-import { PropsWithChildren, useEffect } from "react"
-import { useAtom } from "jotai"
-import { api } from "../../../../packages/common/lib/trpc/react"
-import { convDetailFromServerAtom, convsFromServerAtom } from "@/store/conv"
-import {
-  convAppsAtom,
-  appsPersistedAtom,
-  appIdPersistedAtom,
-} from "@/store/app"
-import { userPromptAtom } from "../../../../packages/common/store/user"
 import { useConvQuery } from "@/hooks/use-conv-query"
+import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
+import { convDetailFromServerAtom, convsFromServerAtom } from "@/store/conv"
+import { useAtom } from "jotai"
+import { PropsWithChildren, useEffect } from "react"
+import { Separator } from "../../../../packages/common/components/ui/separator"
+import { api } from "../../../../packages/common/lib/trpc/react"
+import { userPromptAtom } from "../../../../packages/common/store/user"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.core.listConv.useQuery()
@@ -21,7 +17,6 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)
-  const [convApps] = useAtom(convAppsAtom)
 
   const utils = api.useUtils()
   const queryInChat = useConvQuery()
@@ -33,11 +28,9 @@ export default function ConvLayout({ children }: PropsWithChildren) {
 
   // 2. 当 conv 更新后，用 conv 里的 app 覆盖本地的 app
   useEffect(() => {
-    // 不能清空
-    if (!convApps.length) return
-    // console.log("-- apps (conv --> persisted): ", { convApps })
-    setPersistedApps(convApps)
-  }, [convApps])
+    if (!conv?.apps.length) return // todo: 支持清空
+    setPersistedApps(conv.apps)
+  }, [conv])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个
   useEffect(() => {
