@@ -19,13 +19,15 @@ export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
     },
   },
 })
+export type IRequest = Prisma.RequestGetPayload<typeof requestSchema>
+
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
     apps: appInDBSchema,
     requests: {
       ...requestSchema,
       orderBy: {
-        updatedAt: "desc",
+        updatedAt: "asc", // 增序
       },
     },
   },

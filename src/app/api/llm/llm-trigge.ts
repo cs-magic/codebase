@@ -2,7 +2,10 @@
 import { callChatGPT } from "../../../../packages/llm/models/openai"
 
 import { ILLMMessage } from "@/schema/message"
-import { IRequest, ISSEEvent } from "../../../../packages/common/lib/sse/schema"
+import {
+  ISSERequest,
+  ISSEEvent,
+} from "../../../../packages/common/lib/sse/schema"
 import { llmManager } from "./llm-manager"
 import { App } from ".prisma/client"
 import { db } from "../../../../packages/common/lib/db"
@@ -23,7 +26,7 @@ export const triggerLLM = async ({
   const appId = app.id
   const triggerId = getTriggerID(requestId, appId)
 
-  const r: IRequest = (llmManager[triggerId] = {
+  const r: ISSERequest = (llmManager[triggerId] = {
     finished: false,
     data: [],
     clients: [],
@@ -81,7 +84,7 @@ export const triggerLLM = async ({
         tEnd: new Date(),
         response: output,
       })
-      console.log("[LLM] closed: ", { triggerId, output })
+      console.log("[sse] closed: ", { triggerId, output })
     }
   }
 

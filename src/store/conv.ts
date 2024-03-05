@@ -1,6 +1,12 @@
-import { IConvDetail, IConvSummary, IUpdateResponse } from "@/schema/conv"
+import {
+  IConvDetail,
+  IConvSummary,
+  IRequest,
+  IUpdateResponse,
+} from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
+import { ISSERequest } from "../../packages/common/lib/sse/schema"
 import { IMessageInChat } from "../schema/message"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 
@@ -20,6 +26,33 @@ export const requestIdAtom = atom<string | null>(null)
 //////////////////////////////
 // derived
 //////////////////////////////
+
+export const requestsAtom = atom<IRequest[]>(
+  (get) => get(convDetailFromServerAtom)?.requests ?? [],
+)
+
+export const requestSliderAtom = atom(
+  (get) => {
+    const requests = get(requestsAtom)
+    return {
+      current: requests.findIndex((r) => r.id === get(requestIdAtom)),
+      max: requests.length,
+    }
+  },
+  (get, set) => {
+    const setN = (n: number) => {
+      if (n < 0 || n > get(requestsAtom).length - 1) return
+      set(requestIdAtom, get(requestsAtom)[Math.floor(n)]!.id)
+    }
+    const inc = () => setN(get(requestSliderAtom).current + 1)
+    const dec = () => setN(get(requestSliderAtom).current - 1)
+    return {
+      setN,
+      inc,
+      dec,
+    }
+  },
+)
 
 export const convIdAtom = atom((get) => get(convDetailFromServerAtom)?.id)
 
