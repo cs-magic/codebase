@@ -1,9 +1,10 @@
+import { Prisma } from "@prisma/client"
+
 export type IClient = {
   onEvent: (event: ISSEEvent) => Promise<void>
 }
 export type ISSERequest = {
-  data: ISSEEvent[]
-  finished: boolean
+  response: Prisma.ResponseUncheckedCreateInput
   clients: IClient[]
 }
 /**

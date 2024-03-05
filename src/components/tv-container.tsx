@@ -1,14 +1,14 @@
 "use client"
-import { PropsWithChildren, useRef } from "react"
-import { useAtom } from "jotai"
-import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@/store/tv"
-import { useFullscreen, useMeasure } from "react-use"
-import { cn } from "../../packages/common/lib/utils"
-import { FlexContainer } from "../../packages/common/components/flex-container"
-import { range } from "lodash"
 import { Controls } from "@/components/tv-controls"
+import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@/store/tv"
 
 import "@/styles/tv.css"
+import { useAtom } from "jotai"
+import { range } from "lodash"
+import { PropsWithChildren, useRef } from "react"
+import { useFullscreen, useMeasure } from "react-use"
+import { FlexContainer } from "../../packages/common/components/flex-container"
+import { cn } from "../../packages/common/lib/utils"
 
 /**
  * tv, ref: https://codepen.io/manz/pen/MWoRMja
@@ -28,7 +28,7 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
   const [refViewport, viewport] = useMeasure<HTMLDivElement>()
   const scale = getTvScale(viewport)
 
-  console.log({ scale, isScreenOn, isFullScreen })
+  // console.log({ scale, isScreenOn, isFullScreen })
 
   return (
     <div

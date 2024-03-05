@@ -30,20 +30,20 @@ export const useConvSSE = (appId: string) => {
         })
       },
       onData: (data) => {
-        console.log({ data })
+        // console.debug({ data })
         update((s) => {
           s.response += data
         })
       },
       onError: (error) => {
-        console.log({ error })
+        console.warn({ error })
         update((s) => {
           s.error = error
         })
       },
       onFinal: () => {
         console.log("-- DONE")
-        // todo: 在服务端维护
+        // 这个不重要
         update((s) => {
           s.tEnd = new Date()
         })

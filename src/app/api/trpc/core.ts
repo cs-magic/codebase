@@ -14,7 +14,7 @@ import {
 } from "../../../schema/conv"
 import { appInDBSchema, createAppSchema } from "../../../schema/app"
 import { llmMessageSchema } from "../../../schema/message"
-import { triggerLLM } from "../llm/llm-trigge"
+import { triggerLLM } from "../llm/llm-triggle"
 
 export const coreRouter = createTRPCRouter({
   listModels: publicProcedure.query(() =>

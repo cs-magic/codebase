@@ -39,10 +39,13 @@ export const llmInit = async (
   writer: WritableStreamDefaultWriter,
   requestId: string,
 ) => {
-  const request = llmManager[requestId]!
+  const request = llmManager[requestId]
+  if (!request) return
 
   // 1. old (request.data 也在持续增加)
-  await Promise.all(request.data.map(async (e) => await llmWrite(writer, e)))
+  const { response, error } = request.response
+  if (response) await llmWrite(writer, { event: "onData", data: response })
+  if (error) await llmWrite(writer, { event: "onError", data: error })
 
   // 2. new
   request.clients.push({
