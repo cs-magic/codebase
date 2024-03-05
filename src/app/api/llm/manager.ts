@@ -1,7 +1,29 @@
 import { WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill"
+import {
+  ISSEEvent,
+  ISSERequest,
+} from "../../../../packages/common/lib/sse/schema"
+import { staticCreate } from "../../../../packages/common/lib/utils"
 
-import { llmManager } from "./llm-manager"
-import { llmWrite } from "./llm-write"
+export const llmManager = staticCreate<Record<string, ISSERequest>>(() => ({}))
+console.log({ llmManager })
+
+export const llmEncoder = new TextEncoder()
+
+export const llmWrite = async (
+  writer: WritableStreamDefaultWriter,
+  sseEvent: ISSEEvent,
+) => {
+  // 返回客户端不需要有 close 标志，直接 readystate=2 即可
+  if (sseEvent.event === "close") return await writer.close()
+
+  const { event, data } = sseEvent
+
+  // 要额外加一个 \n，否则不符合格式规范
+  await writer.write(
+    llmEncoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+  )
+}
 
 /**
  * // todo: ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109

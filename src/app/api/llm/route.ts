@@ -1,22 +1,33 @@
 import { NextRequest } from "next/server"
-import { llmInit } from "./llm-init"
-import { llmManager } from "./llm-manager"
-import { llmWrite } from "./llm-write"
+import { db } from "../../../../packages/common/lib/db"
+import { TRIGGER_SEPARATOR } from "../../../lib/utils"
+import { llmInit, llmWrite } from "./manager"
 
 export async function GET(req: NextRequest) {
-  const requestId = new URL(req.url).searchParams.get("r") ?? ""
-  const requests = Object.keys(llmManager)
-  const isHit = requests.includes(requestId)
-  console.log("[sse] GET: ", { requestId, requests, isHit })
+  const triggerId = new URL(req.url).searchParams.get("r") ?? ""
+  const [requestId = "", appId = ""] = triggerId.split(TRIGGER_SEPARATOR)
+  const response = await db.response.findUnique({
+    where: {
+      requestId_appId: { requestId, appId },
+    },
+  })
 
   const responseStream = new TransformStream()
   const writer = responseStream.writable.getWriter()
 
-  if (isHit)
-    void llmInit(writer, requestId) // DO NOT await
-  else void llmWrite(writer, { event: "onError", data: "请求不存在" })
-
-  console.log("[sse] Response: ", { requestId })
+  type Status = "NOT_FOUND" | "FINISHED" | "ING"
+  let status: Status
+  if (!response) {
+    void llmWrite(writer, { event: "onError", data: "请求不存在" })
+    status = "NOT_FOUND"
+  } else if (response.tEnd) {
+    void llmWrite(writer, { event: "onError", data: "请求已完成" })
+    status = "FINISHED"
+  } else {
+    void llmInit(writer, triggerId) // DO NOT await
+    status = "ING"
+  }
+  console.log("[sse] triggered: ", { triggerId, status })
 
   return new Response(responseStream.readable, {
     headers: {

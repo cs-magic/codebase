@@ -6,7 +6,7 @@ import {
   ISSERequest,
   ISSEEvent,
 } from "../../../../packages/common/lib/sse/schema"
-import { llmManager } from "./llm-manager"
+import { llmManager } from "./manager"
 import { App } from ".prisma/client"
 import { db } from "../../../../packages/common/lib/db"
 import { Prisma } from "@prisma/client"
