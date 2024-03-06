@@ -11,12 +11,11 @@ import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
 export const ConvApp = ({ app }: { app: IAppDetail }) => {
-  useConvSSE(app.id)
-
   const [commonContext] = useAtom(commonContextAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppId] = useAtom(appIdPersistedAtom)
   const [request] = useAtom(requestAtom)
+
   const targetAppId = persistedApps.some((a) => a.id === app.id)
     ? app.id
     : selectedAppId
@@ -32,6 +31,10 @@ export const ConvApp = ({ app }: { app: IAppDetail }) => {
           isError: !!response.error,
         },
       ]
+
+  useConvSSE(app.id)
+
+  // console.log({ appId: app.id, commonContext, response })
 
   return (
     <div

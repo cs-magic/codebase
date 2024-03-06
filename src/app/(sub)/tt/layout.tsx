@@ -1,9 +1,7 @@
 "use client"
 import { Sidebar } from "@/components/sidebar"
-import { useConvQuery } from "@/hooks/use-conv-query"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
 import {
-  convAppsAtom,
   convDetailFromServerAtom,
   convsFromServerAtom,
   requestAtom,
@@ -14,20 +12,16 @@ import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { Separator } from "../../../../packages/common/components/ui/separator"
 import { api } from "../../../../packages/common/lib/trpc/react"
-import { userPromptAtom } from "../../../../packages/common/store/user"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
-  const { data: convsInDB } = api.core.listConv.useQuery()
-
-  const [, setConvs] = useAtom(convsFromServerAtom)
-  const [conv, setConv] = useAtom(convDetailFromServerAtom)
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
-  const [query] = useAtom(userPromptAtom)
   const [request] = useAtom(requestAtom)
-  const [requestId] = useAtom(requestIdAtom)
+  const [requestId, setRequestId] = useAtom(requestIdAtom)
+  const [, setConvs] = useAtom(convsFromServerAtom)
+  const [, setConv] = useAtom(convDetailFromServerAtom)
 
-  const queryInChat = useConvQuery()
+  const { data: convsInDB } = api.core.listConv.useQuery()
 
   // 1. 获取列表数据
   useEffect(() => {
@@ -58,11 +52,6 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     })
     setSelectedAppID(firstAppId)
   }, [persistedApps.length])
-
-  // 4. 如果本地有conv，且有用户输入的话，则自动触发一次会话请求
-  useEffect(() => {
-    if (conv?.id && query) queryInChat() // 用户带着问题来的
-  }, [conv?.id])
 
   // 5. 当离开会话的时候，置空
   useEffect(() => {

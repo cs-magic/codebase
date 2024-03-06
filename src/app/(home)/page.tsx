@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation"
-
-export default function HomePage() {
-  redirect("/tt")
+export default async function HomePage() {
+  return "hello world"
 }

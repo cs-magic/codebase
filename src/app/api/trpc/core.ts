@@ -6,6 +6,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "../../../../packages/common/lib/trpc/trpc"
+import { getNewId } from "../../../../packages/common/lib/utils"
 import {
   ConvUpdateInputSchema,
   ConvWhereUniqueInputSchema,
@@ -148,45 +149,50 @@ export const coreRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
+      const requestId = getNewId()
       const context = input.context
-      const request = await db.request.create({
-        ...requestSchema,
+      const conv = await db.conv.update({
+        where: { id: input.convId },
+        ...convDetailSchema,
         data: {
-          conv: {
-            connect: {
-              id: ctx.conv.id,
-            },
-          },
-          context,
-          responses: {
-            create: input.apps.map((app) => ({
-              tTrigger: new Date(),
-              app: {
-                connectOrCreate: {
-                  where: { id: app.id },
-                  create: {
-                    ...app,
-                    user: ctx.user.id,
+          currentRequestId: requestId,
+          requests: {
+            create: {
+              id: requestId,
+              context,
+              responses: {
+                create: input.apps.map((app) => ({
+                  tTrigger: new Date(),
+                  app: {
+                    connectOrCreate: {
+                      where: { id: app.id },
+                      create: {
+                        ...app,
+                        user: ctx.user.id,
+                      },
+                    },
                   },
-                },
+                })),
               },
-            })),
+            },
           },
         },
       })
 
-      console.log("-- query LLM: ", { input, request })
+      console.log("-- query LLM: ", { input })
 
       await Promise.all(
-        request.responses.map(async (r) => {
-          await triggerLLM({
-            app: r.app,
-            context,
-            requestId: request.id,
-            llmDelay: input.llmDelay,
-          })
-        }),
+        conv.requests
+          .find((r) => r.id === requestId)!
+          .responses.map(async (r) => {
+            await triggerLLM({
+              app: r.app,
+              context,
+              requestId,
+              llmDelay: input.llmDelay,
+            })
+          }),
       )
-      return request
+      return requestId
     }),
 })

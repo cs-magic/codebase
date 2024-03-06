@@ -14,7 +14,7 @@ export const ConvApps = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [gridCols] = useAtom(appsGridColsAtom)
 
-  console.log({ persistedApps })
+  // console.log({ persistedApps })
 
   return (
     <div
@@ -28,11 +28,14 @@ export const ConvApps = () => {
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {persistedApps?.map((app) => (
-        <ScopeProvider key={app.id} atoms={[stopGeneratingAtom]}>
-          <ConvApp app={app} key={app.id} />
-        </ScopeProvider>
-      ))}
+      {persistedApps?.map(
+        // 同一个app-id是否可以多个呢？请求应该要额外小心处理！
+        (app, index) => (
+          <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>
+            <ConvApp app={app} />
+          </ScopeProvider>
+        ),
+      )}
     </div>
   )
 }

@@ -59,11 +59,13 @@ export const useConvSSE = (appId: string) => {
 
   useEffect(() => {
     const sse = refSSE.current
-    console.log({ sse, stoppedGenerating })
+    // console.log({ sse, stoppedGenerating })
+
     if (stoppedGenerating && sse && sse.readyState !== sse.CLOSED) {
       sse.close()
       onFinal()
     }
+
     // 复原
     stopGenerating(false)
   }, [stoppedGenerating])

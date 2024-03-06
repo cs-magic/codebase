@@ -1,20 +1,15 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { userPromptAtom } from "../../packages/common/store/user"
-import { IconContainer } from "../../packages/common/components/icon-container"
 import { ArrowUpIcon, Paperclip } from "lucide-react"
+import { IconContainer } from "../../packages/common/components/icon-container"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "../../packages/common/components/ui/tooltip"
 import { cn } from "../../packages/common/lib/utils"
-import { useConvQueryOnEnter } from "@/hooks/use-conv-query-on-enter"
+import { userPromptAtom } from "../../packages/common/store/user"
+import { useConvQueryOnEnterV2 } from "../hooks/use-conv-query-on-enter-v2"
 
 export const HomeQueryInput = () => {
-  const query = useConvQueryOnEnter()
+  const query = useConvQueryOnEnterV2()
   const [prompt] = useAtom(userPromptAtom)
 
   return (

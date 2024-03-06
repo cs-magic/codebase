@@ -1,14 +1,18 @@
 "use client"
+import { useRouter } from "next/navigation"
 import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { SidebarConversationItem } from "./sidebar-conversation"
 import { useAtom } from "jotai"
-import { convsFromServerAtom } from "@/store/conv"
+import { convsFromServerAtom, requestIdAtom } from "@/store/conv"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
 
 export const Sidebar = () => {
   const [conversations] = useAtom(convsFromServerAtom)
+  const [, setRequestId] = useAtom(requestIdAtom)
+
+  const router = useRouter()
   const addConversation = useAddConv()
   const deleteAllConversations = useDelAllConvs()
 
@@ -17,7 +21,12 @@ export const Sidebar = () => {
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
-        onClick={() => addConversation()}
+        onClick={async () => {
+          const data = await addConversation()
+          setRequestId(null)
+          // 路由跳转，并且避免再拿数据
+          router.push(`/tt/${data.id}`) // 异步
+        }}
       >
         <PlusIcon className={"w-4 h-4"} />
         新建会话

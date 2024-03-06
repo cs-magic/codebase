@@ -191,8 +191,9 @@ model Conv {
   fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
   fromUserId String
 
-  title    String?
-  requests Request[]
+  title            String?
+  requests         Request[] @relation("requests")
+  currentRequestId String?
 
   apps App[]
 }
@@ -219,7 +220,7 @@ model Request {
   /// [QueryContex]
   context Json
 
-  conv   Conv   @relation(fields: [convId], references: [id], onDelete: Cascade)
+  conv   Conv   @relation("requests", fields: [convId], references: [id], onDelete: Cascade)
   convId String
 
   apps App[]

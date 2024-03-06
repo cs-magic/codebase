@@ -5,6 +5,7 @@ import {
   convsFromServerAtom,
   requestIdAtom,
 } from "@/store/conv"
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
@@ -15,7 +16,7 @@ import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
 
-export default function ConversationPage({
+export default function ConvPage({
   params: { slug },
 }: {
   params: { slug?: string[] }
@@ -24,11 +25,16 @@ export default function ConversationPage({
   const [convId] = useAtom(convIdAtom)
   const [, setConvDetail] = useAtom(convDetailFromServerAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
-  const [, setRequestId] = useAtom(requestIdAtom)
+  const [currentRequestId, setRequestId] = useAtom(requestIdAtom)
 
   const router = useRouter()
   const id = slug ? slug[0] : slug
   const reqIdFromUrl = useSearchParams().get("r")
+
+  // 首页
+  useEffect(() => {
+    if (!id) setConvDetail(null)
+  }, [id])
 
   // 2. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
@@ -45,9 +51,12 @@ export default function ConversationPage({
     setConvDetail(null)
   }, [isError])
 
-  // 2.2 有效则更新详情数据
+  /**
+   * conv 逻辑，无脑对齐即可，就是个 context 作用
+   */
   useEffect(() => {
-    if (convFromServer) setConvDetail(convFromServer)
+    if (!convFromServer) return
+    setConvDetail(convFromServer)
   }, [convFromServer])
 
   // 3. 当会话列表变动后（比如清除或者清空），如果命中了当前会话，则清除，可以涵盖单删或者多删
@@ -59,10 +68,37 @@ export default function ConversationPage({
     }
   }, [convs])
 
-  // 4. 更新 request id
+  /**
+   * request id 逻辑
+   * 1. 访问 rid, rid命中，则设置
+   * 2. 否则，设置为数据库中最新的rid，或者为空
+   */
   useEffect(() => {
-    setRequestId(reqIdFromUrl)
-  }, [reqIdFromUrl])
+    console.log(ansiColors.red("try to update reqId: "), {
+      reqIdFromUrl,
+      convFromServer,
+    })
+    if (!convFromServer) return
+
+    if (reqIdFromUrl) {
+      if (convFromServer.requests.some((r) => r.id === reqIdFromUrl)) {
+        setRequestId(reqIdFromUrl)
+      } else {
+        router.replace(`/tt/${id}`)
+      }
+    } else {
+      if (convFromServer.currentRequestId) {
+        router.replace(`/tt/${id}?r=${convFromServer.currentRequestId}`)
+      } else {
+        setRequestId(null)
+      }
+    }
+  }, [reqIdFromUrl, convFromServer])
+
+  // 清空request
+  useEffect(() => {
+    if (!convId) setRequestId(null)
+  }, [convId])
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

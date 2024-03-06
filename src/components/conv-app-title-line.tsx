@@ -10,21 +10,17 @@ import {
 } from "../../packages/common/components/ui/select"
 import { api } from "../../packages/common/lib/trpc/react"
 import { IAppDetail } from "../schema/app.detail"
-import { appsPersistedAtom } from "../store/app"
+import { replaceAppAtom } from "../store/app"
 
 export const ConvAppTitleLine = ({ app }: { app: IAppDetail }) => {
   const { data: apps } = api.core.listApps.useQuery()
-  const [, setApps] = useAtom(appsPersistedAtom)
+  const [, replaceApp] = useAtom(replaceAppAtom)
 
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
         onValueChange={(value) => {
-          setApps((prevApps) =>
-            prevApps.map((a) =>
-              a.id !== app.id ? a : apps!.find((a) => a.id === value)!,
-            ),
-          )
+          replaceApp(app.id, apps!.find((a) => a.id === value)!)
         }}
       >
         <SelectTrigger

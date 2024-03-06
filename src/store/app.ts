@@ -21,10 +21,7 @@ export const serverAppsAtom = atom<IAppDetail[]>([])
 export const uiSelectAppsDialogOpenAtom = atom(false)
 
 // todo: avoid persist apps
-export const appsPersistedAtom = atomWithStorage<IAppDetail[]>(
-  "conv.apps.list",
-  [],
-)
+export const appsPersistedAtom = atomWithStorage<IAppDetail[]>("apps.list", [])
 
 // todo: avoid persist the cur app
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
@@ -41,6 +38,18 @@ export const stopGeneratingAtom = atom(false)
 // derived
 //////////////////////////////
 
+export const replaceAppAtom = atom(
+  null,
+  (get, set, fromAppId: string, toApp: IAppDetail) => {
+    set(appsPersistedAtom, (prevApps) =>
+      produce(prevApps, (prevApps) => {
+        const index = prevApps.findIndex((a) => a.id === fromAppId)
+        prevApps[index] = { ...toApp, id: getNewId() }
+      }),
+    )
+  },
+)
+
 export const forkAppAtom = atom(null, (get, set, forkFromId: string) => {
   set(appsPersistedAtom, (prevApps) =>
     produce(prevApps, (prevApps) => {
@@ -52,7 +61,7 @@ export const forkAppAtom = atom(null, (get, set, forkFromId: string) => {
 })
 
 export const pushAppAtom = atom(null, (get, set, app: IAppDetail) => {
-  set(appsPersistedAtom, (prev) => [...prev, app])
+  set(appsPersistedAtom, (prev) => [...prev, { ...app, id: getNewId() }])
 })
 
 export const delAppAtom = atom(null, (get, set, id: string) => {

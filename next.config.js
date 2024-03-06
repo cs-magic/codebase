@@ -59,6 +59,17 @@ const config = {
   },
 
   tsconfigPath: "tsconfig.json",
+
+  // ref: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirects-in-nextconfigjs
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/tt",
+        permanent: false,
+      },
+    ]
+  },
 }
 
 export default config

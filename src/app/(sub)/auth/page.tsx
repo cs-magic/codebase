@@ -25,10 +25,11 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (!ok) return
+    console.log("-- redirecting to home page")
     router.push("/")
   }, [ok])
 
-  console.log("[auth]: ", JSON.stringify(session))
+  console.log("[auth]: ", { sessionStatus: session.status, ok })
 
   // avoid screen blink
   if (ok) return null
