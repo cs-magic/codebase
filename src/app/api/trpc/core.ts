@@ -57,8 +57,9 @@ export const coreRouter = createTRPCRouter({
     }),
   ),
 
-  listConv: protectedProcedure.query(() =>
+  listConv: protectedProcedure.query(({ ctx }) =>
     db.conv.findMany({
+      where: { fromUserId: ctx.user.id },
       orderBy: { updatedAt: "desc" },
       ...convSummarySchema,
     }),
@@ -66,9 +67,12 @@ export const coreRouter = createTRPCRouter({
 
   getConv: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input }) =>
+    .query(async ({ input, ctx }) =>
       db.conv.findUniqueOrThrow({
-        where: input,
+        where: {
+          id: input.id,
+          fromUserId: ctx.user.id,
+        },
         ...convDetailSchema,
       }),
     ),
@@ -100,7 +104,14 @@ export const coreRouter = createTRPCRouter({
 
   delConv: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .mutation(({ ctx, input }) => db.conv.delete({ where: input })),
+    .mutation(({ ctx, input }) =>
+      db.conv.delete({
+        where: {
+          id: input.id,
+          fromUserId: ctx.user.id,
+        },
+      }),
+    ),
 
   delAllConvs: protectedProcedure.mutation(({ ctx }) =>
     db.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
