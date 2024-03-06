@@ -91,13 +91,12 @@ export function useConvQueryOnEnterV2() {
           // 重置以拿到最新的数据
           void utils.core.getConv.invalidate()
 
-          router.push(`/tt/${conv!.id}?r=${requestIdNew}`)
-
           console.log(
-            ansiColors.red(
-              `[useConvQuery] req-id: ${reqId} --> ${requestIdNew} `,
+            ansiColors.blue(
+              `router push --> /tt/${conv!.id}?r=${requestIdNew}`,
             ),
           )
+          router.push(`/tt/${conv!.id}?r=${requestIdNew}`)
         },
         onError: (err) => {
           console.error(err)

@@ -1,5 +1,6 @@
 "use client"
 
+import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef } from "react"
 import * as React from "react"
@@ -27,7 +28,10 @@ const ConvRequestsSlider = React.forwardRef<
   const router = useRouter()
   useEffect(() => {
     const request = requests[current]
-    if (request) router.replace(`?r=${request.id}`)
+    if (request) {
+      console.log(ansiColors.blue(`router replace --> ?r=${request.id}`))
+      router.replace(`?r=${request.id}`)
+    }
   }, [current])
 
   return (

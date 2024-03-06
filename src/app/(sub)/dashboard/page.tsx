@@ -1,4 +1,5 @@
 "use client"
+import ansiColors from "ansi-colors"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -29,7 +30,10 @@ export default function DashboardPage() {
 
   const router = useRouter()
   useEffect(() => {
-    if (session.status === "unauthenticated") return router.push("/")
+    if (session.status === "unauthenticated") {
+      console.log(ansiColors.blue(`router push --> /`))
+      return router.push("/")
+    }
   }, [session.status])
 
   const updateProfile = useUserUpdateProfile()

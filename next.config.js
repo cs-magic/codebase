@@ -6,7 +6,7 @@ await import("./src/env.js")
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
+  reactStrictMode: false,
 
   distDir: process.env.DIST ?? ".next",
 
@@ -57,8 +57,6 @@ const config = {
       // ["@swc-jotai/react-refresh", {}],
     ],
   },
-
-  tsconfigPath: "tsconfig.json",
 
   // ref: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirects-in-nextconfigjs
   async redirects() {

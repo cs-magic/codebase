@@ -3,6 +3,7 @@
 import { AuthContainer } from "@/components/auth-container"
 
 import { BrandingTitle } from "@/components/branding-title"
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
@@ -25,7 +26,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (!ok) return
-    console.log("-- redirecting to home page")
+    console.log(ansiColors.red("router push --> /"))
     router.push("/")
   }, [ok])
 

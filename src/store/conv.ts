@@ -7,8 +7,7 @@ import {
 } from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
-import { ISSERequest } from "../../packages/common/lib/sse/schema"
-import { IContext, IMessageInChat } from "../schema/message"
+import { IContext } from "../schema/message"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 
 //////////////////////////////

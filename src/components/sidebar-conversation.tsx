@@ -4,6 +4,7 @@ import { convIdAtom } from "@/store/conv"
 import { useAtom } from "jotai"
 import { MoreHorizontal, PenIcon, TrashIcon } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { InputWithEnter } from "../../packages/common/components/input"
@@ -27,6 +28,8 @@ export const SidebarConversationItem = ({
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()
 
+  const [renaming, setRenaming] = useState(false)
+
   return (
     <Link
       href={`/tt/${conv.id}`}
@@ -36,24 +39,24 @@ export const SidebarConversationItem = ({
         convId === conv.id && "bg-accent/50",
       )}
     >
-      {/*{convId === conv.id ? (*/}
-      <InputWithEnter
-        placeholder={"Untitled"}
-        defaultValue={conv.title ?? ""}
-        className={cn(
-          "bg-transparent border-none focus-visible:ring-0",
-          convId !== conv.id && "cursor-pointer",
-        )}
-        onEnter={(title) => {
-          updateConv.mutate({
-            where: { id: conv.id },
-            data: { title },
-          })
-        }}
-      />
-      {/*) : (*/}
-      {/*  <span>{conv.title ?? "Untitled"}</span>*/}
-      {/*)}*/}
+      {renaming ? (
+        <InputWithEnter
+          placeholder={"Untitled"}
+          defaultValue={conv.title ?? ""}
+          className={cn(
+            "bg-transparent border-none focus-visible:ring-0",
+            convId !== conv.id && "cursor-pointer",
+          )}
+          onEnter={(title) => {
+            updateConv.mutate({
+              where: { id: conv.id },
+              data: { title },
+            })
+          }}
+        />
+      ) : (
+        <span className={"grow"}>{conv.title ?? "Untitled"}</span>
+      )}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -65,6 +68,16 @@ export const SidebarConversationItem = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent>
+          <DropdownMenuItem
+            className={"gap-2"}
+            onClick={(event) => {
+              event.preventDefault()
+              setRenaming(true)
+            }}
+          >
+            <PenIcon className={"w-4 h-4"} /> 重命名
+          </DropdownMenuItem>
+
           <DropdownMenuItem
             className={"gap-2"}
             onClick={(event) => {

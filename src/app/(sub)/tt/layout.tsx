@@ -56,6 +56,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   // 5. 当离开会话的时候，置空
   useEffect(() => {
     return () => {
+      console.log(ansiColors.red("clear conv since leaving"))
       setConv(null)
     }
   }, [])

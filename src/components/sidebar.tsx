@@ -1,4 +1,5 @@
 "use client"
+import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
@@ -25,6 +26,7 @@ export const Sidebar = () => {
           const data = await addConversation()
           setRequestId(null)
           // 路由跳转，并且避免再拿数据
+          console.log(ansiColors.blue(`router push --> /tt/${data.id}`))
           router.push(`/tt/${data.id}`) // 异步
         }}
       >
