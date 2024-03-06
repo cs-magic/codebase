@@ -18,6 +18,7 @@ export const ConvAppMessage = ({
     <div className={"w-full flex gap-2 p-2 sm:p-4 hover:bg-accent/50"}>
       <Avatar className={"shrink-0"}>
         <AvatarImage
+          fetchPriority={"high"}
           src={m.role === "user" ? userAvatar : logo ?? DEFAULT_AVATAR}
         />
       </Avatar>

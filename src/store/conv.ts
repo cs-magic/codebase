@@ -62,12 +62,6 @@ export const requestAtom = atom((get) =>
   ),
 )
 
-export const convAppsAtom = atom((get) => {
-  const request = get(requestAtom)
-  if (request) return request.responses.map((r) => r.app)
-  return get(convDetailFromServerAtom)?.apps ?? []
-})
-
 export const commonContextAtom = atom<IContext>(
   (get) => get(requestAtom)?.context ?? [],
 )

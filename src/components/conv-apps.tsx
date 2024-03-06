@@ -5,16 +5,19 @@ import {
   appsPersistedAtom,
   stopGeneratingAtom,
 } from "@/store/app"
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
 import { cn } from "../../packages/common/lib/utils"
+import { commonContextAtom } from "../store/conv"
 import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [gridCols] = useAtom(appsGridColsAtom)
 
-  // console.log({ persistedApps })
+  const [commonContext] = useAtom(commonContextAtom)
+  console.log(ansiColors.bgRed.white("commonContext: "), commonContext)
 
   return (
     <div
@@ -32,7 +35,7 @@ export const ConvApps = () => {
         // 同一个app-id是否可以多个呢？请求应该要额外小心处理！
         (app, index) => (
           <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>
-            <ConvApp app={app} />
+            <ConvApp app={app} commonContext={commonContext} />
           </ScopeProvider>
         ),
       )}

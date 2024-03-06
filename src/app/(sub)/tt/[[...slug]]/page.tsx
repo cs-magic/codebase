@@ -8,7 +8,7 @@ import {
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { api } from "../../../../../packages/common/lib/trpc/react"
 
 import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
@@ -30,6 +30,7 @@ export default function ConvPage({
   const router = useRouter()
   const id = slug ? slug[0] : slug
   const reqIdFromUrl = useSearchParams().get("r")
+  const [loaded, setLoaded] = useState(false)
 
   // 首页
   useEffect(() => {
@@ -68,6 +69,8 @@ export default function ConvPage({
       !convFromServer || convFromServer.currentRequestId !== requestId
 
     if (skip) return console.log(`setting conv since fetched (skip=${skip})`)
+
+    setLoaded(true)
 
     console.log(ansiColors.red(`setting conv since fetched (skip=${skip}): `), {
       convId,
@@ -120,6 +123,8 @@ export default function ConvPage({
   useEffect(() => {
     if (!convId) setRequestId(null)
   }, [convId])
+
+  // if (!loaded) return null
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

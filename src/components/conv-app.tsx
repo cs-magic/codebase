@@ -4,14 +4,19 @@ import { useAtom } from "jotai"
 import { cn } from "../../packages/common/lib/utils"
 import { useConvSSE } from "../hooks/use-conv-sse"
 import { IAppDetail } from "../schema/app.detail"
-import { RoleType } from "../schema/message"
+import { IContext, RoleType } from "../schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
-import { commonContextAtom, requestAtom } from "../store/conv"
+import { requestAtom } from "../store/conv"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
-export const ConvApp = ({ app }: { app: IAppDetail }) => {
-  const [commonContext] = useAtom(commonContextAtom)
+export const ConvApp = ({
+  app,
+  commonContext,
+}: {
+  app: IAppDetail
+  commonContext: IContext
+}) => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppId] = useAtom(appIdPersistedAtom)
   const [request] = useAtom(requestAtom)
