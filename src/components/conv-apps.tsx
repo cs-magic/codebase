@@ -17,7 +17,7 @@ export const ConvApps = () => {
   const [gridCols] = useAtom(appsGridColsAtom)
 
   const [commonContext] = useAtom(commonContextAtom)
-  console.log(ansiColors.bgRed.white("commonContext: "), commonContext)
+  // console.log(ansiColors.bgRed.white("commonContext: "), commonContext)
 
   return (
     <div

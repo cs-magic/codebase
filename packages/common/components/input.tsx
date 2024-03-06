@@ -10,6 +10,7 @@ const InputWithEnter = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, onKeyDown, onBlur, onEnter, ...props }, ref) => {
     return (
       <input
+        ref={ref}
         type={type}
         className={cn(
           // -- shadcn
@@ -36,7 +37,6 @@ const InputWithEnter = React.forwardRef<HTMLInputElement, InputProps>(
           }
           if (onKeyDown) onKeyDown(event)
         }}
-        ref={ref}
         {...props}
       />
     )
