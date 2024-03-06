@@ -1,4 +1,4 @@
-import { IAppInDB } from "@/schema/app"
+import { IAppDetail } from "@/schema/app"
 import { convDetailFromServerAtom, requestAtom } from "@/store/conv"
 import { atom, createStore } from "jotai"
 import { atomWithStorage } from "jotai/utils"
@@ -13,7 +13,7 @@ import { uiScreenAtom } from "../../packages/common/store/ui"
 /**
  * apps queried from server, and then be used crossing components
  */
-export const serverAppsAtom = atom<IAppInDB[]>([])
+export const serverAppsAtom = atom<IAppDetail[]>([])
 
 /**
  * 用户选择app的弹窗，允许多个地方触发
@@ -21,7 +21,7 @@ export const serverAppsAtom = atom<IAppInDB[]>([])
 export const uiSelectAppsDialogOpenAtom = atom(false)
 
 // todo: avoid persist apps
-export const appsPersistedAtom = atomWithStorage<IAppInDB[]>(
+export const appsPersistedAtom = atomWithStorage<IAppDetail[]>(
   "conv.apps.list",
   [],
 )
@@ -46,7 +46,7 @@ export const stopGeneratingAtom = atom(false)
 // derived
 //////////////////////////////
 
-export const addAppAtom = atom(null, (get, set, app: IAppInDB) => {
+export const addAppAtom = atom(null, (get, set, app: IAppDetail) => {
   set(appsPersistedAtom, (p) => [
     ...p,
     { ...app, id: getNewId() }, // new id

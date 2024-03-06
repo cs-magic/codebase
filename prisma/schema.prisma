@@ -244,8 +244,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  queryConversations Conv[]
-  queryConfigs       App[]
+  convs Conv[]
+  apps  App[]
 }
 
 model VerificationToken {

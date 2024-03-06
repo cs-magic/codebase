@@ -1,6 +1,6 @@
 "use client"
 
-import { IAppInChat } from "@/schema/app"
+import { IAppDetail } from "@/schema/app"
 import { useAtom } from "jotai"
 import { cn } from "../../packages/common/lib/utils"
 import { useConvSSE } from "../hooks/use-conv-sse"
@@ -10,7 +10,7 @@ import { commonContextAtom, requestAtom } from "../store/conv"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
-export const ConvApp = ({ app }: { app: IAppInChat }) => {
+export const ConvApp = ({ app }: { app: IAppDetail }) => {
   useConvSSE(app.id)
 
   const [commonContext] = useAtom(commonContextAtom)

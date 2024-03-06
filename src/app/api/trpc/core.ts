@@ -1,22 +1,30 @@
+import { z } from "zod"
+import { db } from "../../../../packages/common/lib/db"
 import {
   convProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "../../../../packages/common/lib/trpc/trpc"
-import { db } from "../../../../packages/common/lib/db"
-import { z } from "zod"
-import { modelViewSchema } from "../../../schema/model"
+import { appDetailSchema, createAppSchema } from "../../../schema/app"
 import {
   convDetailSchema,
   convSummarySchema,
   requestSchema,
 } from "../../../schema/conv"
-import { appInDBSchema, createAppSchema } from "../../../schema/app"
 import { llmMessageSchema } from "../../../schema/message"
+import { modelViewSchema } from "../../../schema/model"
+import { userDetailSchema } from "../../../schema/user.detail"
 import { triggerLLM } from "../llm/llm-triggle"
 
 export const coreRouter = createTRPCRouter({
+  getSelf: protectedProcedure.query(async ({ ctx }) =>
+    db.user.findUniqueOrThrow({
+      where: { id: ctx.user.id },
+      ...userDetailSchema,
+    }),
+  ),
+
   listModels: publicProcedure.query(() =>
     db.model.findMany({
       ...modelViewSchema,
@@ -30,7 +38,7 @@ export const coreRouter = createTRPCRouter({
   listApps: publicProcedure.query(() =>
     db.app.findMany({
       where: { granted: true },
-      ...appInDBSchema,
+      ...appDetailSchema,
       orderBy: {
         // todo: by hot or so
         updatedAt: "desc",

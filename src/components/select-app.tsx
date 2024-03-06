@@ -1,7 +1,7 @@
 import { buttonVariants } from "../../packages/common/components/ui/button"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 import { cn } from "../../packages/common/lib/utils"
-import { IAppInDB } from "@/schema/app"
+import { IAppDetail } from "@/schema/app"
 import { useAtom } from "jotai"
 
 import {
@@ -16,7 +16,7 @@ export const SelectApp = ({
   app,
   type,
 }: {
-  app: IAppInDB
+  app: IAppDetail
   type: "toAdd" | "toDel"
 }) => {
   const [persistedApps] = useAtom(appsPersistedAtom)

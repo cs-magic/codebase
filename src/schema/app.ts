@@ -1,18 +1,19 @@
 import { modelViewSchema } from "@/schema/model"
 import { Prisma } from "@prisma/client"
-import { userListViewSchema } from "@/schema/user"
 import { z } from "zod"
+import { userListViewSchema } from "./user.base"
 
-export const appInDBSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
+export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   include: {
     fromUser: userListViewSchema,
     model: modelViewSchema, // model虽然在系统里已经事先获取了一份，但可能不全
   },
 })
-export type IAppInDB = Prisma.AppGetPayload<typeof appInDBSchema>
+export type IAppDetail = Prisma.AppGetPayload<typeof appDetailSchema>
 
-export type IAppInChat = IAppInDB
-
+/**
+ * todo: use from app model
+ */
 export const createAppSchema = z.object({
   id: z.string(),
   modelName: z.string(),
@@ -20,3 +21,4 @@ export const createAppSchema = z.object({
   systemPrompt: z.string().nullable(),
   temperature: z.number().nullable(),
 })
+export type ICreateApp = z.infer<typeof createAppSchema>

@@ -1,4 +1,4 @@
-import { appInDBSchema } from "@/schema/app"
+import { appDetailSchema } from "@/schema/app"
 import { Prisma, Response } from "@prisma/client"
 
 export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
@@ -12,7 +12,7 @@ export type IConvSummary = Prisma.ConvGetPayload<typeof convSummarySchema>
 
 export const responseSchema = Prisma.validator<Prisma.ResponseDefaultArgs>()({
   include: {
-    app: appInDBSchema,
+    app: appDetailSchema,
   },
 })
 export type IResponse = Prisma.ResponseGetPayload<typeof responseSchema>
@@ -34,7 +34,7 @@ export type IRequest = Prisma.RequestGetPayload<typeof requestSchema>
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
     apps: {
-      ...appInDBSchema,
+      ...appDetailSchema,
       orderBy: {
         createdAt: "asc",
       },
