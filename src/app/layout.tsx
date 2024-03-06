@@ -19,7 +19,7 @@ import JotaiProvider from "../../packages/common/components/jotai.provider"
 import { ReturnHomeAlertDialog } from "@/components/_return-home"
 import { CheckAuthAlertDialog } from "@/components/auth-checker"
 import { SystemSocketStatus } from "@/components/system-socket-status"
-import LLMProvider from "../providers/app"
+import LLMProvider from "../components/apps.provider"
 
 const inter = Inter({
   subsets: ["latin"],

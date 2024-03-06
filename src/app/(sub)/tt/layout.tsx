@@ -19,16 +19,14 @@ import { userPromptAtom } from "../../../../packages/common/store/user"
 export default function ConvLayout({ children }: PropsWithChildren) {
   const { data: convsInDB } = api.core.listConv.useQuery()
 
-  const [convs, setConvs] = useAtom(convsFromServerAtom)
+  const [, setConvs] = useAtom(convsFromServerAtom)
   const [conv, setConv] = useAtom(convDetailFromServerAtom)
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [query] = useAtom(userPromptAtom)
-  const [convApps] = useAtom(convAppsAtom)
   const [request] = useAtom(requestAtom)
   const [requestId] = useAtom(requestIdAtom)
 
-  const utils = api.useUtils()
   const queryInChat = useConvQuery()
 
   // 1. 获取列表数据

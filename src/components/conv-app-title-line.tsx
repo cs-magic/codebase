@@ -5,6 +5,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectSeparator,
   SelectTrigger,
 } from "../../packages/common/components/ui/select"
 import { api } from "../../packages/common/lib/trpc/react"
@@ -35,6 +36,9 @@ export const ConvAppTitleLine = ({ app }: { app: IAppDetail }) => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>官方 App</SelectLabel>
+
+            <SelectSeparator />
+
             {!apps ? (
               <div className={"animate-spin h-8 w-full"} />
             ) : (

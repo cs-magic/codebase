@@ -2,8 +2,8 @@ import {
   appIdPersistedAtom,
   appsPersistedAtom,
   delAppAtom,
+  forkAppAtom,
   stopGeneratingAtom,
-  uiSelectAppsDialogOpenAtom,
 } from "@/store/app"
 import { useAtom } from "jotai"
 import {
@@ -21,10 +21,10 @@ import { checkRespondingAtom } from "../store/conv"
 import { ConvAppTitleLine } from "./conv-app-title-line"
 
 export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
+  const [, forkApp] = useAtom(forkAppAtom)
   const [, delApp] = useAtom(delAppAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
-  const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
   const [checkResponding] = useAtom(checkRespondingAtom)
   const [, stopGenerating] = useAtom(stopGeneratingAtom)
 
@@ -74,7 +74,9 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
 
       <IconContainer
         tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          forkApp(app.id)
+        }}
       >
         <PlusCircleIcon />
       </IconContainer>

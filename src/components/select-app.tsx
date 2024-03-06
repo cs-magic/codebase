@@ -4,10 +4,11 @@ import { cn } from "../../packages/common/lib/utils"
 import { useAtom } from "jotai"
 
 import {
-  addAppAtom,
+  forkAppAtom,
   delAppAtom,
   appsPersistedAtom,
   uiMaxAppsAtom,
+  pushAppAtom,
 } from "@/store/app"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { IAppDetail } from "../schema/app.detail"
@@ -20,12 +21,11 @@ export const SelectApp = ({
   type: "toAdd" | "toDel"
 }) => {
   const [persistedApps] = useAtom(appsPersistedAtom)
-  const [, addApp] = useAtom(addAppAtom)
+  const [, pushApp] = useAtom(pushAppAtom)
   const [, delApp] = useAtom(delAppAtom)
-
   const [maxToAdd] = useAtom(uiMaxAppsAtom)
-  const disabled = type === "toAdd" && persistedApps.length >= maxToAdd
 
+  const disabled = type === "toAdd" && persistedApps.length >= maxToAdd
   const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
 
   return (
@@ -43,7 +43,7 @@ export const SelectApp = ({
         }
         onClick={(event) => {
           if (type === "toDel") void delApp(app.id)
-          else void addApp(app)
+          else void pushApp(app)
         }}
       >
         <Icon />

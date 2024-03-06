@@ -1,8 +1,12 @@
 "use client"
+import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { api } from "../../packages/common/lib/trpc/react"
-import { appsPersistedAtom, serverAppsAtom } from "../store/app"
-import { useAtom } from "jotai"
+import {
+  appsPersistedAtom,
+  serverAppsAtom,
+  uiSelectAppsDialogOpenAtom,
+} from "../store/app"
 
 /**
  * 用户初始化模型列表，首页和会话页全局需要
@@ -12,13 +16,14 @@ import { useAtom } from "jotai"
 export default function AppsProvider({ children }: PropsWithChildren) {
   const { data: apps } = api.core.listApps.useQuery()
   const [, setAllApps] = useAtom(serverAppsAtom)
-  const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
+  const [persistedApps] = useAtom(appsPersistedAtom)
+  const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
   useEffect(() => {
-    if (apps) setAllApps(apps)
+    if (!apps) return
 
-    if ((!persistedApps || persistedApps.length < 1) && apps)
-      setPersistedApps(apps.filter((a) => a.id === "gpt-4"))
+    setAllApps(apps)
+    if (!persistedApps?.length) setOpen(true)
   }, [apps])
 
   return <>{children}</>

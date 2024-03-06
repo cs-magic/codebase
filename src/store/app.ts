@@ -1,10 +1,10 @@
-import { convDetailFromServerAtom, requestAtom } from "@/store/conv"
-import { atom, createStore } from "jotai"
+import { produce } from "immer"
+import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BEST_VIEWPOINT } from "../../packages/common/config/system"
 import { getNewId } from "../../packages/common/lib/utils"
 import { uiScreenAtom } from "../../packages/common/store/ui"
-import { IAppDetail } from "../schema/app.detail"
+import { IAppDetail } from "../schema/app.detail" //////////////////////////////
 
 //////////////////////////////
 // base
@@ -26,11 +26,6 @@ export const appsPersistedAtom = atomWithStorage<IAppDetail[]>(
   [],
 )
 
-const store = createStore()
-store.sub(appsPersistedAtom, () => {
-  console.log({ appsPersistedAtom })
-})
-
 // todo: avoid persist the cur app
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
 
@@ -46,11 +41,18 @@ export const stopGeneratingAtom = atom(false)
 // derived
 //////////////////////////////
 
-export const addAppAtom = atom(null, (get, set, app: IAppDetail) => {
-  set(appsPersistedAtom, (p) => [
-    ...p,
-    { ...app, id: getNewId() }, // new id
-  ])
+export const forkAppAtom = atom(null, (get, set, forkFromId: string) => {
+  set(appsPersistedAtom, (prevApps) =>
+    produce(prevApps, (prevApps) => {
+      const index = prevApps.findIndex((a) => a.id === forkFromId)
+      const newApp = { ...prevApps[index]!, id: getNewId() }
+      prevApps.splice(index, 0, newApp)
+    }),
+  )
+})
+
+export const pushAppAtom = atom(null, (get, set, app: IAppDetail) => {
+  set(appsPersistedAtom, (prev) => [...prev, app])
 })
 
 export const delAppAtom = atom(null, (get, set, id: string) => {

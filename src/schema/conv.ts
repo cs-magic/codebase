@@ -21,11 +21,12 @@ export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
   include: {
     responses: {
       ...responseSchema,
-      orderBy: {
-        app: {
-          createdAt: "asc",
-        },
-      },
+      // 这个要加，否则回答问题的时候会乱序
+      // orderBy: {
+      //   app: {
+      //     createdAt: "asc",
+      //   },
+      // },
     },
   },
 })
@@ -35,9 +36,10 @@ export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
     apps: {
       ...appDetailSchema,
-      orderBy: {
-        createdAt: "asc",
-      },
+      // 不要加这个，否则本地初始化后会乱序
+      // orderBy: {
+      //   createdAt: "asc",
+      // },
     },
     requests: {
       ...requestSchema,
