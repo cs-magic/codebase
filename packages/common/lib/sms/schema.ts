@@ -7,7 +7,6 @@ import { validatePhone } from "../utils"
  */
 export const sendSmsSchema = z.object({
   phone: z.string().refine(validatePhone, "手机号格式不合法"),
-  name: z.string().refine((s) => s.length > 0, "至少要有一个字"),
 })
 export type ISendSms = z.infer<typeof sendSmsSchema>
 
@@ -23,9 +22,19 @@ export type IProviderSendSms = (
 export const smsSignInSchema = sendSmsSchema.and(
   z.object({
     code: z.string().refine((s) => /\d{6}/.test(s), "验证码格式不合法"),
+    name: z.string().optional(),
+    image: z.string().optional(),
   }),
 )
 export type ISmsSignIn = z.infer<typeof smsSignInSchema>
+
+export const profileUpdateSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  image: z.string(),
+})
+export type IProfileUpdate = z.infer<typeof profileUpdateSchema>
+
 /**
  * sms basic
  */

@@ -6,7 +6,7 @@ import {
 } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { db } from "./db"
-import { SmsProvider } from "./sms/next-auth.provider"
+import { SmsProvider, ProfileUpdateProvider } from "./sms/next-auth.provider"
 import WechatProvider from "./wechat/auth/provider"
 import { env } from "@/env"
 
@@ -80,6 +80,8 @@ export const authOptions: NextAuthOptions = {
     }),
 
     SmsProvider,
+
+    ProfileUpdateProvider,
 
     // DiscordProvider({
     //   clientId: env.DISCORD_CLIENT_ID,

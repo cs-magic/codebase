@@ -21,17 +21,19 @@ export const smsCodeExpireSecondsAtom = atom(10 * 60)
 /**
  * send code
  */
-export const smsNameAtom = atom("")
 export const smsPhoneAtom = atom("")
+export const smsNameAtom = atom<string>("")
+export const smsImageAtom = atom("")
 
 export const smsSendCodePayloadAtom = atom<ISendSms>((get) => ({
   phone: get(smsPhoneAtom),
-  name: get(smsNameAtom),
 }))
 export const smsCodeAtom = atom("")
 export const smsSignInPayloadAtom = atom<ISmsSignIn>((get) => ({
   ...get(smsSendCodePayloadAtom),
   code: get(smsCodeAtom),
+  name: get(smsNameAtom),
+  image: get(smsImageAtom),
 }))
 
 export const smsSentOKAtom = atom<Nullable>(null)
@@ -40,5 +42,3 @@ export const smsDowntimeAtom = atom(0)
 /**
  * sign in
  */
-
-export const smsSignOKAtom = atom<Nullable>(null)

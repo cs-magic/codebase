@@ -1,12 +1,14 @@
 "use client"
 
-import {
-  smsDowntimeAtom,
-  smsNameAtom,
-  smsPhoneAtom,
-} from "../../packages/common/lib/sms/store"
-import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useAtom } from "jotai"
+import { signIn } from "next-auth/react"
+import { ComponentType } from "react"
+import { useForm } from "react-hook-form"
+
+import { ButtonWithLoading } from "../../packages/common/components/button-with-loading"
+import { SeparatorContainer } from "../../packages/common/components/separator-container"
+import { Button } from "../../packages/common/components/ui/button"
 import {
   Form,
   FormControl,
@@ -15,26 +17,22 @@ import {
   FormLabel,
   FormMessage,
 } from "../../packages/common/components/ui/form"
-import { Label } from "../../packages/common/components/ui/label"
-import { Button } from "../../packages/common/components/ui/button"
 import { Input } from "../../packages/common/components/ui/input"
-import { ISendSms, sendSmsSchema } from "../../packages/common/lib/sms/schema"
-import { cn } from "../../packages/common/lib/utils"
+import { Label } from "../../packages/common/components/ui/label"
 import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { signIn } from "next-auth/react"
-import { WECHAT_PROVIDER_ID } from "../../packages/common/lib/wechat/auth/config"
-import { useAtom } from "jotai"
-
-import { ButtonWithLoading } from "../../packages/common/components/button-with-loading"
-import { SeparatorContainer } from "../../packages/common/components/separator-container"
-import { ComponentType } from "react"
 import { useSmsSendCode } from "../../packages/common/lib/sms/hooks/use-sms-send-code"
+import { ISendSms, sendSmsSchema } from "../../packages/common/lib/sms/schema"
+import {
+  smsDowntimeAtom,
+  smsPhoneAtom,
+} from "../../packages/common/lib/sms/store"
+import { cn } from "../../packages/common/lib/utils"
+import { WECHAT_PROVIDER_ID } from "../../packages/common/lib/wechat/auth/config"
 
 export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
   const { isWechat } = useBrowserEnvironment()
   const [downtime] = useAtom(smsDowntimeAtom)
   const [, setPhone] = useAtom(smsPhoneAtom)
-  const [, setName] = useAtom(smsNameAtom)
   const sendCode = useSmsSendCode()
 
   const form = useForm<ISendSms>({
@@ -42,7 +40,6 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
     // 如果不加的话，会导致 undefined --> value warning
     defaultValues: {
       phone: "",
-      name: "",
     },
   })
 
@@ -77,27 +74,6 @@ export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
             <SeparatorContainer>或者</SeparatorContainer>
           </>
         )}
-
-        <FormField
-          name={"name"}
-          control={form.control}
-          render={({ field }) => (
-            <FormItem className={"w-full"}>
-              <FormLabel>请输入阁下的昵称</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  onChange={(event) => {
-                    field.onChange(event)
-                    setName(event.currentTarget.value)
-                  }}
-                  autoFocus
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           name={"phone"}

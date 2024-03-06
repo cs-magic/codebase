@@ -38,6 +38,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
+
+    OSS_ACCESS_KEY_ID: z.string(),
+    OSS_ACCESS_KEY_SECRET: z.string(),
   },
 
   /**
@@ -71,6 +74,8 @@ export const env = createEnv({
     PUSHER_APP_ID: process.env.PUSHER_APP_ID,
     NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
     PUSHER_APP_SECRET: process.env.PUSHER_APP_SECRET,
+    OSS_ACCESS_KEY_ID: process.env.OSS_ACCESS_KEY_ID,
+    OSS_ACCESS_KEY_SECRET: process.env.OSS_ACCESS_KEY_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -1,13 +1,12 @@
 import { useAtom } from "jotai"
-import { uiLoadingAlertDialogAtom } from "../../../store/ui"
-import { smsSignInPayloadAtom, smsSignOKAtom } from "../store"
 import { signIn } from "next-auth/react"
-import { SMS_PROVIDER_ID } from "../const"
 import { toast } from "sonner"
+import { uiLoadingAlertDialogAtom } from "../../../store/ui"
+import { SMS_PROVIDER_ID } from "../const"
+import { smsSignInPayloadAtom } from "../store"
 
 export const useSmsSignIn = () => {
   const [, setLoading] = useAtom(uiLoadingAlertDialogAtom)
-  const [, setSmsSignInOK] = useAtom(smsSignOKAtom)
   const [data] = useAtom(smsSignInPayloadAtom)
 
   return async () => {
@@ -18,11 +17,9 @@ export const useSmsSignIn = () => {
       ...data,
       redirect: false,
     })
+    console.log("[sms] sign in result: ", res)
     const ok = !!res?.ok
-    setSmsSignInOK(ok)
-    if (ok) {
-      toast.success("登录成功！")
-    } else toast.error("登录失败！")
+    if (!ok) toast.error("验证失败！")
     setLoading(false)
   }
 }

@@ -1,12 +1,12 @@
 "use server"
 
+import { userDetailSchema } from "@/schema/user.detail"
 import { db } from "../../db"
 import { SMS_PROVIDER_ID } from "../const"
-import { IProviderSendSms, ISmsSignIn } from "../schema"
+import { IProfileUpdate, IProviderSendSms, ISmsSignIn } from "../schema"
 
 export const $sendSms = async (
   phone: string,
-  name: string,
   expireSeconds: number,
   sendApproach: IProviderSendSms,
 ) => {
@@ -36,7 +36,6 @@ export const $sendSms = async (
 
         user: {
           create: {
-            name,
             /**
              * jwt not need this session
              */
@@ -52,13 +51,6 @@ export const $sendSms = async (
       update: {
         access_token,
         expires_at,
-        user: {
-          update: {
-            data: {
-              name,
-            },
-          },
-        },
       },
     })
     console.log("[components] account: ", account)
@@ -67,7 +59,9 @@ export const $sendSms = async (
 }
 
 export const $smsSignIn = async (values: ISmsSignIn) => {
-  const { phone, code } = values
+  console.log("[sms] sign in with data: ", values)
+  const { phone, code, name, image } = values
+
   const account = await db.account.findUnique({
     where: {
       provider_providerAccountId: {
@@ -81,8 +75,14 @@ export const $smsSignIn = async (values: ISmsSignIn) => {
 
   if (!account) throw new Error("account not found")
 
-  const user = account.user
-
-  console.log("[components] signed in user: ", user)
-  return user
+  if (name && image) {
+    return await db.user.update({
+      where: { id: account.userId },
+      data: {
+        name,
+        image,
+      },
+    })
+  }
+  return account.user
 }

@@ -1,19 +1,16 @@
 import { useAtom } from "jotai"
-import { Label } from "../../packages/common/components/ui/label"
-import { AuthSmsInputDigits } from "./auth-sms-input-digits"
-import { AuthSmsResendCode } from "./auth-sms-resend-code"
-import { AuthSmsReinputPhone } from "./auth-sms-reinput-phone"
-import { smsCodeAtom, smsSignOKAtom } from "../../packages/common/lib/sms/store"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useSmsSignIn } from "../../packages/common/lib/sms/hooks/use-sms-sign-in"
 import { useKey } from "react-use"
+import { Label } from "../../packages/common/components/ui/label"
+import { useSmsSignIn } from "../../packages/common/lib/sms/hooks/use-sms-sign-in"
+import { smsCodeAtom } from "../../packages/common/lib/sms/store"
+import { AuthSmsInputDigits } from "./auth-sms-input-digits"
+import { AuthSmsReinputPhone } from "./auth-sms-reinput-phone"
+import { AuthSmsResendCode } from "./auth-sms-resend-code"
 
 export const SmsSignIn = () => {
-  const [signInOk] = useAtom(smsSignOKAtom)
   const [digits, setDigits] = useAtom(smsCodeAtom)
 
-  const router = useRouter()
   const smsSignIn = useSmsSignIn()
 
   // 监听数字输入
@@ -33,12 +30,6 @@ export const SmsSignIn = () => {
 
   // 监听回车键，清除所有已输入
   useKey("Backspace", () => setDigits(""))
-
-  // 登录成功后的跳转，todo: support callback
-  useEffect(() => {
-    if (signInOk !== true) return
-    router.push("/")
-  }, [signInOk])
 
   return (
     <div className={"flex flex-col gap-4 w-full items-center"}>
