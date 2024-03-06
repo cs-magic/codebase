@@ -1,7 +1,7 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { ISendSms, ISmsSignIn, SmsProviderType, SmsStage } from "./schema"
 import { Nullable } from "../../schema/base"
+import { ISendSms, ISmsSignIn, SmsProviderType, SmsStage } from "./schema"
 
 /**
  * general
@@ -16,7 +16,7 @@ export const smsCodeCountdownSecondsAtom = atomWithStorage(
   "sms.code.countdown",
   60,
 )
-export const smsCodeExpireMinutesAtom = atom(10)
+export const smsCodeExpireSecondsAtom = atom(10 * 60)
 
 /**
  * send code

@@ -17,8 +17,8 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
   const [isScreenOn] = useAtom(tvScreenOnAtom)
   const [isFullScreen, setFullScreen] = useAtom(tvFullScreenAtom)
 
-  const ref = useRef<HTMLDivElement>(null)
-  useFullscreen(ref, isFullScreen, {
+  const refFullScreen = useRef<HTMLDivElement>(null)
+  useFullscreen(refFullScreen, isFullScreen, {
     onClose: () => setFullScreen(false),
   })
 
@@ -55,12 +55,11 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
             {/*  不包含红色外框【目标】 */}
             <div
               className={cn("television-inner", isFullScreen && "!border-none")}
-              ref={ref}
             >
               {/*  电视机屏幕容器 */}
               <div className="television-screen-container ">
                 {/*  电视机外屏 */}
-                <div className="television-crt">
+                <div className="television-crt" ref={refFullScreen}>
                   {/*  电视机内屏 */}
                   <div className="television-screen ">
                     <div className="off"></div>
@@ -81,9 +80,11 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
                 </div>
               </div>
 
+              {/* 电视机侧部 */}
               <div className="television-lateral">
-                <div className="dial-container">
-                  <div className="dial channel-button" style={{}}>
+                <div className="dial-container ">
+                  {/* 频道旋钮*/}
+                  <div className="dial channel-button " style={{}}>
                     <div className="data-container">
                       {range(10).map((i) => (
                         <div key={i} className={"data"}>
@@ -95,7 +96,8 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
                     <div className="selector"></div>
                   </div>
 
-                  <div className="dial volume-button" style={{}}>
+                  {/*  音量旋钮 */}
+                  <div className="dial volume-button " style={{}}>
                     <div className="data-container">
                       {range(10).map((i) => (
                         <div key={i} className={"data"}>

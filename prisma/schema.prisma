@@ -28,7 +28,6 @@ datasource db {
 // Necessary for Next auth
 model Account {
   id                String  @id @default(nanoid(5))
-  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -39,7 +38,9 @@ model Account {
   scope             String?
   id_token          String? // @db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   @@unique([provider, providerAccountId])
 }

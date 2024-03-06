@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import {
-  smsCodeExpireMinutesAtom,
+  smsCodeExpireSecondsAtom,
   smsCodeCountdownSecondsAtom,
   smsDowntimeAtom,
   smsProviderTypeAtom,
@@ -16,21 +16,21 @@ import { toast } from "sonner"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)
-  const sendApproach =
-    smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
-
   const [, setLoading] = useAtom(uiLoadingAlertDialogAtom)
   const [, setSmsSentOk] = useAtom(smsSentOKAtom)
   const [, setSmsStage] = useAtom(smsStageAtom)
   const [smsDowntime, setSmsDowntime] = useAtom(smsDowntimeAtom)
   const [smsSendPayload] = useAtom(smsSendCodePayloadAtom)
   const [smsCountdownSeconds] = useAtom(smsCodeCountdownSecondsAtom)
-  const [smsExpireMinutes] = useAtom(smsCodeExpireMinutesAtom)
+  const [smsExpireSeconds] = useAtom(smsCodeExpireSecondsAtom)
+
+  const sendApproach =
+    smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
+  const { phone, name } = smsSendPayload
 
   return async () => {
-    const { phone, name } = smsSendPayload
     setLoading(true)
-    const ok = await $sendSms(phone, smsExpireMinutes, sendApproach) // 异步
+    const ok = await $sendSms(phone, name, smsExpireSeconds, sendApproach) // 异步
     setSmsSentOk(ok)
     setLoading(false)
 

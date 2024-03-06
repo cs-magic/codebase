@@ -2,11 +2,23 @@ import { z } from "zod"
 
 import { validatePhone } from "../utils"
 
+/**
+ * 用户短信发送在form里需要的信息
+ */
 export const sendSmsSchema = z.object({
   phone: z.string().refine(validatePhone, "手机号格式不合法"),
   name: z.string().refine((s) => s.length > 0, "至少要有一个字"),
 })
 export type ISendSms = z.infer<typeof sendSmsSchema>
+
+/**
+ * 调用短信服务商所需要的接口信息
+ */
+export type IProviderSendSms = (
+  phone: string,
+  code: string,
+  expireMinutes: number, //
+) => Promise<boolean>
 
 export const smsSignInSchema = sendSmsSchema.and(
   z.object({

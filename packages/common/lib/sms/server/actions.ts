@@ -1,21 +1,18 @@
 "use server"
 
-import { ISmsSignIn } from "../schema"
 import { db } from "../../db"
 import { SMS_PROVIDER_ID } from "../const"
+import { IProviderSendSms, ISmsSignIn } from "../schema"
 
 export const $sendSms = async (
   phone: string,
-  expire: number,
-  sendApproach: (
-    phone: string,
-    code: string,
-    expire: number,
-  ) => Promise<boolean>,
+  name: string,
+  expireSeconds: number,
+  sendApproach: IProviderSendSms,
 ) => {
   const code = Math.random().toString().slice(2, 8)
 
-  const ok = await sendApproach(phone, code, expire)
+  const ok = await sendApproach(phone, code, expireSeconds)
 
   if (ok) {
     // todo: link account
@@ -24,11 +21,9 @@ export const $sendSms = async (
       providerAccountId: phone,
       provider: SMS_PROVIDER_ID,
     }
-    const update = {
-      access_token: code,
-      // 10 m
-      expires_at: Date.now() / 10000 + 10 * 60,
-    }
+    const access_token = code
+    const expires_at = Date.now() / 1e3 + expireSeconds
+
     const account = await db.account.upsert({
       where: {
         provider_providerAccountId: id,
@@ -36,9 +31,12 @@ export const $sendSms = async (
       create: {
         ...id,
         type: "credentials",
-        ...update,
+        access_token,
+        expires_at,
+
         user: {
           create: {
+            name,
             /**
              * jwt not need this session
              */
@@ -51,7 +49,17 @@ export const $sendSms = async (
           },
         },
       },
-      update: update,
+      update: {
+        access_token,
+        expires_at,
+        user: {
+          update: {
+            data: {
+              name,
+            },
+          },
+        },
+      },
     })
     console.log("[components] account: ", account)
   }
