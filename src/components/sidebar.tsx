@@ -7,10 +7,12 @@ import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "../../packages/common/components/ui/button"
+import { devEnabledAtom } from "../../packages/common/store"
 import { SidebarConversationItem } from "./sidebar-conversation"
 
 export const Sidebar = () => {
   const [conversations] = useAtom(serverConvListFAtom)
+  const [devEnabled] = useAtom(devEnabledAtom)
 
   const router = useRouter()
   const addConversation = useAddConv()
@@ -32,7 +34,7 @@ export const Sidebar = () => {
         新建会话
       </Button>
 
-      {process.env.NODE_ENV !== "production" && (
+      {devEnabled && (
         <Button
           className={"w-full gap-2 my-2 shrink-0"}
           variant={"destructive"}

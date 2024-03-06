@@ -16,6 +16,7 @@ import {
 } from "../../packages/common/components/ui/select"
 import { useAtom } from "jotai"
 import { Label } from "../../packages/common/components/ui/label"
+import { Switch } from "../../packages/common/components/ui/switch"
 import {
   smsCodeCountdownSecondsAtom,
   smsProviderTypeAtom,
@@ -26,7 +27,7 @@ import { api } from "../../packages/common/lib/trpc/react"
 import { Button } from "../../packages/common/components/ui/button"
 import { Separator } from "../../packages/common/components/ui/separator"
 import { Input } from "../../packages/common/components/ui/input"
-import { llmDelayAtom } from "packages/common/store"
+import { devEnabledAtom, llmDelayAtom } from "packages/common/store"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
@@ -34,6 +35,7 @@ export const Devtool = () => {
     smsCodeCountdownSecondsAtom,
   )
   const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
+  const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
 
   const utils = api.useUtils()
 
@@ -46,6 +48,10 @@ export const Devtool = () => {
       </DialogTrigger>
 
       <DialogContent>
+        <Label>Dev</Label>
+        <Label>Devel Enabled: </Label>
+        <Switch checked={devEnabled} onCheckedChange={setDevEnabled} />
+
         <Label>SMS </Label>
 
         <Label>Provider Type</Label>

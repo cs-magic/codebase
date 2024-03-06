@@ -6,6 +6,7 @@ import { useAtom } from "jotai"
 
 import { cn } from "packages/common/lib/utils"
 import * as React from "react"
+import { devEnabledAtom } from "../../packages/common/store"
 import { useRequestSlider } from "../hooks/use-request-slider"
 
 const ConvRequestsSlider = React.forwardRef<
@@ -16,15 +17,18 @@ const ConvRequestsSlider = React.forwardRef<
   const [requests] = useAtom(requestsAtom)
 
   const { min, max, onChange, value } = useRequestSlider()
+  const [devEnabled] = useAtom(devEnabledAtom)
 
   return (
     <div className={"flex w-full flex-col gap-2"}>
-      <div className={"flex items-center gap-2"}>
-        <span className={"mr-2"}>
-          [{conv?.id} - {conv?.currentRequestId}]
-        </span>
-        {requests.map((r, i) => `[${i + 1}]${r.id}`).join(", ")}
-      </div>
+      {devEnabled && (
+        <div className={"flex items-center gap-2"}>
+          <span className={"mr-2"}>
+            [{conv?.id} - {conv?.currentRequestId}]
+          </span>
+          {requests.map((r, i) => `[${i + 1}]${r.id}`).join(", ")}
+        </div>
+      )}
 
       <div className={"w-full flex items-center gap-2 text-muted-foreground"}>
         <span className={"text-xs"}>时光机：</span>
