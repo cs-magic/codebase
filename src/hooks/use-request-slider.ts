@@ -1,3 +1,4 @@
+import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { api } from "../../packages/common/lib/trpc/react"
@@ -12,22 +13,20 @@ export const useRequestSlider = () => {
 
   const total = requests.length
   const router = useRouter()
-  const updateConv = api.core.updateConv.useMutation()
-
-  const [cur, setCur] = useState(currentIndex)
-
-  useEffect(() => {
-    console.log({ cur })
-    const currentRequest = requests[cur - 1]
-    if (!currentRequest) return
-    router.replace(`/tt/${convId}?r=${currentRequest.id}`)
-    // updateConv.mutate({ where: { id: convId }, data: { currentRequestId} })
-  }, [cur])
 
   return {
     value: currentIndex + 1,
     min: 1,
     max: total,
-    onChange: setCur,
+    onChange: (n: number) => {
+      const currentRequest = requests[n - 1]
+      if (!currentRequest) return
+      console.log(
+        ansiColors.blue(
+          `router replace --> /tt/${convId}?r=${currentRequest.id}`,
+        ),
+      )
+      router.replace(`/tt/${convId}?r=${currentRequest.id}`)
+    },
   }
 }

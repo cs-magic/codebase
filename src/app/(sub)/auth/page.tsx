@@ -26,7 +26,7 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (!ok) return
-    console.log(ansiColors.red("router push --> /"))
+    console.log(ansiColors.blue("router push --> /"))
     router.push("/")
   }, [ok])
 
