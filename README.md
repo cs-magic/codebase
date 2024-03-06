@@ -34,6 +34,13 @@
 # 阿里的库会有证书过期问题
 yarn config set "strict-ssl" false -g
 ```
+
+### [zod-prisma-types] 
+
+- zod 的版本有要求（不能太高）：`yarn add zod@3.21.1`，参考：https://github.com/chrishoermann/zod-prisma-types/issues/222
+- 之前在开发 lit-agent 项目的时候有 build bug，现在重新试了一下，又没了。。
+- 且用且看吧
+
 ### [NextJS] server action 在 dev 里可以放在 route 里，但 build 时会失败
 
 ### [DevOps] 控制台颜色

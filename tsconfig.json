@@ -10,6 +10,7 @@
     "isolatedModules": true,
     /* Strictness */
     "strict": true,
+
     "noUncheckedIndexedAccess": true,
     "checkJs": false,
     /* Bundled projects */
@@ -47,6 +48,6 @@
     ".next-tmp/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }

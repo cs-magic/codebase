@@ -57,6 +57,8 @@ const config = {
       // ["@swc-jotai/react-refresh", {}],
     ],
   },
+
+  tsconfigPath: "tsconfig.json",
 }
 
 export default config

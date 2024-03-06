@@ -14,10 +14,12 @@ export default function TestTrpcRouterInClientPage() {
 
   const utils = api.useUtils()
   const { data: user } = api.core.getSelf.useQuery()
+  const updateUser = api.core.updateSelf.useMutation()
 
   const refName = useRef<HTMLInputElement>(null)
+  const refId = useRef<HTMLInputElement>(null)
 
-  const update = async (method: "db" | "trpc") => {
+  const updateName = async (method: "db" | "trpc") => {
     if (!userId) return
     if (!refName.current) return
     const newName = refName.current.value
@@ -25,18 +27,20 @@ export default function TestTrpcRouterInClientPage() {
 
     if (method === "db") {
       await updateUserNameViaTrpc(userId, newName)
-      void utils.core.getSelf.invalidate()
     } else {
-      // const router = protectedProcedure
-      //   .input(z.object({ name: z.string() }))
-      //   .mutation(async ({ ctx, input }) => {
-      //     await ctx.db.user.update({
-      //       where: { id: ctx.user.id },
-      //       data: { name: input.name },
-      //     })
-      //   })
-      toast.error("router not supported directly call")
+      await updateUser.mutateAsync({ name: newName })
     }
+    void utils.core.getSelf.invalidate()
+  }
+
+  const updateId = async () => {
+    if (!userId) return
+    if (!refId.current) return
+    const newId = refId.current.value
+    if (!newId) return
+
+    await updateUser.mutateAsync({ id: newId })
+    void utils.core.getSelf.invalidate()
   }
 
   return (
@@ -52,9 +56,16 @@ export default function TestTrpcRouterInClientPage() {
         <Input ref={refName} />
       </div>
 
-      <Button onClick={async () => update("db")}>提交修改（db）</Button>
+      <div>
+        new id:
+        <Input ref={refId} />
+      </div>
 
-      <Button onClick={async () => update("trpc")}>提交修改（trpc）</Button>
+      <Button onClick={async () => updateName("db")}>提交修改（db）</Button>
+
+      <Button onClick={async () => updateName("trpc")}>提交修改（trpc）</Button>
+
+      <Button onClick={async () => updateId()}>提交修改（id）</Button>
     </FlexContainer>
   )
 }

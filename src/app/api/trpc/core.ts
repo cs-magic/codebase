@@ -6,6 +6,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "../../../../packages/common/lib/trpc/trpc"
+import { UserUpdateInputSchema } from "../../../../prisma/generated/zod"
 import { appDetailSchema, createAppSchema } from "../../../schema/app"
 import {
   convDetailSchema,
@@ -18,6 +19,16 @@ import { userDetailSchema } from "../../../schema/user.detail"
 import { triggerLLM } from "../llm/llm-triggle"
 
 export const coreRouter = createTRPCRouter({
+  updateSelf: protectedProcedure
+    .input(UserUpdateInputSchema)
+    .mutation(({ ctx, input }) => {
+      console.log("update self")
+      return db.user.update({
+        where: { id: ctx.user.id },
+        data: input,
+      })
+    }),
+
   getSelf: protectedProcedure.query(async ({ ctx }) =>
     db.user.findUniqueOrThrow({
       where: { id: ctx.user.id },
