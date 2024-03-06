@@ -92,6 +92,10 @@ const Credentials = (
 
 ## BUGFIX
 
+### sonner 版本要求
+
+这个不行： `"sonner": "^1.4.0",`，参考：https://github.com/emilkowalski/sonner/issues/353
+
 ### jotai 不可以 在 set 里 set writable variable， 那是用于 useAtom 的，见：
 
 ![img.png](docs/jotai-writeable.png)

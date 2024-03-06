@@ -65,7 +65,7 @@ export default function RootLayout({
                           richColors
                           position={"top-right"}
                           duration={3000}
-                          closeButton
+                          closeButton={false}
                         />
 
                         <LoadingAlertDialog />

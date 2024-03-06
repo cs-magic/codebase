@@ -6177,10 +6177,10 @@ snake-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-sonner@^1.4.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.4.1.tgz#51482aba9a18dd381283b30f607f092de2307354"
-  integrity sha512-KJcFbMF+z2OMSJ9H+N6mrk/ffnEzuyLFlHoza/HQvNyiACoY958VtFdC7xD9D74ttzA+kcS1YIJOsNwbKWDsHw==
+sonner@1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.4.3.tgz#b0c1cc175a0e9184460911ca9c396daec5311ae9"
+  integrity sha512-SArYlHbkjqRuLiR0iGY2ZSr09oOrxw081ZZkQPfXrs8aZQLIBOLOdzTYxGJB5yIZ7qL56UEPmrX1YqbODwG0Lw==
 
 source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
