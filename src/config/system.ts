@@ -18,9 +18,18 @@ export const modes: Record<ModeType, IMode> = {
 export const subAppsIcons: ISubAppIcon[] = [
   {
     id: "tt",
-    Cover: Text2ImageAppSVG,
+    Cover: "/apps/eval-ai.png",
     title: "AI 评测",
+    enabled: true,
   },
+
+  {
+    id: "diagram",
+    Cover: "/apps/sokka-ai.png",
+    title: "AI 导图",
+    enabled: false,
+  },
+
   // { id: "tt", fromMode: "text", toMode: "text", Cover: Text2TextAppSVG, title: "文生文" },
   // { id: "ti", fromMode: "text", toMode: "image", Cover: Text2ImageAppSVG , title:"问生图"},
   // { fromMode: "image", toMode: "text" },

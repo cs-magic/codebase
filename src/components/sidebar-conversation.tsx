@@ -17,7 +17,7 @@ import {
 import { api } from "../../packages/common/lib/trpc/react"
 import { cn } from "../../packages/common/lib/utils"
 
-export const ConversationListComp = ({
+export const SidebarConversationItem = ({
   conv,
 }: {
   conv: { id: string; title: string | null }
@@ -28,26 +28,32 @@ export const ConversationListComp = ({
   const updateConv = api.core.updateConv.useMutation()
 
   return (
-    <div
+    <Link
+      href={`/tt/${conv.id}`}
       className={cn(
-        "w-full justify-start group px-2 gap-1",
+        "w-full justify-start group px-2 my-1 gap-1",
         buttonVariants({ variant: "ghost" }),
         convId === conv.id && "bg-accent/50",
       )}
     >
-      <Link href={`/tt/${conv.id}`} className={"grow truncate text-left py-2"}>
-        <InputWithEnter
-          placeholder={"Untitled"}
-          defaultValue={conv.title ?? ""}
-          className={"bg-transparent border-none focus-visible:ring-0"}
-          onEnter={(title) => {
-            updateConv.mutate({
-              where: { id: conv.id },
-              data: { title },
-            })
-          }}
-        />
-      </Link>
+      {/*{convId === conv.id ? (*/}
+      <InputWithEnter
+        placeholder={"Untitled"}
+        defaultValue={conv.title ?? ""}
+        className={cn(
+          "bg-transparent border-none focus-visible:ring-0",
+          convId !== conv.id && "cursor-pointer",
+        )}
+        onEnter={(title) => {
+          updateConv.mutate({
+            where: { id: conv.id },
+            data: { title },
+          })
+        }}
+      />
+      {/*) : (*/}
+      {/*  <span>{conv.title ?? "Untitled"}</span>*/}
+      {/*)}*/}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -62,15 +68,7 @@ export const ConversationListComp = ({
           <DropdownMenuItem
             className={"gap-2"}
             onClick={(event) => {
-              void deleteConv(conv.id)
-            }}
-          >
-            <PenIcon className={"w-4 h-4"} /> 重命名
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            className={"gap-2"}
-            onClick={(event) => {
+              event.preventDefault()
               void deleteConv(conv.id)
             }}
           >
@@ -78,6 +76,6 @@ export const ConversationListComp = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </Link>
   )
 }

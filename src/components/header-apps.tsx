@@ -35,15 +35,15 @@ export const Apps = () => {
           ))}
         </div>
 
-        <Button
-          variant={"outline"}
-          className={"w-full"}
-          onClick={() => {
-            toast.info("敬请期待！")
-          }}
-        >
-          查看CS魔法社的更多产品
-        </Button>
+        {/*<Button*/}
+        {/*  variant={"outline"}*/}
+        {/*  className={"w-full"}*/}
+        {/*  onClick={() => {*/}
+        {/*    toast.info("敬请期待！")*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  查看CS魔法社的更多产品*/}
+        {/*</Button>*/}
       </DropdownMenuContent>
     </DropdownMenu>
   )

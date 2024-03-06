@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "../../packages/common/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
-import { ConversationListComp } from "./sidebar-conversation"
+import { SidebarConversationItem } from "./sidebar-conversation"
 import { useAtom } from "jotai"
 import { convsFromServerAtom } from "@/store/conv"
 import { useAddConv } from "@/hooks/use-conv-add"
@@ -36,7 +36,7 @@ export const Sidebar = () => {
 
       <div className={"grow overflow-auto"}>
         {conversations.map((conversation) => (
-          <ConversationListComp conv={conversation} key={conversation.id} />
+          <SidebarConversationItem conv={conversation} key={conversation.id} />
         ))}
       </div>
     </div>
