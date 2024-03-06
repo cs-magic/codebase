@@ -25,14 +25,15 @@ export const BrandingTitle = ({
         )}
         {...props}
       >
-        搜 嘎
-        <span
-          className={
-            "rotate-12 scale-150 inline-block primary-gradient bg-gradient-to-t"
-          }
-        >
-          {" !"}
-        </span>
+        Eval AI
+        {/*搜 嘎*/}
+        {/*<span*/}
+        {/*  className={*/}
+        {/*    "rotate-12 scale-150 inline-block primary-gradient bg-gradient-to-t"*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  {" !"}*/}
+        {/*</span>*/}
       </h1>
 
       {/*{withDescription && <span className={"text-sm"}>全栈 AI 平台</span>}*/}

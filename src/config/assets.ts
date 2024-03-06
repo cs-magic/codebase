@@ -14,5 +14,6 @@ export const BRANDING_IDOUBI_ENTERPRISE_LIGHT =
   "/branding/enterprise/idoubi.png"
 export const BRANDING_IDOUBI_AVATAR = "/branding/individual/idoubi_avatar.jpg"
 export const BRANDING_MARK_AVATAR = "/branding/individual/mark_avatar.jpg"
+export const APP_EVAL_IMAGE = "/apps/eval.png"
 
 export { SokkaBrand, V2AGIBrand, Text2TextAppSVG, Text2ImageAppSVG }

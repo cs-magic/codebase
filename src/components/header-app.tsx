@@ -1,20 +1,17 @@
+import { DEFAULT_AVATAR } from "@/config/assets"
+import Image from "next/image"
 import Link from "next/link"
 import { AspectRatio } from "../../packages/common/components/ui/aspect-ratio"
-import Image from "next/image"
-import { DEFAULT_AVATAR } from "@/config/assets"
-import { ModeType } from "@/schema/scenario"
-import { modes } from "@/config/system"
 
 export interface ISubAppIcon {
   id: string
-  fromMode: ModeType
-  toMode: ModeType
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   Cover?: string | React.VFC<React.SVGProps<SVGSVGElement>>
+  title: string
 }
 
 export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
-  const { fromMode, toMode, Cover } = subAppIcon
+  const { Cover } = subAppIcon
   return (
     <Link
       href={`/${subAppIcon.id}`}
@@ -36,9 +33,7 @@ export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
         )}
       </AspectRatio>
 
-      <div
-        className={"text-sm"}
-      >{`${modes[fromMode].label} -> ${modes[toMode].label}`}</div>
+      <div className={"text-sm"}>{subAppIcon.title}</div>
     </Link>
   )
 }
