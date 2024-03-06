@@ -14,6 +14,8 @@ export const ConvApps = () => {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [gridCols] = useAtom(appsGridColsAtom)
 
+  console.log({ persistedApps })
+
   return (
     <div
       className={cn(

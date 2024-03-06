@@ -11,7 +11,9 @@ import {
   ConvWhereUniqueInputSchema,
   UserUpdateInputSchema,
 } from "../../../../prisma/generated/zod"
-import { appDetailSchema, createAppSchema } from "../../../schema/app"
+
+import { createAppSchema } from "../../../schema/app.create"
+import { appDetailSchema } from "../../../schema/app.detail"
 import {
   convDetailSchema,
   convSummarySchema,

@@ -1,7 +1,6 @@
 import { buttonVariants } from "../../packages/common/components/ui/button"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
 import { cn } from "../../packages/common/lib/utils"
-import { IAppDetail } from "@/schema/app"
 import { useAtom } from "jotai"
 
 import {
@@ -11,6 +10,7 @@ import {
   uiMaxAppsAtom,
 } from "@/store/app"
 import { IconContainer } from "../../packages/common/components/icon-container"
+import { IAppDetail } from "../schema/app.detail"
 
 export const SelectApp = ({
   app,

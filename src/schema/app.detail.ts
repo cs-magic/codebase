@@ -1,6 +1,5 @@
-import { modelViewSchema } from "@/schema/model"
 import { Prisma } from "@prisma/client"
-import { z } from "zod"
+import { modelViewSchema } from "./model"
 import { userListViewSchema } from "./user.base"
 
 export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
@@ -10,15 +9,3 @@ export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   },
 })
 export type IAppDetail = Prisma.AppGetPayload<typeof appDetailSchema>
-
-/**
- * todo: use from app model
- */
-export const createAppSchema = z.object({
-  id: z.string(),
-  modelName: z.string(),
-  title: z.string().nullable(),
-  systemPrompt: z.string().nullable(),
-  temperature: z.number().nullable(),
-})
-export type ICreateApp = z.infer<typeof createAppSchema>

@@ -1,9 +1,9 @@
 "use client"
 
-import { IAppDetail } from "@/schema/app"
 import { useAtom } from "jotai"
 import { cn } from "../../packages/common/lib/utils"
 import { useConvSSE } from "../hooks/use-conv-sse"
+import { IAppDetail } from "../schema/app.detail"
 import { RoleType } from "../schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
 import { commonContextAtom, requestAtom } from "../store/conv"
@@ -39,7 +39,7 @@ export const ConvApp = ({ app }: { app: IAppDetail }) => {
         "w-full h-full overflow-auto flex flex-col relative border-t border-r",
       )}
     >
-      <ConvAppTopBar appId={app.id} title={app?.model.title} />
+      <ConvAppTopBar app={app} />
 
       <ConvAppMessages
         appId={app.id}

@@ -1,5 +1,5 @@
-import { appDetailSchema } from "@/schema/app"
 import { Prisma, Response } from "@prisma/client"
+import { appDetailSchema } from "./app.detail"
 
 export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   select: {

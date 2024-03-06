@@ -16,25 +16,22 @@ import {
 } from "lucide-react"
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { cn } from "../../packages/common/lib/utils"
+import { IAppDetail } from "../schema/app.detail"
 import { checkRespondingAtom } from "../store/conv"
+import { ConvAppTitleLine } from "./conv-app-title-line"
 
-export const ConvAppTopBar = ({
-  appId,
-  title,
-}: {
-  appId: string
-  title: string
-}) => {
+export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
   const [, delApp] = useAtom(delAppAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
+  const [checkResponding] = useAtom(checkRespondingAtom)
+  const [, stopGenerating] = useAtom(stopGeneratingAtom)
 
+  const { id: appId } = app
   const selected = appId === selectedAppID
   const LockOrNot = selected ? Lock : Unlock
-  const [checkResponding] = useAtom(checkRespondingAtom)
   const fetching = checkResponding(appId)
-  const [, stopGenerating] = useAtom(stopGeneratingAtom)
 
   return (
     <div
@@ -44,13 +41,7 @@ export const ConvAppTopBar = ({
         selected && "border-b border-primary-foreground/50",
       )}
     >
-      <div className={"flex items-center gap-2 overflow-hidden"}>
-        <div className={"w-full flex gap-2 items-baseline"}>
-          <span className={"truncate"}>{title}</span>
-
-          <span className={"text-muted-foreground text-xs"}>{appId}</span>
-        </div>
-      </div>
+      <ConvAppTitleLine app={app} />
       <div className={"grow"} />
 
       <IconContainer
