@@ -6,7 +6,11 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "../../../../packages/common/lib/trpc/trpc"
-import { UserUpdateInputSchema } from "../../../../prisma/generated/zod"
+import {
+  ConvUpdateInputSchema,
+  ConvWhereUniqueInputSchema,
+  UserUpdateInputSchema,
+} from "../../../../prisma/generated/zod"
 import { appDetailSchema, createAppSchema } from "../../../schema/app"
 import {
   convDetailSchema,
@@ -19,6 +23,13 @@ import { userDetailSchema } from "../../../schema/user.detail"
 import { triggerLLM } from "../llm/llm-triggle"
 
 export const coreRouter = createTRPCRouter({
+  getSelf: protectedProcedure.query(async ({ ctx }) =>
+    db.user.findUniqueOrThrow({
+      where: { id: ctx.user.id },
+      ...userDetailSchema,
+    }),
+  ),
+
   updateSelf: protectedProcedure
     .input(UserUpdateInputSchema)
     .mutation(({ ctx, input }) => {
@@ -28,13 +39,6 @@ export const coreRouter = createTRPCRouter({
         data: input,
       })
     }),
-
-  getSelf: protectedProcedure.query(async ({ ctx }) =>
-    db.user.findUniqueOrThrow({
-      where: { id: ctx.user.id },
-      ...userDetailSchema,
-    }),
-  ),
 
   listModels: publicProcedure.query(() =>
     db.model.findMany({
@@ -101,6 +105,22 @@ export const coreRouter = createTRPCRouter({
         ...convDetailSchema,
       }),
     ),
+
+  updateConv: protectedProcedure
+    .input(
+      z.object({
+        where: ConvWhereUniqueInputSchema,
+        data: ConvUpdateInputSchema,
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      const { id, ...safeData } = input.data
+      return db.conv.update({
+        where: { ...input.where, fromUserId: ctx.user.id },
+        data: safeData,
+        ...convDetailSchema,
+      })
+    }),
 
   delConv: protectedProcedure
     .input(z.object({ id: z.string() }))
