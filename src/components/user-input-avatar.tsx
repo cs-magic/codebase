@@ -1,6 +1,5 @@
 import { useAtom } from "jotai"
 import { UserIcon } from "lucide-react"
-import { toast } from "sonner"
 import {
   Avatar,
   AvatarFallback,
@@ -32,12 +31,7 @@ export const UserInputAvatar = () => {
           const files = event.currentTarget.files
           if (!files?.length) return
           const data = await uploadFiles(files)
-          if (!data.success) {
-            toast.error("上传失败")
-          } else {
-            toast.success("上传成功")
-            setImage(data.data![0]!)
-          }
+          if (data.success) setImage(data.data![0]!)
         }}
       />
     </Label>
