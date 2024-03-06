@@ -8,7 +8,7 @@ export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
     title: true,
   },
 })
-export type IConvSummary = Prisma.ConvGetPayload<typeof convSummarySchema>
+export type IConvBase = Prisma.ConvGetPayload<typeof convSummarySchema>
 
 export const responseSchema = Prisma.validator<Prisma.ResponseDefaultArgs>()({
   include: {

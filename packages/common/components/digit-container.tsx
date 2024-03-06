@@ -13,9 +13,9 @@ export const DigitContainer = ({
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (!focus || !ref.current) return
+    if (!focus || !ref.value) return
 
-    ref.current.focus()
+    ref.value.focus()
   }, [focus])
 
   return (

@@ -1,17 +1,16 @@
 "use client"
-import ansiColors from "ansi-colors"
-import { useRouter } from "next/navigation"
-import { Button } from "../../packages/common/components/ui/button"
-import { MinusIcon, PlusIcon } from "lucide-react"
-import { SidebarConversationItem } from "./sidebar-conversation"
-import { useAtom } from "jotai"
-import { convsFromServerAtom, requestIdAtom } from "@/store/conv"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
+import { serverConvListFAtom } from "@/store/conv"
+import ansiColors from "ansi-colors"
+import { useAtom } from "jotai"
+import { MinusIcon, PlusIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Button } from "../../packages/common/components/ui/button"
+import { SidebarConversationItem } from "./sidebar-conversation"
 
 export const Sidebar = () => {
-  const [conversations] = useAtom(convsFromServerAtom)
-  const [, setRequestId] = useAtom(requestIdAtom)
+  const [conversations] = useAtom(serverConvListFAtom)
 
   const router = useRouter()
   const addConversation = useAddConv()
@@ -24,7 +23,6 @@ export const Sidebar = () => {
         variant={"outline"}
         onClick={async () => {
           const data = await addConversation()
-          setRequestId(null)
           // 路由跳转，并且避免再拿数据
           console.log(ansiColors.blue(`router push --> /tt/${data.id}`))
           router.push(`/tt/${data.id}`) // 异步

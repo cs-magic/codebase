@@ -6,7 +6,6 @@ import {
 import { staticCreate } from "../../../../packages/common/lib/utils"
 
 export const llmManager = staticCreate<Record<string, ISSERequest>>(() => ({}))
-console.log({ llmManager })
 
 export const llmEncoder = new TextEncoder()
 

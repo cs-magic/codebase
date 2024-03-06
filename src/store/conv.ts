@@ -1,6 +1,6 @@
 import {
+  IConvBase,
   IConvDetail,
-  IConvSummary,
   IRequest,
   IResponse,
   IUpdateResponse,
@@ -14,60 +14,43 @@ import { appIdPersistedAtom } from "./app" //////////////////////////////
 // base
 //////////////////////////////
 
-export const convsFromServerAtom = atom<IConvSummary[]>([])
+export const serverConvListFAtom = atom<IConvBase[]>([])
 
-export const convDetailFromServerAtom = atomWithImmer<IConvDetail | null>(null)
-
-/**
- * 用户选择哪条request，这个信息不在数据库存储，所以需要用户自己维护
- */
-export const requestIdAtom = atom<string | null>(null)
+export const serverConvDetailAtom = atomWithImmer<IConvDetail | null>(null)
 
 //////////////////////////////
 // derived
 //////////////////////////////
 
 export const requestsAtom = atom<IRequest[]>(
-  (get) => get(convDetailFromServerAtom)?.requests ?? [],
+  (get) => get(serverConvDetailAtom)?.requests ?? [],
 )
 
-export const requestSliderAtom = atom(
-  (get) => {
-    const requests = get(requestsAtom)
-    return {
-      current: requests.findIndex((r) => r.id === get(requestIdAtom)),
-      total: requests.length,
-    }
-  },
-  (get, set) => {
-    const setN = (n: number) => {
-      if (n < 0 || n > get(requestsAtom).length - 1) return
-      set(requestIdAtom, get(requestsAtom)[Math.floor(n)]!.id)
-    }
-    const inc = () => setN(get(requestSliderAtom).current + 1)
-    const dec = () => setN(get(requestSliderAtom).current - 1)
-    return {
-      setN,
-      inc,
-      dec,
-    }
-  },
-)
-
-export const convIdAtom = atom((get) => get(convDetailFromServerAtom)?.id)
+export const convIdAtom = atom((get) => get(serverConvDetailAtom)?.id)
 
 export const requestAtom = atom((get) =>
-  get(convDetailFromServerAtom)?.requests.find(
-    (r) => r.id === get(requestIdAtom),
+  get(serverConvDetailAtom)?.requests.find(
+    (r) => r.id === get(serverConvDetailAtom)?.currentRequestId,
   ),
 )
+
+/**
+ * ~~用户选择哪条request，这个信息不在数据库存储，所以需要用户自己维护~~
+ * 在加了数据库的currentRequestId之后，维护彼此的同步成了一种灾难，bug层出不穷，渲染效率低下
+ */
+export const requestIdAtom = atom((get) => get(requestAtom)?.id)
 
 export const commonContextAtom = atom<IContext>(
   (get) => get(requestAtom)?.context ?? [],
 )
+export const responsesAtom = atom((get) => get(requestAtom)?.responses ?? [])
 
 export const bestResponseAtom = atom<IResponse | undefined>((get) =>
-  get(requestAtom)?.responses.find((r) => r.appId === get(appIdPersistedAtom)),
+  get(responsesAtom)?.find((r) => r.appId === get(appIdPersistedAtom)),
+)
+
+export const responseFinishedAtom = atom<boolean>((get) =>
+  get(responsesAtom)?.every((r) => !!r.tEnd),
 )
 
 export const bestContextAtom = atom<IContext>((get) => {
@@ -107,7 +90,7 @@ export const updateResponseAtom = atom(
     appId: string,
     func: IUpdateResponse,
   ) => {
-    set(convDetailFromServerAtom, (conv) => {
+    set(serverConvDetailAtom, (conv) => {
       const s = conv?.requests
         ?.find((r) => r.id === requestId)
         ?.responses.find((r) => r.appId === appId)

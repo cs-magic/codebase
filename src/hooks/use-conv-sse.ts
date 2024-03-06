@@ -12,13 +12,14 @@ import {
 
 export const useConvSSE = (appId: string) => {
   const [checkResponding] = useAtom(checkRespondingAtom)
-  const [requestId] = useAtom(requestIdAtom)
   const [, updateResponse] = useAtom(updateResponseAtom)
   const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
+  const [requestId] = useAtom(requestIdAtom)
 
   const isResponding = checkResponding(appId)
-  const update = (func: IUpdateResponse) =>
-    updateResponse(requestId, appId, func)
+  const update = (func: IUpdateResponse) => {
+    if (requestId) updateResponse(requestId, appId, func)
+  }
 
   const onFinal = () => {
     console.log("-- DONE")
@@ -58,7 +59,7 @@ export const useConvSSE = (appId: string) => {
   }, [isResponding])
 
   useEffect(() => {
-    const sse = refSSE.current
+    const sse = refSSE.value
     // console.log({ sse, stoppedGenerating })
 
     if (stoppedGenerating && sse && sse.readyState !== sse.CLOSED) {

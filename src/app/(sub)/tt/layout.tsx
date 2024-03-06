@@ -2,10 +2,9 @@
 import { Sidebar } from "@/components/sidebar"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
 import {
-  convDetailFromServerAtom,
-  convsFromServerAtom,
+  serverConvDetailAtom,
+  serverConvListFAtom,
   requestAtom,
-  requestIdAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
@@ -17,9 +16,8 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [request] = useAtom(requestAtom)
-  const [requestId, setRequestId] = useAtom(requestIdAtom)
-  const [, setConvs] = useAtom(convsFromServerAtom)
-  const [, setConv] = useAtom(convDetailFromServerAtom)
+  const [, setConvs] = useAtom(serverConvListFAtom)
+  const [conv, setConv] = useAtom(serverConvDetailAtom)
 
   const { data: convsInDB } = api.core.listConv.useQuery()
 
@@ -38,7 +36,7 @@ export default function ConvLayout({ children }: PropsWithChildren) {
       newApps,
     })
     setPersistedApps(newApps)
-  }, [requestId])
+  }, [conv?.currentRequestId])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个
   useEffect(() => {

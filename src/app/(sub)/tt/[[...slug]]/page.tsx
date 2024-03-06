@@ -1,11 +1,11 @@
 "use client"
 import {
-  convDetailFromServerAtom,
+  serverConvDetailAtom,
   convIdAtom,
-  convsFromServerAtom,
-  requestIdAtom,
+  serverConvListFAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
+import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -21,16 +21,21 @@ export default function ConvPage({
 }: {
   params: { slug?: string[] }
 }) {
-  const [convs] = useAtom(convsFromServerAtom)
+  const [convs] = useAtom(serverConvListFAtom)
   const [convId] = useAtom(convIdAtom)
-  const [, setConv] = useAtom(convDetailFromServerAtom)
+  const [conv, setConv] = useAtom(serverConvDetailAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
-  const [requestId, setRequestId] = useAtom(requestIdAtom)
 
   const router = useRouter()
   const id = slug ? slug[0] : slug
   const reqIdFromUrl = useSearchParams().get("r")
   const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    if (conv?.requests.some((r) => r.id === reqIdFromUrl)) {
+      setConv((conv) => ({ ...conv, currentRequestId: reqIdFromUrl }))
+    }
+  }, [reqIdFromUrl])
 
   // 首页
   useEffect(() => {
@@ -65,8 +70,7 @@ export default function ConvPage({
    * 避免多次刷新！重要！
    */
   useEffect(() => {
-    const skip =
-      !convFromServer || convFromServer.currentRequestId !== requestId
+    const skip = !convFromServer
 
     if (skip) return console.log(`setting conv since fetched (skip=${skip})`)
 
@@ -78,7 +82,7 @@ export default function ConvPage({
       reqIdFromUrl,
     })
     setConv(convFromServer)
-  }, [convFromServer, requestId])
+  }, [convFromServer])
 
   // 2.1 无效则跳转
   useEffect(() => {
@@ -100,7 +104,7 @@ export default function ConvPage({
 
     if (reqIdFromUrl) {
       if (convFromServer.requests.some((r) => r.id === reqIdFromUrl)) {
-        setRequestId(reqIdFromUrl)
+        // setRequestId(reqIdFromUrl)
       } else {
         console.log(ansiColors.blue(`router --> /tt/${id}`))
         router.replace(`/tt/${id}`)
@@ -114,15 +118,10 @@ export default function ConvPage({
         )
         router.replace(`/tt/${id}?r=${convFromServer.currentRequestId}`)
       } else {
-        setRequestId(null)
+        // setRequestId(null)
       }
     }
   }, [reqIdFromUrl, convFromServer])
-
-  // 清空request
-  useEffect(() => {
-    if (!convId) setRequestId(null)
-  }, [convId])
 
   // if (!loaded) return null
 

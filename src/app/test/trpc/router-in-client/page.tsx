@@ -21,8 +21,8 @@ export default function TestTrpcRouterInClientPage() {
 
   const updateName = async (method: "db" | "trpc") => {
     if (!userId) return
-    if (!refName.current) return
-    const newName = refName.current.value
+    if (!refName.value) return
+    const newName = refName.value.value
     if (!newName) return
 
     if (method === "db") {
@@ -35,8 +35,8 @@ export default function TestTrpcRouterInClientPage() {
 
   const updateId = async () => {
     if (!userId) return
-    if (!refId.current) return
-    const newId = refId.current.value
+    if (!refId.value) return
+    const newId = refId.value.value
     if (!newId) return
 
     await updateUser.mutateAsync({ id: newId })

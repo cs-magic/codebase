@@ -1,9 +1,10 @@
 import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import {
   bestContextAtom,
-  convDetailFromServerAtom,
-  requestIdAtom,
+  responseFinishedAtom,
+  serverConvDetailAtom,
 } from "@/store/conv"
+import { useIsFetching } from "@tanstack/react-query"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
@@ -23,12 +24,11 @@ import { IMessageInChat } from "../schema/message"
  * @param query
  */
 export function useConvQueryOnEnterV2() {
-  let [conv] = useAtom(convDetailFromServerAtom)
+  let [conv] = useAtom(serverConvDetailAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
 
-  const [reqId] = useAtom(requestIdAtom)
   const [context] = useAtom(bestContextAtom)
   const [llmDelay] = useAtom(llmDelayAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
@@ -40,8 +40,15 @@ export function useConvQueryOnEnterV2() {
   const addConv = api.core.addConv.useMutation()
   const utils = api.useUtils()
 
+  const [responseFinished] = useAtom(responseFinishedAtom)
+
   return async () => {
-    console.log(ansiColors.red("useQueryOnEnter: "), { query })
+    console.log(ansiColors.red("useQueryOnEnter: "), {
+      query,
+      responseFinished,
+    })
+
+    if (!responseFinished) return
 
     if (!query) return toast.error("不能为空")
 
