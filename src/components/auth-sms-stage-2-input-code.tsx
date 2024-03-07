@@ -1,11 +1,11 @@
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { useKey } from "react-use"
-import { toast } from "sonner"
 import { Label } from "../../packages/common/components/ui/label"
 import { useSmsSignIn } from "../../packages/common/lib/sms/hooks/use-sms-sign-in"
 import { smsCodeAtom } from "../../packages/common/lib/sms/store"
-import { AuthSmsInputDigits } from "./auth-sms-input-digits"
+import { cn } from "../../packages/common/lib/utils"
+import { SMS_DIGIT_SIZE } from "../config/sms"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
 
@@ -43,28 +43,45 @@ export const SmsStage2InputCode = () => {
       >
         <div>请输入发送到您手机的短信验证码</div>
 
-        <input
-          autoFocus
-          ref={refInput}
-          placeholder="000000"
-          type={"text"}
-          // ref: https://dev.to/madsstoumann/using-a-single-input-for-one-time-code-352l
-          autoComplete="one-time-code"
-          inputMode="numeric"
-          maxLength={6}
-          pattern="\d{6}"
-          onChange={(event) => {
-            console.log("-- input changed: ", event.currentTarget.value)
-            toast.info(`-- input changed: ${event.currentTarget.value}`, {
-              duration: 0,
-              closeButton: true,
-            })
-          }}
-        />
+        <Label className={"w-full h-8 sm:h-12 relative"}>
+          <input
+            className={"opacity-0 absolute"}
+            // hidden // 不能
+            autoFocus
+            ref={refInput}
+            placeholder="000000"
+            type={"text"}
+            // ref: https://dev.to/madsstoumann/using-a-single-input-for-one-time-code-352l
+            autoComplete="one-time-code"
+            inputMode="numeric"
+            maxLength={6}
+            pattern="\d{6}"
+            onChange={(event) => {
+              setDigits(event.currentTarget.value)
+            }}
+          />
+
+          <div className={"flex justify-center items-center gap-2 "}>
+            <span className={cn("font-black text-primary/75", SMS_DIGIT_SIZE)}>
+              M -{" "}
+            </span>
+
+            {[...Array(6)].map((value, index) => (
+              <span
+                key={index}
+                className={cn(
+                  "w-8 h-8 sm:w-12 sm:h-12 rounded-lg  text-center p-0 border",
+                  SMS_DIGIT_SIZE,
+                )}
+              >
+                {digits[index]}
+              </span>
+            ))}
+          </div>
+        </Label>
+
         <SmsReInputPhone />
       </div>
-
-      {/*<AuthSmsInputDigits />*/}
 
       <SmsResendCode />
     </div>
