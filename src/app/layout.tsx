@@ -78,9 +78,13 @@ export default function RootLayout({
 
                         <AutoHeight />
 
-                        <SystemSocketStatus />
+                        {env.NODE_ENV !== "production" && (
+                          <>
+                            <SystemSocketStatus />
 
-                        {env.NODE_ENV !== "production" && <Devtool />}
+                            <Devtool />
+                          </>
+                        )}
                       </ScreenProvider>
                     </TooltipProvider>
                   </ThemeProvider>

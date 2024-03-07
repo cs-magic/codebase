@@ -1,11 +1,7 @@
 "use client"
 import { Sidebar } from "@/components/sidebar"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
-import {
-  serverConvDetailAtom,
-  serverConvListFAtom,
-  requestAtom,
-} from "@/store/conv"
+import { serverConvDetailAtom, serverConvListFAtom } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
@@ -15,9 +11,8 @@ import { api } from "../../../../packages/common/lib/trpc/react"
 export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
-  const [request] = useAtom(requestAtom)
   const [, setConvs] = useAtom(serverConvListFAtom)
-  const [conv, setConv] = useAtom(serverConvDetailAtom)
+  const [, setConv] = useAtom(serverConvDetailAtom)
 
   const { data: convsInDB } = api.core.listConv.useQuery()
 
@@ -25,18 +20,6 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   useEffect(() => {
     if (convsInDB) setConvs(convsInDB)
   }, [convsInDB])
-
-  // note：应该要request_id变，再决定apps变！conv变是不行的，因为request可能不同步
-  useEffect(() => {
-    if (!request) return
-    const newApps = request.responses.map((r) => r.app)
-    console.log(ansiColors.red("setting apps: "), {
-      request,
-      persistedApps,
-      newApps,
-    })
-    setPersistedApps(newApps)
-  }, [conv?.currentRequestId])
 
   // 3. 当有persisted app 但没有selected app时，自动选第一个
   useEffect(() => {
@@ -58,10 +41,6 @@ export default function ConvLayout({ children }: PropsWithChildren) {
       setConv(null)
     }
   }, [])
-
-  // ~~ 6. 当 conv 个数变化时，重置 ~~
-  // 不需要重置，现在是服务器向客户端单向更新 convs
-  // useEffect(() => void utils.core.listConv.invalidate(), [convs.length])
 
   return (
     <div className={"w-full h-full overflow-hidden flex border-y"}>

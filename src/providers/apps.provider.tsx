@@ -2,6 +2,7 @@
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { toast } from "sonner"
+import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
 import { api } from "../../packages/common/lib/trpc/react"
 import { appsPersistedAtom, pushAppAtom, serverAppsAtom } from "../store/app"
 
@@ -15,6 +16,7 @@ export default function AppsProvider({ children }: PropsWithChildren) {
   const [, setAllApps] = useAtom(serverAppsAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, pushApp] = useAtom(pushAppAtom)
+  const { isMobile } = useBrowserEnvironment()
 
   useEffect(() => {
     if (!apps) return
@@ -29,7 +31,7 @@ export default function AppsProvider({ children }: PropsWithChildren) {
     if (!gptApps.length) toast.error("apps 没有初始化！", { duration: 0 })
 
     if (!persistedApps?.length)
-      gptApps.slice(0, 2).forEach((app) => pushApp(app))
+      gptApps.slice(0, isMobile ? 1 : 2).forEach((app) => pushApp(app))
   }, [apps?.length, persistedApps.length])
 
   return <>{children}</>
