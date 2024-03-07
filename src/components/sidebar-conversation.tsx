@@ -63,7 +63,7 @@ export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
             },
             {
               onSuccess: (data) => {
-                toast.success(content)
+                // toast.success(content)
                 utils.core.listConv.invalidate()
                 if (conv.id === convId) setConv(data)
               },
