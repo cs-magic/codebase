@@ -1,4 +1,4 @@
-import SokkaBrand from "@/../public/branding/enterprise/CS魔法社Logo-方正字汇-锐速体.svg"
+import CsMagicBrand from "@/../public/branding/enterprise/CS魔法社Logo-方正字汇-锐速体.svg"
 import V2AGIBrand from "@/../public/branding/enterprise/v2agi.svg"
 
 import Text2TextAppSVG from "../../public/apps/t2t.svg"
@@ -16,4 +16,4 @@ export const BRANDING_IDOUBI_AVATAR = "/branding/individual/idoubi_avatar.jpg"
 export const BRANDING_MARK_AVATAR = "/branding/individual/mark_avatar.jpg"
 export const APP_EVAL_IMAGE = "/apps/eval.png"
 
-export { SokkaBrand, V2AGIBrand, Text2TextAppSVG, Text2ImageAppSVG }
+export { CsMagicBrand, V2AGIBrand, Text2TextAppSVG, Text2ImageAppSVG }

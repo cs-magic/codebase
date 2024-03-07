@@ -1,10 +1,10 @@
+.env.cs-magic.cn
 # zod
 prisma/generated
 
 deprecated
 .next-tmp
 
-.env.cs-magic.cn
 .idea
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

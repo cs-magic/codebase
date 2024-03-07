@@ -1,4 +1,4 @@
-import { SokkaBrand, V2AGIBrand } from "@/config/assets"
+import { CsMagicBrand, V2AGIBrand } from "@/config/assets"
 import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
 import { SHOW_PARTNERS } from "@/config/branding"
 import { BrandingPartners } from "@/components/branding-partners"
@@ -20,7 +20,7 @@ export const Footer = () => {
           className={"h-full"}
           target={"_blank"}
         >
-          <SokkaBrand className={"h-full w-auto"} />
+          <CsMagicBrand className={"h-full w-auto"} />
         </Link>
 
         <Link
