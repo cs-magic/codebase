@@ -1,5 +1,7 @@
 import { toast } from "sonner"
-import { IApi } from "../../../schema/api"
+import { v4 } from "uuid"
+import { IApi } from "../../schema/api"
+import { getOssSignatureUrl } from "./server/actons"
 
 export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
   // todo: cleaner approach
@@ -7,14 +9,10 @@ export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
 
   const images = await Promise.all(
     Object.values(files).map(async (file) => {
-      const resGetId = await fetch("/api/oss/upload")
-      if (!resGetId.ok) return
+      let signatureUrl = await getOssSignatureUrl(v4())
 
-      const dataGetId = await resGetId.json()
-      let signatureUrl: string = dataGetId.data.signatureUrl
       if (isHttps) signatureUrl = signatureUrl.replace("http://", "https://")
 
-      console.log("putting file into: ", signatureUrl)
       const resPut = await fetch(signatureUrl, {
         method: "PUT",
         headers: new Headers({

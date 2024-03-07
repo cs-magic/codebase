@@ -7,7 +7,7 @@ import {
 } from "../../packages/common/components/ui/avatar"
 import { Label } from "../../packages/common/components/ui/label"
 import { useUserDraftImage } from "../../packages/common/hooks/use-user"
-import { uploadFiles } from "../../packages/common/lib/oss/upload/client"
+import { uploadFiles } from "../../packages/common/lib/oss/upload"
 import { smsImageAtom } from "../../packages/common/lib/sms/store"
 
 export const UserInputAvatar = () => {

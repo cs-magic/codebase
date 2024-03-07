@@ -20,6 +20,7 @@ export const SmsProvider = Credentials({
     code: { type: "string" },
   },
   authorize: (credentials, req) => {
+    console.log("sms authorizing with credentials: ", credentials)
     if (!credentials) throw new Error("no credentials")
     const { code, phone } = credentials
     if (!code || !phone) throw new Error("no phone or code")
@@ -36,6 +37,7 @@ export const ProfileUpdateProvider = Credentials({
     image: { type: "string" },
   },
   authorize: async (credentials, req) => {
+    console.log("updating profile with credentials: ", credentials)
     if (!credentials) throw new Error("no credentials")
     const { image, name, id } = credentials
     if (!image || !name) throw new Error("no name or image")

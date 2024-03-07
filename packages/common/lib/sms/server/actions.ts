@@ -1,9 +1,8 @@
 "use server"
 
-import { userDetailSchema } from "@/schema/user.detail"
 import { db } from "../../db"
 import { SMS_PROVIDER_ID } from "../const"
-import { IProfileUpdate, IProviderSendSms, ISmsSignIn } from "../schema"
+import { IProviderSendSms, ISmsSignIn } from "../schema"
 
 export const $sendSms = async (
   phone: string,
@@ -59,7 +58,6 @@ export const $sendSms = async (
 }
 
 export const $smsSignIn = async (values: ISmsSignIn) => {
-  console.log("[sms] sign in with data: ", values)
   const { phone, code, name, image } = values
 
   const account = await db.account.findUnique({
