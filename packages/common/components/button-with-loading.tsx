@@ -19,10 +19,10 @@ export const ButtonWithLoading = ({
     >
       {loading ? (
         <LoaderIcon className={"animate-spin"} />
-      ) : downtime ? (
-        `${downtime} S`
-      ) : (
+      ) : !downtime || downtime <= 0 ? (
         children
+      ) : (
+        `${downtime} S`
       )}
     </Button>
   )

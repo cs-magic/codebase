@@ -12,10 +12,10 @@ import { smsStageAtom } from "../../../../packages/common/lib/sms/store"
 /**
  * ui ref: https://clerk.com/
  */
-import { SmsSendCode } from "../../../components/auth-sms-stage-1-send-code"
-import { SmsSignIn } from "../../../components/auth-sms-stage-2-sign-in"
+import { SmsStage1SendCode } from "../../../components/auth-sms-stage-1-send-code"
+import { SmsStage2InputCode } from "../../../components/auth-sms-stage-2-input-code"
 import { useEffect } from "react"
-import { SmsWithName } from "../../../components/auth-sms-stage-3-input-name"
+import { SmsStage3UpdateProfile } from "../../../components/auth-sms-stage-3-update-profile"
 
 export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)
@@ -43,14 +43,14 @@ export default function AuthPage() {
         </div>
       ) : session.status === "authenticated" ? (
         ok ? null : (
-          <SmsWithName />
+          <SmsStage3UpdateProfile />
         )
       ) : stage === "toSendSms" ? (
-        <SmsSendCode
+        <SmsStage1SendCode
           BrandComp={() => <BrandingTitle className={"text-lg gap-2"} />}
         />
       ) : (
-        <SmsSignIn />
+        <SmsStage2InputCode />
       )}
     </AuthContainer>
   )

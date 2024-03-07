@@ -1,16 +1,18 @@
 import { useAtom } from "jotai"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useKey } from "react-use"
+import { toast } from "sonner"
 import { Label } from "../../packages/common/components/ui/label"
 import { useSmsSignIn } from "../../packages/common/lib/sms/hooks/use-sms-sign-in"
 import { smsCodeAtom } from "../../packages/common/lib/sms/store"
 import { AuthSmsInputDigits } from "./auth-sms-input-digits"
-import { AuthSmsReinputPhone } from "./auth-sms-reinput-phone"
-import { AuthSmsResendCode } from "./auth-sms-resend-code"
+import { SmsReInputPhone } from "./auth-sms-reinput-phone"
+import { SmsResendCode } from "./auth-sms-resend-code"
 
-export const SmsSignIn = () => {
+export const SmsStage2InputCode = () => {
   const [digits, setDigits] = useAtom(smsCodeAtom)
 
+  const refInput = useRef<HTMLInputElement>(null)
   const smsSignIn = useSmsSignIn()
 
   // 监听数字输入
@@ -41,12 +43,30 @@ export const SmsSignIn = () => {
       >
         <div>请输入发送到您手机的短信验证码</div>
 
-        <AuthSmsReinputPhone />
+        <input
+          autoFocus
+          ref={refInput}
+          placeholder="000000"
+          type={"text"}
+          // ref: https://dev.to/madsstoumann/using-a-single-input-for-one-time-code-352l
+          autoComplete="one-time-code"
+          inputMode="numeric"
+          maxLength={6}
+          pattern="\d{6}"
+          onChange={(event) => {
+            console.log("-- input changed: ", event.currentTarget.value)
+            toast.info(`-- input changed: ${event.currentTarget.value}`, {
+              duration: 0,
+              closeButton: true,
+            })
+          }}
+        />
+        <SmsReInputPhone />
       </div>
 
-      <AuthSmsInputDigits />
+      {/*<AuthSmsInputDigits />*/}
 
-      <AuthSmsResendCode />
+      <SmsResendCode />
     </div>
   )
 }

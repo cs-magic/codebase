@@ -29,7 +29,11 @@ import {
 import { cn } from "../../packages/common/lib/utils"
 import { WECHAT_PROVIDER_ID } from "../../packages/common/lib/wechat/auth/config"
 
-export const SmsSendCode = ({ BrandComp }: { BrandComp: ComponentType }) => {
+export const SmsStage1SendCode = ({
+  BrandComp,
+}: {
+  BrandComp: ComponentType
+}) => {
   const { isWechat } = useBrowserEnvironment()
   const [downtime] = useAtom(smsDowntimeAtom)
   const [, setPhone] = useAtom(smsPhoneAtom)

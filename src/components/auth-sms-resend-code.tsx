@@ -3,7 +3,7 @@ import { useAtom } from "jotai"
 import { smsDowntimeAtom } from "../../packages/common/lib/sms/store"
 import { useSmsSendCode } from "../../packages/common/lib/sms/hooks/use-sms-send-code"
 
-export const AuthSmsResendCode = () => {
+export const SmsResendCode = () => {
   const [downtime] = useAtom(smsDowntimeAtom)
   const sendCode = useSmsSendCode()
 

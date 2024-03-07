@@ -1,4 +1,5 @@
 import { useAtom } from "jotai"
+import { useEffect } from "react"
 import { toast } from "sonner"
 import { uiLoadingAlertDialogAtom } from "../../../store/ui"
 import { $sendSms } from "../server/actions"
@@ -28,6 +29,14 @@ export const useSmsSendCode = () => {
     smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
   const { phone } = smsSendPayload
 
+  useEffect(() => {
+    if (smsDowntime > 0) {
+      setTimeout(() => {
+        setSmsDowntime((v) => v - 1)
+      }, 1000)
+    }
+  }, [smsDowntime])
+
   return async () => {
     setLoading(true)
     const ok = await $sendSms(phone, smsExpireSeconds, sendApproach) // 异步
@@ -40,12 +49,5 @@ export const useSmsSendCode = () => {
 
     setSmsStage("toAuth")
     setSmsDowntime(smsCountdownSeconds)
-
-    const f = () => {
-      setSmsDowntime((v) => v - 1)
-      // todo: realtime?
-      if (smsDowntime > 0) setTimeout(f, 1000)
-    }
-    setTimeout(f, 1000)
   }
 }

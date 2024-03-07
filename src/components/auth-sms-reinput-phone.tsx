@@ -3,7 +3,7 @@ import { smsPhoneAtom, smsStageAtom } from "../../packages/common/lib/sms/store"
 import { EditIcon } from "lucide-react"
 import { useAtom } from "jotai"
 
-export const AuthSmsReinputPhone = () => {
+export const SmsReInputPhone = () => {
   const [phone] = useAtom(smsPhoneAtom)
   const [, setStage] = useAtom(smsStageAtom)
 

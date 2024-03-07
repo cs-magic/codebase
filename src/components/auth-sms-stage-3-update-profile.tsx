@@ -6,7 +6,7 @@ import { smsImageAtom, smsNameAtom } from "../../packages/common/lib/sms/store"
 import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 
-export const SmsWithName = () => {
+export const SmsStage3UpdateProfile = () => {
   const [name] = useAtom(smsNameAtom)
   const [image] = useAtom(smsImageAtom)
   const updateProfile = useUserUpdateProfile()
