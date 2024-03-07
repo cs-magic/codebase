@@ -14,6 +14,7 @@ export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
       let signatureUrl: string = dataGetId.data.signatureUrl
       if (isHttps) signatureUrl = signatureUrl.replace("http://", "https://")
 
+      console.log("putting file into: ", signatureUrl)
       const resPut = await fetch(signatureUrl, {
         method: "PUT",
         headers: new Headers({

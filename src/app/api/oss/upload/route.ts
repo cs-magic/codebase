@@ -8,6 +8,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<IApi>> {
   const signatureUrl = oss.signatureUrl(id, {
     method: "PUT",
     "Content-Type": "image/png",
+    expires: 0, // default 1800
   })
   console.log("[OSS] get signature url: ", signatureUrl)
   return NextResponse.json({ success: true, data: { signatureUrl } })

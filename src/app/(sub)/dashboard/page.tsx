@@ -1,8 +1,5 @@
 "use client"
-import ansiColors from "ansi-colors"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import { FlexContainer } from "../../../../packages/common/components/flex-container"
 import { Button } from "../../../../packages/common/components/ui/button"
 import {
@@ -27,14 +24,6 @@ export default function DashboardPage() {
   const user = session.data?.user
   const name = useUserDraftName()
   const image = useUserDraftImage()
-
-  const router = useRouter()
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      console.log(ansiColors.blue(`router push --> /`))
-      return router.push("/")
-    }
-  }, [session.status])
 
   const updateProfile = useUserUpdateProfile()
 
