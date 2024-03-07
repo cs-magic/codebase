@@ -5,6 +5,11 @@ export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   select: {
     id: true,
     updatedAt: true,
+    titleResponse: {
+      select: {
+        content: true,
+      },
+    },
   },
 })
 export type IConvBase = Prisma.ConvGetPayload<typeof convSummarySchema>

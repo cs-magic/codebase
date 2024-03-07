@@ -1,6 +1,6 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convIdAtom } from "@/store/conv"
+import { convIdAtom, serverConvDetailAtom } from "@/store/conv"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
@@ -16,16 +16,19 @@ import {
 } from "../../packages/common/components/ui/dropdown-menu"
 import { api } from "../../packages/common/lib/trpc/react"
 import { cn } from "../../packages/common/lib/utils"
+import { IConvBase } from "../schema/conv"
 
-export const SidebarConversationItem = ({
-  conv,
-}: {
-  conv: { id: string; title: string | null }
-}) => {
+export const SidebarConversationItem = ({ conv }: { conv: IConvBase }) => {
   const [convId] = useAtom(convIdAtom)
+  const [convDetail] = useAtom(serverConvDetailAtom)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()
+
+  /**
+   * 当前会话用detail，否则用base
+   */
+  const theConv = convDetail?.id === conv.id ? convDetail : conv
 
   return (
     <Link
@@ -38,15 +41,21 @@ export const SidebarConversationItem = ({
     >
       <InputWithEnter
         placeholder={"Untitled"}
-        defaultValue={conv.title ?? ""}
+        defaultValue={theConv.titleResponse?.content ?? ""}
         className={cn(
           "bg-transparent border-none focus-visible:ring-0 cursor-default",
           convId !== conv.id && "caret-transparent", // 光标透明，这样就不会误以为在输入了，而且主textarea会抢光标的
         )}
-        onEnter={(title) => {
+        onEnter={(content) => {
           updateConv.mutate({
             where: { id: conv.id },
-            data: { title },
+            data: {
+              titleResponse: {
+                update: {
+                  content,
+                },
+              },
+            },
           })
         }}
       />

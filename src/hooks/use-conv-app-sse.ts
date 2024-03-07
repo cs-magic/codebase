@@ -1,9 +1,10 @@
+import { ConvTitleResponse } from "@prisma/client"
 import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
 import { getTriggerID } from "../lib/utils"
-import { IUpdateResponse } from "../schema/conv"
+import { IConvDetail, IUpdateResponse } from "../schema/conv"
 import { stopGeneratingAtom } from "../store/app"
 import {
   checkRespondingAtom,
@@ -81,6 +82,13 @@ export const useConvTitleSse = () => {
   const [, setConv] = useAtom(serverConvDetailAtom)
 
   const refSSE = useRef<EventSource>()
+  const update = (func: (response: ConvTitleResponse) => void) => {
+    setConv((conv) =>
+      produce(conv, (conv) => {
+        if (conv?.titleResponse) func(conv.titleResponse)
+      }),
+    )
+  }
 
   useEffect(() => {
     if (!convId || !requestId) return
@@ -88,19 +96,18 @@ export const useConvTitleSse = () => {
     refSSE.current = fetchSSE(`/api/llm?r=${getTriggerID(requestId, convId)}`, {
       onOpen: () => {
         console.log("-- STARTED")
+        update((response) => (response.content = ""))
       },
       onData: (data) => {
         console.debug({ data })
-        setConv((conv) =>
-          produce(conv, (conv) => {
-            if (conv?.titleResponse) {
-              conv.titleResponse.content += data
-            }
-          }),
-        )
+        update((response) => (response.content += data))
       },
       onError: (error) => {
         console.warn({ error })
+        update((response) => (response.error = error))
+      },
+      onFinal: () => {
+        update((response) => (response.tEnd = new Date()))
       },
     })
   }, [requestId])

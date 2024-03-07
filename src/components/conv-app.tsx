@@ -30,7 +30,7 @@ export const ConvApp = ({
     : [
         ...commonContext,
         {
-          content: response.error ?? response.response ?? "",
+          content: response.error ?? response.content ?? "",
           role: "assistant" as RoleType,
           updatedAt: response.updatedAt,
           isError: !!response.error,
