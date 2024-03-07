@@ -67,15 +67,22 @@ export const SmsStage2InputCode = () => {
             </span>
 
             {[...Array(6)].map((value, index) => (
-              <span
+              <div
                 key={index}
                 className={cn(
-                  "w-8 h-8 sm:w-12 sm:h-12 rounded-lg  text-center p-0 border",
+                  "w-8 h-8 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-center p-0 border",
+                  index === digits.length && "caret-input animate-pulse",
                   SMS_DIGIT_SIZE,
                 )}
               >
-                {digits[index]}
-              </span>
+                {index < digits.length ? (
+                  digits[index]
+                ) : index === digits.length ? (
+                  <span className={"cursor"} />
+                ) : (
+                  ""
+                )}
+              </div>
             ))}
           </div>
         </Label>
