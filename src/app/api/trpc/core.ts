@@ -195,8 +195,8 @@ export const coreRouter = createTRPCRouter({
         },
       })
 
-      await Promise.all([
-        ...conv.requests
+      await Promise.all(
+        conv.requests
           .find((r) => r.id === requestId)!
           .responses.map(async (r) => {
             await triggerLLM({
@@ -210,7 +210,10 @@ export const coreRouter = createTRPCRouter({
               llmDelay: input.llmDelay,
             })
           }),
+      )
 
+      // 如果已经更新了就不要改了
+      if (!conv.titleResponse?.content) {
         await triggerLLM({
           requestId,
           task: {
@@ -229,8 +232,8 @@ export const coreRouter = createTRPCRouter({
             ...context,
           ],
           llmDelay: input.llmDelay,
-        }),
-      ])
+        })
+      }
       return requestId
     }),
 })

@@ -6,10 +6,10 @@ import { IconContainer } from "../../packages/common/components/icon-container"
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
 import { cn } from "../../packages/common/lib/utils"
 import { userPromptAtom } from "../../packages/common/store/user"
-import { useConvQueryOnEnterV2 } from "../hooks/use-conv-query-on-enter-v2"
+import { useConvQuery } from "../hooks/use-conv-query"
 
 export const HomeQueryInput = () => {
-  const query = useConvQueryOnEnterV2()
+  const query = useConvQuery()
   const [prompt] = useAtom(userPromptAtom)
 
   return (

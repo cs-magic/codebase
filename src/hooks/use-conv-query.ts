@@ -23,7 +23,7 @@ import { IMessageInChat } from "../schema/message"
  * 2. 用户在会话里query
  * @param query
  */
-export function useConvQueryOnEnterV2() {
+export function useConvQuery() {
   let [conv] = useAtom(serverConvDetailAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)

@@ -1,10 +1,10 @@
 "use client"
 
 import { TextareaAuto } from "../../packages/common/components/textarea-auto"
-import { useConvQueryOnEnterV2 } from "../hooks/use-conv-query-on-enter-v2"
+import { useConvQuery } from "../hooks/use-conv-query"
 
 export const ConvQuery = () => {
-  const query = useConvQueryOnEnterV2()
+  const query = useConvQuery()
 
   return (
     <TextareaAuto
