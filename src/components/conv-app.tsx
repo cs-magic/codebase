@@ -39,7 +39,7 @@ export const ConvApp = ({
 
   useConvSSE(app.id)
 
-  // console.log({ appId: app.id, commonContext, response })
+  // console.log({ appId: config.id, commonContext, response })
 
   return (
     <div

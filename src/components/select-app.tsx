@@ -54,7 +54,7 @@ export const SelectApp = ({
 
       <span className={"grow"} />
       <span className={"text-muted-foreground text-sm"}>
-        {/*by {app.user}*/}
+        {/*by {config.user}*/}
         by {app.model.company.title}
       </span>
     </div>

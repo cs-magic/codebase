@@ -23,7 +23,7 @@ export const uiSelectAppsDialogOpenAtom = atom(false)
 // todo: avoid persist apps
 export const appsPersistedAtom = atomWithStorage<IAppDetail[]>("apps.list", [])
 
-// todo: avoid persist the cur app
+// todo: avoid persist the cur config
 export const appIdPersistedAtom = atomWithStorage("conv.apps.cur", "")
 
 //////////////////////////////

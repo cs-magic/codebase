@@ -23,7 +23,7 @@ export const requestSchema = Prisma.validator<Prisma.RequestDefaultArgs>()({
       ...responseSchema,
       // 这个要加，否则回答问题的时候会乱序
       // orderBy: {
-      //   app: {
+      //   config: {
       //     createdAt: "asc",
       //   },
       // },

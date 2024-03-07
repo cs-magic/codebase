@@ -21,14 +21,14 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     if (convsInDB) setConvs(convsInDB)
   }, [convsInDB])
 
-  // 3. 当有persisted app 但没有selected app时，自动选第一个
+  // 3. 当有persisted config 但没有selected app时，自动选第一个
   useEffect(() => {
     if (!persistedApps.length) return
     // 确保当前选中的app还在列表内
     if (selectedAppID && persistedApps.find((p) => p.id === selectedAppID))
       return
     const firstAppId = persistedApps[0]!.id
-    console.log("-- setting selected app id to be the first one: ", {
+    console.log("-- setting selected config id to be the first one: ", {
       firstAppId,
     })
     setSelectedAppID(firstAppId)

@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 /**
- * todo: use from app model
+ * todo: use from config model
  */
 export const createAppSchema = z.object({
   id: z.string(),

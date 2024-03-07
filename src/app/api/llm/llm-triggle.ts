@@ -51,7 +51,7 @@ export const triggerLLM = async ({
   const start = async () => {
     try {
       if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(app.modelName)) {
-        const res = await callChatGPT({ app, context })
+        const res = await callChatGPT({ config: app, context })
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string

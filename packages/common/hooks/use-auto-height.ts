@@ -6,7 +6,7 @@ export const useAutoHeight = () => {
   useEffect(() => {
     const setInnerHeight = () => {
       document.documentElement.style.setProperty(
-        "--app-height",
+        "--config-height",
         `${window.innerHeight}px`,
       )
     }

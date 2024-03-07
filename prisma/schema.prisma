@@ -235,8 +235,8 @@ model Response {
   request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 
-  app   App    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId String
+  config App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId  String
 
   response String?
   error    String?
