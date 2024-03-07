@@ -49,16 +49,16 @@ export default function RootLayout({
     // html should be at the top, for providing context
     <html lang="zh" suppressHydrationWarning>
       <body className={cn(`font-sans`, inter.variable)}>
-        <main className={"w-screen h-screen relative"}>
-          {/* 1. data layer */}
-          <JotaiProvider>
-            <SessionProvider>
-              <TRPCReactProvider>
-                <LLMProvider>
-                  {/* 2. ui layer */}
-                  <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                    <TooltipProvider>
-                      <ScreenProvider>
+        {/* 1. data layer */}
+        <JotaiProvider>
+          <SessionProvider>
+            <TRPCReactProvider>
+              <LLMProvider>
+                {/* 2. ui layer */}
+                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                  <TooltipProvider>
+                    <ScreenProvider>
+                      <main className={"w-screen relative overflow-hidden"}>
                         {children}
 
                         <Toaster
@@ -85,14 +85,14 @@ export default function RootLayout({
                             <Devtool />
                           </>
                         )}
-                      </ScreenProvider>
-                    </TooltipProvider>
-                  </ThemeProvider>
-                </LLMProvider>
-              </TRPCReactProvider>
-            </SessionProvider>
-          </JotaiProvider>
-        </main>
+                      </main>
+                    </ScreenProvider>
+                  </TooltipProvider>
+                </ThemeProvider>
+              </LLMProvider>
+            </TRPCReactProvider>
+          </SessionProvider>
+        </JotaiProvider>
       </body>
     </html>
   )

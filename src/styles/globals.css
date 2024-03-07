@@ -102,6 +102,14 @@
 
 }
 
+main {
+    height: 100vh;
+    /*height: -webkit-fill-available;*/
+    /*max-height: var(--app-height);*/
+    height: var(--app-height);
+}
+
+
 
 /*
 自定义遮罩层样式，父级元素加 relative，该元素加 absolute

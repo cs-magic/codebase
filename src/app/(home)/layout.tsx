@@ -1,12 +1,12 @@
+import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import React, { PropsWithChildren } from "react"
-import { Footer } from "@/components/footer"
 import { FlexContainer } from "../../../packages/common/components/flex-container"
 
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (
     <FlexContainer orientation={"vertical"} className={"!p-0"}>
-      <Header withBrand />
+      <Header />
 
       <div className={"grow w-full overflow-auto"}>{children}</div>
 

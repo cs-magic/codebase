@@ -1,7 +1,8 @@
 "use client"
-import { PropsWithChildren, useEffect } from "react"
-import { useMeasure } from "react-use"
 import { useAtom } from "jotai"
+import { PropsWithChildren, useEffect } from "react"
+import { useMeasure, useWindowSize } from "react-use"
+import { toast } from "sonner"
 
 import { uiScreenAtom } from "../store/ui"
 
@@ -15,7 +16,7 @@ export const ScreenProvider = ({ children }: PropsWithChildren) => {
   }, [width, height])
 
   return (
-    <div className={"w-screen h-screen"} ref={ref}>
+    <div id={"screen-measure"} ref={ref}>
       {children}
     </div>
   )
