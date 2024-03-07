@@ -27,8 +27,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "Sokka",
-  description: "Sokka | Soga | WayToAGI | CS-Magic | CSMagic",
+  title: "领先的 AI 评测平台",
+  description: "Eval | AI评测 | CSMagic | WayToAGI",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }
 
