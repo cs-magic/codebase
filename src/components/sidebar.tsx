@@ -6,11 +6,16 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { HTMLAttributes } from "react"
 import { Button } from "../../packages/common/components/ui/button"
+import { cn } from "../../packages/common/lib/utils"
 import { devEnabledAtom } from "../../packages/common/store"
 import { SidebarConversationItem } from "./sidebar-conversation"
 
-export const Sidebar = () => {
+export const Sidebar = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) => {
   const [conversations] = useAtom(serverConvListFAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
@@ -19,7 +24,13 @@ export const Sidebar = () => {
   const deleteAllConversations = useDelAllConvs()
 
   return (
-    <div className={"hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col"}>
+    <div
+      className={cn(
+        "hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col",
+        className,
+      )}
+      {...props}
+    >
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
