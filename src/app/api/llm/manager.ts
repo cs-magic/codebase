@@ -33,8 +33,8 @@ export const llmInit = async (
   if (!trigger) return
 
   // 1. old (request.data 也在持续增加)
-  const { response, error } = trigger.response
-  if (response) await llmWrite(writer, { event: "onData", data: response })
+  const { content, error } = trigger.response
+  if (content) await llmWrite(writer, { event: "onData", data: content })
   if (error) await llmWrite(writer, { event: "onError", data: error })
 
   // 2. new
