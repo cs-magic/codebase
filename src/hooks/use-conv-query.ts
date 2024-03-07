@@ -2,6 +2,7 @@ import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import {
   bestContextAtom,
   responseFinishedAtom,
+  responsesAtom,
   serverConvDetailAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
@@ -40,25 +41,29 @@ export function useConvQuery() {
   const addConv = api.core.addConv.useMutation()
   const utils = api.useUtils()
 
+  const [responses] = useAtom(responsesAtom)
   const [responseFinished] = useAtom(responseFinishedAtom)
 
   return async () => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
       query,
+      responses,
       responseFinished,
     })
 
-    if (!responseFinished) return
+    if (!responseFinished) return toast.warning("等待流完成")
 
-    if (!query) return toast.error("不能为空")
+    if (!query) return toast.warning("不能为空")
 
     if (!persistedApps.length) {
       setSelectAppsOpen(true)
-      toast.error("至少需要选中一种模型")
-      return
+      return toast.warning("至少需要选中一种模型")
     }
 
-    if (session.status !== "authenticated") return setOpen(true)
+    if (session.status !== "authenticated") {
+      setOpen(true)
+      return toast.warning("请登录")
+    }
 
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
     if (!conv) {

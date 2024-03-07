@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 import { IMessageInChat } from "../schema/message"
 import { ConvAppMessage } from "./conv-app-message"
 
@@ -11,12 +12,19 @@ export const ConvAppMessages = ({
   logo: string | null
   context: IMessageInChat[]
 }) => {
+  const scroll = () => {
+    refScroll.current?.scrollIntoView({ behavior: "auto" })
+  }
+
   const refScroll = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    refScroll.current?.scrollIntoView({ behavior: "auto" })
+    scroll()
   }, [context])
 
-  // console.log({ appId, context })
+  const softKeyboardOn = useSoftKeyboardOn()
+  useEffect(() => {
+    scroll()
+  }, [softKeyboardOn])
 
   return (
     <div className={"grow overflow-auto"}>

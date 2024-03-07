@@ -33,7 +33,7 @@ export const ConvApps = () => {
         gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
       }}
     >
-      {persistedApps.slice(0, isMobile ? 1 : persistedApps.length)?.map(
+      {persistedApps.map(
         // 同一个app-id是否可以多个呢？请求应该要额外小心处理！
         (app, index) => (
           <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>

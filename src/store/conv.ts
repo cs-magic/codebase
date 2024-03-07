@@ -50,7 +50,7 @@ export const bestResponseAtom = atom<IResponse | undefined>((get) =>
 )
 
 export const responseFinishedAtom = atom<boolean>((get) =>
-  get(responsesAtom)?.every((r) => !!r.tEnd),
+  get(responsesAtom)?.every((r) => !r || !!r.tEnd),
 )
 
 export const bestContextAtom = atom<IContext>((get) => {
