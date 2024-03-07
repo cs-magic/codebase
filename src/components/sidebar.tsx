@@ -10,18 +10,18 @@ import { HTMLAttributes } from "react"
 import { Button } from "../../packages/common/components/ui/button"
 import { cn } from "../../packages/common/lib/utils"
 import { devEnabledAtom } from "../../packages/common/store"
-import { SidebarConversationItem } from "./sidebar-conversation"
+import { SidebarConvItem } from "./sidebar-conversation"
 
 export const Sidebar = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => {
-  const [conversations] = useAtom(serverConvListFAtom)
+  const [convs] = useAtom(serverConvListFAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
   const router = useRouter()
-  const addConversation = useAddConv()
-  const deleteAllConversations = useDelAllConvs()
+  const addConv = useAddConv()
+  const delAllConvs = useDelAllConvs()
 
   return (
     <div
@@ -35,7 +35,7 @@ export const Sidebar = ({
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
         onClick={async () => {
-          const data = await addConversation()
+          const data = await addConv()
           // 路由跳转，并且避免再拿数据
           console.log(ansiColors.blue(`router push --> /tt/${data.id}`))
           router.push(`/tt/${data.id}`) // 异步
@@ -49,7 +49,7 @@ export const Sidebar = ({
         <Button
           className={"w-full gap-2 my-2 shrink-0"}
           variant={"destructive"}
-          onClick={deleteAllConversations}
+          onClick={delAllConvs}
         >
           <MinusIcon className={"w-4 h-4"} />
           清空会话
@@ -57,8 +57,8 @@ export const Sidebar = ({
       )}
 
       <div className={"grow overflow-auto"}>
-        {conversations.map((conversation) => (
-          <SidebarConversationItem conv={conversation} key={conversation.id} />
+        {convs.map((conv) => (
+          <SidebarConvItem conv={conv} key={conv.id} />
         ))}
       </div>
     </div>

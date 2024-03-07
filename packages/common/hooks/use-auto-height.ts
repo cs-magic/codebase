@@ -3,8 +3,8 @@
 import { uiInnerHeight, uiViewportHeight } from "@/store/ui"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
-import { isNamedDeclarationWithName } from "ts-api-utils"
-import { serverLog } from "../lib/actions"
+import { isServer } from "../lib/utils"
+import { useMounted } from "./use-mounted"
 
 /**
  * ref: https://gist.github.com/MartijnHols/e9f4f787efa9190885a708468f63c5bb
@@ -14,10 +14,10 @@ export const useAutoHeight = () => {
   const [ih, setIh] = useAtom(uiInnerHeight)
 
   const getHeight = useCallback(() => {
-    const vh = window.visualViewport?.height ?? null
+    const vh = isServer ? 0 : window.visualViewport?.height ?? null
     setVh(vh)
 
-    const ih = window.innerHeight
+    const ih = isServer ? 0 : window.innerHeight
     setIh(ih)
 
     return vh ?? ih

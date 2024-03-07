@@ -1,9 +1,11 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
 import { convIdAtom, serverConvDetailAtom } from "@/store/conv"
+import { produce } from "immer"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
+import { toast } from "sonner"
 
 import { IconContainer } from "../../packages/common/components/icon-container"
 import { InputWithEnter } from "../../packages/common/components/input"
@@ -18,9 +20,9 @@ import { api } from "../../packages/common/lib/trpc/react"
 import { cn } from "../../packages/common/lib/utils"
 import { IConvBase } from "../schema/conv"
 
-export const SidebarConversationItem = ({ conv }: { conv: IConvBase }) => {
+export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   const [convId] = useAtom(convIdAtom)
-  const [convDetail] = useAtom(serverConvDetailAtom)
+  const [convDetail, setConv] = useAtom(serverConvDetailAtom)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()
@@ -29,6 +31,7 @@ export const SidebarConversationItem = ({ conv }: { conv: IConvBase }) => {
    * 当前会话用detail，否则用base
    */
   const theConv = convDetail?.id === conv.id ? convDetail : conv
+  const utils = api.useUtils()
 
   return (
     <Link
@@ -47,16 +50,25 @@ export const SidebarConversationItem = ({ conv }: { conv: IConvBase }) => {
           convId !== conv.id && "caret-transparent", // 光标透明，这样就不会误以为在输入了，而且主textarea会抢光标的
         )}
         onEnter={(content) => {
-          updateConv.mutate({
-            where: { id: conv.id },
-            data: {
-              titleResponse: {
-                update: {
-                  content,
+          updateConv.mutate(
+            {
+              where: { id: conv.id },
+              data: {
+                titleResponse: {
+                  update: {
+                    content,
+                  },
                 },
               },
             },
-          })
+            {
+              onSuccess: (data) => {
+                toast.success(content)
+                utils.core.listConv.invalidate()
+                if (conv.id === convId) setConv(data)
+              },
+            },
+          )
         }}
       />
 
