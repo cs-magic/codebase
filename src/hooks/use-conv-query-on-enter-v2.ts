@@ -4,7 +4,6 @@ import {
   responseFinishedAtom,
   serverConvDetailAtom,
 } from "@/store/conv"
-import { useIsFetching } from "@tanstack/react-query"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
@@ -16,6 +15,7 @@ import {
   uiCheckAuthAlertDialogOpenAtom,
   userPromptAtom,
 } from "../../packages/common/store/user"
+import { parseApp } from "../../packages/llm/schema"
 import { IMessageInChat } from "../schema/message"
 
 /**
@@ -65,7 +65,7 @@ export function useConvQueryOnEnterV2() {
       conv = await addConv.mutateAsync(
         {
           title: undefined,
-          apps: persistedApps,
+          apps: persistedApps.map((a) => parseApp(a)),
         },
         {
           onError: () => {
@@ -90,7 +90,7 @@ export function useConvQueryOnEnterV2() {
       {
         convId: conv.id,
         context: newContext,
-        apps: persistedApps,
+        apps: persistedApps.map((a) => parseApp(a)),
         llmDelay,
       },
       {

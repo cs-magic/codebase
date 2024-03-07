@@ -57,11 +57,11 @@ export const bestContextAtom = atom<IContext>((get) => {
   const commonContext = get(commonContextAtom)
   const bestResponse = get(bestResponseAtom)
   if (!bestResponse) return commonContext
-  const { response, error, updatedAt } = bestResponse
+  const { content, error, updatedAt } = bestResponse
   return [
     ...commonContext,
     {
-      content: error ?? response ?? "",
+      content: error ?? content ?? "",
       role: "assistant",
       isError: !!error,
       updatedAt,

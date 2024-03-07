@@ -10,29 +10,41 @@ import {
 } from "../../../../packages/common/lib/sse/schema"
 import { sleep } from "../../../../packages/common/lib/utils"
 import { callChatGPT } from "../../../../packages/llm/models/openai"
+import { ICreateCallLLM } from "../../../../packages/llm/schema"
 import { llmManager } from "./manager"
-import { App } from ".prisma/client"
 
 export const triggerLLM = async ({
+  task,
   requestId,
   app,
   context,
   llmDelay = 0,
 }: {
+  task:
+    | {
+        convId: undefined
+        appId: string
+      }
+    | {
+        convId: string
+        appId: undefined
+      }
   requestId: string
-  app: App
+  app: ICreateCallLLM
   context: ILLMMessage[]
   llmDelay?: number
   // todo: more args
 }) => {
-  const appId = app.id
-  const triggerId = getTriggerID(requestId, appId)
+  const triggerId = getTriggerID(requestId, task.convId ?? task.appId)
 
   const response: Prisma.ResponseUncheckedCreateInput = {
-    appId,
     tStart: new Date(),
     requestId,
-    response: "", // init or undefined, affecting later concat string
+    content: "", // init or undefined, affecting later concat string
+    appId:
+      task.appId ??
+      // compatible with conv
+      "",
   }
 
   const r: ISSERequest = (llmManager[triggerId] = {
@@ -50,12 +62,21 @@ export const triggerLLM = async ({
 
   const start = async () => {
     try {
+      const {
+        // todo: dynamic openai api key
+        openAIApiKey,
+        ...config
+      } = app
       if (["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(app.modelName)) {
-        const res = await callChatGPT({ config: app, context })
+        const res = await callChatGPT({
+          // null --> default
+          config,
+          context,
+        })
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string
-          r.response.response += token
+          r.response.content += token
           // console.debug("[llm] token: ", { triggerID: requestId, token })
           pushToClients({ event: "onData", data: token })
           await sleep(llmDelay)
@@ -71,19 +92,39 @@ export const triggerLLM = async ({
     } finally {
       r.response.tEnd = new Date()
       // 只在最后更新一次数据库
-      const responseInDB = await db.response.update({
-        where: {
-          requestId_appId: {
-            requestId,
-            appId,
+      if (task.appId) {
+        await db.response.update({
+          where: {
+            requestId_appId: {
+              requestId,
+              appId: task.appId,
+            },
           },
-        },
-        data: r.response,
-      })
+          data: r.response,
+        })
+      } else {
+        const { requestId, appId, ...props } = r.response
+        await db.convTitleResponse.upsert({
+          where: {
+            convId: task.convId,
+          },
+          create: {
+            ...props,
+            conv: {
+              connect: {
+                id: task.convId,
+              },
+            },
+          },
+          update: {
+            ...props,
+          },
+        })
+      }
 
       pushToClients({ event: "close" })
       delete llmManager[triggerId] // clean manager
-      console.log("[sse] closed: ", responseInDB)
+      console.log("[sse] closed")
     }
   }
 

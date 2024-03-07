@@ -2,6 +2,8 @@ import { appsPersistedAtom } from "@/store/app"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 import { api } from "../../packages/common/lib/trpc/react"
+import { parseApp } from "../../packages/llm/schema"
+import { createAppSchema } from "../schema/app.create"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话 （包含query、路由）
@@ -20,7 +22,7 @@ export function useAddConv() {
     return addConv.mutateAsync(
       {
         title,
-        apps: persistedApps,
+        apps: persistedApps.map((a) => parseApp(a)),
       },
       {
         onError: () => {

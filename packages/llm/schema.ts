@@ -1,3 +1,5 @@
+import { ICreateApp } from "@/schema/app.create"
+import { App } from "@prisma/client"
 import { z } from "zod"
 
 export const createCallLLMSchema = z.object({
@@ -21,3 +23,20 @@ export const callLLMSchema = createCallLLMSchema.extend({
   systemPrompt: z.string().optional(),
 })
 export type ICallLLMConfig = z.infer<typeof callLLMSchema>
+
+export const parseApp = (app: App): ICreateApp => ({
+  id: app.id,
+  modelName: app.modelName,
+
+  n: app.n ?? undefined,
+  openAIApiKey: app.openAIApiKey ?? undefined,
+  stop: app.stop ?? undefined,
+  user: app.user ?? undefined,
+  frequencyPenalty: app.frequencyPenalty ?? undefined,
+  maxTokens: app.maxTokens ?? undefined,
+  topP: app.topP ?? undefined,
+  presencePenalty: app.presencePenalty ?? undefined,
+  streaming: app.streaming ?? undefined,
+  temperature: app.temperature ?? undefined,
+  timeout: app.timeout ?? undefined,
+})

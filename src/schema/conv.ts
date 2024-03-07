@@ -5,7 +5,6 @@ export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   select: {
     id: true,
     updatedAt: true,
-    title: true,
   },
 })
 export type IConvBase = Prisma.ConvGetPayload<typeof convSummarySchema>
@@ -34,6 +33,7 @@ export type IRequest = Prisma.RequestGetPayload<typeof requestSchema>
 
 export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
   include: {
+    titleResponse: true,
     apps: {
       ...appDetailSchema,
       // 不要加这个，否则本地初始化后会乱序

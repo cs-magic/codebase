@@ -15,6 +15,7 @@ import { openAlertDialogAtom } from "../../../../../packages/common/store/ui"
 import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
+import { useConvTitleSse } from "../../../../hooks/use-conv-app-sse"
 
 export default function ConvPage({
   params: { slug },
@@ -124,6 +125,8 @@ export default function ConvPage({
   }, [reqIdFromUrl, convFromServer])
 
   // if (!loaded) return null
+
+  useConvTitleSse()
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

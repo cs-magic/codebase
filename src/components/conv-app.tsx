@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai"
 import { cn } from "../../packages/common/lib/utils"
-import { useConvSSE } from "../hooks/use-conv-sse"
+import { useConvAppSse } from "../hooks/use-conv-app-sse"
 import { IAppDetail } from "../schema/app.detail"
 import { IContext, RoleType } from "../schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
@@ -37,7 +37,7 @@ export const ConvApp = ({
         },
       ]
 
-  useConvSSE(app.id)
+  useConvAppSse(app.id)
 
   // console.log({ appId: config.id, commonContext, response })
 

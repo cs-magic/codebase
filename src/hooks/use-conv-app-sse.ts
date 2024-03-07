@@ -1,3 +1,4 @@
+import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common/lib/sse/fetch-sse"
@@ -6,11 +7,13 @@ import { IUpdateResponse } from "../schema/conv"
 import { stopGeneratingAtom } from "../store/app"
 import {
   checkRespondingAtom,
+  convIdAtom,
   requestIdAtom,
+  serverConvDetailAtom,
   updateResponseAtom,
 } from "../store/conv"
 
-export const useConvSSE = (appId: string) => {
+export const useConvAppSse = (appId: string) => {
   const [checkResponding] = useAtom(checkRespondingAtom)
   const [, updateResponse] = useAtom(updateResponseAtom)
   const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
@@ -39,13 +42,13 @@ export const useConvSSE = (appId: string) => {
         console.log("-- STARTED")
         update((s) => {
           s.tStart = new Date()
-          s.response = ""
+          s.content = ""
         })
       },
       onData: (data) => {
         // console.debug({ data })
         update((s) => {
-          s.response += data
+          s.content += data
         })
       },
       onError: (error) => {
@@ -70,4 +73,44 @@ export const useConvSSE = (appId: string) => {
     // 复原
     stopGenerating(false)
   }, [stoppedGenerating])
+}
+
+export const useConvTitleSse = () => {
+  const [convId] = useAtom(convIdAtom)
+  const [requestId] = useAtom(requestIdAtom)
+  const [, setConv] = useAtom(serverConvDetailAtom)
+
+  const refSSE = useRef<EventSource>()
+
+  useEffect(() => {
+    if (!convId || !requestId) return
+
+    refSSE.current = fetchSSE(`/api/llm?r=${getTriggerID(requestId, convId)}`, {
+      onOpen: () => {
+        console.log("-- STARTED")
+      },
+      onData: (data) => {
+        console.debug({ data })
+        setConv((conv) =>
+          produce(conv, (conv) => {
+            if (conv?.titleResponse) {
+              conv.titleResponse.content += data
+            }
+          }),
+        )
+      },
+      onError: (error) => {
+        console.warn({ error })
+      },
+    })
+  }, [requestId])
+
+  useEffect(() => {
+    const sse = refSSE.current
+    // console.log({ sse, stoppedGenerating })
+
+    if (sse && sse.readyState !== sse.CLOSED) {
+      sse.close()
+    }
+  }, [])
 }

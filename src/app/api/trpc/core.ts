@@ -7,6 +7,7 @@ import {
   publicProcedure,
 } from "../../../../packages/common/lib/trpc/trpc"
 import { getNewId } from "../../../../packages/common/lib/utils"
+import { createCallLLMSchema, parseApp } from "../../../../packages/llm/schema"
 import {
   ConvUpdateInputSchema,
   ConvWhereUniqueInputSchema,
@@ -15,11 +16,7 @@ import {
 
 import { createAppSchema } from "../../../schema/app.create"
 import { appDetailSchema } from "../../../schema/app.detail"
-import {
-  convDetailSchema,
-  convSummarySchema,
-  requestSchema,
-} from "../../../schema/conv"
+import { convDetailSchema, convSummarySchema } from "../../../schema/conv"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
 import { userDetailSchema } from "../../../schema/user.detail"
@@ -104,6 +101,9 @@ export const coreRouter = createTRPCRouter({
               create: { ...app, user: ctx.user.id },
             })),
           },
+          titleResponse: {
+            create: {},
+          },
         },
         ...convDetailSchema,
       }),
@@ -150,49 +150,87 @@ export const coreRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       const requestId = getNewId()
-      const context = input.context
+      const { context, convId } = input
+
+      console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
+
       const conv = await db.conv.update({
         where: { id: input.convId },
         ...convDetailSchema,
         data: {
           currentRequestId: requestId,
+
+          // todo: only once
+          titleResponse: {
+            connectOrCreate: {
+              where: { convId },
+              create: {
+                tTrigger: new Date(),
+              },
+            },
+          },
+
           requests: {
             create: {
               id: requestId,
               context,
               responses: {
-                create: input.apps.map((app) => ({
-                  tTrigger: new Date(),
-                  app: {
-                    connectOrCreate: {
-                      where: { id: app.id },
-                      create: {
-                        ...app,
-                        user: ctx.user.id,
+                create: [
+                  ...input.apps.map((app) => ({
+                    tTrigger: new Date(),
+                    app: {
+                      connectOrCreate: {
+                        where: { id: app.id },
+                        create: {
+                          ...app,
+                          user: ctx.user.id,
+                        },
                       },
                     },
-                  },
-                })),
+                  })),
+                ],
               },
             },
           },
         },
       })
 
-      console.log("-- query LLM: ", { input })
-
-      await Promise.all(
-        conv.requests
+      await Promise.all([
+        ...conv.requests
           .find((r) => r.id === requestId)!
           .responses.map(async (r) => {
             await triggerLLM({
-              app: r.app,
-              context,
               requestId,
+              task: {
+                convId: undefined,
+                appId: r.appId,
+              },
+              app: parseApp(r.app),
+              context,
               llmDelay: input.llmDelay,
             })
           }),
-      )
+
+        await triggerLLM({
+          requestId,
+          task: {
+            convId: input.convId,
+            appId: undefined,
+          },
+          app: createCallLLMSchema.parse({
+            modelName: "gpt-3.5-turbo",
+          }),
+          context: [
+            {
+              role: "system",
+              content:
+                "以下是我与你的一段对话，请做一个简要的总结（要求：不超过10个字）",
+            },
+            ...context,
+          ],
+          llmDelay: input.llmDelay,
+        }),
+      ])
       return requestId
     }),
 })

@@ -191,11 +191,27 @@ model Conv {
   fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
   fromUserId String
 
-  title            String?
   requests         Request[] @relation("requests")
   currentRequestId String?
 
-  apps App[]
+  apps          App[]
+  titleResponse ConvTitleResponse?
+}
+
+model ConvTitleResponse {
+  id        String   @id @default(nanoid(9))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conv   Conv   @relation(fields: [convId], references: [id], onDelete: Cascade)
+  convId String @unique
+
+  content String?
+  error   String?
+
+  tTrigger DateTime?
+  tStart   DateTime?
+  tEnd     DateTime?
 }
 
 model Model {
@@ -235,11 +251,11 @@ model Response {
   request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 
-  config App    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId  String
+  app   App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId String
 
-  response String?
-  error    String?
+  content String?
+  error   String?
 
   tTrigger DateTime?
   tStart   DateTime?
