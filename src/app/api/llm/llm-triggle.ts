@@ -5,7 +5,7 @@ import { sleep } from "../../../../packages/common-algo/utils"
 import { prisma } from "../../../../packages/common-db"
 import { callChatGPT } from "../../../../packages/common-llm/models/openai"
 import { ICreateCallLLM } from "../../../../packages/common-llm/schema"
-import { ISSEEvent } from "../../../../packages/common-sse/schema"
+import { ISseEvent } from "../../../../packages/common-sse/schema"
 import { getTriggerID } from "../../../utils"
 import { llmManager } from "./manager"
 
@@ -43,16 +43,15 @@ export const triggerLLM = async ({
       "",
   }
 
-  await llmManager.addTrigger(triggerId)
+  await llmManager.onTriggerStarts(triggerId)
   console.log("[sse] triggered: ", {
     triggerId,
     context,
-    triggers: await llmManager.listTriggers(),
   })
 
   const start = async () => {
-    const pushToClients = async (e: ISSEEvent) => {
-      await llmManager.pushEventToClients(triggerId, e)
+    const pushToClients = async (e: ISseEvent) => {
+      await llmManager.onEvent(triggerId, e)
     }
 
     try {
@@ -85,8 +84,8 @@ export const triggerLLM = async ({
       r.error = err.message
     } finally {
       r.tEnd = new Date()
-      // 只在最后更新一次数据库
       if (task.appId) {
+        // update conv app
         await prisma.response.update({
           where: {
             requestId_appId: {
@@ -97,6 +96,7 @@ export const triggerLLM = async ({
           data: r,
         })
       } else {
+        // update conv title
         const { requestId, appId, ...props } = r
         await prisma.convTitleResponse.upsert({
           where: {
@@ -118,7 +118,7 @@ export const triggerLLM = async ({
 
       await pushToClients({ event: "close" })
       // clean
-      await llmManager.cleanTrigger(triggerId)
+      await llmManager.onTriggerEnds(triggerId)
       console.log("[sse] closed")
     }
   }

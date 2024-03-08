@@ -1,34 +1,42 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { llmInit, llmManager, llmWrite } from "./manager"
+import { ISseEvent } from "../../../../packages/common-sse/schema"
+import { llmEncoder, llmManager } from "./manager"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url).searchParams.get("r") ?? ""
-
   const clientId = nanoid()
+
+  const responseStream = new TransformStream()
+  const writer = responseStream.writable.getWriter()
+
+  const write = async (event: ISseEvent) => {
+    // 要额外加一个 \n，否则不符合格式规范
+    await writer.write(
+      llmEncoder.encode(
+        `event: ${event.event}\ndata: ${JSON.stringify(event?.data ?? "")}\n\n`,
+      ),
+    )
+  }
 
   // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {
     console.log(`Client(id=${clientId}) aborted connection.`)
 
     // 1. 先写
-    await llmWrite(writer, { event: "onError", data: "您已中止" })
+    await write({ event: "onError", data: "您已中止" })
     await writer.close()
     // 2. 再移除（2要在1之后）
-    await llmManager.delClient(triggerId, clientId)
+    await llmManager.onClientDisconnected(triggerId, clientId)
   }
 
-  const responseStream = new TransformStream()
-  const writer = responseStream.writable.getWriter()
-
-  if (!(await llmManager.hasTrigger(triggerId)))
-    void llmWrite(writer, { event: "onError", data: "请求不存在或已完成" })
-  else void llmInit(clientId, writer, triggerId) // DO NOT await
-
-  console.log("[sse] requested: ", {
-    clientId,
-    triggerId,
-    triggers: await llmManager.listTriggers(),
+  void llmManager.onClientConnected(triggerId, {
+    id: clientId,
+    // todo: onEvent in serialization approach like Redis?
+    onEvent: async (sseEvent) => {
+      await write(sseEvent)
+      if (sseEvent.event === "close") await writer.close()
+    },
   })
 
   return new Response(responseStream.readable, {

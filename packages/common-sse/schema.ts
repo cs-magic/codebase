@@ -1,17 +1,18 @@
 export type IClient = {
   id: string
-  onEvent: (event: ISSEEvent) => Promise<void>
+  onEvent: (event: ISseEvent) => void
+  // onEvent: (event: ISSEEvent) => Promise<void>
 }
 export type ISseTrigger = {
   // response: Prisma.ResponseUncheckedCreateInput
-  events: ISSEEvent[]
+  events: ISseEvent[]
   clients: IClient[]
 }
 /**
  * 不能用 error 这是 sse 默认的 event-type
  */
 export type ISSEEventType = "onInit" | "onData" | "onError" | "close"
-export type ISSEEvent<T extends ISSEEventType = any> = T extends "onInit"
+export type ISseEvent<T extends ISSEEventType = any> = T extends "onInit"
   ? { event: "onInit"; data?: string }
   : T extends "onData"
     ? {
