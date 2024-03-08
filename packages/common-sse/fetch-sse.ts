@@ -11,7 +11,7 @@ export const fetchSSE = (
     onFinal?: (sse: EventSource) => void
   },
 ) => {
-  console.log(ansiColors.bgRed.white(`fetching SSE: ${requestUrl}`))
+  // console.log(ansiColors.bgRed.white(`fetching SSE: ${requestUrl}`))
 
   /**
    * sse 要自己控制关闭，https://stackoverflow.com/a/54385424/9422455
@@ -26,12 +26,14 @@ export const fetchSSE = (
   sse.addEventListener(
     "onData" as ISSEEventType,
     (ev: MessageEvent<string>) => {
+      console.log("[sse] onData: ", ev)
       if (options?.onData) options.onData(JSON.parse(ev.data) as string)
     },
   )
   sse.addEventListener(
     "onError" as ISSEEventType,
     (ev: MessageEvent<string>) => {
+      console.log("[sse] onError: ", ev)
       if (options?.onError) options.onError(JSON.parse(ev.data) as string)
 
       doEnd()
@@ -40,12 +42,12 @@ export const fetchSSE = (
 
   sse.onopen = () => {
     if (options?.onOpen) options.onOpen()
-    // console.log("event source opened")
+    console.log("[sse] opened")
   }
   sse.onerror = (err) => {
     // 2 是结束
-    // if (err.eventPhase !== 2) console.log(`event source error: `, err)
-    // else console.log("event source closed")
+    if (err.eventPhase !== 2) console.warn(`event source error: `, err)
+    else console.log("[sse] closed")
 
     doEnd()
   }

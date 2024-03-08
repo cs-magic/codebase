@@ -3,11 +3,13 @@ import {
   IConvDetail,
   IRequest,
   IResponse,
-  IUpdateResponse,
+  IUpdateAppResponse,
+  IUpdateConvTitleResponse,
 } from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
 import { IContext } from "../schema/message"
+import { ResponseStatus } from "../schema/sse"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 
 //////////////////////////////
@@ -53,6 +55,10 @@ export const responseFinishedAtom = atom<boolean>((get) =>
   get(responsesAtom)?.every((r) => !r || !!r.tEnd),
 )
 
+export const getAppResponseAtom = atom(
+  (get) => (appId: string) => get(responsesAtom).find((r) => r.appId === appId),
+)
+
 export const bestContextAtom = atom<IContext>((get) => {
   const commonContext = get(commonContextAtom)
   const bestResponse = get(bestResponseAtom)
@@ -69,31 +75,52 @@ export const bestContextAtom = atom<IContext>((get) => {
   ]
 })
 
-// export const responseAtom = atom(
-//     (get) => get(requestAtom)?.responses.find((r) => r.appId === get(appIdPersistedAtom))
-// )
-
 export const checkRespondingAtom = atom((get) => (appId: string) => {
   const response = get(requestAtom)?.responses.find((r) => r.appId === appId)
   return !!response && !response.tEnd
 })
 
+export const checkRespondingStatus = (
+  response?: null | {
+    tStart?: Date | null
+    tEnd?: Date | null
+  },
+): ResponseStatus => {
+  if (!response) return "unknown"
+  if (!response.tStart) return "to-response"
+  if (response.tEnd) return "responded"
+  return "responding"
+}
+
 /**
  * 客户端在线同步
  */
-export const updateResponseAtom = atom(
+export const updateAppResponseAtom = atom(
   null,
   (
     get,
     set,
     requestId: string | null,
     appId: string,
-    func: IUpdateResponse,
+    func: IUpdateAppResponse,
   ) => {
     set(serverConvDetailAtom, (conv) => {
       const s = conv?.requests
         ?.find((r) => r.id === requestId)
         ?.responses.find((r) => r.appId === appId)
+
+      if (!s) return
+
+      func(s)
+    })
+  },
+)
+
+export const updateConvTitleAtom = atom(
+  null,
+  (get, set, convId: string, func: IUpdateConvTitleResponse) => {
+    set(serverConvDetailAtom, (conv) => {
+      const s = conv?.titleResponse
 
       if (!s) return
 

@@ -19,11 +19,14 @@ export class StaticLlmManager implements ILlmManager {
   }
 
   onTriggerEnds(triggerId: string): Promise<void> {
+    // !important
+    this.onEvent(triggerId, { event: "close" })
     delete StaticLlmManager.triggers[triggerId]
     return Promise.resolve(undefined)
   }
 
   onEvent(triggerId: string, event: ISseEvent): Promise<void> {
+    console.log("[sse] server --> client: ", event)
     StaticLlmManager.triggers[triggerId]?.clients.forEach((client) => {
       client.onEvent(event)
     })
@@ -34,8 +37,12 @@ export class StaticLlmManager implements ILlmManager {
   // client
   //////////////////////////////
 
-  onClientConnected(triggerId: string, client: IClient): Promise<void> {
-    StaticLlmManager.triggers[triggerId]?.clients.push(client)
+  async onClientConnected(triggerId: string, client: IClient): Promise<void> {
+    const trigger = await this.getTrigger(triggerId)
+    if (!trigger) return
+
+    await Promise.all(trigger.events.map(async (e) => client.onEvent(e)))
+    trigger.clients.push(client)
     return Promise.resolve(undefined)
   }
 

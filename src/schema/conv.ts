@@ -1,4 +1,4 @@
-import { Prisma, Response } from "@prisma/client"
+import { ConvTitleResponse, Prisma, Response } from "@prisma/client"
 import { appDetailSchema } from "./app.detail"
 
 export const convSummarySchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
@@ -56,4 +56,5 @@ export const convDetailSchema = Prisma.validator<Prisma.ConvDefaultArgs>()({
 })
 export type IConvDetail = Prisma.ConvGetPayload<typeof convDetailSchema>
 
-export type IUpdateResponse = (s: Response) => void
+export type IUpdateAppResponse = (s: Response) => void
+export type IUpdateConvTitleResponse = (s: ConvTitleResponse) => void

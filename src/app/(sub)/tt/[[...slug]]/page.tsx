@@ -1,11 +1,12 @@
 "use client"
 import {
-  serverConvDetailAtom,
+  checkRespondingStatus,
   convIdAtom,
+  requestIdAtom,
+  serverConvDetailAtom,
   serverConvListFAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
-import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -15,23 +16,25 @@ import { openAlertDialogAtom } from "../../../../../packages/common-ui/store"
 import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
-
-import { useConvTitleSse } from "../../../../hooks/use-sse-conv-title"
+import { useConvSse } from "../../../../hooks/use-conv-sse"
 
 export default function ConvPage({
   params: { slug },
 }: {
-  params: { slug?: string[] }
+  params: {
+    slug?: string[]
+  }
 }) {
   const [convs] = useAtom(serverConvListFAtom)
-  const [convId] = useAtom(convIdAtom)
   const [conv, setConv] = useAtom(serverConvDetailAtom)
+  const [convId] = useAtom(convIdAtom)
+  const [requestId] = useAtom(requestIdAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
 
   const router = useRouter()
   const id = slug ? slug[0] : slug
   const reqIdFromUrl = useSearchParams().get("r")
-  const [loaded, setLoaded] = useState(false)
+  const [, setLoaded] = useState(false)
 
   useEffect(() => {
     if (conv?.requests.some((r) => r.id === reqIdFromUrl)) {
@@ -65,6 +68,7 @@ export default function ConvPage({
     },
     { enabled: !!id },
   )
+
   /**
    * conv 逻辑
    * ~~无脑对齐即可，就是个 context 作用~~
@@ -127,7 +131,12 @@ export default function ConvPage({
 
   // if (!loaded) return null
 
-  useConvTitleSse()
+  useConvSse({
+    type: "conv-title",
+    convId,
+    status: checkRespondingStatus(conv?.titleResponse),
+    requestId,
+  })
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

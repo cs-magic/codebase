@@ -5,7 +5,6 @@ import { sleep } from "../../../../packages/common-algo/utils"
 import { prisma } from "../../../../packages/common-db"
 import { callChatGPT } from "../../../../packages/common-llm/models/openai"
 import { ICreateCallLLM } from "../../../../packages/common-llm/schema"
-import { ISseEvent } from "../../../../packages/common-sse/schema"
 import { getTriggerID } from "../../../utils"
 import { llmManager } from "./manager"
 
@@ -33,7 +32,7 @@ export const triggerLLM = async ({
 }) => {
   const triggerId = getTriggerID(requestId, task.convId ?? task.appId)
 
-  const r: Prisma.ResponseUncheckedCreateInput = {
+  const response: Prisma.ResponseUncheckedCreateInput = {
     tStart: new Date(),
     requestId,
     content: "", // init or undefined, affecting later concat string
@@ -50,10 +49,6 @@ export const triggerLLM = async ({
   })
 
   const start = async () => {
-    const pushToClients = async (e: ISseEvent) => {
-      await llmManager.onEvent(triggerId, e)
-    }
-
     try {
       const {
         // todo: dynamic openai api key
@@ -69,9 +64,9 @@ export const triggerLLM = async ({
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string
-          r.content += token
+          response.content += token
           // console.debug("[llm] token: ", { triggerID: requestId, token })
-          await pushToClients({ event: "onData", data: token })
+          await llmManager.onEvent(triggerId, { event: "onData", data: token })
           await sleep(llmDelay)
         }
       } else {
@@ -79,11 +74,16 @@ export const triggerLLM = async ({
       }
     } catch (e) {
       console.error("[call] error: ", e)
-      const err = e as { message: string }
-      await pushToClients({ event: "onError", data: err.message })
-      r.error = err.message
+      const err = e as {
+        message: string
+      }
+      await llmManager.onEvent(triggerId, {
+        event: "onError",
+        data: err.message,
+      })
+      response.error = err.message
     } finally {
-      r.tEnd = new Date()
+      response.tEnd = new Date()
       if (task.appId) {
         // update conv app
         await prisma.response.update({
@@ -93,11 +93,11 @@ export const triggerLLM = async ({
               appId: task.appId,
             },
           },
-          data: r,
+          data: response,
         })
       } else {
         // update conv title
-        const { requestId, appId, ...props } = r
+        const { requestId, appId, ...props } = response
         await prisma.convTitleResponse.upsert({
           where: {
             convId: task.convId,
@@ -116,10 +116,9 @@ export const triggerLLM = async ({
         })
       }
 
-      await pushToClients({ event: "close" })
       // clean
       await llmManager.onTriggerEnds(triggerId)
-      console.log("[sse] closed")
+      console.log("[sse] finished: ", { triggerId, response })
     }
   }
 

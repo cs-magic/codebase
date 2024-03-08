@@ -2,11 +2,16 @@
 
 import { useAtom } from "jotai"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { useConvAppSse } from "../hooks/use-sse-conv-app"
+import { useConvSse } from "../hooks/use-conv-sse"
 import { IAppDetail } from "../schema/app.detail"
 import { IContext, RoleType } from "../schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
-import { requestAtom } from "../store/conv"
+import {
+  checkRespondingAtom,
+  checkRespondingStatus,
+  convIdAtom,
+  requestAtom,
+} from "../store/conv"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
@@ -20,6 +25,7 @@ export const ConvApp = ({
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppId] = useAtom(appIdPersistedAtom)
   const [request] = useAtom(requestAtom)
+  const [convId] = useAtom(convIdAtom)
 
   const targetAppId = persistedApps.some((a) => a.id === app.id)
     ? app.id
@@ -37,7 +43,13 @@ export const ConvApp = ({
         },
       ]
 
-  useConvAppSse(app.id)
+  useConvSse({
+    type: "app-response",
+    status: checkRespondingStatus(response),
+    convId,
+    requestId: request?.id,
+    appId: app.id,
+  })
 
   // console.log({ appId: config.id, commonContext, response })
 

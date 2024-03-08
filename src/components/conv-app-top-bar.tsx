@@ -18,7 +18,7 @@ import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
-import { checkRespondingAtom } from "../store/conv"
+import { checkRespondingStatus, getAppResponseAtom } from "../store/conv"
 import { ConvAppTitleLine } from "./conv-app-title-line"
 
 export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
@@ -26,13 +26,13 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
   const [, delApp] = useAtom(delAppAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
-  const [checkResponding] = useAtom(checkRespondingAtom)
   const [, stopGenerating] = useAtom(stopGeneratingAtom)
+  const [getResponse] = useAtom(getAppResponseAtom)
 
   const { id: appId } = app
   const selected = appId === selectedAppID
   const LockOrNot = selected ? Lock : Unlock
-  const fetching = checkResponding(appId)
+  const respondingStatus = checkRespondingStatus(getResponse(app.id))
 
   const { isMobile } = useEnvironments()
 
@@ -49,12 +49,13 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
 
       {!isMobile && (
         <IconContainer
+          disabled={respondingStatus !== "responding"}
           tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
           onClick={() => {
             stopGenerating(true)
           }}
         >
-          <StopCircle className={cn(!fetching && "text-muted-foreground")} />
+          <StopCircle />
         </IconContainer>
       )}
 

@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
   const writer = responseStream.writable.getWriter()
 
   const write = async (event: ISseEvent) => {
+    console.log("[sse] client --> user: ", event)
     // 要额外加一个 \n，否则不符合格式规范
     await writer.write(
       llmEncoder.encode(
