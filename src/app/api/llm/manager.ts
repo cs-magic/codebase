@@ -22,13 +22,12 @@ class LlmManager {
 
   public async listTriggers() {
     const triggerIds = await redis.keys("*-events")
-    console.log("[redis] listed triggers: ", triggerIds)
+    // console.log("[redis] listed triggers: ", triggerIds)
     return triggerIds
   }
 
   public async hasTrigger(triggerId: string) {
-    console.log("[redis] checking trigger: ", { triggerId })
-
+    // console.log("[redis] checking trigger: ", { triggerId })
     return redis.exists(`${triggerId}-events`)
   }
 
@@ -85,9 +84,8 @@ class LlmManager {
 
     this.addEvent(triggerId, event)
 
-    const clients_ = await redis.keys(`${triggerId}-clients`)
     return Promise.all(
-      clients_.map(async (client_) => {
+      (await redis.keys(`${triggerId}-clients`)).map(async (client_) => {
         // todo: is it ok?
         const client = JSON.parse(client_) as IClient
         return client.onEvent(event)

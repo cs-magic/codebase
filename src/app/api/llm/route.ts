@@ -10,11 +10,12 @@ export async function GET(req: NextRequest) {
   // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {
     console.log(`Client(id=${clientId}) aborted connection.`)
-    await llmManager.delClient(triggerId, clientId)
 
-    // 这个没用的，刷新会让用户重新取流
+    // 1. 先写
     await llmWrite(writer, { event: "onError", data: "您已中止" })
     await writer.close()
+    // 2. 再移除（2要在1之后）
+    await llmManager.delClient(triggerId, clientId)
   }
 
   const responseStream = new TransformStream()
