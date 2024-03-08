@@ -3,7 +3,7 @@ import ansiColors from "ansi-colors"
 import { useEffect } from "react"
 import { initPusherClient } from "../../packages/common-puser/client/init"
 import { pusherServerConfigs } from "../../packages/common-puser/config"
-import { SseEventType } from "../../packages/common-sse/schema"
+import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 import { updateAppResponseAtom } from "../store/conv"
 import { transportTypeAtom } from "../store/query"
@@ -33,31 +33,42 @@ export const useQueryLlmPusher = (sseRequest: ILLMRequest) => {
     console.log(ansiColors.red(`pusher bounds to channel: ${triggerId}`), {
       triggerId,
     })
-    channel.bind("init" as SseEventType, (data: { time: number }) => {
-      console.log(`[${Date.now()}] [pusher] init: `, data)
+
+    const bindEvent = <T extends SseEventType>(
+      type: T,
+      func: (event: ISseEvent<T>) => void,
+    ) => {
+      channel.bind(type, (event: ISseEvent<T>) => {
+        console.log(`[pusher-client] << `, event)
+        func(event)
+      })
+    }
+
+    bindEvent("data", (event) => {
+      update((response) => {
+        if (!response.content) response.content = event.data.token
+        else response.content += event.data.token
+      })
+    })
+
+    bindEvent("error", (event) => {
+      update((response) => {
+        response.error = event.data.message
+      })
+    })
+
+    bindEvent("init", (event) => {
       update((response) => {
         response.tStart = new Date()
       })
     })
-    channel.bind("data" as SseEventType, (data: string) => {
-      console.log(`[${Date.now()}] [pusher] data: `, data)
-      update((response) => {
-        if (!response.content) response.content = data
-        else response.content += data
-      })
-    })
-    channel.bind("error" as SseEventType, (data: string) => {
-      console.log(`[${Date.now()}] [pusher] error: `, data)
-      update((response) => {
-        response.error = data
-      })
-    })
-    channel.bind("close" as SseEventType, (data: string) => {
-      console.log(`[${Date.now()}] [pusher] close: `, data)
+
+    bindEvent("close", (event) => {
       update((response) => {
         response.tEnd = new Date()
       })
     })
+
     return () => {
       pusher.unsubscribe(triggerId)
     }

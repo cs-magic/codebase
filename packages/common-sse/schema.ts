@@ -24,10 +24,16 @@ export type GenericSseEvent<T extends SseEventType, V = any> = {
   data: V & { time?: number }
 }
 
-export type ISseEvent =
-  | GenericSseEvent<"init", object>
-  | GenericSseEvent<"data", { token: string }>
-  | GenericSseEvent<"error", { message: string }>
-  | GenericSseEvent<"close", { reason: string }>
-  | GenericSseEvent<"onClientConnected", { id: string }>
-  | GenericSseEvent<"onClientDisconnected", { id: string }>
+export type ISseEvent<T extends SseEventType = any> = T extends "init"
+  ? GenericSseEvent<"init", object>
+  : T extends "data"
+    ? GenericSseEvent<"data", { token: string }>
+    : T extends "error"
+      ? GenericSseEvent<"error", { message: string }>
+      : T extends "close"
+        ? GenericSseEvent<"close", { reason: string }>
+        : T extends "onClientConnected"
+          ? GenericSseEvent<"onClientConnected", { id: string }>
+          : T extends "onClientDisconnected"
+            ? GenericSseEvent<"onClientDisconnected", { id: string }>
+            : never
