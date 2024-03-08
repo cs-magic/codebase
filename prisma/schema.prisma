@@ -70,11 +70,11 @@ model App {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  fromUser User   @relation(fields: [user], references: [id], onDelete: Cascade)
+  fromUser User?   @relation(fields: [user], references: [id], onDelete: Cascade)
   // string
   // Optional
   // A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. Learn more.
-  user     String
+  user     String?
 
   model     Model  @relation(fields: [modelName], references: [id], onDelete: Cascade)
   // ID of the model to use. See the model endpoint compatibility table for details on which models work with the Chat API.

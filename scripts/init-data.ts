@@ -1,21 +1,4 @@
-import { Company } from "@prisma/client"
 import { db } from "../packages/common/lib/db"
-
-export type CompanyId = "openai" | "moonshot"
-export const supportedCompanies: Record<CompanyId, Company> = {
-  openai: {
-    id: "openai",
-    title: "Open AI",
-    url: null,
-    logo: null,
-  },
-  moonshot: {
-    id: "moonshot",
-    title: "月之暗面",
-    url: null,
-    logo: null,
-  },
-}
 
 const initLLM = async () => {
   const deletedCompanies = await db.company.deleteMany()
@@ -60,28 +43,23 @@ const initLLM = async () => {
     ],
   })
 
+  const models = await db.model.findMany()
+  const createdApps = await db.app.createMany({
+    data: models.map((m) => ({
+      id: m.id,
+      modelName: m.id,
+      title: m.title,
+      // 商店上架
+      granted: true,
+    })),
+  })
+
   console.log({
     deletedCompanies,
     createdCompanies,
     createdModels,
+    createdApps,
   })
-
-  const user = await db.user.findFirst()
-  if (user) {
-    const models = await db.model.findMany()
-    const createdApps = await db.app.createMany({
-      data: models.map((m) => ({
-        id: m.id,
-        modelName: m.id,
-        title: m.title,
-        user: user.id,
-        // 商店上架
-        granted: true,
-      })),
-    })
-
-    console.log({ createdApps })
-  }
 }
 
 void initLLM()
