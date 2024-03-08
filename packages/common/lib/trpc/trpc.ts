@@ -11,7 +11,7 @@ import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { z, ZodError } from "zod"
 import { Context } from "./context"
-import { db } from "../db"
+import { prisma } from "../db/providers/prisma/connection"
 import { convDetailSchema } from "@/schema/conv"
 
 /**
@@ -72,7 +72,7 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   }
   return next({
     ctx: {
-      db,
+      db: prisma,
       // infers the `session` as non-nullable
       session: { ...ctx.session, user: ctx.session.user },
       user: ctx.session.user,
@@ -83,7 +83,7 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 export const convProcedure = protectedProcedure
   .input(z.object({ convId: z.string() }))
   .use(async ({ ctx, next, input }) => {
-    const conv = await db.conv.findUniqueOrThrow({
+    const conv = await prisma.conv.findUniqueOrThrow({
       where: {
         id: input.convId,
         fromUserId: ctx.user.id,

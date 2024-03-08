@@ -3,7 +3,7 @@ import { getTriggerID } from "@/lib/utils"
 
 import { ILLMMessage } from "@/schema/message"
 import { Prisma } from "@prisma/client"
-import { db } from "../../../../packages/common/lib/db"
+import { prisma } from "../../../../packages/common/lib/db"
 import {
   ISSEEvent,
   ISSERequest,
@@ -47,10 +47,11 @@ export const triggerLLM = async ({
       "",
   }
 
-  const r: ISSERequest = (llmManager[triggerId] = {
+  const r: ISSERequest = {
     clients: [],
     response,
-  })
+  }
+  await llmManager.set(triggerId, r)
 
   const pushToClients = (e: ISSEEvent) => r.clients.forEach((c) => c.onEvent(e))
 
@@ -93,7 +94,7 @@ export const triggerLLM = async ({
       r.response.tEnd = new Date()
       // 只在最后更新一次数据库
       if (task.appId) {
-        await db.response.update({
+        await prisma.response.update({
           where: {
             requestId_appId: {
               requestId,
@@ -104,7 +105,7 @@ export const triggerLLM = async ({
         })
       } else {
         const { requestId, appId, ...props } = r.response
-        await db.convTitleResponse.upsert({
+        await prisma.convTitleResponse.upsert({
           where: {
             convId: task.convId,
           },
@@ -123,7 +124,8 @@ export const triggerLLM = async ({
       }
 
       pushToClients({ event: "close" })
-      delete llmManager[triggerId] // clean manager
+      // clean
+      await llmManager.del(triggerId)
       console.log("[sse] closed")
     }
   }

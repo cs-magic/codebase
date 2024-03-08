@@ -1,9 +1,9 @@
-import { db } from "../packages/common/lib/db"
+import { prisma } from "../packages/common/lib/db/providers/prisma/connection"
 
 const initLLM = async () => {
-  const deletedCompanies = await db.company.deleteMany()
+  const deletedCompanies = await prisma.company.deleteMany()
 
-  const createdCompanies = await db.company.createMany({
+  const createdCompanies = await prisma.company.createMany({
     data: [
       {
         id: "openai",
@@ -20,7 +20,7 @@ const initLLM = async () => {
     ],
   })
 
-  const createdModels = await db.model.createMany({
+  const createdModels = await prisma.model.createMany({
     data: [
       {
         id: "gpt-3.5-turbo",
@@ -43,8 +43,8 @@ const initLLM = async () => {
     ],
   })
 
-  const models = await db.model.findMany()
-  const createdApps = await db.app.createMany({
+  const models = await prisma.model.findMany()
+  const createdApps = await prisma.app.createMany({
     data: models.map((m) => ({
       id: m.id,
       modelName: m.id,

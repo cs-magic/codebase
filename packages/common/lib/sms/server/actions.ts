@@ -1,6 +1,6 @@
 "use server"
 
-import { db } from "../../db"
+import { prisma } from "../../db/providers/prisma/connection"
 import { SMS_PROVIDER_ID } from "../const"
 import { IProviderSendSms, ISmsSignIn } from "../schema"
 
@@ -23,7 +23,7 @@ export const $sendSms = async (
     const access_token = code
     const expires_at = Date.now() / 1e3 + expireSeconds
 
-    const account = await db.account.upsert({
+    const account = await prisma.account.upsert({
       where: {
         provider_providerAccountId: id,
       },
@@ -60,7 +60,7 @@ export const $sendSms = async (
 export const $smsSignIn = async (values: ISmsSignIn) => {
   const { phone, code, name, image } = values
 
-  const account = await db.account.findUnique({
+  const account = await prisma.account.findUnique({
     where: {
       provider_providerAccountId: {
         providerAccountId: phone,
@@ -74,7 +74,7 @@ export const $smsSignIn = async (values: ISmsSignIn) => {
   if (!account) throw new Error("account not found")
 
   if (name && image) {
-    return await db.user.update({
+    return await prisma.user.update({
       where: { id: account.userId },
       data: {
         name,

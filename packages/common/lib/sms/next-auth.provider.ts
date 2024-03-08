@@ -1,6 +1,6 @@
 import { userDetailSchema } from "@/schema/user.detail"
 import Credentials from "next-auth/providers/credentials"
-import { db } from "../db"
+import { prisma } from "../db/providers/prisma/connection"
 import { PROFILE_UPDATE_PROVIDER_ID, SMS_PROVIDER_ID } from "./const"
 import { $smsSignIn } from "./server/actions" // // sb tsx 需要用 default
 
@@ -42,9 +42,9 @@ export const ProfileUpdateProvider = Credentials({
     const { image, name, id } = credentials
     if (!image || !name) throw new Error("no name or image")
 
-    await db.user.findUniqueOrThrow({ where: { id } })
+    await prisma.user.findUniqueOrThrow({ where: { id } })
 
-    return await db.user.update({
+    return await prisma.user.update({
       where: { id },
       data: { name, image },
       ...userDetailSchema,

@@ -1,6 +1,6 @@
 "use server"
-import { db } from "../../../../../packages/common/lib/db"
+import { prisma } from "../../../../../packages/common/lib/db/providers/prisma/connection"
 
 export const updateUserNameViaTrpc = async (userId: string, name: string) => {
-  await db.user.update({ where: { id: userId }, data: { name } })
+  await prisma.user.update({ where: { id: userId }, data: { name } })
 }

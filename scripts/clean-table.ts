@@ -1,4 +1,4 @@
-import { db } from "../packages/common/lib/db"
+import { prisma } from "../packages/common/lib/db/providers/prisma/connection"
 
 const cleanTable = async () => {
   const tableName = process.argv[2]
@@ -6,7 +6,7 @@ const cleanTable = async () => {
   if (!tableName) return
 
   //@ts-ignore
-  const result = await db[tableName].deleteMany()
+  const result = await prisma[tableName].deleteMany()
   console.log("cleaned result: ", result)
 }
 

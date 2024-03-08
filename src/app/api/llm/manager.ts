@@ -1,11 +1,13 @@
 import { WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill"
+import { redis, RedisStore } from "../../../../packages/common/lib/db"
+
 import {
   ISSEEvent,
   ISSERequest,
 } from "../../../../packages/common/lib/sse/schema"
-import { staticCreate } from "../../../../packages/common/lib/utils"
 
-export const llmManager = staticCreate<Record<string, ISSERequest>>(() => ({}))
+// export const llmManager = staticCreate<Record<string, ISSERequest>>(() => ({}))
+export const llmManager = new RedisStore<ISSERequest>()
 
 export const llmEncoder = new TextEncoder()
 
@@ -29,7 +31,7 @@ export const llmInit = async (
   writer: WritableStreamDefaultWriter,
   triggerId: string,
 ) => {
-  const trigger = llmManager[triggerId]
+  const trigger = await llmManager.get(triggerId)
   if (!trigger) return
 
   // 1. old (request.data 也在持续增加)
@@ -42,4 +44,8 @@ export const llmInit = async (
     id: clientId,
     onEvent: (e) => llmWrite(writer, e),
   })
+}
+
+export const redisGet = async <T>(key: string, s: T) => {
+  return redis.set(key, JSON.stringify(s))
 }

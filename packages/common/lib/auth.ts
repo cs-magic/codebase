@@ -6,7 +6,7 @@ import {
 } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { DefaultJWT } from "next-auth/jwt"
-import { db } from "./db"
+import { prisma } from "./db/providers/prisma/connection"
 import { SmsProvider, ProfileUpdateProvider } from "./sms/next-auth.provider"
 import WechatProvider from "./wechat/auth/provider"
 import { env } from "@/env"
@@ -83,7 +83,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
-  adapter: PrismaAdapter(db) as Adapter,
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     WechatProvider({
       clientId: WECHAT_APP_ID,

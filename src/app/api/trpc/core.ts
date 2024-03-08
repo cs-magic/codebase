@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { db } from "../../../../packages/common/lib/db"
+import { prisma } from "../../../../packages/common/lib/db/providers/prisma/connection"
 import {
   convProcedure,
   createTRPCRouter,
@@ -24,7 +24,7 @@ import { triggerLLM } from "../llm/llm-triggle"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
-    db.user.findUniqueOrThrow({
+    prisma.user.findUniqueOrThrow({
       where: { id: ctx.user.id },
       ...userDetailSchema,
     }),
@@ -34,14 +34,14 @@ export const coreRouter = createTRPCRouter({
     .input(UserUpdateInputSchema)
     .mutation(({ ctx, input }) => {
       console.log("update self")
-      return db.user.update({
+      return prisma.user.update({
         where: { id: ctx.user.id },
         data: input,
       })
     }),
 
   listModels: publicProcedure.query(() =>
-    db.model.findMany({
+    prisma.model.findMany({
       ...modelViewSchema,
       orderBy: {
         // todo: by hot or so
@@ -51,7 +51,7 @@ export const coreRouter = createTRPCRouter({
   ),
 
   listApps: publicProcedure.query(() =>
-    db.app.findMany({
+    prisma.app.findMany({
       where: { granted: true },
       ...appDetailSchema,
       orderBy: {
@@ -62,7 +62,7 @@ export const coreRouter = createTRPCRouter({
   ),
 
   listConv: protectedProcedure.query(({ ctx }) =>
-    db.conv.findMany({
+    prisma.conv.findMany({
       where: { fromUserId: ctx.user.id },
       orderBy: { updatedAt: "desc" },
       ...convSummarySchema,
@@ -72,7 +72,7 @@ export const coreRouter = createTRPCRouter({
   getConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) =>
-      db.conv.findUniqueOrThrow({
+      prisma.conv.findUniqueOrThrow({
         where: {
           id: input.id,
           fromUserId: ctx.user.id,
@@ -91,7 +91,7 @@ export const coreRouter = createTRPCRouter({
       }),
     )
     .mutation(({ input, ctx }) =>
-      db.conv.create({
+      prisma.conv.create({
         data: {
           ...input,
           fromUserId: ctx.user.id,
@@ -118,7 +118,7 @@ export const coreRouter = createTRPCRouter({
     )
     .mutation(({ ctx, input }) => {
       const { id, ...safeData } = input.data
-      return db.conv.update({
+      return prisma.conv.update({
         where: { ...input.where, fromUserId: ctx.user.id },
         data: safeData,
         ...convDetailSchema,
@@ -128,7 +128,7 @@ export const coreRouter = createTRPCRouter({
   delConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) =>
-      db.conv.delete({
+      prisma.conv.delete({
         where: {
           id: input.id,
           fromUserId: ctx.user.id,
@@ -137,7 +137,7 @@ export const coreRouter = createTRPCRouter({
     ),
 
   delAllConvs: protectedProcedure.mutation(({ ctx }) =>
-    db.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
+    prisma.conv.deleteMany({ where: { fromUserId: ctx.user.id } }),
   ),
 
   query: convProcedure
@@ -154,7 +154,7 @@ export const coreRouter = createTRPCRouter({
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 
-      const conv = await db.conv.update({
+      const conv = await prisma.conv.update({
         where: { id: input.convId },
         ...convDetailSchema,
         data: {

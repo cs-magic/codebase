@@ -13,6 +13,7 @@ export default withAuth(
     else if (token?.name && path.startsWith("/auth")) return redirect("/")
   },
   {
+    // 加这个的必要性， ref: https://github.com/nextauthjs/next-auth/discussions/4136#discussioncomment-2314117
     pages: {
       signIn: "/auth",
     },
