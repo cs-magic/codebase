@@ -1,4 +1,6 @@
 import { useAtom } from "jotai"
+import { signOut } from "next-auth/react"
+import { toast } from "sonner"
 import { Button } from "../../packages/common/components/ui/button"
 import { Label } from "../../packages/common/components/ui/label"
 import { useUserUpdateProfile } from "../../packages/common/hooks/use-user-update-profile"
@@ -28,7 +30,16 @@ export const SmsStage3UpdateProfile = () => {
         <Button
           disabled={!name || !image}
           className={"w-full"}
-          onClick={updateProfile}
+          onClick={async () => {
+            const res = await updateProfile()
+            if (res?.ok) {
+              toast.success("登录成功")
+            } else {
+              // e.g. 表里的记录被删了
+              toast.error("登录失败，请重试！")
+              void signOut()
+            }
+          }}
         >
           敬启 AI 世界
         </Button>

@@ -71,7 +71,6 @@ export const SmsStage2InputCode = () => {
                 key={index}
                 className={cn(
                   "w-8 h-8 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-center p-0 border",
-                  index === digits.length && "caret-input animate-pulse",
                   SMS_DIGIT_SIZE,
                 )}
               >

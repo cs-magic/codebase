@@ -9,6 +9,7 @@ export const UserInputName = () => {
 
   return (
     <Input
+      className={"text-primary-foreground font-black text-2xl text-center"}
       autoFocus
       value={name}
       onChange={(event) => {

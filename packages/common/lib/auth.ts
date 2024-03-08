@@ -5,12 +5,20 @@ import {
   type NextAuthOptions,
 } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
+import { DefaultJWT } from "next-auth/jwt"
 import { db } from "./db"
 import { SmsProvider, ProfileUpdateProvider } from "./sms/next-auth.provider"
 import WechatProvider from "./wechat/auth/provider"
 import { env } from "@/env"
 
 import { WECHAT_APP_ID } from "./wechat/config"
+
+declare module "next-auth/jwt" {
+  interface JWT extends DefaultJWT {
+    name?: string | null
+    // image?: string
+  }
+}
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -43,6 +51,7 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: "/auth",
+    // signOut: "/auth",
   },
 
   session: {
@@ -57,6 +66,7 @@ export const authOptions: NextAuthOptions = {
       // console.log("[next-auth] jwt: ", { user, token })
       if (user) {
         token.sub = user.id
+        token.name = user.name
       }
       return token
     },

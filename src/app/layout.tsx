@@ -58,7 +58,12 @@ export default function RootLayout({
                 <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
                   <TooltipProvider>
                     <ScreenProvider>
-                      <main className={"w-screen relative overflow-hidden"}>
+                      <main
+                        className={cn(
+                          "w-screen relative overflow-hidden",
+                          //"bg-cyan-900"
+                        )}
+                      >
                         {children}
 
                         <Toaster

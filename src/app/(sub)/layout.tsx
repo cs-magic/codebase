@@ -1,12 +1,16 @@
 import { Header } from "@/components/header"
 import { FlexContainer } from "packages/common/components/flex-container"
 import { PropsWithChildren } from "react"
+import { cn } from "../../../packages/common/lib/utils"
 
 export default function SubLayout({ children }: PropsWithChildren) {
   return (
     <FlexContainer
       orientation={"vertical"}
-      className={"!p-0 !gap-0 h-full overflow-hidden"}
+      className={cn(
+        "!p-0 !gap-0 h-full overflow-hidden",
+        // "bg-cyan-800"
+      )}
     >
       <Header />
 
