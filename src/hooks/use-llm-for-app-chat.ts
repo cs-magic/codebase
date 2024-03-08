@@ -1,5 +1,4 @@
 import { useAtom } from "jotai"
-import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { IBaseResponse } from "../schema/query"
 import { ILLMRequest } from "../schema/sse"
 import {
@@ -15,7 +14,6 @@ export const useLLMForAppChat = (
   response: IBaseResponse | undefined,
 ) => {
   const [requestId] = useAtom(requestIdAtom)
-  const [pusherServerId] = useAtom(pusherServerIdAtom)
 
   const [, updateAppResponse] = useAtom(updateAppResponseAtom)
 

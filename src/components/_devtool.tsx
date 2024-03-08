@@ -4,6 +4,8 @@ import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { llmDelayAtom } from "../../packages/common-llm/store"
+import { PusherServerId } from "../../packages/common-puser/config"
+import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { SmsProviderType } from "../../packages/common-sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
@@ -39,6 +41,7 @@ export const Devtool = () => {
   const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
   const [transportType, setTransportType] = useAtom(transportTypeAtom)
+  const [pusherServerId, setPusherServerId] = useAtom(pusherServerIdAtom)
 
   const utils = api.useUtils()
 
@@ -126,6 +129,30 @@ export const Devtool = () => {
                   Puhser
                 </SelectItem>
                 <SelectItem value={"sse" as TransportType}>SSE</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className={"flex items-center gap-2"}>
+          <Label>Pusher Server ID</Label>
+          <Select
+            value={pusherServerId}
+            onValueChange={(s: PusherServerId) => setPusherServerId(s)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value={"aws" as PusherServerId}>Ali</SelectItem>
+                <SelectItem value={"tencent_ws" as PusherServerId}>
+                  tencent-ws
+                </SelectItem>
+                <SelectItem value={"tencent_wss" as PusherServerId}>
+                  tencent-wss
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

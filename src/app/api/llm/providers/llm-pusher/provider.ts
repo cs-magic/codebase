@@ -1,6 +1,9 @@
 import Pusher from "pusher"
 import { redis } from "../../../../../../packages/common-db"
-import { pusherServerConfigs } from "../../../../../../packages/common-puser/config"
+import {
+  pusherServerConfigs,
+  PusherServerId,
+} from "../../../../../../packages/common-puser/config"
 import { initPusherServer } from "../../../../../../packages/common-puser/server/init"
 import { ISseEvent } from "../../../../../../packages/common-sse/schema"
 import {
@@ -21,11 +24,9 @@ export class PusherLlmManager implements ILlmManagerPusher {
   private pusher: Pusher
   private channel: string
 
-  constructor(request: ILLMRequest) {
-    this.channel = getTriggerIdFromSseRequest(request)
-    this.pusher = initPusherServer(
-      pusherServerConfigs[request.pusherServerId ?? "tencent_wss"],
-    )
+  constructor(channelId: string, pusherServerId: PusherServerId) {
+    this.channel = channelId
+    this.pusher = initPusherServer(pusherServerConfigs[pusherServerId])
   }
 
   //////////////////////////////
@@ -77,7 +78,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
 
   private async push(event: ISseEvent) {
     event.data = { time: Date.now(), ...event.data }
-    console.log(`[PUSHER] >> `, event)
+    console.log(`[PUSHER] >> ${this.channel}: `, event)
     this.pusher.trigger(this.channel, event.event, event)
   }
 }

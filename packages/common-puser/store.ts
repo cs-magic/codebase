@@ -7,8 +7,12 @@ import { toast } from "sonner"
 import sum from "lodash/sum"
 
 import { atom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
 
-export const pusherServerIdAtom = atom<PusherServerId>("tencent_wss")
+export const pusherServerIdAtom = atomWithStorage<PusherServerId>(
+  "pusher.server.id",
+  "tencent_wss",
+)
 export const pusherClientAtom = atom<PusherJS | null>(null)
 export const pusherStateAtom = atom<PusherConnectionState>("initialized")
 export const pusherLastPingTimeAtom = atom<number | null>(null)

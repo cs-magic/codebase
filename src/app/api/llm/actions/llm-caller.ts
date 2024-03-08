@@ -5,7 +5,10 @@ import {
   callChatGPT,
   callLlmApiMock,
 } from "../../../../../packages/common-llm/models/openai"
-import { LlmActionPayload } from "../../../../schema/sse"
+import {
+  getTriggerIdFromSseRequest,
+  LlmActionPayload,
+} from "../../../../schema/sse"
 import { PusherLlmManager } from "../providers/llm-pusher"
 
 export const callLLM = async (
@@ -20,8 +23,10 @@ export const callLLM = async (
   console.log("[LLM] called: ", payload)
 
   const { request, action } = payload
+  const channelId = getTriggerIdFromSseRequest(request)
+  if (!channelId || !request.pusherServerId) return
 
-  const llmManager = new PusherLlmManager(request)
+  const llmManager = new PusherLlmManager(channelId, request.pusherServerId)
 
   if (action === "interrupt") {
     await llmManager.onTriggerEnds("interrupted")

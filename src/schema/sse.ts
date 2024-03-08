@@ -25,10 +25,20 @@ export type ILLMRequest = {
     }
 )
 
-export const getTriggerIdFromSseRequest = (request: ILLMRequest) =>
-  request.type === "app-response"
-    ? `chat@${request.requestId}.${request.appId}`
-    : `title@${request.convId}`
+export const getTriggerIdFromSseRequest = (request: ILLMRequest) => {
+  switch (request.type) {
+    case "app-response":
+      const { requestId, appId } = request
+      return !!requestId && !!appId ? `chat@${requestId}.${appId}` : null
+
+    case "conv-title":
+      const { convId } = request
+      return !!convId ? `title@${convId}` : null
+
+    default:
+      return null
+  }
+}
 
 export type LlmActionPayload = { request: ILLMRequest } & (
   | {

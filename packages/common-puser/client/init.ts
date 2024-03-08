@@ -46,9 +46,9 @@ export const initPusherClient = (
     enabledTransports: ["ws", "wss"],
 
     // 客户端检查服务器的间隔，默认30秒
-    activityTimeout: 3000,
+    activityTimeout: 10000,
 
-    pongTimeout: 3000,
+    pongTimeout: 10000,
   })
 
   console.log("binding error...")

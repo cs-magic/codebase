@@ -49,6 +49,8 @@ export const ConvAppTitleLine = ({ app }: { app: IAppDetail }) => {
           </SelectGroup>
         </SelectContent>
       </Select>
+
+      <span className={"text-xs"}>{app.id}</span>
     </div>
   )
 }

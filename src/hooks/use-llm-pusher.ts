@@ -17,10 +17,10 @@ export const useLlmPusher = (
   const triggerId = getTriggerIdFromSseRequest(request)
 
   useEffect(() => {
-    if (transportType !== "pusher") return
+    if (transportType !== "pusher" || !triggerId) return
 
     const channel = pusher.subscribe(triggerId)
-    console.log(ansiColors.red(`pusher bounds to channel: ${triggerId}`), {
+    console.log(ansiColors.red(`[pusher] bound to channel: ${triggerId}`), {
       triggerId,
     })
 
@@ -28,6 +28,7 @@ export const useLlmPusher = (
       type: T,
       func: (event: ISseEvent<T>) => void,
     ) => {
+      console.log(`[pusher] binding event: `, type)
       channel.bind(type, (event: ISseEvent<T>) => {
         console.log(`[pusher-client] << `, event)
         func(event)
@@ -35,6 +36,7 @@ export const useLlmPusher = (
     }
 
     bindEvent("data", (event) => {
+      console.log({ event })
       update((response) => {
         if (!response.content) response.content = event.data.token
         else response.content += event.data.token
@@ -42,25 +44,28 @@ export const useLlmPusher = (
     })
 
     bindEvent("error", (event) => {
+      console.log({ event })
       update((response) => {
         response.error = event.data.message
       })
     })
 
     bindEvent("init", (event) => {
+      console.log({ event })
       update((response) => {
         response.tStart = new Date()
       })
     })
 
     bindEvent("close", (event) => {
+      console.log({ event })
       update((response) => {
         response.tEnd = new Date()
       })
     })
 
     return () => {
-      pusher.unsubscribe(triggerId)
+      // pusher.unsubscribe(triggerId)
     }
   }, [triggerId])
 }
