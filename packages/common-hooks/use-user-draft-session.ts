@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
-import { smsImageAtom, smsNameAtom } from "../common-auth/store"
+import { userImageAtom, userNameAtom } from "../common-auth/store"
 
 /**
  * 充分性：实时显示用户正在更新的昵称与头像
@@ -9,7 +9,7 @@ import { smsImageAtom, smsNameAtom } from "../common-auth/store"
  * @param key
  */
 export const useDraftSession = (key: "name" | "image") => {
-  const atom = key === "name" ? smsImageAtom : smsNameAtom
+  const atom = key === "name" ? userImageAtom : userNameAtom
   const [draft, setDraft] = useAtom(atom)
   const value = useSession().data?.user[key] ?? ""
 

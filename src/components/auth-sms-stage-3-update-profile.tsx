@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
-import { smsImageAtom, smsNameAtom } from "../../packages/common-auth/store"
+import { userImageAtom, userNameAtom } from "../../packages/common-auth/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { useUserUpdateProfile } from "../../packages/common-hooks/use-user-update-profile"
@@ -9,8 +9,8 @@ import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 
 export const SmsStage3UpdateProfile = () => {
-  const [name] = useAtom(smsNameAtom)
-  const [image] = useAtom(smsImageAtom)
+  const [name] = useAtom(userNameAtom)
+  const [image] = useAtom(userImageAtom)
   const updateProfile = useUserUpdateProfile()
 
   return (

@@ -5,7 +5,7 @@ import { useAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { ComponentType } from "react"
 import { useForm } from "react-hook-form"
-import { smsPhoneAtom } from "../../packages/common-auth/store"
+import { userPhoneAtom } from "../../packages/common-auth/store"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { useSmsSendCode } from "../../packages/common-sms/hooks/use-sms-send-code"
 import { ISendSms, sendSmsSchema } from "../../packages/common-sms/schema"
@@ -34,7 +34,7 @@ export const SmsStage1SendCode = ({
 }) => {
   const { isWechat } = useEnvironments()
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)
-  const [, setPhone] = useAtom(smsPhoneAtom)
+  const [, setPhone] = useAtom(userPhoneAtom)
   const sendCode = useSmsSendCode()
 
   const form = useForm<ISendSms>({

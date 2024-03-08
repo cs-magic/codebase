@@ -3,7 +3,7 @@ import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/fetch-sse"
-import { getTriggerID } from "../lib/utils"
+import { getTriggerID } from "../utils"
 import { IConvDetail, IUpdateResponse } from "../schema/conv"
 import { stopGeneratingAtom } from "../store/app"
 import {

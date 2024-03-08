@@ -1,6 +1,10 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { smsImageAtom, smsNameAtom, smsPhoneAtom } from "../common-auth/store"
+import {
+  userImageAtom,
+  userNameAtom,
+  userPhoneAtom,
+} from "../common-auth/store"
 import { Nullable } from "../common-general/schema"
 import { ISendSms, ISmsSignIn, SmsProviderType, SmsStage } from "./schema"
 
@@ -29,11 +33,11 @@ export const smsCodeSentOKAtom = atom<Nullable>(null)
 //////////////////////////////
 
 export const smsSendCodePayloadAtom = atom<ISendSms>((get) => ({
-  phone: get(smsPhoneAtom),
+  phone: get(userPhoneAtom),
 }))
 export const smsSignInPayloadAtom = atom<ISmsSignIn>((get) => ({
   ...get(smsSendCodePayloadAtom),
   code: get(smsCodeValueAtom),
-  name: get(smsNameAtom),
-  image: get(smsImageAtom),
+  name: get(userNameAtom),
+  image: get(userImageAtom),
 }))

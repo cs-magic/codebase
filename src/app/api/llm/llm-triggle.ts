@@ -1,5 +1,5 @@
 "use server"
-import { getTriggerID } from "@/lib/utils"
+import { getTriggerID } from "../../../utils"
 
 import { ILLMMessage } from "@/schema/message"
 import { Prisma } from "@prisma/client"

@@ -15,34 +15,7 @@ import WechatProvider from "../common-wechat/auth/provider"
 import { env } from "@/env"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
-
-declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
-    // name?: string | null // 已经有了？
-    // image?: string // jwt 里是picture
-  }
-}
-
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"]
-  }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
-}
+import { tokenExpireSeconds } from "./store"
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -60,7 +33,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     // Credentials should use `jwt`, ref: https://github.com/nextauthjs/next-auth/issues/3970#issuecomment-1046347097
     strategy: "jwt",
-    maxAge: 60 * 60, // 1 h
+    maxAge: tokenExpireSeconds, // 1 h
   },
 
   callbacks: {
