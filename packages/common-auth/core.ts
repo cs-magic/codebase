@@ -10,7 +10,7 @@ import {
 import WechatProvider from "../common-wechat/auth/provider"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
-import { tokenExpireSeconds } from "./store"
+import { tokenExpireSeconds } from "./config"
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     // Credentials should use `jwt`, ref: https://github.com/nextauthjs/next-auth/issues/3970#issuecomment-1046347097
     strategy: "jwt",
-    maxAge: tokenExpireSeconds, // 1 h
+    maxAge: tokenExpireSeconds,
   },
 
   callbacks: {

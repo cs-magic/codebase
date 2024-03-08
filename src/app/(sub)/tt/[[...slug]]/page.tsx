@@ -15,7 +15,8 @@ import { openAlertDialogAtom } from "../../../../../packages/common-ui/store"
 import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
-import { useConvTitleSse } from "../../../../hooks/use-conv-app-sse"
+
+import { useConvTitleSse } from "../../../../hooks/use-sse-conv-title"
 
 export default function ConvPage({
   params: { slug },

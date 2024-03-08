@@ -16,31 +16,47 @@ class LlmManager {
     this.key = key
   }
 
+  public async addTrigger(triggerId: string) {
+    return this.addEvent(triggerId, { event: "onInit" })
+  }
+
   public async listTriggers() {
-    return redis.keys("*-events")
+    const triggerIds = await redis.keys("*-events")
+    console.log("[redis] listed triggers: ", triggerIds)
+    return triggerIds
   }
 
   public async hasTrigger(triggerId: string) {
+    console.log("[redis] checking trigger: ", { triggerId })
+
     return redis.exists(`${triggerId}-events`)
   }
 
   public async getTrigger(triggerId: string): Promise<ISseTrigger> {
-    const events_ = await redis.get(`${triggerId}-events`)
-    const clients_ = await redis.get(`${triggerId}-clients`)
+    const events = (await redis.lrange(`${triggerId}-events`, 0, -1)).map((e) =>
+      JSON.parse(e),
+    ) as ISSEEvent[]
+
+    const clients = (await redis.lrange(`${triggerId}-clients`, 0, -1)).map(
+      (e) => {
+        const client = JSON.parse(e) as IClient
+        console.log({ client })
+        return client
+      },
+    )
+
+    console.log("[redis] getting trigger: ", { triggerId, events, clients })
 
     return {
-      events: events_ === null ? [] : (JSON.parse(events_) as ISSEEvent[]),
-      clients: clients_ === null ? [] : (JSON.parse(clients_) as IClient[]),
+      events,
+      clients,
     }
   }
 
   public async cleanTrigger(triggerId: string) {
+    console.log("[redis] clean trigger: ", { triggerId })
     await redis.del(`${triggerId}-events`)
     await redis.del(`${triggerId}-clients`)
-  }
-
-  public async addEvent(triggerId: string, event: ISSEEvent) {
-    return redis.lpush(`${triggerId}-events`, JSON.stringify(event))
   }
 
   /**
@@ -48,15 +64,27 @@ class LlmManager {
    * @param client 可能不行！
    */
   public async addClient(triggerId: string, client: IClient) {
+    console.log("[redis] adding client: ", { triggerId, client })
+
     return redis.lpush(`${triggerId}-clients`, JSON.stringify(client))
   }
 
   public async delClient(triggerId: string, clientId: string) {
+    console.log("[redis] deleting client: ", { triggerId, clientId })
     const index = await redis.lpos(triggerId, clientId)
     return index === null ? null : await redis.lpop(triggerId, index)
   }
 
+  private async addEvent(triggerId: string, event: ISSEEvent) {
+    // console.log("[redis] adding event: ", { triggerId, event })
+    return redis.lpush(`${triggerId}-events`, JSON.stringify(event))
+  }
+
   public async pushEventToClients(triggerId: string, event: ISSEEvent) {
+    console.log("[redis] pushing event to all clients: ", { triggerId, event })
+
+    this.addEvent(triggerId, event)
+
     const clients_ = await redis.keys(`${triggerId}-clients`)
     return Promise.all(
       clients_.map(async (client_) => {
@@ -79,11 +107,11 @@ export const llmWrite = async (
   // 返回客户端不需要有 close 标志，直接 readystate=2 即可
   if (sseEvent.event === "close") return await writer.close()
 
-  const { event, data } = sseEvent
-
   // 要额外加一个 \n，否则不符合格式规范
   await writer.write(
-    llmEncoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+    llmEncoder.encode(
+      `event: ${sseEvent.event}\ndata: ${JSON.stringify(sseEvent?.data ?? "")}\n\n`,
+    ),
   )
 }
 

@@ -1,18 +1,14 @@
-import { ConvTitleResponse } from "@prisma/client"
-import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/fetch-sse"
-import { getTriggerID } from "../utils"
-import { IConvDetail, IUpdateResponse } from "../schema/conv"
+import { IUpdateResponse } from "../schema/conv"
 import { stopGeneratingAtom } from "../store/app"
 import {
   checkRespondingAtom,
-  convIdAtom,
   requestIdAtom,
-  serverConvDetailAtom,
   updateResponseAtom,
 } from "../store/conv"
+import { getTriggerID } from "../utils"
 
 export const useConvAppSse = (appId: string) => {
   const [checkResponding] = useAtom(checkRespondingAtom)
@@ -74,50 +70,4 @@ export const useConvAppSse = (appId: string) => {
     // 复原
     stopGenerating(false)
   }, [stoppedGenerating])
-}
-
-export const useConvTitleSse = () => {
-  const [convId] = useAtom(convIdAtom)
-  const [requestId] = useAtom(requestIdAtom)
-  const [, setConv] = useAtom(serverConvDetailAtom)
-
-  const refSSE = useRef<EventSource>()
-  const update = (func: (response: ConvTitleResponse) => void) => {
-    setConv((conv) =>
-      produce(conv, (conv) => {
-        if (conv?.titleResponse) func(conv.titleResponse)
-      }),
-    )
-  }
-
-  useEffect(() => {
-    if (!convId || !requestId) return
-
-    refSSE.current = fetchSSE(`/api/llm?r=${getTriggerID(requestId, convId)}`, {
-      onOpen: () => {
-        console.log("-- STARTED")
-        update((response) => (response.content = ""))
-      },
-      onData: (data) => {
-        console.debug({ data })
-        update((response) => (response.content += data))
-      },
-      onError: (error) => {
-        console.warn({ error })
-        update((response) => (response.error = error))
-      },
-      onFinal: () => {
-        update((response) => (response.tEnd = new Date()))
-      },
-    })
-  }, [requestId])
-
-  useEffect(() => {
-    const sse = refSSE.current
-    // console.log({ sse, stoppedGenerating })
-
-    if (sse && sse.readyState !== sse.CLOSED) {
-      sse.close()
-    }
-  }, [])
 }

@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   console.log("[sse] requested: ", {
     clientId,
     triggerId,
-    triggers: Object.keys(llmManager),
+    triggers: await llmManager.listTriggers(),
   })
 
   return new Response(responseStream.readable, {

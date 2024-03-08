@@ -1,13 +1,12 @@
 "use server"
-import { getTriggerID } from "../../../utils"
-
 import { ILLMMessage } from "@/schema/message"
 import { Prisma } from "@prisma/client"
 import { sleep } from "../../../../packages/common-algo/utils"
 import { prisma } from "../../../../packages/common-db"
-import { ISSEEvent, ISseTrigger } from "../../../../packages/common-sse/schema"
 import { callChatGPT } from "../../../../packages/common-llm/models/openai"
 import { ICreateCallLLM } from "../../../../packages/common-llm/schema"
+import { ISSEEvent } from "../../../../packages/common-sse/schema"
+import { getTriggerID } from "../../../utils"
 import { llmManager } from "./manager"
 
 export const triggerLLM = async ({
@@ -44,9 +43,7 @@ export const triggerLLM = async ({
       "",
   }
 
-  const pushToClients = async (e: ISSEEvent) =>
-    llmManager.pushEventToClients(triggerId, e)
-
+  await llmManager.addTrigger(triggerId)
   console.log("[sse] triggered: ", {
     triggerId,
     context,
@@ -54,6 +51,10 @@ export const triggerLLM = async ({
   })
 
   const start = async () => {
+    const pushToClients = async (e: ISSEEvent) => {
+      await llmManager.pushEventToClients(triggerId, e)
+    }
+
     try {
       const {
         // todo: dynamic openai api key
