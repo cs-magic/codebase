@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { ISseEvent } from "../../../../packages/common-sse/schema"
-import { llmEncoder } from "./manager"
-import { PusherLlmManager } from "./manager-pusher"
+import { ISseEvent } from "../../../../../../packages/common-sse/schema"
+import { StaticLlmManager } from "./provider-static"
+import { llmEncoder } from "./utils"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url).searchParams.get("r") ?? ""
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     )
   }
 
-  const llmManager = new PusherLlmManager(triggerId)
+  const llmManager = new StaticLlmManager(triggerId)
 
   // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {
@@ -34,7 +34,14 @@ export async function GET(req: NextRequest) {
     await llmManager.onClientDisconnected(clientId)
   }
 
-  void llmManager.onClientConnected(clientId)
+  void llmManager.onClientConnected({
+    id: clientId,
+    // todo: onEvent in serialization approach like Redis?
+    onEvent: async (sseEvent) => {
+      await write(sseEvent)
+      if (sseEvent.event === "close") await writer.close()
+    },
+  })
 
   return new Response(responseStream.readable, {
     headers: {

@@ -1,10 +1,5 @@
 import { z } from "zod"
-import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
-import {
-  createCallLLMSchema,
-  parseApp,
-} from "../../../../packages/common-llm/schema"
 import { pusherServerIdSchema } from "../../../../packages/common-puser/config"
 import {
   convProcedure,
@@ -17,19 +12,16 @@ import {
   ConvWhereUniqueInputSchema,
   UserUpdateInputSchema,
 } from "../../../../prisma/generated/zod"
-import ConvTitleResponseUncheckedCreateInputSchema from "../../../../prisma/generated/zod/inputTypeSchemas/ConvTitleResponseUncheckedCreateInputSchema"
 
 import { createAppSchema } from "../../../schema/app.create"
 import { appDetailSchema } from "../../../schema/app.detail"
 import { convDetailSchema, convSummarySchema } from "../../../schema/conv"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
-import { LlmActionPayload } from "../../../schema/sse"
 import { userDetailSchema } from "../../../schema/user.detail"
-import { dispatchLlmAction } from "../llm/llm-actions"
+
+import { triggerLLMThreads } from "../llm/actions/llm-trigger"
 import { Prisma } from ".prisma/client"
-import ResponseUncheckedCreateInput = Prisma.ResponseUncheckedCreateInput
-import ConvTitleResponseUncheckedCreateInput = Prisma.ConvTitleResponseUncheckedCreateInput
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -152,6 +144,7 @@ export const coreRouter = createTRPCRouter({
   query: convProcedure
     .input(
       z.object({
+        requestId: z.string(),
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
         llmDelay: z.number().default(0),
@@ -159,8 +152,7 @@ export const coreRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const requestId = getNewId()
-      const { context, convId, pusherServerId } = input
+      const { context, convId, pusherServerId, llmDelay, requestId } = input
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 
@@ -170,7 +162,6 @@ export const coreRouter = createTRPCRouter({
         data: {
           currentRequestId: requestId,
 
-          // todo: only once
           titleResponse: {
             connectOrCreate: {
               where: { convId },
@@ -205,95 +196,7 @@ export const coreRouter = createTRPCRouter({
         },
       })
 
-      await Promise.all(
-        conv.requests
-          .find((r) => r.id === requestId)!
-          .responses.map(async (r) => {
-            const appId = r.appId
-            const payload: LlmActionPayload = {
-              action: "trigger",
-              request: {
-                pusherServerId,
-                requestId,
-                appId,
-                type: "app-response",
-                status: "to-response",
-              },
-              app: parseApp(r.app),
-              context,
-              llmDelay: input.llmDelay,
-            }
-            const response: ResponseUncheckedCreateInput = {
-              tStart: new Date(),
-              content: "",
-              requestId,
-              appId,
-            }
-            await dispatchLlmAction(payload, {
-              onData: (data) => {
-                response.content += data
-              },
-              onError: (error) => {
-                response.error = error
-              },
-              onFinal: async () => {
-                response.tEnd = new Date()
-                console.log("-- onFinal: ", response)
-                await prisma.response.update({
-                  where: { requestId_appId: { requestId, appId } },
-                  data: response,
-                })
-              },
-            })
-          }),
-      )
-
-      // 如果已经更新了就不要改了
-      if (conv.titleResponse?.content) {
-      } else {
-        const payload: LlmActionPayload = {
-          action: "trigger",
-          request: {
-            pusherServerId,
-            convId: conv.id,
-            type: "conv-title",
-            status: "to-response",
-          },
-          app: createCallLLMSchema.parse({
-            modelName: "gpt-3.5-turbo",
-          }),
-          context: [
-            {
-              role: "system",
-              content:
-                "以下是我与你的一段对话，请做一个简要的总结（要求：不超过10个字）",
-            },
-            ...context,
-          ],
-          llmDelay: input.llmDelay,
-        }
-        const response: ConvTitleResponseUncheckedCreateInput = {
-          tStart: new Date(),
-          content: "",
-          convId,
-        }
-        await dispatchLlmAction(payload, {
-          onData: (data) => {
-            response.content += data
-          },
-          onError: (error) => {
-            response.error = error
-          },
-          onFinal: async () => {
-            response.tEnd = new Date()
-            console.log("-- onFinal: ", response)
-            await prisma.convTitleResponse.update({
-              where: { convId },
-              data: response,
-            })
-          },
-        })
-      }
+      void triggerLLMThreads(conv, requestId, pusherServerId, context, llmDelay)
       return requestId
     }),
 })

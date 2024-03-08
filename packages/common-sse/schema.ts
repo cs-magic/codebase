@@ -25,7 +25,7 @@ export type GenericSseEvent<T extends SseEventType, V = any> = {
 }
 
 export type ISseEvent =
-  | GenericSseEvent<"init", string>
+  | GenericSseEvent<"init", { time: number }>
   | GenericSseEvent<"data", string>
   | GenericSseEvent<"error", string>
   | GenericSseEvent<"close", string>

@@ -1,10 +1,6 @@
 import { type WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill"
 
-import { type ISseEvent } from "../../../../packages/common-sse/schema"
-
-// export const llmManager = staticCreate<Record<string, ISSERequest>>(() => ({}))
-
-// export const llmManager = new RedisLlmManager("llm-manager")
+import { type ISseEvent } from "../../../../../../packages/common-sse/schema"
 
 export const llmEncoder = new TextEncoder()
 

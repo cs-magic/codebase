@@ -1,13 +1,14 @@
 "use client"
 
 import { useConvSse } from "@/hooks/use-conv-sse"
+import { Prisma } from "@prisma/client"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { initPusherClient } from "../../packages/common-puser/client/init"
 import { pusherServerConfigs } from "../../packages/common-puser/config"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
-import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
+import { SseEventType } from "../../packages/common-sse/schema"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
 import { IContext, RoleType } from "../schema/message"
@@ -15,11 +16,9 @@ import { getTriggerIdFromSseRequest, ISseRequest } from "../schema/sse"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
 import {
   checkRespondingStatus,
-  requestAtom,
   requestIdAtom,
   responsesAtom,
   updateAppResponseAtom,
-  updateConvTitleAtom,
 } from "../store/conv"
 import { transportTypeAtom } from "../store/query"
 import { ConvAppMessages } from "./conv-app-messages"
@@ -57,14 +56,8 @@ export const ConvApp = ({
       ]
 
   const [, updateAppResponse] = useAtom(updateAppResponseAtom)
-  const [, updateConvTitle] = useAtom(updateConvTitleAtom)
   const update = (
-    func: (data: {
-      tEnd: Date | null
-      content: string | null
-      tStart: Date | null
-      error: string | null
-    }) => void,
+    func: (data: Prisma.ResponseUncheckedCreateInput) => void,
   ) => {
     if (requestId) updateAppResponse(requestId, app.id, func)
   }
@@ -85,17 +78,29 @@ export const ConvApp = ({
     console.log(ansiColors.red(`pusher bounds to channel: ${triggerId}`), {
       triggerId,
     })
+    channel.bind("init" as SseEventType, (data: { time: number }) => {
+      console.log(`[${Date.now()}] [pusher] init: `, data)
+      update((response) => {
+        response.tStart = new Date()
+      })
+    })
     channel.bind("data" as SseEventType, (data: string) => {
-      console.log("data: ", data)
+      console.log(`[${Date.now()}] [pusher] data: `, data)
       update((response) => {
         if (!response.content) response.content = data
         else response.content += data
       })
     })
     channel.bind("error" as SseEventType, (data: string) => {
-      console.log("error: ", data)
+      console.log(`[${Date.now()}] [pusher] error: `, data)
       update((response) => {
         response.error = data
+      })
+    })
+    channel.bind("close" as SseEventType, (data: string) => {
+      console.log(`[${Date.now()}] [pusher] close: `, data)
+      update((response) => {
+        response.tEnd = new Date()
       })
     })
     return () => {

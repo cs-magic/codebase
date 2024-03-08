@@ -18,7 +18,8 @@ import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { dispatchLlmAction } from "../app/api/llm/llm-actions"
+
+import { callLLM } from "../app/api/llm/actions/llm-caller"
 import { IAppDetail } from "../schema/app.detail"
 import {
   checkRespondingStatus,
@@ -62,7 +63,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
           )}
           tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
           onClick={() => {
-            void dispatchLlmAction(
+            void callLLM(
               {
                 action: "interrupt",
                 request: {

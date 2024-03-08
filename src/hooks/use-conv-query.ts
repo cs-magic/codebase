@@ -10,6 +10,7 @@ import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { getNewId } from "../../packages/common-algo/id"
 import { parseApp } from "../../packages/common-llm/schema"
 import { llmDelayAtom } from "../../packages/common-llm/store"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
@@ -92,8 +93,11 @@ export function useConvQuery() {
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
+    const requestId = getNewId()
+
     query.mutate(
       {
+        requestId,
         convId: conv.id,
         context: newContext,
         apps: persistedApps.map((a) => parseApp(a)),
@@ -102,15 +106,17 @@ export function useConvQuery() {
       },
       {
         onSuccess: (requestIdNew) => {
-          // 重置以拿到最新的数据
+          // todo: validate necessary 重置以拿到最新的数据
           void utils.core.getConv.invalidate()
+
+          //   todo: is requestId update too late, causing no `init` event?
+          router.push(`/tt/${conv!.id}?r=${requestId}`)
 
           console.log(
             ansiColors.blue(
               `router push --> /tt/${conv!.id}?r=${requestIdNew}`,
             ),
           )
-          router.push(`/tt/${conv!.id}?r=${requestIdNew}`)
         },
         onError: (err) => {
           console.error(err)

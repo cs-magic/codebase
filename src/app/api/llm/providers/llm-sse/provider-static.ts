@@ -3,7 +3,7 @@ import {
   IClient,
   ISseEvent,
   ISseTrigger,
-} from "../../../../packages/common-sse/schema"
+} from "../../../../../../packages/common-sse/schema"
 import { ILlmManagerTraditional } from "./schema"
 
 export class StaticLlmManager implements ILlmManagerTraditional {

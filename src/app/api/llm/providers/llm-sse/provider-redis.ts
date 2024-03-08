@@ -1,10 +1,10 @@
-import { redis } from "../../../../packages/common-db"
+import { redis } from "../../../../../../packages/common-db"
 import {
   IClient,
   ISseEvent,
   ISseTrigger,
-} from "../../../../packages/common-sse/schema"
-import { llmWrite } from "./manager"
+} from "../../../../../../packages/common-sse/schema"
+import { llmWrite } from "./utils"
 import { ILlmManagerTraditional } from "./schema"
 
 export class RedisLlmManager implements ILlmManagerTraditional {

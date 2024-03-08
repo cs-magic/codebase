@@ -1,8 +1,12 @@
 import Pusher from "pusher"
-import { pusherServerConfigs } from "../../../../packages/common-puser/config"
-import { initPusherServer } from "../../../../packages/common-puser/server/init"
-import { ISseEvent } from "../../../../packages/common-sse/schema"
-import { getTriggerIdFromSseRequest, ISseRequest } from "../../../schema/sse"
+import { pusherServerConfigs } from "../../../../../../packages/common-puser/config"
+import { initPusherServer } from "../../../../../../packages/common-puser/server/init"
+import { ISseEvent } from "../../../../../../packages/common-sse/schema"
+import {
+  getTriggerIdFromSseRequest,
+  ISseRequest,
+} from "../../../../../schema/sse"
+
 import { ILlmManagerPusher } from "./schema"
 
 export class PusherLlmManager implements ILlmManagerPusher {
@@ -14,13 +18,12 @@ export class PusherLlmManager implements ILlmManagerPusher {
     this.pusher = initPusherServer(pusherServerConfigs[request.pusherServerId])
   }
 
-  async onTriggerStarts() {
-    this.push({ event: "init" })
-  }
-
   //////////////////////////////
   // server
   //////////////////////////////
+  async onTriggerStarts() {
+    this.push({ event: "init", data: { time: Date.now() } })
+  }
 
   async onTriggerEnds(reason?: string) {
     this.push({ event: "close", data: reason })
@@ -47,6 +50,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
   //////////////////////////////
 
   private async push(event: ISseEvent) {
+    console.log(`[${Date.now()}] server --> client: `, event)
     this.pusher.trigger(this.channel, event.event, event.data)
   }
 }
