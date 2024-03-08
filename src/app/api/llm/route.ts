@@ -1,7 +1,10 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
 import { ISseEvent } from "../../../../packages/common-sse/schema"
-import { llmEncoder, llmManager } from "./manager"
+import { LlmActionPayload } from "../../../schema/sse"
+import { dispatchLlmAction } from "./llm-actions"
+import { llmEncoder } from "./manager"
+import { StaticLlmManager } from "./manager-static"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url).searchParams.get("r") ?? ""
@@ -11,7 +14,7 @@ export async function GET(req: NextRequest) {
   const writer = responseStream.writable.getWriter()
 
   const write = async (event: ISseEvent) => {
-    console.log("[sse] client --> user: ", event)
+    // console.log("[sse] client --> user: ", event)
     // 要额外加一个 \n，否则不符合格式规范
     await writer.write(
       llmEncoder.encode(
@@ -20,18 +23,20 @@ export async function GET(req: NextRequest) {
     )
   }
 
+  const llmManager = new StaticLlmManager(triggerId)
+
   // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {
     console.log(`Client(id=${clientId}) aborted connection.`)
 
     // 1. 先写
-    await write({ event: "onError", data: "您已中止" })
+    await write({ event: "error", data: "您已中止" })
     await writer.close()
     // 2. 再移除（2要在1之后）
-    await llmManager.onClientDisconnected(triggerId, clientId)
+    await llmManager.onClientDisconnected(clientId)
   }
 
-  void llmManager.onClientConnected(triggerId, {
+  void llmManager.onClientConnected({
     id: clientId,
     // todo: onEvent in serialization approach like Redis?
     onEvent: async (sseEvent) => {
@@ -47,4 +52,9 @@ export async function GET(req: NextRequest) {
       "Cache-Control": "no-cache, no-transform",
     },
   })
+}
+
+export async function POST(req: NextRequest) {
+  const payload = req.json() as unknown as LlmActionPayload
+  return new Response(await dispatchLlmAction(payload))
 }

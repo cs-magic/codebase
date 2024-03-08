@@ -8,10 +8,10 @@ import { llmWrite } from "./manager"
 import { ILlmManager } from "./schema"
 
 export class RedisLlmManager implements ILlmManager {
-  private key: string
+  private triggerId: string
 
-  constructor(key: string) {
-    this.key = key
+  constructor(triggerId: string) {
+    this.triggerId = triggerId
   }
 
   private async listTriggers() {
@@ -24,29 +24,36 @@ export class RedisLlmManager implements ILlmManager {
   // public
   //////////////////////////////
 
-  public async onTriggerStarts(triggerId: string) {
-    this.onEvent(triggerId, { event: "onInit" })
+  public async onTriggerStarts() {
+    this.onEvent({ event: "init" })
   }
 
-  public async hasTrigger(triggerId: string) {
+  public async hasTrigger() {
     // console.log("[redis] checking trigger: ", { triggerId })
-    return !!(await redis.exists(`${triggerId}-events`))
+    return !!(await redis.exists(`${this.triggerId}-events`))
   }
 
-  public async getTrigger(triggerId: string): Promise<ISseTrigger> {
-    const events = (await redis.lrange(`${triggerId}-events`, 0, -1)).map((e) =>
-      JSON.parse(e),
+  /**
+   * todo: redis get trigger()
+   */
+  public async getTrigger() {
+    const events = (await redis.lrange(`${this.triggerId}-events`, 0, -1)).map(
+      (e) => JSON.parse(e),
     ) as ISseEvent[]
 
-    const clients = (await redis.lrange(`${triggerId}-clients`, 0, -1)).map(
-      (e) => {
-        const client = JSON.parse(e) as IClient
-        console.log({ client })
-        return client
-      },
-    )
+    const clients = (
+      await redis.lrange(`${this.triggerId}-clients`, 0, -1)
+    ).map((e) => {
+      const client = JSON.parse(e) as IClient
+      console.log({ client })
+      return client
+    })
 
-    console.log("[redis] getting trigger: ", { triggerId, events, clients })
+    console.log("[redis] getting trigger: ", {
+      triggerId: this.triggerId,
+      events,
+      clients,
+    })
 
     return {
       events,
@@ -54,34 +61,43 @@ export class RedisLlmManager implements ILlmManager {
     }
   }
 
-  public async onTriggerEnds(triggerId: string) {
-    console.log("[redis] clean trigger: ", { triggerId })
-    await redis.del(`${triggerId}-events`)
-    await redis.del(`${triggerId}-clients`)
+  public async onTriggerEnds() {
+    console.log("[redis] clean trigger: ", { triggerId: this.triggerId })
+    await redis.del(`${this.triggerId}-events`)
+    await redis.del(`${this.triggerId}-clients`)
   }
 
   /**
    * @param triggerId
    * @param client 可能不行！
    */
-  public async onClientConnected(triggerId: string, client: IClient) {
-    console.log("[redis] adding client: ", { triggerId, client })
+  public async onClientConnected(client: IClient) {
+    console.log("[redis] adding client: ", {
+      triggerId: this.triggerId,
+      client,
+    })
 
-    redis.lpush(`${triggerId}-clients`, JSON.stringify(client))
+    redis.lpush(`${this.triggerId}-clients`, JSON.stringify(client))
   }
 
-  public async onClientDisconnected(triggerId: string, clientId: string) {
-    console.log("[redis] deleting client: ", { triggerId, clientId })
-    const index = await redis.lpos(triggerId, clientId)
-    index === null ? null : await redis.lpop(triggerId, index)
+  public async onClientDisconnected(clientId: string) {
+    console.log("[redis] deleting client: ", {
+      triggerId: this.triggerId,
+      clientId,
+    })
+    const index = await redis.lpos(this.triggerId, clientId)
+    index === null ? null : await redis.lpop(this.triggerId, index)
   }
 
-  public async onEvent(triggerId: string, event: ISseEvent) {
-    console.log("[redis] pushing event to all clients: ", { triggerId, event })
-    await redis.lpush(`${triggerId}-events`, JSON.stringify(event))
+  public async onEvent(event: ISseEvent) {
+    console.log("[redis] pushing event to all clients: ", {
+      triggerId: this.triggerId,
+      event,
+    })
+    await redis.lpush(`${this.triggerId}-events`, JSON.stringify(event))
 
     await Promise.all(
-      (await redis.keys(`${triggerId}-clients`)).map(async (client_) => {
+      (await redis.keys(`${this.triggerId}-clients`)).map(async (client_) => {
         // todo: is it ok?
         const client = JSON.parse(client_) as IClient
         client.onEvent(event)

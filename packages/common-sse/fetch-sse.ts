@@ -1,5 +1,5 @@
 import ansiColors from "ansi-colors"
-import { ISSEEventType } from "./schema"
+import { ISseEventType } from "./schema"
 
 export const fetchSSE = (
   requestUrl: string,
@@ -23,27 +23,29 @@ export const fetchSSE = (
     sse.close()
   }
 
-  sse.addEventListener(
-    "onData" as ISSEEventType,
-    (ev: MessageEvent<string>) => {
-      console.log("[sse] onData: ", ev)
-      if (options?.onData) options.onData(JSON.parse(ev.data) as string)
-    },
-  )
-  sse.addEventListener(
-    "onError" as ISSEEventType,
-    (ev: MessageEvent<string>) => {
-      console.log("[sse] onError: ", ev)
-      if (options?.onError) options.onError(JSON.parse(ev.data) as string)
-
-      doEnd()
-    },
-  )
-
   sse.onopen = () => {
     if (options?.onOpen) options.onOpen()
     console.log("[sse] opened")
   }
+
+  sse.addEventListener("data" as ISseEventType, (ev: MessageEvent<string>) => {
+    console.log("[sse] onData: ", ev)
+    if (options?.onData) options.onData(JSON.parse(ev.data) as string)
+  })
+
+  /**
+   * todo: error 占用了系统的 error 通道?
+   */
+  sse.addEventListener("error" as ISseEventType, (ev: MessageEvent<string>) => {
+    console.log("[sse] onError: ", ev)
+    if (options?.onError)
+      options.onError(
+        typeof ev.data === "string" ? (JSON.parse(ev.data) as string) : ev.data,
+      )
+
+    doEnd()
+  })
+
   sse.onerror = (err) => {
     // 2 是结束
     if (err.eventPhase !== 2) console.warn(`event source error: `, err)

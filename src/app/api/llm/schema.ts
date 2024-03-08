@@ -10,24 +10,26 @@ export interface ILlmManager {
   //////////////////////////////
 
   // 1. add trigger, on LLM starts
-  onTriggerStarts: (triggerId: string, trigger: ISseTrigger) => Promise<void>
+  onTriggerStarts: (trigger: ISseTrigger) => Promise<void>
   // 2. clean trigger, on LLM ends
-  onTriggerEnds: (triggerId: string) => Promise<void>
+  onTriggerEnds: () => Promise<void>
   // 3. push event to clients, when LLM outputs token
-  onEvent: (triggerId: string, event: ISseEvent) => Promise<void>
+  onEvent: (event: ISseEvent) => Promise<void>
 
   ///////////////////////////////
   // client (GET)
   //////////////////////////////
 
   // 1. a user visited
-  onClientConnected: (triggerId: string, client: IClient) => Promise<void>
+  onClientConnected: (client: IClient) => Promise<void>
   // 2. a user leaved
-  onClientDisconnected: (triggerId: string, clientId: string) => Promise<void>
+  onClientDisconnected: (clientId: string) => Promise<void>
 
   //////////////////////////////
   // general
   //////////////////////////////
 
-  getTrigger: (triggerId: string) => Promise<ISseTrigger | null>
+  trigger?: ISseTrigger | null
+  // todo: redis type hint
+  // getTrigger?: Promise<ISseTrigger | null>
 }

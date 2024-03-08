@@ -13,6 +13,7 @@
 - 【乐观刷新】前期为了保证开发速度与质量，可以暂时先不用
 - 【状态管理】jotai vs zustand vs vs valtio
 - 【trpc状态同步】在列表页上，我们还是用了invalidate机制，避免了手写各种convs的更新与对齐，然后本地的convs始终对齐trcp的列表数据即可
+- 【llm-manager同步】（2024-03-09）在经历了痛苦的同步控制，最后不得不用上redis并陷入序列化的困境后，我最终决定放弃一切幻想all in pusher
 
 
 ### Conversation

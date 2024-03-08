@@ -9,27 +9,36 @@ import { ILlmManager } from "./schema"
 export class StaticLlmManager implements ILlmManager {
   static triggers: Record<string, ISseTrigger> = {}
 
+  private triggerId: string
+
+  constructor(triggerId: string) {
+    this.triggerId = triggerId
+  }
+
+  get triggers() {
+    return Object.keys(StaticLlmManager.triggers)
+  }
+
   //////////////////////////////
   // server
   //////////////////////////////
 
-  onTriggerStarts(triggerId: string): Promise<void> {
-    StaticLlmManager.triggers[triggerId] = { events: [], clients: [] }
-    return Promise.resolve(undefined)
+  get trigger() {
+    return StaticLlmManager.triggers[this.triggerId] ?? null
   }
 
-  onTriggerEnds(triggerId: string): Promise<void> {
+  async onTriggerStarts(): Promise<void> {
+    this.print("onTriggerStarts(before)")
+    StaticLlmManager.triggers[this.triggerId] = { events: [], clients: [] }
+    this.print("onTriggerStarts(end)")
+  }
+
+  async onTriggerEnds(reason?: string): Promise<void> {
+    this.print("onTriggerEnds(before)")
     // !important
-    this.onEvent(triggerId, { event: "close" })
-    delete StaticLlmManager.triggers[triggerId]
-    return Promise.resolve(undefined)
-  }
-
-  onEvent(triggerId: string, event: ISseEvent): Promise<void> {
-    console.log("[sse] server --> client: ", event)
-    StaticLlmManager.triggers[triggerId]?.clients.forEach((client) => {
-      client.onEvent(event)
-    })
+    this.onEvent({ event: "close", data: reason })
+    delete StaticLlmManager.triggers[this.triggerId]
+    this.print("onTriggerEnds(end)")
     return Promise.resolve(undefined)
   }
 
@@ -37,32 +46,53 @@ export class StaticLlmManager implements ILlmManager {
   // client
   //////////////////////////////
 
-  async onClientConnected(triggerId: string, client: IClient): Promise<void> {
-    const trigger = await this.getTrigger(triggerId)
-    if (!trigger) return
-
-    await Promise.all(trigger.events.map(async (e) => client.onEvent(e)))
-    trigger.clients.push(client)
-    return Promise.resolve(undefined)
+  async onEvent(event: ISseEvent): Promise<void> {
+    console.log("[sse] server --> client: ", {
+      triggerId: this.triggerId,
+      ...event,
+    })
+    StaticLlmManager.triggers[this.triggerId]?.clients.forEach((client) => {
+      // how?
+      client.onEvent(event)
+    })
   }
 
-  onClientDisconnected(triggerId: string, clientId: string): Promise<void> {
-    remove(
-      StaticLlmManager.triggers[triggerId]?.clients ?? [],
-      (c) => c.id === clientId,
-    )
-    return Promise.resolve(undefined)
+  async onClientConnected(client: IClient): Promise<void> {
+    this.print(`onClientConnected(id=${client.id})`)
+    if (!this.trigger) {
+      client.onEvent({
+        event: "close",
+        data: `trigger(id=${this.triggerId}) not found`,
+      })
+      return
+    }
+
+    await Promise.all(this.trigger.events.map(async (e) => client.onEvent(e)))
+    this.trigger.clients.push(client)
   }
 
   //////////////////////////////
   // general
   //////////////////////////////
 
-  getTrigger(triggerId: string): Promise<ISseTrigger | null> {
-    return Promise.resolve(StaticLlmManager.triggers[triggerId] ?? null)
+  onClientDisconnected(clientId: string): Promise<void> {
+    this.print(`onClientDisconnected(id=${clientId})`)
+    remove(this.trigger?.clients ?? [], (c) => c.id === clientId)
+    return Promise.resolve(undefined)
   }
 
-  hasTrigger(triggerId: string): Promise<boolean> {
-    return Promise.resolve(triggerId in StaticLlmManager.triggers)
+  async hasTrigger(): Promise<boolean> {
+    //   console.log("hasTrigger: ", {
+    //     triggerId,
+    //     triggers: this.triggers,
+    //   })
+    return this.triggerId in StaticLlmManager.triggers
+  }
+
+  private print(name: string) {
+    console.log(`[sse] ${name}: `, {
+      triggerId: this.triggerId,
+      triggers: this.triggers,
+    })
   }
 }

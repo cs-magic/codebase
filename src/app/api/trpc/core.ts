@@ -2,15 +2,15 @@ import { z } from "zod"
 import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
 import {
+  createCallLLMSchema,
+  parseApp,
+} from "../../../../packages/common-llm/schema"
+import {
   convProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "../../../../packages/common-trpc/trpc"
-import {
-  createCallLLMSchema,
-  parseApp,
-} from "../../../../packages/common-llm/schema"
 import {
   ConvUpdateInputSchema,
   ConvWhereUniqueInputSchema,
@@ -22,8 +22,9 @@ import { appDetailSchema } from "../../../schema/app.detail"
 import { convDetailSchema, convSummarySchema } from "../../../schema/conv"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
+import { LlmActionPayload } from "../../../schema/sse"
 import { userDetailSchema } from "../../../schema/user.detail"
-import { triggerLLM } from "../llm/llm-triggle"
+import { dispatchLlmAction } from "../llm/llm-actions"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -202,26 +203,32 @@ export const coreRouter = createTRPCRouter({
         conv.requests
           .find((r) => r.id === requestId)!
           .responses.map(async (r) => {
-            await triggerLLM({
-              requestId,
-              task: {
-                convId: undefined,
+            const payload: LlmActionPayload = {
+              action: "trigger",
+              request: {
+                requestId,
                 appId: r.appId,
+                convId: conv.id,
+                type: "app-response",
+                status: "to-response",
               },
               app: parseApp(r.app),
               context,
               llmDelay: input.llmDelay,
-            })
+            }
+            await dispatchLlmAction(payload)
           }),
       )
 
       // 如果已经更新了就不要改了
       if (!conv.titleResponse?.content) {
-        await triggerLLM({
-          requestId,
-          task: {
-            convId: input.convId,
-            appId: undefined,
+        const payload: LlmActionPayload = {
+          action: "trigger",
+          request: {
+            requestId,
+            convId: conv.id,
+            type: "conv-title",
+            status: "to-response",
           },
           app: createCallLLMSchema.parse({
             modelName: "gpt-3.5-turbo",
@@ -235,7 +242,8 @@ export const coreRouter = createTRPCRouter({
             ...context,
           ],
           llmDelay: input.llmDelay,
-        })
+        }
+        await dispatchLlmAction(payload)
       }
       return requestId
     }),
