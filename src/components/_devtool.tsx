@@ -1,13 +1,24 @@
 "use client"
 
+import { useAtom } from "jotai"
+import { SettingsIcon } from "lucide-react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { llmDelayAtom } from "../../packages/common-llm/store"
+import { SmsProviderType } from "../../packages/common-sms/schema"
+import {
+  smsCodeToCountdownSecondsAtom,
+  smsProviderTypeAtom,
+} from "../../packages/common-sms/store"
+import { api } from "../../packages/common-trpc/react"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/dialog"
-import { SettingsIcon } from "lucide-react"
+import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import {
   Select,
   SelectContent,
@@ -16,19 +27,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
-import { useAtom } from "jotai"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
-import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
-import {
-  smsCodeToCountdownSecondsAtom,
-  smsProviderTypeAtom,
-} from "../../packages/common-sms/store"
-import { SmsProviderType } from "../../packages/common-sms/schema"
-import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { api } from "../../packages/common-trpc/react"
-import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
-import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
+import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
+import { TransportType, transportTypeAtom } from "../store/query"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
@@ -37,6 +38,7 @@ export const Devtool = () => {
   )
   const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
+  const [transportType, setTransportType] = useAtom(transportTypeAtom)
 
   const utils = api.useUtils()
 
@@ -106,6 +108,27 @@ export const Devtool = () => {
               setLlmDelay(Number(event.currentTarget.value))
             }}
           />
+        </div>
+
+        <div className={"flex items-center gap-2"}>
+          <Label>Transport Type</Label>
+          <Select
+            value={transportType}
+            onValueChange={(s: TransportType) => setTransportType(s)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value={"pusher" as TransportType}>
+                  Puhser
+                </SelectItem>
+                <SelectItem value={"sse" as TransportType}>SSE</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </DialogContent>
     </Dialog>

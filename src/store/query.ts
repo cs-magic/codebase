@@ -5,4 +5,5 @@ import { atom } from "jotai"
  */
 export const userPromptAtom = atom("")
 
-export const transportTypeAtom = atom<"pusher" | "sse">("pusher")
+export type TransportType = "pusher" | "sse"
+export const transportTypeAtom = atom<TransportType>("pusher")
