@@ -5,8 +5,8 @@ import { serverConvDetailAtom, serverConvListFAtom } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
-import { Separator } from "../../../../packages/common/components/ui/separator"
-import { api } from "../../../../packages/common/lib/trpc/react"
+import { Separator } from "../../../../packages/common-ui/shadcn/shadcn-components/separator"
+import { api } from "../../../../packages/common-trpc/react"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)

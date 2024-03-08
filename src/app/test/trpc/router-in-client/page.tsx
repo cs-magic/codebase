@@ -2,11 +2,11 @@
 import { useSession } from "next-auth/react"
 import { useRef } from "react"
 import { toast } from "sonner"
-import { FlexContainer } from "../../../../../packages/common/components/flex-container"
-import { Button } from "../../../../../packages/common/components/ui/button"
-import { Input } from "../../../../../packages/common/components/ui/input"
-import { Label } from "../../../../../packages/common/components/ui/label"
-import { api } from "../../../../../packages/common/lib/trpc/react"
+import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
+import { Button } from "../../../../../packages/common-ui/shadcn/shadcn-components/button"
+import { Input } from "../../../../../packages/common-ui/shadcn/shadcn-components/input"
+import { Label } from "../../../../../packages/common-ui/shadcn/shadcn-components/label"
+import { api } from "../../../../../packages/common-trpc/react"
 import { updateUserNameViaTrpc } from "./actions"
 
 export default function TestTrpcRouterInClientPage() {

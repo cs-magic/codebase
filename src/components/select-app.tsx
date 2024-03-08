@@ -1,6 +1,6 @@
-import { buttonVariants } from "../../packages/common/components/ui/button"
+import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
-import { cn } from "../../packages/common/lib/utils"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useAtom } from "jotai"
 
 import {
@@ -10,7 +10,7 @@ import {
   uiMaxAppsAtom,
   pushAppAtom,
 } from "@/store/app"
-import { IconContainer } from "../../packages/common/components/icon-container"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { IAppDetail } from "../schema/app.detail"
 
 export const SelectApp = ({

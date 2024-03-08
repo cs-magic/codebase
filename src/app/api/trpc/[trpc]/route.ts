@@ -2,7 +2,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 import { type NextRequest } from "next/server"
 import { appRouter } from "../index"
 
-import { createTRPCContext } from "../../../../../packages/common/lib/trpc/context"
+import { createTRPCContext } from "../../../../../packages/common-trpc/context"
 import { env } from "@/env"
 
 /**

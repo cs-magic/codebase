@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { uiScreenAtom } from "../../packages/common/store/ui"
+import { uiScreenAtom } from "../../packages/common-ui/store"
 
 export const uiMobileSidebarOpen = atom(false)
 

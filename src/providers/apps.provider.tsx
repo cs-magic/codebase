@@ -2,8 +2,8 @@
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
 import { toast } from "sonner"
-import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { api } from "../../packages/common/lib/trpc/react"
+import { useEnvironments } from "../../packages/common-hooks/use-environments"
+import { api } from "../../packages/common-trpc/react"
 import { appsPersistedAtom, pushAppAtom, serverAppsAtom } from "../store/app"
 
 /**
@@ -16,7 +16,7 @@ export default function AppsProvider({ children }: PropsWithChildren) {
   const [, setAllApps] = useAtom(serverAppsAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, pushApp] = useAtom(pushAppAtom)
-  const { isMobile } = useBrowserEnvironment()
+  const { isMobile } = useEnvironments()
 
   useEffect(() => {
     if (!apps) return

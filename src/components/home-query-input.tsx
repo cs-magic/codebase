@@ -2,11 +2,11 @@
 
 import { useAtom } from "jotai"
 import { ArrowUpIcon, Paperclip } from "lucide-react"
-import { IconContainer } from "../../packages/common/components/icon-container"
-import { TextareaAuto } from "../../packages/common/components/textarea-auto"
-import { cn } from "../../packages/common/lib/utils"
-import { userPromptAtom } from "../../packages/common/store/user"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useConvQuery } from "../hooks/use-conv-query"
+import { userPromptAtom } from "../store/query"
 
 export const HomeQueryInput = () => {
   const query = useConvQuery()

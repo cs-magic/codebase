@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { createCallLLMSchema } from "../../packages/llm/schema"
+import { createCallLLMSchema } from "../../packages/common-llm/schema"
 
 /**
  * todo: use from config model

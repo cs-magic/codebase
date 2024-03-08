@@ -1,16 +1,16 @@
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { useKey } from "react-use"
-import { Label } from "../../packages/common/components/ui/label"
-import { useSmsSignIn } from "../../packages/common/lib/sms/hooks/use-sms-sign-in"
-import { smsCodeAtom } from "../../packages/common/lib/sms/store"
-import { cn } from "../../packages/common/lib/utils"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { useSmsSignIn } from "../../packages/common-sms/hooks/use-sms-sign-in"
+import { smsCodeValueAtom } from "../../packages/common-sms/store"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { SMS_DIGIT_SIZE } from "../config/sms"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
 
 export const SmsStage2InputCode = () => {
-  const [digits, setDigits] = useAtom(smsCodeAtom)
+  const [digits, setDigits] = useAtom(smsCodeValueAtom)
 
   const refInput = useRef<HTMLInputElement>(null)
   const smsSignIn = useSmsSignIn()

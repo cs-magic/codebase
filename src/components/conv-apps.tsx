@@ -5,11 +5,9 @@ import {
   appsPersistedAtom,
   stopGeneratingAtom,
 } from "@/store/app"
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
-import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { cn } from "../../packages/common/lib/utils"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { commonContextAtom } from "../store/conv"
 import { ConvApp } from "./conv-app"
 
@@ -18,7 +16,6 @@ export const ConvApps = () => {
   const [gridCols] = useAtom(appsGridColsAtom)
 
   const [commonContext] = useAtom(commonContextAtom)
-  const { isMobile } = useBrowserEnvironment()
   // console.log(ansiColors.bgRed.white("commonContext: "), commonContext)
 
   return (

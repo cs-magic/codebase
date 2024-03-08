@@ -1,10 +1,12 @@
 "use client"
 
+import { devEnabledAtom } from "../../packages/common-dev/store"
+import { llmDelayAtom } from "../../packages/common-llm/store"
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
-} from "../../packages/common/components/ui/dialog"
+} from "../../packages/common-ui/shadcn/shadcn-components/dialog"
 import { SettingsIcon } from "lucide-react"
 import {
   Select,
@@ -13,26 +15,25 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../packages/common/components/ui/select"
+} from "../../packages/common-ui/shadcn/shadcn-components/select"
 import { useAtom } from "jotai"
-import { Label } from "../../packages/common/components/ui/label"
-import { Switch } from "../../packages/common/components/ui/switch"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
 import {
-  smsCodeCountdownSecondsAtom,
+  smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../packages/common/lib/sms/store"
-import { SmsProviderType } from "../../packages/common/lib/sms/schema"
-import { IconContainer } from "../../packages/common/components/icon-container"
-import { api } from "../../packages/common/lib/trpc/react"
-import { Button } from "../../packages/common/components/ui/button"
-import { Separator } from "../../packages/common/components/ui/separator"
-import { Input } from "../../packages/common/components/ui/input"
-import { devEnabledAtom, llmDelayAtom } from "packages/common/store"
+} from "../../packages/common-sms/store"
+import { SmsProviderType } from "../../packages/common-sms/schema"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { api } from "../../packages/common-trpc/react"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
+import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 
 export const Devtool = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
   const [smsCountdownSeconds, setSmsCountdownSeconds] = useAtom(
-    smsCodeCountdownSecondsAtom,
+    smsCodeToCountdownSecondsAtom,
   )
   const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)

@@ -14,9 +14,9 @@ import {
   StopCircle,
   Unlock,
 } from "lucide-react"
-import { IconContainer } from "../../packages/common/components/icon-container"
-import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { cn } from "../../packages/common/lib/utils"
+import { useEnvironments } from "../../packages/common-hooks/use-environments"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
 import { checkRespondingAtom } from "../store/conv"
 import { ConvAppTitleLine } from "./conv-app-title-line"
@@ -34,7 +34,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
   const LockOrNot = selected ? Lock : Unlock
   const fetching = checkResponding(appId)
 
-  const { isMobile } = useBrowserEnvironment()
+  const { isMobile } = useEnvironments()
 
   return (
     <div

@@ -2,10 +2,10 @@
 import { TVContainer } from "@/components/tv-container"
 import { useAtom } from "jotai"
 import React from "react"
-import { FlexContainer } from "../../../packages/common/components/flex-container"
-import { cn } from "../../../packages/common/lib/utils"
-import { userPromptAtom } from "../../../packages/common/store/user"
+import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
+import { cn } from "../../../packages/common-ui/shadcn/utils"
 import { HomeQueryInput } from "../../components/home-query-input"
+import { userPromptAtom } from "../../store/query"
 
 export default function HomePage() {
   const [prompt] = useAtom(userPromptAtom)

@@ -3,10 +3,10 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../packages/common/components/ui/avatar"
-import { Label } from "../../packages/common/components/ui/label"
-import { useDraftSession } from "../../packages/common/hooks/use-user-draft-session"
-import { uploadFiles } from "../../packages/common/lib/oss/upload"
+} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { useDraftSession } from "../../packages/common-hooks/use-user-draft-session"
+import { uploadFiles } from "../../packages/common-oss/upload"
 
 export const UserInputAvatar = () => {
   const { draft, setDraft } = useDraftSession("image")

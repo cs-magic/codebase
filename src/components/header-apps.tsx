@@ -3,11 +3,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../../packages/common/components/ui/dropdown-menu"
-import { IconContainer } from "../../packages/common/components/icon-container"
+} from "../../packages/common-ui/shadcn/shadcn-components/dropdown-menu"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { IoApps } from "react-icons/io5"
-import { cn } from "../../packages/common/lib/utils"
-import { Button } from "../../packages/common/components/ui/button"
+import { cn } from "../../packages/common-ui/shadcn/utils"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { toast } from "sonner"
 import { SubAppIcon } from "@/components/header-app"
 import { subAppsIcons } from "@/config/system"

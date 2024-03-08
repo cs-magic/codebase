@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Button } from "../../../../packages/common/components/ui/button"
+import { Button } from "../../../../packages/common-ui/shadcn/shadcn-components/button"
 
 export default function TextToImagePage() {
   return (

@@ -2,8 +2,11 @@ import { IMessageInChat } from "@/schema/message"
 import { useSession } from "next-auth/react"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { RiOpenaiFill } from "react-icons/ri"
-import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
-import { cn } from "../../packages/common/lib/utils"
+import {
+  Avatar,
+  AvatarImage,
+} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 
 export const ConvAppMessage = ({
   m,

@@ -1,4 +1,4 @@
-import { api } from "../../packages/common/lib/trpc/react"
+import { api } from "../../packages/common-trpc/react"
 import { toast } from "sonner"
 
 /**

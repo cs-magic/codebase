@@ -7,8 +7,8 @@ import {
   SelectLabel,
   SelectSeparator,
   SelectTrigger,
-} from "../../packages/common/components/ui/select"
-import { api } from "../../packages/common/lib/trpc/react"
+} from "../../packages/common-ui/shadcn/shadcn-components/select"
+import { api } from "../../packages/common-trpc/react"
 import { IAppDetail } from "../schema/app.detail"
 import { replaceAppAtom } from "../store/app"
 

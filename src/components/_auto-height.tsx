@@ -1,7 +1,7 @@
 "use client"
-import { useAutoHeight } from "../../packages/common/hooks/use-auto-height"
+import { useDisplayAutoHeight } from "../../packages/common-hooks/use-display-auto-height"
 
 export const AutoHeight = () => {
-  useAutoHeight()
+  useDisplayAutoHeight()
   return null
 }

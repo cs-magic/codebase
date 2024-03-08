@@ -2,7 +2,7 @@ import { DEFAULT_AVATAR } from "@/config/assets"
 import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
-import { AspectRatio } from "../../packages/common/components/ui/aspect-ratio"
+import { AspectRatio } from "../../packages/common-ui/shadcn/shadcn-components/aspect-ratio"
 import { MSG_TODO } from "../config/messages"
 
 export interface ISubAppIcon {

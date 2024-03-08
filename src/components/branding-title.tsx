@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react"
 import Link from "next/link"
-import { cn } from "../../packages/common/lib/utils"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 
 export const BrandingTitle = ({
   withDescription,

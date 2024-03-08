@@ -5,10 +5,16 @@ import { useAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { ComponentType } from "react"
 import { useForm } from "react-hook-form"
+import { smsPhoneAtom } from "../../packages/common-auth/store"
+import { useEnvironments } from "../../packages/common-hooks/use-environments"
+import { useSmsSendCode } from "../../packages/common-sms/hooks/use-sms-send-code"
+import { ISendSms, sendSmsSchema } from "../../packages/common-sms/schema"
+import { smsCodeCurCountdownSecondsAtom } from "../../packages/common-sms/store"
+import { WECHAT_PROVIDER_ID } from "../../packages/common-wechat/auth/config"
 
-import { ButtonWithLoading } from "../../packages/common/components/button-with-loading"
-import { SeparatorContainer } from "../../packages/common/components/separator-container"
-import { Button } from "../../packages/common/components/ui/button"
+import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
+import { SeparatorContainer } from "../../packages/common-ui/components/separator-container"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   Form,
   FormControl,
@@ -16,26 +22,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../packages/common/components/ui/form"
-import { Input } from "../../packages/common/components/ui/input"
-import { Label } from "../../packages/common/components/ui/label"
-import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { useSmsSendCode } from "../../packages/common/lib/sms/hooks/use-sms-send-code"
-import { ISendSms, sendSmsSchema } from "../../packages/common/lib/sms/schema"
-import {
-  smsDowntimeAtom,
-  smsPhoneAtom,
-} from "../../packages/common/lib/sms/store"
-import { cn } from "../../packages/common/lib/utils"
-import { WECHAT_PROVIDER_ID } from "../../packages/common/lib/wechat/auth/config"
+} from "../../packages/common-ui/shadcn/shadcn-components/form"
+import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 
 export const SmsStage1SendCode = ({
   BrandComp,
 }: {
   BrandComp: ComponentType
 }) => {
-  const { isWechat } = useBrowserEnvironment()
-  const [downtime] = useAtom(smsDowntimeAtom)
+  const { isWechat } = useEnvironments()
+  const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)
   const [, setPhone] = useAtom(smsPhoneAtom)
   const sendCode = useSmsSendCode()
 

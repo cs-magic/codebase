@@ -6,8 +6,8 @@ import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { smsStageAtom } from "../../../../packages/common/lib/sms/store"
-import { UnexpectedError } from "../../../../packages/common/schema/errors"
+import { UnexpectedError } from "../../../../packages/common-general/schema"
+import { smsStageAtom } from "../../../../packages/common-sms/store"
 /**
  * ui ref: https://clerk.com/
  */

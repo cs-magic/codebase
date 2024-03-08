@@ -1,4 +1,4 @@
-import { prisma } from "../packages/common/lib/db/providers/prisma/connection"
+import { prisma } from "../packages/common-db/providers/prisma/connection"
 
 const initLLM = async () => {
   const deletedCompanies = await prisma.company.deleteMany()

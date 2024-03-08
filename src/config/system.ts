@@ -1,10 +1,6 @@
-import {
-  APP_EVAL_IMAGE,
-  Text2ImageAppSVG,
-  Text2TextAppSVG,
-} from "@/config/assets"
-import { IMode, ModeType } from "@/schema/scenario"
 import { ISubAppIcon } from "@/components/header-app"
+import { IMode, ModeType } from "@/schema/scenario"
+import { env } from "../env"
 
 export const modes: Record<ModeType, IMode> = {
   text: { id: "text", label: "文" },

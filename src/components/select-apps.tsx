@@ -4,11 +4,11 @@ import React, { useState } from "react"
 import {
   Dialog,
   DialogContent,
-} from "../../packages/common/components/ui/dialog"
-import { Label } from "../../packages/common/components/ui/label"
+} from "../../packages/common-ui/shadcn/shadcn-components/dialog"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { SelectApp } from "./select-app"
-import { Separator } from "../../packages/common/components/ui/separator"
-import { Input } from "../../packages/common/components/ui/input"
+import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
+import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { useAtom } from "jotai"
 
 import {

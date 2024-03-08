@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { toast } from "sonner"
-import { TextareaAuto } from "../../packages/common/components/textarea-auto"
+import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { useConvQuery } from "../hooks/use-conv-query"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 

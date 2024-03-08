@@ -1,7 +1,10 @@
 import { INDIES_AVATARS, SPONSORS_BANNERS } from "@/config/branding"
-import { SeparatorContainer } from "../../packages/common/components/separator-container"
-import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
-import { Avatar, AvatarImage } from "../../packages/common/components/ui/avatar"
+import { SeparatorContainer } from "../../packages/common-ui/components/separator-container"
+import { ImageEqualHeight } from "../../packages/common-ui/components/image-equal-height"
+import {
+  Avatar,
+  AvatarImage,
+} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
 
 export const BrandingPartners = () => {
   return (

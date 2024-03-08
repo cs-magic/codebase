@@ -1,9 +1,9 @@
 import { produce } from "immer"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { BEST_VIEWPOINT } from "../../packages/common/config/system"
-import { getNewId } from "../../packages/common/lib/utils"
-import { uiScreenAtom } from "../../packages/common/store/ui"
+import { getNewId } from "../../packages/common-algo/id"
+import { BEST_VIEWPOINT } from "../../packages/common-ui/config"
+import { uiScreenAtom } from "../../packages/common-ui/store"
 import { IAppDetail } from "../schema/app.detail" //////////////////////////////
 
 //////////////////////////////

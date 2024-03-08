@@ -3,11 +3,11 @@
 import { requestsAtom, serverConvDetailAtom } from "@/store/conv"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { useAtom } from "jotai"
-
-import { cn } from "packages/common/lib/utils"
 import * as React from "react"
-import { useBrowserEnvironment } from "../../packages/common/hooks/use-browser-environment"
-import { devEnabledAtom } from "../../packages/common/store"
+import { devEnabledAtom } from "../../packages/common-dev/store"
+import { useEnvironments } from "../../packages/common-hooks/use-environments"
+
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useRequestSlider } from "../hooks/use-request-slider"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 
@@ -21,7 +21,7 @@ const ConvRequestsSlider = React.forwardRef<
   const { min, max, onChange, value } = useRequestSlider()
   const [devEnabled] = useAtom(devEnabledAtom)
   const softKeyboardOn = useSoftKeyboardOn()
-  const { isMobile } = useBrowserEnvironment()
+  const { isMobile } = useEnvironments()
 
   return (
     <div className={"flex w-full flex-col gap-2"}>

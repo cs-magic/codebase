@@ -1,10 +1,10 @@
 "use client"
 import Link from "next/link"
-import { Button } from "../../packages/common/components/ui/button"
+import { uiAlertDialogContent } from "../../packages/common-ui/store"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import React from "react"
-import { ContentAlertDialog } from "../../packages/common/components/content-alert-dialog"
+import { ContentAlertDialog } from "../../packages/common-ui/components/content-alert-dialog"
 import { useAtom } from "jotai"
-import { uiAlertDialogContent } from "../../packages/common/store/ui"
 
 export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {
   const [dynamicContent] = useAtom(uiAlertDialogContent)

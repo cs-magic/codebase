@@ -3,14 +3,11 @@ import { getTriggerID } from "@/lib/utils"
 
 import { ILLMMessage } from "@/schema/message"
 import { Prisma } from "@prisma/client"
-import { prisma } from "../../../../packages/common/lib/db"
-import {
-  ISSEEvent,
-  ISSERequest,
-} from "../../../../packages/common/lib/sse/schema"
-import { sleep } from "../../../../packages/common/lib/utils"
-import { callChatGPT } from "../../../../packages/llm/models/openai"
-import { ICreateCallLLM } from "../../../../packages/llm/schema"
+import { sleep } from "../../../../packages/common-algo/utils"
+import { prisma } from "../../../../packages/common-db"
+import { ISSEEvent, ISseTrigger } from "../../../../packages/common-sse/schema"
+import { callChatGPT } from "../../../../packages/common-llm/models/openai"
+import { ICreateCallLLM } from "../../../../packages/common-llm/schema"
 import { llmManager } from "./manager"
 
 export const triggerLLM = async ({
@@ -37,7 +34,7 @@ export const triggerLLM = async ({
 }) => {
   const triggerId = getTriggerID(requestId, task.convId ?? task.appId)
 
-  const response: Prisma.ResponseUncheckedCreateInput = {
+  const r: Prisma.ResponseUncheckedCreateInput = {
     tStart: new Date(),
     requestId,
     content: "", // init or undefined, affecting later concat string
@@ -47,18 +44,13 @@ export const triggerLLM = async ({
       "",
   }
 
-  const r: ISSERequest = {
-    clients: [],
-    response,
-  }
-  await llmManager.set(triggerId, r)
-
-  const pushToClients = (e: ISSEEvent) => r.clients.forEach((c) => c.onEvent(e))
+  const pushToClients = async (e: ISSEEvent) =>
+    llmManager.pushEventToClients(triggerId, e)
 
   console.log("[sse] triggered: ", {
     triggerId,
     context,
-    triggers: Object.keys(llmManager),
+    triggers: await llmManager.listTriggers(),
   })
 
   const start = async () => {
@@ -77,9 +69,9 @@ export const triggerLLM = async ({
         for await (const chunk of res) {
           // console.log("[llm] chunk: ", JSON.stringify(chunk))
           const token = chunk.content as string
-          r.response.content += token
+          r.content += token
           // console.debug("[llm] token: ", { triggerID: requestId, token })
-          pushToClients({ event: "onData", data: token })
+          await pushToClients({ event: "onData", data: token })
           await sleep(llmDelay)
         }
       } else {
@@ -88,10 +80,10 @@ export const triggerLLM = async ({
     } catch (e) {
       console.error("[call] error: ", e)
       const err = e as { message: string }
-      pushToClients({ event: "onError", data: err.message })
-      r.response.error = err.message
+      await pushToClients({ event: "onError", data: err.message })
+      r.error = err.message
     } finally {
-      r.response.tEnd = new Date()
+      r.tEnd = new Date()
       // 只在最后更新一次数据库
       if (task.appId) {
         await prisma.response.update({
@@ -101,10 +93,10 @@ export const triggerLLM = async ({
               appId: task.appId,
             },
           },
-          data: r.response,
+          data: r,
         })
       } else {
-        const { requestId, appId, ...props } = r.response
+        const { requestId, appId, ...props } = r
         await prisma.convTitleResponse.upsert({
           where: {
             convId: task.convId,
@@ -123,9 +115,9 @@ export const triggerLLM = async ({
         })
       }
 
-      pushToClients({ event: "close" })
+      await pushToClients({ event: "close" })
       // clean
-      await llmManager.del(triggerId)
+      await llmManager.cleanTrigger(triggerId)
       console.log("[sse] closed")
     }
   }

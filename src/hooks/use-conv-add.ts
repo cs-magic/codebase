@@ -1,8 +1,8 @@
 import { appsPersistedAtom } from "@/store/app"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
-import { api } from "../../packages/common/lib/trpc/react"
-import { parseApp } from "../../packages/llm/schema"
+import { api } from "../../packages/common-trpc/react"
+import { parseApp } from "../../packages/common-llm/schema"
 import { createAppSchema } from "../schema/app.create"
 
 /**

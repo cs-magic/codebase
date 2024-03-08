@@ -1,12 +1,12 @@
 "use client"
 
-import { Button } from "../../../../packages/common/components/ui/button"
+import { Button } from "../../../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   cleanSocketAtom,
   initSocketAtom,
   socketClientAtom,
   socketServerIdAtom,
-} from "../../../../packages/common/lib/puser/socket.atom"
+} from "../../../../packages/common-puser/socket.atom"
 import { useEffect } from "react"
 import {
   Select,
@@ -15,9 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../packages/common/components/ui/select"
-import { PusherServerId } from "../../../../packages/common/lib/puser/config"
-import { FlexContainer } from "../../../../packages/common/components/flex-container"
+} from "../../../../packages/common-ui/shadcn/shadcn-components/select"
+import { PusherServerId } from "../../../../packages/common-puser/config"
+import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 import { useAtom } from "jotai"
 
 export default function TestSocketPage() {

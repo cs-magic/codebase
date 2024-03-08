@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
-import { FlexContainer } from "packages/common/components/flex-container"
+import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
 import { PropsWithChildren } from "react"
-import { cn } from "../../../packages/common/lib/utils"
+import { cn } from "../../../packages/common-ui/shadcn/utils"
 
 export default function SubLayout({ children }: PropsWithChildren) {
   return (

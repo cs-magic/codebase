@@ -1,13 +1,16 @@
 import { z } from "zod"
-import { prisma } from "../../../../packages/common/lib/db/providers/prisma/connection"
+import { getNewId } from "../../../../packages/common-algo/id"
+import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
 import {
   convProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "../../../../packages/common/lib/trpc/trpc"
-import { getNewId } from "../../../../packages/common/lib/utils"
-import { createCallLLMSchema, parseApp } from "../../../../packages/llm/schema"
+} from "../../../../packages/common-trpc/trpc"
+import {
+  createCallLLMSchema,
+  parseApp,
+} from "../../../../packages/common-llm/schema"
 import {
   ConvUpdateInputSchema,
   ConvWhereUniqueInputSchema,

@@ -6,15 +6,15 @@ import { UserButton } from "@/components/header-user"
 import { useAtom } from "jotai"
 import { MenuIcon } from "lucide-react"
 import { useWindowSize } from "react-use"
-import { IconContainer } from "../../packages/common/components/icon-container"
+import { uiScreenAtom } from "../../packages/common-ui/store"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../packages/common/components/ui/sheet"
-import { uiScreenAtom } from "../../packages/common/store/ui"
+} from "../../packages/common-ui/shadcn/shadcn-components/sheet"
 import { uiInnerHeight, uiViewportHeight } from "../store/ui"
 import { Sidebar } from "./sidebar"
 

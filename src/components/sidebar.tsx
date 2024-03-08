@@ -7,9 +7,9 @@ import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { HTMLAttributes } from "react"
-import { Button } from "../../packages/common/components/ui/button"
-import { cn } from "../../packages/common/lib/utils"
-import { devEnabledAtom } from "../../packages/common/store"
+import { devEnabledAtom } from "../../packages/common-dev/store"
+import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { SidebarConvItem } from "./sidebar-conversation"
 
 export const Sidebar = ({

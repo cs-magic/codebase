@@ -1,7 +1,6 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { uiCheckAuthAlertDialogOpenAtom } from "../../packages/common/store/user"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +9,9 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "../../packages/common/components/ui/alert-dialog"
+} from "../../packages/common-ui/shadcn/shadcn-components/alert-dialog"
 import { signIn } from "next-auth/react"
+import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
 
 export const CheckAuthAlertDialog = () => {
   const [open, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)

@@ -9,15 +9,13 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { api } from "packages/common/lib/trpc/react"
+import { llmDelayAtom } from "../../packages/common-llm/store"
+import { api } from "../../packages/common-trpc/react"
 import { toast } from "sonner"
-import { llmDelayAtom } from "../../packages/common/store"
-import {
-  uiCheckAuthAlertDialogOpenAtom,
-  userPromptAtom,
-} from "../../packages/common/store/user"
-import { parseApp } from "../../packages/llm/schema"
+import { parseApp } from "../../packages/common-llm/schema"
 import { IMessageInChat } from "../schema/message"
+import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
+import { userPromptAtom } from "../store/query"
 
 /**
  * 1. 用户在首页query

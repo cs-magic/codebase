@@ -1,5 +1,5 @@
 import { CsMagicBrand, V2AGIBrand } from "@/config/assets"
-import { ImageEqualHeight } from "../../packages/common/components/image-equal-height"
+import { ImageEqualHeight } from "../../packages/common-ui/components/image-equal-height"
 import { SHOW_PARTNERS } from "@/config/branding"
 import { BrandingPartners } from "@/components/branding-partners"
 import Link from "next/link"

@@ -7,17 +7,17 @@ import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
 
-import { IconContainer } from "../../packages/common/components/icon-container"
-import { InputWithEnter } from "../../packages/common/components/input"
-import { buttonVariants } from "../../packages/common/components/ui/button"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { InputWithEnter } from "../../packages/common-ui/components/input"
+import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../packages/common/components/ui/dropdown-menu"
-import { api } from "../../packages/common/lib/trpc/react"
-import { cn } from "../../packages/common/lib/utils"
+} from "../../packages/common-ui/shadcn/shadcn-components/dropdown-menu"
+import { api } from "../../packages/common-trpc/react"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IConvBase } from "../schema/conv"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {

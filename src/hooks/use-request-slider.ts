@@ -1,7 +1,7 @@
 import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { api } from "../../packages/common/lib/trpc/react"
+import { api } from "../../packages/common-trpc/react"
 import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv"
 import { useAtom } from "jotai"
 
