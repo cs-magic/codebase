@@ -15,13 +15,13 @@ import {
   Unlock,
 } from "lucide-react"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
+import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { dispatchLlmAction } from "../app/api/llm/llm-actions"
 import { IAppDetail } from "../schema/app.detail"
 import {
   checkRespondingStatus,
-  convIdAtom,
   getAppResponseAtom,
   requestIdAtom,
 } from "../store/conv"
@@ -34,7 +34,6 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
   const [, stopGenerating] = useAtom(stopGeneratingAtom)
   const [getResponse] = useAtom(getAppResponseAtom)
-  const [convId] = useAtom(convIdAtom)
   const [requestId] = useAtom(requestIdAtom)
 
   const { id: appId } = app
@@ -43,6 +42,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
   const respondingStatus = checkRespondingStatus(getResponse(app.id))
 
   const { isMobile } = useEnvironments()
+  const [pusherServerId] = useAtom(pusherServerIdAtom)
 
   return (
     <div
@@ -62,16 +62,19 @@ export const ConvAppTopBar = ({ app }: { app: IAppDetail }) => {
           )}
           tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
           onClick={() => {
-            void dispatchLlmAction({
-              action: "interrupt",
-              request: {
-                convId,
-                requestId,
-                appId,
-                type: "app-response",
-                status: "responding",
+            void dispatchLlmAction(
+              {
+                action: "interrupt",
+                request: {
+                  requestId,
+                  appId,
+                  type: "app-response",
+                  status: "responding",
+                  pusherServerId,
+                },
               },
-            })
+              {},
+            )
             stopGenerating(true)
           }}
         >

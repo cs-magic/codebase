@@ -9,10 +9,11 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { llmDelayAtom } from "../../packages/common-llm/store"
-import { api } from "../../packages/common-trpc/react"
 import { toast } from "sonner"
 import { parseApp } from "../../packages/common-llm/schema"
+import { llmDelayAtom } from "../../packages/common-llm/store"
+import { pusherServerIdAtom } from "../../packages/common-puser/store"
+import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
 import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
 import { userPromptAtom } from "../store/query"
@@ -27,10 +28,12 @@ export function useConvQuery() {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
-
   const [context] = useAtom(bestContextAtom)
   const [llmDelay] = useAtom(llmDelayAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
+  const [responses] = useAtom(responsesAtom)
+  const [responseFinished] = useAtom(responseFinishedAtom)
+  const [pusherServerId] = useAtom(pusherServerIdAtom)
 
   const router = useRouter()
 
@@ -39,9 +42,6 @@ export function useConvQuery() {
   const addConv = api.core.addConv.useMutation()
   const utils = api.useUtils()
 
-  const [responses] = useAtom(responsesAtom)
-  const [responseFinished] = useAtom(responseFinishedAtom)
-
   return async () => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
       query,
@@ -49,7 +49,10 @@ export function useConvQuery() {
       responseFinished,
     })
 
-    if (!responseFinished) return toast.warning("等待流完成")
+    if (!responseFinished) {
+      console.log({ responses })
+      return toast.warning("等待流完成")
+    }
 
     if (!query) return toast.warning("不能为空")
 
@@ -95,6 +98,7 @@ export function useConvQuery() {
         context: newContext,
         apps: persistedApps.map((a) => parseApp(a)),
         llmDelay,
+        pusherServerId,
       },
       {
         onSuccess: (requestIdNew) => {

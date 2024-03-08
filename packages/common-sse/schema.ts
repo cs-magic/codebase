@@ -11,10 +11,23 @@ export type ISseTrigger = {
 /**
  * 不能用 error 这是 sse 默认的 event-type
  */
-export type ISseEventType = "init" | "data" | "error" | "close"
+export type SseEventType =
+  | "init"
+  | "data"
+  | "error"
+  | "close"
+  | "onClientConnected"
+  | "onClientDisconnected"
+
+export type GenericSseEvent<T extends SseEventType, V = any> = {
+  event: T
+  data?: V
+}
 
 export type ISseEvent =
-  | { event: "init"; data?: string }
-  | { event: "data"; data: string }
-  | { event: "error"; data: string }
-  | { event: "close"; data?: string }
+  | GenericSseEvent<"init", string>
+  | GenericSseEvent<"data", string>
+  | GenericSseEvent<"error", string>
+  | GenericSseEvent<"close", string>
+  | GenericSseEvent<"onClientConnected", { id: string }>
+  | GenericSseEvent<"onClientDisconnected", { id: string }>

@@ -1,5 +1,5 @@
 import ansiColors from "ansi-colors"
-import { ISseEventType } from "./schema"
+import { SseEventType } from "./schema"
 
 export const fetchSSE = (
   requestUrl: string,
@@ -28,7 +28,7 @@ export const fetchSSE = (
     console.log("[sse] opened")
   }
 
-  sse.addEventListener("data" as ISseEventType, (ev: MessageEvent<string>) => {
+  sse.addEventListener("data" as SseEventType, (ev: MessageEvent<string>) => {
     console.log("[sse] onData: ", ev)
     if (options?.onData) options.onData(JSON.parse(ev.data) as string)
   })
@@ -36,7 +36,7 @@ export const fetchSSE = (
   /**
    * todo: error 占用了系统的 error 通道?
    */
-  sse.addEventListener("error" as ISseEventType, (ev: MessageEvent<string>) => {
+  sse.addEventListener("error" as SseEventType, (ev: MessageEvent<string>) => {
     console.log("[sse] onError: ", ev)
     if (options?.onError)
       options.onError(

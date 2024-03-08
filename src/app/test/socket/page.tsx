@@ -2,11 +2,11 @@
 
 import { Button } from "../../../../packages/common-ui/shadcn/shadcn-components/button"
 import {
-  cleanSocketAtom,
-  initSocketAtom,
-  socketClientAtom,
-  socketServerIdAtom,
-} from "../../../../packages/common-puser/socket.atom"
+  cleanPusherAtom,
+  initPusherAtom,
+  pusherClientAtom,
+  pusherServerIdAtom,
+} from "../../../../packages/common-puser/store"
 import { useEffect } from "react"
 import {
   Select,
@@ -21,10 +21,10 @@ import { FlexContainer } from "../../../../packages/common-ui/components/flex-co
 import { useAtom } from "jotai"
 
 export default function TestSocketPage() {
-  const [serverId, setServerId] = useAtom(socketServerIdAtom)
-  const [client] = useAtom(socketClientAtom)
-  const [, init] = useAtom(initSocketAtom)
-  const [, clean] = useAtom(cleanSocketAtom)
+  const [serverId, setServerId] = useAtom(pusherServerIdAtom)
+  const [client] = useAtom(pusherClientAtom)
+  const [, init] = useAtom(initPusherAtom)
+  const [, clean] = useAtom(cleanPusherAtom)
 
   console.log({ client })
 

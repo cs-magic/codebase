@@ -5,6 +5,7 @@
  */
 
 import { ILLMMessage } from "@/schema/message"
+import { IterableReadableStream } from "@langchain/core/utils/stream"
 import {
   AIMessage,
   HumanMessage,
@@ -38,4 +39,14 @@ export const callChatGPT = async ({
       return new Message(m.content)
     }),
   )
+}
+
+export const callLlmApiMock = async ({
+  config,
+  context,
+}: {
+  config: ICreateCallLLM
+  context: ILLMMessage[]
+}) => {
+  return new IterableReadableStream<{ content: string }>()
 }

@@ -5,6 +5,7 @@ import {
   createCallLLMSchema,
   parseApp,
 } from "../../../../packages/common-llm/schema"
+import { pusherServerIdSchema } from "../../../../packages/common-puser/config"
 import {
   convProcedure,
   createTRPCRouter,
@@ -16,6 +17,7 @@ import {
   ConvWhereUniqueInputSchema,
   UserUpdateInputSchema,
 } from "../../../../prisma/generated/zod"
+import ConvTitleResponseUncheckedCreateInputSchema from "../../../../prisma/generated/zod/inputTypeSchemas/ConvTitleResponseUncheckedCreateInputSchema"
 
 import { createAppSchema } from "../../../schema/app.create"
 import { appDetailSchema } from "../../../schema/app.detail"
@@ -25,6 +27,9 @@ import { modelViewSchema } from "../../../schema/model"
 import { LlmActionPayload } from "../../../schema/sse"
 import { userDetailSchema } from "../../../schema/user.detail"
 import { dispatchLlmAction } from "../llm/llm-actions"
+import { Prisma } from ".prisma/client"
+import ResponseUncheckedCreateInput = Prisma.ResponseUncheckedCreateInput
+import ConvTitleResponseUncheckedCreateInput = Prisma.ConvTitleResponseUncheckedCreateInput
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -150,11 +155,12 @@ export const coreRouter = createTRPCRouter({
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
         llmDelay: z.number().default(0),
+        pusherServerId: pusherServerIdSchema,
       }),
     )
     .mutation(async ({ input, ctx }) => {
       const requestId = getNewId()
-      const { context, convId } = input
+      const { context, convId, pusherServerId } = input
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 
@@ -203,12 +209,13 @@ export const coreRouter = createTRPCRouter({
         conv.requests
           .find((r) => r.id === requestId)!
           .responses.map(async (r) => {
+            const appId = r.appId
             const payload: LlmActionPayload = {
               action: "trigger",
               request: {
+                pusherServerId,
                 requestId,
-                appId: r.appId,
-                convId: conv.id,
+                appId,
                 type: "app-response",
                 status: "to-response",
               },
@@ -216,16 +223,38 @@ export const coreRouter = createTRPCRouter({
               context,
               llmDelay: input.llmDelay,
             }
-            await dispatchLlmAction(payload)
+            const response: ResponseUncheckedCreateInput = {
+              tStart: new Date(),
+              content: "",
+              requestId,
+              appId,
+            }
+            await dispatchLlmAction(payload, {
+              onData: (data) => {
+                response.content += data
+              },
+              onError: (error) => {
+                response.error = error
+              },
+              onFinal: async () => {
+                response.tEnd = new Date()
+                console.log("-- onFinal: ", response)
+                await prisma.response.update({
+                  where: { requestId_appId: { requestId, appId } },
+                  data: response,
+                })
+              },
+            })
           }),
       )
 
       // 如果已经更新了就不要改了
-      if (!conv.titleResponse?.content) {
+      if (conv.titleResponse?.content) {
+      } else {
         const payload: LlmActionPayload = {
           action: "trigger",
           request: {
-            requestId,
+            pusherServerId,
             convId: conv.id,
             type: "conv-title",
             status: "to-response",
@@ -243,7 +272,27 @@ export const coreRouter = createTRPCRouter({
           ],
           llmDelay: input.llmDelay,
         }
-        await dispatchLlmAction(payload)
+        const response: ConvTitleResponseUncheckedCreateInput = {
+          tStart: new Date(),
+          content: "",
+          convId,
+        }
+        await dispatchLlmAction(payload, {
+          onData: (data) => {
+            response.content += data
+          },
+          onError: (error) => {
+            response.error = error
+          },
+          onFinal: async () => {
+            response.tEnd = new Date()
+            console.log("-- onFinal: ", response)
+            await prisma.convTitleResponse.update({
+              where: { convId },
+              data: response,
+            })
+          },
+        })
       }
       return requestId
     }),

@@ -1,13 +1,13 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { socketLatencyAtom } from "../../packages/common-puser/socket.atom"
+import { pusherLatencyAtom } from "../../packages/common-puser/store"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { BarChart } from "lucide-react"
 import { SystemSocketStatusIcon } from "@/components/system-socket-status-icon"
 
 export const SystemSocketStatus = () => {
-  const [latency] = useAtom(socketLatencyAtom)
+  const [latency] = useAtom(pusherLatencyAtom)
 
   return (
     <div

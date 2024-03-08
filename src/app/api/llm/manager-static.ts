@@ -4,9 +4,9 @@ import {
   ISseEvent,
   ISseTrigger,
 } from "../../../../packages/common-sse/schema"
-import { ILlmManager } from "./schema"
+import { ILlmManagerTraditional } from "./schema"
 
-export class StaticLlmManager implements ILlmManager {
+export class StaticLlmManager implements ILlmManagerTraditional {
   static triggers: Record<string, ISseTrigger> = {}
 
   private triggerId: string

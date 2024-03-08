@@ -1,19 +1,19 @@
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/fetch-sse"
-import { ISseRequest } from "../schema/sse"
+import { getTriggerIdFromSseRequest, ISseRequest } from "../schema/sse"
 import { stopGeneratingAtom } from "../store/app"
 import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv"
-import { getTriggerID } from "../utils"
+import { transportTypeAtom } from "../store/query"
 
-export const useConvSse = (data: ISseRequest) => {
+export const useConvSse = (request: ISseRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
+
+  const { status, type, pusherServerId } = request
+  const [transportType] = useAtom(transportTypeAtom)
+
   const [, updateAppResponse] = useAtom(updateAppResponseAtom)
   const [, updateConvTitle] = useAtom(updateConvTitleAtom)
-
-  const { convId, status, requestId } = data
-
   const update = (
     func: (data: {
       tEnd: Date | null
@@ -22,10 +22,13 @@ export const useConvSse = (data: ISseRequest) => {
       error: string | null
     }) => void,
   ) => {
-    if (!requestId || !convId) return
-    if (data.type === "app-response")
-      updateAppResponse(requestId, data.appId, func)
-    else updateConvTitle(convId, func)
+    if (request.type === "app-response") {
+      const { requestId } = request
+      if (requestId) updateAppResponse(requestId, request.appId, func)
+    } else {
+      const { convId } = request
+      if (convId) updateConvTitle(convId, func)
+    }
   }
 
   const onFinal = (reason: string) => {
@@ -39,14 +42,15 @@ export const useConvSse = (data: ISseRequest) => {
 
   const refSSE = useRef<EventSource>()
 
-  const ok = status === "to-response" && !!requestId && !!convId
   useEffect(() => {
-    const color = ok ? ansiColors.red : ansiColors.gray
-    console.log(color("[sse] requesting: "), { ...data, ok })
-    if (!ok) return
+    if (transportType !== "sse") return
+
+    console.log("[sse] requesting: ", request)
+    // todo: more robust lock
+    if (status !== "to-response") return
 
     refSSE.current = fetchSSE(
-      `/api/llm?r=${getTriggerID(requestId, data.type === "app-response" ? data.appId : convId)}`,
+      `/api/llm?r=${getTriggerIdFromSseRequest(request)}`,
       {
         onOpen: () => {
           update((s) => {
@@ -71,15 +75,7 @@ export const useConvSse = (data: ISseRequest) => {
 
     // 不能在这里清除，条件太强了，因为ok只是一个trigger
     // return () => onFinal("after hook")
-  }, [ok])
-
-  useEffect(() => {
-    // onFinal("request id changed")
-  }, [requestId])
-
-  useEffect(() => {
-    onFinal("conv id changed")
-  }, [convId])
+  }, [status])
 
   useEffect(() => {
     if (stoppedGenerating) {

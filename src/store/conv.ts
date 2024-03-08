@@ -51,10 +51,6 @@ export const bestResponseAtom = atom<IResponse | undefined>((get) =>
   get(responsesAtom)?.find((r) => r.appId === get(appIdPersistedAtom)),
 )
 
-export const responseFinishedAtom = atom<boolean>((get) =>
-  get(responsesAtom)?.every((r) => !r || !!r.tEnd),
-)
-
 export const getAppResponseAtom = atom(
   (get) => (appId: string) => get(responsesAtom).find((r) => r.appId === appId),
 )
@@ -75,11 +71,6 @@ export const bestContextAtom = atom<IContext>((get) => {
   ]
 })
 
-export const checkRespondingAtom = atom((get) => (appId: string) => {
-  const response = get(requestAtom)?.responses.find((r) => r.appId === appId)
-  return !!response && !response.tEnd
-})
-
 export const checkRespondingStatus = (
   response?: null | {
     tStart?: Date | null
@@ -91,6 +82,10 @@ export const checkRespondingStatus = (
   if (response.tEnd) return "responded"
   return "responding"
 }
+
+export const responseFinishedAtom = atom<boolean>((get) =>
+  get(responsesAtom)?.every((r) => checkRespondingStatus(r) !== "responding"),
+)
 
 /**
  * 客户端在线同步

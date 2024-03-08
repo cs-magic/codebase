@@ -5,9 +5,9 @@ import {
   ISseTrigger,
 } from "../../../../packages/common-sse/schema"
 import { llmWrite } from "./manager"
-import { ILlmManager } from "./schema"
+import { ILlmManagerTraditional } from "./schema"
 
-export class RedisLlmManager implements ILlmManager {
+export class RedisLlmManager implements ILlmManagerTraditional {
   private triggerId: string
 
   constructor(triggerId: string) {
