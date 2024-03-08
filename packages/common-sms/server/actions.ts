@@ -52,7 +52,7 @@ export const $sendSms = async (
         expires_at,
       },
     })
-    console.log("[components] account: ", account)
+    console.log("[sms] account: ", account)
   }
   return ok
 }

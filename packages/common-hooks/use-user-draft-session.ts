@@ -11,18 +11,18 @@ import { userImageAtom, userNameAtom } from "../common-auth/store"
 export const useDraftSession = (key: "name" | "image") => {
   const atom = key === "name" ? userImageAtom : userNameAtom
   const [draft, setDraft] = useAtom(atom)
-  const value = useSession().data?.user[key] ?? ""
+  const sessionValue = useSession().data?.user[key]
 
-  const changed = draft !== value
+  const changed = draft !== sessionValue
 
   // console.log({ key, value, draft, changed })
 
   useEffect(() => {
-    setDraft(value)
-  }, [value])
+    setDraft(sessionValue)
+  }, [sessionValue])
 
   return {
-    value,
+    value: sessionValue,
     draft,
     changed,
     setDraft,

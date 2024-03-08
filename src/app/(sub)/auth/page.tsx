@@ -29,7 +29,7 @@ export default function AuthPage() {
     router.push("/")
   }, [ok])
 
-  console.log("[auth]: ", { sessionStatus: session.status, ok })
+  console.log("[auth]: ", { session, ok })
 
   switch (session.status) {
     case "loading":

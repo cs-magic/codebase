@@ -12,13 +12,12 @@ export const UserInputName = ({
     <InputWithEnter
       className={"text-primary-foreground font-black text-2xl text-center"}
       autoFocus
-      value={draft}
+      value={draft ?? ""}
       onChange={(event) => {
         setDraft(event.currentTarget.value)
       }}
       onEnter={(s) => {
         if (onEnter) onEnter(s)
-        else setDraft(value) // reset
       }}
     />
   )

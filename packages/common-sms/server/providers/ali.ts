@@ -39,7 +39,7 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
     templateParam: JSON.stringify({ code }),
   })
   try {
-    console.log("[components] sending: ", { phone, code })
+    console.log("[sms] sending: ", { phone, code })
     // 复制代码运行请自行打印 API 的返回值
     // const res = true
     // await sleep(1000)
@@ -59,10 +59,10 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
       sendSmsRequest,
       new RuntimeOptions({}),
     )
-    console.log("[components] sent result: ", res)
+    console.log("[sms] sent result: ", res)
     return res.statusCode === 200 && res.body.code === "OK"
   } catch (err) {
-    console.log("[components] sent error: ", err)
+    console.log("[sms] sent error: ", err)
     return false
   }
 }

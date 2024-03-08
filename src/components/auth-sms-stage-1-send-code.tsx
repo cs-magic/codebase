@@ -5,11 +5,13 @@ import { useAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { ComponentType } from "react"
 import { useForm } from "react-hook-form"
-import { userPhoneAtom } from "../../packages/common-auth/store"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { useSmsSendCode } from "../../packages/common-sms/hooks/use-sms-send-code"
 import { ISendSms, sendSmsSchema } from "../../packages/common-sms/schema"
-import { smsCodeCurCountdownSecondsAtom } from "../../packages/common-sms/store"
+import {
+  smsCodeCurCountdownSecondsAtom,
+  userPhoneAtom,
+} from "../../packages/common-sms/store"
 import { WECHAT_PROVIDER_ID } from "../../packages/common-wechat/auth/config"
 
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
@@ -85,6 +87,7 @@ export const SmsStage1SendCode = ({
               <FormLabel>请输入阁下的手机号</FormLabel>
               <FormControl>
                 <Input
+                  // 不要加自动聚焦，因为不止一种登录方式
                   {...field}
                   onChange={(event) => {
                     field.onChange(event)

@@ -1,6 +1,5 @@
 "use client"
-import { userPhoneAtom } from "../../packages/common-auth/store"
-import { smsStageAtom } from "../../packages/common-sms/store"
+import { smsStageAtom, userPhoneAtom } from "../../packages/common-sms/store"
 import { EditIcon } from "lucide-react"
 import { useAtom } from "jotai"
 
