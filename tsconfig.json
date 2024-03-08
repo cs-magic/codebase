@@ -21,7 +21,7 @@
     ],
     "noEmit": true,
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "plugins": [
       {
@@ -49,5 +49,20 @@
   ],
   "exclude": [
     "node_modules",
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+
+    "compilerOptions": {
+      // compilerOptions specified here will override those declared below,
+      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
+      // different options with a single tsconfig.json.
+
+      "module": "CommonJS",
+      "isolatedModules": false,
+      "esModuleInterop": true,
+
+    }
+  }
 }

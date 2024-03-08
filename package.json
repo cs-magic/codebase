@@ -55,6 +55,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "colors": "^1.4.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.1.0",
     "eventsource": "^2.0.2",
@@ -96,6 +97,7 @@
     "zod": "3.21.1"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/eslint": "^8.56.2",
     "@types/eventsource": "^1.1.15",
     "@types/moment": "^2.13.0",
@@ -111,6 +113,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "zod-prisma": "^0.5.4"

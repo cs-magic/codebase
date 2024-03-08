@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "../common-auth/config"
+import { getServerAuthSession } from "../common-auth/utils"
 
 /**
  * 1. CONTEXT

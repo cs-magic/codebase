@@ -1,18 +1,13 @@
+import { env } from "@/env"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import {
-  type DefaultSession,
-  getServerSession,
-  type NextAuthOptions,
-} from "next-auth"
+import { type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
-import { DefaultJWT } from "next-auth/jwt"
 import { prisma } from "../common-db"
 import {
-  SmsProvider,
   ProfileUpdateProvider,
+  SmsProvider,
 } from "../common-sms/next-auth.provider"
 import WechatProvider from "../common-wechat/auth/provider"
-import { env } from "@/env"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
 import { tokenExpireSeconds } from "./store"
@@ -85,10 +80,3 @@ export const authOptions: NextAuthOptions = {
      */
   ],
 }
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = () => getServerSession(authOptions)
