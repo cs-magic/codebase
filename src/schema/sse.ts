@@ -2,14 +2,15 @@ import { ICreateCallLLM } from "../../packages/common-llm/schema"
 import { PusherServerId } from "../../packages/common-puser/config"
 import { ILLMMessage } from "./message"
 
+export type ResponseFinalStatus = "interrupted" | "responded"
+
 export type ResponseStatus =
+  | "unknown"
   | "to-response"
   | "responding"
-  | "responded"
-  | "interrupted"
-  | "unknown"
+  | ResponseFinalStatus
 
-export type ISseRequest = {
+export type ILLMRequest = {
   status: ResponseStatus
   pusherServerId: PusherServerId
 } & (
@@ -24,12 +25,12 @@ export type ISseRequest = {
     }
 )
 
-export const getTriggerIdFromSseRequest = (request: ISseRequest) =>
+export const getTriggerIdFromSseRequest = (request: ILLMRequest) =>
   request.type === "app-response"
     ? `chat@${request.requestId}.${request.appId}`
     : `title@${request.convId}`
 
-export type LlmActionPayload = { request: ISseRequest } & (
+export type LlmActionPayload = { request: ILLMRequest } & (
   | {
       app: ICreateCallLLM
       context: ILLMMessage[]

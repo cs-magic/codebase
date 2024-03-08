@@ -1,32 +1,53 @@
+import { event } from "next/dist/build/output/log"
 import Pusher from "pusher"
+import { redis } from "../../../../../../packages/common-db"
 import { pusherServerConfigs } from "../../../../../../packages/common-puser/config"
 import { initPusherServer } from "../../../../../../packages/common-puser/server/init"
 import { ISseEvent } from "../../../../../../packages/common-sse/schema"
 import {
   getTriggerIdFromSseRequest,
-  ISseRequest,
+  ILLMRequest,
+  ResponseFinalStatus,
+  ResponseStatus,
 } from "../../../../../schema/sse"
 
 import { ILlmManagerPusher } from "./schema"
 
+/**
+ * note:
+ * - 因为server-action的机制， 所有state需要用redis等中心化管理
+ */
 export class PusherLlmManager implements ILlmManagerPusher {
   private pusher: Pusher
   private channel: string
 
-  constructor(request: ISseRequest) {
+  constructor(request: ILLMRequest) {
     this.channel = getTriggerIdFromSseRequest(request)
     this.pusher = initPusherServer(pusherServerConfigs[request.pusherServerId])
+  }
+
+  //////////////////////////////
+  // state
+  //////////////////////////////
+  public get status() {
+    return redis.get(this.channel)
+  }
+
+  public setStatus(status: ResponseStatus) {
+    return redis.set(this.channel, status)
   }
 
   //////////////////////////////
   // server
   //////////////////////////////
   async onTriggerStarts() {
-    this.push({ event: "init", data: { time: Date.now() } })
+    this.push({ event: "init", data: {} })
+    this.setStatus("responding")
   }
 
-  async onTriggerEnds(reason?: string) {
-    this.push({ event: "close", data: reason })
+  async onTriggerEnds(reason: ResponseFinalStatus) {
+    this.push({ event: "close", data: { reason } })
+    this.setStatus(reason)
   }
 
   async onEvent(event: ISseEvent) {
@@ -42,7 +63,10 @@ export class PusherLlmManager implements ILlmManagerPusher {
   }
 
   async onClientDisconnected(clientId: string) {
-    this.push({ event: "onClientDisconnected", data: { id: clientId } })
+    this.push({
+      event: "onClientDisconnected",
+      data: { id: clientId },
+    })
   }
 
   //////////////////////////////
@@ -50,7 +74,8 @@ export class PusherLlmManager implements ILlmManagerPusher {
   //////////////////////////////
 
   private async push(event: ISseEvent) {
-    console.log(`[${Date.now()}] server --> client: `, event)
-    this.pusher.trigger(this.channel, event.event, event.data)
+    event.data = { time: Date.now(), ...event.data }
+    console.log(`server --> client: `, event)
+    this.pusher.trigger(this.channel, event.event, event)
   }
 }

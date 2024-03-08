@@ -16,7 +16,7 @@ import { openAlertDialogAtom } from "../../../../../packages/common-ui/store"
 import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
-import { useConvSse } from "../../../../hooks/use-conv-sse"
+import { useQueryLlmSse } from "../../../../hooks/use-query-llm-sse"
 
 export default function ConvPage({
   params: { slug },
@@ -131,7 +131,7 @@ export default function ConvPage({
 
   // if (!loaded) return null
 
-  useConvSse({
+  useQueryLlmSse({
     type: "conv-title",
     convId,
     status: checkRespondingStatus(conv?.titleResponse),

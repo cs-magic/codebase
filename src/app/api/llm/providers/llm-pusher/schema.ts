@@ -2,6 +2,7 @@ import {
   ISseEvent,
   ISseTrigger,
 } from "../../../../../../packages/common-sse/schema"
+import { ResponseFinalStatus } from "../../../../../schema/sse"
 
 export interface ILlmManagerPusher {
   //////////////////////////////
@@ -11,7 +12,7 @@ export interface ILlmManagerPusher {
   // 1. add trigger, on LLM starts
   onTriggerStarts: (trigger: ISseTrigger) => Promise<void>
   // 2. clean trigger, on LLM ends
-  onTriggerEnds: () => Promise<void>
+  onTriggerEnds: (reason: ResponseFinalStatus) => Promise<void>
   // 3. push event to clients, when LLM outputs token
   onEvent: (event: ISseEvent) => Promise<void>
 

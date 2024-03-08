@@ -21,13 +21,13 @@ export type SseEventType =
 
 export type GenericSseEvent<T extends SseEventType, V = any> = {
   event: T
-  data?: V
+  data: V & { time?: number }
 }
 
 export type ISseEvent =
-  | GenericSseEvent<"init", { time: number }>
-  | GenericSseEvent<"data", string>
-  | GenericSseEvent<"error", string>
-  | GenericSseEvent<"close", string>
+  | GenericSseEvent<"init", object>
+  | GenericSseEvent<"data", { token: string }>
+  | GenericSseEvent<"error", { message: string }>
+  | GenericSseEvent<"close", { reason: string }>
   | GenericSseEvent<"onClientConnected", { id: string }>
   | GenericSseEvent<"onClientDisconnected", { id: string }>

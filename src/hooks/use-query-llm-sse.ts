@@ -1,12 +1,12 @@
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/fetch-sse"
-import { getTriggerIdFromSseRequest, ISseRequest } from "../schema/sse"
+import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 import { stopGeneratingAtom } from "../store/app"
 import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv"
 import { transportTypeAtom } from "../store/query"
 
-export const useConvSse = (request: ISseRequest) => {
+export const useQueryLlmSse = (request: ILLMRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
 
   const { status, type, pusherServerId } = request

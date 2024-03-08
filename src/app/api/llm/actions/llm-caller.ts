@@ -37,6 +37,7 @@ export const callLLM = async (
       ? callChatGPT
       : callLlmApiMock
 
+    // todo: limit times / tokens
     const res = await api({ config: app, context })
 
     // ~~不需延后，pusher应该会自动接收之前的通知~~
@@ -46,14 +47,14 @@ export const callLLM = async (
 
     for await (const chunk of res) {
       // todo: 用户打断
-      // if (!llmManager.trigger) break
+      if ((await llmManager.status) !== "responding") break
 
       const token = chunk.content as string
 
       if (options.onData) options.onData(token)
 
       // console.debug("[llm] token: ", { triggerID: requestId, token })
-      await llmManager.onEvent({ event: "data", data: token })
+      await llmManager.onEvent({ event: "data", data: { token } })
 
       await sleep(llmDelay)
     }
@@ -62,7 +63,7 @@ export const callLLM = async (
 
     const message = (e as { message: string }).message
 
-    await llmManager.onEvent({ event: "error", data: message })
+    await llmManager.onEvent({ event: "error", data: { message } })
 
     if (options.onError) options.onError(message)
   } finally {
@@ -71,6 +72,6 @@ export const callLLM = async (
     if (options.onFinal) options.onFinal()
 
     // clean
-    await llmManager.onTriggerEnds("transfer completed")
+    await llmManager.onTriggerEnds("responded")
   }
 }

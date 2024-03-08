@@ -9,6 +9,7 @@ import {
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
 import { IContext } from "../schema/message"
+import { IBaseResponse } from "../schema/query"
 import { ResponseStatus } from "../schema/sse"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 
@@ -72,10 +73,7 @@ export const bestContextAtom = atom<IContext>((get) => {
 })
 
 export const checkRespondingStatus = (
-  response?: null | {
-    tStart?: Date | null
-    tEnd?: Date | null
-  },
+  response?: null | IBaseResponse,
 ): ResponseStatus => {
   if (!response) return "unknown"
   if (!response.tStart) return "to-response"
