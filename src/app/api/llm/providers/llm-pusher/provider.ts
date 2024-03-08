@@ -1,4 +1,3 @@
-import { event } from "next/dist/build/output/log"
 import Pusher from "pusher"
 import { redis } from "../../../../../../packages/common-db"
 import { pusherServerConfigs } from "../../../../../../packages/common-puser/config"
@@ -14,6 +13,7 @@ import {
 import { ILlmManagerPusher } from "./schema"
 
 /**
+ *
  * note:
  * - 因为server-action的机制， 所有state需要用redis等中心化管理
  */
@@ -23,7 +23,9 @@ export class PusherLlmManager implements ILlmManagerPusher {
 
   constructor(request: ILLMRequest) {
     this.channel = getTriggerIdFromSseRequest(request)
-    this.pusher = initPusherServer(pusherServerConfigs[request.pusherServerId])
+    this.pusher = initPusherServer(
+      pusherServerConfigs[request.pusherServerId ?? "tencent_wss"],
+    )
   }
 
   //////////////////////////////
@@ -75,7 +77,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
 
   private async push(event: ISseEvent) {
     event.data = { time: Date.now(), ...event.data }
-    console.log(`server --> client: `, event)
+    console.log(`[PUSHER] >> `, event)
     this.pusher.trigger(this.channel, event.event, event)
   }
 }

@@ -4,6 +4,7 @@ import {
   ISseEvent,
   ISseTrigger,
 } from "../../../../../../packages/common-sse/schema"
+import { ResponseFinalStatus } from "../../../../../schema/sse"
 import { ILlmManagerTraditional } from "./schema"
 
 export class StaticLlmManager implements ILlmManagerTraditional {
@@ -33,13 +34,12 @@ export class StaticLlmManager implements ILlmManagerTraditional {
     this.print("onTriggerStarts(end)")
   }
 
-  async onTriggerEnds(reason?: string): Promise<void> {
+  async onTriggerEnds(reason: ResponseFinalStatus) {
     this.print("onTriggerEnds(before)")
     // !important
-    this.onEvent({ event: "close", data: reason })
+    this.onEvent({ event: "close", data: { reason } })
     delete StaticLlmManager.triggers[this.triggerId]
     this.print("onTriggerEnds(end)")
-    return Promise.resolve(undefined)
   }
 
   //////////////////////////////
@@ -47,7 +47,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
   //////////////////////////////
 
   async onEvent(event: ISseEvent): Promise<void> {
-    console.log("[sse] server --> client: ", {
+    console.log("[LLM] >> ", {
       triggerId: this.triggerId,
       ...event,
     })
@@ -62,7 +62,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
     if (!this.trigger) {
       client.onEvent({
         event: "close",
-        data: `trigger(id=${this.triggerId}) not found`,
+        data: { reason: "not-found" },
       })
       return
     }

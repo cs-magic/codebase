@@ -111,7 +111,7 @@ export const updateAppResponseAtom = atom(
 
 export const updateConvTitleAtom = atom(
   null,
-  (get, set, convId: string, func: IUpdateConvTitleResponse) => {
+  (get, set, func: IUpdateConvTitleResponse) => {
     set(serverConvDetailAtom, (conv) => {
       const s = conv?.titleResponse
 

@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { useQueryLLM } from "../hooks/use-query-llm"
+import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
 import { IAppDetail } from "../schema/app.detail"
 import { IContext, RoleType } from "../schema/message"
 import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
@@ -37,7 +37,7 @@ export const ConvApp = ({
         },
       ]
 
-  useQueryLLM(app.id, response)
+  useLLMForAppChat(app.id, response)
 
   // console.log({ appId: config.id, commonContext, response })
 

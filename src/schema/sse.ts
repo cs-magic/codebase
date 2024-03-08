@@ -2,7 +2,7 @@ import { ICreateCallLLM } from "../../packages/common-llm/schema"
 import { PusherServerId } from "../../packages/common-puser/config"
 import { ILLMMessage } from "./message"
 
-export type ResponseFinalStatus = "interrupted" | "responded"
+export type ResponseFinalStatus = "interrupted" | "responded" | "not-found"
 
 export type ResponseStatus =
   | "unknown"
@@ -11,8 +11,8 @@ export type ResponseStatus =
   | ResponseFinalStatus
 
 export type ILLMRequest = {
-  status: ResponseStatus
-  pusherServerId: PusherServerId
+  pusherServerId?: PusherServerId
+  status?: ResponseStatus
 } & (
   | {
       type: "conv-title"

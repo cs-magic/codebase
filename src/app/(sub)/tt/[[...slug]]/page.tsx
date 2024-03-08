@@ -1,8 +1,6 @@
 "use client"
 import {
-  checkRespondingStatus,
   convIdAtom,
-  requestIdAtom,
   serverConvDetailAtom,
   serverConvListFAtom,
 } from "@/store/conv"
@@ -16,7 +14,7 @@ import { openAlertDialogAtom } from "../../../../../packages/common-ui/store"
 import { ConvApps } from "../../../../components/conv-apps"
 import { ConvControl } from "../../../../components/conv-control"
 import { ConvQuery } from "../../../../components/conv-query"
-import { useQueryLlmSse } from "../../../../hooks/use-query-llm-sse"
+import { useLLMForConvTitle } from "../../../../hooks/use-llm-for-conv-title"
 
 export default function ConvPage({
   params: { slug },
@@ -28,7 +26,6 @@ export default function ConvPage({
   const [convs] = useAtom(serverConvListFAtom)
   const [conv, setConv] = useAtom(serverConvDetailAtom)
   const [convId] = useAtom(convIdAtom)
-  const [requestId] = useAtom(requestIdAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
 
   const router = useRouter()
@@ -129,14 +126,7 @@ export default function ConvPage({
     }
   }, [reqIdFromUrl, convFromServer])
 
-  // if (!loaded) return null
-
-  useQueryLlmSse({
-    type: "conv-title",
-    convId,
-    status: checkRespondingStatus(conv?.titleResponse),
-    requestId,
-  })
+  useLLMForConvTitle()
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

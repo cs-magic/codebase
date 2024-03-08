@@ -1,34 +1,24 @@
-import { Prisma } from "@prisma/client"
 import ansiColors from "ansi-colors"
-import { useEffect } from "react"
-import { initPusherClient } from "../../packages/common-puser/client/init"
-import { pusherServerConfigs } from "../../packages/common-puser/config"
-import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
-import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
-import { updateAppResponseAtom } from "../store/conv"
-import { transportTypeAtom } from "../store/query"
 import { useAtom } from "jotai"
+import { useEffect } from "react"
+import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
+import { IBaseResponse } from "../schema/query"
+import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
+import { transportTypeAtom } from "../store/query"
+import { usePusher } from "./use-pusher"
 
-export const useQueryLlmPusher = (sseRequest: ILLMRequest) => {
+export const useLlmPusher = (
+  request: ILLMRequest,
+  update: (func: (response: IBaseResponse) => void) => void,
+) => {
   const [transportType] = useAtom(transportTypeAtom)
-  const [, updateAppResponse] = useAtom(updateAppResponseAtom)
 
-  const triggerId = getTriggerIdFromSseRequest(sseRequest)
-
-  const update = (
-    func: (data: Prisma.ResponseUncheckedCreateInput) => void,
-  ) => {
-    if (sseRequest.type !== "app-response" || !sseRequest.requestId) return
-
-    updateAppResponse(sseRequest.requestId, sseRequest.appId, func)
-  }
+  const { pusher } = usePusher()
+  const triggerId = getTriggerIdFromSseRequest(request)
 
   useEffect(() => {
     if (transportType !== "pusher") return
 
-    const pusher = initPusherClient(
-      pusherServerConfigs[sseRequest.pusherServerId],
-    )
     const channel = pusher.subscribe(triggerId)
     console.log(ansiColors.red(`pusher bounds to channel: ${triggerId}`), {
       triggerId,

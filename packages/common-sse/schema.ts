@@ -1,3 +1,5 @@
+import { ResponseFinalStatus } from "@/schema/sse"
+
 export type IClient = {
   id: string
   onEvent: (event: ISseEvent) => void
@@ -31,7 +33,7 @@ export type ISseEvent<T extends SseEventType = any> = T extends "init"
     : T extends "error"
       ? GenericSseEvent<"error", { message: string }>
       : T extends "close"
-        ? GenericSseEvent<"close", { reason: string }>
+        ? GenericSseEvent<"close", { reason: ResponseFinalStatus }>
         : T extends "onClientConnected"
           ? GenericSseEvent<"onClientConnected", { id: string }>
           : T extends "onClientDisconnected"

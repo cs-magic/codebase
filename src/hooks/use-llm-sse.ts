@@ -6,7 +6,7 @@ import { stopGeneratingAtom } from "../store/app"
 import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv"
 import { transportTypeAtom } from "../store/query"
 
-export const useQueryLlmSse = (request: ILLMRequest) => {
+export const useLlmSse = (request: ILLMRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
 
   const { status, type, pusherServerId } = request
@@ -27,7 +27,7 @@ export const useQueryLlmSse = (request: ILLMRequest) => {
       if (requestId) updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
-      if (convId) updateConvTitle(convId, func)
+      if (convId) updateConvTitle(func)
     }
   }
 
