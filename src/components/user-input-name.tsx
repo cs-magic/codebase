@@ -1,19 +1,24 @@
-import { useAtom } from "jotai"
-import { Input } from "../../packages/common/components/ui/input"
-import { useUserDraftName } from "../../packages/common/hooks/use-user"
-import { smsNameAtom } from "../../packages/common/lib/sms/store"
+import { InputWithEnter } from "../../packages/common/components/input"
+import { useDraftSession } from "../../packages/common/hooks/use-user-draft-session"
 
-export const UserInputName = () => {
-  const name = useUserDraftName()
-  const [, setName] = useAtom(smsNameAtom)
+export const UserInputName = ({
+  onEnter,
+}: {
+  onEnter?: (s: string) => void
+}) => {
+  const { draft, value, setDraft } = useDraftSession("name")
 
   return (
-    <Input
+    <InputWithEnter
       className={"text-primary-foreground font-black text-2xl text-center"}
       autoFocus
-      value={name}
+      value={draft}
       onChange={(event) => {
-        setName(event.currentTarget.value)
+        setDraft(event.currentTarget.value)
+      }}
+      onEnter={(s) => {
+        if (onEnter) onEnter(s)
+        else setDraft(value) // reset
       }}
     />
   )

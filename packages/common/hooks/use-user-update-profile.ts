@@ -1,12 +1,12 @@
 import { signIn, useSession } from "next-auth/react"
 import { toast } from "sonner"
 import { PROFILE_UPDATE_PROVIDER_ID } from "../lib/sms/const"
-import { useUserDraftImage, useUserDraftName } from "./use-user"
+import { useDraftSession } from "./use-user-draft-session"
 
 export const useUserUpdateProfile = () => {
   const id = useSession().data?.user?.id
-  const name = useUserDraftName()
-  const image = useUserDraftImage()
+  const { draft: image } = useDraftSession("image")
+  const { draft: name } = useDraftSession("name")
 
   return async () => {
     if (!id || !name || !image) {

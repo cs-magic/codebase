@@ -6,22 +6,22 @@ import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { smsStageAtom } from "../../../../../packages/common/lib/sms/store"
-import { UnexpectedError } from "../../../../../packages/common/schema/errors"
+import { smsStageAtom } from "../../../../packages/common/lib/sms/store"
+import { UnexpectedError } from "../../../../packages/common/schema/errors"
 /**
  * ui ref: https://clerk.com/
  */
-import { SmsStage1SendCode } from "../../../../components/auth-sms-stage-1-send-code"
-import { SmsStage2InputCode } from "../../../../components/auth-sms-stage-2-input-code"
-import { SmsStage3UpdateProfile } from "../../../../components/auth-sms-stage-3-update-profile"
-import { BrandingTitle } from "../../../../components/branding-title"
+import { SmsStage1SendCode } from "../../../components/auth-sms-stage-1-send-code"
+import { SmsStage2InputCode } from "../../../components/auth-sms-stage-2-input-code"
+import { SmsStage3UpdateProfile } from "../../../components/auth-sms-stage-3-update-profile"
+import { BrandingTitle } from "../../../components/branding-title"
 
 export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)
 
   const session = useSession()
   const router = useRouter()
-  const ok = !!session.data?.user?.name && !!session.data.user.image
+  const ok = !!session.data?.user.name && !!session.data.user.image
 
   useEffect(() => {
     if (!ok) return
@@ -41,7 +41,7 @@ export default function AuthPage() {
 
     case "authenticated":
       // avoid screen blink
-      return ok ? null : <SmsStage3UpdateProfile />
+      return <SmsStage3UpdateProfile />
 
     case "unauthenticated":
     default:

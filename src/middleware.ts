@@ -9,8 +9,8 @@ export default withAuth(
     const path = req.nextUrl.pathname
     const token = req.nextauth.token
     console.log({ path, token })
-    // if (!token?.name && !path.startsWith("/auth")) return redirect("/auth")
-    // else if (token?.name && path.startsWith("/auth")) return redirect("/")
+    if (!token?.name && !path.startsWith("/auth")) return redirect("/auth")
+    else if (token?.name && path.startsWith("/auth")) return redirect("/")
   },
   {
     pages: {

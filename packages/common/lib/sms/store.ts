@@ -22,8 +22,8 @@ export const smsCodeExpireSecondsAtom = atom(10 * 60)
  * send code
  */
 export const smsPhoneAtom = atom("")
-export const smsNameAtom = atom<string>("")
-export const smsImageAtom = atom("")
+export const smsNameAtom = atom<string | null | undefined>(null)
+export const smsImageAtom = atom<string | null | undefined>(null)
 
 export const smsSendCodePayloadAtom = atom<ISendSms>((get) => ({
   phone: get(smsPhoneAtom),

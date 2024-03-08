@@ -15,8 +15,8 @@ import { WECHAT_APP_ID } from "./wechat/config"
 
 declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
-    name?: string | null
-    // image?: string
+    // name?: string | null // 已经有了？
+    // image?: string // jwt 里是picture
   }
 }
 
@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.sub ?? user.id,
+          image: token.picture,
         },
       }
     },
