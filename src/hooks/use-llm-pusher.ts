@@ -17,7 +17,7 @@ export const useLlmPusher = (
   const triggerId = getTriggerIdFromSseRequest(request)
 
   useEffect(() => {
-    if (transportType !== "pusher" || !triggerId) return
+    if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
     console.log(ansiColors.red(`[pusher] bound to channel: ${triggerId}`), {
@@ -67,5 +67,5 @@ export const useLlmPusher = (
     return () => {
       // pusher.unsubscribe(triggerId)
     }
-  }, [triggerId])
+  }, [triggerId, pusher, transportType])
 }
