@@ -1,9 +1,9 @@
 import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
 import {
   bestContextAtom,
+  convAtom,
   responseFinishedAtom,
   responsesAtom,
-  convAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { getNewId } from "../../packages/common-algo/id"
-import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { parseApp } from "../../packages/common-llm/schema"
 import { llmDelayAtom } from "../../packages/common-llm/store"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
@@ -37,8 +36,7 @@ export function useConvQuery() {
   const [responseFinished] = useAtom(responseFinishedAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
 
-  const router = useRouterWithLog()
-
+  const router = useRouter()
   const session = useSession()
   const query = api.core.query.useMutation()
   const addConv = api.core.addConv.useMutation()

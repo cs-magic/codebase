@@ -3,8 +3,8 @@
 import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useRouterWithLog } from "../../../../packages/common-hooks/use-router-with-log"
 import { smsStageAtom } from "../../../../packages/common-sms/store"
 /**
  * ui ref: https://clerk.com/
@@ -18,7 +18,7 @@ export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)
 
   const session = useSession()
-  const router = useRouterWithLog()
+  const router = useRouter()
   const ok = !!session.data?.user.name && !!session.data.user.image
 
   useEffect(() => {

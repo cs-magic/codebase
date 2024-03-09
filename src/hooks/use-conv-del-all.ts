@@ -1,9 +1,9 @@
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { api } from "../../packages/common-trpc/react"
 
 export const useDelAllConvs = () => {
-  const router = useRouterWithLog()
+  const router = useRouter()
   const utils = api.useUtils()
 
   const delAllConvs = api.core.delAllConvs.useMutation({

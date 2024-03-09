@@ -33,7 +33,7 @@ export const useLlmPusher = (
       type: T,
       func: (event: ISseEvent<T>) => void,
     ) => {
-      console.log(`[pusher] binding event: `, type)
+      // console.log(`[pusher] binding event: `, type)
       channel.bind(type, (event: ISseEvent<T>) => {
         console.log(`[pusher-client] << `, event)
         func(event)

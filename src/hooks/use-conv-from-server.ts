@@ -5,7 +5,10 @@ import { useAtom } from "jotai"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
 import { convAtom } from "../store/conv"
 
-export const useConvFromServer = (convIdInUrl: string | undefined) => {
+export const useConvFromServer = (
+  convIdInUrl: string | undefined,
+  reqIdInUrl: string | null,
+) => {
   const [conv, setConv] = useAtom(convAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
 
@@ -26,11 +29,17 @@ export const useConvFromServer = (convIdInUrl: string | undefined) => {
   useEffect(() => {
     const skip = !convFromServer
 
-    if (skip) return console.log(`setting conv since fetched (skip=${skip})`)
+    if (skip) return console.log(`setting conv since fetched (skipped)`)
 
-    console.log(ansiColors.red(`setting conv since fetched (skip=${skip}): `), {
-      id: convIdInUrl,
-      serverId: convFromServer?.id,
+    console.log(ansiColors.red(`setting conv since fetched: `), {
+      conv: {
+        cur: convIdInUrl,
+        new: convFromServer?.id,
+      },
+      req: {
+        cur: reqIdInUrl,
+        new: convFromServer.currentRequestId,
+      },
     })
     setConv(convFromServer)
   }, [convFromServer])

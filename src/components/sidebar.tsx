@@ -6,11 +6,11 @@ import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
-import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
 import { SidebarConvItem } from "./sidebar-conversation"
+import { useRouter } from "next/navigation"
 
 export const Sidebar = ({
   className,
@@ -19,7 +19,7 @@ export const Sidebar = ({
   const [convs] = useAtom(convsAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const router = useRouterWithLog()
+  const router = useRouter()
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
 

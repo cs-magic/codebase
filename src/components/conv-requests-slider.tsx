@@ -8,7 +8,7 @@ import { devEnabledAtom } from "../../packages/common-dev/store"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { useRequestSlider } from "../hooks/use-request-slider"
+import { useConvRequestSlider } from "../hooks/use-conv-request-slider"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 
 const ConvRequestsSlider = React.forwardRef<
@@ -18,21 +18,21 @@ const ConvRequestsSlider = React.forwardRef<
   const [conv] = useAtom(convAtom)
   const [requests] = useAtom(requestsAtom)
 
-  const { min, max, onChange, value } = useRequestSlider()
+  const { min, max, onChange, value } = useConvRequestSlider()
   const [devEnabled] = useAtom(devEnabledAtom)
   const softKeyboardOn = useSoftKeyboardOn()
   const { isMobile } = useEnvironments()
 
   return (
     <div className={"flex w-full flex-col gap-2"}>
-      {/*{devEnabled && (*/}
-      {/*  <div className={"flex items-center gap-2"}>*/}
-      {/*    <span className={"mr-2"}>*/}
-      {/*      [{conv?.id} - {conv?.currentRequestId}]*/}
-      {/*    </span>*/}
-      {/*    {requests.map((r, i) => `[${i + 1}]${r.id}`).join(", ")}*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {devEnabled && (
+        <div className={"flex items-center gap-2"}>
+          <span className={"mr-2"}>
+            [{conv?.id} - {conv?.currentRequestId}]
+          </span>
+          {requests.map((r, i) => `[${i + 1}]${r.id}`).join(", ")}
+        </div>
+      )}
 
       {!isMobile && (
         <div className={"w-full flex items-center gap-2 text-muted-foreground"}>

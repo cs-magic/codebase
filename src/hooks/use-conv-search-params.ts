@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
+import { api } from "../../packages/common-trpc/react"
 import { convAtom } from "../store/conv"
 import { getConvUrl } from "../utils"
 
@@ -20,9 +21,10 @@ export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [conv] = useAtom(convAtom)
+  const [conv, setConv] = useAtom(convAtom)
+  const updateConv = api.core.updateConv.useMutation()
 
-  const router = useRouterWithLog()
+  const router = useRouter()
 
   useEffect(() => {
     // 确保已经刷新对齐了conv
@@ -34,6 +36,20 @@ export const useConvSearchParams = (
         (reqIdInUrl && !conv.requests.some((r) => r.id === reqIdInUrl))
       )
         router.replace(getConvUrl(conv))
+      // 从客户端触发更新数据库里的指针（无需invalidate）
+      else if (reqIdInUrl && conv.currentRequestId !== reqIdInUrl) {
+        console.log(
+          `-- trigger db reqId: ${conv.currentRequestId} --> ${reqIdInUrl}`,
+        )
+        // no need to invalidate, just optimistic update
+        setConv((conv) => {
+          if (conv) conv.currentRequestId = reqIdInUrl
+        })
+        updateConv.mutate({
+          where: { id: conv.id },
+          data: { currentRequestId: reqIdInUrl },
+        })
+      }
     }
   }, [convIdInUrl, reqIdInUrl, conv?.id])
 }

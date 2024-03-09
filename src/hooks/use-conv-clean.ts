@@ -1,7 +1,7 @@
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { convAtom, convsAtom } from "../store/conv"
 
 export const useConvClean = (reqId: string | undefined) => {
@@ -9,7 +9,7 @@ export const useConvClean = (reqId: string | undefined) => {
   const [convs] = useAtom(convsAtom)
   const convId = conv?.id
 
-  const router = useRouterWithLog()
+  const router = useRouter()
 
   // 首页
   useEffect(() => {

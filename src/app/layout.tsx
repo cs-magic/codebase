@@ -1,25 +1,24 @@
+import { Devtool } from "@/components/_devtool"
+import { ReturnHomeAlertDialog } from "@/components/_return-home"
+import { CheckAuthAlertDialog } from "@/components/auth-checker"
+import { SystemSocketStatus } from "@/components/system-socket-status"
+import { env } from "@/env"
 import "@/styles/globals.css"
+import { type Viewport } from "next"
 
 import { Inter } from "next/font/google"
 
 import { TRPCReactProvider } from "../../packages/common-trpc/react"
-import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
-import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonner"
-import { SessionProvider } from "../../packages/common-ui/providers/session.provider"
-import { type Viewport } from "next"
-import { cn } from "../../packages/common-ui/shadcn/utils"
-import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
-import { AppsDialog } from "../components/select-apps"
-import { ScreenProvider } from "../../packages/common-ui/providers/screen.provider"
-import { AutoHeight } from "@/components/_auto-height"
-import { Devtool } from "@/components/_devtool"
-import { env } from "@/env"
 import { LoadingAlertDialog } from "../../packages/common-ui/components/loading-alert-dialog"
 import JotaiProvider from "../../packages/common-ui/providers/jotai.provider"
-import { ReturnHomeAlertDialog } from "@/components/_return-home"
-import { CheckAuthAlertDialog } from "@/components/auth-checker"
-import { SystemSocketStatus } from "@/components/system-socket-status"
-import LLMProvider from "../providers/apps.provider"
+import { ScreenProvider } from "../../packages/common-ui/providers/screen.provider"
+import { SessionProvider } from "../../packages/common-ui/providers/session.provider"
+import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
+import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonner"
+import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
+import { cn } from "../../packages/common-ui/shadcn/utils"
+import { AppsDialog } from "../components/select-apps"
+import GlobalHooksProviders from "../providers/global.provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,11 +52,12 @@ export default function RootLayout({
         <JotaiProvider>
           <SessionProvider>
             <TRPCReactProvider>
-              <LLMProvider>
-                {/* 2. ui layer */}
-                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                  <TooltipProvider>
-                    <ScreenProvider>
+              {/* 2. ui layer */}
+              <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                <TooltipProvider>
+                  <ScreenProvider>
+                    {/* 3. hooks layer */}
+                    <GlobalHooksProviders>
                       <main
                         className={cn(
                           "w-screen relative overflow-hidden",
@@ -81,8 +81,6 @@ export default function RootLayout({
 
                         <AppsDialog />
 
-                        <AutoHeight />
-
                         {env.NODE_ENV !== "production" && (
                           <>
                             <SystemSocketStatus />
@@ -91,10 +89,10 @@ export default function RootLayout({
                           </>
                         )}
                       </main>
-                    </ScreenProvider>
-                  </TooltipProvider>
-                </ThemeProvider>
-              </LLMProvider>
+                    </GlobalHooksProviders>
+                  </ScreenProvider>
+                </TooltipProvider>
+              </ThemeProvider>
             </TRPCReactProvider>
           </SessionProvider>
         </JotaiProvider>

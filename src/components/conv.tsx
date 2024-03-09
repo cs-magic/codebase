@@ -14,7 +14,7 @@ export default function Conv({
   convIdInUrl: string | undefined
   reqIdInUrl: string | null
 }) {
-  useConvFromServer(convIdInUrl)
+  useConvFromServer(convIdInUrl, reqIdInUrl)
 
   useConvSearchParams(convIdInUrl, reqIdInUrl)
 
