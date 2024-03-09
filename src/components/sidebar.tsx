@@ -10,6 +10,7 @@ import { HTMLAttributes } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
 import { SidebarConvItem } from "./sidebar-conversation"
 
 export const Sidebar = ({
@@ -22,6 +23,8 @@ export const Sidebar = ({
   const router = useRouter()
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
+
+  useLLMForConvTitle()
 
   return (
     <div

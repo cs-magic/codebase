@@ -15,6 +15,7 @@ export const useLLMForConvTitle = () => {
   const llmRequest: ILLMRequest = {
     type: "conv-title",
     status: !conv ? "unknown" : checkRespondingStatus(conv.titleResponse),
+    convId: conv?.id,
   }
 
   useLlmPusher(llmRequest, updateConvTitle)

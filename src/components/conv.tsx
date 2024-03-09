@@ -3,7 +3,6 @@
 import { useConvClean } from "../hooks/use-conv-clean"
 import { useConvFromServer } from "../hooks/use-conv-from-server"
 import { useConvSearchParams } from "../hooks/use-conv-search-params"
-import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
 import { ConvApps } from "./conv-apps"
 import { ConvControl } from "./conv-control"
 import { ConvQuery } from "./conv-query"
@@ -20,8 +19,6 @@ export default function Conv({
   useConvSearchParams(convIdInUrl, reqIdInUrl)
 
   useConvClean(convIdInUrl)
-
-  useLLMForConvTitle()
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

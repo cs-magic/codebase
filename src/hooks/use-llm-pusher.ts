@@ -20,9 +20,14 @@ export const useLlmPusher = (
     if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
-    console.log(ansiColors.red(`[pusher] bound to channel: ${triggerId}`), {
-      triggerId,
-    })
+    console.log(
+      ansiColors.red(
+        `[pusher] bound to channel: ${triggerId}, type: ${request.type}, status: ${request.status}`,
+      ),
+      {
+        triggerId,
+      },
+    )
 
     const bindEvent = <T extends SseEventType>(
       type: T,
