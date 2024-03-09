@@ -12,6 +12,7 @@ import {
   smsProviderTypeAtom,
 } from "../../packages/common-sms/store"
 import { api } from "../../packages/common-trpc/react"
+import { trpcReactLogEnabledAtom } from "../../packages/common-trpc/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
@@ -42,6 +43,9 @@ export const Devtool = () => {
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
   const [transportType, setTransportType] = useAtom(transportTypeAtom)
   const [pusherServerId, setPusherServerId] = useAtom(pusherServerIdAtom)
+  const [trpcReactLogEnabled, setTrpcReactLogEnabled] = useAtom(
+    trpcReactLogEnabledAtom,
+  )
 
   const utils = api.useUtils()
 
@@ -156,6 +160,15 @@ export const Devtool = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className={"flex items-center gap-2"}>
+          <Label>TRPC</Label>
+          <Label>React Log Enabled: </Label>
+          <Switch
+            checked={trpcReactLogEnabled}
+            onCheckedChange={setTrpcReactLogEnabled}
+          />
         </div>
       </DialogContent>
     </Dialog>

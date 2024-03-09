@@ -12,6 +12,7 @@ import { IContext } from "../schema/message"
 import { IBaseResponse } from "../schema/query"
 import { ResponseStatus } from "../schema/sse"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
+import { produce } from "immer"
 
 //////////////////////////////
 // base
@@ -114,6 +115,15 @@ export const updateConvTitleAtom = atom(
       const s = conv?.titleResponse
 
       if (!s) return
+
+      // 列表页里的最新名字也要更新，因为没有 invalidate
+      if (s.content)
+        set(convsAtom, (convs) =>
+          produce(convs, (convs) => {
+            convs.find((c) => c.id === conv.id)!.titleResponse!.content =
+              s.content
+          }),
+        )
 
       func(s)
     })

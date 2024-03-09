@@ -35,13 +35,15 @@ export const useLlmPusher = (
     ) => {
       // console.log(`[pusher] binding event: `, type)
       channel.bind(type, (event: ISseEvent<T>) => {
-        console.log(`[pusher-client] << `, event)
+        console.log(
+          `[pusher] << ${ansiColors.bgBlue.white(event.event)}`,
+          event.data,
+        )
         func(event)
       })
     }
 
     bindEvent("data", (event) => {
-      console.log({ event })
       update((response) => {
         if (!response.content) response.content = event.data.token
         else response.content += event.data.token
@@ -49,21 +51,18 @@ export const useLlmPusher = (
     })
 
     bindEvent("error", (event) => {
-      console.log({ event })
       update((response) => {
         response.error = event.data.message
       })
     })
 
     bindEvent("init", (event) => {
-      console.log({ event })
       update((response) => {
         response.tStart = new Date()
       })
     })
 
     bindEvent("close", (event) => {
-      console.log({ event })
       update((response) => {
         response.tEnd = new Date()
       })
