@@ -44,7 +44,7 @@ export const useConvSearchParams = (
         router.replace(`/tt/${convIdInUrl}`)
       }
     } else {
-      if (conv.currentRequestId) {
+      if (convIdInUrl && conv.currentRequestId) {
         console.log(
           ansiColors.blue(
             `router push --> /tt/${convIdInUrl}?r=${conv.currentRequestId}`,
