@@ -25,7 +25,7 @@ export class RedisLlmManager implements ILlmManagerTraditional {
   //////////////////////////////
 
   public async onTriggerStarts() {
-    this.onEvent({ event: "init" })
+    this.onEvent({ event: "init", data: {} })
   }
 
   public async hasTrigger() {

@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     console.log(`Client(id=${clientId}) aborted connection.`)
 
     // 1. 先写
-    await write({ event: "error", data: "您已中止" })
+    await write({ event: "error", data: { message: "您已中止" } })
     await writer.close()
     // 2. 再移除（2要在1之后）
     await llmManager.onClientDisconnected(clientId)
