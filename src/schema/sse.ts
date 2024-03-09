@@ -19,7 +19,7 @@ export type ILLMRequest = {
       convId?: string
     }
   | {
-      requestId?: string
+      requestId?: string | null
       type: "app-response"
       appId: string
     }

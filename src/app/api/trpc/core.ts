@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
 import { pusherServerIdSchema } from "../../../../packages/common-puser/config"
 import {
@@ -144,7 +145,7 @@ export const coreRouter = createTRPCRouter({
   query: convProcedure
     .input(
       z.object({
-        requestId: z.string(),
+        requestId: z.string().optional(),
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
         llmDelay: z.number().default(0),
@@ -152,7 +153,13 @@ export const coreRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const { context, convId, pusherServerId, llmDelay, requestId } = input
+      const {
+        context,
+        convId,
+        pusherServerId,
+        llmDelay,
+        requestId = getNewId(),
+      } = input
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 

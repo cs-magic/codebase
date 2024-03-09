@@ -1,8 +1,9 @@
+import { produce } from "immer"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { api } from "../../packages/common-trpc/react"
-import { convAtom } from "../store/conv"
+import { convAtom, convsAtom, requestIdAtom } from "../store/conv"
 import { getConvUrl } from "../utils"
 
 /**
@@ -21,8 +22,10 @@ export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [conv, setConv] = useAtom(convAtom)
+  const [conv] = useAtom(convAtom)
+  const [, setConvs] = useAtom(convsAtom)
   const updateConv = api.core.updateConv.useMutation()
+  const [requestId] = useAtom(requestIdAtom)
 
   const router = useRouter()
 
@@ -30,25 +33,34 @@ export const useConvSearchParams = (
     // 确保已经刷新对齐了conv
     if (conv && convIdInUrl && convIdInUrl === conv.id) {
       if (
-        // 1. 有 rid，但是实际不存在
-        (!reqIdInUrl && !!conv.currentRequestId) ||
-        // 2. 没有rid，但是实际有老师请求
+        // 1. 没有 rid，但有游标
+        (!reqIdInUrl && !!requestId) ||
+        // 2. 有rid，但没有游标
         (reqIdInUrl && !conv.requests.some((r) => r.id === reqIdInUrl))
       )
         router.replace(getConvUrl(conv))
       // 从客户端触发更新数据库里的指针（无需invalidate）
-      else if (reqIdInUrl && conv.currentRequestId !== reqIdInUrl) {
-        console.log(
-          `-- trigger db reqId: ${conv.currentRequestId} --> ${reqIdInUrl}`,
+      else if (reqIdInUrl && requestId !== reqIdInUrl) {
+        console.log(`-- trigger db reqId: ${requestId} --> ${reqIdInUrl}`)
+
+        // 更新convs里的指针（无需关心conv里的游标，因为始终以convs对齐）
+        updateConv.mutate(
+          {
+            where: { id: conv.id },
+            data: { currentRequestId: reqIdInUrl },
+          },
+          {
+            onSuccess: () => {
+              // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
+              setConvs((convs) =>
+                produce(convs, (convs) => {
+                  convs.find((c) => c.id === conv.id)!.currentRequestId =
+                    reqIdInUrl
+                }),
+              )
+            },
+          },
         )
-        // no need to invalidate, just optimistic update
-        setConv((conv) => {
-          if (conv) conv.currentRequestId = reqIdInUrl
-        })
-        updateConv.mutate({
-          where: { id: conv.id },
-          data: { currentRequestId: reqIdInUrl },
-        })
       }
     }
   }, [convIdInUrl, reqIdInUrl, conv?.id])

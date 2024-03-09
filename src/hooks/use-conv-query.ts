@@ -92,11 +92,8 @@ export function useConvQuery() {
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
-    const requestId = getNewId()
-
     query.mutate(
       {
-        requestId,
         convId: conv.id,
         context: newContext,
         apps: persistedApps.map((a) => parseApp(a)),
@@ -104,7 +101,7 @@ export function useConvQuery() {
         pusherServerId,
       },
       {
-        onSuccess: (requestIdNew) => {
+        onSuccess: (requestId) => {
           // todo: validate necessary 重置以拿到最新的数据
           void utils.core.getConv.invalidate()
 

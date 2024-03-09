@@ -25,16 +25,11 @@ export const useLlmPusher = (
     const channel = pusher.subscribe(triggerId)
     console.log({ pusherLogLevel })
     if (pusherLogLevel <= LogLevel.info)
-      console.log(
-        `[pusher] bound to channel: ${triggerId}, type: ${request.type}, status: ${request.status}`,
-        {
-          triggerId,
-        },
-      )
+      console.log(`[pusher] bound to channel: ${triggerId}, `, request)
 
     const bindEvent = <T extends SseEventType>(
       type: T,
-      func: (event: ISseEvent<T>) => void,
+      func: (event: ISseEvent<T>["data"]) => void,
     ) => {
       // console.log(`[pusher] binding event: `, type)
       channel.bind(type, (event: ISseEvent<T>) => {
@@ -49,14 +44,14 @@ export const useLlmPusher = (
 
     bindEvent("data", (event) => {
       update((response) => {
-        if (!response.content) response.content = event.data.token
-        else response.content += event.data.token
+        if (!response.content) response.content = event.token
+        else response.content += event.token
       })
     })
 
     bindEvent("error", (event) => {
       update((response) => {
-        response.error = event.data.message
+        response.error = event.message
       })
     })
 

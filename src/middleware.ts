@@ -8,7 +8,7 @@ export default withAuth(
 
     const { pathname: path, search } = req.nextUrl
     const token = req.nextauth.token
-    console.log({
+    console.log("[middleware]: ", {
       path,
       search,
       // token

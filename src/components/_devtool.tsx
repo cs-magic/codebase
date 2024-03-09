@@ -267,9 +267,13 @@ export const ConfigCard = ({
 export const ConfigLogCard = () => {
   const [convLogLevel, setConvLogLevel] = useAtom(convLogLevelAtom)
   const [pusherLogLevel, setPusherLogLevel] = useAtom(pusherLogLevelAtom)
+  // const [routeLogLevel, setRouteLogLevel] = useAtom(routeLogLevelAtom)
 
   return (
     <ConfigCard title={"log"}>
+      <Label>Route Log Level: </Label>
+      <SelectLogLevel value={convLogLevel} setValue={setConvLogLevel} />
+
       <Label>Conv Log Level: </Label>
       <SelectLogLevel value={convLogLevel} setValue={setConvLogLevel} />
 

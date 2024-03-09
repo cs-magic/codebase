@@ -32,22 +32,25 @@ export const convLogLevelAtom = atomWithStorage<LogLevel>(
 //////////////////////////////
 // derived
 //////////////////////////////
+export const convIdAtom = atom((get) => get(convAtom)?.id)
+
+/**
+ * ~~用户选择哪条request，这个信息不在数据库存储，所以需要用户自己维护~~
+ * ~~在加了数据库的currentRequestId之后，维护彼此的同步成了一种灾难，bug层出不穷，渲染效率低下~~
+ * 当前requestId始终从convs里拿，不要关心conv，conv只维护更重要的数据
+ */
+export const requestIdAtom = atom(
+  (get) =>
+    get(convsAtom).find((c) => c.id === get(convIdAtom))?.currentRequestId,
+)
+
+export const requestAtom = atom((get) =>
+  get(convAtom)?.requests.find((r) => r.id === get(requestIdAtom)),
+)
 
 export const requestsAtom = atom<IRequest[]>(
   (get) => get(convAtom)?.requests ?? [],
 )
-
-export const convIdAtom = atom((get) => get(convAtom)?.id)
-
-export const requestAtom = atom((get) =>
-  get(convAtom)?.requests.find((r) => r.id === get(convAtom)?.currentRequestId),
-)
-
-/**
- * ~~用户选择哪条request，这个信息不在数据库存储，所以需要用户自己维护~~
- * 在加了数据库的currentRequestId之后，维护彼此的同步成了一种灾难，bug层出不穷，渲染效率低下
- */
-export const requestIdAtom = atom((get) => get(requestAtom)?.id)
 
 export const commonContextAtom = atom<IContext>(
   (get) => get(requestAtom)?.context ?? [],

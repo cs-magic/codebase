@@ -5,6 +5,7 @@ import { api } from "../../packages/common-trpc/react"
 import { parseApp } from "../../packages/common-llm/schema"
 import { createAppSchema } from "../schema/app.create"
 import { convAtom } from "../store/conv"
+import { useRouter } from "next/navigation"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话 （包含query、路由）
@@ -15,6 +16,7 @@ import { convAtom } from "../store/conv"
 export function useAddConv() {
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setConv] = useAtom(convAtom)
+  const router = useRouter()
 
   const addConv = api.core.addConv.useMutation()
 
@@ -31,6 +33,7 @@ export function useAddConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
+          router.push(`/tt/${data.id}`) // 异步
           void utils.core.listConv.invalidate()
           setConv(data)
         },

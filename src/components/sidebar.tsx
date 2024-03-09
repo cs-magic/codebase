@@ -10,7 +10,6 @@ import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
 import { SidebarConvItem } from "./sidebar-conversation"
-import { useRouter } from "next/navigation"
 
 export const Sidebar = ({
   className,
@@ -19,7 +18,6 @@ export const Sidebar = ({
   const [convs] = useAtom(convsAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const router = useRouter()
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
 
@@ -36,11 +34,7 @@ export const Sidebar = ({
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
-        onClick={async () => {
-          const data = await addConv()
-          // 路由跳转，并且避免再拿数据
-          router.push(`/tt/${data.id}`) // 异步
-        }}
+        onClick={() => addConv()}
       >
         <PlusIcon className={"w-4 h-4"} />
         新建会话

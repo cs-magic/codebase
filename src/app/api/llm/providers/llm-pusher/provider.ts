@@ -44,17 +44,17 @@ export class PusherLlmManager implements ILlmManagerPusher {
   // server
   //////////////////////////////
   async onTriggerStarts() {
-    this.push({ event: "init", data: {} })
-    this.setStatus("responding")
+    await this.setStatus("responding")
+    await this.push({ event: "init", data: {} })
   }
 
   async onTriggerEnds(reason: ResponseFinalStatus) {
-    this.push({ event: "close", data: { reason } })
-    this.setStatus(reason)
+    await this.setStatus(reason)
+    await this.push({ event: "close", data: { reason } })
   }
 
   async onEvent(event: ISseEvent) {
-    this.push(event)
+    await this.push(event)
   }
 
   //////////////////////////////
@@ -62,11 +62,11 @@ export class PusherLlmManager implements ILlmManagerPusher {
   //////////////////////////////
 
   async onClientConnected(clientId: string) {
-    this.push({ event: "onClientConnected", data: { id: clientId } })
+    await this.push({ event: "onClientConnected", data: { id: clientId } })
   }
 
   async onClientDisconnected(clientId: string) {
-    this.push({
+    await this.push({
       event: "onClientDisconnected",
       data: { id: clientId },
     })
@@ -79,6 +79,6 @@ export class PusherLlmManager implements ILlmManagerPusher {
   private async push(event: ISseEvent) {
     event.data = { time: Date.now(), ...event.data }
     console.log(`[PUSHER] >> ${this.channel}: `, event)
-    this.pusher.trigger(this.channel, event.event, event)
+    await this.pusher.trigger(this.channel, event.event, event.data)
   }
 }
