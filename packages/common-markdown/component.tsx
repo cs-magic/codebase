@@ -1,3 +1,5 @@
+"use client"
+
 import { HTMLAttributes, LegacyRef } from "react"
 import Markdown, { ExtraProps } from "react-markdown"
 import rehypeKatex from "rehype-katex"
