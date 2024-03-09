@@ -2,6 +2,7 @@
 
 import {
   convAtom,
+  requestIdAtom,
   requestsAtom,
   requestsSlideTextDisplayAtom,
 } from "@/store/conv"
@@ -20,6 +21,7 @@ const ConvRequestsSlider = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const [conv] = useAtom(convAtom)
   const [requests] = useAtom(requestsAtom)
+  const [requestId] = useAtom(requestIdAtom)
   const [requestsSlideTextDisplay] = useAtom(requestsSlideTextDisplayAtom)
 
   const { min, max, onChange, value } = useConvRequestSlider()
@@ -39,7 +41,7 @@ const ConvRequestsSlider = React.forwardRef<
 
       {!isMobile && (
         <div className={"w-full flex items-center gap-2 text-muted-foreground"}>
-          <span className={"text-xs"}>时光机：</span>
+          <span className={"text-xs"}>时光机（{requestId}）：</span>
           <SliderPrimitive.Root
             min={min}
             max={max}

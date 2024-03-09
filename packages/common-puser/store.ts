@@ -28,7 +28,7 @@ export const pusherLatenciesAtom = atom<FixedArray<number>>(
 
 export const pusherLogLevelAtom = atomWithStorage<LogLevel>(
   "pusher.log.level",
-  LogLevel.info,
+  LogLevel.debug,
 )
 
 //////////////////////////////
