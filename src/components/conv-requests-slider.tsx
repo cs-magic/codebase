@@ -1,6 +1,6 @@
 "use client"
 
-import { requestsAtom, serverConvDetailAtom } from "@/store/conv"
+import { requestsAtom, convAtom } from "@/store/conv"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { useAtom } from "jotai"
 import * as React from "react"
@@ -15,7 +15,7 @@ const ConvRequestsSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const [conv] = useAtom(serverConvDetailAtom)
+  const [conv] = useAtom(convAtom)
   const [requests] = useAtom(requestsAtom)
 
   const { min, max, onChange, value } = useRequestSlider()

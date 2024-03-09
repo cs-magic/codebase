@@ -65,7 +65,7 @@ export const useLlmPusher = (
     })
 
     return () => {
-      // pusher.unsubscribe(triggerId)
+      pusher.unsubscribe(triggerId)
     }
   }, [triggerId, pusher, transportType])
 }

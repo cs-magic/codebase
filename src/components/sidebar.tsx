@@ -1,7 +1,7 @@
 "use client"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
-import { serverConvListFAtom } from "@/store/conv"
+import { convsAtom } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
@@ -16,7 +16,7 @@ export const Sidebar = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => {
-  const [convs] = useAtom(serverConvListFAtom)
+  const [convs] = useAtom(convsAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
   const router = useRouter()

@@ -3,7 +3,7 @@ import {
   bestContextAtom,
   responseFinishedAtom,
   responsesAtom,
-  serverConvDetailAtom,
+  convAtom,
 } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
@@ -25,7 +25,7 @@ import { userPromptAtom } from "../store/query"
  * @param query
  */
 export function useConvQuery() {
-  let [conv] = useAtom(serverConvDetailAtom)
+  let [conv] = useAtom(convAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)

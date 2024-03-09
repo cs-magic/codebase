@@ -1,6 +1,6 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convIdAtom, serverConvDetailAtom } from "@/store/conv"
+import { convIdAtom, convAtom } from "@/store/conv"
 import { produce } from "immer"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
@@ -29,7 +29,7 @@ import { Label } from "packages/common-ui/shadcn/shadcn-components/label"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   const [convId] = useAtom(convIdAtom)
-  const [convDetail, setConv] = useAtom(serverConvDetailAtom)
+  const [convDetail, setConv] = useAtom(convAtom)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()

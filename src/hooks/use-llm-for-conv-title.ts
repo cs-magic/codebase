@@ -2,14 +2,14 @@ import { useAtom } from "jotai"
 import { ILLMRequest } from "../schema/sse"
 import {
   checkRespondingStatus,
-  serverConvDetailAtom,
+  convAtom,
   updateConvTitleAtom,
 } from "../store/conv"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 
 export const useLLMForConvTitle = () => {
-  const [conv] = useAtom(serverConvDetailAtom)
+  const [conv] = useAtom(convAtom)
   const [, updateConvTitle] = useAtom(updateConvTitleAtom)
 
   const llmRequest: ILLMRequest = {

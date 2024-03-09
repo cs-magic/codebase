@@ -17,24 +17,22 @@ import { appIdPersistedAtom } from "./app" //////////////////////////////
 // base
 //////////////////////////////
 
-export const serverConvListFAtom = atom<IConvBase[]>([])
+export const convsAtom = atom<IConvBase[]>([])
 
-export const serverConvDetailAtom = atomWithImmer<IConvDetail | null>(null)
+export const convAtom = atomWithImmer<IConvDetail | null>(null)
 
 //////////////////////////////
 // derived
 //////////////////////////////
 
 export const requestsAtom = atom<IRequest[]>(
-  (get) => get(serverConvDetailAtom)?.requests ?? [],
+  (get) => get(convAtom)?.requests ?? [],
 )
 
-export const convIdAtom = atom((get) => get(serverConvDetailAtom)?.id)
+export const convIdAtom = atom((get) => get(convAtom)?.id)
 
 export const requestAtom = atom((get) =>
-  get(serverConvDetailAtom)?.requests.find(
-    (r) => r.id === get(serverConvDetailAtom)?.currentRequestId,
-  ),
+  get(convAtom)?.requests.find((r) => r.id === get(convAtom)?.currentRequestId),
 )
 
 /**
@@ -97,7 +95,7 @@ export const updateAppResponseAtom = atom(
     appId: string,
     func: IUpdateAppResponse,
   ) => {
-    set(serverConvDetailAtom, (conv) => {
+    set(convAtom, (conv) => {
       const s = conv?.requests
         ?.find((r) => r.id === requestId)
         ?.responses.find((r) => r.appId === appId)
@@ -112,7 +110,7 @@ export const updateAppResponseAtom = atom(
 export const updateConvTitleAtom = atom(
   null,
   (get, set, func: IUpdateConvTitleResponse) => {
-    set(serverConvDetailAtom, (conv) => {
+    set(convAtom, (conv) => {
       const s = conv?.titleResponse
 
       if (!s) return

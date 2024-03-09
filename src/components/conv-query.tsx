@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import { toast } from "sonner"
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { useConvQuery } from "../hooks/use-conv-query"

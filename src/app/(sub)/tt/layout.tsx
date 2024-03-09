@@ -1,7 +1,7 @@
 "use client"
 import { Sidebar } from "@/components/sidebar"
 import { appIdPersistedAtom, appsPersistedAtom } from "@/store/app"
-import { serverConvDetailAtom, serverConvListFAtom } from "@/store/conv"
+import { convAtom, convsAtom } from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
@@ -11,8 +11,8 @@ import { api } from "../../../../packages/common-trpc/react"
 export default function ConvLayout({ children }: PropsWithChildren) {
   const [persistedApps, setPersistedApps] = useAtom(appsPersistedAtom)
   const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
-  const [, setConvs] = useAtom(serverConvListFAtom)
-  const [, setConv] = useAtom(serverConvDetailAtom)
+  const [, setConvs] = useAtom(convsAtom)
+  const [, setConv] = useAtom(convAtom)
 
   const { data: convsInDB } = api.core.listConv.useQuery()
 
