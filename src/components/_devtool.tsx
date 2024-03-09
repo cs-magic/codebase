@@ -294,12 +294,12 @@ export const SelectLogLevel = (props: {
 
       <SelectContent>
         <SelectGroup>
-          <SelectItem value={"1"}>Verbose</SelectItem>
-          <SelectItem value={"2"}>Debug</SelectItem>
-          <SelectItem value={"3"}>Info</SelectItem>
-          <SelectItem value={"4"}>Warning</SelectItem>
-          <SelectItem value={"5"}>Error</SelectItem>
-          <SelectItem value={"6"}>Critical</SelectItem>
+          <SelectItem value={"0"}>Verbose</SelectItem>
+          <SelectItem value={"1"}>Debug</SelectItem>
+          <SelectItem value={"2"}>Info</SelectItem>
+          <SelectItem value={"3"}>Warning</SelectItem>
+          <SelectItem value={"4"}>Error</SelectItem>
+          <SelectItem value={"5"}>Critical</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

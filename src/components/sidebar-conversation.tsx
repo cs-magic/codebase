@@ -35,7 +35,7 @@ export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
    * 当前会话用detail，否则用base
    *
    * 虽然在我们支持了convList获取content之后，不需要下面的分支了
-   * 但按道理是没问题的，不知道为啥闪烁，可能应该还是更新的时候出错了
+   * 但  按道理是没问题的，不知道为啥闪烁，可能应该还是更新的时候出错了
    */
   const theConv = convDetail?.id === conv.id ? convDetail : conv
   const utils = api.useUtils()

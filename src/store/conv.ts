@@ -127,7 +127,7 @@ export const updateConvTitleAtom = atom(
       if (s.content)
         set(convsAtom, (convs) =>
           produce(convs, (convs) => {
-            console.log(`-- updating title: `, s.content)
+            // console.log(`-- updating title: `, s.content)
             convs.find((c) => c.id === conv.id)!.titleResponse!.content =
               s.content
           }),

@@ -23,6 +23,7 @@ export const useLlmPusher = (
     if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
+    console.log({ pusherLogLevel })
     if (pusherLogLevel <= LogLevel.info)
       console.log(
         `[pusher] bound to channel: ${triggerId}, type: ${request.type}, status: ${request.status}`,
@@ -74,5 +75,5 @@ export const useLlmPusher = (
     return () => {
       pusher.unsubscribe(triggerId)
     }
-  }, [triggerId, pusher, transportType])
+  }, [triggerId, pusher, transportType, pusherLogLevel])
 }
