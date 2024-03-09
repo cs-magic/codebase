@@ -13,7 +13,7 @@
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
     "update": "git add . && git stash && git pull -f && yarn",
-    "postupdate": "DIST=.next-tmp && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart eval-ai"
+    "postupdate": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart eval-ai"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",
