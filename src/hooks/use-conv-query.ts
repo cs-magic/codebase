@@ -112,11 +112,9 @@ export function useConvQuery() {
         systemPromptForConvTitle: convSummaryPrompt,
       },
       {
-        onSuccess: (requestId) => {
-          // todo: validate necessary 重置以拿到最新的数据
-          void utils.core.getConv.invalidate()
-
-          //   todo: is requestId update too late, causing no `init` event?
+        onSuccess: async (requestId) => {
+          // 服务器上路由跳转很快，所以我们要先确保数据重置完
+          await utils.core.getConv.invalidate()
           router.push(`/tt/${conv!.id}?r=${requestId}`)
         },
         onError: (err) => {
