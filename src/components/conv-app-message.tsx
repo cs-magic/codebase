@@ -2,6 +2,7 @@ import { IMessageInChat } from "@/schema/message"
 import { useSession } from "next-auth/react"
 import { DEFAULT_AVATAR } from "@/config/assets"
 import { RiOpenaiFill } from "react-icons/ri"
+import { MarkdownComp } from "../../packages/common-markdown/component"
 import {
   Avatar,
   AvatarImage,
@@ -33,14 +34,14 @@ export const ConvAppMessage = ({
         )}
       </div>
 
-      <div
+      <MarkdownComp
         className={cn(
           "p-2 rounded-lg overflow-hidden",
           m.isError && "text-destructive-foreground bg-destructive/75",
         )}
       >
         {m.content}
-      </div>
+      </MarkdownComp>
     </div>
   )
 }
