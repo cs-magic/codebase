@@ -1,13 +1,17 @@
-import { FixedArray } from "../common-algo/array"
-import { PusherConnectionState } from "./schema"
-import { initPusherClient } from "./client/init"
-import { pusherServerConfigs, PusherServerId } from "./config"
-import PusherJS from "pusher-js"
-import { toast } from "sonner"
-import sum from "lodash/sum"
-
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
+import sum from "lodash/sum"
+import PusherJS from "pusher-js"
+import { toast } from "sonner"
+import { FixedArray } from "../common-algo/array"
+import { LogLevel } from "../common-log/schema"
+import { initPusherClient } from "./client/init"
+import { pusherServerConfigs, PusherServerId } from "./config"
+import { PusherConnectionState } from "./schema"
+
+///////////////////////////////
+// base
+//////////////////////////////
 
 export const pusherServerIdAtom = atomWithStorage<PusherServerId>(
   "pusher.server.id",
@@ -21,6 +25,15 @@ export const pusherLatencyAtom = atom<number>(0)
 export const pusherLatenciesAtom = atom<FixedArray<number>>(
   new FixedArray<number>(10),
 )
+
+export const pusherLogLevelAtom = atomWithStorage<LogLevel>(
+  "pusher.log.level",
+  LogLevel.info,
+)
+
+//////////////////////////////
+// derive
+//////////////////////////////
 
 export const cleanPusherAtom = atom(null, (get, set) => {
   const client = get(pusherClientAtom)

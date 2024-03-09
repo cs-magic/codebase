@@ -1,6 +1,8 @@
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
+import { LogLevel } from "../../packages/common-log/schema"
+import { pusherLogLevelAtom } from "../../packages/common-puser/store"
 import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
 import { IBaseResponse } from "../schema/query"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
@@ -12,6 +14,7 @@ export const useLlmPusher = (
   update: (func: (response: IBaseResponse) => void) => void,
 ) => {
   const [transportType] = useAtom(transportTypeAtom)
+  const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
 
   const { pusher } = usePusher()
   const triggerId = getTriggerIdFromSseRequest(request)
@@ -20,14 +23,13 @@ export const useLlmPusher = (
     if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
-    console.log(
-      ansiColors.red(
+    if (pusherLogLevel <= LogLevel.info)
+      console.log(
         `[pusher] bound to channel: ${triggerId}, type: ${request.type}, status: ${request.status}`,
-      ),
-      {
-        triggerId,
-      },
-    )
+        {
+          triggerId,
+        },
+      )
 
     const bindEvent = <T extends SseEventType>(
       type: T,
@@ -35,10 +37,11 @@ export const useLlmPusher = (
     ) => {
       // console.log(`[pusher] binding event: `, type)
       channel.bind(type, (event: ISseEvent<T>) => {
-        console.log(
-          `[pusher] << ${ansiColors.bgBlue.white(event.event)}`,
-          event.data,
-        )
+        if (pusherLogLevel <= LogLevel.debug)
+          console.log(
+            `[pusher] << ${ansiColors.bgBlue.white(event.event)}`,
+            event.data,
+          )
         func(event)
       })
     }

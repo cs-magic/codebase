@@ -19,7 +19,7 @@ export const useConvRequestSlider = () => {
 
   useEffect(() => {
     const newReqId = requests[tempValue - 1]?.id
-    console.log({ value, tempValue, newReqId })
+    // console.log({ value, tempValue, newReqId })
     if (
       convId &&
       newReqId

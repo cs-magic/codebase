@@ -8,11 +8,13 @@ import {
 } from "@/schema/conv"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
+import { LogLevel } from "../../packages/common-log/schema"
 import { IContext } from "../schema/message"
 import { IBaseResponse } from "../schema/query"
 import { ResponseStatus } from "../schema/sse"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
 import { produce } from "immer"
+import { atomWithStorage } from "jotai/utils"
 
 //////////////////////////////
 // base
@@ -21,6 +23,11 @@ import { produce } from "immer"
 export const convsAtom = atom<IConvBase[]>([])
 
 export const convAtom = atomWithImmer<IConvDetail | null>(null)
+
+export const convLogLevelAtom = atomWithStorage<LogLevel>(
+  "conv.log.level",
+  LogLevel.info,
+)
 
 //////////////////////////////
 // derived
@@ -120,6 +127,7 @@ export const updateConvTitleAtom = atom(
       if (s.content)
         set(convsAtom, (convs) =>
           produce(convs, (convs) => {
+            console.log(`-- updating title: `, s.content)
             convs.find((c) => c.id === conv.id)!.titleResponse!.content =
               s.content
           }),

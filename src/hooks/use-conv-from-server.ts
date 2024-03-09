@@ -1,9 +1,10 @@
 import { useEffect } from "react"
+import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { convAtom } from "../store/conv"
+import { convAtom, convLogLevelAtom } from "../store/conv"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,
@@ -11,6 +12,7 @@ export const useConvFromServer = (
 ) => {
   const [conv, setConv] = useAtom(convAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
+  const [convLogLevel] = useAtom(convLogLevelAtom)
 
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
@@ -29,18 +31,23 @@ export const useConvFromServer = (
   useEffect(() => {
     const skip = !convFromServer
 
-    if (skip) return console.log(`setting conv since fetched (skipped)`)
+    if (skip) {
+      if (convLogLevel <= LogLevel.debug)
+        console.log(`setting conv since fetched (skipped)`)
+      return
+    }
 
-    console.log(ansiColors.red(`setting conv since fetched: `), {
-      conv: {
-        cur: convIdInUrl,
-        new: convFromServer?.id,
-      },
-      req: {
-        cur: reqIdInUrl,
-        new: convFromServer.currentRequestId,
-      },
-    })
+    if (convLogLevel <= LogLevel.info)
+      console.log("setting conv since fetched: ", {
+        conv: {
+          cur: convIdInUrl,
+          new: convFromServer?.id,
+        },
+        req: {
+          cur: reqIdInUrl,
+          new: convFromServer.currentRequestId,
+        },
+      })
     setConv(convFromServer)
   }, [convFromServer])
 
