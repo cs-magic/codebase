@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { getNewId } from "../../packages/common-algo/id"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { parseApp } from "../../packages/common-llm/schema"
 import { llmDelayAtom } from "../../packages/common-llm/store"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
@@ -36,7 +37,7 @@ export function useConvQuery() {
   const [responseFinished] = useAtom(responseFinishedAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
 
-  const router = useRouter()
+  const router = useRouterWithLog()
 
   const session = useSession()
   const query = api.core.query.useMutation()
@@ -111,12 +112,6 @@ export function useConvQuery() {
 
           //   todo: is requestId update too late, causing no `init` event?
           router.push(`/tt/${conv!.id}?r=${requestId}`)
-
-          console.log(
-            ansiColors.blue(
-              `router push --> /tt/${conv!.id}?r=${requestIdNew}`,
-            ),
-          )
         },
         onError: (err) => {
           console.error(err)

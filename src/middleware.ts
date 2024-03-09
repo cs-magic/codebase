@@ -8,7 +8,11 @@ export default withAuth(
 
     const { pathname: path, search } = req.nextUrl
     const token = req.nextauth.token
-    console.log({ path, search, token })
+    console.log({
+      path,
+      search,
+      // token
+    })
 
     if (!token?.name && !path.startsWith("/auth")) return redirect("/auth")
     else if (token?.name && path.startsWith("/auth")) return redirect("/")

@@ -1,10 +1,9 @@
-import ansiColors from "ansi-colors"
-import { useRouter } from "next/navigation"
-import { api } from "../../packages/common-trpc/react"
 import { toast } from "sonner"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
+import { api } from "../../packages/common-trpc/react"
 
 export const useDelAllConvs = () => {
-  const router = useRouter()
+  const router = useRouterWithLog()
   const utils = api.useUtils()
 
   const delAllConvs = api.core.delAllConvs.useMutation({
@@ -15,7 +14,6 @@ export const useDelAllConvs = () => {
     onSuccess: (data) => {
       void utils.core.listConv.invalidate()
       console.log("deleted all: ", { data })
-      console.log(ansiColors.blue(`router push --> /tt`))
       router.push("/tt")
     },
   })

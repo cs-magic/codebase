@@ -1,59 +1,39 @@
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { convAtom } from "../store/conv"
+import { getConvUrl } from "../utils"
 
+/**
+ * ⭐️⭐️⭐️ 2024-03-09 14:34:29
+ *
+ * 1. visit /tt/cid?r=rid
+ * 1.1 cid --> conv -- !conv.rids.includes(rid) --> /tt/cid
+ *
+ * 2. visit /tt/cid
+ * 2.1 cid --> conv -- !!conv.rid --> /tt/cid?r=rid
+ *
+ * @param convIdInUrl
+ * @param reqIdInUrl
+ */
 export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [conv, setConv] = useAtom(convAtom)
-  const router = useRouter()
+  const [conv] = useAtom(convAtom)
 
-  /**
-   * todo: redundant ?
-   */
+  const router = useRouterWithLog()
+
   useEffect(() => {
-    if (conv?.requests.some((r) => r.id === reqIdInUrl)) {
-      console.log(ansiColors.red(`setting conv since reqIdFromUrl hit: `), {
-        id: convIdInUrl,
-        serverId: conv?.id,
-      })
-      setConv((conv) => ({ ...conv, currentRequestId: reqIdInUrl }))
+    // 确保已经刷新对齐了conv
+    if (conv && convIdInUrl && convIdInUrl === conv.id) {
+      if (
+        // 1. 有 rid，但是实际不存在
+        (!reqIdInUrl && !!conv.currentRequestId) ||
+        // 2. 没有rid，但是实际有老师请求
+        (reqIdInUrl && !conv.requests.some((r) => r.id === reqIdInUrl))
+      )
+        router.replace(getConvUrl(conv))
     }
-  }, [reqIdInUrl])
-
-  /**
-   * request id 逻辑
-   * 1. 访问 rid, rid命中，则设置
-   * 2. 否则，设置为数据库中最新的rid，或者为空
-   */
-  useEffect(() => {
-    // console.log(ansiColors.red("try to update reqId: "), {
-    //   reqIdFromUrl,
-    //   convFromServer,
-    // })
-    if (!conv) return
-
-    if (reqIdInUrl) {
-      if (conv.requests.some((r) => r.id === reqIdInUrl)) {
-        // setRequestId(reqIdFromUrl)
-      } else {
-        console.log(ansiColors.blue(`router --> /tt/${convIdInUrl}`))
-        router.replace(`/tt/${convIdInUrl}`)
-      }
-    } else {
-      if (convIdInUrl && conv.currentRequestId) {
-        console.log(
-          ansiColors.blue(
-            `router push --> /tt/${convIdInUrl}?r=${conv.currentRequestId}`,
-          ),
-        )
-        router.replace(`/tt/${convIdInUrl}?r=${conv.currentRequestId}`)
-      } else {
-        // setRequestId(null)
-      }
-    }
-  }, [reqIdInUrl, conv])
+  }, [convIdInUrl, reqIdInUrl, conv?.id])
 }

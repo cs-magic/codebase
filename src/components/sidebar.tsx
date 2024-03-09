@@ -2,12 +2,11 @@
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
 import { convsAtom } from "@/store/conv"
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
-import { useRouter } from "next/navigation"
 import { HTMLAttributes } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
@@ -20,7 +19,7 @@ export const Sidebar = ({
   const [convs] = useAtom(convsAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const router = useRouter()
+  const router = useRouterWithLog()
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
 
@@ -40,7 +39,6 @@ export const Sidebar = ({
         onClick={async () => {
           const data = await addConv()
           // 路由跳转，并且避免再拿数据
-          console.log(ansiColors.blue(`router push --> /tt/${data.id}`))
           router.push(`/tt/${data.id}`) // 异步
         }}
       >

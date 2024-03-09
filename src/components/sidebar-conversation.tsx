@@ -1,15 +1,13 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convIdAtom, convAtom } from "@/store/conv"
-import { produce } from "immer"
+import { convAtom, convIdAtom } from "@/store/conv"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import { useRef } from "react"
-import { toast } from "sonner"
+import { api } from "../../packages/common-trpc/react"
 
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { InputWithEnter } from "../../packages/common-ui/components/input"
 import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   DropdownMenu,
@@ -17,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/dropdown-menu"
-import { api } from "../../packages/common-trpc/react"
 import {
   Tooltip,
   TooltipContent,
@@ -25,7 +22,7 @@ import {
 } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IConvBase } from "../schema/conv"
-import { Label } from "packages/common-ui/shadcn/shadcn-components/label"
+import { getConvUrl } from "../utils"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   const [convId] = useAtom(convIdAtom)
@@ -48,7 +45,7 @@ export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
 
   return (
     <Link
-      href={`/tt/${conv.id}`}
+      href={getConvUrl(conv)}
       className={cn(
         "w-full justify-start group px-2 my-1 gap-1",
         buttonVariants({ variant: "ghost" }),

@@ -1,7 +1,7 @@
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
 import { convAtom, convsAtom } from "../store/conv"
 
 export const useConvClean = (reqId: string | undefined) => {
@@ -9,7 +9,7 @@ export const useConvClean = (reqId: string | undefined) => {
   const [convs] = useAtom(convsAtom)
   const convId = conv?.id
 
-  const router = useRouter()
+  const router = useRouterWithLog()
 
   // 首页
   useEffect(() => {
@@ -24,7 +24,6 @@ export const useConvClean = (reqId: string | undefined) => {
       console.log(ansiColors.red("clear conv since not existed now"))
       setConv(null)
       if (reqId) {
-        console.log(ansiColors.blue(`router push --> /tt`))
         router.push("/tt") // 如果不在列表页，还要退回去
       }
     }

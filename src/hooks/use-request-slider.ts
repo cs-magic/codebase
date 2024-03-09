@@ -1,9 +1,6 @@
-import ansiColors from "ansi-colors"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { api } from "../../packages/common-trpc/react"
-import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv"
 import { useAtom } from "jotai"
+import { useRouterWithLog } from "../../packages/common-hooks/use-router-with-log"
+import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv"
 
 export const useRequestSlider = () => {
   const [convId] = useAtom(convIdAtom)
@@ -12,7 +9,7 @@ export const useRequestSlider = () => {
   const currentIndex = requests.findIndex((r) => r.id === requestId)
 
   const total = requests.length
-  const router = useRouter()
+  const router = useRouterWithLog()
 
   return {
     value: currentIndex + 1,
@@ -21,11 +18,7 @@ export const useRequestSlider = () => {
     onChange: (n: number) => {
       const currentRequest = requests[n - 1]
       if (!currentRequest) return
-      console.log(
-        ansiColors.blue(
-          `router replace --> /tt/${convId}?r=${currentRequest.id}`,
-        ),
-      )
+
       router.replace(`/tt/${convId}?r=${currentRequest.id}`)
     },
   }

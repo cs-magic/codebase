@@ -1,12 +1,10 @@
 "use client"
 
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { UnexpectedError } from "../../../../packages/common-general/schema"
+import { useRouterWithLog } from "../../../../packages/common-hooks/use-router-with-log"
 import { smsStageAtom } from "../../../../packages/common-sms/store"
 /**
  * ui ref: https://clerk.com/
@@ -20,12 +18,11 @@ export default function AuthPage() {
   const [stage] = useAtom(smsStageAtom)
 
   const session = useSession()
-  const router = useRouter()
+  const router = useRouterWithLog()
   const ok = !!session.data?.user.name && !!session.data.user.image
 
   useEffect(() => {
     if (!ok) return
-    console.log(ansiColors.blue("router push --> /"))
     router.push("/")
   }, [ok])
 
