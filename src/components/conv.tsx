@@ -15,13 +15,13 @@ export default function Conv({
   convIdInUrl: string | undefined
   reqIdInUrl: string | null
 }) {
-  useLLMForConvTitle()
+  useConvFromServer(convIdInUrl)
 
-  useConvFromServer()
-
-  useConvSearchParams(reqIdInUrl)
+  useConvSearchParams(convIdInUrl, reqIdInUrl)
 
   useConvClean(convIdInUrl)
+
+  useLLMForConvTitle()
 
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>

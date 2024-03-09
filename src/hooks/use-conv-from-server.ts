@@ -5,18 +5,16 @@ import { useAtom } from "jotai"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
 import { convAtom } from "../store/conv"
 
-export const useConvFromServer = () => {
+export const useConvFromServer = (convIdInUrl: string | undefined) => {
   const [conv, setConv] = useAtom(convAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
-
-  const id = conv?.id
 
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
     {
-      id: id!,
+      id: convIdInUrl!,
     },
-    { enabled: !!id },
+    { enabled: !!convIdInUrl },
   )
 
   /**
@@ -31,7 +29,7 @@ export const useConvFromServer = () => {
     if (skip) return console.log(`setting conv since fetched (skip=${skip})`)
 
     console.log(ansiColors.red(`setting conv since fetched (skip=${skip}): `), {
-      id,
+      id: convIdInUrl,
       serverId: convFromServer?.id,
     })
     setConv(convFromServer)
