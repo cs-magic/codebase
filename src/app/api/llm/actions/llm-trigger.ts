@@ -1,12 +1,13 @@
-import { ConvTitleResponse, Response } from "@prisma/client"
 import { prisma } from "../../../../../packages/common-db"
 import {
   createCallLLMSchema,
   parseApp,
 } from "../../../../../packages/common-llm/schema"
+import { CONV_SUMMARY_PROMPT } from "../../../../../packages/common-llm/store"
 import { PusherServerId } from "../../../../../packages/common-puser/config"
 import { IConvDetail } from "../../../../schema/conv"
 import { ILLMMessage } from "../../../../schema/message"
+import { IBaseResponse } from "../../../../schema/query"
 import { LlmActionPayload } from "../../../../schema/sse"
 import { callLLMWithDB } from "./llm-caller-with-db"
 
@@ -16,8 +17,10 @@ export const triggerLLMThreads = async (
   pusherServerId: PusherServerId,
   context: ILLMMessage[],
   llmDelay: number,
+  bestAppId: string,
+  systemPromptForConvTitle?: string,
 ) => {
-  await Promise.all(
+  void Promise.all(
     conv.requests
       .find((r) => r.id === requestId)!
       .responses.map(async (r) => {
@@ -35,44 +38,51 @@ export const triggerLLMThreads = async (
           context,
           llmDelay,
         }
-        await callLLMWithDB<Response>(payload, async (response) => {
+        void callLLMWithDB<IBaseResponse>(payload, async (response) => {
           await prisma.response.update({
             where: { requestId_appId: { requestId, appId } },
             data: response,
           })
+
+          // 使用最好的那个app回复的上下文进行总结
+          if (
+            appId === bestAppId &&
+            !conv.titleResponse?.tStart &&
+            response.content
+          ) {
+            const payload: LlmActionPayload = {
+              action: "trigger",
+              request: {
+                pusherServerId,
+                convId: conv.id,
+                type: "conv-title",
+                status: "to-response",
+              },
+              app: createCallLLMSchema.parse({
+                modelName: "gpt-3.5-turbo",
+              }),
+              context: [
+                {
+                  role: "system",
+                  content: systemPromptForConvTitle ?? CONV_SUMMARY_PROMPT,
+                },
+                ...context,
+                {
+                  role: "assistant",
+                  content: response.content,
+                },
+              ],
+              llmDelay,
+            }
+            void callLLMWithDB<IBaseResponse>(payload, async (response) => {
+              console.log("-- updating conv title into db: ", { response })
+              await prisma.convTitleResponse.update({
+                where: { convId: conv.id },
+                data: response,
+              })
+            })
+          }
         })
       }),
   )
-
-  // 如果已经更新了就不要改了
-  if (conv.titleResponse?.content) {
-  } else {
-    const payload: LlmActionPayload = {
-      action: "trigger",
-      request: {
-        pusherServerId,
-        convId: conv.id,
-        type: "conv-title",
-        status: "to-response",
-      },
-      app: createCallLLMSchema.parse({
-        modelName: "gpt-3.5-turbo",
-      }),
-      context: [
-        {
-          role: "system",
-          content:
-            "以下是我与你的一段对话，请做一个简要的总结（要求：不超过10个字）",
-        },
-        ...context,
-      ],
-      llmDelay,
-    }
-    await callLLMWithDB<ConvTitleResponse>(payload, async (response) => {
-      await prisma.convTitleResponse.update({
-        where: { convId: conv.id },
-        data: response,
-      })
-    })
-  }
 }

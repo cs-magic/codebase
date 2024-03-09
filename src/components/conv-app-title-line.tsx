@@ -23,9 +23,7 @@ export const ConvAppTitleLine = ({ app }: { app: IAppDetail }) => {
           replaceApp(app.id, apps!.find((a) => a.id === value)!)
         }}
       >
-        <SelectTrigger
-          className={"focus-visible:ring-0 gap-2 w-40 overflow-hidden"}
-        >
+        <SelectTrigger className={"focus:ring-0 gap-2 w-40 overflow-hidden"}>
           <span className={"truncate"}>{app.title}</span>
         </SelectTrigger>
 

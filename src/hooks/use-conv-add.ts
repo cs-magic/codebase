@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation"
  */
 export function useAddConv() {
   const [persistedApps] = useAtom(appsPersistedAtom)
-  const [, setConv] = useAtom(convAtom)
   const router = useRouter()
 
   const addConv = api.core.addConv.useMutation()
@@ -33,7 +32,7 @@ export function useAddConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
-          router.push(`/tt/${data.id}`) // 异步
+          router.push(`/tt/${data.id}`)
           void utils.core.listConv.invalidate()
           // setConv(data)
         },

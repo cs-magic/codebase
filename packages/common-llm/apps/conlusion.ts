@@ -20,12 +20,3 @@ export const callPromptBase = async (
       : context,
   })
 }
-
-/**
- * ref: https://stackoverflow.com/a/71882569/9422455
- */
-export const callConclusion = partial(callPromptBase, {
-  systemPrompt:
-    "以下是我与你的一段对话，请做一个简要的总结（要求：不超过10个字）",
-  modelName: "gpt-3.5-turbo",
-})

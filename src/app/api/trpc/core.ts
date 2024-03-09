@@ -22,7 +22,6 @@ import { modelViewSchema } from "../../../schema/model"
 import { userDetailSchema } from "../../../schema/user.detail"
 
 import { triggerLLMThreads } from "../llm/actions/llm-trigger"
-import { Prisma } from ".prisma/client"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -66,7 +65,7 @@ export const coreRouter = createTRPCRouter({
   listConv: protectedProcedure.query(({ ctx }) =>
     prisma.conv.findMany({
       where: { fromUserId: ctx.user.id },
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       ...convSummarySchema,
     }),
   ),
@@ -148,8 +147,10 @@ export const coreRouter = createTRPCRouter({
         requestId: z.string().optional(),
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
+        bestAppId: z.string(),
         llmDelay: z.number().default(0),
         pusherServerId: pusherServerIdSchema,
+        systemPromptForConvTitle: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -159,6 +160,8 @@ export const coreRouter = createTRPCRouter({
         pusherServerId,
         llmDelay,
         requestId = getNewId(),
+        bestAppId,
+        systemPromptForConvTitle,
       } = input
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
@@ -203,7 +206,15 @@ export const coreRouter = createTRPCRouter({
         },
       })
 
-      void triggerLLMThreads(conv, requestId, pusherServerId, context, llmDelay)
+      void triggerLLMThreads(
+        conv,
+        requestId,
+        pusherServerId,
+        context,
+        llmDelay,
+        bestAppId,
+        systemPromptForConvTitle,
+      )
       return requestId
     }),
 })

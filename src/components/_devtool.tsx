@@ -11,7 +11,10 @@ import {
 } from "packages/common-ui/shadcn/components/ui/tabs"
 import { PropsWithChildren, ReactNode } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
-import { llmDelayAtom } from "../../packages/common-llm/store"
+import {
+  convSummaryPromptAtom,
+  llmDelayAtom,
+} from "../../packages/common-llm/store"
 import { LogLevel } from "../../packages/common-log/schema"
 import { PusherServerId } from "../../packages/common-puser/config"
 import {
@@ -26,6 +29,7 @@ import {
 import { api } from "../../packages/common-trpc/react"
 import { trpcReactLogEnabledAtom } from "../../packages/common-trpc/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import {
   Card,
@@ -161,9 +165,22 @@ export const ConfigLLMCard = () => {
   const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
   const [transportType, setTransportType] = useAtom(transportTypeAtom)
   const [pusherServerId, setPusherServerId] = useAtom(pusherServerIdAtom)
+  const [convSummaryPrompt, setConvSummaryPrompt] = useAtom(
+    convSummaryPromptAtom,
+  )
 
   return (
     <ConfigCard title={"LLM"}>
+      <Label>System Prompt For Conv Summary</Label>
+      <TextareaAuto
+        minRows={6}
+        className={"border p-2"}
+        value={convSummaryPrompt}
+        onChange={(event) => {
+          setConvSummaryPrompt(event.currentTarget.value)
+        }}
+      />
+
       <LabelLine title={"Delay(ms)"}>
         <Input
           value={llmDelay}

@@ -1,4 +1,8 @@
-import { appsPersistedAtom, uiSelectAppsDialogOpenAtom } from "@/store/app"
+import {
+  appIdPersistedAtom,
+  appsPersistedAtom,
+  uiSelectAppsDialogOpenAtom,
+} from "@/store/app"
 import {
   bestContextAtom,
   convAtom,
@@ -12,7 +16,10 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { getNewId } from "../../packages/common-algo/id"
 import { parseApp } from "../../packages/common-llm/schema"
-import { llmDelayAtom } from "../../packages/common-llm/store"
+import {
+  convSummaryPromptAtom,
+  llmDelayAtom,
+} from "../../packages/common-llm/store"
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
@@ -27,6 +34,7 @@ import { userPromptAtom } from "../store/query"
 export function useConvQuery() {
   let [conv] = useAtom(convAtom)
   const [persistedApps] = useAtom(appsPersistedAtom)
+  const [appId] = useAtom(appIdPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
   const [context] = useAtom(bestContextAtom)
@@ -35,6 +43,7 @@ export function useConvQuery() {
   const [responses] = useAtom(responsesAtom)
   const [responseFinished] = useAtom(responseFinishedAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
+  const [convSummaryPrompt] = useAtom(convSummaryPromptAtom)
 
   const router = useRouter()
   const session = useSession()
@@ -99,6 +108,8 @@ export function useConvQuery() {
         apps: persistedApps.map((a) => parseApp(a)),
         llmDelay,
         pusherServerId,
+        bestAppId: appId,
+        systemPromptForConvTitle: convSummaryPrompt,
       },
       {
         onSuccess: (requestId) => {
