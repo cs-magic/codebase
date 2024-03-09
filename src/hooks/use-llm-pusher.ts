@@ -9,9 +9,16 @@ import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 import { transportTypeAtom } from "../store/query"
 import { usePusher } from "./use-pusher"
 
+/**
+ *
+ * @param request
+ * @param update
+ * @param autoClose 是否取消频道监听
+ */
 export const useLlmPusher = (
   request: ILLMRequest,
   update: (func: (response: IBaseResponse) => void) => void,
+  autoClose: boolean,
 ) => {
   const [transportType] = useAtom(transportTypeAtom)
   const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
@@ -23,7 +30,7 @@ export const useLlmPusher = (
     if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
-    console.log({ pusherLogLevel })
+
     if (pusherLogLevel <= LogLevel.info)
       console.log(`[pusher] bound to channel: ${triggerId}, `, request)
 
@@ -68,7 +75,7 @@ export const useLlmPusher = (
     })
 
     return () => {
-      pusher.unsubscribe(triggerId)
+      if (autoClose) pusher.unsubscribe(triggerId)
     }
   }, [triggerId, pusher, transportType, pusherLogLevel])
 }

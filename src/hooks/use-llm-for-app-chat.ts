@@ -24,10 +24,14 @@ export const useLLMForAppChat = (
     appId,
   }
 
-  useLlmPusher(llmRequest, (response) => {
-    if (!requestId) return
-    updateAppResponse(requestId, appId, response)
-  })
+  useLlmPusher(
+    llmRequest,
+    (response) => {
+      if (!requestId) return
+      updateAppResponse(requestId, appId, response)
+    },
+    true,
+  )
 
   useLlmSse(llmRequest)
 }

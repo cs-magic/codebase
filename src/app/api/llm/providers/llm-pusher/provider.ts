@@ -77,7 +77,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
   //////////////////////////////
 
   private async push(event: ISseEvent) {
-    event.data = { time: Date.now(), ...event.data }
+    // event.data = { time: Date.now(), ...event.data }
     console.log(`[PUSHER] >> ${this.channel}: `, event)
     await this.pusher.trigger(this.channel, event.event, event.data)
   }

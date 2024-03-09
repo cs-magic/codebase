@@ -1,8 +1,7 @@
+import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
-import ansiColors from "ansi-colors"
-import { useAtom } from "jotai"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
 import { convAtom, convLogLevelAtom } from "../store/conv"
 

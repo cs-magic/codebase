@@ -1,6 +1,6 @@
 "use client"
 
-import { convLogLevelAtom } from "@/store/conv"
+import { convLogLevelAtom, requestsSlideTextDisplayAtom } from "@/store/conv"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import {
@@ -97,11 +97,21 @@ export const Devtool = () => {
 
 export const ConfigDevCard = () => {
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
+  const [requestsSlideTextDisplay, setRequestsSlideTextDisplay] = useAtom(
+    requestsSlideTextDisplayAtom,
+  )
 
   return (
     <ConfigCard title={"Dev"}>
       <LabelLine title={"Dev Enabled"}>
         <Switch checked={devEnabled} onCheckedChange={setDevEnabled} />
+      </LabelLine>
+
+      <LabelLine title={"Requests Slide Text On"}>
+        <Switch
+          checked={requestsSlideTextDisplay}
+          onCheckedChange={setRequestsSlideTextDisplay}
+        />
       </LabelLine>
     </ConfigCard>
   )

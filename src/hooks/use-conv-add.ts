@@ -35,7 +35,7 @@ export function useAddConv() {
         onSuccess: (data) => {
           router.push(`/tt/${data.id}`) // 异步
           void utils.core.listConv.invalidate()
-          setConv(data)
+          // setConv(data)
         },
       },
     )

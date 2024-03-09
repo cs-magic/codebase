@@ -8,33 +8,26 @@ export const useConvRequestSlider = () => {
   const [convId] = useAtom(convIdAtom)
   const [requests] = useAtom(requestsAtom)
   const [requestId] = useAtom(requestIdAtom)
+
   const value = requests.findIndex((r) => r.id === requestId) + 1
-  const [tempValue, setTempValue] = useState(-1)
+  const [tempValue, setTempValue] = useState(value)
 
   const router = useRouter()
 
   useEffect(() => {
-    setTempValue(value)
-  }, [value])
+    if (value === tempValue) return
 
-  useEffect(() => {
     const newReqId = requests[tempValue - 1]?.id
-    // console.log({ value, tempValue, newReqId })
-    if (
-      convId &&
-      newReqId
-      // 这个暂时不能加，因为requestId还没同步
-      // && newReqId !== requestId
-    ) {
-      const newUrl = getConvUrl({ id: convId, currentRequestId: newReqId })
-      router.replace(newUrl)
-    }
+
+    if (!convId || !newReqId || newReqId === requestId) return
+
+    router.replace(getConvUrl({ id: convId, currentRequestId: newReqId }))
   }, [tempValue])
 
   return {
     min: 1,
     max: requests.length,
-    value: tempValue,
+    value,
     onChange: setTempValue,
   }
 }

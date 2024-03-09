@@ -18,7 +18,7 @@ export const useLLMForConvTitle = () => {
     convId: conv?.id,
   }
 
-  useLlmPusher(llmRequest, updateConvTitle)
+  useLlmPusher(llmRequest, updateConvTitle, false)
 
   useLlmSse(llmRequest)
 }

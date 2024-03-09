@@ -29,6 +29,11 @@ export const convLogLevelAtom = atomWithStorage<LogLevel>(
   LogLevel.info,
 )
 
+export const requestsSlideTextDisplayAtom = atomWithStorage(
+  "requests.slide.text.display",
+  true,
+)
+
 //////////////////////////////
 // derived
 //////////////////////////////

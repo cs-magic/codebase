@@ -1,10 +1,13 @@
 "use client"
 
-import { requestsAtom, convAtom } from "@/store/conv"
+import {
+  convAtom,
+  requestsAtom,
+  requestsSlideTextDisplayAtom,
+} from "@/store/conv"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { useAtom } from "jotai"
 import * as React from "react"
-import { devEnabledAtom } from "../../packages/common-dev/store"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 
 import { cn } from "../../packages/common-ui/shadcn/utils"
@@ -17,15 +20,15 @@ const ConvRequestsSlider = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const [conv] = useAtom(convAtom)
   const [requests] = useAtom(requestsAtom)
+  const [requestsSlideTextDisplay] = useAtom(requestsSlideTextDisplayAtom)
 
   const { min, max, onChange, value } = useConvRequestSlider()
-  const [devEnabled] = useAtom(devEnabledAtom)
   const softKeyboardOn = useSoftKeyboardOn()
   const { isMobile } = useEnvironments()
 
   return (
     <div className={"flex w-full flex-col gap-2"}>
-      {devEnabled && (
+      {requestsSlideTextDisplay && (
         <div className={"flex items-center gap-2"}>
           <span className={"mr-2"}>
             [{conv?.id} - {conv?.currentRequestId}]

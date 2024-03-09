@@ -1,6 +1,6 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convAtom, convIdAtom } from "@/store/conv"
+import { convIdAtom } from "@/store/conv"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
@@ -26,19 +26,9 @@ import { getConvUrl } from "../utils"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   const [convId] = useAtom(convIdAtom)
-  const [convDetail, setConv] = useAtom(convAtom)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()
-
-  /**
-   * 当前会话用detail，否则用base
-   *
-   * 虽然在我们支持了convList获取content之后，不需要下面的分支了
-   * 但  按道理是没问题的，不知道为啥闪烁，可能应该还是更新的时候出错了
-   */
-  const theConv = convDetail?.id === conv.id ? convDetail : conv
-  const utils = api.useUtils()
 
   const ref = useRef<HTMLDivElement>(null)
   const open =
@@ -58,11 +48,14 @@ export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
       <Tooltip open={open}>
         <TooltipTrigger asChild>
           <div className={"grow truncate py-2"} ref={ref}>
-            {theConv.titleResponse?.content ?? "Untitled"}
+            {
+              // 直接使用 convList 里的标题
+              conv.titleResponse?.content ?? "新的对话"
+            }
           </div>
         </TooltipTrigger>
 
-        <TooltipContent>{theConv.titleResponse?.content}</TooltipContent>
+        <TooltipContent>{conv.titleResponse?.content}</TooltipContent>
       </Tooltip>
 
       {/*<InputWithEnter*/}
