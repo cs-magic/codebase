@@ -1,11 +1,7 @@
-import {
-  IClient,
-  ISseEvent,
-  ISseTrigger,
-} from "../../../../../../packages/common-sse/schema"
-import { ResponseFinalStatus } from "../../../../../schema/sse"
+import { ISseEvent, ISseTrigger } from "../../../common-sse/schema"
+import { ResponseFinalStatus } from "@/schema/sse"
 
-export interface ILlmManagerTraditional {
+export interface ILlmManagerPusher {
   //////////////////////////////
   // server (POST)
   //////////////////////////////
@@ -22,15 +18,7 @@ export interface ILlmManagerTraditional {
   //////////////////////////////
 
   // 1. a user visited
-  onClientConnected: (client: IClient) => Promise<void>
+  onClientConnected: (clientId: string) => void
   // 2. a user leaved
-  onClientDisconnected: (clientId: string) => Promise<void>
-
-  //////////////////////////////
-  // general
-  //////////////////////////////
-
-  trigger?: ISseTrigger | null
-  // todo: redis type hint
-  // getTrigger?: Promise<ISseTrigger | null>
+  onClientDisconnected: (clientId: string) => void
 }

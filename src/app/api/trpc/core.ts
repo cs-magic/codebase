@@ -21,7 +21,7 @@ import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
 import { userDetailSchema } from "../../../schema/user.detail"
 
-import { triggerLLMThreads } from "../llm/actions/llm-trigger"
+import { triggerLLMThreads } from "../../../../packages/common-llm/actions/llm-trigger"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>

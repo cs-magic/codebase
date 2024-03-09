@@ -1,5 +1,5 @@
-import { IBaseResponse } from "../../../../schema/query"
-import { LlmActionPayload } from "../../../../schema/sse"
+import { IBaseResponse } from "@/schema/query"
+import { LlmActionPayload } from "@/schema/sse"
 import { callLLM } from "./llm-caller"
 
 export const callLLMWithDB = async <T extends IBaseResponse>(
@@ -10,7 +10,7 @@ export const callLLMWithDB = async <T extends IBaseResponse>(
     tStart: new Date(),
     content: "",
   } as T
-  void callLLM(payload, {
+  await callLLM(payload, {
     onData: (data) => {
       response.content += data
     },

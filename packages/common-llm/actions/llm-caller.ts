@@ -1,14 +1,8 @@
 "use server"
 
-import { sleep } from "../../../../../packages/common-algo/utils"
-import {
-  callChatGPT,
-  callLlmApiMock,
-} from "../../../../../packages/common-llm/models/openai"
-import {
-  getTriggerIdFromSseRequest,
-  LlmActionPayload,
-} from "../../../../schema/sse"
+import { sleep } from "../../common-algo/utils"
+import { callChatGPT, callLlmApiMock } from "../models/openai"
+import { getTriggerIdFromSseRequest, LlmActionPayload } from "@/schema/sse"
 import { PusherLlmManager } from "../providers/llm-pusher"
 
 export const callLLM = async (

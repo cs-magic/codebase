@@ -1,17 +1,17 @@
 import Pusher from "pusher"
-import { redis } from "../../../../../../packages/common-db"
+import { redis } from "../../../common-db"
 import {
   pusherServerConfigs,
   PusherServerId,
-} from "../../../../../../packages/common-puser/config"
-import { initPusherServer } from "../../../../../../packages/common-puser/server/init"
-import { ISseEvent } from "../../../../../../packages/common-sse/schema"
+} from "../../../common-puser/config"
+import { initPusherServer } from "../../../common-puser/server/init"
+import { ISseEvent } from "../../../common-sse/schema"
 import {
   getTriggerIdFromSseRequest,
   ILLMRequest,
   ResponseFinalStatus,
   ResponseStatus,
-} from "../../../../../schema/sse"
+} from "@/schema/sse"
 
 import { ILlmManagerPusher } from "./schema"
 

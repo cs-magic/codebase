@@ -1,6 +1,6 @@
 import { type WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill"
 
-import { type ISseEvent } from "../../../../../../packages/common-sse/schema"
+import { type ISseEvent } from "../../../common-sse/schema"
 
 export const llmEncoder = new TextEncoder()
 

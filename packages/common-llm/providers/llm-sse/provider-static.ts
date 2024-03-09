@@ -1,10 +1,6 @@
 import { remove } from "lodash"
-import {
-  IClient,
-  ISseEvent,
-  ISseTrigger,
-} from "../../../../../../packages/common-sse/schema"
-import { ResponseFinalStatus } from "../../../../../schema/sse"
+import { IClient, ISseEvent, ISseTrigger } from "../../../common-sse/schema"
+import { ResponseFinalStatus } from "@/schema/sse"
 import { ILlmManagerTraditional } from "./schema"
 
 export class StaticLlmManager implements ILlmManagerTraditional {

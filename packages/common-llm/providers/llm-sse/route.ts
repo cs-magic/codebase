@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { ISseEvent } from "../../../../../../packages/common-sse/schema"
+import { ISseEvent } from "../../../common-sse/schema"
 import { StaticLlmManager } from "./provider-static"
 import { llmEncoder } from "./utils"
 

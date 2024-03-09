@@ -1,14 +1,11 @@
-import { prisma } from "../../../../../packages/common-db"
-import {
-  createCallLLMSchema,
-  parseApp,
-} from "../../../../../packages/common-llm/schema"
-import { CONV_SUMMARY_PROMPT } from "../../../../../packages/common-llm/store"
-import { PusherServerId } from "../../../../../packages/common-puser/config"
-import { IConvDetail } from "../../../../schema/conv"
-import { ILLMMessage } from "../../../../schema/message"
-import { IBaseResponse } from "../../../../schema/query"
-import { LlmActionPayload } from "../../../../schema/sse"
+import { prisma } from "../../common-db"
+import { createCallLLMSchema, parseApp } from "../schema"
+import { CONV_SUMMARY_PROMPT } from "../store"
+import { PusherServerId } from "../../common-puser/config"
+import { IConvDetail } from "@/schema/conv"
+import { ILLMMessage } from "@/schema/message"
+import { IBaseResponse } from "@/schema/query"
+import { LlmActionPayload } from "@/schema/sse"
 import { callLLMWithDB } from "./llm-caller-with-db"
 
 export const triggerLLMThreads = async (
@@ -20,7 +17,7 @@ export const triggerLLMThreads = async (
   bestAppId: string,
   systemPromptForConvTitle?: string,
 ) => {
-  void Promise.all(
+  await Promise.all(
     conv.requests
       .find((r) => r.id === requestId)!
       .responses.map(async (r) => {

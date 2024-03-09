@@ -19,7 +19,7 @@ import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 
-import { callLLM } from "../app/api/llm/actions/llm-caller"
+import { callLLM } from "../../packages/common-llm/actions/llm-caller"
 import { IAppDetail } from "../schema/app.detail"
 import {
   checkRespondingStatus,

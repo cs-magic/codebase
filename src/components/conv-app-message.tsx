@@ -36,7 +36,7 @@ export const ConvAppMessage = ({
 
       <MarkdownComp
         className={cn(
-          "p-2 rounded-lg overflow-hidden",
+          "grow p-2 rounded-lg overflow-hidden",
           m.isError && "text-destructive-foreground bg-destructive/75",
         )}
       >

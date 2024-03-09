@@ -41,7 +41,12 @@ export const TextareaAuto = forwardRef<
       onKeyDown={(event) => {
         if (onKeyDown) return onKeyDown(event)
         if (onQuery) {
-          if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+          if (
+            event.key === "Enter" &&
+            !event.nativeEvent.isComposing &&
+            !event.shiftKey &&
+            !event.altKey
+          ) {
             event.preventDefault()
             const value = event.currentTarget.value
             if (!value) return
