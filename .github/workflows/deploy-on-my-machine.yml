@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  DOMAIN: 'https://sokka.cs-magic.cn'
+  DOMAIN: 'https://eval.cs-magic.cn'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
