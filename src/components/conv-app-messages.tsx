@@ -27,7 +27,7 @@ export const ConvAppMessages = ({
   }, [softKeyboardOn])
 
   return (
-    <div className={"grow overflow-auto"}>
+    <div className={"flex flex-col"}>
       {context.map((m, index) => (
         <ConvAppMessage m={m} logo={logo} key={index} />
       ))}

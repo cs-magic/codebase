@@ -1,22 +1,18 @@
 "use client"
 
-import {
-  appsGridColsAtom,
-  appsPersistedAtom,
-  stopGeneratingAtom,
-} from "@/store/app"
 import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
+import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { commonContextAtom } from "../store/conv"
+import { getAppsGridColsAtom, stopGeneratingAtom } from "../store/app.atom"
+import { convStore } from "../store/conv.valtio"
 import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
-  const [persistedApps] = useAtom(appsPersistedAtom)
-  const [gridCols] = useAtom(appsGridColsAtom)
+  const [gridCols] = useAtom(getAppsGridColsAtom)
 
-  const [commonContext] = useAtom(commonContextAtom)
-  // console.log(ansiColors.bgRed.white("commonContext: "), commonContext)
+  const { apps } = useSnapshot(convStore)
+  // const apps = useConvStore.use.apps()
 
   return (
     <div
@@ -27,17 +23,15 @@ export const ConvApps = () => {
       )}
       style={{
         // ref: https://tailwindcss.com/docs/grid-template-columns
-        gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(${gridCols(apps.length)}, minmax(0, 1fr))`,
       }}
     >
-      {persistedApps.map(
-        // 同一个app-id是否可以多个呢？请求应该要额外小心处理！
-        (app, index) => (
-          <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>
-            <ConvApp app={app} commonContext={commonContext} />
-          </ScopeProvider>
-        ),
-      )}
+      {apps.map((app, index) => (
+        // 不要用app.id会重复！
+        <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>
+          <ConvApp app={app} />
+        </ScopeProvider>
+      ))}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { convAtom, convLogLevelAtom } from "../store/conv"
+import { convAtom, convLogLevelAtom } from "../store/conv.atom"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,

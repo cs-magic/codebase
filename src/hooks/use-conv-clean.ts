@@ -2,7 +2,7 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { convAtom, convsAtom } from "../store/conv"
+import { convAtom, convsAtom } from "../store/conv.atom"
 
 export const useConvClean = (reqId: string | undefined) => {
   const [conv, setConv] = useAtom(convAtom)

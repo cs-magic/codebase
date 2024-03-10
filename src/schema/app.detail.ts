@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client"
 import { modelViewSchema } from "./model"
+import { IAppResponse } from "./query"
 import { userListViewSchema } from "./user.base"
 
 export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
@@ -9,3 +10,9 @@ export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   },
 })
 export type IAppDetail = Prisma.AppGetPayload<typeof appDetailSchema>
+
+export type IAppClient = IAppDetail & {
+  response?: IAppResponse
+  isDraft: boolean
+  clientId: string
+}

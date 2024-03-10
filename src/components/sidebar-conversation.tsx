@@ -1,6 +1,6 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convIdAtom } from "@/store/conv"
+import { convIdAtom } from "../store/conv.atom"
 import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"

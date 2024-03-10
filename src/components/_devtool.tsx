@@ -1,6 +1,9 @@
 "use client"
 
-import { convLogLevelAtom, requestsSlideTextDisplayAtom } from "@/store/conv"
+import {
+  convLogLevelAtom,
+  requestsSlideTextDisplayAtom,
+} from "../store/conv.atom"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import {

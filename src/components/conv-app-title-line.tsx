@@ -1,4 +1,5 @@
-import { useAtom } from "jotai"
+import { useSnapshot } from "valtio"
+import { api } from "../../packages/common-trpc/react"
 import {
   Select,
   SelectContent,
@@ -8,19 +9,19 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
-import { api } from "../../packages/common-trpc/react"
-import { IAppDetail } from "../schema/app.detail"
-import { replaceAppAtom } from "../store/app"
+import { IAppClient } from "../schema/app.detail"
+import { convStore } from "../store/conv.valtio"
 
-export const ConvAppTitleLine = ({ app }: { app: IAppDetail }) => {
+export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
   const { data: apps } = api.core.listApps.useQuery()
-  const [, replaceApp] = useAtom(replaceAppAtom)
+
+  // const replaceApp = useConvStore.use.replaceApp()
 
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
         onValueChange={(value) => {
-          replaceApp(app.id, apps!.find((a) => a.id === value)!)
+          convStore.replaceApp(app.clientId, apps!.find((a) => a.id === value)!)
         }}
       >
         <SelectTrigger className={"focus:ring-0 gap-2 w-40 overflow-hidden"}>

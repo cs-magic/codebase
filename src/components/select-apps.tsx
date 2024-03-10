@@ -16,7 +16,7 @@ import {
   appsPersistedAtom,
   uiMaxAppsAtom,
   uiSelectAppsDialogOpenAtom,
-} from "@/store/app"
+} from "../store/app.atom"
 
 export const AppsDialog = () => {
   const [allApps] = useAtom(serverAppsAtom)

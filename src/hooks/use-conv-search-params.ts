@@ -3,7 +3,7 @@ import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { api } from "../../packages/common-trpc/react"
-import { convAtom, convsAtom, requestIdAtom } from "../store/conv"
+import { convAtom, convsAtom, requestIdAtom } from "../store/conv.atom"
 import { getConvUrl } from "../utils"
 
 /**

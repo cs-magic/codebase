@@ -5,7 +5,7 @@ import {
   requestIdAtom,
   requestsAtom,
   requestsSlideTextDisplayAtom,
-} from "@/store/conv"
+} from "../store/conv.atom"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { useAtom } from "jotai"
 import * as React from "react"

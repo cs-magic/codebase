@@ -1,7 +1,7 @@
 "use client"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
-import { convsAtom } from "@/store/conv"
+import { convsAtom } from "../store/conv.atom"
 import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { HTMLAttributes } from "react"

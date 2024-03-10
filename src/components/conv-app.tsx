@@ -1,43 +1,31 @@
 "use client"
 
-import { useAtom } from "jotai"
+import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
-import { IAppDetail } from "../schema/app.detail"
-import { IContext, RoleType } from "../schema/message"
-import { appIdPersistedAtom, appsPersistedAtom } from "../store/app"
-import { responsesAtom } from "../store/conv"
+import { IAppClient } from "../schema/app.detail"
+import { RoleType } from "../schema/message"
+import { convStore } from "../store/conv.valtio"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
-export const ConvApp = ({
-  app,
-  commonContext,
-}: {
-  app: IAppDetail
-  commonContext: IContext
-}) => {
-  const [persistedApps] = useAtom(appsPersistedAtom)
-  const [selectedAppId] = useAtom(appIdPersistedAtom)
-  const [responses] = useAtom(responsesAtom)
+export const ConvApp = ({ app }: { app: IAppClient }) => {
+  // const commonContext = useConvStore.use.commonContext()
+  const { commonContext } = useSnapshot(convStore)
 
-  const targetAppId = persistedApps.some((a) => a.id === app.id)
-    ? app.id
-    : selectedAppId
-  const response = responses.find((r) => r.appId === targetAppId)
-  const context = !response
+  const context = !app.response
     ? commonContext
     : [
         ...commonContext,
         {
-          content: response.error ?? response.content ?? "",
+          content: app.response.error ?? app.response.content ?? "",
           role: "assistant" as RoleType,
-          updatedAt: response.updatedAt,
-          isError: !!response.error,
+          updatedAt: app.response.updatedAt,
+          isError: !!app.response.error,
         },
       ]
 
-  useLLMForAppChat(app.id, response)
+  useLLMForAppChat(app.response?.requestId ?? null, app.id, app.response)
 
   // console.log({ appId: config.id, commonContext, response })
 
@@ -49,11 +37,17 @@ export const ConvApp = ({
     >
       <ConvAppTopBar app={app} />
 
-      <ConvAppMessages
-        appId={app.id}
-        logo={app?.model.logo}
-        context={context}
-      />
+      <div className={"grow overflow-auto"}>
+        {app.isDraft ? (
+          "draft"
+        ) : (
+          <ConvAppMessages
+            appId={app.id}
+            logo={app?.model.logo}
+            context={context}
+          />
+        )}
+      </div>
     </div>
   )
 }

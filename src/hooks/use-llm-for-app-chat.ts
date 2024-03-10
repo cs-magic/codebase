@@ -1,20 +1,16 @@
 import { useAtom } from "jotai"
 import { IBaseResponse } from "../schema/query"
 import { ILLMRequest } from "../schema/sse"
-import {
-  checkRespondingStatus,
-  requestIdAtom,
-  updateAppResponseAtom,
-} from "../store/conv"
+import { updateAppResponseAtom } from "../store/conv.atom"
+import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 
 export const useLLMForAppChat = (
+  requestId: string | null,
   appId: string,
   response: IBaseResponse | undefined,
 ) => {
-  const [requestId] = useAtom(requestIdAtom)
-
   const [, updateAppResponse] = useAtom(updateAppResponseAtom)
 
   const llmRequest: ILLMRequest = {
@@ -31,6 +27,9 @@ export const useLLMForAppChat = (
       updateAppResponse(requestId, appId, response)
     },
     true,
+    () => {
+      // setIsDraft(false)
+    },
   )
 
   useLlmSse(llmRequest)

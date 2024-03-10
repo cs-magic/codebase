@@ -18,7 +18,7 @@ export const llmMessageSchema = z.object({
 export type ILLMMessage = z.infer<typeof llmMessageSchema>
 
 export type IMessageInChat = ILLMMessage & {
-  updatedAt: Date
+  updatedAt?: Date
   isError?: boolean
 }
 export type IContext = IMessageInChat[]

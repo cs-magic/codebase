@@ -19,6 +19,7 @@ export const useLlmPusher = (
   request: ILLMRequest,
   update: (func: (response: IBaseResponse) => void) => void,
   autoClose: boolean,
+  onInit?: () => void,
 ) => {
   const [transportType] = useAtom(transportTypeAtom)
   const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
@@ -63,6 +64,7 @@ export const useLlmPusher = (
     })
 
     bindEvent("init", (event) => {
+      if (onInit) onInit()
       update((response) => {
         response.tStart = new Date()
       })

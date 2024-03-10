@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv"
+import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv.atom"
 import { getConvUrl } from "../utils"
 
 export const useConvRequestSlider = () => {

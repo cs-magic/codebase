@@ -1,10 +1,7 @@
 import { useAtom } from "jotai"
 import { ILLMRequest } from "../schema/sse"
-import {
-  checkRespondingStatus,
-  convAtom,
-  updateConvTitleAtom,
-} from "../store/conv"
+import { convAtom, updateConvTitleAtom } from "../store/conv.atom"
+import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 

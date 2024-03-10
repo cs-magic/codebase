@@ -3,4 +3,10 @@ export type IBaseResponse = {
   tEnd?: Date | null
   content?: string | null
   error?: string | null
+  updatedAt?: Date
+}
+
+export type IAppResponse = IBaseResponse & {
+  requestId: string
+  appId: string
 }

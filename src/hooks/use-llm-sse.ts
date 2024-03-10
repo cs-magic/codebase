@@ -2,8 +2,8 @@ import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/fetch-sse"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
-import { stopGeneratingAtom } from "../store/app"
-import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv"
+import { stopGeneratingAtom } from "../store/app.atom"
+import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv.atom"
 import { transportTypeAtom } from "../store/query"
 
 export const useLlmSse = (request: ILLMRequest) => {

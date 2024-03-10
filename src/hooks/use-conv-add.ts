@@ -1,10 +1,10 @@
-import { appsPersistedAtom } from "@/store/app"
+import { appsPersistedAtom } from "../store/app.atom"
 import { useAtom } from "jotai"
 import { toast } from "sonner"
 import { api } from "../../packages/common-trpc/react"
 import { parseApp } from "../../packages/common-llm/schema"
 import { createAppSchema } from "../schema/app.create"
-import { convAtom } from "../store/conv"
+import { convAtom } from "../store/conv.atom"
 import { useRouter } from "next/navigation"
 
 /**

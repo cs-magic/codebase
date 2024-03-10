@@ -1,20 +1,9 @@
-import {
-  appIdPersistedAtom,
-  appsPersistedAtom,
-  uiSelectAppsDialogOpenAtom,
-} from "@/store/app"
-import {
-  bestContextAtom,
-  convAtom,
-  responseFinishedAtom,
-  responsesAtom,
-} from "@/store/conv"
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { getNewId } from "../../packages/common-algo/id"
+import { useSnapshot } from "valtio"
 import { parseApp } from "../../packages/common-llm/schema"
 import {
   convSummaryPromptAtom,
@@ -23,7 +12,9 @@ import {
 import { pusherServerIdAtom } from "../../packages/common-puser/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
+import { uiSelectAppsDialogOpenAtom } from "../store/app.atom"
 import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
+import { convStore } from "../store/conv.valtio"
 import { userPromptAtom } from "../store/query"
 
 /**
@@ -32,18 +23,31 @@ import { userPromptAtom } from "../store/query"
  * @param query
  */
 export function useConvQuery() {
-  let [conv] = useAtom(convAtom)
-  const [persistedApps] = useAtom(appsPersistedAtom)
-  const [appId] = useAtom(appIdPersistedAtom)
   const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
   const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
-  const [context] = useAtom(bestContextAtom)
   const [llmDelay] = useAtom(llmDelayAtom)
   const [prompt, setPrompt] = useAtom(userPromptAtom)
-  const [responses] = useAtom(responsesAtom)
-  const [responseFinished] = useAtom(responseFinishedAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
   const [convSummaryPrompt] = useAtom(convSummaryPromptAtom)
+
+  // let [conv] = useAtom(convAtom)
+  // const [apps] = useAtom(appsPersistedAtom)
+  // const [appId] = useAtom(appIdPersistedAtom)
+  // const [context] = useAtom(bestContextAtom)
+  // const [responses] = useAtom(responsesAtom)
+  // const [responseFinished] = useAtom(responseFinishedAtom)
+
+  // let conv = useConvStore.use.conv()
+  // const apps = useConvStore.use.apps()
+  // const appIndex = useConvStore.use.appIndex()
+  // const appId = useConvStore.use.appId()
+  // const bestContext = useConvStore.use.bestContext()
+  // const responses = useConvStore.use.responses()
+  // const responding = useConvStore.use.responding()
+
+  const { apps, appIndex, appId, bestContext, responses, responding } =
+    useSnapshot(convStore)
+  let { conv } = useSnapshot(convStore)
 
   const router = useRouter()
   const session = useSession()
@@ -53,19 +57,26 @@ export function useConvQuery() {
 
   return async () => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
+      conv,
       query,
       responses,
-      responseFinished,
+      context: bestContext,
+      apps,
+      appIndex,
+      appId,
+      responding,
     })
 
-    if (!responseFinished) {
+    if (responding) {
       console.log({ responses })
       return toast.warning("等待流完成")
     }
 
-    if (!query) return toast.warning("不能为空")
+    if (!query) return toast.warning("query 不能为空")
 
-    if (!persistedApps.length) {
+    if (!appId) return toast.warning("app 不能为空")
+
+    if (!apps.length) {
       setSelectAppsOpen(true)
       return toast.warning("至少需要选中一种模型")
     }
@@ -80,7 +91,7 @@ export function useConvQuery() {
       conv = await addConv.mutateAsync(
         {
           title: undefined,
-          apps: persistedApps.map((a) => parseApp(a)),
+          apps: apps.map(parseApp),
         },
         {
           onError: () => {
@@ -97,7 +108,7 @@ export function useConvQuery() {
     setPrompt("") // reset
 
     const newContext = [
-      ...context,
+      ...bestContext,
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
@@ -105,7 +116,7 @@ export function useConvQuery() {
       {
         convId: conv.id,
         context: newContext,
-        apps: persistedApps.map((a) => parseApp(a)),
+        apps: apps.map(parseApp),
         llmDelay,
         pusherServerId,
         bestAppId: appId,

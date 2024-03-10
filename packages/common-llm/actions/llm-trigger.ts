@@ -21,7 +21,7 @@ export const triggerLLMThreads = async (
     conv.requests
       .find((r) => r.id === requestId)!
       .responses.map(async (r) => {
-        const appId = r.appId
+        const appId = r.appClientId
         const payload: LlmActionPayload = {
           action: "trigger",
           request: {

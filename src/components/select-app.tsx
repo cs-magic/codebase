@@ -1,17 +1,13 @@
-import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
-import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
-import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useAtom } from "jotai"
-
-import {
-  forkAppAtom,
-  delAppAtom,
-  appsPersistedAtom,
-  uiMaxAppsAtom,
-  pushAppAtom,
-} from "@/store/app"
+import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
+import { useSnapshot } from "valtio"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
+
+import { uiMaxAppsAtom } from "../store/app.atom"
+import { convStore } from "../store/conv.valtio"
 
 export const SelectApp = ({
   app,
@@ -20,12 +16,21 @@ export const SelectApp = ({
   app: IAppDetail
   type: "toAdd" | "toDel"
 }) => {
-  const [persistedApps] = useAtom(appsPersistedAtom)
-  const [, pushApp] = useAtom(pushAppAtom)
-  const [, delApp] = useAtom(delAppAtom)
   const [maxToAdd] = useAtom(uiMaxAppsAtom)
 
-  const disabled = type === "toAdd" && persistedApps.length >= maxToAdd
+  // const [apps] = useAtom(appsPersistedAtom)
+  // const [, pushApp] = useAtom(pushAppAtom)
+  // const [, delApp] = useAtom(delAppAtom)
+
+  // const apps = useConvStore.use.apps()
+  // const pushApp = useConvStore.use.pushApp()
+  // const delApp = useConvStore.use.delApp()
+
+  const { apps } = useSnapshot(convStore)
+
+  const disabled =
+    (type === "toAdd" && apps.length >= maxToAdd) ||
+    (type === "toDel" && apps.length <= 1)
   const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
 
   return (
@@ -34,16 +39,17 @@ export const SelectApp = ({
       className={cn(
         "w-full flex items-center p-2 rounded-lg group",
         buttonVariants({ variant: "ghost" }),
-        disabled && "pointer-events-none opacity-50",
       )}
     >
       <IconContainer
         className={
           "w-6 h-6 invisible group-hover:visible hover:text-primary-foreground"
         }
+        disabled={disabled}
         onClick={(event) => {
-          if (type === "toDel") void delApp(app.id)
-          else void pushApp(app)
+          if (disabled) return
+          if (type === "toDel") void convStore.delApp(app.id)
+          else void convStore.pushApp(app)
         }}
       >
         <Icon />

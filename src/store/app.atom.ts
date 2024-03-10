@@ -4,7 +4,8 @@ import { atomWithStorage } from "jotai/utils"
 import { getNewId } from "../../packages/common-algo/id"
 import { BEST_VIEWPOINT } from "../../packages/common-ui/config"
 import { uiScreenAtom } from "../../packages/common-ui/store"
-import { IAppDetail } from "../schema/app.detail" //////////////////////////////
+import { IAppDetail } from "../schema/app.detail"
+import { convStore } from "./conv.valtio" //////////////////////////////
 
 //////////////////////////////
 // base
@@ -44,7 +45,8 @@ export const replaceAppAtom = atom(
     set(appsPersistedAtom, (prevApps) =>
       produce(prevApps, (prevApps) => {
         const index = prevApps.findIndex((a) => a.id === fromAppId)
-        prevApps[index] = { ...toApp, id: getNewId() }
+        prevApps[index] = toApp
+        // set(isDraftAtom, true)
       }),
     )
   },
@@ -80,9 +82,9 @@ export const uiMaxAppsAtom = atom((get) =>
   ),
 )
 
-export const appsGridColsAtom = atom((get) => {
+export const getAppsGridColsAtom = atom((get) => (nApps: number) => {
   const { width } = get(uiScreenAtom)
-  const nApps = get(appsPersistedAtom).length
+  // const nApps = get(appsPersistedAtom).length
   return width // 未初始化时避免闪烁
     ? Math.min(Math.floor(width / BEST_VIEWPOINT), nApps)
     : nApps
