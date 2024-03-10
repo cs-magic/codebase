@@ -3,18 +3,17 @@ import {
   IConvDetail,
   IRequest,
   IResponse,
-  IUpdateAppResponse,
-  IUpdateConvTitleResponse,
+  IUpdateResponse,
 } from "@/schema/conv"
+import { produce } from "immer"
 import { atom } from "jotai"
 import { atomWithImmer } from "jotai-immer"
+import { atomWithStorage } from "jotai/utils"
 import { LogLevel } from "../../packages/common-log/schema"
 import { IContext } from "../schema/message"
 import { IBaseResponse } from "../schema/query"
 import { ResponseStatus } from "../schema/sse"
 import { appIdPersistedAtom } from "./app" //////////////////////////////
-import { produce } from "immer"
-import { atomWithStorage } from "jotai/utils"
 
 //////////////////////////////
 // base
@@ -109,7 +108,7 @@ export const updateAppResponseAtom = atom(
     set,
     requestId: string | null,
     appId: string,
-    func: IUpdateAppResponse,
+    func: IUpdateResponse,
   ) => {
     set(convAtom, (conv) => {
       const s = conv?.requests
@@ -125,23 +124,17 @@ export const updateAppResponseAtom = atom(
 
 export const updateConvTitleAtom = atom(
   null,
-  (get, set, func: IUpdateConvTitleResponse) => {
-    set(convAtom, (conv) => {
-      const s = conv?.titleResponse
+  (get, set, convId: string | null | undefined, func: IUpdateResponse) => {
+    if (!convId) return
 
-      if (!s) return
+    set(convsAtom, (convs) =>
+      produce(convs, (convs) => {
+        const s = convs.find((c) => c.id === convId)?.titleResponse
 
-      // 列表页里的最新名字也要更新，因为没有 invalidate
-      if (s.content)
-        set(convsAtom, (convs) =>
-          produce(convs, (convs) => {
-            // console.log(`-- updating title: `, s.content)
-            convs.find((c) => c.id === conv.id)!.titleResponse!.content =
-              s.content
-          }),
-        )
+        if (!s) return
 
-      func(s)
-    })
+        func(s)
+      }),
+    )
   },
 )

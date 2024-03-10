@@ -16,10 +16,10 @@ export const useLlmSse = (request: ILLMRequest) => {
   const [, updateConvTitle] = useAtom(updateConvTitleAtom)
   const update = (
     func: (data: {
-      tEnd: Date | null
-      content: string | null
-      tStart: Date | null
-      error: string | null
+      content?: string | null
+      tEnd?: Date | null
+      tStart?: Date | null
+      error?: string | null
     }) => void,
   ) => {
     if (request.type === "app-response") {
@@ -27,7 +27,7 @@ export const useLlmSse = (request: ILLMRequest) => {
       if (requestId) updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
-      if (convId) updateConvTitle(func)
+      if (convId) updateConvTitle(convId, func)
     }
   }
 
