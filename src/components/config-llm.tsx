@@ -1,3 +1,4 @@
+import { appsPlaceholderCountAtom } from "@/store/system.atom"
 import { useAtom } from "jotai"
 import {
   convSummaryPromptAtom,
@@ -7,6 +8,7 @@ import { PusherServerId } from "../../packages/common-pusher/schema"
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { TransportType } from "../../packages/common-transport/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
+import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
@@ -18,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
-import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { ConfigCard } from "./config-card"
 
 export const ConfigLLMCard = () => {
@@ -27,6 +28,9 @@ export const ConfigLLMCard = () => {
   const [pusherServerId, setPusherServerId] = useAtom(pusherServerIdAtom)
   const [convSummaryPrompt, setConvSummaryPrompt] = useAtom(
     convSummaryPromptAtom,
+  )
+  const [appsPlaceholderCount, setAppsPlaceholderCount] = useAtom(
+    appsPlaceholderCountAtom,
   )
 
   return (
@@ -40,6 +44,16 @@ export const ConfigLLMCard = () => {
           setConvSummaryPrompt(event.currentTarget.value)
         }}
       />
+
+      <LabelLine title={"placeholder apps"}>
+        <Input
+          value={appsPlaceholderCount}
+          type={"number"}
+          onChange={(event) => {
+            setAppsPlaceholderCount(Number(event.currentTarget.value))
+          }}
+        />
+      </LabelLine>
 
       <LabelLine title={"Delay(ms)"}>
         <Input

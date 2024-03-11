@@ -9,18 +9,14 @@ import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useConvRequestSlider } from "../hooks/use-conv-request-slider"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
-import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 import { coreStore } from "../store/core.valtio"
+import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 
 const ConvRequestsSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => {
   const [requestsSlideTextDisplay] = useAtom(requestsSlideTextVisibleAtom)
-
-  // const [conv] = useAtom(convAtom)
-  // const [requests] = useAtom(requestsAtom)
-  // const [requestId] = useAtom(requestIdAtom)
 
   const { conv, requests, requestId } = useSnapshot(coreStore)
 

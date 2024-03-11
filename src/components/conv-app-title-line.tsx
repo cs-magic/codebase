@@ -14,9 +14,6 @@ import { coreStore } from "../store/core.valtio"
 export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
   const { data: apps } = api.core.listApps.useQuery()
 
-  // const replaceApp = useConvStore.use.replaceApp()
-  // const { replaceApp } = useAtomValue(convAtomStore)
-
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
@@ -49,7 +46,9 @@ export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
         </SelectContent>
       </Select>
 
-      <span className={"text-xs"}>{app.clientId}</span>
+      <span className={"text-xs"}>
+        {app.id}_{app.clientId}
+      </span>
     </div>
   )
 }

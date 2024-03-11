@@ -2,11 +2,9 @@
 
 import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
-import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { uiScreenAtom } from "../../packages/common-ui/store"
-
-import { coreStore } from "../store/core.valtio"
+import { useApps } from "../hooks/use-apps"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { getAppsGridCols } from "../utils"
@@ -14,7 +12,7 @@ import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
   const [{ width }] = useAtom(uiScreenAtom)
-  const { apps } = useSnapshot(coreStore)
+  const apps = useApps()
 
   return (
     <div

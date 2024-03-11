@@ -16,13 +16,14 @@ export class CoreStore {
   //////////////////////////////
 
   convs: IConvBase[] = []
-  _conv: IConvDetail | null = null
   _appIndex = 0
-  _appsInConv: IAppClient[] = []
-
-  // persisted
-  _appsDefault: IAppClient[] = []
   logLevel: LogLevel = LogLevel.warning
+
+  _conv: IConvDetail | null = null
+
+  //////////////////////////////
+  // derived
+  //////////////////////////////
 
   get conv() {
     const conv = this._conv
@@ -35,20 +36,29 @@ export class CoreStore {
     if (this.logLevel <= LogLevel.info) console.log("-- setting conv: ", conv)
   }
 
-  //////////////////////////////
-  // derived states
-  //////////////////////////////
-
-  get apps() {
-    return this._appsInConv.length ? this._appsInConv : this._appsDefault
-  }
-
   get convId() {
     return this.conv?.id ?? null
   }
 
+  get apps(): IAppClient[] {
+    return this.responses.map((r) => ({
+      ...r.app,
+      clientId: r.appClientId,
+      response: r,
+      isDraft: false, // todo
+    }))
+  }
+
+  get app(): IAppClient | null {
+    return this.apps[this._appIndex] ?? null
+  }
+
+  get appId() {
+    return this.app?.id ?? null
+  }
+
   get appClientId() {
-    return this.apps[this._appIndex]?.clientId ?? null
+    return this.app?.clientId ?? null
   }
 
   get requests(): IRequest[] {
@@ -120,11 +130,10 @@ export class CoreStore {
   // actions
   //////////////////////////////
 
-  initAppsFromServer(apps: IAppDetail[]) {
-    this._appsDefault = apps
-      .filter((a) => a.id === "gpt-3.5-turbo")
-      .map((a) => forkApp(a, undefined))
-    this._appIndex = 0
+  updateRequestId(requestId: string) {
+    const conv = this.convs.find((c) => c.id === this.convId)
+    if (!conv) return
+    conv.currentRequestId = requestId
   }
 
   updateRequestFromServer(request: IRequest) {
@@ -134,8 +143,6 @@ export class CoreStore {
     }
     const conv = this.convs.find((c) => c.id === request.convId)
     if (conv) conv.currentRequestId = request.id
-
-    this.updateAppsInConv()
   }
 
   addConvFromServer(conv: IConvDetail) {
@@ -215,7 +222,6 @@ export class CoreStore {
     if (convId === this.convId) {
       this._conv = null
       this._appIndex = 0
-      this._appsInConv = []
     }
     remove(this.convs, (c) => c.id === convId)
   }
@@ -224,22 +230,6 @@ export class CoreStore {
     this.convs = []
     this._appIndex = 0
     this._conv = null
-    this._appsInConv = []
-  }
-
-  /**
-   * todo: computed
-   * @private
-   */
-  private updateAppsInConv() {
-    this._appsInConv = this.responses.map((r) => ({
-      ...r.app,
-      response: r,
-      clientId: r.appClientId,
-      isDraft: false,
-    }))
-    if (this.logLevel <= LogLevel.warning)
-      console.log("-- _appsInConv: ", this._appsInConv)
   }
 
   /**

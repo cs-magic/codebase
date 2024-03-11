@@ -92,11 +92,15 @@ export function useConvQuery() {
 
     const shouldConvTitle = !coreStore.conv?.titleResponse?.tStart
 
+    const prev = apps
+    const after = apps.map(parseAppClient)
+    console.log("-- apps: ", { prev, after })
+
     query.mutate(
       {
         // app-response
         context: newContext,
-        apps: apps.map(parseAppClient),
+        apps: after,
         convId: coreStore.convId!,
         options: {
           llmDelay,

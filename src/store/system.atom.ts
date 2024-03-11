@@ -1,4 +1,5 @@
 import { atom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
 import { BEST_VIEWPOINT } from "../../packages/common-ui/config"
 import { uiScreenAtom } from "../../packages/common-ui/store"
 import { ScenarioType } from "../schema/scenario"
@@ -22,6 +23,8 @@ export const userInputAtom = atom("")
  * 用于用户打断生成
  */
 export const appStopGeneratingScopeAtom = atom(false)
+
+export const appsPlaceholderCountAtom = atomWithStorage("apps.placeholder.n", 2)
 
 //////////////////////////////
 // derived

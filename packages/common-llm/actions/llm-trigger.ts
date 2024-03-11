@@ -29,7 +29,7 @@ export const triggerLLMThreads = async (
         request: {
           pusherServerId,
           requestId: request.id,
-          appId: r.appClientId,
+          appId: r.appId,
           appClientId: r.appClientId,
           type: "app-response",
           status: "to-response",
