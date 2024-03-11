@@ -19,7 +19,8 @@ export const useLLMForConvTitle = () => {
       if (!conv) return
       coreStore.updateConvTitle(conv.id, func)
     },
-    autoClose: false, // 常驻后台
+    // autoClose: false, // ~~ 常驻后台 ~~ 会导致重复监听
+    autoClose: true,
   })
 
   useLlmSse(llmRequest)
