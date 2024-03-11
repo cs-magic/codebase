@@ -6,7 +6,7 @@ import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-component
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
 
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 export const SelectApp = ({
@@ -18,7 +18,7 @@ export const SelectApp = ({
 }) => {
   const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
 
-  const { apps } = useSnapshot(core)
+  const { apps } = useSnapshot(coreStore)
 
   const disabled =
     (type === "toAdd" && apps.length >= maxToAdd) ||
@@ -42,9 +42,9 @@ export const SelectApp = ({
           if (disabled) return
           if (type === "toDel")
             // void convStore.
-            core.delApp(app.id)
+            coreStore.delApp(app.id)
           // void convStore.
-          else core.pushApp(app)
+          else coreStore.pushApp(app)
         }}
       >
         <Icon />

@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { api } from "../../packages/common-trpc/react"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 
 export const useDelAllConvs = () => {
   const router = useRouter()
@@ -12,7 +12,7 @@ export const useDelAllConvs = () => {
       toast.error("删除失败！")
     },
     onSuccess: (data) => {
-      core.delAllConvs()
+      coreStore.delAllConvs()
       router.push("/tt")
     },
   })

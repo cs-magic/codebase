@@ -5,12 +5,12 @@ import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
 import { IAppClient } from "../schema/app.detail"
 import { RoleType } from "../schema/message"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
 export const ConvApp = ({ app }: { app: IAppClient }) => {
-  const { commonContext } = useSnapshot(core)
+  const { commonContext } = useSnapshot(coreStore)
 
   const context = !app.response
     ? commonContext

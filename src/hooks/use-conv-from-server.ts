@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 import { convLogLevelAtom } from "../store/dev.atom"
 import { useSnapshot } from "valtio"
 
@@ -15,7 +15,7 @@ export const useConvFromServer = (
 
   const openAlertDialog = useSetAtom(openAlertDialogAtom)
 
-  const { convId } = useSnapshot(core)
+  const { convId } = useSnapshot(coreStore)
 
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
@@ -57,7 +57,7 @@ export const useConvFromServer = (
         },
       })
 
-    core.initConvFromServer(convFromServer)
+    coreStore.initConvFromServer(convFromServer)
   }, [convFromServer])
 
   // 2. 无效则跳转

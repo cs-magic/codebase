@@ -2,7 +2,7 @@ import { toast } from "sonner"
 import { useSnapshot } from "valtio"
 import { parseApp } from "../../packages/common-llm/schema"
 import { api } from "../../packages/common-trpc/react"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话 （包含query、路由）
@@ -11,7 +11,7 @@ import { core } from "../store/core.valtio"
  * 返回 appId，用于其他的函数
  */
 export function useAddConv() {
-  const { apps } = useSnapshot(core)
+  const { apps } = useSnapshot(coreStore)
 
   const addConv = api.core.addConv.useMutation()
 

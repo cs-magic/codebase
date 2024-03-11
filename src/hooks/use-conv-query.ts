@@ -11,7 +11,7 @@ import {
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 
 import { userInputAtom } from "../store/system.atom"
 import {
@@ -40,7 +40,7 @@ export function useConvQuery() {
     bestContext,
     responses,
     responding,
-  } = useSnapshot(core)
+  } = useSnapshot(coreStore)
 
   const router = useRouter()
   const session = useSession()
@@ -79,14 +79,14 @@ export function useConvQuery() {
 
     // todo: mutate optimization
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
-    if (!core.conv) {
+    if (!coreStore.conv) {
       const conv = await addConv.mutateAsync({
         title: undefined,
         apps: apps.map(parseAppClient),
       })
       // 直接本地刷新
-      core.addConvFromServer(conv)
-      core.initConvFromServer(conv)
+      coreStore.addConvFromServer(conv)
+      coreStore.initConvFromServer(conv)
     }
 
     // 否则直接发起请求
@@ -97,14 +97,14 @@ export function useConvQuery() {
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
-    const shouldConvTitle = !core.conv?.titleResponse?.tStart
+    const shouldConvTitle = !coreStore.conv?.titleResponse?.tStart
 
     query.mutate(
       {
         // app-response
         context: newContext,
         apps: apps.map(parseAppClient),
-        convId: core.convId!,
+        convId: coreStore.convId!,
         options: {
           llmDelay,
           pusherServerId,
@@ -121,7 +121,7 @@ export function useConvQuery() {
       {
         onSuccess: async (request) => {
           // local update
-          core.updateRequestFromServer(request)
+          coreStore.updateRequestFromServer(request)
           router.push(`/tt/${request.convId}?r=${request.id}`)
         },
         onError: (err) => {

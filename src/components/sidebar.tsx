@@ -9,7 +9,7 @@ import { devEnabledAtom } from "../../packages/common-dev/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 import { SidebarConvItem } from "./sidebar-conversation"
 import { useRouter } from "next/navigation"
 
@@ -19,7 +19,7 @@ export const Sidebar = ({
 }: HTMLAttributes<HTMLDivElement>) => {
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const { convs } = useSnapshot(core)
+  const { convs } = useSnapshot(coreStore)
 
   const delAllConvs = useDelAllConvs()
 
@@ -29,7 +29,7 @@ export const Sidebar = ({
   const addConv = useAddConv()
   const addConvInSidebar = async () => {
     const conv = await addConv()
-    core.addConvFromServer(conv)
+    coreStore.addConvFromServer(conv)
     void router.push(`/tt/${conv.id}`)
   }
 

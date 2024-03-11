@@ -1,7 +1,7 @@
 import { atomWithStorage } from "jotai/utils"
 import { LogLevel } from "../../packages/common-log/schema"
 import { atom } from "jotai"
-import { core } from "./core.valtio"
+import { coreStore } from "./core.valtio"
 import ansiColors from "ansi-colors"
 
 /**
@@ -16,7 +16,7 @@ export const convLogLevelAtom = atom(
   (get) => get(convLogLevelBaseAtom),
   (get, set, value: LogLevel) => {
     console.log(ansiColors.red(`-- setting valtio log level: `), value)
-    core.logLevel = value // 先更新valtio
+    coreStore.logLevel = value // 先更新valtio
     set(convLogLevelBaseAtom, value)
   },
 )

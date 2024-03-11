@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 /**
@@ -26,7 +26,7 @@ export const useConvSearchParams = (
     convId: convIdCurrent,
     requestIds,
     requestId: reqIdCurrent,
-  } = useSnapshot(core)
+  } = useSnapshot(coreStore)
 
   const utils = api.useUtils()
   const updateConv = api.core.updateConv.useMutation()
@@ -79,18 +79,11 @@ export const useConvSearchParams = (
     else if (shouldGotoNew) {
       // console.log(`-- request id change: ${requestId} --> ${reqIdInUrl}`)
 
-      // 更新convs里的指针（无需关心conv里的游标，因为始终以convs对齐）
-      updateConv.mutate(
-        {
-          where: { id: convIdCurrent },
-          data: { currentRequestId: reqIdInUrl },
-        },
-        {
-          onSuccess: () => {
-            void utils.core.listConv.invalidate() // update request id
-          },
-        },
-      )
+      // 更新convs里的指针（无需关心conv里的指针，因为始终以convs对齐）
+      updateConv.mutate({
+        where: { id: convIdCurrent },
+        data: { currentRequestId: reqIdInUrl },
+      })
     }
   }, [convIdInUrl, reqIdInUrl])
 }

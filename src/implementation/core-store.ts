@@ -1,3 +1,4 @@
+import { remove } from "lodash"
 import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
@@ -14,13 +15,13 @@ export class CoreStore {
   //////////////////////////////
 
   convs: IConvBase[] = []
-  appIndex = 0
+  _conv: IConvDetail | null = null
+  _appIndex = 0
   _appsInConv: IAppClient[] = []
+
   // persisted
   _appsDefault: IAppClient[] = []
   logLevel: LogLevel = LogLevel.warning
-
-  _conv: IConvDetail | null = null
 
   get conv() {
     const conv = this._conv
@@ -46,7 +47,7 @@ export class CoreStore {
   }
 
   get bestAppClientId() {
-    return this.apps[this.appIndex]?.clientId ?? null
+    return this.apps[this._appIndex]?.clientId ?? null
   }
 
   get requests(): IRequest[] {
@@ -93,7 +94,7 @@ export class CoreStore {
   }
 
   get bestResponse() {
-    return this.responses[this.appIndex] ?? null
+    return this.responses[this._appIndex] ?? null
   }
 
   get bestContext(): IContext {
@@ -122,7 +123,7 @@ export class CoreStore {
     this._appsDefault = apps
       .filter((a) => a.id === "gpt-3.5-turbo")
       .map((a) => forkApp(a, undefined))
-    this.appIndex = 0
+    this._appIndex = 0
   }
 
   updateRequestFromServer(request: IRequest) {
@@ -149,7 +150,7 @@ export class CoreStore {
   }
 
   selectApp(appClientId: string) {
-    this.appIndex = this.apps.findIndex((a) => a.clientId === appClientId)
+    this._appIndex = this.apps.findIndex((a) => a.clientId === appClientId)
   }
 
   pushApp(app: IAppDetail) {
@@ -172,7 +173,7 @@ export class CoreStore {
     const index = this.apps.findIndex((a) => a.clientId === appClientId)
     if (index < 0) return
     this.apps.splice(index, 1)
-    this.appIndex = 0
+    this._appIndex = 0
   }
 
   updateAppResponse(
@@ -210,9 +211,18 @@ export class CoreStore {
     func(res)
   }
 
+  delConv(convId: string) {
+    if (convId === this.convId) {
+      this._conv = null
+      this._appIndex = 0
+      this._appsInConv = []
+    }
+    remove(this.convs, (c) => c.id === convId)
+  }
+
   delAllConvs() {
     this.convs = []
-    this.appIndex = 0
+    this._appIndex = 0
     this._conv = null
     this._appsInConv = []
   }

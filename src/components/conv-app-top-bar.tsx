@@ -16,7 +16,7 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppClient } from "../schema/app.detail"
 
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { checkRespondingStatus } from "../utils"
@@ -27,7 +27,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
 
   const stopGenerating = useSetAtom(appStopGeneratingScopeAtom)
 
-  const { requestId, apps, appIndex } = useSnapshot(core)
+  const { requestId, apps, appIndex } = useSnapshot(coreStore)
 
   const selected = app.clientId === apps[appIndex]?.clientId
   const LockOrNot = selected ? Lock : Unlock
@@ -75,7 +75,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          core.selectApp(app.clientId)
+          coreStore.selectApp(app.clientId)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -86,7 +86,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         disabled={apps.length <= 1}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void core.delApp(app.clientId)
+          void coreStore.delApp(app.clientId)
         }}
       >
         <MinusCircleIcon />
@@ -96,7 +96,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         <IconContainer
           tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
           onClick={() => {
-            core.forkApp(app)
+            coreStore.forkApp(app)
           }}
         >
           <PlusCircleIcon />

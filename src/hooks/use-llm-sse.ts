@@ -5,7 +5,7 @@ import { transportTypeAtom } from "../../packages/common-transport/store"
 import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
-import { core } from "../store/core.valtio"
+import { coreStore } from "../store/core.valtio"
 
 export const useLlmSse = (request: ILLMRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(
@@ -25,11 +25,11 @@ export const useLlmSse = (request: ILLMRequest) => {
   ) => {
     if (request.type === "app-response") {
       const { requestId } = request
-      if (requestId) core.updateAppResponse(requestId, request.appId, func)
+      if (requestId) coreStore.updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
       if (!convId) return
-      core.updateConvTitle(convId, func)
+      coreStore.updateConvTitle(convId, func)
     }
   }
 
