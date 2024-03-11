@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { devEnabledAtom } from "../../packages/common-dev/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import {
   Tabs,
@@ -19,8 +20,11 @@ import { ConfigTRPCCard } from "./config-trpc"
 
 import { useHotkeys } from "@mantine/hooks"
 import { SettingsIcon } from "lucide-react"
+import { useAtom } from "jotai"
 
 export const DevConfig = () => {
+  const [devEnabled] = useAtom(devEnabledAtom)
+
   const [open, setOpen] = useState(false)
 
   useHotkeys([
@@ -31,6 +35,8 @@ export const DevConfig = () => {
       },
     ],
   ])
+
+  if (!devEnabled) return null
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
