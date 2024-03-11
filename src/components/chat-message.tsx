@@ -9,7 +9,7 @@ import {
 } from "../../packages/common-ui/shadcn/shadcn-components/avatar"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 
-export const ConvAppMessage = ({
+export const ChatMessage = ({
   m,
   logo,
 }: {

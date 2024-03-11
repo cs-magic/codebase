@@ -13,9 +13,9 @@ import { Chat } from "./chat"
 
 export const Chats = () => {
   const [{ width }] = useAtom(uiScreenAtom)
-  const { chats } = useSnapshot(coreStore)
+  const { chats, commonContext } = useSnapshot(coreStore)
 
-  console.log("-- chats: ", chats)
+  console.log("-- chats: ", chats, commonContext)
 
   return (
     <div

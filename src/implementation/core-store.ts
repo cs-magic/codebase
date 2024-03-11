@@ -101,6 +101,9 @@ export class CoreStore {
   }
 
   get bestContext(): IContext {
+    return this.commonContext
+
+    //  todo: bug?
     return this.chat
       ? [
           ...this.commonContext,

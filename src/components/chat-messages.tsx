@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 import { IMessageInChat } from "../schema/message"
-import { ConvAppMessage } from "./conv-app-message"
+import { ChatMessage } from "./chat-message"
 
-export const ConvAppMessages = ({
+export const ChatMessages = ({
   appId,
   logo,
   context,
@@ -29,7 +29,7 @@ export const ConvAppMessages = ({
   return (
     <div className={"flex flex-col"}>
       {context.map((m, index) => (
-        <ConvAppMessage m={m} logo={logo} key={index} />
+        <ChatMessage m={m} logo={logo} key={index} />
       ))}
 
       <div ref={refScroll} />

@@ -2,13 +2,12 @@
 
 import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { DeepReadonly } from "../../packages/common-utils/schema"
 import { useLLMForChat } from "../hooks/use-llm-for-app-chat"
 import { RoleType } from "../schema/message"
 import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
+import { ChatMessages } from "./chat-messages"
 import { ChatTopBar } from "./chat-top-bar"
-import { ConvAppMessages } from "./conv-app-messages"
 
 export const Chat = ({ chat }: { chat: IResponse }) => {
   const { commonContext } = useSnapshot(coreStore)
@@ -39,7 +38,7 @@ export const Chat = ({ chat }: { chat: IResponse }) => {
         {chat.isDraft ? (
           "draft"
         ) : (
-          <ConvAppMessages
+          <ChatMessages
             appId={chat.app!.id}
             logo={chat.app!.model.logo}
             context={context}
