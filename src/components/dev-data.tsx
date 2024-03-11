@@ -3,6 +3,7 @@ import { devEnabledAtom } from "../../packages/common-dev/store"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { coreStore } from "../store/core.valtio"
+import { useAtom } from "jotai"
 
 export const DevData = () => {
   const { convId, requestId, chatId, appId } = useSnapshot(coreStore)

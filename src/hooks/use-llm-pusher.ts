@@ -86,6 +86,7 @@ export const useLlmPusher = (
     return () => {
       if (autoClose) {
         console.log(ansiColors.red(`[pusher] unbound ${triggerId}`))
+        channel.unbind_all() // <-- unbind
         pusher.unsubscribe(triggerId)
       }
     }
