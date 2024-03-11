@@ -1,5 +1,3 @@
-import ansiColors from "ansi-colors"
-import { getNewId } from "../../packages/common-algo/id"
 import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
@@ -16,15 +14,14 @@ export class CoreStore implements ICoreStore {
   //////////////////////////////
 
   convs: IConvBase[] = []
-  apps: IAppClient[] = []
   appIndex = 0
+
+  // persisted
+  _appsDefault: IAppClient[] = []
+  _appsInConv: IAppClient[] = []
   logLevel: LogLevel = LogLevel.warning
 
   _conv: IConvDetail | null = null
-
-  //////////////////////////////
-  // derived states
-  //////////////////////////////
 
   get conv() {
     const conv = this._conv
@@ -35,6 +32,14 @@ export class CoreStore implements ICoreStore {
   set conv(conv: IConvDetail | null) {
     this._conv = conv
     if (this.logLevel <= LogLevel.info) console.log("-- setting conv: ", conv)
+  }
+
+  //////////////////////////////
+  // derived states
+  //////////////////////////////
+
+  get apps() {
+    return this._appsInConv.length ? this._appsInConv : this._appsDefault
   }
 
   get convId() {
@@ -55,8 +60,12 @@ export class CoreStore implements ICoreStore {
     return this.requests.map((r) => r.id)
   }
 
+  /**
+   * 当前的 requestId, title 都是从 convs 里找
+   */
   get requestId() {
-    const requestId = this.conv?.currentRequestId ?? null
+    const requestId =
+      this.convs.find((c) => c.id === this.convId)?.currentRequestId ?? null
     if (this.logLevel <= LogLevel.debug) console.log({ requestId })
     return requestId
   }
@@ -73,7 +82,10 @@ export class CoreStore implements ICoreStore {
 
   get commonContext(): IContext {
     const commonContext = this.request?.context ?? []
-    if (this.logLevel <= LogLevel.info) console.log({ commonContext })
+    if (this.logLevel <= LogLevel.info) {
+      console.log({ thisLogLevel: this.logLevel })
+      console.log({ commonContext })
+    }
     return commonContext
   }
 
@@ -108,30 +120,16 @@ export class CoreStore implements ICoreStore {
   //////////////////////////////
 
   initAppsFromServer(apps: IAppDetail[]) {
-    this.apps = apps.filter((a) => a.id === "gpt-3.5-turbo").map(forkApp)
+    this._appsDefault = apps
+      .filter((a) => a.id === "gpt-3.5-turbo")
+      .map(forkApp)
     this.appIndex = 0
   }
 
   initConvFromServer(conv: IConvDetail) {
     this.conv = conv
-  }
-
-  updateRequestId(requestId: string | null) {
-    if (!this.conv) return
-
-    this.conv.currentRequestId = requestId
-
-    this.apps = this.responses.map((r) => ({
-      ...r.app,
-      response: r,
-      isDraft: false,
-      clientId: getNewId(),
-    }))
-
-    console.log(ansiColors.red("-- updateRequestId: "), {
-      requestId,
-      apps: this.apps,
-    })
+    if (this.responses.length)
+      this._appsInConv = this.responses.map((r) => forkApp(r.app))
   }
 
   selectApp(appClientId: string) {

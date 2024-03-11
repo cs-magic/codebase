@@ -1,10 +1,10 @@
 import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "./app.detail"
-import { IResponse, IUpdateResponse } from "./response"
 import { IConvBase } from "./conv.base"
 import { IConvDetail } from "./conv.detail"
 import { IContext } from "./message"
 import { IRequest } from "./request"
+import { IResponse, IUpdateResponse } from "./response"
 
 export interface ICoreStore {
   ///////////////////////////////
@@ -41,9 +41,6 @@ export interface ICoreStore {
   initConvFromServer: (conv: IConvDetail) => void
 
   updateConvTitle: (convId: string, func: IUpdateResponse) => void
-
-  // -- req
-  updateRequestId: (requestId: string | null) => void
 
   //  -- apps
   initAppsFromServer: (apps: IAppDetail[]) => void

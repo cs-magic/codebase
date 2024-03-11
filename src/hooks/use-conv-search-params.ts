@@ -28,23 +28,28 @@ export const useConvSearchParams = (
     requestId: reqIdCurrent,
   } = useSnapshot(coreValtio)
 
+  const utils = api.useUtils()
   const updateConv = api.core.updateConv.useMutation()
 
   const router = useRouter()
 
+  const isDraft = convIdInUrl !== convIdCurrent
+
   const hasReqInDB = !!reqIdInUrl && requestIds.includes(reqIdInUrl)
 
   const shouldGotoCurrent =
-    // 1. 没有 rid，但有游标
-    (!reqIdInUrl && !!reqIdCurrent) ||
-    // 2. 有rid，但没有游标
-    (reqIdInUrl && !hasReqInDB)
+    !isDraft && // 1. 没有 rid，但有游标
+    ((!reqIdInUrl && !!reqIdCurrent) ||
+      // 2. 有rid，但没有游标
+      (reqIdInUrl && !hasReqInDB))
 
   const shouldGotoNew =
+    !isDraft &&
     // 有 rid
     reqIdInUrl &&
     // 有有效
     hasReqInDB &&
+    // todo: 下面这条似乎始终为 true
     // 但不等于当下
     reqIdCurrent !== reqIdInUrl
 
@@ -56,14 +61,14 @@ export const useConvSearchParams = (
       reqIdInUrl,
       reqIdCurrent,
 
+      isDraft,
       hasReqInDB,
-
       shouldGotoCurrent,
       shouldGotoNew,
     })
 
     // 确保已经刷新对齐了conv
-    if (convIdInUrl !== convIdCurrent) return
+    if (isDraft) return
 
     if (shouldGotoCurrent)
       router.replace(
@@ -81,12 +86,10 @@ export const useConvSearchParams = (
         },
         {
           onSuccess: () => {
-            // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
-
-            coreValtio.updateRequestId(reqIdInUrl)
+            void utils.core.listConv.invalidate() // update request id
           },
         },
       )
     }
-  }, [shouldGotoCurrent, shouldGotoNew])
+  }, [isDraft, shouldGotoCurrent, shouldGotoNew])
 }

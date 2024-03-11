@@ -30,6 +30,6 @@ export const forkApp = (app: IAppDetail): IAppClient => ({
   clientId: getNewId(),
 
   // decide whether to change
-  isDraft: true,
+  isDraft: false,
   response: undefined,
 })

@@ -114,7 +114,8 @@ export function useConvQuery() {
       {
         onSuccess: async (requestId) => {
           // 服务器上路由跳转很快，所以我们要先确保数据重置完
-          await utils.core.getConv.invalidate()
+          await utils.core.listConv.invalidate() // update req id
+          await utils.core.getConv.invalidate() // update req, apps
           router.push(`/tt/${conv!.id}?r=${requestId}`)
         },
         onError: (err) => {

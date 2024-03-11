@@ -48,7 +48,8 @@ export const useConvFromServer = (
           new: convFromServer.currentRequestId,
         },
       })
-    coreValtio.conv = convFromServer
+
+    coreValtio.initConvFromServer(convFromServer)
   }, [convFromServer])
 
   // 2. 无效则跳转
