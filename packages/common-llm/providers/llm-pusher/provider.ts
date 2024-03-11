@@ -1,10 +1,8 @@
 import Pusher from "pusher"
 import { redis } from "../../../common-db"
+import { PusherServerId } from "../../../common-pusher/schema"
 import { ISSEEvent } from "../../../common-sse/schema"
-import {
-  pusherServerConfigs,
-  PusherServerId,
-} from "../../../common-transport/config"
+import { pusherServerConfigs } from "../../../common-pusher/config"
 import { initPusherServer } from "../../../common-pusher/server/init"
 import {
   getTriggerIdFromSseRequest,

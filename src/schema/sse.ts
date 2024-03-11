@@ -1,5 +1,6 @@
 import { ICreateCallLLM } from "../../packages/common-llm/schema"
-import { PusherServerId } from "../../packages/common-transport/config"
+
+import { PusherServerId } from "../../packages/common-pusher/schema"
 import { ILLMMessage } from "./message"
 
 export type ResponseFinalStatus = "interrupted" | "responded" | "not-found"

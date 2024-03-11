@@ -1,5 +1,6 @@
 "use client"
 
+import { PusherServerId } from "../../packages/common-pusher/schema"
 import {
   pusherLogLevelAtom,
   pusherServerIdAtom,
@@ -20,7 +21,6 @@ import {
   llmDelayAtom,
 } from "../../packages/common-llm/store"
 import { LogLevel } from "../../packages/common-log/schema"
-import { PusherServerId } from "../../packages/common-transport/config"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { SmsProviderType } from "../../packages/common-sms/schema"
 import {

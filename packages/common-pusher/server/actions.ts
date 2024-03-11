@@ -1,11 +1,8 @@
 "use server"
 
-import { PusherEventData, PusherEventType } from "../schema"
+import { PusherEventData, PusherEventType, PusherServerId } from "../schema"
 import { initPusherServer } from "./init"
-import {
-  pusherServerConfigs,
-  PusherServerId,
-} from "../../common-transport/config"
+import { pusherServerConfigs } from "../config"
 
 export const pusherSend = async <T extends PusherEventType>(
   serverId: PusherServerId,

@@ -5,7 +5,7 @@ import {
   pusherServerIdAtom,
 } from "../../packages/common-pusher/store"
 import { initPusherClient } from "../../packages/common-pusher/client/init"
-import { pusherServerConfigs } from "../../packages/common-transport/config"
+import { pusherServerConfigs } from "../../packages/common-pusher/config"
 
 export const usePusher = () => {
   const [serverId] = useAtom(pusherServerIdAtom)

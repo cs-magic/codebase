@@ -1,6 +1,4 @@
-/**
- * config
- */
+import { z } from "zod"
 
 export interface IPusherServerConfig {
   host: string
@@ -38,3 +36,9 @@ export type PusherEventData<T extends PusherEventType> =
         channelId: string
         content: string
       }
+
+export const pusherServerIdSchema = z
+  .union([z.literal("aws"), z.literal("tencent_ws"), z.literal("tencent_wss")])
+  .default("tencent_wss")
+
+export type PusherServerId = z.infer<typeof pusherServerIdSchema>

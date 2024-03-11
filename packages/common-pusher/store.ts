@@ -7,8 +7,8 @@ import PusherJS from "pusher-js"
 import { FixedArray } from "../common-algo/array"
 import { LogLevel } from "../common-log/schema"
 import { initPusherClient } from "./client/init"
-import { pusherServerConfigs, PusherServerId } from "../common-transport/config"
-import { PusherConnectionState } from "./schema"
+import { pusherServerConfigs } from "./config"
+import { PusherConnectionState, PusherServerId } from "./schema"
 
 //////////////////////////////
 // base

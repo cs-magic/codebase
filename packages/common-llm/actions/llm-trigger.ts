@@ -1,7 +1,7 @@
 import { prisma } from "../../common-db"
+import { PusherServerId } from "../../common-pusher/schema"
 import { createCallLLMSchema, parseApp } from "../schema"
 import { CONV_SUMMARY_PROMPT } from "../store"
-import { PusherServerId } from "../../common-transport/config"
 import { IConvDetail } from "@/schema/conv"
 import { ILLMMessage } from "@/schema/message"
 import { IBaseResponse } from "@/schema/query"
