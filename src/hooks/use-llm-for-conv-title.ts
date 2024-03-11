@@ -1,12 +1,12 @@
 import { useSnapshot } from "valtio"
 import { ILLMRequest } from "../schema/sse"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 
 export const useLLMForConvTitle = () => {
-  const { conv } = useSnapshot(coreValtio)
+  const { conv } = useSnapshot(core)
 
   const llmRequest: ILLMRequest = {
     type: "conv-title",
@@ -18,7 +18,7 @@ export const useLLMForConvTitle = () => {
     llmRequest,
     (func) => {
       if (!conv) return
-      coreValtio.updateConvTitle(conv.id, func)
+      core.updateConvTitle(conv.id, func)
     },
     false,
   )

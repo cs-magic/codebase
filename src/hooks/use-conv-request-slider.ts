@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useSnapshot } from "valtio"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 export const useConvRequestSlider = () => {
@@ -9,7 +9,7 @@ export const useConvRequestSlider = () => {
   // const [requests] = useAtom(requestsAtom)
   // const [requestId] = useAtom(requestIdAtom)
 
-  const { convId, requests, requestId } = useSnapshot(coreValtio)
+  const { convId, requests, requestId } = useSnapshot(core)
 
   const value = requests.findIndex((r) => r.id === requestId) + 1
   const [tempValue, setTempValue] = useState(value)

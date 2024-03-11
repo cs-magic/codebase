@@ -16,12 +16,12 @@ export class CoreStore implements ICoreStore {
   convs: IConvBase[] = []
   appIndex = 0
 
+  _conv: IConvDetail | null = null
+  _appsInConv: IAppClient[] = []
+
   // persisted
   _appsDefault: IAppClient[] = []
-  _appsInConv: IAppClient[] = []
   logLevel: LogLevel = LogLevel.warning
-
-  _conv: IConvDetail | null = null
 
   get conv() {
     const conv = this._conv
@@ -126,6 +126,19 @@ export class CoreStore implements ICoreStore {
     this.appIndex = 0
   }
 
+  updateRequestFromServer(request: IRequest) {
+    if (this.conv?.id === request.convId) {
+      this.conv.currentRequestId = request.id
+      this.conv.requests.push(request)
+    }
+    const conv = this.convs.find((c) => c.id === request.convId)
+    if (conv) conv.currentRequestId = request.id
+  }
+
+  addConvFromServer(conv: IConvDetail) {
+    this.convs.splice(0, 0, conv)
+  }
+
   initConvFromServer(conv: IConvDetail) {
     this.conv = conv
     if (this.responses.length)
@@ -180,5 +193,12 @@ export class CoreStore implements ICoreStore {
     const res = this.convs.find((c) => c.id === convId)?.titleResponse
     if (!res) return
     func(res)
+  }
+
+  delAllConvs() {
+    this.convs = []
+    this.appIndex = 0
+    this._conv = null
+    this._appsInConv = []
   }
 }

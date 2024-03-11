@@ -2,13 +2,13 @@ import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 
 export const useConvClean = (reqId: string | undefined) => {
   // const [conv, setConv] = useAtom(convAtom)
   // const [convs] = useAtom(convsAtom)
   // const convId = conv?.id
-  const { conv, convId, convs } = useSnapshot(coreValtio)
+  const { conv, convId, convs } = useSnapshot(core)
 
   const router = useRouter()
 
@@ -16,7 +16,7 @@ export const useConvClean = (reqId: string | undefined) => {
   useEffect(() => {
     if (reqId) return
     console.log(ansiColors.red("clear conv since no id"))
-    coreValtio.conv = null
+    core.conv = null
     // setConv(null)
   }, [reqId])
 
@@ -24,7 +24,7 @@ export const useConvClean = (reqId: string | undefined) => {
   useEffect(() => {
     if (convId && !convs.find((c) => c.id === convId)) {
       console.log(ansiColors.red("clear conv since not existed now"))
-      coreValtio.conv = null
+      core.conv = null
       // setConv(null)
       if (reqId) {
         router.push("/tt") // 如果不在列表页，还要退回去

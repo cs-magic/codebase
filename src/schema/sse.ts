@@ -27,7 +27,7 @@ export type ILLMRequest = {
     }
 )
 
-export const getTriggerIdFromSseRequest = (request: ILLMRequest) => {
+export const getTriggerIdFromSSERequest = (request: ILLMRequest) => {
   switch (request.type) {
     case "app-response":
       const { requestId, appId } = request

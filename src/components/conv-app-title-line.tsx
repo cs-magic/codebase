@@ -9,7 +9,7 @@ import {
   SelectTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
 import { IAppClient } from "../schema/app.detail"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 
 export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
   const { data: apps } = api.core.listApps.useQuery()
@@ -21,10 +21,7 @@ export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
         onValueChange={(value) => {
-          coreValtio.replaceApp(
-            app.clientId,
-            apps!.find((a) => a.id === value)!,
-          )
+          core.replaceApp(app.clientId, apps!.find((a) => a.id === value)!)
         }}
       >
         <SelectTrigger className={"focus:ring-0 gap-2 w-40 overflow-hidden"}>

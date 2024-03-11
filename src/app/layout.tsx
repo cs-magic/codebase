@@ -1,4 +1,3 @@
-import { Devtool } from "@/components/_devtool"
 import { ReturnHomeAlertDialog } from "@/components/_return-home"
 import { CheckAuthAlertDialog } from "@/components/auth-checker"
 import { SystemSocketStatus } from "@/components/system-socket-status"
@@ -17,6 +16,7 @@ import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
 import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonner"
 import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { ConfigPanel } from "../components/config"
 import { AppsDialog } from "../components/select-apps"
 import GlobalHooksProviders from "../providers/global.provider"
 
@@ -85,7 +85,7 @@ export default function RootLayout({
                           <>
                             <SystemSocketStatus />
 
-                            <Devtool />
+                            <ConfigPanel />
                           </>
                         )}
                       </main>

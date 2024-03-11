@@ -2,7 +2,7 @@
 
 import { sleep } from "../../common-algo/utils"
 import { callChatGPT, callLlmApiMock } from "../models/openai"
-import { getTriggerIdFromSseRequest, LlmActionPayload } from "@/schema/sse"
+import { getTriggerIdFromSSERequest, LlmActionPayload } from "@/schema/sse"
 import { PusherLlmManager } from "../providers/llm-pusher"
 
 export const callLLM = async (
@@ -17,7 +17,7 @@ export const callLLM = async (
   console.log("[LLM] called: ", payload)
 
   const { request, action } = payload
-  const channelId = getTriggerIdFromSseRequest(request)
+  const channelId = getTriggerIdFromSSERequest(request)
   if (!channelId || !request.pusherServerId) return
 
   const llmManager = new PusherLlmManager(channelId, request.pusherServerId)

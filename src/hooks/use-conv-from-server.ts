@@ -3,8 +3,9 @@ import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { convLogLevelAtom } from "../store/dev.atom"
+import { useSnapshot } from "valtio"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,
@@ -14,12 +15,19 @@ export const useConvFromServer = (
 
   const openAlertDialog = useSetAtom(openAlertDialogAtom)
 
+  const { convId } = useSnapshot(core)
+
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
     {
       id: convIdInUrl!,
     },
-    { enabled: !!convIdInUrl },
+    {
+      enabled:
+        !!convIdInUrl &&
+        // 如果已经拿过数据，就不要拿了！
+        convId !== convIdInUrl,
+    },
   )
 
   /**
@@ -49,7 +57,7 @@ export const useConvFromServer = (
         },
       })
 
-    coreValtio.initConvFromServer(convFromServer)
+    core.initConvFromServer(convFromServer)
   }, [convFromServer])
 
   // 2. 无效则跳转
@@ -57,4 +65,6 @@ export const useConvFromServer = (
     if (!isError) return
     openAlertDialog("没有此会话！")
   }, [isError])
+
+  console.log("useConvFromServer: ", { isError, convFromServer })
 }

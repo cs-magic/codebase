@@ -1,6 +1,8 @@
 import { getNewId } from "../packages/common-algo/id"
+import { parseApp } from "../packages/common-llm/schema"
 import { BEST_VIEWPOINT } from "../packages/common-ui/config"
-import { IAppClient, IAppDetail } from "./schema/app.detail"
+import { ICreateApp } from "./schema/app.create"
+import { IAppClient, IAppClientSpecial, IAppDetail } from "./schema/app.detail"
 import { IBaseResponse } from "./schema/query"
 import { IResponse } from "./schema/response"
 import { ResponseStatus } from "./schema/sse"
@@ -33,4 +35,13 @@ export const forkApp = (app: IAppDetail, response?: IResponse): IAppClient => ({
   // decide whether to change
   isDraft: false,
   response,
+})
+
+export const parseAppClient = (
+  app: IAppClient,
+): ICreateApp & IAppClientSpecial => ({
+  ...parseApp(app),
+  clientId: app.clientId,
+  isDraft: app.isDraft,
+  response: app.response,
 })

@@ -5,7 +5,7 @@ import { ISSEEvent } from "../../../common-sse/schema"
 import { pusherServerConfigs } from "../../../common-pusher/config"
 import { initPusherServer } from "../../../common-pusher/server/init"
 import {
-  getTriggerIdFromSseRequest,
+  getTriggerIdFromSSERequest,
   ILLMRequest,
   ResponseFinalStatus,
   ResponseStatus,

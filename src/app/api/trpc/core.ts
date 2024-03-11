@@ -207,6 +207,6 @@ export const coreRouter = createTRPCRouter({
         bestAppId,
         systemPromptForConvTitle,
       )
-      return requestId
+      return request
     }),
 })

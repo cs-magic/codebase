@@ -9,8 +9,9 @@ import { devEnabledAtom } from "../../packages/common-dev/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { SidebarConvItem } from "./sidebar-conversation"
+import { useRouter } from "next/navigation"
 
 export const Sidebar = ({
   className,
@@ -18,14 +19,19 @@ export const Sidebar = ({
 }: HTMLAttributes<HTMLDivElement>) => {
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const { convs } = useSnapshot(coreValtio)
+  const { convs } = useSnapshot(core)
 
-  const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
 
   useLLMForConvTitle()
 
-  // console.log({ convs })
+  const router = useRouter()
+  const addConv = useAddConv()
+  const addConvInSidebar = async () => {
+    const conv = await addConv()
+    core.addConvFromServer(conv)
+    void router.push(`/tt/${conv.id}`)
+  }
 
   return (
     <div
@@ -38,7 +44,7 @@ export const Sidebar = ({
       <Button
         className={"w-full gap-2 my-2 shrink-0"}
         variant={"outline"}
-        onClick={() => addConv()}
+        onClick={addConvInSidebar}
       >
         <PlusIcon className={"w-4 h-4"} />
         新建会话

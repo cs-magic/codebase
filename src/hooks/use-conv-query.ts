@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useSnapshot } from "valtio"
-import { parseApp } from "../../packages/common-llm/schema"
 import {
   convSummaryPromptAtom,
   llmDelayAtom,
@@ -12,13 +11,14 @@ import {
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 
 import { userInputAtom } from "../store/system.atom"
 import {
   checkAuthAlertDialogOpenAtom,
   selectAppsDialogOpenAtom,
 } from "../store/ui.atom"
+import { parseAppClient } from "../utils"
 
 /**
  * 1. 用户在首页query
@@ -34,8 +34,7 @@ export function useConvQuery() {
   const setPrompt = useSetAtom(userInputAtom)
 
   const { apps, appIndex, appId, bestContext, responses, responding } =
-    useSnapshot(coreValtio)
-  let { conv } = useSnapshot(coreValtio)
+    useSnapshot(core)
 
   const router = useRouter()
   const session = useSession()
@@ -45,7 +44,6 @@ export function useConvQuery() {
 
   return async (prompt: string) => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
-      conv,
       query,
       responses,
       context: bestContext,
@@ -76,11 +74,11 @@ export function useConvQuery() {
 
     // todo: mutate optimization
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
-    if (!conv) {
-      conv = await addConv.mutateAsync(
+    if (!core.conv) {
+      const conv = await addConv.mutateAsync(
         {
           title: undefined,
-          apps: apps.map(parseApp),
+          apps: apps.map(parseAppClient),
         },
         {
           onError: () => {
@@ -91,6 +89,9 @@ export function useConvQuery() {
           },
         },
       )
+      // 直接本地刷新
+      core.addConvFromServer(conv)
+      core.initConvFromServer(conv)
     }
 
     // 否则直接发起请求
@@ -103,20 +104,24 @@ export function useConvQuery() {
 
     query.mutate(
       {
-        convId: conv.id,
+        // app-response
         context: newContext,
-        apps: apps.map(parseApp),
+        apps: apps.map(parseAppClient),
         llmDelay,
-        pusherServerId,
+
+        // conv-title
+        convId: core.convId!,
         bestAppId: appId,
         systemPromptForConvTitle: convSummaryPrompt,
+
+        // utils
+        pusherServerId,
       },
       {
-        onSuccess: async (requestId) => {
-          // 服务器上路由跳转很快，所以我们要先确保数据重置完
-          await utils.core.listConv.invalidate() // update req id
-          await utils.core.getConv.invalidate() // update req, apps
-          router.push(`/tt/${conv!.id}?r=${requestId}`)
+        onSuccess: async (request) => {
+          // local update
+          core.updateRequestFromServer(request)
+          router.push(`/tt/${request.convId}?r=${request.id}`)
         },
         onError: (err) => {
           console.error(err)

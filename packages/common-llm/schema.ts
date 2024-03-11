@@ -1,5 +1,4 @@
 import { ICreateApp } from "@/schema/app.create"
-import { IAppClient } from "@/schema/app.detail"
 import { App } from "@prisma/client"
 import { z } from "zod"
 
@@ -14,7 +13,7 @@ export const createCallLLMSchema = z.object({
   presencePenalty: z.number().default(0).optional(),
   n: z.number().default(1).optional(),
   streaming: z.boolean().default(true).optional(),
-  stop: z.string().array().optional(),
+  // stop: z.string().array().optional(), // todo: readonly warning
   timeout: z.number().default(3000).optional(),
   openAIApiKey: z.string().optional(),
 })
@@ -31,7 +30,7 @@ export const parseApp = (
   id: app.id,
   modelName: app.modelName,
 
-  stop: [...app.stop], // string[]
+  // stop: [...app.stop], // string[]
   n: app.n ?? undefined,
   openAIApiKey: app.openAIApiKey ?? undefined,
   user: app.user ?? undefined,

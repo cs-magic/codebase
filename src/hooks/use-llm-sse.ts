@@ -2,10 +2,10 @@ import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/core"
 import { transportTypeAtom } from "../../packages/common-transport/store"
-import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
+import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 
 export const useLlmSse = (request: ILLMRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(
@@ -25,12 +25,11 @@ export const useLlmSse = (request: ILLMRequest) => {
   ) => {
     if (request.type === "app-response") {
       const { requestId } = request
-      if (requestId)
-        coreValtio.updateAppResponse(requestId, request.appId, func)
+      if (requestId) core.updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
       if (!convId) return
-      coreValtio.updateConvTitle(convId, func)
+      core.updateConvTitle(convId, func)
     }
   }
 
@@ -53,7 +52,7 @@ export const useLlmSse = (request: ILLMRequest) => {
     if (status !== "to-response") return
 
     refSSE.current = fetchSSE(
-      `/api/llm?r=${getTriggerIdFromSseRequest(request)}`,
+      `/api/llm?r=${getTriggerIdFromSSERequest(request)}`,
       {
         onOpen: () => {
           update((s) => {

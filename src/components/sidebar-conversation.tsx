@@ -22,12 +22,12 @@ import {
 import { cn } from "../../packages/common-ui/shadcn/utils"
 
 import { IConvBase } from "../schema/conv.base"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   // const [convId] = useAtom(convIdAtom)
-  const { convId } = useSnapshot(coreValtio)
+  const { convId } = useSnapshot(core)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()

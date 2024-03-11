@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 /**
@@ -26,7 +26,7 @@ export const useConvSearchParams = (
     convId: convIdCurrent,
     requestIds,
     requestId: reqIdCurrent,
-  } = useSnapshot(coreValtio)
+  } = useSnapshot(core)
 
   const utils = api.useUtils()
   const updateConv = api.core.updateConv.useMutation()
@@ -55,9 +55,6 @@ export const useConvSearchParams = (
     reqIdCurrent !== reqIdInUrl
 
   useEffect(() => {
-    // 确保已经刷新对齐了conv
-    if (isDraft) return
-
     console.log(ansiColors.red("-- useConvSearchParams: "), {
       convIdInUrl,
       convIdCurrent,
@@ -70,6 +67,9 @@ export const useConvSearchParams = (
       shouldGotoCurrent,
       shouldGotoNew,
     })
+
+    // 确保已经刷新对齐了conv
+    if (isDraft) return
 
     if (shouldGotoCurrent)
       router.replace(

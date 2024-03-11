@@ -1,10 +1,10 @@
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { api } from "../../packages/common-trpc/react"
+import { core } from "../store/core.valtio"
 
 export const useDelAllConvs = () => {
   const router = useRouter()
-  const utils = api.useUtils()
 
   const delAllConvs = api.core.delAllConvs.useMutation({
     onError: (error) => {
@@ -12,8 +12,7 @@ export const useDelAllConvs = () => {
       toast.error("删除失败！")
     },
     onSuccess: (data) => {
-      void utils.core.listConv.invalidate()
-      console.log("deleted all: ", { data })
+      core.delAllConvs()
       router.push("/tt")
     },
   })

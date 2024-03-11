@@ -1,17 +1,16 @@
-import { IBaseResponse } from "../schema/query"
+import { useSnapshot } from "valtio"
+import { IAppClient } from "../schema/app.detail"
 import { ILLMRequest } from "../schema/sse"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 
-export const useLLMForAppChat = (
-  requestId: string,
-  appId: string,
-  appClientId: string,
-  response: IBaseResponse | undefined,
-  enabled?: boolean,
-) => {
+export const useLLMForAppChat = (app: IAppClient) => {
+  const { requestId } = useSnapshot(core)
+
+  const { response, id: appId, clientId: appClientId } = app
+
   const llmRequest: ILLMRequest = {
     type: "app-response",
     status: checkRespondingStatus(response),
@@ -23,9 +22,9 @@ export const useLLMForAppChat = (
   useLlmPusher(llmRequest, {
     update: (response) => {
       if (!requestId) return
-      coreValtio.updateAppResponse(requestId, appClientId, response)
+      core.updateAppResponse(requestId, appClientId, response)
     },
-    enabled,
+    enabled: !!requestId,
     onInit: () => {
       // setIsDraft(false)
     },

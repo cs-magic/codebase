@@ -14,7 +14,8 @@ export default function Conv({
   convIdInUrl: string | undefined
   reqIdInUrl: string | null
 }) {
-  useConvFromServer(convIdInUrl, reqIdInUrl)
+  // 本地手动更新，不需要它了
+  // useConvFromServer(convIdInUrl, reqIdInUrl)
 
   useConvSearchParams(convIdInUrl, reqIdInUrl)
 

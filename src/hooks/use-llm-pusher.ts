@@ -1,4 +1,3 @@
-import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
@@ -6,7 +5,7 @@ import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
 import { ISSEEvent, SSEEventType } from "../../packages/common-sse/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
-import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
+import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
 import { usePusher } from "./use-pusher"
 
 /**
@@ -28,7 +27,7 @@ export const useLlmPusher = (
   const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
 
   const { pusher } = usePusher()
-  const triggerId = getTriggerIdFromSseRequest(request)
+  const triggerId = getTriggerIdFromSSERequest(request)
 
   const { enabled, update, onInit, autoClose } = options
 
@@ -44,38 +43,34 @@ export const useLlmPusher = (
       type: T,
       func: (event: ISSEEvent<T>["data"]) => void,
     ) => {
-      // console.log(`[pusher] binding event: `, type)
-      channel.bind(type, (event: ISSEEvent<T>) => {
+      channel.bind(type, (data: ISSEEvent<T>["data"]) => {
         if (pusherLogLevel <= LogLevel.debug)
-          console.log(
-            `[pusher] << ${ansiColors.bgBlue.white(event.event)}`,
-            event.data,
-          )
-        func(event)
+          console.log(`[pusher] ${triggerId} << ${type}`, data)
+        func(data)
       })
     }
 
-    bindEvent("data", (event) => {
+    bindEvent("data", (data) => {
       update((response) => {
-        if (!response.content) response.content = event.token
-        else response.content += event.token
+        if (!response.content) response.content = data.token
+        else response.content += data.token
       })
     })
 
-    bindEvent("error", (event) => {
+    bindEvent("error", (data) => {
       update((response) => {
-        response.error = event.message
+        response.error = data.message
       })
     })
 
-    bindEvent("init", (event) => {
+    bindEvent("init", (data) => {
       if (onInit) onInit()
       update((response) => {
         response.tStart = new Date()
       })
     })
 
-    bindEvent("close", (event) => {
+    bindEvent("close", (data) => {
       update((response) => {
         response.tEnd = new Date()
       })

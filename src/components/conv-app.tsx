@@ -5,13 +5,12 @@ import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
 import { IAppClient } from "../schema/app.detail"
 import { RoleType } from "../schema/message"
-import { coreValtio } from "../store/core.valtio"
+import { core } from "../store/core.valtio"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
-import { useEffect } from "react"
 
 export const ConvApp = ({ app }: { app: IAppClient }) => {
-  const { commonContext } = useSnapshot(coreValtio)
+  const { commonContext } = useSnapshot(core)
 
   const context = !app.response
     ? commonContext
@@ -25,12 +24,7 @@ export const ConvApp = ({ app }: { app: IAppClient }) => {
         },
       ]
 
-  useLLMForAppChat(
-    app.response?.requestId ?? null,
-    app.id,
-    app.clientId,
-    app.response,
-  )
+  useLLMForAppChat(app)
 
   // console.log({ appId: config.id, commonContext, response })
 
