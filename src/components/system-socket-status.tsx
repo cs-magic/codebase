@@ -1,7 +1,7 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { pusherLatencyAtom } from "../../packages/common-puser/store"
+import { pusherLatencyAtom } from "../../packages/common-transport/store"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { BarChart } from "lucide-react"
 import { SystemSocketStatusIcon } from "@/components/system-socket-status-icon"

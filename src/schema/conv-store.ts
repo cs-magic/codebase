@@ -1,14 +1,14 @@
-import { IAppClient, IAppDetail } from "../schema/app.detail"
+import { IAppClient, IAppDetail } from "./app.detail"
 import {
   IConvBase,
   IConvDetail,
   IRequest,
   IResponse,
   IUpdateResponse,
-} from "../schema/conv"
-import { IContext } from "../schema/message"
+} from "./conv"
+import { IContext } from "./message"
 
-export interface ConvSchema {
+export interface IConvStore {
   ///////////////////////////////
   // base
   //////////////////////////////
@@ -22,6 +22,7 @@ export interface ConvSchema {
   // derived
   //////////////////////////////
 
+  convId: string | null
   appId: string | null
   requests: IRequest[]
   requestId: string | null
@@ -62,8 +63,4 @@ export interface ConvSchema {
   forkApp: (app: IAppClient) => void
 
   delApp: (appClientId: string) => void
-
-  //////////////////////////////
-  // private
-  //////////////////////////////
 }

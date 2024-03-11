@@ -3,9 +3,9 @@ import { redis } from "../../../common-db"
 import {
   pusherServerConfigs,
   PusherServerId,
-} from "../../../common-puser/config"
-import { initPusherServer } from "../../../common-puser/server/init"
-import { ISseEvent } from "../../../common-sse/schema"
+} from "../../../common-transport/config"
+import { initPusherServer } from "../../../common-transport/server/init"
+import { ISseEvent } from "../../../common-transport/schema"
 import {
   getTriggerIdFromSseRequest,
   ILLMRequest,

@@ -6,7 +6,7 @@ import {
   initPusherAtom,
   pusherClientAtom,
   pusherServerIdAtom,
-} from "../../../../packages/common-puser/store"
+} from "../../../../packages/common-transport/store"
 import { useEffect } from "react"
 import {
   Select,
@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../packages/common-ui/shadcn/shadcn-components/select"
-import { PusherServerId } from "../../../../packages/common-puser/config"
+import { PusherServerId } from "../../../../packages/common-transport/config"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 import { useAtom } from "jotai"
 

@@ -1,13 +1,15 @@
-import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { convIdAtom, requestIdAtom, requestsAtom } from "../store/conv.atom"
+import { useSnapshot } from "valtio"
+import { convStore } from "../store/conv.valtio"
 import { getConvUrl } from "../utils"
 
 export const useConvRequestSlider = () => {
-  const [convId] = useAtom(convIdAtom)
-  const [requests] = useAtom(requestsAtom)
-  const [requestId] = useAtom(requestIdAtom)
+  // const [convId] = useAtom(convIdAtom)
+  // const [requests] = useAtom(requestsAtom)
+  // const [requestId] = useAtom(requestIdAtom)
+
+  const { convId, requests, requestId } = useSnapshot(convStore)
 
   const value = requests.findIndex((r) => r.id === requestId) + 1
   const [tempValue, setTempValue] = useState(value)

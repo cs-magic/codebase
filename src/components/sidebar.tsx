@@ -1,22 +1,25 @@
 "use client"
 import { useAddConv } from "@/hooks/use-conv-add"
 import { useDelAllConvs } from "@/hooks/use-conv-del-all"
-import { convsAtom } from "../store/conv.atom"
 import { useAtom } from "jotai"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
+import { useSnapshot } from "valtio"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
+import { convStore } from "../store/conv.valtio"
 import { SidebarConvItem } from "./sidebar-conversation"
 
 export const Sidebar = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => {
-  const [convs] = useAtom(convsAtom)
   const [devEnabled] = useAtom(devEnabledAtom)
+
+  const { convs } = useSnapshot(convStore)
+  // const [convs] = useAtom(convsAtom)
 
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()

@@ -1,23 +1,27 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import sum from "lodash/sum"
+import Pusher from "pusher"
 import PusherJS from "pusher-js"
 import { toast } from "sonner"
 import { FixedArray } from "../common-algo/array"
 import { LogLevel } from "../common-log/schema"
 import { initPusherClient } from "./client/init"
 import { pusherServerConfigs, PusherServerId } from "./config"
-import { PusherConnectionState } from "./schema"
+import { PusherConnectionState, TransportType } from "./schema"
 
 ///////////////////////////////
 // base
 //////////////////////////////
 
+export const pusherServerAtom = atom<Pusher | null>(null)
+
+export const pusherClientAtom = atom<PusherJS | null>(null)
+
 export const pusherServerIdAtom = atomWithStorage<PusherServerId>(
   "pusher.server.id",
   "tencent_wss",
 )
-export const pusherClientAtom = atom<PusherJS | null>(null)
 export const pusherStateAtom = atom<PusherConnectionState>("initialized")
 export const pusherLastPingTimeAtom = atom<number | null>(null)
 export const pusherLastPongTimeAtom = atom<number | null>(null)
@@ -73,3 +77,5 @@ export const initPusherAtom = atom(null, (get, set) => {
     },
   })
 })
+
+export const transportTypeAtom = atom<TransportType>("pusher")

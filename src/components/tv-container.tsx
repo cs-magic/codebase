@@ -1,6 +1,10 @@
 "use client"
 import { Controls } from "@/components/tv-controls"
-import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@/store/tv"
+import {
+  getTvScale,
+  tvFullScreenAtom,
+  tvScreenOnAtom,
+} from "../../packages/extend-tv/store"
 
 import "@/styles/tv.css"
 import { useAtom } from "jotai"

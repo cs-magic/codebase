@@ -1,3 +1,4 @@
+import { forkApp } from "../utils"
 import { getNewId } from "../../packages/common-algo/id"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import {
@@ -8,10 +9,9 @@ import {
   IUpdateResponse,
 } from "../schema/conv"
 import { IContext } from "../schema/message"
-import { forkApp } from "./app.utils"
-import { ConvSchema } from "./conv.schema"
+import { IConvStore } from "../schema/conv-store"
 
-export class ConvClass {
+export class ConvStore implements IConvStore {
   //////////////////////////////
   // base states
   //////////////////////////////
@@ -24,6 +24,10 @@ export class ConvClass {
   //////////////////////////////
   // derived states
   //////////////////////////////
+
+  get convId() {
+    return this.conv?.id ?? null
+  }
 
   get appId() {
     return this.apps[this.appIndex]?.clientId ?? null

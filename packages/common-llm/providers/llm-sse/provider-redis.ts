@@ -1,5 +1,9 @@
 import { redis } from "../../../common-db"
-import { IClient, ISseEvent, ISseTrigger } from "../../../common-sse/schema"
+import {
+  IClient,
+  ISseEvent,
+  ISseTrigger,
+} from "../../../common-transport/schema"
 import { llmWrite } from "./utils"
 import { ILlmManagerTraditional } from "./schema"
 

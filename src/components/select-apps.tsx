@@ -1,37 +1,41 @@
 "use client"
 
 import React, { useState } from "react"
+import { api } from "../../packages/common-trpc/react"
 import {
   Dialog,
   DialogContent,
 } from "../../packages/common-ui/shadcn/shadcn-components/dialog"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { appsPersistedAtom, serverAppsAtom } from "../../deprecated/v2/app.atom"
+import { maxAppsOnScreenAtom } from "../store/core.atom"
+
+import { selectAppsDialogOpenAtom } from "../store/ui.atom"
+import { convStore } from "../store/conv.valtio"
 import { SelectApp } from "./select-app"
 import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
 import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { useAtom } from "jotai"
 
-import {
-  serverAppsAtom,
-  appsPersistedAtom,
-  uiMaxAppsAtom,
-  uiSelectAppsDialogOpenAtom,
-} from "../store/app.atom"
+import { useSnapshot } from "valtio"
 
 export const AppsDialog = () => {
-  const [allApps] = useAtom(serverAppsAtom)
-  const [persistedApps] = useAtom(appsPersistedAtom)
+  const { apps } = useSnapshot(convStore)
 
+  // const [allApps] = useAtom(serverAppsAtom)
+  // const [persistedApps] = useAtom(appsPersistedAtom)
+
+  const { data: allApps = [] } = api.core.listApps.useQuery()
   const [appFilter, setAppFilter] = useState("")
-  const [open, setOpen] = useAtom(uiSelectAppsDialogOpenAtom)
-  const [maxToAdd] = useAtom(uiMaxAppsAtom)
-
   const filteredApps = allApps.filter(
     (m) =>
       m.title?.toLowerCase().includes(appFilter.toLowerCase()) ??
       (m.model.title.toLowerCase().includes(appFilter.toLowerCase()) ||
         m.model.company.title.toLowerCase().includes(appFilter)),
   )
+
+  const [open, setOpen] = useAtom(selectAppsDialogOpenAtom)
+  const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
 
   // console.log({ allApps, appFilter, filteredApps, maxToAdd })
   // console.log({ persistedApps })
@@ -46,7 +50,7 @@ export const AppsDialog = () => {
               <span className={"text-xs"}>（至少选择1个）</span>
             </Label>
 
-            {persistedApps.map((m, index) => (
+            {apps.map((m, index) => (
               <SelectApp key={index} app={m} type={"toDel"} />
             ))}
           </div>

@@ -1,5 +1,5 @@
-import { tvScreenOnAtom } from "@/store/tv"
-import { tvFullScreenAtom } from "@/store/tv"
+import { tvScreenOnAtom } from "../../packages/extend-tv/store"
+import { tvFullScreenAtom } from "../../packages/extend-tv/store"
 import { useAtom } from "jotai"
 
 export const Controls = () => {

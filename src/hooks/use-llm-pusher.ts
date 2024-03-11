@@ -2,11 +2,13 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
-import { pusherLogLevelAtom } from "../../packages/common-puser/store"
-import { ISseEvent, SseEventType } from "../../packages/common-sse/schema"
+import {
+  pusherLogLevelAtom,
+  transportTypeAtom,
+} from "../../packages/common-transport/store"
+import { ISseEvent, SseEventType } from "../../packages/common-transport/schema"
 import { IBaseResponse } from "../schema/query"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
-import { transportTypeAtom } from "../store/query"
 import { usePusher } from "./use-pusher"
 
 /**

@@ -18,3 +18,9 @@ export const openAlertDialogAtom = atom(null, (get, set, content: string) => {
   set(uiAlertDialogOpen, true)
   set(uiAlertDialogContent, content)
 })
+export const uiMobileSidebarOpen = atom(false)
+export const uiInnerHeight = atom<null | number>(null)
+export const uiViewportHeight = atom<number | null>(null)
+export const isSoftKeyboardOn = atom(
+  (get) => (get(uiInnerHeight) ?? 0) < get(uiScreenAtom).height,
+)

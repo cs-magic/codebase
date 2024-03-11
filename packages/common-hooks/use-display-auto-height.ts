@@ -1,9 +1,9 @@
 "use client"
 
-import { uiInnerHeight, uiViewportHeight } from "@/store/ui"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
 import { isServer } from "../common-env/utils"
+import { uiInnerHeight, uiViewportHeight } from "../common-ui/store"
 import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top"
 
 /**

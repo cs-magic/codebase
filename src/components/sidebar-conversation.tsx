@@ -1,10 +1,9 @@
 "use client"
 import { useDelConv } from "@/hooks/use-conv-del"
-import { convIdAtom } from "../store/conv.atom"
-import { useAtom } from "jotai"
 import { MoreHorizontal, TrashIcon } from "lucide-react"
 import Link from "next/link"
 import { useRef } from "react"
+import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
 
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
@@ -22,10 +21,12 @@ import {
 } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IConvBase } from "../schema/conv"
+import { convStore } from "../store/conv.valtio"
 import { getConvUrl } from "../utils"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
-  const [convId] = useAtom(convIdAtom)
+  // const [convId] = useAtom(convIdAtom)
+  const { convId } = useSnapshot(convStore)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()

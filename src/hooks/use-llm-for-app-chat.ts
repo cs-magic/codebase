@@ -1,7 +1,6 @@
-import { useAtom } from "jotai"
 import { IBaseResponse } from "../schema/query"
 import { ILLMRequest } from "../schema/sse"
-import { updateAppResponseAtom } from "../store/conv.atom"
+import { convStore } from "../store/conv.valtio"
 import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
@@ -11,8 +10,6 @@ export const useLLMForAppChat = (
   appId: string,
   response: IBaseResponse | undefined,
 ) => {
-  const [, updateAppResponse] = useAtom(updateAppResponseAtom)
-
   const llmRequest: ILLMRequest = {
     type: "app-response",
     status: checkRespondingStatus(response),
@@ -24,7 +21,7 @@ export const useLLMForAppChat = (
     llmRequest,
     (response) => {
       if (!requestId) return
-      updateAppResponse(requestId, appId, response)
+      convStore.updateAppResponse(requestId, appId, response)
     },
     true,
     () => {

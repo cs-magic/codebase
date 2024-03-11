@@ -3,15 +3,17 @@ import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { convAtom, convLogLevelAtom } from "../store/conv.atom"
+import { convLogLevelAtom } from "../store/dev.atom"
+import { convStore } from "../store/conv.valtio"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [conv, setConv] = useAtom(convAtom)
   const [, openAlertDialog] = useAtom(openAlertDialogAtom)
   const [convLogLevel] = useAtom(convLogLevelAtom)
+
+  // const [, setConv] = useAtom(convAtom)
 
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
@@ -47,7 +49,7 @@ export const useConvFromServer = (
           new: convFromServer.currentRequestId,
         },
       })
-    setConv(convFromServer)
+    convStore.convs = convFromServer
   }, [convFromServer])
 
   // 2. 无效则跳转

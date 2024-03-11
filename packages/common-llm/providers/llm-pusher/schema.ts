@@ -1,4 +1,4 @@
-import { ISseEvent, ISseTrigger } from "../../../common-sse/schema"
+import { ISseEvent, ISseTrigger } from "../../../common-transport/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 
 export interface ILlmManagerPusher {

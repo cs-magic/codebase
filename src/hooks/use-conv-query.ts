@@ -1,21 +1,24 @@
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
-import { useAtomValue } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useSnapshot } from "valtio"
 import { parseApp } from "../../packages/common-llm/schema"
 import {
   convSummaryPromptAtom,
   llmDelayAtom,
 } from "../../packages/common-llm/store"
-import { pusherServerIdAtom } from "../../packages/common-puser/store"
+import { pusherServerIdAtom } from "../../packages/common-transport/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
-import { uiSelectAppsDialogOpenAtom } from "../store/app.atom"
-import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
-import { convAtomStore } from "../store/conv.store"
-import { userPromptAtom } from "../store/query"
+
+import { userInputAtom } from "../store/core.atom"
+import {
+  checkAuthAlertDialogOpenAtom,
+  selectAppsDialogOpenAtom,
+} from "../store/ui.atom"
+import { convStore } from "../store/conv.valtio"
 
 /**
  * 1. 用户在首页query
@@ -23,10 +26,10 @@ import { userPromptAtom } from "../store/query"
  * @param query
  */
 export function useConvQuery() {
-  const [, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
-  const [, setSelectAppsOpen] = useAtom(uiSelectAppsDialogOpenAtom)
+  const [, setOpen] = useAtom(checkAuthAlertDialogOpenAtom)
+  const [, setSelectAppsOpen] = useAtom(selectAppsDialogOpenAtom)
   const [llmDelay] = useAtom(llmDelayAtom)
-  const [prompt, setPrompt] = useAtom(userPromptAtom)
+  const [prompt, setPrompt] = useAtom(userInputAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
   const [convSummaryPrompt] = useAtom(convSummaryPromptAtom)
 
@@ -46,10 +49,11 @@ export function useConvQuery() {
   // const responding = useConvStore.use.responding()
 
   const { apps, appIndex, appId, bestContext, responses, responding } =
-    useAtomValue(convAtomStore)
-  // useSnapshot(convStore)
-  let { conv } = useAtomValue(convAtomStore)
-  // useSnapshot(convStore)
+    // useAtomValue(convAtomStore)
+    useSnapshot(convStore)
+  let { conv } =
+    // useAtomValue(convAtomStore)
+    useSnapshot(convStore)
 
   const router = useRouter()
   const session = useSession()
@@ -88,6 +92,7 @@ export function useConvQuery() {
       return toast.warning("请登录")
     }
 
+    // todo: mutate optimization
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
     if (!conv) {
       conv = await addConv.mutateAsync(

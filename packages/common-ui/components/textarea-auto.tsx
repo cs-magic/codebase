@@ -1,6 +1,6 @@
 "use client"
 
-import { userPromptAtom } from "@/store/query"
+import { userInputAtom } from "@/store/core.atom"
 import { useAtom } from "jotai"
 import { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"
@@ -16,7 +16,7 @@ export const TextareaAuto = forwardRef<
   const mounted = useMounted()
   // avoid layout shift
   const rows = !mounted ? minRows : undefined
-  const [prompt, setPrompt] = useAtom(userPromptAtom)
+  const [prompt, setPrompt] = useAtom(userInputAtom)
 
   return (
     <ReactTextareaAutoSize

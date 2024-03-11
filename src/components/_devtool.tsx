@@ -1,9 +1,6 @@
 "use client"
 
-import {
-  convLogLevelAtom,
-  requestsSlideTextDisplayAtom,
-} from "../store/conv.atom"
+import { TransportType } from "../../packages/common-transport/schema"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import {
@@ -19,11 +16,12 @@ import {
   llmDelayAtom,
 } from "../../packages/common-llm/store"
 import { LogLevel } from "../../packages/common-log/schema"
-import { PusherServerId } from "../../packages/common-puser/config"
+import { PusherServerId } from "../../packages/common-transport/config"
 import {
   pusherLogLevelAtom,
   pusherServerIdAtom,
-} from "../../packages/common-puser/store"
+  transportTypeAtom,
+} from "../../packages/common-transport/store"
 import { SmsProviderType } from "../../packages/common-sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
@@ -56,7 +54,8 @@ import {
   SheetTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/sheet"
 import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
-import { TransportType, transportTypeAtom } from "../store/query"
+import { convLogLevelAtom } from "../store/dev.atom"
+import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 
 export const Devtool = () => {
   return (
@@ -105,7 +104,7 @@ export const Devtool = () => {
 export const ConfigDevCard = () => {
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
   const [requestsSlideTextDisplay, setRequestsSlideTextDisplay] = useAtom(
-    requestsSlideTextDisplayAtom,
+    requestsSlideTextVisibleAtom,
   )
 
   return (

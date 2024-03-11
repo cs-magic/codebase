@@ -1,11 +1,9 @@
-import { appsPersistedAtom } from "../store/app.atom"
-import { useAtom } from "jotai"
-import { toast } from "sonner"
-import { api } from "../../packages/common-trpc/react"
-import { parseApp } from "../../packages/common-llm/schema"
-import { createAppSchema } from "../schema/app.create"
-import { convAtom } from "../store/conv.atom"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import { useSnapshot } from "valtio"
+import { parseApp } from "../../packages/common-llm/schema"
+import { api } from "../../packages/common-trpc/react"
+import { convStore } from "../store/conv.valtio"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话 （包含query、路由）
@@ -14,7 +12,9 @@ import { useRouter } from "next/navigation"
  * 返回 appId，用于其他的函数
  */
 export function useAddConv() {
-  const [persistedApps] = useAtom(appsPersistedAtom)
+  // const [apps] = useAtom(appsPersistedAtom)
+  const { apps } = useSnapshot(convStore)
+
   const router = useRouter()
 
   const addConv = api.core.addConv.useMutation()
@@ -25,7 +25,7 @@ export function useAddConv() {
     return addConv.mutateAsync(
       {
         title,
-        apps: persistedApps.map((a) => parseApp(a)),
+        apps: apps.map((a) => parseApp(a)),
       },
       {
         onError: () => {

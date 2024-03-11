@@ -1,18 +1,24 @@
 "use client"
 
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
+import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { getAppsGridColsAtom, stopGeneratingAtom } from "../store/app.atom"
-import { convAtomStore } from "../store/conv.store"
+import { uiScreenAtom } from "../../packages/common-ui/store"
+
+import { appStopGeneratingScopeAtom } from "../store/core.atom"
+
+import { convStore } from "../store/conv.valtio"
+import { getAppsGridCols } from "../utils"
 import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
-  const [gridCols] = useAtom(getAppsGridColsAtom)
-
+  // const [gridCols] = useAtom(getAppsGridColsAtom)
   // const apps = useConvStore.use.apps()
-  const { apps } = useAtomValue(convAtomStore)
   // useSnapshot(convStore)
+
+  const [{ width }] = useAtom(uiScreenAtom)
+  const { apps } = useSnapshot(convStore)
 
   console.log({ apps })
 
@@ -25,12 +31,12 @@ export const ConvApps = () => {
       )}
       style={{
         // ref: https://tailwindcss.com/docs/grid-template-columns
-        gridTemplateColumns: `repeat(${gridCols(apps.length)}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(${getAppsGridCols(width, apps.length)}, minmax(0, 1fr))`,
       }}
     >
       {apps.map((app, index) => (
         // 不要用app.id会重复！
-        <ScopeProvider key={index} atoms={[stopGeneratingAtom]}>
+        <ScopeProvider key={index} atoms={[appStopGeneratingScopeAtom]}>
           <ConvApp app={app} />
         </ScopeProvider>
       ))}

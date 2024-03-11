@@ -6,11 +6,11 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useConvQuery } from "../hooks/use-conv-query"
-import { userPromptAtom } from "../store/query"
+import { userInputAtom } from "../store/core.atom"
 
 export const HomeQueryInput = () => {
   const query = useConvQuery()
-  const [prompt] = useAtom(userPromptAtom)
+  const [prompt] = useAtom(userInputAtom)
 
   return (
     <div className={"grow flex rounded-3xl border p-2 my-8"}>

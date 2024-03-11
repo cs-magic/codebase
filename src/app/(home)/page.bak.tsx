@@ -5,10 +5,10 @@ import React from "react"
 import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
 import { cn } from "../../../packages/common-ui/shadcn/utils"
 import { HomeQueryInput } from "../../components/home-query-input"
-import { userPromptAtom } from "../../store/query"
+import { userInputAtom } from "../../store/core.atom"
 
 export default function HomePage() {
-  const [prompt] = useAtom(userPromptAtom)
+  const [prompt] = useAtom(userInputAtom)
 
   return (
     <FlexContainer

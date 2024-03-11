@@ -1,4 +1,3 @@
-import { useAtomValue } from "jotai"
 import { api } from "../../packages/common-trpc/react"
 import {
   Select,
@@ -10,20 +9,18 @@ import {
   SelectTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
 import { IAppClient } from "../schema/app.detail"
-import { convAtomStore } from "../store/conv.store"
 
 export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
   const { data: apps } = api.core.listApps.useQuery()
 
   // const replaceApp = useConvStore.use.replaceApp()
-  const { replaceApp } = useAtomValue(convAtomStore)
+  // const { replaceApp } = useAtomValue(convAtomStore)
 
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
         onValueChange={(value) => {
-          // convStore.
-          replaceApp(app.clientId, apps!.find((a) => a.id === value)!)
+          convStore.replaceApp(app.clientId, apps!.find((a) => a.id === value)!)
         }}
       >
         <SelectTrigger className={"focus:ring-0 gap-2 w-40 overflow-hidden"}>

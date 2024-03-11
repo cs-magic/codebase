@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
-import { pusherServerIdSchema } from "../../../../packages/common-puser/config"
+import { pusherServerIdSchema } from "../../../../packages/common-transport/config"
 import {
   convProcedure,
   createTRPCRouter,

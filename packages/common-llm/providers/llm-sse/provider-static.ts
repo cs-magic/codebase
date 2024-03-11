@@ -1,5 +1,9 @@
 import { remove } from "lodash"
-import { IClient, ISseEvent, ISseTrigger } from "../../../common-sse/schema"
+import {
+  IClient,
+  ISseEvent,
+  ISseTrigger,
+} from "../../../common-transport/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 import { ILlmManagerTraditional } from "./schema"
 

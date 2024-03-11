@@ -1,19 +1,20 @@
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
-import { fetchSSE } from "../../packages/common-sse/fetch-sse"
+import { fetchSSE } from "../../packages/common-transport/fetch-sse"
+import { transportTypeAtom } from "../../packages/common-transport/store"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
-import { stopGeneratingAtom } from "../store/app.atom"
-import { updateAppResponseAtom, updateConvTitleAtom } from "../store/conv.atom"
-import { transportTypeAtom } from "../store/query"
+
+import { appStopGeneratingScopeAtom } from "../store/core.atom"
+import { convStore } from "../store/conv.valtio"
 
 export const useLlmSse = (request: ILLMRequest) => {
-  const [stoppedGenerating, stopGenerating] = useAtom(stopGeneratingAtom)
+  const [stoppedGenerating, stopGenerating] = useAtom(
+    appStopGeneratingScopeAtom,
+  )
 
   const { status, type, pusherServerId } = request
   const [transportType] = useAtom(transportTypeAtom)
 
-  const [, updateAppResponse] = useAtom(updateAppResponseAtom)
-  const [, updateConvTitle] = useAtom(updateConvTitleAtom)
   const update = (
     func: (data: {
       content?: string | null
@@ -24,10 +25,11 @@ export const useLlmSse = (request: ILLMRequest) => {
   ) => {
     if (request.type === "app-response") {
       const { requestId } = request
-      if (requestId) updateAppResponse(requestId, request.appId, func)
+      if (requestId) convStore.updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
-      if (convId) updateConvTitle(convId, func)
+      if (!convId) return
+      convStore.updateConvTitle(convId, func)
     }
   }
 

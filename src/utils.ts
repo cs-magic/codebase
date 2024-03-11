@@ -1,3 +1,6 @@
+import { getNewId } from "../packages/common-algo/id"
+import { BEST_VIEWPOINT } from "../packages/common-ui/config"
+import { IAppClient, IAppDetail } from "./schema/app.detail"
 import { IBaseResponse } from "./schema/query"
 import { ResponseStatus } from "./schema/sse"
 
@@ -18,3 +21,15 @@ export const checkRespondingStatus = (
   if (response.tEnd) return "responded"
   return "responding"
 }
+export const getAppsGridCols = (width: number, nApps: number) =>
+  width // 未初始化时避免闪烁
+    ? Math.min(Math.floor(width / BEST_VIEWPOINT), nApps)
+    : nApps
+export const forkApp = (app: IAppDetail): IAppClient => ({
+  ...app,
+  clientId: getNewId(),
+
+  // decide whether to change
+  isDraft: true,
+  response: undefined,
+})

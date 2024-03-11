@@ -11,10 +11,11 @@ import {
   AlertDialogTitle,
 } from "../../packages/common-ui/shadcn/shadcn-components/alert-dialog"
 import { signIn } from "next-auth/react"
-import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
+
+import { checkAuthAlertDialogOpenAtom } from "../store/ui.atom"
 
 export const CheckAuthAlertDialog = () => {
-  const [open, setOpen] = useAtom(uiCheckAuthAlertDialogOpenAtom)
+  const [open, setOpen] = useAtom(checkAuthAlertDialogOpenAtom)
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>

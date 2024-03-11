@@ -1,12 +1,13 @@
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
+import { useSnapshot } from "valtio"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
+import { maxAppsOnScreenAtom } from "../store/core.atom"
 
-import { uiMaxAppsAtom } from "../store/app.atom"
-import { convAtomStore } from "../store/conv.store"
+import { convStore } from "../store/conv.valtio"
 
 export const SelectApp = ({
   app,
@@ -15,7 +16,7 @@ export const SelectApp = ({
   app: IAppDetail
   type: "toAdd" | "toDel"
 }) => {
-  const [maxToAdd] = useAtom(uiMaxAppsAtom)
+  const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
 
   // const [apps] = useAtom(appsPersistedAtom)
   // const [, pushApp] = useAtom(pushAppAtom)
@@ -25,8 +26,7 @@ export const SelectApp = ({
   // const pushApp = useConvStore.use.pushApp()
   // const delApp = useConvStore.use.delApp()
 
-  const { apps, delApp, pushApp } = useAtomValue(convAtomStore)
-  // useSnapshot(convStore)
+  const { apps } = useSnapshot(convStore)
 
   const disabled =
     (type === "toAdd" && apps.length >= maxToAdd) ||
@@ -50,9 +50,9 @@ export const SelectApp = ({
           if (disabled) return
           if (type === "toDel")
             // void convStore.
-            delApp(app.id)
+            convStore.delApp(app.id)
           // void convStore.
-          else pushApp(app)
+          else convStore.pushApp(app)
         }}
       >
         <Icon />

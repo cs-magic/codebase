@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import {
   Lock,
   MinusCircleIcon,
@@ -7,20 +7,23 @@ import {
   StopCircle,
   Unlock,
 } from "lucide-react"
+import { useSnapshot } from "valtio"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 
 import { callLLM } from "../../packages/common-llm/actions/llm-caller"
-import { pusherServerIdAtom } from "../../packages/common-puser/store"
+import { pusherServerIdAtom } from "../../packages/common-transport/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppClient } from "../schema/app.detail"
-import { stopGeneratingAtom } from "../store/app.atom"
-import { convAtomStore } from "../store/conv.store"
+
+import { appStopGeneratingScopeAtom } from "../store/core.atom"
+
+import { convStore } from "../store/conv.valtio"
 import { checkRespondingStatus } from "../utils"
 import { ConvAppTitleLine } from "./conv-app-title-line"
 
 export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
-  const [, stopGenerating] = useAtom(stopGeneratingAtom)
+  const [, stopGenerating] = useAtom(appStopGeneratingScopeAtom)
 
   // const [apps] = useAtom(appsPersistedAtom)
   // const [, delApp] = useAtom(delAppAtom)
@@ -35,9 +38,9 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
   // const appIndex = useConvStore.use.appIndex()
   // const selectApp = useConvStore.use.selectApp()
 
-  const { requestId, apps, appIndex, delApp, selectApp, forkApp } =
-    useAtomValue(convAtomStore)
-  // useSnapshot(convStore)
+  const { requestId, apps, appIndex } =
+    // useAtomValue(convAtomStore)
+    useSnapshot(convStore)
 
   const selected = app.clientId === apps[appIndex]?.clientId
   const LockOrNot = selected ? Lock : Unlock
@@ -86,8 +89,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          // convStore.
-          selectApp(app.clientId)
+          convStore.selectApp(app.clientId)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -98,8 +100,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         disabled={apps.length <= 1}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          // void convStore.
-          delApp(app.clientId)
+          void convStore.delApp(app.clientId)
         }}
       >
         <MinusCircleIcon />
@@ -109,8 +110,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         <IconContainer
           tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
           onClick={() => {
-            // convStore.
-            forkApp(app)
+            convStore.forkApp(app)
           }}
         >
           <PlusCircleIcon />

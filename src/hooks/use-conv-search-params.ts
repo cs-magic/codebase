@@ -1,9 +1,8 @@
-import { produce } from "immer"
-import { useAtom } from "jotai"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
-import { convAtom, convsAtom, requestIdAtom } from "../store/conv.atom"
+import { convStore } from "../store/conv.valtio"
 import { getConvUrl } from "../utils"
 
 /**
@@ -22,10 +21,13 @@ export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [conv] = useAtom(convAtom)
-  const [, setConvs] = useAtom(convsAtom)
+  // const [, setConvs] = useAtom(convsAtom)
+  // const [conv] = useAtom(convAtom)
+  // const [requestId] = useAtom(requestIdAtom)
+
+  const { conv, requestId } = useSnapshot(convStore)
+
   const updateConv = api.core.updateConv.useMutation()
-  const [requestId] = useAtom(requestIdAtom)
 
   const router = useRouter()
 
@@ -52,12 +54,8 @@ export const useConvSearchParams = (
           {
             onSuccess: () => {
               // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
-              setConvs((convs) =>
-                produce(convs, (convs) => {
-                  convs.find((c) => c.id === conv.id)!.currentRequestId =
-                    reqIdInUrl
-                }),
-              )
+
+              convStore.updateRequestId(reqIdInUrl)
             },
           },
         )
