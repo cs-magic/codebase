@@ -251,8 +251,9 @@ model Response {
   request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 
-  app   App    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId String
+  app         App    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId       String
+  appClientId String // 做好同步的关键一招！
 
   content String?
   error   String?

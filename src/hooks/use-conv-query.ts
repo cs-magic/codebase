@@ -40,7 +40,6 @@ export function useConvQuery() {
   const session = useSession()
   const query = api.core.query.useMutation()
   const addConv = api.core.addConv.useMutation()
-  const utils = api.useUtils()
 
   return async (prompt: string) => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
@@ -75,20 +74,10 @@ export function useConvQuery() {
     // todo: mutate optimization
     // 若此时还没有会话，则先创建会话，并在创建后自动发起请求
     if (!core.conv) {
-      const conv = await addConv.mutateAsync(
-        {
-          title: undefined,
-          apps: apps.map(parseAppClient),
-        },
-        {
-          onError: () => {
-            toast.error("新建会话失败")
-          },
-          onSuccess: (data) => {
-            void utils.core.listConv.invalidate()
-          },
-        },
-      )
+      const conv = await addConv.mutateAsync({
+        title: undefined,
+        apps: apps.map(parseAppClient),
+      })
       // 直接本地刷新
       core.addConvFromServer(conv)
       core.initConvFromServer(conv)

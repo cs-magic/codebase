@@ -49,7 +49,7 @@ export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
         </SelectContent>
       </Select>
 
-      <span className={"text-xs"}>{app.id}</span>
+      <span className={"text-xs"}>{app.clientId}</span>
     </div>
   )
 }

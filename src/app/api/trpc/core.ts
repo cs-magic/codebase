@@ -18,7 +18,7 @@ import {
 } from "../../../../prisma/generated/zod"
 
 import { createAppSchema } from "../../../schema/app.create"
-import { appDetailSchema } from "../../../schema/app.detail"
+import { appDetailSchema, clientAppSchema } from "../../../schema/app.detail"
 import { convSummarySchema } from "../../../schema/conv.base"
 import { convDetailSchema } from "../../../schema/conv.detail"
 import { llmMessageSchema } from "../../../schema/message"
@@ -149,7 +149,7 @@ export const coreRouter = createTRPCRouter({
       z.object({
         requestId: z.string().optional(),
         context: llmMessageSchema.array(),
-        apps: createAppSchema.array(),
+        apps: clientAppSchema.array(),
 
         bestAppId: z.string(),
         llmDelay: z.number().default(0),
@@ -181,18 +181,23 @@ export const coreRouter = createTRPCRouter({
           },
           responses: {
             create: [
-              ...input.apps.map((app) => ({
-                tTrigger: new Date(),
-                app: {
-                  connectOrCreate: {
-                    where: { id: app.id },
-                    create: {
-                      ...app,
-                      user: ctx.user.id,
+              ...input.apps.map((app) => {
+                // app.clientId --> response.appClientId
+                const { clientId, ...other } = app
+                return {
+                  tTrigger: new Date(),
+                  appClientId: clientId,
+                  app: {
+                    connectOrCreate: {
+                      where: { id: app.id },
+                      create: {
+                        ...other,
+                        user: ctx.user.id,
+                      },
                     },
                   },
-                },
-              })),
+                }
+              }),
             ],
           },
         },

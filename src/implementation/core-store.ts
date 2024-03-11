@@ -2,26 +2,25 @@ import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
 import { IConvDetail } from "../schema/conv.detail"
-import { ICoreStore } from "../schema/core.store"
 import { IContext } from "../schema/message"
 import { IRequest } from "../schema/request"
 import { IResponse, IUpdateResponse } from "../schema/response"
 import { forkApp } from "../utils"
 
-export class CoreStore implements ICoreStore {
+export class CoreStore {
+  // implements ICoreStore
   //////////////////////////////
   // base states
   //////////////////////////////
 
   convs: IConvBase[] = []
   appIndex = 0
-
-  _conv: IConvDetail | null = null
   _appsInConv: IAppClient[] = []
-
   // persisted
   _appsDefault: IAppClient[] = []
   logLevel: LogLevel = LogLevel.warning
+
+  _conv: IConvDetail | null = null
 
   get conv() {
     const conv = this._conv
@@ -133,6 +132,8 @@ export class CoreStore implements ICoreStore {
     }
     const conv = this.convs.find((c) => c.id === request.convId)
     if (conv) conv.currentRequestId = request.id
+
+    this.updateAppsInConv()
   }
 
   addConvFromServer(conv: IConvDetail) {
@@ -141,8 +142,10 @@ export class CoreStore implements ICoreStore {
 
   initConvFromServer(conv: IConvDetail) {
     this.conv = conv
-    if (this.responses.length)
-      this._appsInConv = this.responses.map((r) => forkApp(r.app, r))
+    console.log("-- initConvFromServer: ", conv)
+    if (!this.responses.length) return
+
+    this.updateAppsInConv()
   }
 
   selectApp(appClientId: string) {
@@ -178,12 +181,24 @@ export class CoreStore implements ICoreStore {
     func: IUpdateResponse,
   ) {
     if (this.logLevel <= LogLevel.debug) console.log({ requestId, appClientId })
-    const conv = this.conv
-    if (requestId !== conv?.currentRequestId) return
-    const req = conv.requests.find((r) => r.id === requestId)
-    // todo: appClientId ?
-    const res = req?.responses.find((r) => r.appId === appClientId)
+
+    /**
+     * v1: get response from $.conv.request.response[i]
+     */
+    // const conv = this.conv
+    // if (requestId !== conv?.currentRequestId) return
+    // const res = conv.requests
+    //   .find((r) => r.id === requestId)
+    //   ?.responses.find((r) => r.appClientId === appClientId)
+    // if (!res) return
+
+    /**
+     * v2: get response from $.apps[i].response
+     */
+    const res = this.apps.find((a) => a.clientId === appClientId)?.response
+    // console.log({ requestId, appClientId, res })
     if (!res) return
+
     func(res)
   }
 
@@ -200,5 +215,20 @@ export class CoreStore implements ICoreStore {
     this.appIndex = 0
     this._conv = null
     this._appsInConv = []
+  }
+
+  /**
+   * todo: computed
+   * @private
+   */
+  private updateAppsInConv() {
+    this._appsInConv = this.responses.map((r) => ({
+      ...r.app,
+      response: r,
+      clientId: r.appClientId,
+      isDraft: false,
+    }))
+    if (this.logLevel <= LogLevel.warning)
+      console.log("-- _appsInConv: ", this._appsInConv)
   }
 }

@@ -30,8 +30,10 @@ export type ILLMRequest = {
 export const getTriggerIdFromSSERequest = (request: ILLMRequest) => {
   switch (request.type) {
     case "app-response":
-      const { requestId, appId } = request
-      return !!requestId && !!appId ? `chat@${requestId}.${appId}` : null
+      const { requestId, appClientId } = request
+      return !!requestId && !!appClientId
+        ? `chat@${requestId}.${appClientId}`
+        : null
 
     case "conv-title":
       const { convId } = request

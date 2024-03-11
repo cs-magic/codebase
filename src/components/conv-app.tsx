@@ -26,7 +26,7 @@ export const ConvApp = ({ app }: { app: IAppClient }) => {
 
   useLLMForAppChat(app)
 
-  // console.log({ appId: config.id, commonContext, response })
+  console.log({ app, context })
 
   return (
     <div

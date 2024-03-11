@@ -1,7 +1,9 @@
 import { Prisma } from "@prisma/client"
+import { createAppSchema } from "./app.create"
 import { modelViewSchema } from "./model"
 import { IAppResponse } from "./query"
 import { userListViewSchema } from "./user.base"
+import { z } from "zod"
 
 export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   include: {
@@ -16,10 +18,14 @@ export type IAppDetail = Omit<
   "stop"
 > & { stop: Readonly<string[]> }
 
+export const clientAppSchema = createAppSchema.extend({
+  clientId: z.string(),
+})
 export type IAppClientSpecial = {
+  clientId: string
+
   response?: IAppResponse
   isDraft: boolean
-  clientId: string
 }
 
 export type IAppClient = IAppDetail & IAppClientSpecial
