@@ -21,6 +21,8 @@ export class CoreStore {
 
   _conv: IConvDetail | null = null
 
+  _serverApps: IAppClient[] = []
+
   //////////////////////////////
   // derived
   //////////////////////////////
@@ -41,12 +43,14 @@ export class CoreStore {
   }
 
   get apps(): IAppClient[] {
-    return this.responses.map((r) => ({
-      ...r.app,
-      clientId: r.appClientId,
-      response: r,
-      isDraft: false, // todo
-    }))
+    return this.responses.length
+      ? this.responses.map((r) => ({
+          ...r.app,
+          clientId: r.appClientId,
+          response: r,
+          isDraft: false, // todo
+        }))
+      : this._serverApps
   }
 
   get app(): IAppClient | null {

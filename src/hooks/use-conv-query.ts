@@ -58,7 +58,7 @@ export function useConvQuery() {
 
     if (!query) return toast.warning("query 不能为空")
 
-    if (!appClientId) return toast.warning("app 不能为空")
+    // if (!appClientId) return toast.warning("app 不能为空")
 
     if (!apps.length) {
       setSelectAppsOpen(true)
