@@ -5,6 +5,7 @@ import { ScopeProvider } from "jotai-scope"
 import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { uiScreenAtom } from "../../packages/common-ui/store"
+import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
@@ -29,7 +30,8 @@ export const Chats = () => {
         gridTemplateColumns: `repeat(${getAppsGridCols(width, chats.length)}, minmax(0, 1fr))`,
       }}
     >
-      {chats.map((chat, index) => (
+      {// todo: immutable ?
+      (chats as IResponse[]).map((chat, index) => (
         // 不要用app.id会重复！
         <ScopeProvider key={index} atoms={[appStopGeneratingScopeAtom]}>
           <Chat chat={chat} />

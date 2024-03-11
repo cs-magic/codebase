@@ -6,7 +6,7 @@ import { convDetailSchema } from "./conv.detail"
 
 export const userDetailSchema = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {
-    appsWithChat: appDetailSchema,
+    apps: appDetailSchema,
     convs: convDetailSchema,
   },
 })

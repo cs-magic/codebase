@@ -1,29 +1,29 @@
 "use client"
 
+import { useAtom } from "jotai"
 import React, { useState } from "react"
+
+import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
 import {
   Dialog,
   DialogContent,
 } from "../../packages/common-ui/shadcn/shadcn-components/dialog"
+import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
-import { appsPersistedAtom, serverAppsAtom } from "../../deprecated/v2/app.atom"
+import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
+import { IAppDetail } from "../schema/app.detail"
+import { coreStore } from "../store/core.valtio"
 import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 import { selectAppsDialogOpenAtom } from "../store/ui.atom"
-import { coreStore } from "../store/core.valtio"
 import { SelectApp } from "./select-app"
-import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
-import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
-import { useAtom } from "jotai"
-
-import { useSnapshot } from "valtio"
 
 export const AppsDialog = () => {
-  const { apps } = useSnapshot(coreStore)
+  const [open, setOpen] = useAtom(selectAppsDialogOpenAtom)
+  const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
 
-  // const [allApps] = useAtom(serverAppsAtom)
-  // const [persistedApps] = useAtom(appsPersistedAtom)
+  const { apps } = useSnapshot(coreStore)
 
   const { data: allApps = [] } = api.core.listApps.useQuery()
   const [appFilter, setAppFilter] = useState("")
@@ -33,12 +33,6 @@ export const AppsDialog = () => {
       (m.model.title.toLowerCase().includes(appFilter.toLowerCase()) ||
         m.model.company.title.toLowerCase().includes(appFilter)),
   )
-
-  const [open, setOpen] = useAtom(selectAppsDialogOpenAtom)
-  const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
-
-  // console.log({ allApps, appFilter, filteredApps, maxToAdd })
-  // console.log({ persistedApps })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -50,8 +44,8 @@ export const AppsDialog = () => {
               <span className={"text-xs"}>（至少选择1个）</span>
             </Label>
 
-            {apps.map((m, index) => (
-              <SelectApp key={index} app={m} type={"toDel"} />
+            {(apps as IAppDetail[]).map((app, index) => (
+              <SelectApp key={index} app={app} type={"toDel"} />
             ))}
           </div>
 
@@ -72,8 +66,8 @@ export const AppsDialog = () => {
                 （您的屏幕最多只能添加{maxToAdd}个App）
               </span>
             </Label>
-            {filteredApps.map((m, index) => (
-              <SelectApp key={index} app={m} type={"toAdd"} />
+            {filteredApps.map((app, index) => (
+              <SelectApp key={index} app={app} type={"toAdd"} />
             ))}
           </div>
         </div>

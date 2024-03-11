@@ -42,6 +42,7 @@ export const app2response = (app: IAppDetail): IResponse => ({
   interruptedAt: null,
   convId: null,
   id: getNewId(9),
+  appClientId: getNewId(5),
 })
 
 export const response2app = (response: IResponse): IAppDetail => response.app!
