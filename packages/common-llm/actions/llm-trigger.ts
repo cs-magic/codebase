@@ -15,7 +15,7 @@ export const triggerLLMThreads = async (
     pusherServerId: PusherServerId
     llmDelay: number
     withConv?: {
-      bestResponseId: string
+      bestChatId: string
       systemPromptForConvTitle?: string
     }
   },
@@ -46,7 +46,7 @@ export const triggerLLMThreads = async (
         })
 
         // 使用最好的那个app回复的上下文进行总结
-        if (withConv && r.id === withConv.bestResponseId && response.content) {
+        if (withConv && r.id === withConv.bestChatId && response.content) {
           const payload: LlmActionPayload = {
             action: "trigger",
             request: {

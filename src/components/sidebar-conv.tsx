@@ -25,7 +25,7 @@ import { IConvBase } from "../schema/conv.base"
 import { coreStore } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
-export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
+export const SidebarConv = ({ conv }: { conv: IConvBase }) => {
   // const [convId] = useAtom(convIdAtom)
   const { convId } = useSnapshot(coreStore)
 

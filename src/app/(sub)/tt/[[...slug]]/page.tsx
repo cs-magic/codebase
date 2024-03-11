@@ -21,7 +21,7 @@ export default function ConvPage({
   const convIdInUrl = slug ? slug[0] : slug
   const reqIdInUrl = useSearchParams().get("r")
 
-  console.log(ansiColors.red("== ConvPage =="), { convIdInUrl, reqIdInUrl })
+  console.log("== ConvPage ==", { convIdInUrl, reqIdInUrl })
 
   return <Conv convIdInUrl={convIdInUrl} reqIdInUrl={reqIdInUrl} />
 }

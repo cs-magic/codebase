@@ -17,9 +17,9 @@ export const useLLMForChat = (chat: IResponse) => {
   }
 
   useLlmPusher(llmRequest, {
-    update: (response) => {
+    update: (func) => {
       if (!requestId) return
-      coreStore.updateChat(requestId, chat.id, response)
+      coreStore.updateChat(requestId, chat.id, func)
     },
     onInit: () => {
       // setIsDraft(false)

@@ -7,6 +7,7 @@ import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
 import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
 import { usePusher } from "./use-pusher"
+import ansiColors from "ansi-colors"
 
 /**
  *
@@ -36,7 +37,10 @@ export const useLlmPusher = (
     const channel = pusher.subscribe(triggerId)
 
     if (pusherLogLevel <= LogLevel.info)
-      console.log(`[pusher] bound to channel: ${triggerId}, `, request)
+      console.log(
+        ansiColors.red(`[pusher] bound to channel: ${triggerId} `),
+        request,
+      )
 
     const bindEvent = <T extends SSEEventType>(
       type: T,
@@ -53,6 +57,10 @@ export const useLlmPusher = (
       update((response) => {
         if (!response.content) response.content = data.token
         else response.content += data.token
+        console.log("-- updating pusher token: ", {
+          token: data.token,
+          content: response.content,
+        })
       })
     })
 

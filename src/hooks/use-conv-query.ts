@@ -33,7 +33,8 @@ export function useConvQuery() {
   const setSelectAppsOpen = useSetAtom(selectAppsDialogOpenAtom)
   const setPrompt = useSetAtom(userInputAtom)
 
-  const { apps, responding, chatId, bestContext } = useSnapshot(coreStore)
+  const { apps, responding, chatId, bestContext, chats, baseConv } =
+    useSnapshot(coreStore)
 
   const router = useRouter()
   const session = useSession()
@@ -43,7 +44,6 @@ export function useConvQuery() {
   return async (prompt: string) => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
       query,
-      apps,
       responding,
     })
 
@@ -70,7 +70,6 @@ export function useConvQuery() {
     if (!coreStore.conv) {
       const conv = await addConv.mutateAsync({
         title: undefined,
-        apps: apps.map(parseApp),
       })
       // 直接本地刷新
       coreStore.addConvFromServer(conv)
@@ -85,17 +84,16 @@ export function useConvQuery() {
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
-    const shouldConvTitle = !coreStore.conv?.titleResponse?.tStart
-
-    const prev = apps
-    const after = apps.map(parseApp)
-    console.log("-- apps: ", { prev, after })
+    const shouldConvTitle = !baseConv?.titleResponse?.content
 
     query.mutate(
       {
         // app-response
         context: newContext,
-        apps: after,
+        appsWithChat: chats.map((chat) => ({
+          ...parseApp(chat.app!),
+          chatId: chat.id,
+        })),
         convId: coreStore.convId!,
         options: {
           llmDelay,
@@ -104,7 +102,7 @@ export function useConvQuery() {
           // conv-title
           withConv: shouldConvTitle
             ? {
-                bestResponseId: chatId!,
+                bestChatId: chatId!,
                 systemPromptForConvTitle: convSummaryPrompt,
               }
             : undefined,
@@ -114,6 +112,7 @@ export function useConvQuery() {
         onSuccess: async (request) => {
           // local update
           coreStore.updateRequestFromServer(request)
+
           router.push(`/tt/${request.convId}?r=${request.id}`)
         },
         onError: (err) => {

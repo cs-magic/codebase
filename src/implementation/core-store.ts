@@ -26,6 +26,10 @@ export class CoreStore {
   // derived
   //////////////////////////////
 
+  get baseConv(): IConvBase | null {
+    return this.convs.find((c) => c.id === this.convId) ?? null
+  }
+
   get conv() {
     const conv = this._conv
     if (this.logLevel <= LogLevel.debug) console.log({ conv })
@@ -68,7 +72,11 @@ export class CoreStore {
   }
 
   get chats(): IResponse[] {
-    return this.request?.responses ?? this._serverChats
+    return (
+      this.request?.responses
+        // filter conv titles // todo: type hint
+        .filter((c) => !c.convId) ?? this._serverChats
+    )
   }
 
   get chat(): IResponse | null {
@@ -84,7 +92,7 @@ export class CoreStore {
   }
 
   get app(): IAppDetail | null {
-    return this.apps[this._chatIndex] ?? null
+    return this.chat?.app ?? null
   }
 
   get appId() {
@@ -100,21 +108,11 @@ export class CoreStore {
     return commonContext
   }
 
+  /**
+   * todo: bug ?
+   */
   get bestContext(): IContext {
     return this.commonContext
-
-    //  todo: bug?
-    return this.chat
-      ? [
-          ...this.commonContext,
-          {
-            updatedAt: this.chat.updatedAt,
-            content: this.chat.content ?? this.chat.error ?? "",
-            isError: !!this.chat.error,
-            role: "assistant",
-          },
-        ]
-      : this.commonContext
   }
 
   get responding() {
@@ -189,9 +187,9 @@ export class CoreStore {
   }
 
   updateConvTitle(convId: string, func: IUpdateResponse) {
-    if (this.logLevel <= LogLevel.debug)
-      console.log("-- updateConvTitle: ", { convId })
     const res = this.convs.find((c) => c.id === convId)?.titleResponse
+    // if (this.logLevel <= LogLevel.info)
+    console.log("-- updateConvTitle: ", { convId, res, convs: this.convs })
     if (!res) return
     func(res)
   }

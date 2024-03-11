@@ -1,3 +1,4 @@
+import { appWithChatIdSchema } from "@/schema/app.create"
 import { z } from "zod"
 import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
@@ -24,7 +25,6 @@ import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
 import { requestSchema } from "../../../schema/request"
 import { userDetailSchema } from "../../../schema/user.detail"
-import { createAppSchema } from "@/schema/app.create"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -91,24 +91,21 @@ export const coreRouter = createTRPCRouter({
       z.object({
         id: z.string().optional(),
         title: z.string().optional(),
-        apps: createAppSchema.array(),
       }),
     )
-    .mutation(({ input, ctx }) =>
-      prisma.conv.create({
+    .mutation(({ input, ctx }) => {
+      return prisma.conv.create({
         data: {
           ...input,
           fromUserId: ctx.user.id,
-          apps: {
-            connectOrCreate: input.apps.map((app) => ({
-              where: { id: app.id },
-              create: { ...app, user: ctx.user.id },
-            })),
+          titleResponse: {
+            // 强制返回titleResponse后续要用于更新标题的判断
+            create: {},
           },
         },
         ...convDetailSchema,
-      }),
-    ),
+      })
+    }),
 
   updateConv: protectedProcedure
     .input(
@@ -146,7 +143,7 @@ export const coreRouter = createTRPCRouter({
       z.object({
         requestId: z.string().optional(),
         context: llmMessageSchema.array(),
-        apps: createAppSchema.array(),
+        appsWithChat: appWithChatIdSchema.array(),
 
         options: z.object({
           llmDelay: z.number().default(0),
@@ -154,7 +151,7 @@ export const coreRouter = createTRPCRouter({
 
           withConv: z
             .object({
-              bestResponseId: z.string(),
+              bestChatId: z.string(),
               systemPromptForConvTitle: z.string().optional(),
             })
             .optional(),
@@ -177,13 +174,16 @@ export const coreRouter = createTRPCRouter({
           },
           responses: {
             create: [
-              ...input.apps.map((app) => {
+              ...input.appsWithChat.map((appWithChatId) => {
                 // app.clientId --> response.appClientId
+                const { chatId, ...app } = appWithChatId
+
                 return {
+                  id: chatId,
                   tTrigger: new Date(),
                   app: {
                     connectOrCreate: {
-                      where: { id: app.id },
+                      where: { id: appWithChatId.id },
                       create: {
                         ...app,
                         user: ctx.user.id,
@@ -197,15 +197,6 @@ export const coreRouter = createTRPCRouter({
         },
         ...requestSchema,
       })
-
-      if (options.withConv) {
-        await prisma.response.create({
-          data: {
-            requestId,
-            convId,
-          },
-        })
-      }
 
       void triggerLLMThreads(request, context, options)
       return request
