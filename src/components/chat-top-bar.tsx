@@ -28,9 +28,9 @@ export const ChatTopBar = ({ chat }: { chat: IResponse }) => {
 
   const stopGenerating = useSetAtom(appStopGeneratingScopeAtom)
 
-  const { requestId, apps, responseId } = useSnapshot(coreStore)
+  const { requestId, apps, chatId } = useSnapshot(coreStore)
 
-  const selected = chat.id === responseId
+  const selected = chat.id === chatId
   const LockOrNot = selected ? Lock : Unlock
   const respondingStatus = checkRespondingStatus(chat)
 

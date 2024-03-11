@@ -1,5 +1,4 @@
 import { remove } from "lodash"
-import { UnexpectedError } from "../../packages/common-general/schema"
 import { LogLevel } from "../../packages/common-log/schema"
 import { IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
@@ -26,10 +25,6 @@ export class CoreStore {
   // derived
   //////////////////////////////
 
-  get baseConv(): IConvBase | null {
-    return this.convs.find((c) => c.id === this.convId) ?? null
-  }
-
   get conv() {
     const conv = this._conv
     if (this.logLevel <= LogLevel.debug) console.log({ conv })
@@ -39,6 +34,10 @@ export class CoreStore {
   set conv(conv: IConvDetail | null) {
     this._conv = conv
     if (this.logLevel <= LogLevel.info) console.log("-- setting conv: ", conv)
+  }
+
+  get baseConv(): IConvBase | null {
+    return this.convs.find((c) => c.id === this.convId) ?? null
   }
 
   get convId() {
@@ -72,11 +71,7 @@ export class CoreStore {
   }
 
   get chats(): IResponse[] {
-    return (
-      this.request?.responses
-        // filter conv titles // todo: type hint
-        .filter((c) => !c.convId) ?? this._serverChats
-    )
+    return this.request?.responses ?? this._serverChats
   }
 
   get chat(): IResponse | null {
@@ -147,8 +142,9 @@ export class CoreStore {
 
   initConvFromServer(conv: IConvDetail, requestId?: string | null) {
     const convInStore = this.convs.find((c) => c.id === conv.id)
-    if (!convInStore) throw new UnexpectedError()
+    if (!convInStore) return // throw new UnexpectedError()
     this.conv = conv
+    if (this.request) remove(this.request.responses, (r) => !!r.convId) // !important, drop title responses
     if (requestId !== undefined) convInStore.currentRequestId = requestId
   }
 
@@ -160,20 +156,20 @@ export class CoreStore {
     this.chats.push(app2response(app))
   }
 
-  replaceChat(responseId: string, app: IAppDetail) {
-    const index = this.chats.findIndex((a) => a.id === responseId)
+  replaceChat(chatId: string, app: IAppDetail) {
+    const index = this.chats.findIndex((a) => a.id === chatId)
     if (index < 0) return
     this.chats[index] = app2response(app)
   }
 
-  forkChat(response: IResponse) {
-    const index = this.chats.findIndex((a) => a.id === response.id)
+  forkChat(chat: IResponse) {
+    const index = this.chats.findIndex((a) => a.id === chat.id)
     if (index < 0) return
-    this.chats.splice(index + 1, 0, response)
+    this.chats.splice(index + 1, 0, chat)
   }
 
-  delChat(responseId: string) {
-    const index = this.chats.findIndex((a) => a.id === responseId)
+  delChat(chatId: string) {
+    const index = this.chats.findIndex((a) => a.id === chatId)
     if (index < 0) return
     this.chats.splice(index, 1)
     this._chatIndex = 0

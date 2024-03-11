@@ -1,3 +1,6 @@
+import { useAtom } from "jotai"
+import { useSnapshot } from "valtio"
+import { devEnabledAtom } from "../../packages/common-dev/store"
 import { api } from "../../packages/common-trpc/react"
 import {
   Select,
@@ -13,6 +16,7 @@ import { coreStore } from "../store/core.valtio"
 
 export const ChatTitleLine = ({ chat }: { chat: IResponse }) => {
   const { data: apps } = api.core.listApps.useQuery()
+  const [devEnabled] = useAtom(devEnabledAtom)
 
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
@@ -46,9 +50,11 @@ export const ChatTitleLine = ({ chat }: { chat: IResponse }) => {
         </SelectContent>
       </Select>
 
-      <span className={"text-xs"}>
-        {chat.id}_{chat.app!.id}
-      </span>
+      {devEnabled && (
+        <span className={"text-xs"}>
+          {chat.id}_{chat.app!.id}
+        </span>
+      )}
     </div>
   )
 }
