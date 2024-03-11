@@ -233,15 +233,15 @@ model Response {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // 用户也可以手动更新 response，所以 request 是非必须的，强制required写起来也麻烦
-  request   Request? @relation(fields: [requestId], references: [id], onDelete: Cascade)
-  requestId String?
-
   conv   Conv?   @relation(fields: [convId], references: [id], onDelete: Cascade)
   convId String? @unique
 
-  app   App?    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId String?
+  // 用户也可以手动更新 response，所以 request 是非必须的，强制required写起来也麻烦
+  request     Request? @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId   String?
+  app         App?     @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId       String?
+  appClientId String? // requestId + appClientId 唯一确定客户端； requestId 与 appId 是一对多关系
 
   content String?
   error   String?

@@ -100,19 +100,21 @@ export class CoreStore {
   }
 
   get commonContext(): IContext {
-    const commonContext = this.request?.context ?? []
-    if (this.logLevel <= LogLevel.info) {
-      console.log({ thisLogLevel: this.logLevel })
-      console.log({ commonContext })
-    }
-    return commonContext
+    return this.request?.context ?? []
   }
 
-  /**
-   * todo: bug ?
-   */
   get bestContext(): IContext {
-    return this.commonContext
+    return !this.chat?.tStart
+      ? this.commonContext
+      : [
+          ...this.commonContext,
+          {
+            role: "assistant",
+            content: this.chat.content ?? this.chat.error ?? "",
+            isError: !!this.chat.error,
+            updatedAt: this.chat.updatedAt,
+          },
+        ]
   }
 
   get responding() {

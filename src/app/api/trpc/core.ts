@@ -141,7 +141,6 @@ export const coreRouter = createTRPCRouter({
   query: convProcedure
     .input(
       z.object({
-        requestId: z.string().optional(),
         context: llmMessageSchema.array(),
         appsWithChat: appWithChatIdSchema.array(),
 
@@ -159,13 +158,12 @@ export const coreRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const { context, convId, requestId = getNewId(), options } = input
+      const { context, convId, options } = input
 
-      console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
+      console.log("[query]: ", JSON.stringify({ input }, null, 2))
 
       const request = await prisma.request.create({
         data: {
-          id: requestId,
           context,
           conv: {
             connect: {
@@ -179,7 +177,7 @@ export const coreRouter = createTRPCRouter({
                 const { chatId, ...app } = appWithChatId
 
                 return {
-                  id: chatId,
+                  appClientId: chatId,
                   tTrigger: new Date(),
                   app: {
                     connectOrCreate: {

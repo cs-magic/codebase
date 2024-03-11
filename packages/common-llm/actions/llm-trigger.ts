@@ -46,7 +46,11 @@ export const triggerLLMThreads = async (
         })
 
         // 使用最好的那个app回复的上下文进行总结
-        if (withConv && r.id === withConv.bestChatId && response.content) {
+        if (
+          withConv &&
+          r.appClientId === withConv.bestChatId &&
+          response.content
+        ) {
           const payload: LlmActionPayload = {
             action: "trigger",
             request: {
