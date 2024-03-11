@@ -62,7 +62,7 @@ export default function Conv({
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
       <Chats />
 
-      <div className={"w-full max-w-[720px] mx-auto p-2 shrink-0"}>
+      <div className={"w-full max-w-[720px] mx-auto p-1 shrink-0"}>
         <ConvControl />
 
         <ConvQuery />

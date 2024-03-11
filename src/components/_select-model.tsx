@@ -7,7 +7,7 @@ import {
 } from "@radix-ui/react-select"
 import { Check } from "lucide-react"
 
-export const SelctModel = ({
+export const SelectModel = ({
   value,
   Cover,
   label,

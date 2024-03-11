@@ -14,10 +14,7 @@ export const Sidebar = ({
 
   return (
     <div
-      className={cn(
-        "hidden sm:w-60 shrink-0 p-4 h-full sm:flex flex-col",
-        className,
-      )}
+      className={cn("shrink-0 p-4 h-full sm:flex flex-col", className)}
       {...props}
     >
       <SidebarCreateConv />

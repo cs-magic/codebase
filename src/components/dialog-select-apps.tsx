@@ -17,7 +17,7 @@ import { coreStore } from "../store/core.valtio"
 import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 import { selectAppsDialogOpenAtom } from "../store/ui.atom"
-import { SelectApp } from "./select-app"
+import { DialogSelectApp } from "./dialog-select-app"
 
 export const AppsDialog = () => {
   const [open, setOpen] = useAtom(selectAppsDialogOpenAtom)
@@ -45,7 +45,7 @@ export const AppsDialog = () => {
             </Label>
 
             {(apps as IAppDetail[]).map((app, index) => (
-              <SelectApp key={index} app={app} type={"toDel"} />
+              <DialogSelectApp key={index} app={app} type={"toDel"} />
             ))}
           </div>
 
@@ -67,7 +67,7 @@ export const AppsDialog = () => {
               </span>
             </Label>
             {filteredApps.map((app, index) => (
-              <SelectApp key={index} app={app} type={"toAdd"} />
+              <DialogSelectApp key={index} app={app} type={"toAdd"} />
             ))}
           </div>
         </div>

@@ -25,10 +25,10 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   console.log(ansiColors.red("=== ConvLayout ==="))
 
   return (
-    <div className={"w-full h-full overflow-hidden flex border-y"}>
-      <Sidebar />
+    <div className={"w-full h-full overflow-hidden flex"}>
+      <Sidebar className={"hidden sm:w-60"} />
 
-      <Separator orientation={"vertical"} />
+      <Separator orientation={"vertical"} className={"hidden sm:block"} />
 
       <div className={"grow overflow-hidden h-full"}>{children}</div>
     </div>

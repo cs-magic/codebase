@@ -15,7 +15,7 @@ import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonne
 import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { Dev } from "../components/dev"
-import { AppsDialog } from "../components/select-apps"
+import { AppsDialog } from "../components/dialog-select-apps"
 import GlobalHooksProviders from "../providers/global.provider"
 
 const inter = Inter({

@@ -29,7 +29,7 @@ export const Chat = ({ chat }: { chat: IResponse }) => {
   return (
     <div
       className={cn(
-        "w-full h-full overflow-auto flex flex-col relative border-t border-r",
+        "w-full h-full overflow-auto flex flex-col relative sm:border-t sm:border-r",
       )}
     >
       <ChatTopBar chat={chat} />

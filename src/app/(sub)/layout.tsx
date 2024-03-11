@@ -8,13 +8,13 @@ export default function SubLayout({ children }: PropsWithChildren) {
     <FlexContainer
       orientation={"vertical"}
       className={cn(
-        "!p-0 !gap-0 h-full overflow-hidden",
+        "!p-0 !gap-0 h-full overflow-hidden ",
         // "bg-cyan-800"
       )}
     >
       <Header />
 
-      <div className={"grow w-full flex flex-col overflow-hidden"}>
+      <div className={"grow w-full flex flex-col overflow-hidden border-t"}>
         {children}
       </div>
 

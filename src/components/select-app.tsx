@@ -1,63 +1,57 @@
-import { useAtom } from "jotai"
-import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
-import { useSnapshot } from "valtio"
-import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { ComponentPropsWithoutRef } from "react"
+import { api } from "../../packages/common-trpc/react"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+} from "../../packages/common-ui/shadcn/shadcn-components/select"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { IAppDetail } from "../schema/app.detail"
-
+import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
-import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 export const SelectApp = ({
-  app,
-  type,
-}: {
-  app: IAppDetail
-  type: "toAdd" | "toDel"
-}) => {
-  const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
-
-  const { apps } = useSnapshot(coreStore)
-
-  const disabled =
-    (type === "toAdd" && apps.length >= maxToAdd) ||
-    (type === "toDel" && apps.length <= 1)
-  const Icon = type === "toDel" ? MinusCircleIcon : PlusCircleIcon
+  chat,
+  className,
+  ...props
+}: { chat: IResponse } & ComponentPropsWithoutRef<typeof SelectTrigger>) => {
+  const { data: apps } = api.core.listApps.useQuery()
 
   return (
-    <div
-      key={app.id}
-      className={cn(
-        "w-full flex items-center p-2 rounded-lg group",
-        buttonVariants({ variant: "ghost" }),
-      )}
+    <Select
+      onValueChange={(value) => {
+        coreStore.replaceChat(chat.id, apps!.find((a) => a.id === value)!)
+      }}
     >
-      <IconContainer
-        className={
-          "w-6 h-6 invisible group-hover:visible hover:text-primary-foreground"
-        }
-        disabled={disabled}
-        onClick={(event) => {
-          if (disabled) return
-          if (type === "toDel")
-            // void convStore.
-            coreStore.delChat(app.id)
-          // void convStore.
-          else coreStore.pushChat(app)
-        }}
+      <SelectTrigger
+        className={cn("focus:ring-0 gap-2 w-40 overflow-hidden", className)}
+        {...props}
       >
-        <Icon />
-      </IconContainer>
+        <span className={"truncate"}>{chat.app!.title}</span>
+      </SelectTrigger>
 
-      <span className={"mx-2"}>{app.model.title}</span>
-      <span className={"mx-2 text-xs text-muted-foreground"}>{app.id}</span>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>官方 App</SelectLabel>
 
-      <span className={"grow"} />
-      <span className={"text-muted-foreground text-sm"}>
-        {/*by {config.user}*/}
-        by {app.model.company.title}
-      </span>
-    </div>
+          <SelectSeparator />
+
+          {!apps ? (
+            <div className={"animate-spin h-8 w-full"} />
+          ) : (
+            apps.map((a) => {
+              return (
+                <SelectItem value={a.id} key={a.id}>
+                  {a.title}
+                </SelectItem>
+              )
+            })
+          )}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   )
 }
