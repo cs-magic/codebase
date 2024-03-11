@@ -4,8 +4,8 @@ import { fetchSSE } from "../../packages/common-sse/core"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 
-import { appStopGeneratingScopeAtom } from "../store/core.atom"
-import { convStore } from "../store/conv.valtio"
+import { appStopGeneratingScopeAtom } from "../store/system.atom"
+import { coreValtio } from "../store/core.valtio"
 
 export const useLlmSse = (request: ILLMRequest) => {
   const [stoppedGenerating, stopGenerating] = useAtom(
@@ -25,11 +25,12 @@ export const useLlmSse = (request: ILLMRequest) => {
   ) => {
     if (request.type === "app-response") {
       const { requestId } = request
-      if (requestId) convStore.updateAppResponse(requestId, request.appId, func)
+      if (requestId)
+        coreValtio.updateAppResponse(requestId, request.appId, func)
     } else {
       const { convId } = request
       if (!convId) return
-      convStore.updateConvTitle(convId, func)
+      coreValtio.updateConvTitle(convId, func)
     }
   }
 

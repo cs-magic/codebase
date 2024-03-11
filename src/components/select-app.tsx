@@ -5,9 +5,9 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
-import { maxAppsOnScreenAtom } from "../store/core.atom"
+import { maxAppsOnScreenAtom } from "../store/system.atom"
 
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 export const SelectApp = ({
   app,
@@ -26,7 +26,7 @@ export const SelectApp = ({
   // const pushApp = useConvStore.use.pushApp()
   // const delApp = useConvStore.use.delApp()
 
-  const { apps } = useSnapshot(convStore)
+  const { apps } = useSnapshot(coreValtio)
 
   const disabled =
     (type === "toAdd" && apps.length >= maxToAdd) ||
@@ -50,9 +50,9 @@ export const SelectApp = ({
           if (disabled) return
           if (type === "toDel")
             // void convStore.
-            convStore.delApp(app.id)
+            coreValtio.delApp(app.id)
           // void convStore.
-          else convStore.pushApp(app)
+          else coreValtio.pushApp(app)
         }}
       >
         <Icon />

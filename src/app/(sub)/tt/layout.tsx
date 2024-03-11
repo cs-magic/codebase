@@ -5,7 +5,7 @@ import { PropsWithChildren, useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../../../packages/common-trpc/react"
 import { Separator } from "../../../../packages/common-ui/shadcn/shadcn-components/separator"
-import { convStore } from "../../../store/conv.valtio"
+import { coreValtio } from "../../../store/core.valtio"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
   // const [apps] = useAtom(appsPersistedAtom)
@@ -13,13 +13,13 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   // const [, setConvs] = useAtom(convsAtom)
   // const [, setConv] = useAtom(convAtom)
 
-  const { apps, appId } = useSnapshot(convStore)
+  const { apps, appId } = useSnapshot(coreValtio)
 
   const { data: convsInDB } = api.core.listConv.useQuery()
 
   // 1. 获取列表数据
   useEffect(() => {
-    if (convsInDB) convStore.convs = convsInDB
+    if (convsInDB) coreValtio.convs = convsInDB
   }, [convsInDB])
 
   // 3. 当有persisted config 但没有selected app时，自动选第一个
@@ -31,14 +31,14 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     console.log("-- setting selected config id to be the first one: ", {
       firstAppId,
     })
-    convStore.appIndex = 0
+    coreValtio.appIndex = 0
   }, [apps.length])
 
   // 5. 当离开会话的时候，置空
   useEffect(() => {
     return () => {
       console.log(ansiColors.red("clear conv since leaving"))
-      convStore.conv = null
+      coreValtio.conv = null
       // setConv(null)
     }
   }, [])

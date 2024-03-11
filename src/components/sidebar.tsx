@@ -9,7 +9,7 @@ import { devEnabledAtom } from "../../packages/common-dev/store"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 import { SidebarConvItem } from "./sidebar-conversation"
 
 export const Sidebar = ({
@@ -18,7 +18,7 @@ export const Sidebar = ({
 }: HTMLAttributes<HTMLDivElement>) => {
   const [devEnabled] = useAtom(devEnabledAtom)
 
-  const { convs } = useSnapshot(convStore)
+  const { convs } = useSnapshot(coreValtio)
   // const [convs] = useAtom(convsAtom)
 
   const addConv = useAddConv()

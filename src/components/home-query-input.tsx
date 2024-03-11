@@ -6,7 +6,7 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useConvQuery } from "../hooks/use-conv-query"
-import { userInputAtom } from "../store/core.atom"
+import { userInputAtom } from "../store/system.atom"
 
 export const HomeQueryInput = () => {
   const query = useConvQuery()

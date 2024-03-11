@@ -1,6 +1,6 @@
 "use client"
 
-import { userInputAtom } from "@/store/core.atom"
+import { userInputAtom } from "@/store/system.atom"
 import { useAtom } from "jotai"
 import { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"

@@ -1,14 +1,11 @@
 import { IAppClient, IAppDetail } from "./app.detail"
-import {
-  IConvBase,
-  IConvDetail,
-  IRequest,
-  IResponse,
-  IUpdateResponse,
-} from "./conv"
+import { IResponse, IUpdateResponse } from "./response"
+import { IConvBase } from "./conv.base"
+import { IConvDetail } from "./conv.detail"
 import { IContext } from "./message"
+import { IRequest } from "./request"
 
-export interface IConvStore {
+export interface ICoreStore {
   ///////////////////////////////
   // base
   //////////////////////////////

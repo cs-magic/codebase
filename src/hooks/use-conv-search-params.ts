@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 /**
@@ -25,7 +25,7 @@ export const useConvSearchParams = (
   // const [conv] = useAtom(convAtom)
   // const [requestId] = useAtom(requestIdAtom)
 
-  const { conv, requestId } = useSnapshot(convStore)
+  const { conv, requestId } = useSnapshot(coreValtio)
 
   const updateConv = api.core.updateConv.useMutation()
 
@@ -55,7 +55,7 @@ export const useConvSearchParams = (
             onSuccess: () => {
               // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
 
-              convStore.updateRequestId(reqIdInUrl)
+              coreValtio.updateRequestId(reqIdInUrl)
             },
           },
         )

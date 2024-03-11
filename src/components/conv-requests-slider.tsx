@@ -10,7 +10,7 @@ import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useConvRequestSlider } from "../hooks/use-conv-request-slider"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 const ConvRequestsSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -22,7 +22,7 @@ const ConvRequestsSlider = React.forwardRef<
   // const [requests] = useAtom(requestsAtom)
   // const [requestId] = useAtom(requestIdAtom)
 
-  const { conv, requests, requestId } = useSnapshot(convStore)
+  const { conv, requests, requestId } = useSnapshot(coreValtio)
 
   const { min, max, onChange, value } = useConvRequestSlider()
   const softKeyboardOn = useSoftKeyboardOn()

@@ -1,6 +1,6 @@
 import { IBaseResponse } from "../schema/query"
 import { ILLMRequest } from "../schema/sse"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 import { checkRespondingStatus } from "../utils"
 import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
@@ -21,7 +21,7 @@ export const useLLMForAppChat = (
     llmRequest,
     (response) => {
       if (!requestId) return
-      convStore.updateAppResponse(requestId, appId, response)
+      coreValtio.updateAppResponse(requestId, appId, response)
     },
     true,
     () => {

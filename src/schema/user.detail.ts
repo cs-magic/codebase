@@ -1,7 +1,8 @@
 import { Prisma } from "@prisma/client"
 
 import { appDetailSchema } from "./app.detail"
-import { convDetailSchema } from "./conv"
+
+import { convDetailSchema } from "./conv.detail"
 
 export const userDetailSchema = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {

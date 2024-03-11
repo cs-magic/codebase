@@ -1,17 +1,14 @@
+import { IConvBase } from "../schema/conv.base"
+import { IConvDetail } from "../schema/conv.detail"
+import { IRequest } from "../schema/request"
 import { forkApp } from "../utils"
 import { getNewId } from "../../packages/common-algo/id"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
-import {
-  IConvBase,
-  IConvDetail,
-  IRequest,
-  IResponse,
-  IUpdateResponse,
-} from "../schema/conv"
+import { IResponse, IUpdateResponse } from "../schema/response"
 import { IContext } from "../schema/message"
-import { IConvStore } from "../schema/conv-store"
+import { ICoreStore } from "../schema/core.store"
 
-export class ConvStore implements IConvStore {
+export class CoreStore implements ICoreStore {
   //////////////////////////////
   // base states
   //////////////////////////////

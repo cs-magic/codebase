@@ -13,12 +13,12 @@ import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
 
-import { userInputAtom } from "../store/core.atom"
+import { userInputAtom } from "../store/system.atom"
 import {
   checkAuthAlertDialogOpenAtom,
   selectAppsDialogOpenAtom,
 } from "../store/ui.atom"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 /**
  * 1. 用户在首页query
@@ -50,10 +50,10 @@ export function useConvQuery() {
 
   const { apps, appIndex, appId, bestContext, responses, responding } =
     // useAtomValue(convAtomStore)
-    useSnapshot(convStore)
+    useSnapshot(coreValtio)
   let { conv } =
     // useAtomValue(convAtomStore)
-    useSnapshot(convStore)
+    useSnapshot(coreValtio)
 
   const router = useRouter()
   const session = useSession()

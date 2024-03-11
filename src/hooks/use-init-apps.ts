@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 /**
  * 用户初始化模型列表，首页和会话页全局需要
@@ -16,7 +16,7 @@ export const useInitApps = () => {
   // const apps = useConvStore.use.apps()
   // const initAppsFromServer = useConvStore.use.initAppsFromServer()
 
-  const { apps, appId } = useSnapshot(convStore)
+  const { apps, appId } = useSnapshot(coreValtio)
   // const { apps, appId } = useAtomValue(convAtomStore)
 
   useEffect(() => {
@@ -24,6 +24,6 @@ export const useInitApps = () => {
 
     console.log({ appId, apps })
     // convStore.
-    convStore.initAppsFromServer(serverApps)
+    coreValtio.initAppsFromServer(serverApps)
   }, [serverApps, apps.length])
 }

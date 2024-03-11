@@ -7,12 +7,12 @@
  * need to use are documented accordingly near the end.
  */
 
+import { convDetailSchema } from "@/schema/conv.detail"
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { z, ZodError } from "zod"
 import { Context } from "./context"
 import { prisma } from "../common-db/providers/prisma/connection"
-import { convDetailSchema } from "@/schema/conv"
 
 /**
  * 2. INITIALIZATION

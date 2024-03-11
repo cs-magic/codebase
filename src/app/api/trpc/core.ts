@@ -17,7 +17,8 @@ import {
 
 import { createAppSchema } from "../../../schema/app.create"
 import { appDetailSchema } from "../../../schema/app.detail"
-import { convDetailSchema, convSummarySchema } from "../../../schema/conv"
+import { convSummarySchema } from "../../../schema/conv.base"
+import { convDetailSchema } from "../../../schema/conv.detail"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
 import { userDetailSchema } from "../../../schema/user.detail"

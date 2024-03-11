@@ -3,7 +3,7 @@ import { toast } from "sonner"
 import { useSnapshot } from "valtio"
 import { parseApp } from "../../packages/common-llm/schema"
 import { api } from "../../packages/common-trpc/react"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 /**
  * 1. 用户在首页query后将自动触发新建一个会话 （包含query、路由）
@@ -13,7 +13,7 @@ import { convStore } from "../store/conv.valtio"
  */
 export function useAddConv() {
   // const [apps] = useAtom(appsPersistedAtom)
-  const { apps } = useSnapshot(convStore)
+  const { apps } = useSnapshot(coreValtio)
 
   const router = useRouter()
 

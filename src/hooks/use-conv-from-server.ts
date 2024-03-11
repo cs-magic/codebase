@@ -4,7 +4,7 @@ import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
 import { convLogLevelAtom } from "../store/dev.atom"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,
@@ -49,7 +49,7 @@ export const useConvFromServer = (
           new: convFromServer.currentRequestId,
         },
       })
-    convStore.convs = convFromServer
+    coreValtio.convs = convFromServer
   }, [convFromServer])
 
   // 2. 无效则跳转

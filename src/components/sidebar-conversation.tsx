@@ -20,13 +20,14 @@ import {
   TooltipTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { IConvBase } from "../schema/conv"
-import { convStore } from "../store/conv.valtio"
+
+import { IConvBase } from "../schema/conv.base"
+import { coreValtio } from "../store/core.valtio"
 import { getConvUrl } from "../utils"
 
 export const SidebarConvItem = ({ conv }: { conv: IConvBase }) => {
   // const [convId] = useAtom(convIdAtom)
-  const { convId } = useSnapshot(convStore)
+  const { convId } = useSnapshot(coreValtio)
 
   const deleteConv = useDelConv()
   const updateConv = api.core.updateConv.useMutation()

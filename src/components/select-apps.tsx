@@ -8,10 +8,10 @@ import {
 } from "../../packages/common-ui/shadcn/shadcn-components/dialog"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { appsPersistedAtom, serverAppsAtom } from "../../deprecated/v2/app.atom"
-import { maxAppsOnScreenAtom } from "../store/core.atom"
+import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 import { selectAppsDialogOpenAtom } from "../store/ui.atom"
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 import { SelectApp } from "./select-app"
 import { Separator } from "../../packages/common-ui/shadcn/shadcn-components/separator"
 import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
@@ -20,7 +20,7 @@ import { useAtom } from "jotai"
 import { useSnapshot } from "valtio"
 
 export const AppsDialog = () => {
-  const { apps } = useSnapshot(convStore)
+  const { apps } = useSnapshot(coreValtio)
 
   // const [allApps] = useAtom(serverAppsAtom)
   // const [persistedApps] = useAtom(appsPersistedAtom)

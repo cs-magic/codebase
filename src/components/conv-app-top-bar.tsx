@@ -16,9 +16,9 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppClient } from "../schema/app.detail"
 
-import { appStopGeneratingScopeAtom } from "../store/core.atom"
+import { appStopGeneratingScopeAtom } from "../store/system.atom"
 
-import { convStore } from "../store/conv.valtio"
+import { coreValtio } from "../store/core.valtio"
 import { checkRespondingStatus } from "../utils"
 import { ConvAppTitleLine } from "./conv-app-title-line"
 
@@ -40,7 +40,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
 
   const { requestId, apps, appIndex } =
     // useAtomValue(convAtomStore)
-    useSnapshot(convStore)
+    useSnapshot(coreValtio)
 
   const selected = app.clientId === apps[appIndex]?.clientId
   const LockOrNot = selected ? Lock : Unlock
@@ -89,7 +89,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          convStore.selectApp(app.clientId)
+          coreValtio.selectApp(app.clientId)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -100,7 +100,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         disabled={apps.length <= 1}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void convStore.delApp(app.clientId)
+          void coreValtio.delApp(app.clientId)
         }}
       >
         <MinusCircleIcon />
@@ -110,7 +110,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         <IconContainer
           tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
           onClick={() => {
-            convStore.forkApp(app)
+            coreValtio.forkApp(app)
           }}
         >
           <PlusCircleIcon />
