@@ -19,12 +19,13 @@ export const Sidebar = ({
   const [devEnabled] = useAtom(devEnabledAtom)
 
   const { convs } = useSnapshot(coreValtio)
-  // const [convs] = useAtom(convsAtom)
 
   const addConv = useAddConv()
   const delAllConvs = useDelAllConvs()
 
   useLLMForConvTitle()
+
+  // console.log({ convs })
 
   return (
     <div

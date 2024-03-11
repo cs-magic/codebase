@@ -1,5 +1,5 @@
 import ansiColors from "ansi-colors"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -12,13 +12,13 @@ import {
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
+import { coreValtio } from "../store/core.valtio"
 
 import { userInputAtom } from "../store/system.atom"
 import {
   checkAuthAlertDialogOpenAtom,
   selectAppsDialogOpenAtom,
 } from "../store/ui.atom"
-import { coreValtio } from "../store/core.valtio"
 
 /**
  * 1. 用户在首页query
@@ -26,34 +26,16 @@ import { coreValtio } from "../store/core.valtio"
  * @param query
  */
 export function useConvQuery() {
-  const [, setOpen] = useAtom(checkAuthAlertDialogOpenAtom)
-  const [, setSelectAppsOpen] = useAtom(selectAppsDialogOpenAtom)
   const [llmDelay] = useAtom(llmDelayAtom)
-  const [prompt, setPrompt] = useAtom(userInputAtom)
   const [pusherServerId] = useAtom(pusherServerIdAtom)
   const [convSummaryPrompt] = useAtom(convSummaryPromptAtom)
-
-  // let [conv] = useAtom(convAtom)
-  // const [apps] = useAtom(appsPersistedAtom)
-  // const [appId] = useAtom(appIdPersistedAtom)
-  // const [context] = useAtom(bestContextAtom)
-  // const [responses] = useAtom(responsesAtom)
-  // const [responseFinished] = useAtom(responseFinishedAtom)
-
-  // let conv = useConvStore.use.conv()
-  // const apps = useConvStore.use.apps()
-  // const appIndex = useConvStore.use.appIndex()
-  // const appId = useConvStore.use.appId()
-  // const bestContext = useConvStore.use.bestContext()
-  // const responses = useConvStore.use.responses()
-  // const responding = useConvStore.use.responding()
+  const setOpen = useSetAtom(checkAuthAlertDialogOpenAtom)
+  const setSelectAppsOpen = useSetAtom(selectAppsDialogOpenAtom)
+  const setPrompt = useSetAtom(userInputAtom)
 
   const { apps, appIndex, appId, bestContext, responses, responding } =
-    // useAtomValue(convAtomStore)
     useSnapshot(coreValtio)
-  let { conv } =
-    // useAtomValue(convAtomStore)
-    useSnapshot(coreValtio)
+  let { conv } = useSnapshot(coreValtio)
 
   const router = useRouter()
   const session = useSession()
@@ -61,7 +43,7 @@ export function useConvQuery() {
   const addConv = api.core.addConv.useMutation()
   const utils = api.useUtils()
 
-  return async () => {
+  return async (prompt: string) => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
       conv,
       query,

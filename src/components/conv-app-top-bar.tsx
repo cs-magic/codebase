@@ -1,4 +1,4 @@
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import {
   Lock,
   MinusCircleIcon,
@@ -16,38 +16,24 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppClient } from "../schema/app.detail"
 
-import { appStopGeneratingScopeAtom } from "../store/system.atom"
-
 import { coreValtio } from "../store/core.valtio"
+
+import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { checkRespondingStatus } from "../utils"
 import { ConvAppTitleLine } from "./conv-app-title-line"
 
 export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
-  const [, stopGenerating] = useAtom(appStopGeneratingScopeAtom)
+  const [pusherServerId] = useAtom(pusherServerIdAtom)
 
-  // const [apps] = useAtom(appsPersistedAtom)
-  // const [, delApp] = useAtom(delAppAtom)
-  // const [, forkApp] = useAtom(forkAppAtom)
-  // const [requestId] = useAtom(requestIdAtom)
-  // const [selectedAppID, setSelectedAppID] = useAtom(appIdPersistedAtom)
+  const stopGenerating = useSetAtom(appStopGeneratingScopeAtom)
 
-  // const requestId = useConvStore.use.requestId()
-  // const apps = useConvStore.use.apps()
-  // const forkApp = useConvStore.use.forkApp()
-  // const delApp = useConvStore.use.delApp()
-  // const appIndex = useConvStore.use.appIndex()
-  // const selectApp = useConvStore.use.selectApp()
-
-  const { requestId, apps, appIndex } =
-    // useAtomValue(convAtomStore)
-    useSnapshot(coreValtio)
+  const { requestId, apps, appIndex } = useSnapshot(coreValtio)
 
   const selected = app.clientId === apps[appIndex]?.clientId
   const LockOrNot = selected ? Lock : Unlock
   const respondingStatus = checkRespondingStatus(app.response)
 
   const { isMobile } = useEnvironments()
-  const [pusherServerId] = useAtom(pusherServerIdAtom)
 
   return (
     <div

@@ -1,10 +1,12 @@
-import { tvScreenOnAtom } from "../../packages/extend-tv/store"
-import { tvFullScreenAtom } from "../../packages/extend-tv/store"
-import { useAtom } from "jotai"
+import { useSetAtom } from "jotai"
+import {
+  tvFullScreenAtom,
+  tvScreenOnAtom,
+} from "../../packages/extend-tv/store"
 
 export const Controls = () => {
-  const [, toggleFullscreen] = useAtom(tvFullScreenAtom)
-  const [, toggleScreenOn] = useAtom(tvScreenOnAtom)
+  const toggleFullscreen = useSetAtom(tvFullScreenAtom)
+  const toggleScreenOn = useSetAtom(tvScreenOnAtom)
 
   return (
     <div className="buttons">

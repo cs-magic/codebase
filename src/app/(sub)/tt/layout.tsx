@@ -8,11 +8,6 @@ import { Separator } from "../../../../packages/common-ui/shadcn/shadcn-componen
 import { coreValtio } from "../../../store/core.valtio"
 
 export default function ConvLayout({ children }: PropsWithChildren) {
-  // const [apps] = useAtom(appsPersistedAtom)
-  // const [, setAppId] = useAtom(appIdPersistedAtom)
-  // const [, setConvs] = useAtom(convsAtom)
-  // const [, setConv] = useAtom(convAtom)
-
   const { apps, appId } = useSnapshot(coreValtio)
 
   const { data: convsInDB } = api.core.listConv.useQuery()
@@ -25,12 +20,10 @@ export default function ConvLayout({ children }: PropsWithChildren) {
   // 3. 当有persisted config 但没有selected app时，自动选第一个
   useEffect(() => {
     if (!apps.length) return
+
     // 确保当前选中的app还在列表内
     if (appId && apps.find((p) => p.id === appId)) return
-    const firstAppId = apps[0]!.id
-    console.log("-- setting selected config id to be the first one: ", {
-      firstAppId,
-    })
+
     coreValtio.appIndex = 0
   }, [apps.length])
 
@@ -39,7 +32,6 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     return () => {
       console.log(ansiColors.red("clear conv since leaving"))
       coreValtio.conv = null
-      // setConv(null)
     }
   }, [])
 

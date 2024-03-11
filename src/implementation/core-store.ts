@@ -1,12 +1,12 @@
-import { IConvBase } from "../schema/conv.base"
-import { IConvDetail } from "../schema/conv.detail"
-import { IRequest } from "../schema/request"
-import { forkApp } from "../utils"
 import { getNewId } from "../../packages/common-algo/id"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
-import { IResponse, IUpdateResponse } from "../schema/response"
-import { IContext } from "../schema/message"
+import { IConvBase } from "../schema/conv.base"
+import { IConvDetail } from "../schema/conv.detail"
 import { ICoreStore } from "../schema/core.store"
+import { IContext } from "../schema/message"
+import { IRequest } from "../schema/request"
+import { IResponse, IUpdateResponse } from "../schema/response"
+import { forkApp } from "../utils"
 
 export class CoreStore implements ICoreStore {
   //////////////////////////////
@@ -14,13 +14,25 @@ export class CoreStore implements ICoreStore {
   //////////////////////////////
 
   convs: IConvBase[] = []
-  conv: IConvDetail | null = null
   apps: IAppClient[] = []
   appIndex = 0
+
+  _conv: IConvDetail | null = null
 
   //////////////////////////////
   // derived states
   //////////////////////////////
+
+  get conv() {
+    const conv = this._conv
+    console.log({ conv })
+    return conv
+  }
+
+  set conv(conv: IConvDetail | null) {
+    this._conv = conv
+    console.log("-- setting conv: ", conv)
+  }
 
   get convId() {
     return this.conv?.id ?? null
@@ -31,15 +43,21 @@ export class CoreStore implements ICoreStore {
   }
 
   get requests(): IRequest[] {
-    return this.conv?.requests ?? []
+    const requests = this.conv?.requests ?? []
+    console.log({ requests })
+    return requests
   }
 
   get requestId() {
-    return this.conv?.id ?? null
+    const requestId = this.conv?.currentRequestId ?? null
+    console.log({ requestId })
+    return requestId
   }
 
   get request() {
-    return this.requests.find((r) => r.id === this.requestId) ?? null
+    const request = this.requests.find((r) => r.id === this.requestId) ?? null
+    console.log({ request })
+    return request
   }
 
   get responses(): IResponse[] {
@@ -47,7 +65,9 @@ export class CoreStore implements ICoreStore {
   }
 
   get commonContext(): IContext {
-    return this.request?.context ?? []
+    const commonContext = this.request?.context ?? []
+    console.log({ commonContext })
+    return commonContext
   }
 
   get responding() {
@@ -81,9 +101,7 @@ export class CoreStore implements ICoreStore {
   //////////////////////////////
 
   initAppsFromServer(apps: IAppDetail[]) {
-    console.log("-- this: ", this)
     this.apps = apps.filter((a) => a.id === "gpt-3.5-turbo").map(forkApp)
-    console.log("-- initAppsFromServer: ", { apps, thisApps: this.apps })
     this.appIndex = 0
   }
 

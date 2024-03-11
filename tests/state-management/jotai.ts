@@ -13,6 +13,5 @@
 //
 // // export const useAddConversation = () => {
 // //   const [pAppsIds] = useAtom(pAppsIdsAtom)
-// //   const [, addConversaiton] = useAtom(addConversationAtom)
-// //   // const [, setConversa]
+// //   const addConversation = useSetAtom(addConversationAtom)
 // // }

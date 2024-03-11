@@ -1,5 +1,7 @@
 "use client"
 
+import { useAtom, useSetAtom } from "jotai"
+import { useEffect } from "react"
 import { PusherServerId } from "../../../../packages/common-pusher/schema"
 import {
   cleanPusherAtom,
@@ -7,8 +9,8 @@ import {
   pusherClientAtom,
   pusherServerIdAtom,
 } from "../../../../packages/common-pusher/store"
+import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 import { Button } from "../../../../packages/common-ui/shadcn/shadcn-components/button"
-import { useEffect } from "react"
 import {
   Select,
   SelectContent,
@@ -17,16 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../packages/common-ui/shadcn/shadcn-components/select"
-import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
-import { useAtom } from "jotai"
 
 export default function TestSocketPage() {
   const [serverId, setServerId] = useAtom(pusherServerIdAtom)
   const [client] = useAtom(pusherClientAtom)
-  const [, init] = useAtom(initPusherAtom)
-  const [, clean] = useAtom(cleanPusherAtom)
 
-  console.log({ client })
+  const init = useSetAtom(initPusherAtom)
+  const clean = useSetAtom(cleanPusherAtom)
 
   const c = () => {
     console.log("cleaning...")

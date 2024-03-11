@@ -1,4 +1,4 @@
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { useEffect } from "react"
 import { toast } from "sonner"
 import { uiLoadingAlertDialogAtom } from "../../common-ui/store"
@@ -6,24 +6,25 @@ import { $sendSms } from "../server/actions"
 import { $sendSmsViaAli } from "../server/providers/ali"
 import { $sendSmsViaTencent } from "../server/providers/tencent"
 import {
-  smsCodeToCountdownSecondsAtom,
-  smsCodeExpireSecondsAtom,
   smsCodeCurCountdownSecondsAtom,
+  smsCodeExpireSecondsAtom,
+  smsCodeSentOKAtom,
+  smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
   smsSendCodePayloadAtom,
-  smsCodeSentOKAtom,
   smsStageAtom,
 } from "../store"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)
-  const [, setLoading] = useAtom(uiLoadingAlertDialogAtom)
-  const [, setSmsSentOk] = useAtom(smsCodeSentOKAtom)
-  const [, setSmsStage] = useAtom(smsStageAtom)
   const [smsDowntime, setSmsDowntime] = useAtom(smsCodeCurCountdownSecondsAtom)
   const [smsSendPayload] = useAtom(smsSendCodePayloadAtom)
   const [smsCountdownSeconds] = useAtom(smsCodeToCountdownSecondsAtom)
   const [smsExpireSeconds] = useAtom(smsCodeExpireSecondsAtom)
+
+  const setLoading = useSetAtom(uiLoadingAlertDialogAtom)
+  const setSmsSentOk = useSetAtom(smsCodeSentOKAtom)
+  const setSmsStage = useSetAtom(smsStageAtom)
 
   const sendApproach =
     smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent

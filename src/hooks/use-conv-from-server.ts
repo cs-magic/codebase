@@ -1,19 +1,18 @@
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { api } from "../../packages/common-trpc/react"
 import { openAlertDialogAtom } from "../../packages/common-ui/store"
-import { convLogLevelAtom } from "../store/dev.atom"
 import { coreValtio } from "../store/core.valtio"
+import { convLogLevelAtom } from "../store/dev.atom"
 
 export const useConvFromServer = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const [, openAlertDialog] = useAtom(openAlertDialogAtom)
   const [convLogLevel] = useAtom(convLogLevelAtom)
 
-  // const [, setConv] = useAtom(convAtom)
+  const openAlertDialog = useSetAtom(openAlertDialogAtom)
 
   // 1. 检查服务端是否id有效
   const { isError, data: convFromServer } = api.core.getConv.useQuery(
@@ -49,7 +48,7 @@ export const useConvFromServer = (
           new: convFromServer.currentRequestId,
         },
       })
-    coreValtio.convs = convFromServer
+    coreValtio.conv = convFromServer
   }, [convFromServer])
 
   // 2. 无效则跳转

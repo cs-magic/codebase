@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { ComponentType } from "react"
 import { useForm } from "react-hook-form"
@@ -12,7 +12,6 @@ import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
 } from "../../packages/common-sms/store"
-import { WECHAT_PROVIDER_ID } from "../../packages/common-wechat/auth/config"
 
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { SeparatorContainer } from "../../packages/common-ui/components/separator-container"
@@ -28,6 +27,7 @@ import {
 import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { WECHAT_PROVIDER_ID } from "../../packages/common-wechat/auth/config"
 
 export const SmsStage1SendCode = ({
   BrandComp,
@@ -36,7 +36,9 @@ export const SmsStage1SendCode = ({
 }) => {
   const { isWechat } = useEnvironments()
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)
-  const [, setPhone] = useAtom(userPhoneAtom)
+
+  const setPhone = useSetAtom(userPhoneAtom)
+
   const sendCode = useSmsSendCode()
 
   const form = useForm<ISendSms>({

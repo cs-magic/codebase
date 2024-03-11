@@ -21,10 +21,6 @@ export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  // const [, setConvs] = useAtom(convsAtom)
-  // const [conv] = useAtom(convAtom)
-  // const [requestId] = useAtom(requestIdAtom)
-
   const { conv, requestId } = useSnapshot(coreValtio)
 
   const updateConv = api.core.updateConv.useMutation()
@@ -43,7 +39,7 @@ export const useConvSearchParams = (
         router.replace(getConvUrl(conv))
       // 从客户端触发更新数据库里的指针（无需invalidate）
       else if (reqIdInUrl && requestId !== reqIdInUrl) {
-        console.log(`-- trigger db reqId: ${requestId} --> ${reqIdInUrl}`)
+        // console.log(`-- request id change: ${requestId} --> ${reqIdInUrl}`)
 
         // 更新convs里的指针（无需关心conv里的游标，因为始终以convs对齐）
         updateConv.mutate(

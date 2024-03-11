@@ -5,9 +5,9 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
-import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 import { coreValtio } from "../store/core.valtio"
+import { maxAppsOnScreenAtom } from "../store/system.atom"
 
 export const SelectApp = ({
   app,
@@ -17,14 +17,6 @@ export const SelectApp = ({
   type: "toAdd" | "toDel"
 }) => {
   const [maxToAdd] = useAtom(maxAppsOnScreenAtom)
-
-  // const [apps] = useAtom(appsPersistedAtom)
-  // const [, pushApp] = useAtom(pushAppAtom)
-  // const [, delApp] = useAtom(delAppAtom)
-
-  // const apps = useConvStore.use.apps()
-  // const pushApp = useConvStore.use.pushApp()
-  // const delApp = useConvStore.use.delApp()
 
   const { apps } = useSnapshot(coreValtio)
 

@@ -7,8 +7,6 @@ import { useLlmSse } from "./use-llm-sse"
 
 export const useLLMForConvTitle = () => {
   const { conv } = useSnapshot(coreValtio)
-  // const [conv] = useAtom(convAtom)
-  // const [, updateConvTitle] = useAtom(updateConvTitleAtom)
 
   const llmRequest: ILLMRequest = {
     type: "conv-title",

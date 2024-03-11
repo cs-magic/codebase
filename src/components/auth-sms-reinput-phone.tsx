@@ -1,11 +1,12 @@
 "use client"
-import { smsStageAtom, userPhoneAtom } from "../../packages/common-sms/store"
+import { useAtom, useSetAtom } from "jotai"
 import { EditIcon } from "lucide-react"
-import { useAtom } from "jotai"
+import { smsStageAtom, userPhoneAtom } from "../../packages/common-sms/store"
 
 export const SmsReInputPhone = () => {
   const [phone] = useAtom(userPhoneAtom)
-  const [, setStage] = useAtom(smsStageAtom)
+
+  const setStage = useSetAtom(smsStageAtom)
 
   return (
     <div className={"font-semibold inline-flex items-center gap-1"}>

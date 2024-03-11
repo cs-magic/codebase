@@ -6,21 +6,15 @@ import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { uiScreenAtom } from "../../packages/common-ui/store"
 
-import { appStopGeneratingScopeAtom } from "../store/system.atom"
-
 import { coreValtio } from "../store/core.valtio"
+
+import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { getAppsGridCols } from "../utils"
 import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
-  // const [gridCols] = useAtom(getAppsGridColsAtom)
-  // const apps = useConvStore.use.apps()
-  // useSnapshot(convStore)
-
   const [{ width }] = useAtom(uiScreenAtom)
   const { apps } = useSnapshot(coreValtio)
-
-  console.log({ apps })
 
   return (
     <div

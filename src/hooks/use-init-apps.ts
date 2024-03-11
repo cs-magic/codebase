@@ -9,21 +9,11 @@ import { coreValtio } from "../store/core.valtio"
 export const useInitApps = () => {
   const { data: serverApps } = api.core.listApps.useQuery()
 
-  // const [, setAllApps] = useAtom(serverAppsAtom)
-  // const [apps] = useAtom(appsPersistedAtom)
-  // const [, pushApp] = useAtom(pushAppAtom)
-
-  // const apps = useConvStore.use.apps()
-  // const initAppsFromServer = useConvStore.use.initAppsFromServer()
-
-  const { apps, appId } = useSnapshot(coreValtio)
-  // const { apps, appId } = useAtomValue(convAtomStore)
+  const { apps } = useSnapshot(coreValtio)
 
   useEffect(() => {
     if (!serverApps || !!apps.length) return
 
-    console.log({ appId, apps })
-    // convStore.
     coreValtio.initAppsFromServer(serverApps)
   }, [serverApps, apps.length])
 }

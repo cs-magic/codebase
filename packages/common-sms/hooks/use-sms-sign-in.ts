@@ -1,4 +1,4 @@
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
 import { uiLoadingAlertDialogAtom } from "../../common-ui/store"
@@ -6,8 +6,9 @@ import { SMS_PROVIDER_ID } from "../const"
 import { smsSignInPayloadAtom } from "../store"
 
 export const useSmsSignIn = () => {
-  const [, setLoading] = useAtom(uiLoadingAlertDialogAtom)
   const [data] = useAtom(smsSignInPayloadAtom)
+
+  const setLoading = useSetAtom(uiLoadingAlertDialogAtom)
 
   return async () => {
     console.log("[sms] sign in with: ", data)

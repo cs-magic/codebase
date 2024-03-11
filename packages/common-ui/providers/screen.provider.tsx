@@ -1,13 +1,13 @@
 "use client"
-import { useAtom } from "jotai"
+import { useSetAtom } from "jotai"
 import { PropsWithChildren, useEffect } from "react"
-import { useMeasure, useWindowSize } from "react-use"
-import { toast } from "sonner"
+import { useMeasure } from "react-use"
 import { uiScreenAtom } from "../store"
 
 export const ScreenProvider = ({ children }: PropsWithChildren) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()
-  const [, setMainArea] = useAtom(uiScreenAtom)
+
+  const setMainArea = useSetAtom(uiScreenAtom)
 
   useEffect(() => {
     setMainArea({ width, height })
