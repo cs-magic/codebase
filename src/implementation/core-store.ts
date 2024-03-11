@@ -1,13 +1,13 @@
 import { remove } from "lodash"
 import { UnexpectedError } from "../../packages/common-general/schema"
 import { LogLevel } from "../../packages/common-log/schema"
-import { IAppClient, IAppDetail } from "../schema/app.detail"
+import { IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
 import { IConvDetail } from "../schema/conv.detail"
 import { IContext } from "../schema/message"
 import { IRequest } from "../schema/request"
 import { IResponse, IUpdateResponse } from "../schema/response"
-import { forkApp } from "../utils"
+import { app2response, response2app } from "../utils"
 
 export class CoreStore {
   // implements ICoreStore
@@ -16,12 +16,11 @@ export class CoreStore {
   //////////////////////////////
 
   convs: IConvBase[] = []
-  _appIndex = 0
+  _serverChats: IResponse[] = []
+  _chatIndex = 0
   logLevel: LogLevel = LogLevel.warning
 
   _conv: IConvDetail | null = null
-
-  _serverApps: IAppClient[] = []
 
   //////////////////////////////
   // derived
@@ -40,29 +39,6 @@ export class CoreStore {
 
   get convId() {
     return this.conv?.id ?? null
-  }
-
-  get apps(): IAppClient[] {
-    return this.responses.length
-      ? this.responses.map((r) => ({
-          ...r.app,
-          clientId: r.appClientId,
-          response: r,
-          isDraft: false, // todo
-        }))
-      : this._serverApps
-  }
-
-  get app(): IAppClient | null {
-    return this.apps[this._appIndex] ?? null
-  }
-
-  get appId() {
-    return this.app?.id ?? null
-  }
-
-  get appClientId() {
-    return this.app?.clientId ?? null
   }
 
   get requests(): IRequest[] {
@@ -91,8 +67,28 @@ export class CoreStore {
     return request
   }
 
-  get responses(): IResponse[] {
-    return this.request?.responses ?? []
+  get chats(): IResponse[] {
+    return this.request?.responses ?? this._serverChats
+  }
+
+  get chat(): IResponse | null {
+    return this.chats[this._chatIndex] ?? null
+  }
+
+  get chatId() {
+    return this.chat?.id
+  }
+
+  get apps(): IAppDetail[] {
+    return this.chats.map(response2app)
+  }
+
+  get app(): IAppDetail | null {
+    return this.apps[this._chatIndex] ?? null
+  }
+
+  get appId() {
+    return this.app?.id ?? null
   }
 
   get commonContext(): IContext {
@@ -104,30 +100,22 @@ export class CoreStore {
     return commonContext
   }
 
-  get responding() {
-    return this.responses?.some((r) => !!r.tStart && !r.tEnd)
-  }
-
-  get bestResponse() {
-    return this.responses[this._appIndex] ?? null
-  }
-
   get bestContext(): IContext {
-    return this.bestResponse
+    return this.chat
       ? [
           ...this.commonContext,
           {
-            content:
-              this.bestResponse?.error ??
-              this.bestResponse?.content ??
-              // todo: null?
-              "",
+            updatedAt: this.chat.updatedAt,
+            content: this.chat.content ?? this.chat.error ?? "",
+            isError: !!this.chat.error,
             role: "assistant",
-            isError: !!this.bestResponse?.error,
-            updatedAt: this.bestResponse?.updatedAt,
           },
         ]
       : this.commonContext
+  }
+
+  get responding() {
+    return this.chats?.some((r) => !!r.tStart && !r.tEnd)
   }
 
   //////////////////////////////
@@ -146,7 +134,8 @@ export class CoreStore {
       this.conv.requests.push(request)
     }
     const conv = this.convs.find((c) => c.id === request.convId)
-    if (conv) conv.currentRequestId = request.id
+    if (!conv) return
+    conv.currentRequestId = request.id
   }
 
   addConvFromServer(conv: IConvDetail) {
@@ -160,55 +149,37 @@ export class CoreStore {
     if (requestId !== undefined) convInStore.currentRequestId = requestId
   }
 
-  selectApp(appClientId: string) {
-    this._appIndex = this.apps.findIndex((a) => a.clientId === appClientId)
+  selectChat(responseId: string) {
+    this._chatIndex = this.chats.findIndex((a) => a.id === responseId)
   }
 
-  pushApp(app: IAppDetail) {
-    this.apps.push(forkApp(app))
+  pushChat(app: IAppDetail) {
+    this.chats.push(app2response(app))
   }
 
-  replaceApp(appClientId: string, app: IAppDetail) {
-    const index = this.apps.findIndex((a) => a.clientId === appClientId)
+  replaceChat(responseId: string, app: IAppDetail) {
+    const index = this.chats.findIndex((a) => a.id === responseId)
     if (index < 0) return
-    this.apps[index] = forkApp(app)
+    this.chats[index] = app2response(app)
   }
 
-  forkApp(app: IAppClient) {
-    const index = this.apps.findIndex((a) => a.clientId === app.clientId)
+  forkChat(response: IResponse) {
+    const index = this.chats.findIndex((a) => a.id === response.id)
     if (index < 0) return
-    this.apps.splice(index + 1, 0, forkApp(app))
+    this.chats.splice(index + 1, 0, response)
   }
 
-  delApp(appClientId: string) {
-    const index = this.apps.findIndex((a) => a.clientId === appClientId)
+  delChat(responseId: string) {
+    const index = this.chats.findIndex((a) => a.id === responseId)
     if (index < 0) return
-    this.apps.splice(index, 1)
-    this._appIndex = 0
+    this.chats.splice(index, 1)
+    this._chatIndex = 0
   }
 
-  updateAppResponse(
-    requestId: string,
-    appClientId: string,
-    func: IUpdateResponse,
-  ) {
-    if (this.logLevel <= LogLevel.debug) console.log({ requestId, appClientId })
+  updateChat(requestId: string, responseId: string, func: IUpdateResponse) {
+    if (this.logLevel <= LogLevel.debug) console.log({ requestId, responseId })
 
-    /**
-     * v1: get response from $.conv.request.response[i]
-     */
-    // const conv = this.conv
-    // if (requestId !== conv?.currentRequestId) return
-    // const res = conv.requests
-    //   .find((r) => r.id === requestId)
-    //   ?.responses.find((r) => r.appClientId === appClientId)
-    // if (!res) return
-
-    /**
-     * v2: get response from $.apps[i].response
-     */
-    const res = this.apps.find((a) => a.clientId === appClientId)?.response
-    // console.log({ requestId, appClientId, res })
+    const res = this.chats.find((a) => a.id === responseId)
     if (!res) return
 
     func(res)
@@ -225,14 +196,14 @@ export class CoreStore {
   delConv(convId: string) {
     if (convId === this.convId) {
       this._conv = null
-      this._appIndex = 0
+      this._chatIndex = 0
     }
     remove(this.convs, (c) => c.id === convId)
   }
 
   delAllConvs() {
     this.convs = []
-    this._appIndex = 0
+    this._chatIndex = 0
     this._conv = null
   }
 

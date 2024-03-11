@@ -11,6 +11,7 @@ export type ResponseStatus =
   | "responding"
   | ResponseFinalStatus
 
+// todo: union response id
 export type ILLMRequest = {
   pusherServerId?: PusherServerId
   status?: ResponseStatus
@@ -20,20 +21,17 @@ export type ILLMRequest = {
       convId?: string
     }
   | {
-      requestId?: string | null
       type: "app-response"
+      requestId?: string | null
       appId: string
-      appClientId: string
     }
 )
 
 export const getTriggerIdFromSSERequest = (request: ILLMRequest) => {
   switch (request.type) {
     case "app-response":
-      const { requestId, appClientId } = request
-      return !!requestId && !!appClientId
-        ? `chat@${requestId}.${appClientId}`
-        : null
+      const { requestId, appId } = request
+      return !!requestId && !!appId ? `chat@${requestId}.${appId}` : null
 
     case "conv-title":
       const { convId } = request

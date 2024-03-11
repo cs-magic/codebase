@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
 import { coreStore } from "../store/core.valtio"
-import { ConvApps } from "./conv-apps"
+import { Chats } from "./chats"
 import { ConvControl } from "./conv-control"
 import { ConvQuery } from "./conv-query"
 
@@ -56,9 +56,11 @@ export default function Conv({
 
   // useConvClean(convIdInUrl)
 
+  console.log("== Conv ==")
+
   return (
     <div className={"w-full h-full flex flex-col overflow-hidden"}>
-      <ConvApps />
+      <Chats />
 
       <div className={"w-full max-w-[720px] mx-auto p-2 shrink-0"}>
         <ConvControl />

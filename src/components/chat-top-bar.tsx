@@ -14,24 +14,25 @@ import { callLLM } from "../../packages/common-llm/actions/llm-caller"
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { IAppClient } from "../schema/app.detail"
+import { IAppDetail } from "../schema/app.detail"
+import { IResponse } from "../schema/response"
 
 import { coreStore } from "../store/core.valtio"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { checkRespondingStatus } from "../utils"
-import { ConvAppTitleLine } from "./conv-app-title-line"
+import { ChatTitleLine } from "./chat-title-line"
 
-export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
+export const ChatTopBar = ({ chat }: { chat: IResponse }) => {
   const [pusherServerId] = useAtom(pusherServerIdAtom)
 
   const stopGenerating = useSetAtom(appStopGeneratingScopeAtom)
 
-  const { requestId, apps, appIndex } = useSnapshot(coreStore)
+  const { requestId, apps, responseId } = useSnapshot(coreStore)
 
-  const selected = app.clientId === apps[appIndex]?.clientId
+  const selected = chat.id === responseId
   const LockOrNot = selected ? Lock : Unlock
-  const respondingStatus = checkRespondingStatus(app.response)
+  const respondingStatus = checkRespondingStatus(chat)
 
   const { isMobile } = useEnvironments()
 
@@ -43,7 +44,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         selected && "border-b border-primary-foreground/50",
       )}
     >
-      <ConvAppTitleLine app={app} />
+      <ChatTitleLine chat={chat} />
       <div className={"grow"} />
 
       <IconContainer
@@ -58,7 +59,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
               action: "interrupt",
               request: {
                 requestId,
-                appId: app.clientId,
+                appId: chat.app!.id,
                 type: "app-response",
                 status: "responding",
                 pusherServerId,
@@ -75,7 +76,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
       <IconContainer
         tooltipContent={"选中当前的App，每次发送问题时以它的上下文对齐"}
         onClick={() => {
-          coreStore.selectApp(app.clientId)
+          coreStore.selectChat(chat.id)
         }}
       >
         <LockOrNot className={cn(selected && "text-primary-foreground")} />
@@ -86,7 +87,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         disabled={apps.length <= 1}
         className={cn(apps.length === 1 && "text-muted-foreground")}
         onClick={() => {
-          void coreStore.delApp(app.clientId)
+          void coreStore.delChat(chat.id)
         }}
       >
         <MinusCircleIcon />
@@ -96,7 +97,7 @@ export const ConvAppTopBar = ({ app }: { app: IAppClient }) => {
         <IconContainer
           tooltipContent={"添加一个App（聊天内容与被选中App同步）"}
           onClick={() => {
-            coreStore.forkApp(app)
+            coreStore.forkChat(chat)
           }}
         >
           <PlusCircleIcon />

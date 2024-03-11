@@ -17,14 +17,14 @@ import {
   UserUpdateInputSchema,
 } from "../../../../prisma/generated/zod"
 
-import { createAppSchema } from "../../../schema/app.create"
-import { appDetailSchema, clientAppSchema } from "../../../schema/app.detail"
+import { appDetailSchema } from "../../../schema/app.detail"
 import { convSummarySchema } from "../../../schema/conv.base"
 import { convDetailSchema } from "../../../schema/conv.detail"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
 import { requestSchema } from "../../../schema/request"
 import { userDetailSchema } from "../../../schema/user.detail"
+import { createAppSchema } from "@/schema/app.create"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -105,9 +105,6 @@ export const coreRouter = createTRPCRouter({
               create: { ...app, user: ctx.user.id },
             })),
           },
-          titleResponse: {
-            create: {},
-          },
         },
         ...convDetailSchema,
       }),
@@ -149,7 +146,7 @@ export const coreRouter = createTRPCRouter({
       z.object({
         requestId: z.string().optional(),
         context: llmMessageSchema.array(),
-        apps: clientAppSchema.array(),
+        apps: createAppSchema.array(),
 
         options: z.object({
           llmDelay: z.number().default(0),
@@ -157,7 +154,7 @@ export const coreRouter = createTRPCRouter({
 
           withConv: z
             .object({
-              bestAppClientId: z.string(),
+              bestResponseId: z.string(),
               systemPromptForConvTitle: z.string().optional(),
             })
             .optional(),
@@ -182,15 +179,13 @@ export const coreRouter = createTRPCRouter({
             create: [
               ...input.apps.map((app) => {
                 // app.clientId --> response.appClientId
-                const { clientId, ...other } = app
                 return {
                   tTrigger: new Date(),
-                  appClientId: clientId,
                   app: {
                     connectOrCreate: {
                       where: { id: app.id },
                       create: {
-                        ...other,
+                        ...app,
                         user: ctx.user.id,
                       },
                     },
@@ -202,6 +197,15 @@ export const coreRouter = createTRPCRouter({
         },
         ...requestSchema,
       })
+
+      if (options.withConv) {
+        await prisma.response.create({
+          data: {
+            requestId,
+            convId,
+          },
+        })
+      }
 
       void triggerLLMThreads(request, context, options)
       return request

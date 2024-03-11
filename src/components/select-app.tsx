@@ -42,9 +42,9 @@ export const SelectApp = ({
           if (disabled) return
           if (type === "toDel")
             // void convStore.
-            coreStore.delApp(app.id)
+            coreStore.delChat(app.id)
           // void convStore.
-          else coreStore.pushApp(app)
+          else coreStore.pushChat(app)
         }}
       >
         <Icon />

@@ -9,11 +9,13 @@ import { coreStore } from "../store/core.valtio"
 
 import { appStopGeneratingScopeAtom } from "../store/system.atom"
 import { getAppsGridCols } from "../utils"
-import { ConvApp } from "./conv-app"
+import { Chat } from "./chat"
 
-export const ConvApps = () => {
+export const Chats = () => {
   const [{ width }] = useAtom(uiScreenAtom)
-  const { apps } = useSnapshot(coreStore)
+  const { chats } = useSnapshot(coreStore)
+
+  console.log("-- chats: ", chats)
 
   return (
     <div
@@ -24,13 +26,13 @@ export const ConvApps = () => {
       )}
       style={{
         // ref: https://tailwindcss.com/docs/grid-template-columns
-        gridTemplateColumns: `repeat(${getAppsGridCols(width, apps.length)}, minmax(0, 1fr))`,
+        gridTemplateColumns: `repeat(${getAppsGridCols(width, chats.length)}, minmax(0, 1fr))`,
       }}
     >
-      {apps.map((app, index) => (
+      {chats.map((chat, index) => (
         // 不要用app.id会重复！
         <ScopeProvider key={index} atoms={[appStopGeneratingScopeAtom]}>
-          <ConvApp app={app} />
+          <Chat chat={chat} />
         </ScopeProvider>
       ))}
     </div>

@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useSnapshot } from "valtio"
+import { parseApp } from "../../packages/common-llm/schema"
 import {
   convSummaryPromptAtom,
   llmDelayAtom,
@@ -18,7 +19,6 @@ import {
   checkAuthAlertDialogOpenAtom,
   selectAppsDialogOpenAtom,
 } from "../store/ui.atom"
-import { parseAppClient } from "../utils"
 
 /**
  * 1. 用户在首页query
@@ -33,8 +33,7 @@ export function useConvQuery() {
   const setSelectAppsOpen = useSetAtom(selectAppsDialogOpenAtom)
   const setPrompt = useSetAtom(userInputAtom)
 
-  const { apps, bestContext, responses, responding, appClientId } =
-    useSnapshot(coreStore)
+  const { apps, responding, chatId, bestContext } = useSnapshot(coreStore)
 
   const router = useRouter()
   const session = useSession()
@@ -44,15 +43,11 @@ export function useConvQuery() {
   return async (prompt: string) => {
     console.log(ansiColors.red("useQueryOnEnter: "), {
       query,
-      responses,
-      context: bestContext,
       apps,
-      appClientId,
       responding,
     })
 
     if (responding) {
-      console.log({ responses })
       return toast.warning("等待流完成")
     }
 
@@ -75,7 +70,7 @@ export function useConvQuery() {
     if (!coreStore.conv) {
       const conv = await addConv.mutateAsync({
         title: undefined,
-        apps: apps.map(parseAppClient),
+        apps: apps.map(parseApp),
       })
       // 直接本地刷新
       coreStore.addConvFromServer(conv)
@@ -93,7 +88,7 @@ export function useConvQuery() {
     const shouldConvTitle = !coreStore.conv?.titleResponse?.tStart
 
     const prev = apps
-    const after = apps.map(parseAppClient)
+    const after = apps.map(parseApp)
     console.log("-- apps: ", { prev, after })
 
     query.mutate(
@@ -109,7 +104,7 @@ export function useConvQuery() {
           // conv-title
           withConv: shouldConvTitle
             ? {
-                bestAppClientId: appClientId,
+                bestResponseId: chatId!,
                 systemPromptForConvTitle: convSummaryPrompt,
               }
             : undefined,

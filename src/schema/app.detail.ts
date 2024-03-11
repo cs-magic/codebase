@@ -12,20 +12,16 @@ export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   },
 })
 
-export type IAppDetail = Omit<
-  Prisma.AppGetPayload<typeof appDetailSchema>,
-  // for typescript check of valtio snapshot
-  "stop"
-> & { stop: Readonly<string[]> }
+export type IAppDetail = Prisma.AppGetPayload<typeof appDetailSchema>
 
-export const clientAppSchema = createAppSchema.extend({
-  clientId: z.string(),
-})
+// export type IAppDetail = Omit<
+//   Prisma.AppGetPayload<typeof appDetailSchema>,
+//   // for typescript check of valtio snapshot
+//   "stop"
+// > & {
+//   stop: Readonly<string[]>
+// }
+
 export type IAppClientSpecial = {
-  clientId: string
-
-  response?: IAppResponse
   isDraft: boolean
 }
-
-export type IAppClient = IAppDetail & IAppClientSpecial

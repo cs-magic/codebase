@@ -25,7 +25,7 @@ export const useLlmSse = (request: ILLMRequest) => {
   ) => {
     if (request.type === "app-response") {
       const { requestId } = request
-      if (requestId) coreStore.updateAppResponse(requestId, request.appId, func)
+      if (requestId) coreStore.updateChat(requestId, request.appId, func)
     } else {
       const { convId } = request
       if (!convId) return

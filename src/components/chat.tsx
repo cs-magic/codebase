@@ -2,29 +2,30 @@
 
 import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
-import { IAppClient } from "../schema/app.detail"
+import { DeepReadonly } from "../../packages/common-utils/schema"
+import { useLLMForChat } from "../hooks/use-llm-for-app-chat"
 import { RoleType } from "../schema/message"
+import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
+import { ChatTopBar } from "./chat-top-bar"
 import { ConvAppMessages } from "./conv-app-messages"
-import { ConvAppTopBar } from "./conv-app-top-bar"
 
-export const ConvApp = ({ app }: { app: IAppClient }) => {
+export const Chat = ({ chat }: { chat: IResponse }) => {
   const { commonContext } = useSnapshot(coreStore)
 
-  const context = !app.response
+  const context = !chat.tStart
     ? commonContext
     : [
         ...commonContext,
         {
-          content: app.response.error ?? app.response.content ?? "",
+          content: chat.error ?? chat.content ?? "",
           role: "assistant" as RoleType,
-          updatedAt: app.response.updatedAt,
-          isError: !!app.response.error,
+          updatedAt: chat.updatedAt,
+          isError: !!chat.error,
         },
       ]
 
-  useLLMForAppChat(app)
+  useLLMForChat(chat)
 
   return (
     <div
@@ -32,15 +33,15 @@ export const ConvApp = ({ app }: { app: IAppClient }) => {
         "w-full h-full overflow-auto flex flex-col relative border-t border-r",
       )}
     >
-      <ConvAppTopBar app={app} />
+      <ChatTopBar chat={chat} />
 
       <div className={"grow overflow-auto"}>
-        {app.isDraft ? (
+        {chat.isDraft ? (
           "draft"
         ) : (
           <ConvAppMessages
-            appId={app.id}
-            logo={app?.model.logo}
+            appId={chat.app!.id}
+            logo={chat.app!.model.logo}
             context={context}
           />
         )}

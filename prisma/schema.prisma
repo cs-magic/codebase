@@ -195,23 +195,7 @@ model Conv {
   currentRequestId String?
 
   apps          App[]
-  titleResponse ConvTitleResponse?
-}
-
-model ConvTitleResponse {
-  id        String   @id @default(nanoid(9))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  conv   Conv   @relation(fields: [convId], references: [id], onDelete: Cascade)
-  convId String @unique
-
-  content String?
-  error   String?
-
-  tTrigger DateTime?
-  tStart   DateTime?
-  tEnd     DateTime?
+  titleResponse Response?
 }
 
 model Model {
@@ -245,15 +229,20 @@ model Request {
 }
 
 model Response {
+  // appId 与 requestId 与 responseId 是两两多对多
+  // appClientId String // 做好同步的关键一招！ //不用这个了，直接response，不要依赖倒置
+  id        String   @id @default(nanoid(9))
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   request   Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
   requestId String
 
-  app         App    @relation(fields: [appId], references: [id], onDelete: Cascade)
-  appId       String
-  appClientId String // 做好同步的关键一招！
+  conv   Conv?   @relation(fields: [convId], references: [id], onDelete: Cascade)
+  convId String? @unique
+
+  app   App?    @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId String?
 
   content String?
   error   String?
@@ -262,7 +251,9 @@ model Response {
   tStart   DateTime?
   tEnd     DateTime?
 
-  @@id([requestId, appId])
+  // 客户端
+  isDraft       Boolean?  @default(false)
+  interruptedAt DateTime?
 }
 
 model Session {

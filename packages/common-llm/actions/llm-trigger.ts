@@ -15,7 +15,7 @@ export const triggerLLMThreads = async (
     pusherServerId: PusherServerId
     llmDelay: number
     withConv?: {
-      bestAppClientId: string
+      bestResponseId: string
       systemPromptForConvTitle?: string
     }
   },
@@ -29,32 +29,24 @@ export const triggerLLMThreads = async (
         request: {
           pusherServerId,
           requestId: request.id,
-          appId: r.appId,
-          appClientId: r.appClientId,
+          appId: r.appId!,
           type: "app-response",
           status: "to-response",
         },
-        app: parseApp(r.app),
+        app: parseApp(r.app!),
         context,
         llmDelay,
       }
       void callLLMWithDB<IBaseResponse>(payload, async (response) => {
         await prisma.response.update({
           where: {
-            requestId_appId: {
-              requestId: request.id,
-              appId: r.appId,
-            },
+            id: r.id,
           },
           data: response,
         })
 
         // 使用最好的那个app回复的上下文进行总结
-        if (
-          withConv &&
-          r.appClientId === withConv.bestAppClientId &&
-          response.content
-        ) {
+        if (withConv && r.id === withConv.bestResponseId && response.content) {
           const payload: LlmActionPayload = {
             action: "trigger",
             request: {
@@ -83,7 +75,7 @@ export const triggerLLMThreads = async (
 
           void callLLMWithDB<IBaseResponse>(payload, async (response) => {
             console.log("-- updating conv title into db: ", { response })
-            await prisma.convTitleResponse.update({
+            await prisma.response.update({
               where: { convId: request.convId },
               data: response,
             })

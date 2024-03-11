@@ -8,21 +8,21 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/select"
-import { IAppClient } from "../schema/app.detail"
+import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
 
-export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
+export const ChatTitleLine = ({ chat }: { chat: IResponse }) => {
   const { data: apps } = api.core.listApps.useQuery()
 
   return (
     <div className={"flex items-center gap-2 overflow-hidden"}>
       <Select
         onValueChange={(value) => {
-          coreStore.replaceApp(app.clientId, apps!.find((a) => a.id === value)!)
+          coreStore.replaceChat(chat.id, apps!.find((a) => a.id === value)!)
         }}
       >
         <SelectTrigger className={"focus:ring-0 gap-2 w-40 overflow-hidden"}>
-          <span className={"truncate"}>{app.title}</span>
+          <span className={"truncate"}>{chat.app!.title}</span>
         </SelectTrigger>
 
         <SelectContent>
@@ -47,7 +47,7 @@ export const ConvAppTitleLine = ({ app }: { app: IAppClient }) => {
       </Select>
 
       <span className={"text-xs"}>
-        {app.id}_{app.clientId}
+        {chat.id}_{chat.app!.id}
       </span>
     </div>
   )
