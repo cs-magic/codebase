@@ -1,9 +1,5 @@
 import { redis } from "../../../common-db"
-import {
-  IClient,
-  ISseEvent,
-  ISseTrigger,
-} from "../../../common-transport/schema"
+import { ISSEClient, ISSEEvent, ISSETrigger } from "../../../common-sse/schema"
 import { llmWrite } from "./utils"
 import { ILlmManagerTraditional } from "./schema"
 
@@ -39,12 +35,12 @@ export class RedisLlmManager implements ILlmManagerTraditional {
   public async getTrigger() {
     const events = (await redis.lrange(`${this.triggerId}-events`, 0, -1)).map(
       (e) => JSON.parse(e),
-    ) as ISseEvent[]
+    ) as ISSEEvent[]
 
     const clients = (
       await redis.lrange(`${this.triggerId}-clients`, 0, -1)
     ).map((e) => {
-      const client = JSON.parse(e) as IClient
+      const client = JSON.parse(e) as ISSEClient
       console.log({ client })
       return client
     })
@@ -71,7 +67,7 @@ export class RedisLlmManager implements ILlmManagerTraditional {
    * @param triggerId
    * @param client 可能不行！
    */
-  public async onClientConnected(client: IClient) {
+  public async onClientConnected(client: ISSEClient) {
     console.log("[redis] adding client: ", {
       triggerId: this.triggerId,
       client,
@@ -89,7 +85,7 @@ export class RedisLlmManager implements ILlmManagerTraditional {
     index === null ? null : await redis.lpop(this.triggerId, index)
   }
 
-  public async onEvent(event: ISseEvent) {
+  public async onEvent(event: ISSEEvent) {
     console.log("[redis] pushing event to all clients: ", {
       triggerId: this.triggerId,
       event,
@@ -99,7 +95,7 @@ export class RedisLlmManager implements ILlmManagerTraditional {
     await Promise.all(
       (await redis.keys(`${this.triggerId}-clients`)).map(async (client_) => {
         // todo: is it ok?
-        const client = JSON.parse(client_) as IClient
+        const client = JSON.parse(client_) as ISSEClient
         client.onEvent(event)
       }),
     )

@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { ISseEvent } from "../../../common-transport/schema"
+import { ISSEEvent } from "../../../common-sse/schema"
 import { StaticLlmManager } from "./provider-static"
 import { llmEncoder } from "./utils"
 
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const responseStream = new TransformStream()
   const writer = responseStream.writable.getWriter()
 
-  const write = async (event: ISseEvent) => {
+  const write = async (event: ISSEEvent) => {
     // console.log("[sse] client --> user: ", event)
     // 要额外加一个 \n，否则不符合格式规范
     await writer.write(

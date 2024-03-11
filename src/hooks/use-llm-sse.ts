@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
-import { fetchSSE } from "../../packages/common-transport/fetch-sse"
+import { fetchSSE } from "../../packages/common-sse/core"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 

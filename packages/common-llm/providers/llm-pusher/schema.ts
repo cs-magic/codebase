@@ -1,4 +1,4 @@
-import { ISseEvent, ISseTrigger } from "../../../common-transport/schema"
+import { ISSEEvent, ISSETrigger } from "../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 
 export interface ILlmManagerPusher {
@@ -7,11 +7,11 @@ export interface ILlmManagerPusher {
   //////////////////////////////
 
   // 1. add trigger, on LLM starts
-  onTriggerStarts: (trigger: ISseTrigger) => Promise<void>
+  onTriggerStarts: (trigger: ISSETrigger) => Promise<void>
   // 2. clean trigger, on LLM ends
   onTriggerEnds: (reason: ResponseFinalStatus) => Promise<void>
   // 3. push event to clients, when LLM outputs token
-  onEvent: (event: ISseEvent) => Promise<void>
+  onEvent: (event: ISSEEvent) => Promise<void>
 
   ///////////////////////////////
   // client (GET)

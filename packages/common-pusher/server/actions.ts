@@ -1,14 +1,17 @@
 "use server"
 
-import { EventData, EventType } from "../schema"
+import { PusherEventData, PusherEventType } from "../schema"
 import { initPusherServer } from "./init"
-import { pusherServerConfigs, PusherServerId } from "../config"
+import {
+  pusherServerConfigs,
+  PusherServerId,
+} from "../../common-transport/config"
 
-export const pusherSend = async <T extends EventType>(
+export const pusherSend = async <T extends PusherEventType>(
   serverId: PusherServerId,
   channel: string,
   eventType: T,
-  data: EventData<T>,
+  data: PusherEventData<T>,
 ) => {
   console.log("[socket-server] sending: ", { eventType, data })
   await initPusherServer(pusherServerConfigs[serverId]).trigger(

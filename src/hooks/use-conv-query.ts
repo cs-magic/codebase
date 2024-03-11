@@ -9,7 +9,7 @@ import {
   convSummaryPromptAtom,
   llmDelayAtom,
 } from "../../packages/common-llm/store"
-import { pusherServerIdAtom } from "../../packages/common-transport/store"
+import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
 

@@ -11,7 +11,7 @@ import { useSnapshot } from "valtio"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 
 import { callLLM } from "../../packages/common-llm/actions/llm-caller"
-import { pusherServerIdAtom } from "../../packages/common-transport/store"
+import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppClient } from "../schema/app.detail"

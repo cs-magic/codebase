@@ -1,12 +1,11 @@
 import { type WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill"
-
-import { type ISseEvent } from "../../../common-transport/schema"
+import { ISSEEvent } from "../../../common-sse/schema"
 
 export const llmEncoder = new TextEncoder()
 
 export const llmWrite = async (
   writer: WritableStreamDefaultWriter,
-  sseEvent: ISseEvent,
+  sseEvent: ISSEEvent,
 ) => {
   // 返回客户端不需要有 close 标志，直接 readystate=2 即可
   if (sseEvent.event === "close") return await writer.close()

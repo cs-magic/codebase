@@ -1,11 +1,11 @@
 import { useAtom } from "jotai"
 import { useEffect } from "react"
-import { initPusherClient } from "../../packages/common-transport/client/init"
-import { pusherServerConfigs } from "../../packages/common-transport/config"
 import {
   pusherServerAtom,
   pusherServerIdAtom,
-} from "../../packages/common-transport/store"
+} from "../../packages/common-pusher/store"
+import { initPusherClient } from "../../packages/common-pusher/client/init"
+import { pusherServerConfigs } from "../../packages/common-transport/config"
 
 export const usePusher = () => {
   const [serverId] = useAtom(pusherServerIdAtom)

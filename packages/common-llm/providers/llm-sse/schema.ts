@@ -1,8 +1,4 @@
-import {
-  IClient,
-  ISseEvent,
-  ISseTrigger,
-} from "../../../common-transport/schema"
+import { ISSEClient, ISSEEvent, ISSETrigger } from "../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 
 export interface ILlmManagerTraditional {
@@ -11,18 +7,18 @@ export interface ILlmManagerTraditional {
   //////////////////////////////
 
   // 1. add trigger, on LLM starts
-  onTriggerStarts: (trigger: ISseTrigger) => Promise<void>
+  onTriggerStarts: (trigger: ISSETrigger) => Promise<void>
   // 2. clean trigger, on LLM ends
   onTriggerEnds: (reason: ResponseFinalStatus) => Promise<void>
   // 3. push event to clients, when LLM outputs token
-  onEvent: (event: ISseEvent) => Promise<void>
+  onEvent: (event: ISSEEvent) => Promise<void>
 
   ///////////////////////////////
   // client (GET)
   //////////////////////////////
 
   // 1. a user visited
-  onClientConnected: (client: IClient) => Promise<void>
+  onClientConnected: (client: ISSEClient) => Promise<void>
   // 2. a user leaved
   onClientDisconnected: (clientId: string) => Promise<void>
 
@@ -30,7 +26,7 @@ export interface ILlmManagerTraditional {
   // general
   //////////////////////////////
 
-  trigger?: ISseTrigger | null
+  trigger?: ISSETrigger | null
   // todo: redis type hint
   // getTrigger?: Promise<ISseTrigger | null>
 }

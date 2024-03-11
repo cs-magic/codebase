@@ -1,11 +1,11 @@
 import Pusher from "pusher"
 import { redis } from "../../../common-db"
+import { ISSEEvent } from "../../../common-sse/schema"
 import {
   pusherServerConfigs,
   PusherServerId,
 } from "../../../common-transport/config"
-import { initPusherServer } from "../../../common-transport/server/init"
-import { ISseEvent } from "../../../common-transport/schema"
+import { initPusherServer } from "../../../common-pusher/server/init"
 import {
   getTriggerIdFromSseRequest,
   ILLMRequest,
@@ -53,7 +53,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
     await this.push({ event: "close", data: { reason } })
   }
 
-  async onEvent(event: ISseEvent) {
+  async onEvent(event: ISSEEvent) {
     await this.push(event)
   }
 
@@ -76,7 +76,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
   // general
   //////////////////////////////
 
-  private async push(event: ISseEvent) {
+  private async push(event: ISSEEvent) {
     // event.data = { time: Date.now(), ...event.data }
     console.log(`[PUSHER] >> ${this.channel}: `, event)
     await this.pusher.trigger(this.channel, event.event, event.data)

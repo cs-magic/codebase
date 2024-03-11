@@ -1,10 +1,5 @@
-import { IPusherServerConfig } from "./schema"
+import { IPusherServerConfig } from "../common-pusher/schema"
 import { z } from "zod"
-
-export const pusherServerIdSchema = z
-  .union([z.literal("aws"), z.literal("tencent_ws"), z.literal("tencent_wss")])
-  .default("tencent_wss")
-export type PusherServerId = z.infer<typeof pusherServerIdSchema>
 
 export const pusherServerConfigs: Record<PusherServerId, IPusherServerConfig> =
   {
@@ -30,3 +25,9 @@ export const pusherServerConfigs: Record<PusherServerId, IPusherServerConfig> =
       cluster: "0.0.0.0",
     },
   }
+
+export const pusherServerIdSchema = z
+  .union([z.literal("aws"), z.literal("tencent_ws"), z.literal("tencent_wss")])
+  .default("tencent_wss")
+
+export type PusherServerId = z.infer<typeof pusherServerIdSchema>

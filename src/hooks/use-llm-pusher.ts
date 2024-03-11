@@ -2,11 +2,9 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
-import {
-  pusherLogLevelAtom,
-  transportTypeAtom,
-} from "../../packages/common-transport/store"
-import { ISseEvent, SseEventType } from "../../packages/common-transport/schema"
+import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
+import { ISSEEvent, SSEEventType } from "../../packages/common-sse/schema"
+import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
 import { getTriggerIdFromSseRequest, ILLMRequest } from "../schema/sse"
 import { usePusher } from "./use-pusher"
@@ -37,12 +35,12 @@ export const useLlmPusher = (
     if (pusherLogLevel <= LogLevel.info)
       console.log(`[pusher] bound to channel: ${triggerId}, `, request)
 
-    const bindEvent = <T extends SseEventType>(
+    const bindEvent = <T extends SSEEventType>(
       type: T,
-      func: (event: ISseEvent<T>["data"]) => void,
+      func: (event: ISSEEvent<T>["data"]) => void,
     ) => {
       // console.log(`[pusher] binding event: `, type)
-      channel.bind(type, (event: ISseEvent<T>) => {
+      channel.bind(type, (event: ISSEEvent<T>) => {
         if (pusherLogLevel <= LogLevel.debug)
           console.log(
             `[pusher] << ${ansiColors.bgBlue.white(event.event)}`,

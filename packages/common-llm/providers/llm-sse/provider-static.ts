@@ -1,14 +1,10 @@
 import { remove } from "lodash"
-import {
-  IClient,
-  ISseEvent,
-  ISseTrigger,
-} from "../../../common-transport/schema"
+import { ISSEClient, ISSEEvent, ISSETrigger } from "../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 import { ILlmManagerTraditional } from "./schema"
 
 export class StaticLlmManager implements ILlmManagerTraditional {
-  static triggers: Record<string, ISseTrigger> = {}
+  static triggers: Record<string, ISSETrigger> = {}
 
   private triggerId: string
 
@@ -46,7 +42,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
   // client
   //////////////////////////////
 
-  async onEvent(event: ISseEvent): Promise<void> {
+  async onEvent(event: ISSEEvent): Promise<void> {
     console.log("[LLM] >> ", {
       triggerId: this.triggerId,
       ...event,
@@ -57,7 +53,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
     })
   }
 
-  async onClientConnected(client: IClient): Promise<void> {
+  async onClientConnected(client: ISSEClient): Promise<void> {
     this.print(`onClientConnected(id=${client.id})`)
     if (!this.trigger) {
       client.onEvent({
