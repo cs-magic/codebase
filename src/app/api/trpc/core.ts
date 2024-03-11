@@ -2,6 +2,8 @@ import { z } from "zod"
 import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
 
+import { triggerLLMThreads } from "../../../../packages/common-llm/actions/llm-trigger"
+
 import { pusherServerIdSchema } from "../../../../packages/common-pusher/schema"
 import {
   convProcedure,
@@ -21,9 +23,8 @@ import { convSummarySchema } from "../../../schema/conv.base"
 import { convDetailSchema } from "../../../schema/conv.detail"
 import { llmMessageSchema } from "../../../schema/message"
 import { modelViewSchema } from "../../../schema/model"
+import { requestSchema } from "../../../schema/request"
 import { userDetailSchema } from "../../../schema/user.detail"
-
-import { triggerLLMThreads } from "../../../../packages/common-llm/actions/llm-trigger"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
@@ -149,6 +150,7 @@ export const coreRouter = createTRPCRouter({
         requestId: z.string().optional(),
         context: llmMessageSchema.array(),
         apps: createAppSchema.array(),
+
         bestAppId: z.string(),
         llmDelay: z.number().default(0),
         pusherServerId: pusherServerIdSchema,
@@ -168,49 +170,37 @@ export const coreRouter = createTRPCRouter({
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 
-      const conv = await prisma.conv.update({
-        where: { id: input.convId },
-        ...convDetailSchema,
+      const request = await prisma.request.create({
         data: {
-          currentRequestId: requestId,
-
-          titleResponse: {
-            connectOrCreate: {
-              where: { convId },
-              create: {
-                tTrigger: new Date(),
-              },
+          id: requestId,
+          context,
+          conv: {
+            connect: {
+              id: convId,
             },
           },
-
-          requests: {
-            create: {
-              id: requestId,
-              context,
-              responses: {
-                create: [
-                  ...input.apps.map((app) => ({
-                    tTrigger: new Date(),
-                    app: {
-                      connectOrCreate: {
-                        where: { id: app.id },
-                        create: {
-                          ...app,
-                          user: ctx.user.id,
-                        },
-                      },
+          responses: {
+            create: [
+              ...input.apps.map((app) => ({
+                tTrigger: new Date(),
+                app: {
+                  connectOrCreate: {
+                    where: { id: app.id },
+                    create: {
+                      ...app,
+                      user: ctx.user.id,
                     },
-                  })),
-                ],
-              },
-            },
+                  },
+                },
+              })),
+            ],
           },
         },
+        ...requestSchema,
       })
 
       void triggerLLMThreads(
-        conv,
-        requestId,
+        request,
         pusherServerId,
         context,
         llmDelay,

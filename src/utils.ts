@@ -2,6 +2,7 @@ import { getNewId } from "../packages/common-algo/id"
 import { BEST_VIEWPOINT } from "../packages/common-ui/config"
 import { IAppClient, IAppDetail } from "./schema/app.detail"
 import { IBaseResponse } from "./schema/query"
+import { IResponse } from "./schema/response"
 import { ResponseStatus } from "./schema/sse"
 
 export const getConvUrl = (conv: {
@@ -25,11 +26,11 @@ export const getAppsGridCols = (width: number, nApps: number) =>
   width // 未初始化时避免闪烁
     ? Math.min(Math.floor(width / BEST_VIEWPOINT), nApps)
     : nApps
-export const forkApp = (app: IAppDetail): IAppClient => ({
+export const forkApp = (app: IAppDetail, response?: IResponse): IAppClient => ({
   ...app,
   clientId: getNewId(),
 
   // decide whether to change
   isDraft: false,
-  response: undefined,
+  response,
 })

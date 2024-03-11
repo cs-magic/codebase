@@ -122,14 +122,14 @@ export class CoreStore implements ICoreStore {
   initAppsFromServer(apps: IAppDetail[]) {
     this._appsDefault = apps
       .filter((a) => a.id === "gpt-3.5-turbo")
-      .map(forkApp)
+      .map((a) => forkApp(a, undefined))
     this.appIndex = 0
   }
 
   initConvFromServer(conv: IConvDetail) {
     this.conv = conv
     if (this.responses.length)
-      this._appsInConv = this.responses.map((r) => forkApp(r.app))
+      this._appsInConv = this.responses.map((r) => forkApp(r.app, r))
   }
 
   selectApp(appClientId: string) {

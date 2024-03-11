@@ -23,6 +23,7 @@ export type ILLMRequest = {
       requestId?: string | null
       type: "app-response"
       appId: string
+      appClientId: string
     }
 )
 

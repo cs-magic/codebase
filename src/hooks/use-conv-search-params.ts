@@ -33,7 +33,8 @@ export const useConvSearchParams = (
 
   const router = useRouter()
 
-  const isDraft = convIdInUrl !== convIdCurrent
+  const isDraft =
+    !convIdInUrl || !convIdCurrent || convIdInUrl !== convIdCurrent
 
   const hasReqInDB = !!reqIdInUrl && requestIds.includes(reqIdInUrl)
 
@@ -54,6 +55,9 @@ export const useConvSearchParams = (
     reqIdCurrent !== reqIdInUrl
 
   useEffect(() => {
+    // 确保已经刷新对齐了conv
+    if (isDraft) return
+
     console.log(ansiColors.red("-- useConvSearchParams: "), {
       convIdInUrl,
       convIdCurrent,
@@ -66,9 +70,6 @@ export const useConvSearchParams = (
       shouldGotoCurrent,
       shouldGotoNew,
     })
-
-    // 确保已经刷新对齐了conv
-    if (isDraft) return
 
     if (shouldGotoCurrent)
       router.replace(
@@ -91,5 +92,5 @@ export const useConvSearchParams = (
         },
       )
     }
-  }, [isDraft, shouldGotoCurrent, shouldGotoNew])
+  }, [convIdInUrl, reqIdInUrl])
 }

@@ -8,6 +8,7 @@ import { RoleType } from "../schema/message"
 import { coreValtio } from "../store/core.valtio"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
+import { useEffect } from "react"
 
 export const ConvApp = ({ app }: { app: IAppClient }) => {
   const { commonContext } = useSnapshot(coreValtio)
@@ -24,7 +25,12 @@ export const ConvApp = ({ app }: { app: IAppClient }) => {
         },
       ]
 
-  useLLMForAppChat(app.response?.requestId ?? null, app.id, app.response)
+  useLLMForAppChat(
+    app.response?.requestId ?? null,
+    app.id,
+    app.clientId,
+    app.response,
+  )
 
   // console.log({ appId: config.id, commonContext, response })
 

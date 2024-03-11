@@ -6,28 +6,31 @@ import { useLlmPusher } from "./use-llm-pusher"
 import { useLlmSse } from "./use-llm-sse"
 
 export const useLLMForAppChat = (
-  requestId: string | null,
+  requestId: string,
   appId: string,
+  appClientId: string,
   response: IBaseResponse | undefined,
+  enabled?: boolean,
 ) => {
   const llmRequest: ILLMRequest = {
     type: "app-response",
     status: checkRespondingStatus(response),
     requestId,
     appId,
+    appClientId,
   }
 
-  useLlmPusher(
-    llmRequest,
-    (response) => {
+  useLlmPusher(llmRequest, {
+    update: (response) => {
       if (!requestId) return
-      coreValtio.updateAppResponse(requestId, appId, response)
+      coreValtio.updateAppResponse(requestId, appClientId, response)
     },
-    true,
-    () => {
+    enabled,
+    onInit: () => {
       // setIsDraft(false)
     },
-  )
+    autoClose: true,
+  })
 
   useLlmSse(llmRequest)
 }
