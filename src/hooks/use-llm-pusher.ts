@@ -57,10 +57,10 @@ export const useLlmPusher = (
       update((response) => {
         if (!response.content) response.content = data.token
         else response.content += data.token
-        console.log("-- updating pusher token: ", {
-          token: data.token,
-          content: response.content,
-        })
+        // console.log("-- updating pusher token: ", {
+        //   token: data.token,
+        //   content: response.content,
+        // })
       })
     })
 
@@ -84,7 +84,10 @@ export const useLlmPusher = (
     })
 
     return () => {
-      if (autoClose) pusher.unsubscribe(triggerId)
+      if (autoClose) {
+        console.log(ansiColors.red(`[pusher] unbound ${triggerId}`))
+        pusher.unsubscribe(triggerId)
+      }
     }
   }, [triggerId, pusher, transportType, pusherLogLevel])
 }
