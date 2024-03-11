@@ -11,7 +11,7 @@ export const BrandingTitle = ({
     <Link
       href={"/"}
       className={cn(
-        "flex justify-center",
+        "hidden sm:flex justify-center",
         // "w-full" ,
         // "w-[240px]",
         "shrink-0",

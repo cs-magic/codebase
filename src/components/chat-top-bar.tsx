@@ -39,7 +39,7 @@ export const ChatTopBar = ({ chat }: { chat: IResponse }) => {
   return (
     <div
       className={cn(
-        "w-full overflow-hidden flex items-center p-2 border-b ",
+        "hidden sm:flex w-full overflow-hidden  items-center p-2 border-b ",
         "shrink-0",
         selected && "border-b border-primary-foreground/50",
       )}

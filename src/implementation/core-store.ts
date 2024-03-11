@@ -40,6 +40,10 @@ export class CoreStore {
     return this.convs.find((c) => c.id === this.convId) ?? null
   }
 
+  get title() {
+    return this.baseConv?.titleResponse?.content ?? "新会话"
+  }
+
   get convId() {
     return this.conv?.id ?? null
   }

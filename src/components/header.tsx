@@ -6,6 +6,7 @@ import { UserButton } from "@/components/header-user"
 import { useAtom } from "jotai"
 import { MenuIcon } from "lucide-react"
 import { useWindowSize } from "react-use"
+import { useSnapshot } from "valtio"
 import {
   uiInnerHeight,
   uiScreenAtom,
@@ -19,6 +20,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/sheet"
+import { coreStore } from "../store/core.valtio"
 import { Sidebar } from "./sidebar"
 
 export const Header = () => {
@@ -27,19 +29,23 @@ export const Header = () => {
   const [ih] = useAtom(uiInnerHeight)
   const { height: wh } = useWindowSize()
 
+  const { title } = useSnapshot(coreStore)
+
   return (
-    <div className={"shrink-0 w-full flex gap-2 px-6 py-4"}>
+    <div
+      className={
+        "shrink-0 w-full flex gap-2 px-6 py-4 items-center justify-between"
+      }
+    >
       <div className={"flex items-center"}>
         <MobileConversations />
 
         <BrandingTitle className={"text-2xl"} withDescription />
-
-        {/*<span>*/}
-        {/*  vh: {vh}, ih: {ih}, wh: {wh}*/}
-        {/*</span>*/}
       </div>
 
-      <div className={"grow"} />
+      <div className={"block grow sm:hidden justify-center truncate max-w-1/2"}>
+        {title}
+      </div>
 
       <div className={"ml-auto shrink-0 flex items-center gap-2"}>
         <Apps />
