@@ -1,17 +1,18 @@
 "use client"
 
-import { useSnapshot } from "valtio"
+import { useAtomValue } from "jotai"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { useLLMForAppChat } from "../hooks/use-llm-for-app-chat"
 import { IAppClient } from "../schema/app.detail"
 import { RoleType } from "../schema/message"
-import { convStore } from "../store/conv.valtio"
+import { convAtomStore } from "../store/conv.store"
 import { ConvAppMessages } from "./conv-app-messages"
 import { ConvAppTopBar } from "./conv-app-top-bar"
 
 export const ConvApp = ({ app }: { app: IAppClient }) => {
   // const commonContext = useConvStore.use.commonContext()
-  const { commonContext } = useSnapshot(convStore)
+  const { commonContext } = useAtomValue(convAtomStore)
+  // useSnapshot(convStore)
 
   const context = !app.response
     ? commonContext

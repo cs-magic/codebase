@@ -10,7 +10,7 @@ export const ConvAppMessages = ({
 }: {
   appId: string
   logo: string | null
-  context: IMessageInChat[]
+  context: Readonly<IMessageInChat[]>
 }) => {
   const scroll = () => {
     refScroll.current?.scrollIntoView({ behavior: "auto" })

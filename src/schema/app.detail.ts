@@ -9,7 +9,11 @@ export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
     model: modelViewSchema, // model虽然在系统里已经事先获取了一份，但可能不全
   },
 })
-export type IAppDetail = Prisma.AppGetPayload<typeof appDetailSchema>
+export type IAppDetail = Omit<
+  Prisma.AppGetPayload<typeof appDetailSchema>,
+  // for typescript check of valtio snapshot
+  "stop"
+> & { stop: Readonly<string[]> }
 
 export type IAppClient = IAppDetail & {
   response?: IAppResponse

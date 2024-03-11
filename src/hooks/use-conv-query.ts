@@ -1,9 +1,9 @@
 import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
+import { useAtomValue } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { useSnapshot } from "valtio"
 import { parseApp } from "../../packages/common-llm/schema"
 import {
   convSummaryPromptAtom,
@@ -14,7 +14,7 @@ import { api } from "../../packages/common-trpc/react"
 import { IMessageInChat } from "../schema/message"
 import { uiSelectAppsDialogOpenAtom } from "../store/app.atom"
 import { uiCheckAuthAlertDialogOpenAtom } from "../store/auth"
-import { convStore } from "../store/conv.valtio"
+import { convAtomStore } from "../store/conv.store"
 import { userPromptAtom } from "../store/query"
 
 /**
@@ -46,8 +46,10 @@ export function useConvQuery() {
   // const responding = useConvStore.use.responding()
 
   const { apps, appIndex, appId, bestContext, responses, responding } =
-    useSnapshot(convStore)
-  let { conv } = useSnapshot(convStore)
+    useAtomValue(convAtomStore)
+  // useSnapshot(convStore)
+  let { conv } = useAtomValue(convAtomStore)
+  // useSnapshot(convStore)
 
   const router = useRouter()
   const session = useSession()

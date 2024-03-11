@@ -1,13 +1,12 @@
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { MinusCircleIcon, PlusCircleIcon } from "lucide-react"
-import { useSnapshot } from "valtio"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { IAppDetail } from "../schema/app.detail"
 
 import { uiMaxAppsAtom } from "../store/app.atom"
-import { convStore } from "../store/conv.valtio"
+import { convAtomStore } from "../store/conv.store"
 
 export const SelectApp = ({
   app,
@@ -26,7 +25,8 @@ export const SelectApp = ({
   // const pushApp = useConvStore.use.pushApp()
   // const delApp = useConvStore.use.delApp()
 
-  const { apps } = useSnapshot(convStore)
+  const { apps, delApp, pushApp } = useAtomValue(convAtomStore)
+  // useSnapshot(convStore)
 
   const disabled =
     (type === "toAdd" && apps.length >= maxToAdd) ||
@@ -48,8 +48,11 @@ export const SelectApp = ({
         disabled={disabled}
         onClick={(event) => {
           if (disabled) return
-          if (type === "toDel") void convStore.delApp(app.id)
-          else void convStore.pushApp(app)
+          if (type === "toDel")
+            // void convStore.
+            delApp(app.id)
+          // void convStore.
+          else pushApp(app)
         }}
       >
         <Icon />

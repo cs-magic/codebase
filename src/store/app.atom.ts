@@ -5,7 +5,6 @@ import { getNewId } from "../../packages/common-algo/id"
 import { BEST_VIEWPOINT } from "../../packages/common-ui/config"
 import { uiScreenAtom } from "../../packages/common-ui/store"
 import { IAppDetail } from "../schema/app.detail"
-import { convStore } from "./conv.valtio" //////////////////////////////
 
 //////////////////////////////
 // base

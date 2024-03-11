@@ -1,18 +1,20 @@
 "use client"
 
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { ScopeProvider } from "jotai-scope"
-import { useSnapshot } from "valtio"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { getAppsGridColsAtom, stopGeneratingAtom } from "../store/app.atom"
-import { convStore } from "../store/conv.valtio"
+import { convAtomStore } from "../store/conv.store"
 import { ConvApp } from "./conv-app"
 
 export const ConvApps = () => {
   const [gridCols] = useAtom(getAppsGridColsAtom)
 
-  const { apps } = useSnapshot(convStore)
   // const apps = useConvStore.use.apps()
+  const { apps } = useAtomValue(convAtomStore)
+  // useSnapshot(convStore)
+
+  console.log({ apps })
 
   return (
     <div
