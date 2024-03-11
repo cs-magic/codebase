@@ -33,8 +33,14 @@ export function useConvQuery() {
   const setSelectAppsOpen = useSetAtom(selectAppsDialogOpenAtom)
   const setPrompt = useSetAtom(userInputAtom)
 
-  const { apps, appIndex, appId, bestContext, responses, responding } =
-    useSnapshot(core)
+  const {
+    apps,
+    appIndex,
+    bestAppClientId,
+    bestContext,
+    responses,
+    responding,
+  } = useSnapshot(core)
 
   const router = useRouter()
   const session = useSession()
@@ -48,7 +54,7 @@ export function useConvQuery() {
       context: bestContext,
       apps,
       appIndex,
-      appId,
+      bestAppClientId,
       responding,
     })
 
@@ -59,7 +65,7 @@ export function useConvQuery() {
 
     if (!query) return toast.warning("query 不能为空")
 
-    if (!appId) return toast.warning("app 不能为空")
+    if (!bestAppClientId) return toast.warning("app 不能为空")
 
     if (!apps.length) {
       setSelectAppsOpen(true)
@@ -91,20 +97,26 @@ export function useConvQuery() {
       { content: prompt, role: "user" },
     ] as IMessageInChat[]
 
+    const shouldConvTitle = !core.conv?.titleResponse?.tStart
+
     query.mutate(
       {
         // app-response
         context: newContext,
         apps: apps.map(parseAppClient),
-        llmDelay,
-
-        // conv-title
         convId: core.convId!,
-        bestAppId: appId,
-        systemPromptForConvTitle: convSummaryPrompt,
+        options: {
+          llmDelay,
+          pusherServerId,
 
-        // utils
-        pusherServerId,
+          // conv-title
+          withConv: shouldConvTitle
+            ? {
+                bestAppClientId,
+                systemPromptForConvTitle: convSummaryPrompt,
+              }
+            : undefined,
+        },
       },
       {
         onSuccess: async (request) => {

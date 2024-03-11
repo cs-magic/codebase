@@ -26,8 +26,6 @@ export const ConvApp = ({ app }: { app: IAppClient }) => {
 
   useLLMForAppChat(app)
 
-  console.log({ app, context })
-
   return (
     <div
       className={cn(

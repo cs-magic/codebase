@@ -10,13 +10,18 @@ import { callLLMWithDB } from "./llm-caller-with-db"
 
 export const triggerLLMThreads = async (
   request: IRequest,
-  pusherServerId: PusherServerId,
   context: ILLMMessage[],
-  llmDelay: number,
-  bestAppId: string,
-  systemPromptForConvTitle?: string,
-  withConvTitle?: boolean,
+  options: {
+    pusherServerId: PusherServerId
+    llmDelay: number
+    withConv?: {
+      bestAppClientId: string
+      systemPromptForConvTitle?: string
+    }
+  },
 ) => {
+  const { pusherServerId, llmDelay, withConv } = options
+
   await Promise.all(
     request.responses.map(async (r) => {
       const payload: LlmActionPayload = {
@@ -24,7 +29,7 @@ export const triggerLLMThreads = async (
         request: {
           pusherServerId,
           requestId: request.id,
-          appId: r.appId,
+          appId: r.appClientId,
           appClientId: r.appClientId,
           type: "app-response",
           status: "to-response",
@@ -36,13 +41,20 @@ export const triggerLLMThreads = async (
       void callLLMWithDB<IBaseResponse>(payload, async (response) => {
         await prisma.response.update({
           where: {
-            requestId_appId: { requestId: request.id, appId: r.appId },
+            requestId_appId: {
+              requestId: request.id,
+              appId: r.appId,
+            },
           },
           data: response,
         })
 
         // 使用最好的那个app回复的上下文进行总结
-        if (r.appId === bestAppId && withConvTitle && response.content) {
+        if (
+          withConv &&
+          r.appClientId === withConv.bestAppClientId &&
+          response.content
+        ) {
           const payload: LlmActionPayload = {
             action: "trigger",
             request: {
@@ -57,7 +69,8 @@ export const triggerLLMThreads = async (
             context: [
               {
                 role: "system",
-                content: systemPromptForConvTitle ?? CONV_SUMMARY_PROMPT,
+                content:
+                  withConv.systemPromptForConvTitle ?? CONV_SUMMARY_PROMPT,
               },
               ...context,
               {

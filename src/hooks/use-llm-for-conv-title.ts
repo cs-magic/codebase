@@ -14,14 +14,13 @@ export const useLLMForConvTitle = () => {
     convId: conv?.id,
   }
 
-  useLlmPusher(
-    llmRequest,
-    (func) => {
+  useLlmPusher(llmRequest, {
+    update: (func) => {
       if (!conv) return
       core.updateConvTitle(conv.id, func)
     },
-    false,
-  )
+    autoClose: false, // 常驻后台
+  })
 
   useLlmSse(llmRequest)
 }

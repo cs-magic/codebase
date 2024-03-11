@@ -18,7 +18,6 @@ export const useLlmPusher = (
   request: ILLMRequest,
   options: {
     update: (func: (response: IBaseResponse) => void) => void
-    enabled?: boolean
     onInit?: () => void
     autoClose?: boolean
   },
@@ -29,10 +28,10 @@ export const useLlmPusher = (
   const { pusher } = usePusher()
   const triggerId = getTriggerIdFromSSERequest(request)
 
-  const { enabled, update, onInit, autoClose } = options
+  const { update, onInit, autoClose } = options
 
   useEffect(() => {
-    if (!enabled || transportType !== "pusher" || !triggerId || !pusher) return
+    if (transportType !== "pusher" || !triggerId || !pusher) return
 
     const channel = pusher.subscribe(triggerId)
 
@@ -79,5 +78,5 @@ export const useLlmPusher = (
     return () => {
       if (autoClose) pusher.unsubscribe(triggerId)
     }
-  }, [triggerId, pusher, transportType, pusherLogLevel, enabled])
+  }, [triggerId, pusher, transportType, pusherLogLevel])
 }

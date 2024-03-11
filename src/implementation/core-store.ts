@@ -45,7 +45,7 @@ export class CoreStore {
     return this.conv?.id ?? null
   }
 
-  get appId() {
+  get bestAppClientId() {
     return this.apps[this.appIndex]?.clientId ?? null
   }
 

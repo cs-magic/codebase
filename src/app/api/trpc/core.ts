@@ -151,22 +151,21 @@ export const coreRouter = createTRPCRouter({
         context: llmMessageSchema.array(),
         apps: clientAppSchema.array(),
 
-        bestAppId: z.string(),
-        llmDelay: z.number().default(0),
-        pusherServerId: pusherServerIdSchema,
-        systemPromptForConvTitle: z.string().optional(),
+        options: z.object({
+          llmDelay: z.number().default(0),
+          pusherServerId: pusherServerIdSchema,
+
+          withConv: z
+            .object({
+              bestAppClientId: z.string(),
+              systemPromptForConvTitle: z.string().optional(),
+            })
+            .optional(),
+        }),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const {
-        context,
-        convId,
-        pusherServerId,
-        llmDelay,
-        requestId = getNewId(),
-        bestAppId,
-        systemPromptForConvTitle,
-      } = input
+      const { context, convId, requestId = getNewId(), options } = input
 
       console.log("[query]: ", JSON.stringify({ requestId, input }, null, 2))
 
@@ -204,14 +203,7 @@ export const coreRouter = createTRPCRouter({
         ...requestSchema,
       })
 
-      void triggerLLMThreads(
-        request,
-        pusherServerId,
-        context,
-        llmDelay,
-        bestAppId,
-        systemPromptForConvTitle,
-      )
+      void triggerLLMThreads(request, context, options)
       return request
     }),
 })

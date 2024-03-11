@@ -24,7 +24,6 @@ export const useLLMForAppChat = (app: IAppClient) => {
       if (!requestId) return
       core.updateAppResponse(requestId, appClientId, response)
     },
-    enabled: !!requestId,
     onInit: () => {
       // setIsDraft(false)
     },
