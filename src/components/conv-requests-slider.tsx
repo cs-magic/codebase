@@ -41,7 +41,7 @@ const ConvRequestsSlider = React.forwardRef<
 
       {!isMobile && (
         <div className={"w-full flex items-center gap-2 text-muted-foreground"}>
-          <span className={"text-xs"}>时光机（{requestId}）：</span>
+          <span className={"text-xs"}>时光机 </span>
           <SliderPrimitive.Root
             min={min}
             max={max}

@@ -28,7 +28,6 @@ export const useConvSearchParams = (
     requestId: reqIdCurrent,
   } = useSnapshot(coreStore)
 
-  const utils = api.useUtils()
   const updateConv = api.core.updateConv.useMutation()
 
   const router = useRouter()

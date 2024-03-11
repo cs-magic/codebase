@@ -7,7 +7,7 @@ import { coreStore } from "../store/core.valtio"
 import { convLogLevelAtom } from "../store/dev.atom"
 import { useSnapshot } from "valtio"
 
-export const useConvFromServer = (
+export const useConvInitFromServer = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
@@ -24,9 +24,8 @@ export const useConvFromServer = (
     },
     {
       enabled:
-        !!convIdInUrl &&
-        // 如果已经拿过数据，就不要拿了！
-        convId !== convIdInUrl,
+        // 初始化的时候
+        !!convIdInUrl && !convId,
     },
   )
 

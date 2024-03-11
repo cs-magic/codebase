@@ -16,6 +16,7 @@ import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
 import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonner"
 import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { DevPanel } from "../components/_dev-panel"
 import { ConfigPanel } from "../components/config"
 import { AppsDialog } from "../components/select-apps"
 import GlobalHooksProviders from "../providers/global.provider"
@@ -60,11 +61,13 @@ export default function RootLayout({
                     <GlobalHooksProviders>
                       <main
                         className={cn(
-                          "w-screen relative overflow-hidden",
+                          "w-screen overflow-hidden relative",
                           //"bg-cyan-900"
                         )}
                       >
                         {children}
+
+                        <DevPanel />
 
                         <Toaster
                           richColors

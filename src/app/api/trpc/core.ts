@@ -76,7 +76,7 @@ export const coreRouter = createTRPCRouter({
   getConv: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) =>
-      prisma.conv.findUniqueOrThrow({
+      prisma.conv.findUnique({
         where: {
           id: input.id,
           fromUserId: ctx.user.id,

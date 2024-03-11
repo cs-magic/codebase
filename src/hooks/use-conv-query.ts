@@ -33,14 +33,8 @@ export function useConvQuery() {
   const setSelectAppsOpen = useSetAtom(selectAppsDialogOpenAtom)
   const setPrompt = useSetAtom(userInputAtom)
 
-  const {
-    apps,
-    appIndex,
-    bestAppClientId,
-    bestContext,
-    responses,
-    responding,
-  } = useSnapshot(coreStore)
+  const { apps, bestContext, responses, responding, appClientId } =
+    useSnapshot(coreStore)
 
   const router = useRouter()
   const session = useSession()
@@ -53,8 +47,7 @@ export function useConvQuery() {
       responses,
       context: bestContext,
       apps,
-      appIndex,
-      bestAppClientId,
+      appClientId,
       responding,
     })
 
@@ -65,7 +58,7 @@ export function useConvQuery() {
 
     if (!query) return toast.warning("query 不能为空")
 
-    if (!bestAppClientId) return toast.warning("app 不能为空")
+    if (!appClientId) return toast.warning("app 不能为空")
 
     if (!apps.length) {
       setSelectAppsOpen(true)
@@ -112,7 +105,7 @@ export function useConvQuery() {
           // conv-title
           withConv: shouldConvTitle
             ? {
-                bestAppClientId,
+                bestAppClientId: appClientId,
                 systemPromptForConvTitle: convSummaryPrompt,
               }
             : undefined,

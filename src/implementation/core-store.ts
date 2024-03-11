@@ -1,4 +1,5 @@
 import { remove } from "lodash"
+import { UnexpectedError } from "../../packages/common-general/schema"
 import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
@@ -46,7 +47,7 @@ export class CoreStore {
     return this.conv?.id ?? null
   }
 
-  get bestAppClientId() {
+  get appClientId() {
     return this.apps[this._appIndex]?.clientId ?? null
   }
 
@@ -141,12 +142,11 @@ export class CoreStore {
     this.convs.splice(0, 0, conv)
   }
 
-  initConvFromServer(conv: IConvDetail) {
+  initConvFromServer(conv: IConvDetail, requestId?: string | null) {
+    const convInStore = this.convs.find((c) => c.id === conv.id)
+    if (!convInStore) throw new UnexpectedError()
     this.conv = conv
-    console.log("-- initConvFromServer: ", conv)
-    if (!this.responses.length) return
-
-    this.updateAppsInConv()
+    if (requestId !== undefined) convInStore.currentRequestId = requestId
   }
 
   selectApp(appClientId: string) {
@@ -240,5 +240,12 @@ export class CoreStore {
     }))
     if (this.logLevel <= LogLevel.warning)
       console.log("-- _appsInConv: ", this._appsInConv)
+  }
+
+  /**
+   *  返回到首页
+   */
+  returnToHome() {
+    this.conv = null
   }
 }

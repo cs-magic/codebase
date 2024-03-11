@@ -5,10 +5,7 @@ import { useSnapshot } from "valtio"
 import { coreStore } from "../store/core.valtio"
 
 export const useConvClean = (reqId: string | undefined) => {
-  // const [conv, setConv] = useAtom(convAtom)
-  // const [convs] = useAtom(convsAtom)
-  // const convId = conv?.id
-  const { conv, convId, convs } = useSnapshot(coreStore)
+  const { convId, convs } = useSnapshot(coreStore)
 
   const router = useRouter()
 

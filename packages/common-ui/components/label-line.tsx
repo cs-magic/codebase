@@ -9,9 +9,9 @@ export const LabelLine = ({
   children: ReactNode
 }) => {
   return (
-    <div className={"w-full flex items-center justify-between gap-2"}>
-      <Label className={"w-32 truncate shrink-0"}>{title}</Label>
-      {children}
+    <div className={"w-full flex items-center justify-between gap-2 "}>
+      <div className={"w-28 truncate shrink-0"}>{title}</div>
+      <div className={"grow"}>{children}</div>
     </div>
   )
 }

@@ -22,6 +22,8 @@ export default function ConvLayout({ children }: PropsWithChildren) {
     }
   }, [])
 
+  console.log(ansiColors.red("=== ConvLayout ==="))
+
   return (
     <div className={"w-full h-full overflow-hidden flex border-y"}>
       <Sidebar />
