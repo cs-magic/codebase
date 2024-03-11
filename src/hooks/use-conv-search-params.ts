@@ -1,3 +1,4 @@
+import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useSnapshot } from "valtio"
@@ -21,41 +22,71 @@ export const useConvSearchParams = (
   convIdInUrl: string | undefined,
   reqIdInUrl: string | null,
 ) => {
-  const { conv, requestId } = useSnapshot(coreValtio)
+  const {
+    convId: convIdCurrent,
+    requestIds,
+    requestId: reqIdCurrent,
+  } = useSnapshot(coreValtio)
 
   const updateConv = api.core.updateConv.useMutation()
 
   const router = useRouter()
 
+  const hasReqInDB = !!reqIdInUrl && requestIds.includes(reqIdInUrl)
+
+  const shouldGotoCurrent =
+    // 1. 没有 rid，但有游标
+    (!reqIdInUrl && !!reqIdCurrent) ||
+    // 2. 有rid，但没有游标
+    (reqIdInUrl && !hasReqInDB)
+
+  const shouldGotoNew =
+    // 有 rid
+    reqIdInUrl &&
+    // 有有效
+    hasReqInDB &&
+    // 但不等于当下
+    reqIdCurrent !== reqIdInUrl
+
   useEffect(() => {
+    console.log(ansiColors.red("-- useConvSearchParams: "), {
+      convIdInUrl,
+      convIdCurrent,
+
+      reqIdInUrl,
+      reqIdCurrent,
+
+      hasReqInDB,
+
+      shouldGotoCurrent,
+      shouldGotoNew,
+    })
+
     // 确保已经刷新对齐了conv
-    if (conv && convIdInUrl && convIdInUrl === conv.id) {
-      if (
-        // 1. 没有 rid，但有游标
-        (!reqIdInUrl && !!requestId) ||
-        // 2. 有rid，但没有游标
-        (reqIdInUrl && !conv.requests.some((r) => r.id === reqIdInUrl))
+    if (convIdInUrl !== convIdCurrent) return
+
+    if (shouldGotoCurrent)
+      router.replace(
+        getConvUrl({ id: convIdCurrent, currentRequestId: reqIdCurrent }),
       )
-        router.replace(getConvUrl(conv))
-      // 从客户端触发更新数据库里的指针（无需invalidate）
-      else if (reqIdInUrl && requestId !== reqIdInUrl) {
-        // console.log(`-- request id change: ${requestId} --> ${reqIdInUrl}`)
+    // 从客户端触发更新数据库里的指针（无需invalidate）
+    else if (shouldGotoNew) {
+      // console.log(`-- request id change: ${requestId} --> ${reqIdInUrl}`)
 
-        // 更新convs里的指针（无需关心conv里的游标，因为始终以convs对齐）
-        updateConv.mutate(
-          {
-            where: { id: conv.id },
-            data: { currentRequestId: reqIdInUrl },
-          },
-          {
-            onSuccess: () => {
-              // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
+      // 更新convs里的指针（无需关心conv里的游标，因为始终以convs对齐）
+      updateConv.mutate(
+        {
+          where: { id: convIdCurrent },
+          data: { currentRequestId: reqIdInUrl },
+        },
+        {
+          onSuccess: () => {
+            // utils.core.listConv.invalidate() // don't invalidate list, instead, use local sync
 
-              coreValtio.updateRequestId(reqIdInUrl)
-            },
+            coreValtio.updateRequestId(reqIdInUrl)
           },
-        )
-      }
+        },
+      )
     }
-  }, [convIdInUrl, reqIdInUrl, conv?.id])
+  }, [shouldGotoCurrent, shouldGotoNew])
 }

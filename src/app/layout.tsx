@@ -26,7 +26,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "Eval AI | 优秀的 AI 评测平台",
+  title: "Eval AI | 专业 AI 评测平台",
   description: "Eval | AI评测 | CSMagic | WayToAGI",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }

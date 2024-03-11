@@ -32,8 +32,13 @@ export function useAddConv() {
           toast.error("新建会话失败")
         },
         onSuccess: (data) => {
-          router.push(`/tt/${data.id}`)
+          // NOTE: 不要在这跳转，因为可能要在 query 后再跳转
+          // router.push(`/tt/${data.id}`)
+
+          // 这个可以
           void utils.core.listConv.invalidate()
+
+          // NOTE: 这里不需要更新数据，统一在跳转后拿到数据再更新
           // setConv(data)
         },
       },

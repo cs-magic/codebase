@@ -1,4 +1,6 @@
+import ansiColors from "ansi-colors"
 import { getNewId } from "../../packages/common-algo/id"
+import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "../schema/app.detail"
 import { IConvBase } from "../schema/conv.base"
 import { IConvDetail } from "../schema/conv.detail"
@@ -16,6 +18,7 @@ export class CoreStore implements ICoreStore {
   convs: IConvBase[] = []
   apps: IAppClient[] = []
   appIndex = 0
+  logLevel: LogLevel = LogLevel.warning
 
   _conv: IConvDetail | null = null
 
@@ -25,13 +28,13 @@ export class CoreStore implements ICoreStore {
 
   get conv() {
     const conv = this._conv
-    console.log({ conv })
+    if (this.logLevel <= LogLevel.debug) console.log({ conv })
     return conv
   }
 
   set conv(conv: IConvDetail | null) {
     this._conv = conv
-    console.log("-- setting conv: ", conv)
+    if (this.logLevel <= LogLevel.info) console.log("-- setting conv: ", conv)
   }
 
   get convId() {
@@ -44,19 +47,23 @@ export class CoreStore implements ICoreStore {
 
   get requests(): IRequest[] {
     const requests = this.conv?.requests ?? []
-    console.log({ requests })
+    if (this.logLevel <= LogLevel.debug) console.log({ requests })
     return requests
+  }
+
+  get requestIds(): string[] {
+    return this.requests.map((r) => r.id)
   }
 
   get requestId() {
     const requestId = this.conv?.currentRequestId ?? null
-    console.log({ requestId })
+    if (this.logLevel <= LogLevel.debug) console.log({ requestId })
     return requestId
   }
 
   get request() {
     const request = this.requests.find((r) => r.id === this.requestId) ?? null
-    console.log({ request })
+    if (this.logLevel <= LogLevel.debug) console.log({ request })
     return request
   }
 
@@ -66,7 +73,7 @@ export class CoreStore implements ICoreStore {
 
   get commonContext(): IContext {
     const commonContext = this.request?.context ?? []
-    console.log({ commonContext })
+    if (this.logLevel <= LogLevel.info) console.log({ commonContext })
     return commonContext
   }
 
@@ -110,14 +117,21 @@ export class CoreStore implements ICoreStore {
   }
 
   updateRequestId(requestId: string | null) {
-    const responses =
-      this.conv?.requests.find((r) => r.id === requestId)?.responses ?? []
-    this.apps = responses.map((r) => ({
+    if (!this.conv) return
+
+    this.conv.currentRequestId = requestId
+
+    this.apps = this.responses.map((r) => ({
       ...r.app,
       response: r,
       isDraft: false,
       clientId: getNewId(),
     }))
+
+    console.log(ansiColors.red("-- updateRequestId: "), {
+      requestId,
+      apps: this.apps,
+    })
   }
 
   selectApp(appClientId: string) {
@@ -152,7 +166,7 @@ export class CoreStore implements ICoreStore {
     appClientId: string,
     func: IUpdateResponse,
   ) {
-    console.log({ requestId, appClientId })
+    if (this.logLevel <= LogLevel.debug) console.log({ requestId, appClientId })
     const conv = this.conv
     if (requestId !== conv?.currentRequestId) return
     const req = conv.requests.find((r) => r.id === requestId)
@@ -163,7 +177,8 @@ export class CoreStore implements ICoreStore {
   }
 
   updateConvTitle(convId: string, func: IUpdateResponse) {
-    console.log({ convId })
+    if (this.logLevel <= LogLevel.debug)
+      console.log("-- updateConvTitle: ", { convId })
     const res = this.convs.find((c) => c.id === convId)?.titleResponse
     if (!res) return
     func(res)

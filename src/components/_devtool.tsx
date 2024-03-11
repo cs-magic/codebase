@@ -1,11 +1,6 @@
 "use client"
 
-import { PusherServerId } from "../../packages/common-pusher/schema"
-import {
-  pusherLogLevelAtom,
-  pusherServerIdAtom,
-} from "../../packages/common-pusher/store"
-import { TransportType } from "../../packages/common-transport/schema"
+import { useHotkeys } from "@mantine/hooks"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import {
@@ -14,19 +9,25 @@ import {
   TabsList,
   TabsTrigger,
 } from "packages/common-ui/shadcn/components/ui/tabs"
-import { PropsWithChildren, ReactNode } from "react"
+import { PropsWithChildren, ReactNode, useState } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import {
   convSummaryPromptAtom,
   llmDelayAtom,
 } from "../../packages/common-llm/store"
 import { LogLevel } from "../../packages/common-log/schema"
-import { transportTypeAtom } from "../../packages/common-transport/store"
+import { PusherServerId } from "../../packages/common-pusher/schema"
+import {
+  pusherLogLevelAtom,
+  pusherServerIdAtom,
+} from "../../packages/common-pusher/store"
 import { SmsProviderType } from "../../packages/common-sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
 } from "../../packages/common-sms/store"
+import { TransportType } from "../../packages/common-transport/schema"
+import { transportTypeAtom } from "../../packages/common-transport/store"
 import { api } from "../../packages/common-trpc/react"
 import { trpcReactLogEnabledAtom } from "../../packages/common-trpc/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
@@ -58,8 +59,19 @@ import { convLogLevelAtom } from "../store/dev.atom"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 
 export const Devtool = () => {
+  const [open, setOpen] = useState(false)
+
+  useHotkeys([
+    [
+      "shift+mod+P",
+      () => {
+        setOpen(true)
+      },
+    ],
+  ])
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger className={"fixed left-2 bottom-2"} asChild>
         <IconContainer>
           <SettingsIcon />

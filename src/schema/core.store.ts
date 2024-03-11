@@ -1,3 +1,4 @@
+import { LogLevel } from "../../packages/common-log/schema"
 import { IAppClient, IAppDetail } from "./app.detail"
 import { IResponse, IUpdateResponse } from "./response"
 import { IConvBase } from "./conv.base"
@@ -14,6 +15,8 @@ export interface ICoreStore {
   conv: IConvDetail | null
   apps: IAppClient[]
   appIndex: number
+
+  logLevel?: LogLevel
 
   ///////////////////////////////
   // derived

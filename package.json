@@ -23,6 +23,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@langchain/core": "^0.1.32",
     "@langchain/openai": "^0.0.14",
+    "@mantine/hooks": "^7.6.1",
     "@prisma/client": "^5.10.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
