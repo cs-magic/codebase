@@ -1,12 +1,12 @@
 "use client"
 
+import { DevSocketStatusIcon } from "./dev-socket-status-icon"
 import { useAtom } from "jotai"
+import { BarChart } from "lucide-react"
 import { pusherLatencyAtom } from "../../packages/common-pusher/store"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { BarChart } from "lucide-react"
-import { SystemSocketStatusIcon } from "@/components/system-socket-status-icon"
 
-export const SystemSocketStatus = () => {
+export const DevSocketStatus = () => {
   const [latency] = useAtom(pusherLatencyAtom)
 
   return (
@@ -18,7 +18,7 @@ export const SystemSocketStatus = () => {
       {latency === 0 ? (
         <BarChart className={"animate-pulse w-4 h-4"} />
       ) : (
-        <SystemSocketStatusIcon
+        <DevSocketStatusIcon
           level={latency < 500 ? 3 : latency < 1000 ? 2 : 1}
           className={"w-4 h-4"}
         />

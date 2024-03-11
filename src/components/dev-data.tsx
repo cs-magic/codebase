@@ -1,10 +1,8 @@
-"use client"
-import { useSnapshot } from "valtio"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { coreStore } from "../store/core.valtio"
 
-export const DevPanel = () => {
+export const DevData = () => {
   const { convId, requestId, chatId, appId } = useSnapshot(coreStore)
 
   return (

@@ -1,7 +1,3 @@
-"use client"
-
-import { useHotkeys } from "@mantine/hooks"
-import { SettingsIcon } from "lucide-react"
 import { useState } from "react"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import {
@@ -21,7 +17,10 @@ import { ConfigLogCard } from "./config-log-card"
 import { ConfigSMSCard } from "./config-sms"
 import { ConfigTRPCCard } from "./config-trpc"
 
-export const ConfigPanel = () => {
+import { useHotkeys } from "@mantine/hooks"
+import { SettingsIcon } from "lucide-react"
+
+export const DevConfig = () => {
   const [open, setOpen] = useState(false)
 
   useHotkeys([

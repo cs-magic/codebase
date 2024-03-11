@@ -1,6 +1,7 @@
 import { ReturnHomeAlertDialog } from "@/components/_return-home"
 import { CheckAuthAlertDialog } from "@/components/auth-checker"
-import { SystemSocketStatus } from "@/components/system-socket-status"
+import { Dev } from "../components/dev"
+import { DevSocketStatus } from "../components/dev-socket-status"
 import { env } from "@/env"
 import "@/styles/globals.css"
 import { type Viewport } from "next"
@@ -16,8 +17,9 @@ import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
 import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonner"
 import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { DevPanel } from "../components/_dev-panel"
-import { ConfigPanel } from "../components/config"
+
+import { DevConfig } from "../components/dev-config"
+import { DevData } from "../components/dev-data"
 import { AppsDialog } from "../components/select-apps"
 import GlobalHooksProviders from "../providers/global.provider"
 
@@ -67,8 +69,6 @@ export default function RootLayout({
                       >
                         {children}
 
-                        <DevPanel />
-
                         <Toaster
                           richColors
                           position={"top-right"}
@@ -84,13 +84,8 @@ export default function RootLayout({
 
                         <AppsDialog />
 
-                        {env.NODE_ENV !== "production" && (
-                          <>
-                            <SystemSocketStatus />
-
-                            <ConfigPanel />
-                          </>
-                        )}
+                        {/* 开发专用 */}
+                        <Dev />
                       </main>
                     </GlobalHooksProviders>
                   </ScreenProvider>

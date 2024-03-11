@@ -6,7 +6,7 @@ import { SVGProps } from "react"
  * @param level
  * @constructor
  */
-export const SystemSocketStatusIcon = ({
+export const DevSocketStatusIcon = ({
   level,
   className,
   ...props
