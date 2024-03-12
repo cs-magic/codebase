@@ -14,7 +14,6 @@ import { callLLM } from "../../packages/common-llm/actions/llm-caller"
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { IAppDetail } from "../schema/app.detail"
 import { IResponse } from "../schema/response"
 
 import { coreStore } from "../store/core.valtio"
@@ -54,6 +53,8 @@ export const ChatTopBar = ({ chat }: { chat: IResponse }) => {
         tooltipContent={"停止生成会话（仅限正在生成时使用）（TODO）"}
         disabled={respondingStatus !== "responding"}
         onClick={() => {
+          if (!requestId) return
+
           void callLLM(
             {
               action: "interrupt",
