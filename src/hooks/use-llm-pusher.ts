@@ -3,19 +3,20 @@ import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
 import { usePusherClient } from "../../packages/common-pusher/hooks/use-pusher-client"
+import { IEnsureResponse } from "../../packages/common-pusher/schema"
 import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
 import { ITransEvent, TransEventType } from "../../packages/common-sse/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
-import { getChannelIdFomRequest, ILLMRequest } from "../schema/sse"
+import { getChannelIdFomRequest, ILLMPusherListener } from "../schema/sse"
 
 /**
 
  */
 export const useLLMPusher = (
-  request: ILLMRequest | null,
+  listener: ILLMPusherListener | null,
   options: {
-    update: (func: (response: IBaseResponse) => void) => void
+    ensureResponse: IEnsureResponse
     onInit?: () => void
   } | null,
 ) => {
@@ -27,10 +28,10 @@ export const useLLMPusher = (
   useEffect(() => {
     // console.log("useLLMPusher: ", {request, transportType, pusherClient, options})
 
-    if (!request || transportType !== "pusher" || !pusherClient || !options)
+    if (!listener || transportType !== "pusher" || !pusherClient || !options)
       return
 
-    const channelId = getChannelIdFomRequest(request)
+    const channelId = getChannelIdFomRequest(listener)
 
     if (!channelId) return
 
@@ -39,46 +40,43 @@ export const useLLMPusher = (
     if (pusherLogLevel <= LogLevel.info)
       console.log(
         ansiColors.red(`[pusher] bound to channel: ${channelId} `),
-        request,
+        listener,
       )
 
-    const { update, onInit } = options
+    const { onInit, ensureResponse } = options
 
     const bindEvent = <T extends TransEventType>(
       type: T,
-      func: (event: ITransEvent<T>["data"]) => void,
+      func: (data: ITransEvent<T>["data"], response: IBaseResponse) => void,
     ) => {
       channel.bind(type, (data: ITransEvent<T>["data"]) => {
         if (pusherLogLevel <= LogLevel.debug)
           console.log(`[pusher] ${channelId} << ${type}`, data)
-        func(data)
+
+        const response = ensureResponse(data)
+
+        if (!response) return
+
+        func(data, response)
       })
     }
 
-    bindEvent("data", (data) => {
-      options.update((response) => {
-        if (!response.content) response.content = data.token
-        else response.content += data.token
-      })
+    bindEvent("data", (data, response) => {
+      if (!response.content) response.content = data.token
+      else response.content += data.token
     })
 
-    bindEvent("error", (data) => {
-      update((response) => {
-        response.error = data.message
-      })
+    bindEvent("error", (data, response) => {
+      response.error = data.message
     })
 
-    bindEvent("init", (data) => {
+    bindEvent("init", (data, response) => {
       if (onInit) onInit()
-      update((response) => {
-        response.tStart = new Date()
-      })
+      response.tStart = new Date()
     })
 
-    bindEvent("close", (data) => {
-      update((response) => {
-        response.tEnd = new Date()
-      })
+    bindEvent("close", (data, response) => {
+      response.tEnd = new Date()
     })
 
     /**
@@ -88,5 +86,5 @@ export const useLLMPusher = (
       console.log(ansiColors.red(`[pusher] unbound ${channelId}`))
       pusherClient.unsubscribe(channelId)
     }
-  }, [request, options, pusherClient, transportType, pusherLogLevel])
+  }, [listener, options, pusherClient, transportType, pusherLogLevel])
 }

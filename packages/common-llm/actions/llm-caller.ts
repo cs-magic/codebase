@@ -54,7 +54,13 @@ export const callLLM = async (
       if (options.onData) options.onData(token)
 
       // console.debug("[llm] token: ", { triggerID: requestId, token })
-      await llmManager.onEvent({ event: "data", data: { token } })
+      await llmManager.onEvent({
+        event: "data",
+        data:
+          request.type === "conv-title"
+            ? { token, convId: request.convId }
+            : { token },
+      })
 
       await sleep(llmDelay)
     }

@@ -11,14 +11,9 @@ export type ResponseStatus =
   | "responding"
   | ResponseFinalStatus
 
-// todo: union response id
-export type ILLMRequest = {
-  pusherServerId?: PusherServerId
-  status?: ResponseStatus
-} & (
+export type ILLMPusherListener = { pusherServerId?: PusherServerId } & (
   | {
       type: "conv-title"
-      convId: string
       userId: string
     }
   | {
@@ -28,16 +23,33 @@ export type ILLMRequest = {
     }
 )
 
-export const getChannelIdFomRequest = (request: ILLMRequest) => {
+// todo: union response id
+export type ILLMRequest = {
+  pusherServerId?: PusherServerId
+  status?: ResponseStatus
+} & (
+  | {
+      type: "conv-title"
+      userId: string
+      convId: string
+    }
+  | {
+      type: "app-response"
+      requestId: string
+      appId: string
+    }
+)
+
+export const getChannelIdFomRequest = (request: ILLMPusherListener) => {
   switch (request.type) {
     case "app-response":
       const { requestId, appId } = request
       return !!requestId && !!appId ? `chat@${requestId}.${appId}` : null
 
     case "conv-title":
-      const { convId, userId } = request
+      const { userId } = request
       // 之所以频道不考虑convId，是因为要支持用户在global级别监听，convId作为参数在消息条里
-      return !!convId ? `title@${userId}` : null
+      return `title@${userId}`
 
     default:
       return null

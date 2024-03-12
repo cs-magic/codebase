@@ -1,4 +1,6 @@
+import { IBaseResponse } from "@/schema/query"
 import { z } from "zod"
+import { ITransEvent } from "../common-sse/schema"
 
 export interface IPusherServerConfig {
   host: string
@@ -42,3 +44,7 @@ export const pusherServerIdSchema = z
   .default("tencent_wss")
 
 export type PusherServerId = z.infer<typeof pusherServerIdSchema>
+
+export type IEnsureResponse = (
+  event: ITransEvent["data"],
+) => IBaseResponse | null

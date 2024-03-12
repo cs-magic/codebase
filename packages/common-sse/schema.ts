@@ -19,7 +19,7 @@ export type GenericTransEvent<T extends TransEventType, V = any> = {
 export type ITransEvent<T extends TransEventType = any> = T extends "init"
   ? GenericTransEvent<"init", object>
   : T extends "data"
-    ? GenericTransEvent<"data", { token: string }>
+    ? GenericTransEvent<"data", { token: string; convId?: string }>
     : T extends "error"
       ? GenericTransEvent<"error", { message: string }>
       : T extends "close"

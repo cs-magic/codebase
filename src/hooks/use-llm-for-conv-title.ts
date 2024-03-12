@@ -1,41 +1,38 @@
 import { useSession } from "next-auth/react"
 import { useMemo } from "react"
-import { useSnapshot } from "valtio"
-import { IUpdateResponse } from "../schema/response"
-import { ILLMRequest } from "../schema/sse"
+import { IEnsureResponse } from "../../packages/common-pusher/schema"
+import { ITransEvent } from "../../packages/common-sse/schema"
+import { ILLMPusherListener } from "../schema/sse"
 import { coreStore } from "../store/core.valtio"
 import { useLLMPusher } from "./use-llm-pusher"
-import { useLLMSSE } from "./use-llm-sse"
 
 export const useLLMForConvTitle = () => {
-  const { convId, titleStatus } = useSnapshot(coreStore)
   const userId = useSession().data?.user.id
 
   // todo: should listen pusher on user level, instead of on conv
-  const llmRequest: ILLMRequest | null = useMemo(
+  const llmPusherListener: ILLMPusherListener | null = useMemo(
     () =>
-      userId && convId
+      userId
         ? {
             type: "conv-title",
-            status: titleStatus, // title status shouldn't be monitored by pusher
-            convId,
             userId,
           }
         : null,
-    [convId, userId],
+    [userId],
   )
 
   const options = useMemo(
     () => ({
-      update: (func: IUpdateResponse) => {
-        if (!convId) return
-        coreStore.updateConvTitle(convId, func)
-      },
+      ensureResponse: ((event: ITransEvent["data"]) =>
+        "convId" in event
+          ? coreStore.convs.find((c) => c.id === event.convId)?.titleResponse ??
+            null
+          : null) as IEnsureResponse,
     }),
-    [convId],
+    [],
   )
 
-  useLLMPusher(llmRequest, options)
+  useLLMPusher(llmPusherListener, options)
 
-  useLLMSSE(llmRequest)
+  // useLLMSSE(llmPusherListener)
 }

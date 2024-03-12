@@ -205,6 +205,7 @@ export const coreRouter = createTRPCRouter({
           ? {
               ...withConv,
               userId: ctx.user.id, // inject user id
+              convId,
             }
           : withConv,
       )
