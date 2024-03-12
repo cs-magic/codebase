@@ -1,66 +1,64 @@
+import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
-import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
-import { ISSEEvent, SSEEventType } from "../../packages/common-sse/schema"
+import {
+  pusherClientAtom,
+  pusherLogLevelAtom,
+} from "../../packages/common-pusher/store"
+import { ITransEvent, TransEventType } from "../../packages/common-sse/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
-import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
-import { usePusher } from "./use-pusher"
-import ansiColors from "ansi-colors"
+import { getChannelIdFomRequest, ILLMRequest } from "../schema/sse"
 
 /**
- *
- * @param request
- * @param update
- * @param autoClose 是否取消频道监听
+
  */
-export const useLlmPusher = (
-  request: ILLMRequest,
-  options: {
+export const useLLMPusher = (
+  request?: ILLMRequest | null,
+  options?: {
     update: (func: (response: IBaseResponse) => void) => void
     onInit?: () => void
-    autoClose?: boolean
   },
 ) => {
   const [transportType] = useAtom(transportTypeAtom)
+  const [pusher] = useAtom(pusherClientAtom)
   const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
 
-  const { pusher } = usePusher()
-  const triggerId = getTriggerIdFromSSERequest(request)
-
-  const { update, onInit, autoClose } = options
-
   useEffect(() => {
-    if (transportType !== "pusher" || !triggerId || !pusher) return
+    console.log("useLLMPuser: ", { request, transportType, pusher, options })
 
-    const channel = pusher.subscribe(triggerId)
+    if (!request || transportType !== "pusher" || !pusher || !options) return
+
+    const channelId = getChannelIdFomRequest(request)
+
+    if (!channelId) return
+
+    const channel = pusher.subscribe(channelId)
 
     if (pusherLogLevel <= LogLevel.info)
       console.log(
-        ansiColors.red(`[pusher] bound to channel: ${triggerId} `),
+        ansiColors.red(`[pusher] bound to channel: ${channelId} `),
         request,
       )
 
-    const bindEvent = <T extends SSEEventType>(
+    const { update, onInit } = options
+
+    const bindEvent = <T extends TransEventType>(
       type: T,
-      func: (event: ISSEEvent<T>["data"]) => void,
+      func: (event: ITransEvent<T>["data"]) => void,
     ) => {
-      channel.bind(type, (data: ISSEEvent<T>["data"]) => {
+      channel.bind(type, (data: ITransEvent<T>["data"]) => {
         if (pusherLogLevel <= LogLevel.debug)
-          console.log(`[pusher] ${triggerId} << ${type}`, data)
+          console.log(`[pusher] ${channelId} << ${type}`, data)
         func(data)
       })
     }
 
     bindEvent("data", (data) => {
-      update((response) => {
+      options.update((response) => {
         if (!response.content) response.content = data.token
         else response.content += data.token
-        // console.log("-- updating pusher token: ", {
-        //   token: data.token,
-        //   content: response.content,
-        // })
       })
     })
 
@@ -83,12 +81,12 @@ export const useLlmPusher = (
       })
     })
 
+    /**
+     * 要清理，否则会有重复监听的问题
+     */
     return () => {
-      if (autoClose) {
-        console.log(ansiColors.red(`[pusher] unbound ${triggerId}`))
-        channel.unbind_all() // <-- unbind
-        pusher.unsubscribe(triggerId)
-      }
+      console.log(ansiColors.red(`[pusher] unbound ${channelId}`))
+      pusher.unsubscribe(channelId)
     }
-  }, [triggerId, pusher, transportType, pusherLogLevel])
+  }, [request, options, pusher, transportType, pusherLogLevel])
 }

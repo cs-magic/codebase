@@ -98,15 +98,14 @@ export function useConvQuery() {
         options: {
           llmDelay,
           pusherServerId,
-
-          // conv-title
-          withConv: shouldConvTitle
-            ? {
-                bestChatId: chatId!,
-                systemPromptForConvTitle: convSummaryPrompt,
-              }
-            : undefined,
         },
+        // conv-title
+        withConv: shouldConvTitle
+          ? {
+              bestChatId: chatId!,
+              systemPromptForConvTitle: convSummaryPrompt,
+            }
+          : undefined,
       },
       {
         onSuccess: async (request) => {

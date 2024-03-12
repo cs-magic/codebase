@@ -1,7 +1,7 @@
 import { ILLMMessage } from "@/schema/message"
 import { IBaseResponse } from "@/schema/query"
 import { IRequest } from "@/schema/request"
-import { LlmActionPayload } from "@/schema/sse"
+import { LLMActionPayload } from "@/schema/sse"
 import { prisma } from "../../common-db"
 import { PusherServerId } from "../../common-pusher/schema"
 import { createCallLLMSchema, parseApp } from "../schema"
@@ -14,17 +14,18 @@ export const triggerLLMThreads = async (
   options: {
     pusherServerId: PusherServerId
     llmDelay: number
-    withConv?: {
-      bestChatId: string
-      systemPromptForConvTitle?: string
-    }
+  },
+  withConv?: {
+    userId: string
+    bestChatId: string
+    systemPromptForConvTitle?: string
   },
 ) => {
-  const { pusherServerId, llmDelay, withConv } = options
+  const { pusherServerId, llmDelay } = options
 
   await Promise.all(
     request.responses.map(async (r) => {
-      const payload: LlmActionPayload = {
+      const payload: LLMActionPayload = {
         action: "trigger",
         request: {
           pusherServerId,
@@ -33,11 +34,14 @@ export const triggerLLMThreads = async (
           type: "app-response",
           status: "to-response",
         },
-        app: parseApp(r.app!),
+        app: { ...parseApp(r.app!), timeout: 3000 },
         context,
         llmDelay,
       }
+
       void callLLMWithDB<IBaseResponse>(payload, async (response) => {
+        console.log("-- updating app response: ", { response, r })
+
         await prisma.response.update({
           where: {
             id: r.id,
@@ -51,13 +55,14 @@ export const triggerLLMThreads = async (
           r.appClientId === withConv.bestChatId &&
           response.content
         ) {
-          const payload: LlmActionPayload = {
+          const payload: LLMActionPayload = {
             action: "trigger",
             request: {
               pusherServerId,
               convId: request.convId,
               type: "conv-title",
               status: "to-response",
+              userId: withConv.userId,
             },
             app: createCallLLMSchema.parse({
               modelName: "gpt-3.5-turbo",

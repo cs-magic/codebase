@@ -1,4 +1,4 @@
-import { SSEEventType } from "./schema"
+import { TransEventType } from "./schema"
 
 export const fetchSSE = (
   requestUrl: string,
@@ -27,7 +27,7 @@ export const fetchSSE = (
     console.log("[sse] opened")
   }
 
-  sse.addEventListener("data" as SSEEventType, (ev: MessageEvent<string>) => {
+  sse.addEventListener("data" as TransEventType, (ev: MessageEvent<string>) => {
     console.log("[sse] onData: ", ev)
     if (options?.onData) options.onData(JSON.parse(ev.data) as string)
   })
@@ -35,15 +35,20 @@ export const fetchSSE = (
   /**
    * todo: error 占用了系统的 error 通道?
    */
-  sse.addEventListener("error" as SSEEventType, (ev: MessageEvent<string>) => {
-    console.log("[sse] onError: ", ev)
-    if (options?.onError)
-      options.onError(
-        typeof ev.data === "string" ? (JSON.parse(ev.data) as string) : ev.data,
-      )
+  sse.addEventListener(
+    "error" as TransEventType,
+    (ev: MessageEvent<string>) => {
+      console.log("[sse] onError: ", ev)
+      if (options?.onError)
+        options.onError(
+          typeof ev.data === "string"
+            ? (JSON.parse(ev.data) as string)
+            : ev.data,
+        )
 
-    doEnd()
-  })
+      doEnd()
+    },
+  )
 
   sse.onerror = (err) => {
     // 2 是结束

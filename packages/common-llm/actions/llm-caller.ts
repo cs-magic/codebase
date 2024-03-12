@@ -1,12 +1,12 @@
 "use server"
 
 import { sleep } from "../../common-algo/utils"
-import { callChatGPT, callLlmApiMock } from "../models/openai"
-import { getTriggerIdFromSSERequest, LlmActionPayload } from "@/schema/sse"
-import { PusherLlmManager } from "../providers/llm-pusher"
+import { callChatGPT, callLLMApiMock } from "../models/openai"
+import { getChannelIdFomRequest, LLMActionPayload } from "@/schema/sse"
+import { PusherLLMManager } from "../providers/llm-pusher"
 
 export const callLLM = async (
-  payload: LlmActionPayload,
+  payload: LLMActionPayload,
   options: {
     onInit?: () => void
     onData?: (data: string) => void
@@ -14,13 +14,13 @@ export const callLLM = async (
     onFinal?: () => void
   },
 ) => {
-  console.log("[LLM] called: ", payload)
-
   const { request, action } = payload
-  const channelId = getTriggerIdFromSSERequest(request)
+  const channelId = getChannelIdFomRequest(request)
+  console.log("[LLM] called: ", { ...payload, channelId })
+
   if (!channelId || !request.pusherServerId) return
 
-  const llmManager = new PusherLlmManager(channelId, request.pusherServerId)
+  const llmManager = new PusherLLMManager(channelId, request.pusherServerId)
 
   if (action === "interrupt") {
     await llmManager.onTriggerEnds("interrupted")
@@ -34,8 +34,9 @@ export const callLLM = async (
 
     const api = ["gpt-3.5-turbo", "gpt-4", "gpt-4-32k"].includes(app.modelName)
       ? callChatGPT
-      : callLlmApiMock
+      : callLLMApiMock
 
+    // todo: external timeout of clash
     // todo: limit times / tokens
     const res = await api({ config: app, context })
 
@@ -45,7 +46,7 @@ export const callLLM = async (
     await llmManager.onTriggerStarts()
 
     for await (const chunk of res) {
-      // todo: 用户打断
+      // 用户打断
       if ((await llmManager.status) !== "responding") break
 
       const token = chunk.content as string

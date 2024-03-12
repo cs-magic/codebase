@@ -1,9 +1,9 @@
 import { IBaseResponse } from "@/schema/query"
-import { LlmActionPayload } from "@/schema/sse"
+import { LLMActionPayload } from "@/schema/sse"
 import { callLLM } from "./llm-caller"
 
 export const callLLMWithDB = async <T extends IBaseResponse>(
-  payload: LlmActionPayload,
+  payload: LLMActionPayload,
   onResponse: (response: T) => Promise<void>,
 ) => {
   const response = {

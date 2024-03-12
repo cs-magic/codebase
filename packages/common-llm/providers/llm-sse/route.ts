@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { ISSEEvent } from "../../../common-sse/schema"
-import { StaticLlmManager } from "./provider-static"
+import { ITransEvent } from "../../../common-sse/schema"
+import { StaticLLMManager } from "./provider-static"
 import { llmEncoder } from "./utils"
 
 export async function GET(req: NextRequest) {
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const responseStream = new TransformStream()
   const writer = responseStream.writable.getWriter()
 
-  const write = async (event: ISSEEvent) => {
+  const write = async (event: ITransEvent) => {
     // console.log("[sse] client --> user: ", event)
     // 要额外加一个 \n，否则不符合格式规范
     await writer.write(
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     )
   }
 
-  const llmManager = new StaticLlmManager(triggerId)
+  const llmManager = new StaticLLMManager(triggerId)
 
   // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {

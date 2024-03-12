@@ -3,7 +3,7 @@ import { ResponseFinalStatus } from "@/schema/sse"
 /**
  * 不能用 error 这是 sse 默认的 event-type
  */
-export type SSEEventType =
+export type TransEventType =
   | "init"
   | "data"
   | "error"
@@ -11,31 +11,31 @@ export type SSEEventType =
   | "onClientConnected"
   | "onClientDisconnected"
 
-export type GenericSSEEvent<T extends SSEEventType, V = any> = {
+export type GenericTransEvent<T extends TransEventType, V = any> = {
   event: T
   data: V & { time?: number }
 }
 
-export type ISSEEvent<T extends SSEEventType = any> = T extends "init"
-  ? GenericSSEEvent<"init", object>
+export type ITransEvent<T extends TransEventType = any> = T extends "init"
+  ? GenericTransEvent<"init", object>
   : T extends "data"
-    ? GenericSSEEvent<"data", { token: string }>
+    ? GenericTransEvent<"data", { token: string }>
     : T extends "error"
-      ? GenericSSEEvent<"error", { message: string }>
+      ? GenericTransEvent<"error", { message: string }>
       : T extends "close"
-        ? GenericSSEEvent<"close", { reason: ResponseFinalStatus }>
+        ? GenericTransEvent<"close", { reason: ResponseFinalStatus }>
         : T extends "onClientConnected"
-          ? GenericSSEEvent<"onClientConnected", { id: string }>
+          ? GenericTransEvent<"onClientConnected", { id: string }>
           : T extends "onClientDisconnected"
-            ? GenericSSEEvent<"onClientDisconnected", { id: string }>
+            ? GenericTransEvent<"onClientDisconnected", { id: string }>
             : never
 
-export type ISSEClient = {
+export type ITransClient = {
   id: string
-  onEvent: (event: ISSEEvent) => void
+  onEvent: (event: ITransEvent) => void
 }
 
-export type ISSETrigger = {
-  events: ISSEEvent[]
-  clients: ISSEClient[]
+export type ITransChannel = {
+  events: ITransEvent[]
+  clients: ITransClient[]
 }

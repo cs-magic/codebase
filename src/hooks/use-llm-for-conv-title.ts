@@ -2,26 +2,30 @@ import { useSnapshot } from "valtio"
 import { ILLMRequest } from "../schema/sse"
 import { coreStore } from "../store/core.valtio"
 import { checkRespondingStatus } from "../utils"
-import { useLlmPusher } from "./use-llm-pusher"
-import { useLlmSse } from "./use-llm-sse"
+import { useLLMPusher } from "./use-llm-pusher"
+import { useLLMSSE } from "./use-llm-sse"
+import { useSession } from "next-auth/react"
 
 export const useLLMForConvTitle = () => {
   const { conv } = useSnapshot(coreStore)
+  const userId = useSession().data?.user.id
 
-  const llmRequest: ILLMRequest = {
-    type: "conv-title",
-    status: !conv ? "unknown" : checkRespondingStatus(conv.titleResponse),
-    convId: conv?.id,
-  }
+  const llmRequest: ILLMRequest | null =
+    conv && userId
+      ? {
+          type: "conv-title",
+          status: !conv ? "unknown" : checkRespondingStatus(conv.titleResponse),
+          convId: conv.id,
+          userId,
+        }
+      : null
 
-  useLlmPusher(llmRequest, {
+  useLLMPusher(llmRequest, {
     update: (func) => {
       if (!conv) return
       coreStore.updateConvTitle(conv.id, func)
     },
-    // autoClose: false, // ~~ 常驻后台 ~~ 会导致重复监听
-    autoClose: true,
   })
 
-  useLlmSse(llmRequest)
+  useLLMSSE(llmRequest)
 }

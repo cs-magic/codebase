@@ -24,6 +24,8 @@ export const callChatGPT = async ({
   config: ICreateCallLLM
   context: ILLMMessage[]
 }) => {
+  console.log("-- GPT called: ", { config, context })
+
   const model = new ChatOpenAI({
     ...config,
   })
@@ -41,7 +43,7 @@ export const callChatGPT = async ({
   )
 }
 
-export const callLlmApiMock = async ({
+export const callLLMApiMock = async ({
   config,
   context,
 }: {

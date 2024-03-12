@@ -1,6 +1,5 @@
 import { appWithChatIdSchema } from "@/schema/app.create"
 import { z } from "zod"
-import { getNewId } from "../../../../packages/common-algo/id"
 import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
 
 import { triggerLLMThreads } from "../../../../packages/common-llm/actions/llm-trigger"
@@ -147,18 +146,18 @@ export const coreRouter = createTRPCRouter({
         options: z.object({
           llmDelay: z.number().default(0),
           pusherServerId: pusherServerIdSchema,
-
-          withConv: z
-            .object({
-              bestChatId: z.string(),
-              systemPromptForConvTitle: z.string().optional(),
-            })
-            .optional(),
         }),
+
+        withConv: z
+          .object({
+            bestChatId: z.string(),
+            systemPromptForConvTitle: z.string().optional(),
+          })
+          .optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const { context, convId, options } = input
+      const { context, convId, options, withConv } = input
 
       console.log("[query]: ", JSON.stringify({ input }, null, 2))
 
@@ -196,7 +195,19 @@ export const coreRouter = createTRPCRouter({
         ...requestSchema,
       })
 
-      void triggerLLMThreads(request, context, options)
+      console.log("[query] created request: ", request)
+
+      void triggerLLMThreads(
+        request,
+        context,
+        options,
+        withConv
+          ? {
+              ...withConv,
+              userId: ctx.user.id, // inject user id
+            }
+          : withConv,
+      )
       return request
     }),
 })

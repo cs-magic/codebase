@@ -23,7 +23,7 @@ import {
 import { ConfigCard } from "./config-card"
 
 export const ConfigLLMCard = () => {
-  const [llmDelay, setLlmDelay] = useAtom(llmDelayAtom)
+  const [llmDelay, setLLMDelay] = useAtom(llmDelayAtom)
   const [transportType, setTransportType] = useAtom(transportTypeAtom)
   const [pusherServerId, setPusherServerId] = useAtom(pusherServerIdAtom)
   const [convSummaryPrompt, setConvSummaryPrompt] = useAtom(
@@ -60,7 +60,7 @@ export const ConfigLLMCard = () => {
           value={llmDelay}
           type={"number"}
           onChange={(event) => {
-            setLlmDelay(Number(event.currentTarget.value))
+            setLLMDelay(Number(event.currentTarget.value))
           }}
         />
       </LabelLine>

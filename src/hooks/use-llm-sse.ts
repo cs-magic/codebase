@@ -2,18 +2,20 @@ import { useAtom } from "jotai"
 import { useEffect, useRef } from "react"
 import { fetchSSE } from "../../packages/common-sse/core"
 import { transportTypeAtom } from "../../packages/common-transport/store"
-import { getTriggerIdFromSSERequest, ILLMRequest } from "../schema/sse"
-
-import { appStopGeneratingScopeAtom } from "../store/system.atom"
+import { getChannelIdFomRequest, ILLMRequest } from "../schema/sse"
 import { coreStore } from "../store/core.valtio"
 
-export const useLlmSse = (request: ILLMRequest) => {
+import { appStopGeneratingScopeAtom } from "../store/system.atom"
+
+/**
+ * todo: not clean
+ * @param request
+ */
+export const useLLMSSE = (request?: ILLMRequest | null) => {
+  const [transportType] = useAtom(transportTypeAtom)
   const [stoppedGenerating, stopGenerating] = useAtom(
     appStopGeneratingScopeAtom,
   )
-
-  const { status, type, pusherServerId } = request
-  const [transportType] = useAtom(transportTypeAtom)
 
   const update = (
     func: (data: {
@@ -23,6 +25,8 @@ export const useLlmSse = (request: ILLMRequest) => {
       error?: string | null
     }) => void,
   ) => {
+    if (!request) return
+
     if (request.type === "app-response") {
       const { requestId } = request
       if (requestId) coreStore.updateChat(requestId, request.appId, func)
@@ -45,39 +49,36 @@ export const useLlmSse = (request: ILLMRequest) => {
   const refSSE = useRef<EventSource>()
 
   useEffect(() => {
-    if (transportType !== "sse") return
+    if (transportType !== "sse" || !request) return
 
     console.log("[sse] requesting: ", request)
     // todo: more robust lock
-    if (status !== "to-response") return
+    if (request.status !== "to-response") return
 
-    refSSE.current = fetchSSE(
-      `/api/llm?r=${getTriggerIdFromSSERequest(request)}`,
-      {
-        onOpen: () => {
-          update((s) => {
-            s.tStart = new Date()
-            s.content = ""
-          })
-        },
-        onData: (data) => {
-          // console.debug({ data })
-          update((s) => {
-            s.content += data
-          })
-        },
-        onError: (error) => {
-          update((s) => {
-            s.error = error
-          })
-        },
-        onFinal: () => onFinal("normal onFinal"),
+    refSSE.current = fetchSSE(`/api/llm?r=${getChannelIdFomRequest(request)}`, {
+      onOpen: () => {
+        update((s) => {
+          s.tStart = new Date()
+          s.content = ""
+        })
       },
-    )
+      onData: (data) => {
+        // console.debug({ data })
+        update((s) => {
+          s.content += data
+        })
+      },
+      onError: (error) => {
+        update((s) => {
+          s.error = error
+        })
+      },
+      onFinal: () => onFinal("normal onFinal"),
+    })
 
     // 不能在这里清除，条件太强了，因为ok只是一个trigger
     // return () => onFinal("after hook")
-  }, [status])
+  }, [request?.status])
 
   useEffect(() => {
     if (stoppedGenerating) {

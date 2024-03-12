@@ -1,10 +1,14 @@
 import { remove } from "lodash"
-import { ISSEClient, ISSEEvent, ISSETrigger } from "../../../common-sse/schema"
+import {
+  ITransClient,
+  ITransEvent,
+  ITransChannel,
+} from "../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
-import { ILlmManagerTraditional } from "./schema"
+import { ILLMManagerTraditional } from "./schema"
 
-export class StaticLlmManager implements ILlmManagerTraditional {
-  static triggers: Record<string, ISSETrigger> = {}
+export class StaticLLMManager implements ILLMManagerTraditional {
+  static triggers: Record<string, ITransChannel> = {}
 
   private triggerId: string
 
@@ -13,7 +17,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
   }
 
   get triggers() {
-    return Object.keys(StaticLlmManager.triggers)
+    return Object.keys(StaticLLMManager.triggers)
   }
 
   //////////////////////////////
@@ -21,12 +25,12 @@ export class StaticLlmManager implements ILlmManagerTraditional {
   //////////////////////////////
 
   get trigger() {
-    return StaticLlmManager.triggers[this.triggerId] ?? null
+    return StaticLLMManager.triggers[this.triggerId] ?? null
   }
 
   async onTriggerStarts(): Promise<void> {
     this.print("onTriggerStarts(before)")
-    StaticLlmManager.triggers[this.triggerId] = { events: [], clients: [] }
+    StaticLLMManager.triggers[this.triggerId] = { events: [], clients: [] }
     this.print("onTriggerStarts(end)")
   }
 
@@ -34,7 +38,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
     this.print("onTriggerEnds(before)")
     // !important
     this.onEvent({ event: "close", data: { reason } })
-    delete StaticLlmManager.triggers[this.triggerId]
+    delete StaticLLMManager.triggers[this.triggerId]
     this.print("onTriggerEnds(end)")
   }
 
@@ -42,18 +46,18 @@ export class StaticLlmManager implements ILlmManagerTraditional {
   // client
   //////////////////////////////
 
-  async onEvent(event: ISSEEvent): Promise<void> {
+  async onEvent(event: ITransEvent): Promise<void> {
     console.log("[LLM] >> ", {
       triggerId: this.triggerId,
       ...event,
     })
-    StaticLlmManager.triggers[this.triggerId]?.clients.forEach((client) => {
+    StaticLLMManager.triggers[this.triggerId]?.clients.forEach((client) => {
       // how?
       client.onEvent(event)
     })
   }
 
-  async onClientConnected(client: ISSEClient): Promise<void> {
+  async onClientConnected(client: ITransClient): Promise<void> {
     this.print(`onClientConnected(id=${client.id})`)
     if (!this.trigger) {
       client.onEvent({
@@ -82,7 +86,7 @@ export class StaticLlmManager implements ILlmManagerTraditional {
     //     triggerId,
     //     triggers: this.triggers,
     //   })
-    return this.triggerId in StaticLlmManager.triggers
+    return this.triggerId in StaticLLMManager.triggers
   }
 
   private print(name: string) {

@@ -1,24 +1,24 @@
 import Pusher from "pusher"
 import { redis } from "../../../common-db"
 import { PusherServerId } from "../../../common-pusher/schema"
-import { ISSEEvent } from "../../../common-sse/schema"
+import { ITransEvent } from "../../../common-sse/schema"
 import { pusherServerConfigs } from "../../../common-pusher/config"
 import { initPusherServer } from "../../../common-pusher/server/init"
 import {
-  getTriggerIdFromSSERequest,
+  getChannelIdFomRequest,
   ILLMRequest,
   ResponseFinalStatus,
   ResponseStatus,
 } from "@/schema/sse"
 
-import { ILlmManagerPusher } from "./schema"
+import { ILLMManagerPusher } from "./schema"
 
 /**
  *
  * note:
  * - 因为server-action的机制， 所有state需要用redis等中心化管理
  */
-export class PusherLlmManager implements ILlmManagerPusher {
+export class PusherLLMManager implements ILLMManagerPusher {
   private pusher: Pusher
   private channel: string
 
@@ -51,7 +51,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
     await this.push({ event: "close", data: { reason } })
   }
 
-  async onEvent(event: ISSEEvent) {
+  async onEvent(event: ITransEvent) {
     await this.push(event)
   }
 
@@ -74,7 +74,7 @@ export class PusherLlmManager implements ILlmManagerPusher {
   // general
   //////////////////////////////
 
-  private async push(event: ISSEEvent) {
+  private async push(event: ITransEvent) {
     // event.data = { time: Date.now(), ...event.data }
     console.log(`[PUSHER] >> ${this.channel}: `, event)
     await this.pusher.trigger(this.channel, event.event, event.data)

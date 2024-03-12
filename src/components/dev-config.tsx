@@ -12,6 +12,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/sheet"
+import { cn } from "../../packages/common-ui/shadcn/utils"
 import { ConfigDevCard } from "./config-dev-card"
 import { ConfigLLMCard } from "./config-llm"
 import { ConfigLogCard } from "./config-log-card"
@@ -36,11 +37,12 @@ export const DevConfig = () => {
     ],
   ])
 
-  if (!devEnabled) return null
-
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className={"fixed left-2 bottom-2"} asChild>
+      <SheetTrigger
+        className={cn("fixed left-2 bottom-2", !devEnabled && "hidden")}
+        asChild
+      >
         <IconContainer>
           <SettingsIcon />
         </IconContainer>

@@ -50,6 +50,7 @@ export const pusherLogAtom = atom((get) => ({
 
 export const initPusherAtom = atom(null, (get, set) => {
   const serverId = get(pusherServerIdAtom)
+
   initPusherClient(pusherServerConfigs[serverId], {
     onInit: (pusherClient) => {
       set(pusherClientAtom, pusherClient)

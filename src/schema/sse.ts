@@ -18,31 +18,33 @@ export type ILLMRequest = {
 } & (
   | {
       type: "conv-title"
-      convId?: string
+      convId: string
+      userId: string
     }
   | {
       type: "app-response"
-      requestId?: string | null
+      requestId: string
       appId: string
     }
 )
 
-export const getTriggerIdFromSSERequest = (request: ILLMRequest) => {
+export const getChannelIdFomRequest = (request: ILLMRequest) => {
   switch (request.type) {
     case "app-response":
       const { requestId, appId } = request
       return !!requestId && !!appId ? `chat@${requestId}.${appId}` : null
 
     case "conv-title":
-      const { convId } = request
-      return !!convId ? `title@${convId}` : null
+      const { convId, userId } = request
+      // 之所以频道不考虑convId，是因为要支持用户在global级别监听，convId作为参数在消息条里
+      return !!convId ? `title@${userId}` : null
 
     default:
       return null
   }
 }
 
-export type LlmActionPayload = { request: ILLMRequest } & (
+export type LLMActionPayload = { request: ILLMRequest } & (
   | {
       app: ICreateCallLLM
       context: ILLMMessage[]
