@@ -1,31 +1,41 @@
+import { useSession } from "next-auth/react"
+import { useMemo } from "react"
 import { useSnapshot } from "valtio"
+import { IUpdateResponse } from "../schema/response"
 import { ILLMRequest } from "../schema/sse"
 import { coreStore } from "../store/core.valtio"
-import { checkRespondingStatus } from "../utils"
 import { useLLMPusher } from "./use-llm-pusher"
 import { useLLMSSE } from "./use-llm-sse"
-import { useSession } from "next-auth/react"
 
 export const useLLMForConvTitle = () => {
-  const { conv } = useSnapshot(coreStore)
+  const { convId, titleStatus } = useSnapshot(coreStore)
   const userId = useSession().data?.user.id
 
-  const llmRequest: ILLMRequest | null =
-    conv && userId
-      ? {
-          type: "conv-title",
-          status: !conv ? "unknown" : checkRespondingStatus(conv.titleResponse),
-          convId: conv.id,
-          userId,
-        }
-      : null
+  // todo: should listen pusher on user level, instead of on conv
+  const llmRequest: ILLMRequest | null = useMemo(
+    () =>
+      userId && convId
+        ? {
+            type: "conv-title",
+            status: titleStatus, // title status shouldn't be monitored by pusher
+            convId,
+            userId,
+          }
+        : null,
+    [convId, userId],
+  )
 
-  useLLMPusher(llmRequest, {
-    update: (func) => {
-      if (!conv) return
-      coreStore.updateConvTitle(conv.id, func)
-    },
-  })
+  const options = useMemo(
+    () => ({
+      update: (func: IUpdateResponse) => {
+        if (!convId) return
+        coreStore.updateConvTitle(convId, func)
+      },
+    }),
+    [convId],
+  )
+
+  useLLMPusher(llmRequest, options)
 
   useLLMSSE(llmRequest)
 }

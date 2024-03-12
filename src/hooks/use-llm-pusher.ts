@@ -2,10 +2,8 @@ import ansiColors from "ansi-colors"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 import { LogLevel } from "../../packages/common-log/schema"
-import {
-  pusherClientAtom,
-  pusherLogLevelAtom,
-} from "../../packages/common-pusher/store"
+import { usePusherClient } from "../../packages/common-pusher/hooks/use-pusher-client"
+import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
 import { ITransEvent, TransEventType } from "../../packages/common-sse/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { IBaseResponse } from "../schema/query"
@@ -15,26 +13,28 @@ import { getChannelIdFomRequest, ILLMRequest } from "../schema/sse"
 
  */
 export const useLLMPusher = (
-  request?: ILLMRequest | null,
-  options?: {
+  request: ILLMRequest | null,
+  options: {
     update: (func: (response: IBaseResponse) => void) => void
     onInit?: () => void
-  },
+  } | null,
 ) => {
   const [transportType] = useAtom(transportTypeAtom)
-  const [pusher] = useAtom(pusherClientAtom)
   const [pusherLogLevel] = useAtom(pusherLogLevelAtom)
 
-  useEffect(() => {
-    console.log("useLLMPuser: ", { request, transportType, pusher, options })
+  const pusherClient = usePusherClient()
 
-    if (!request || transportType !== "pusher" || !pusher || !options) return
+  useEffect(() => {
+    // console.log("useLLMPusher: ", {request, transportType, pusherClient, options})
+
+    if (!request || transportType !== "pusher" || !pusherClient || !options)
+      return
 
     const channelId = getChannelIdFomRequest(request)
 
     if (!channelId) return
 
-    const channel = pusher.subscribe(channelId)
+    const channel = pusherClient.subscribe(channelId)
 
     if (pusherLogLevel <= LogLevel.info)
       console.log(
@@ -86,7 +86,7 @@ export const useLLMPusher = (
      */
     return () => {
       console.log(ansiColors.red(`[pusher] unbound ${channelId}`))
-      pusher.unsubscribe(channelId)
+      pusherClient.unsubscribe(channelId)
     }
-  }, [request, options, pusher, transportType, pusherLogLevel])
+  }, [request, options, pusherClient, transportType, pusherLogLevel])
 }

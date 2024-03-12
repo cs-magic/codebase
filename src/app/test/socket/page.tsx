@@ -2,11 +2,10 @@
 
 import { useAtom, useSetAtom } from "jotai"
 import { useEffect } from "react"
+import { usePusherClient } from "../../../../packages/common-pusher/hooks/use-pusher-client"
 import { PusherServerId } from "../../../../packages/common-pusher/schema"
 import {
   cleanPusherAtom,
-  initPusherAtom,
-  pusherClientAtom,
   pusherServerIdAtom,
 } from "../../../../packages/common-pusher/store"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
@@ -22,10 +21,9 @@ import {
 
 export default function TestSocketPage() {
   const [serverId, setServerId] = useAtom(pusherServerIdAtom)
-  const [client] = useAtom(pusherClientAtom)
-
-  const init = useSetAtom(initPusherAtom)
   const clean = useSetAtom(cleanPusherAtom)
+
+  const client = usePusherClient()
 
   const c = () => {
     console.log("cleaning...")
@@ -64,8 +62,6 @@ export default function TestSocketPage() {
           </SelectGroup>
         </SelectContent>
       </Select>
-
-      <Button onClick={init}>start</Button>
 
       <Button
         onClick={() => {

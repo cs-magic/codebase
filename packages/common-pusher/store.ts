@@ -1,14 +1,11 @@
 import { atom } from "jotai"
 
 import { atomWithStorage } from "jotai/utils"
-import { sum } from "lodash" //////////////////////////////
 import Pusher from "pusher"
 import PusherJS from "pusher-js"
 import { FixedArray } from "../common-algo/array"
 import { LogLevel } from "../common-log/schema"
-import { initPusherClient } from "./client/init"
-import { pusherServerConfigs } from "./config"
-import { PusherConnectionState, PusherServerId } from "./schema"
+import { PusherConnectionState, PusherServerId } from "./schema" //////////////////////////////
 
 //////////////////////////////
 // base
@@ -41,35 +38,10 @@ export const cleanPusherAtom = atom(null, (get, set) => {
   client?.disconnect()
   set(pusherClientAtom, null)
 })
+
 export const pusherLogAtom = atom((get) => ({
   lastPingTime: get(pusherLastPingTimeAtom),
   lastPongTime: get(pusherLastPongTimeAtom),
   latency: get(pusherLatencyAtom),
   latencies: get(pusherLatenciesAtom),
 }))
-
-export const initPusherAtom = atom(null, (get, set) => {
-  const serverId = get(pusherServerIdAtom)
-
-  initPusherClient(pusherServerConfigs[serverId], {
-    onInit: (pusherClient) => {
-      set(pusherClientAtom, pusherClient)
-    },
-    onPing: () => {
-      set(pusherLastPingTimeAtom, Date.now())
-    },
-    onPong: () => {
-      set(pusherLastPongTimeAtom, Date.now())
-
-      const newLatency =
-        get(pusherLastPongTimeAtom)! - get(pusherLastPingTimeAtom)!
-      const latencies = get(pusherLatenciesAtom)
-      latencies.push(newLatency)
-
-      const latency = sum(latencies) / latencies.length
-      set(pusherLatencyAtom, latency)
-
-      console.log("pong: ", get(pusherLogAtom))
-    },
-  })
-})

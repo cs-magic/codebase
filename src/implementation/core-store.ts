@@ -6,7 +6,7 @@ import { IConvDetail } from "../schema/conv.detail"
 import { IContext } from "../schema/message"
 import { IRequest } from "../schema/request"
 import { IResponse, IUpdateResponse } from "../schema/response"
-import { app2response, response2app } from "../utils"
+import { app2response, checkRespondingStatus, response2app } from "../utils"
 
 export class CoreStore {
   // implements ICoreStore
@@ -40,12 +40,20 @@ export class CoreStore {
     return this.convs.find((c) => c.id === this.convId) ?? null
   }
 
+  get titleResponse() {
+    return this.baseConv?.titleResponse ?? null
+  }
+
   get title() {
-    return this.baseConv?.titleResponse?.content ?? "新会话"
+    return this.titleResponse?.content ?? "新会话"
   }
 
   get convId() {
     return this.conv?.id ?? null
+  }
+
+  get titleStatus() {
+    return checkRespondingStatus(this.titleResponse)
   }
 
   get requests(): IRequest[] {
@@ -190,8 +198,8 @@ export class CoreStore {
 
   updateConvTitle(convId: string, func: IUpdateResponse) {
     const res = this.convs.find((c) => c.id === convId)?.titleResponse
-    // if (this.logLevel <= LogLevel.info)
-    console.log("-- updateConvTitle: ", { convId, res, convs: this.convs })
+    if (this.logLevel <= LogLevel.debug)
+      console.log("-- updateConvTitle: ", { convId, res, convs: this.convs })
     if (!res) return
     func(res)
   }

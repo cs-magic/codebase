@@ -17,6 +17,7 @@ import { cn } from "../../packages/common-ui/shadcn/utils"
 import { Dev } from "../components/dev"
 import { AppsDialog } from "../components/dialog-select-apps"
 import GlobalHooksProviders from "../providers/global.provider"
+import ansiColors from "ansi-colors"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  console.log(ansiColors.red("== RootLayout =="))
+
   return (
     // html should be at the top, for providing context
     <html lang="zh" suppressHydrationWarning>
