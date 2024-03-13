@@ -1,7 +1,7 @@
 import { signIn } from "next-auth/react"
 import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
 import { cn } from "../../packages/common-ui/shadcn/utils"
-import { WECHAT_PROVIDER_ID } from "../../packages/common-wechat/auth/config"
+import { WECHAT_PROVIDER_ID } from "../../packages/common-auth-wechat/config"
 
 export const AuthWechatSignIn = () => (
   <Button

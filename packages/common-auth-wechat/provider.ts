@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers"
-import { prisma } from "../../common-db"
+import { prisma } from "../common-db"
 import { WECHAT_PROVIDER_ID } from "./config"
 import { getWechatAuthorizationUrl } from "./funcs/client"
 import {
@@ -53,15 +53,18 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
      * @param profile
      */
     profile: async (profile: IWechatProfile) => {
+      const wxid = profile.openid
+
       const account = await prisma.account.findUnique({
         where: {
           provider_providerAccountId: {
-            providerAccountId: profile.openid,
+            providerAccountId: wxid,
             provider: WECHAT_PROVIDER_ID,
           },
         },
         include: { user: true },
       })
+
       if (!account) throw new Error("account not found")
 
       return prisma.user.update({
@@ -69,7 +72,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
           id: account.userId,
         },
         data: {
-          wxid: account.providerAccountId,
+          wxid,
           wxidVerified: new Date(),
         },
       })
