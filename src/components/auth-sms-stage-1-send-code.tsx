@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom, useSetAtom } from "jotai"
 import { useForm } from "react-hook-form"
-import { useSmsSendCode } from "../../packages/common-sms/hooks/use-sms-send-code"
-import { ISendSms, sendSmsSchema } from "../../packages/common-sms/schema"
+import { useSmsSendCode } from "../../packages/common-auth-sms/hooks/use-sms-send-code"
+import { ISendSms, sendSmsSchema } from "../../packages/common-auth-sms/schema"
 import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
-} from "../../packages/common-sms/store"
+} from "../../packages/common-auth-sms/store"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import {
   Form,

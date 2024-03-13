@@ -1,12 +1,17 @@
 import { DefaultSession } from "next-auth"
 import { DefaultJWT } from "next-auth/jwt"
 
+export interface IAuth {
+  id: string
+  // the optional of (name, image) is for callback (like signIn) compatible
+  name?: string | null
+  image?: string | null
+  phone: string | null
+  wxid: string | null
+}
+
 declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
-    // name?: string | null // 已经有了？
-    // image?: string // jwt 里是picture
-    phone?: string
-  }
+  interface JWT extends DefaultJWT, IAuth {}
 }
 
 /**
@@ -16,18 +21,20 @@ declare module "next-auth/jwt" {
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string
-      phone?: string
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"]
-  }
+  /**
+   * 第三方首次入表
+   */
+  interface User extends IAuth {}
 
-  interface User {
-    // ...other properties
-    // role: UserRole;
-    phone?: string
+  /**
+   * 第三方登录返回
+   */
+  interface Profile extends IAuth {}
+
+  /**
+   * user/profile --> token --> session
+   */
+  interface Session extends DefaultSession {
+    user: IAuth
   }
 }

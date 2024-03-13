@@ -1,9 +1,11 @@
+"use client"
+
 import { useAtom } from "jotai"
-import { SmsProviderType } from "../../packages/common-sms/schema"
+import { SmsProviderType } from "../../packages/common-auth-sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../packages/common-sms/store"
+} from "../../packages/common-auth-sms/store"
 import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import {

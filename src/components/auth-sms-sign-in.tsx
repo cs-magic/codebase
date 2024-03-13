@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import { UnexpectedError } from "../../packages/common-general/schema"
-import { smsStageAtom } from "../../packages/common-sms/store"
+import { smsStageAtom } from "../../packages/common-auth-sms/store"
 import { AuthSmsStage2InputCode } from "./auth-sms-stage-2-input-code"
 import { AuthSmsStage1SendCode } from "./auth-sms-stage-1-send-code"
 

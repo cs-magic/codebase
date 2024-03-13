@@ -1,6 +1,8 @@
+"use client"
+
 import { signIn, useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { PROFILE_UPDATE_PROVIDER_ID } from "../common-sms/const"
+import { PROFILE_UPDATE_PROVIDER_ID } from "../common-auth-sms/const"
 import { useDraftSession } from "./use-user-draft-session"
 
 /**

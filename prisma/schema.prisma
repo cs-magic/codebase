@@ -264,13 +264,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(nanoid(5))
-  name          String?
+  id    String  @id @default(nanoid(5))
+  name  String?
+  image String?
+
   email         String?   @unique
+  phone         String?   @unique
+  wxid          String?   @unique
   emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  phoneVerified DateTime?
+  wxidVerified  DateTime?
+
+  accounts Account[]
+  sessions Session[]
 
   convs Conv[]
   apps  App[]

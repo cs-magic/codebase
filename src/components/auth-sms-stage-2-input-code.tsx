@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
-import { useEffect, useRef } from "react"
-import { useSmsSignIn } from "../../packages/common-sms/hooks/use-sms-sign-in"
-import { smsCodeAtom } from "../../packages/common-sms/store"
+import { useRef } from "react"
+import { useSmsSignIn } from "../../packages/common-auth-sms/hooks/use-sms-sign-in"
+import { smsCodeAtom } from "../../packages/common-auth-sms/store"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { SMS_DIGIT_SIZE } from "../config/sms"
@@ -12,13 +12,8 @@ export const AuthSmsStage2InputCode = () => {
   const [digits, setDigits] = useAtom(smsCodeAtom)
 
   const refInput = useRef<HTMLInputElement>(null)
-  const smsSignIn = useSmsSignIn()
 
-  // 到达6位时自动触发登录验证
-  useEffect(() => {
-    if (digits.length !== 6) return
-    void smsSignIn()
-  }, [digits.length])
+  useSmsSignIn()
 
   return (
     <div className={"flex flex-col gap-4 w-full items-center"}>
@@ -51,6 +46,10 @@ export const AuthSmsStage2InputCode = () => {
               } else if (key === "Backspace") {
                 setDigits("")
               }
+            }}
+            onChange={(event) => {
+              // update on one-time-code
+              setDigits(event.currentTarget.value)
             }}
           />
 

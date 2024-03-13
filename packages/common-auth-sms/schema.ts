@@ -22,8 +22,6 @@ export type IProviderSendSms = (
 export const smsSignInSchema = sendSmsSchema.and(
   z.object({
     code: z.string().refine((s) => /\d{6}/.test(s), "验证码格式不合法"),
-    name: z.string().nullish(),
-    image: z.string().nullish(),
   }),
 )
 export type ISmsSignIn = z.infer<typeof smsSignInSchema>

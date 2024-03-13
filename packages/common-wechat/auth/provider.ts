@@ -1,19 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers"
+import { prisma } from "../../common-db"
+import { WECHAT_PROVIDER_ID } from "./config"
+import { getWechatAuthorizationUrl } from "./funcs/client"
 import {
   adaptWechatAuthToken,
-  getWechatUserProfile,
   getWechatAuthToken,
+  getWechatUserProfile,
 } from "./funcs/server"
 import {
   IWechatAdaptedProfile,
   IWechatAdaptedToken,
   IWechatProfile,
 } from "./schema"
-import { WECHAT_PROVIDER_ID } from "./config"
-import { getWechatAuthorizationUrl } from "./funcs/client"
-import { User } from "next-auth"
 
 /**
  * ref:
@@ -53,22 +53,26 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
      * @param profile
      */
     profile: async (profile: IWechatProfile) => {
-      const user: User = {
-        id: profile.openid,
-
-        // 更新 user 的昵称和照片
-        name: profile.nickname,
-        image: profile.headimgurl,
-
-        // 更新额外的字段标识
-        // wechat: profile.openid,
-        // wechatVerified: new Date(),
-      }
-      console.log("[next-auth-wechat-provider] called profile: ", {
-        profile,
-        user,
+      const account = await prisma.account.findUnique({
+        where: {
+          provider_providerAccountId: {
+            providerAccountId: profile.openid,
+            provider: WECHAT_PROVIDER_ID,
+          },
+        },
+        include: { user: true },
       })
-      return user
+      if (!account) throw new Error("account not found")
+
+      return prisma.user.update({
+        where: {
+          id: account.userId,
+        },
+        data: {
+          wxid: account.providerAccountId,
+          wxidVerified: new Date(),
+        },
+      })
     },
 
     // style: { logo: "/facebook.svg", bg: "#006aff", text: "#fff" },

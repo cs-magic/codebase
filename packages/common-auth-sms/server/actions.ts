@@ -2,7 +2,7 @@
 
 import { prisma } from "../../common-db/providers/prisma/connection"
 import { SMS_PROVIDER_ID } from "../const"
-import { IProviderSendSms, ISmsSignIn } from "../schema"
+import { IProviderSendSms } from "../schema"
 
 export const $sendSms = async (
   phone: string,
@@ -55,32 +55,4 @@ export const $sendSms = async (
     console.log("[sms] account: ", account)
   }
   return ok
-}
-
-export const $smsSignIn = async (values: ISmsSignIn) => {
-  const { phone, code, name, image } = values
-
-  const account = await prisma.account.findUnique({
-    where: {
-      provider_providerAccountId: {
-        providerAccountId: phone,
-        provider: SMS_PROVIDER_ID,
-      },
-      access_token: code,
-    },
-    include: { user: true },
-  })
-
-  if (!account) throw new Error("account not found")
-
-  if (name && image) {
-    return await prisma.user.update({
-      where: { id: account.userId },
-      data: {
-        name,
-        image,
-      },
-    })
-  }
-  return account.user
 }
