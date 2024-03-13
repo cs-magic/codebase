@@ -8,7 +8,7 @@ import { useUserUpdateProfile } from "../../packages/common-hooks/use-user-updat
 import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 
-export const SmsStage3UpdateProfile = () => {
+export const AuthUpdateProfile = () => {
   const [name] = useAtom(userNameAtom)
   const [image] = useAtom(userImageAtom)
   const updateProfile = useUserUpdateProfile()

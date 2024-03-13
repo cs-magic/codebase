@@ -6,7 +6,7 @@ import { type Viewport } from "next"
 import { Inter } from "next/font/google"
 
 import { TRPCReactProvider } from "../../packages/common-trpc/react"
-import { LoadingAlertDialog } from "../../packages/common-ui/components/loading-alert-dialog"
+import { LoadingAlertDialog } from "../../packages/common-ui/components/loading"
 import JotaiProvider from "../../packages/common-ui/providers/jotai.provider"
 import { ScreenProvider } from "../../packages/common-ui/providers/screen.provider"
 import { SessionProvider } from "../../packages/common-ui/providers/session.provider"

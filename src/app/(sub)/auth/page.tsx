@@ -1,53 +1,44 @@
 "use client"
 
-import { useAtom } from "jotai"
-import { LoaderIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { smsStageAtom } from "../../../../packages/common-sms/store"
-/**
- * ui ref: https://clerk.com/
- */
-import { SmsStage1SendCode } from "../../../components/auth-sms-stage-1-send-code"
-import { SmsStage2InputCode } from "../../../components/auth-sms-stage-2-input-code"
-import { SmsStage3UpdateProfile } from "../../../components/auth-sms-stage-3-update-profile"
-import { BrandingTitle } from "../../../components/branding-title"
+import { UnexpectedError } from "../../../../packages/common-general/schema"
+import { LoadingTooltip } from "../../../../packages/common-ui/components/loading"
+import { Auth } from "../../../components/auth"
+import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
+import { AuthUpdateProfile } from "../../../components/auth-update-profile"
 
 export default function AuthPage() {
-  const [stage] = useAtom(smsStageAtom)
-
   const session = useSession()
   const router = useRouter()
-  const ok = !!session.data?.user.name && !!session.data.user.image
+  const profileOk = !!session.data?.user.name && !!session.data.user.image
+  const phoneOk = !!session.data?.user.phone
 
   useEffect(() => {
-    if (!ok) return
+    if (!profileOk || !phoneOk) return
     router.push("/")
-  }, [ok])
+  }, [profileOk])
 
-  console.log("[auth]: ", { session, ok })
+  console.log("[auth]: ", { session, ok: profileOk })
 
   switch (session.status) {
-    case "loading":
-      return (
-        <div className={"flex justify-center my-8"}>
-          <LoaderIcon className={"animate-spin"} />
-        </div>
-      )
-
     case "authenticated":
-      // avoid screen blink
-      return <SmsStage3UpdateProfile />
+      if (phoneOk && profileOk) return <LoadingTooltip />
+
+      if (!phoneOk) return <AuthSmsSignIn />
+
+      if (!profileOk) return <AuthUpdateProfile />
+
+      throw new UnexpectedError()
+
+    case "loading":
+      return <LoadingTooltip />
 
     case "unauthenticated":
+      return <Auth />
+
     default:
-      return stage === "toSendSms" ? (
-        <SmsStage1SendCode
-          BrandComp={() => <BrandingTitle className={"text-lg gap-2"} />}
-        />
-      ) : (
-        <SmsStage2InputCode />
-      )
+      throw new UnexpectedError()
   }
 }

@@ -9,16 +9,18 @@ export const JoinComponents = ({
 }) => {
   return (
     <>
-      {components.map((component, index) => {
-        return (
-          <Fragment key={index}>
-            {component}
-            {index < components.length - 1 && isValidElement(separator)
-              ? cloneElement(separator, { key: `separator-${index}` })
-              : null}
-          </Fragment>
-        )
-      })}
+      {components
+        .filter((c) => !!c)
+        .map((component, index) => {
+          return (
+            <Fragment key={index}>
+              {component}
+              {index < components.length - 1 && isValidElement(separator)
+                ? cloneElement(separator, { key: `separator-${index}` })
+                : null}
+            </Fragment>
+          )
+        })}
     </>
   )
 }

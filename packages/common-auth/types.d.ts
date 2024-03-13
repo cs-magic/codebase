@@ -5,6 +5,7 @@ declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
     // name?: string | null // 已经有了？
     // image?: string // jwt 里是picture
+    phone?: string
   }
 }
 
@@ -18,13 +19,15 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string
+      phone?: string
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"]
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    // role: UserRole;
+    phone?: string
+  }
 }

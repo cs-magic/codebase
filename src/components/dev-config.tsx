@@ -1,3 +1,4 @@
+import * as process from "process"
 import { useState } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
@@ -40,7 +41,10 @@ export const DevConfig = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
-        className={cn("fixed left-2 bottom-2", !devEnabled && "hidden")}
+        className={cn(
+          "fixed left-2 bottom-2",
+          process.env.NODE_ENV === "production" && !devEnabled && "hidden",
+        )}
         asChild
       >
         <IconContainer>

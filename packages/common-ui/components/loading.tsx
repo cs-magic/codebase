@@ -1,12 +1,18 @@
 "use client"
-import { useAtom } from "jotai"
-import { uiLoadingAlertDialogAtom } from "../store"
+
+import { LoaderIcon } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
 } from "../shadcn/shadcn-components/alert-dialog"
-import { LoaderIcon } from "lucide-react"
-import React from "react"
+import { uiLoadingAlertDialogAtom } from "../store"
+import { useAtom } from "jotai"
+
+export const LoadingTooltip = () => (
+  <div className={"flex justify-center my-8"}>
+    <LoaderIcon className={"animate-spin"} />
+  </div>
+)
 
 export const LoadingAlertDialog = () => {
   const [loading] = useAtom(uiLoadingAlertDialogAtom)

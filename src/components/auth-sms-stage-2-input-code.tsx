@@ -8,7 +8,7 @@ import { SMS_DIGIT_SIZE } from "../config/sms"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
 
-export const SmsStage2InputCode = () => {
+export const AuthSmsStage2InputCode = () => {
   const [digits, setDigits] = useAtom(smsCodeAtom)
 
   const refInput = useRef<HTMLInputElement>(null)

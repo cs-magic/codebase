@@ -1,6 +1,6 @@
 import { env } from "@/env"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { type NextAuthOptions } from "next-auth"
+import { DefaultSession, type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { prisma } from "../common-db"
 import {
@@ -11,6 +11,7 @@ import WechatProvider from "../common-wechat/auth/provider"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
 import { tokenExpireSeconds } from "./config"
+import { DefaultJWT } from "next-auth/jwt"
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -38,6 +39,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.sub = user.id
         token.name = user.name
+        token.phone = user.phone
       }
       return token
     },
@@ -50,6 +52,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           id: token.sub ?? user.id,
           image: token.picture,
+          phone: token.phone,
         },
       }
     },
