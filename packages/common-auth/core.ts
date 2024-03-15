@@ -3,8 +3,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { ProfileUpdateProvider } from "../common-auth-profile/provider"
+import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db"
-import { SmsProvider } from "../common-auth-sms/next-auth.provider"
+import { SmsProvider } from "../common-auth-sms/provider"
 import WechatProvider from "../common-auth-wechat/provider"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
@@ -30,10 +31,11 @@ export const authOptions: NextAuthOptions = {
     maxAge: tokenExpireSeconds,
   },
 
+  // @ts-ignore // todo: ts profile for signin
   callbacks: {
     // compatible with credential providers
     jwt: ({ session, user, profile, token }) => {
-      console.log("[next-auth] jwt: ", { user, token })
+      console.log("[next-auth] jwt: ", { token, user, profile })
 
       // 首次注册入表
       if (user) {
@@ -44,13 +46,15 @@ export const authOptions: NextAuthOptions = {
         token.phone = user.phone
       }
 
-      // 每次登录
-      if (profile) {
-        token.sub = profile.id
-        token.name = profile.name ?? null
-        token.image = profile.image ?? null
-        token.phone = profile.phone
-        token.wxid = profile.wxid
+      // 每次登录 IWechatProfile
+      else if (profile) {
+        // wechat profile 里没有 id，我们不应该基于它更新！
+        //   token.sub = profile.
+        // token.sub = profile.id
+        // token.name = profile.name ?? null
+        // token.image = profile.image ?? null
+        // token.phone = profile.phone
+        // token.wxid = profile.wxid
       }
 
       return token
@@ -70,7 +74,7 @@ export const authOptions: NextAuthOptions = {
     },
   } as Partial<
     CallbacksOptions<// custom profile
-    IAuth>
+    IWechatProfile>
   >,
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [

@@ -1,5 +1,3 @@
-"use server"
-
 import { WECHAT_APP_ID, WECHAT_APP_SECRET } from "../../common-wechat/config"
 import {
   IWechatAdaptedToken,

@@ -53,29 +53,19 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
      * @param profile
      */
     profile: async (profile: IWechatProfile) => {
-      const wxid = profile.openid
+      return {
+        // 注意，要provider的资料
+        id: profile.openid,
 
-      const account = await prisma.account.findUnique({
-        where: {
-          provider_providerAccountId: {
-            providerAccountId: wxid,
-            provider: WECHAT_PROVIDER_ID,
-          },
-        },
-        include: { user: true },
-      })
+        // 更新 user 的昵称和照片
+        name: profile.nickname,
+        image: profile.headimgurl,
 
-      if (!account) throw new Error("account not found")
+        // 更新额外的字段标识
+        wechat: profile.openid,
+        wechatVerified: new Date(),
 
-      return prisma.user.update({
-        where: {
-          id: account.userId,
-        },
-        data: {
-          wxid,
-          wxidVerified: new Date(),
-        },
-      })
+      }
     },
 
     // style: { logo: "/facebook.svg", bg: "#006aff", text: "#fff" },
