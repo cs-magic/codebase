@@ -1,23 +1,25 @@
 "use client"
 
+import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { toast } from "sonner"
+import { devEnabledAtom } from "../../../../packages/common-dev/store"
 import { UnexpectedError } from "../../../../packages/common-general/schema"
 import { useEnvironments } from "../../../../packages/common-hooks/use-environments"
-import { serverLog } from "../../../../packages/common-log/actions"
 import { LoadingTooltip } from "../../../../packages/common-ui/components/loading"
 import { Label } from "../../../../packages/common-ui/shadcn/shadcn-components/label"
 import { Auth } from "../../../components/auth"
 import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
 import { AuthUpdateProfile } from "../../../components/auth-update-profile"
-import { toast } from "sonner"
 import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in"
 
 export default function AuthPage() {
   const session = useSession()
   const router = useRouter()
   const { isWechat } = useEnvironments()
+  const devEnabled = useAtom(devEnabledAtom)
 
   const profileOk = !!session.data?.user.name && !!session.data.user.image
   const phoneOk = !!session.data?.user.phone
@@ -27,16 +29,12 @@ export default function AuthPage() {
     if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/")
   }, [phoneOk, profileOk, wxidOk, isWechat])
 
-  // useEffect(() => {
-  //   // console.log("[auth]: ", { session, profileOk, phoneOk })
-  //   void serverLog("[auth]: ", { session, profileOk, phoneOk })
-  // }, [session])
-
   useEffect(() => {
-    toast.info(JSON.stringify(session, null, 2), {
-      duration: Infinity,
-      closeButton: true,
-    })
+    if (devEnabled)
+      toast.info(JSON.stringify(session, null, 2), {
+        duration: Infinity,
+        closeButton: true,
+      })
   }, [session])
 
   switch (session.status) {
