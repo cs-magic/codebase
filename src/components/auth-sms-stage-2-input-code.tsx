@@ -1,3 +1,5 @@
+"use client"
+
 import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { useEffect, useRef } from "react"

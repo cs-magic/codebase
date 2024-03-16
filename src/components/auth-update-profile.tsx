@@ -1,3 +1,5 @@
+"use client"
+
 import { useAtom } from "jotai"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
