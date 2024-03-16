@@ -1,6 +1,7 @@
 "use client"
 
 import { useAtom, useSetAtom } from "jotai"
+import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { toast } from "sonner"
 import { uiLoadingAlertDialogAtom } from "../../common-ui/store"
@@ -28,6 +29,8 @@ export const useSmsSendCode = () => {
   const setSmsSentOk = useSetAtom(smsCodeSentOKAtom)
   const setSmsStage = useSetAtom(smsStageAtom)
 
+  const userId = useSession()?.data?.user.id // for link account
+
   const sendApproach =
     smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent
   const { phone } = smsSendPayload
@@ -42,7 +45,7 @@ export const useSmsSendCode = () => {
 
   return async () => {
     setLoading(true)
-    const ok = await $sendSms(phone, smsExpireSeconds, sendApproach) // 异步
+    const ok = await $sendSms(phone, smsExpireSeconds, sendApproach, userId) // 异步
     setSmsSentOk(ok)
     setLoading(false)
 

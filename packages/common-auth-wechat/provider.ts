@@ -44,7 +44,12 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
       // todo: 调查微信与其他的OAuth平台到底有啥不同，需要这么繁琐
       request: async ({ tokens }: { tokens: IWechatAdaptedToken }) => {
         const { id, access_token } = tokens
-        return getWechatUserProfile(access_token, id)
+        const userInfo = await getWechatUserProfile(access_token, id)
+        console.log("[common-auth-wechat] userinfo callback: ", {
+          tokens,
+          userInfo,
+        })
+        return userInfo
       },
     },
 
@@ -53,7 +58,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
      * @param profile
      */
     profile: async (profile: IWechatProfile) => {
-      return {
+      const profileOut = {
         // 注意，要provider的资料
         id: profile.openid,
 
@@ -62,10 +67,14 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
         image: profile.headimgurl,
 
         // 更新额外的字段标识
-        wechat: profile.openid,
-        wechatVerified: new Date(),
-
+        wxid: profile.openid,
+        wxidVerified: new Date(),
       }
+      console.log("[common-auth-wechat] profile callback: ", {
+        profile,
+        profileOut,
+      })
+      return profileOut
     },
 
     // style: { logo: "/facebook.svg", bg: "#006aff", text: "#fff" },

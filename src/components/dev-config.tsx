@@ -23,6 +23,7 @@ import { ConfigTRPCCard } from "./config-trpc"
 import { useHotkeys } from "@mantine/hooks"
 import { SettingsIcon } from "lucide-react"
 import { useAtom } from "jotai"
+import { UserSignOutButton } from "./user-sign-out-button"
 
 export const DevConfig = () => {
   const [devEnabled] = useAtom(devEnabledAtom)
@@ -52,15 +53,20 @@ export const DevConfig = () => {
         </IconContainer>
       </SheetTrigger>
 
-      <SheetContent side={"left"}>
+      <SheetContent side={"left"} className={"w-screen sm:max-w-[480px]"}>
         <Tabs defaultValue={"llm"}>
           <TabsList className={"w-full "}>
+            <TabsTrigger value={"auth"}>Auth</TabsTrigger>
             <TabsTrigger value={"llm"}>LLM</TabsTrigger>
             <TabsTrigger value={"sms"}>SMS</TabsTrigger>
             <TabsTrigger value={"log"}>LOG</TabsTrigger>
             <TabsTrigger value={"trpc"}>TRPC</TabsTrigger>
             <TabsTrigger value={"dev"}>DEV</TabsTrigger>
           </TabsList>
+
+          <TabsContent value={"auth"}>
+            <UserSignOutButton />
+          </TabsContent>
 
           <TabsContent value={"llm"}>
             <ConfigLLMCard />

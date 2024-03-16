@@ -1,19 +1,50 @@
-import { useAtom } from "jotai"
-import { useRef } from "react"
-import { useSmsSignIn } from "../../packages/common-auth-sms/hooks/use-sms-sign-in"
-import { smsCodeAtom } from "../../packages/common-auth-sms/store"
+import { useAtom, useSetAtom } from "jotai"
+import { signIn } from "next-auth/react"
+import { useEffect, useRef } from "react"
+import { toast } from "sonner"
+import { SMS_PROVIDER_ID } from "../../packages/common-auth-sms/const"
+import {
+  smsCodeAtom,
+  smsSignInPayloadAtom,
+} from "../../packages/common-auth-sms/store"
 import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { uiLoadingAlertDialogAtom } from "../../packages/common-ui/store"
 import { SMS_DIGIT_SIZE } from "../config/sms"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
+import { useHotkeys } from "@mantine/hooks"
 
 export const AuthSmsStage2InputCode = () => {
   const [digits, setDigits] = useAtom(smsCodeAtom)
 
   const refInput = useRef<HTMLInputElement>(null)
 
-  useSmsSignIn()
+  const [data] = useAtom(smsSignInPayloadAtom)
+
+  const setLoading = useSetAtom(uiLoadingAlertDialogAtom)
+
+  const smsSignIn = async () => {
+    if (digits.length !== 6) return
+
+    console.log("[sms] sign in with: ", data)
+
+    setLoading(true)
+    const res = await signIn(SMS_PROVIDER_ID, {
+      ...data,
+      redirect: false,
+    })
+    console.log("[sms] sign in result: ", res)
+    const ok = !!res?.ok
+    if (!ok) toast.error(`验证失败！原因：${res?.error ?? "未知"}`)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    void smsSignIn()
+  }, [digits])
+
+  useHotkeys([["Backspace", () => setDigits("")]])
 
   return (
     <div className={"flex flex-col gap-4 w-full items-center"}>
@@ -38,17 +69,19 @@ export const AuthSmsStage2InputCode = () => {
             inputMode="numeric"
             maxLength={6}
             pattern="\d{6}"
+            // NOTE: onKeyDown 会被 onChange劫持
             onKeyDown={(event) => {
               const key = event.key
               console.log("onKeyDown key: ", event.key)
               if (/\d/.test(key)) {
                 setDigits((d) => d + key)
               } else if (key === "Backspace") {
+                event.preventDefault() // 阻止默认的回退一个字符的行为
                 setDigits("")
               }
             }}
+            // NOTE: onChange 对于 one-time-code 是必须得
             onChange={(event) => {
-              // update on one-time-code
               setDigits(event.currentTarget.value)
             }}
           />

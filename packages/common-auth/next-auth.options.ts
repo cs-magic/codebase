@@ -3,14 +3,13 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import { ProfileUpdateProvider } from "../common-auth-profile/provider"
-import { IWechatProfile } from "../common-auth-wechat/schema"
-import { prisma } from "../common-db"
 import { SmsProvider } from "../common-auth-sms/provider"
 import WechatProvider from "../common-auth-wechat/provider"
+import { IWechatProfile } from "../common-auth-wechat/schema"
+import { prisma } from "../common-db"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
 import { tokenExpireSeconds } from "./config"
-import { IAuth } from "./types"
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -69,6 +68,9 @@ export const authOptions: NextAuthOptions = {
           id: token.sub ?? user.id,
           name: token.name,
           image: token.image,
+          wxid: token.wxid,
+          phone: token.phone,
+          email: token.email,
         },
       }
     },
