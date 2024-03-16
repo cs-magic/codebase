@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
     jwt: ({ session, user, profile, token }) => {
       console.log("[next-auth] jwt: ", { token, user, profile })
 
-      // 首次注册入表
+      // 首次注册入表 （user中有userId）
       if (user) {
         token.sub = user.id
         token.name = user.name
@@ -45,15 +45,13 @@ export const authOptions: NextAuthOptions = {
         token.phone = user.phone
       }
 
-      // 每次登录 IWechatProfile
-      else if (profile) {
-        // wechat profile 里没有 id，我们不应该基于它更新！
-        //   token.sub = profile.
-        // token.sub = profile.id
-        // token.name = profile.name ?? null
-        // token.image = profile.image ?? null
-        // token.phone = profile.phone
-        // token.wxid = profile.wxid
+      // profile 中 只有 accountId，没有 id
+      // todo: unify Profile
+      // link 是自动的，link会在有session的时候登录其他平台拿到profile后更新
+      if (profile) {
+        token.name = profile.nickname
+        token.image = profile.headimgurl
+        token.wxid = profile.openid
       }
 
       return token
