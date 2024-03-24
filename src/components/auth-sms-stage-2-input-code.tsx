@@ -74,7 +74,7 @@ export const AuthSmsStage2InputCode = () => {
             // NOTE: onKeyDown 会被 onChange劫持
             onKeyDown={(event) => {
               const key = event.key
-              console.log("onKeyDown key: ", event.key)
+              // console.log("onKeyDown key: ", event.key)
               if (/\d/.test(key)) {
                 setDigits((d) => d + key)
               } else if (key === "Backspace") {

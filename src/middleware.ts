@@ -12,7 +12,7 @@ export default withAuth(
     console.log("[middleware]: ", {
       path,
       search,
-      // token
+      token,
     })
 
     if (!token?.name && !path.startsWith("/auth")) return redirect("/auth")
