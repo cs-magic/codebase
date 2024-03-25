@@ -5,10 +5,7 @@ import { useSnapshot } from "valtio"
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
 import { useConvQuery } from "../hooks/use-conv-query"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
-import { IResponse } from "../schema/response"
 import { coreStore } from "../store/core.valtio"
-import { SelectModel } from "./_select-model"
-import { SelectApp } from "./select-app"
 
 export const ConvQuery = () => {
   const query = useConvQuery()
@@ -24,8 +21,6 @@ export const ConvQuery = () => {
 
   return (
     <div className={"flex flex-col gap-1"}>
-      {chat && <SelectApp chat={chat as IResponse} className={"sm:hidden"} />}
-
       <TextareaAuto
         onSubmit={(event) => {
           toast.info("onSubmit")

@@ -5,7 +5,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
     <div
       className={
-        "w-full h-full flex items-center justify-center gap-4 bg-muted p-4 bg-cyan-400"
+        "w-full h-full flex items-center justify-center gap-4 bg-muted p-4"
       }
     >
       <div

@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "App" ALTER COLUMN "user" DROP NOT NULL;

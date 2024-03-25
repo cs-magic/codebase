@@ -1,17 +1,11 @@
 "use client"
 
 import { BrandingTitle } from "@/components/branding-title"
-import { Apps } from "@/components/header-apps"
 import { UserButton } from "@/components/header-user"
 import { useAtom } from "jotai"
 import { MenuIcon } from "lucide-react"
 import { useWindowSize } from "react-use"
 import { useSnapshot } from "valtio"
-import {
-  uiInnerHeight,
-  uiScreenAtom,
-  uiViewportHeight,
-} from "../../packages/common-ui/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import {
   Sheet,
@@ -20,6 +14,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../packages/common-ui/shadcn/shadcn-components/sheet"
+import {
+  uiInnerHeight,
+  uiScreenAtom,
+  uiViewportHeight,
+} from "../../packages/common-ui/store"
 import { coreStore } from "../store/core.valtio"
 import { Sidebar } from "./sidebar"
 
@@ -48,7 +47,7 @@ export const Header = () => {
       </div>
 
       <div className={"ml-auto shrink-0 flex items-center gap-2"}>
-        <Apps />
+        {/*<Apps />*/}
 
         <UserButton />
       </div>

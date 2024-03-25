@@ -2,6 +2,12 @@ import { ISubAppIcon } from "@/components/header-app"
 import { IMode, ModeType } from "@/schema/scenario"
 import { env } from "../env"
 
+export const config = {
+  website: {
+    title: "P01",
+  },
+}
+
 export const modes: Record<ModeType, IMode> = {
   text: { id: "text", label: "文" },
   image: { id: "image", label: "图" },

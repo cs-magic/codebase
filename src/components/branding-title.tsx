@@ -1,6 +1,7 @@
-import { HTMLAttributes } from "react"
 import Link from "next/link"
+import { HTMLAttributes } from "react"
 import { cn } from "../../packages/common-ui/shadcn/utils"
+import { config } from "../config/system"
 
 export const BrandingTitle = ({
   withDescription,
@@ -25,15 +26,7 @@ export const BrandingTitle = ({
         )}
         {...props}
       >
-        Eval AI
-        {/*搜 嘎*/}
-        {/*<span*/}
-        {/*  className={*/}
-        {/*    "rotate-12 scale-150 inline-block primary-gradient bg-gradient-to-t"*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  {" !"}*/}
-        {/*</span>*/}
+        {config.website.title}
       </h1>
 
       {/*{withDescription && <span className={"text-sm"}>全栈 AI 平台</span>}*/}

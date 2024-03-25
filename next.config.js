@@ -49,23 +49,16 @@ const config = {
 
   // ref: https://jotai.org/docs/tools/devtools#next-js-setup
   transpilePackages: ["jotai-devtools"],
-  experimental: {
-    swcPlugins: [
-      ["@swc-jotai/debug-label", {}],
-
-      // WARNING: 这个不能加！加了之后 atomWithStorage 会完蛋！（调了两天！）
-      // ["@swc-jotai/react-refresh", {}],
-    ],
-  },
+  experimental: {},
 
   // ref: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirects-in-nextconfigjs
   async redirects() {
     return [
-      {
-        source: "/",
-        destination: "/tt",
-        permanent: false,
-      },
+      // {
+      //   source: "/",
+      //   destination: "/tt",
+      //   permanent: false,
+      // },
     ]
   },
 }

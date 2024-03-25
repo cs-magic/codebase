@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "App" ALTER COLUMN "title" DROP NOT NULL,
-ALTER COLUMN "title" DROP DEFAULT;

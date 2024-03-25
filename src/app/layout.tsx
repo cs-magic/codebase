@@ -1,6 +1,5 @@
-import { ReturnHomeAlertDialog } from "@/components/_return-home"
-import { CheckAuthAlertDialog } from "@/components/auth-checker"
 import "@/styles/globals.css"
+import ansiColors from "ansi-colors"
 import { type Viewport } from "next"
 
 import { Inter } from "next/font/google"
@@ -15,9 +14,8 @@ import { Toaster } from "../../packages/common-ui/shadcn/shadcn-components/sonne
 import { TooltipProvider } from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
 import { cn } from "../../packages/common-ui/shadcn/utils"
 import { Dev } from "../components/dev"
-import { AppsDialog } from "../components/dialog-select-apps"
+import { config } from "../config/system"
 import GlobalHooksProviders from "../providers/global.provider"
-import ansiColors from "ansi-colors"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,8 +23,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "Eval AI | 专业 AI 评测平台",
-  description: "Eval | AI评测 | CSMagic | WayToAGI",
+  title: config.website.title,
+  description: config.website.title,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }
 
@@ -75,12 +73,6 @@ export default function RootLayout({
                         />
 
                         <LoadingAlertDialog />
-
-                        <CheckAuthAlertDialog />
-
-                        <ReturnHomeAlertDialog />
-
-                        <AppsDialog />
 
                         {/* 开发专用 */}
                         <Dev />

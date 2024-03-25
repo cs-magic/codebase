@@ -3,12 +3,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client"
 import { createTRPCReact } from "@trpc/react-query"
-import { useCallback, useMemo, useState } from "react"
-
-import { AppRouter, getUrl, transformer } from "./shared"
+import { useAtom } from "jotai"
+import { useMemo } from "react"
 
 import { REFETCH_TRPC_ON_WINDOW_FOCUS_ENABLED } from "./config"
-import { useAtom } from "jotai"
+
+import { AppRouter, getUrl, transformer } from "./shared"
 import { trpcReactLogEnabledAtom } from "./store"
 
 const createQueryClient = () =>

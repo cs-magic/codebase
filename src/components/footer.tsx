@@ -23,13 +23,13 @@ export const Footer = () => {
           <CsMagicBrand className={"h-full w-auto"} />
         </Link>
 
-        <Link
-          href={"https://waytoagi.com"}
-          className={"h-full"}
-          target={"_blank"}
-        >
-          <V2AGIBrand className={"h-full w-auto text-primary"} />
-        </Link>
+        {/*<Link*/}
+        {/*  href={"https://waytoagi.com"}*/}
+        {/*  className={"h-full"}*/}
+        {/*  target={"_blank"}*/}
+        {/*>*/}
+        {/*  <V2AGIBrand className={"h-full w-auto text-primary"} />*/}
+        {/*</Link>*/}
 
         {enterprises.map((item) => (
           <ImageEqualHeight src={item} key={item} />
