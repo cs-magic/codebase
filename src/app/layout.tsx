@@ -59,7 +59,7 @@ export default function RootLayout({
                     <GlobalHooksProviders>
                       <main
                         className={cn(
-                          "w-screen overflow-hidden relative",
+                          "max-w-[1080px] mx-auto overflow-hidden relative",
                           //"bg-cyan-900"
                         )}
                       >
