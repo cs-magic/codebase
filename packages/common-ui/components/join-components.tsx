@@ -7,20 +7,20 @@ export const JoinComponents = ({
   components: React.ReactNode[] // Array of React nodes to join
   separator: React.ReactNode // Separator to use between each pair of components
 }) => {
+  const components_ = components.filter((c) => !!c)
+
   return (
     <>
-      {components
-        .filter((c) => !!c)
-        .map((component, index) => {
-          return (
-            <Fragment key={index}>
-              {component}
-              {index < components.length - 1 && isValidElement(separator)
-                ? cloneElement(separator, { key: `separator-${index}` })
-                : null}
-            </Fragment>
-          )
-        })}
+      {components_.map((component, index) => {
+        return (
+          <Fragment key={index}>
+            {component}
+            {index < components_.length - 1 && isValidElement(separator)
+              ? cloneElement(separator, { key: `separator-${index}` })
+              : null}
+          </Fragment>
+        )
+      })}
     </>
   )
 }
