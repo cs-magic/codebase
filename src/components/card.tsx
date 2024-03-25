@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { BilibiliVideo } from "../../packages/common-bilibili/componnets"
 import moment from "../../packages/common-datetime/moment"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui/shadcn/shadcn-components/aspect-ratio"
@@ -8,26 +9,40 @@ import { config } from "../config/system"
 import { IUserSummary } from "../schema/user.summary"
 import { UserAvatar } from "./user-avatar"
 
-export interface ICard {
+export type CardType = "plain" | "bilibili"
+
+export type ICardBase<T extends CardType> = {
   user: IUserSummary
   content: string
-  backgroundImage?: string
   updatedAt: Date
+  type: T
 }
 
-export const Card = ({ card }: { card: ICard }) => {
+export type ICard<T extends CardType> = T extends "bilibili"
+  ? ICardBase<T> & { src: string }
+  : ICardBase<T> & { backgroundImage: string }
+
+export const Card = <T extends CardType>({ card }: { card: ICard<T> }) => {
   return (
-    <div className={"rounded-lg overflow-hidden card-bg w-[367px]"}>
-      <div className={"w-full "}>
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            src={"https://picsum.photos/300/200"}
-            alt={""}
-            fill
-            className={"w-full h-auto"}
-          />
-        </AspectRatio>
-      </div>
+    <div
+      className={"rounded-lg overflow-hidden card-bg w-[420px] flex flex-col"}
+    >
+      {card.type === "plain" && (
+        <div className={"w-full "}>
+          <AspectRatio ratio={16 / 9}>
+            <Image
+              src={"https://picsum.photos/300/200"}
+              alt={""}
+              fill
+              className={"w-full h-auto"}
+            />
+          </AspectRatio>
+        </div>
+      )}
+
+      {card.type === "bilibili" && (
+        <BilibiliVideo video={{ url: card.src, height: 240 }} />
+      )}
 
       <div className={"flex flex-col gap-2 p-4"}>
         <MarkdownComp>{card.content}</MarkdownComp>
