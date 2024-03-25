@@ -73,12 +73,13 @@ export const AuthSmsStage2InputCode = () => {
             pattern="\d{6}"
             // NOTE: onKeyDown 会被 onChange劫持
             onKeyDown={(event) => {
+              event.preventDefault() // 阻止其他行为
+
               const key = event.key
               // console.log("onKeyDown key: ", event.key)
               if (/\d/.test(key)) {
                 setDigits((d) => d + key)
               } else if (key === "Backspace") {
-                event.preventDefault() // 阻止默认的回退一个字符的行为
                 setDigits("")
               }
             }}
