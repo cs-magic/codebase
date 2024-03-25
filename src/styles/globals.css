@@ -143,3 +143,14 @@ ref: https://chat.openai.com/c/91b8bb72-01f9-49d8-8a4f-19a92adabd33
     @apply inline-block w-[2px] h-5 bg-gray-300;
     animation: blink 1s infinite;
 }
+
+.radial-bg {
+    background: radial-gradient(circle at top left, #ff0000 0%, #ff0000 25%, transparent 25%, transparent 50%, #00ff00 50%, #00ff00 75%, transparent 75%, transparent),
+    radial-gradient(circle at top right, #0000ff 0%, #0000ff 25%, transparent 25%, transparent 50%, #ffff00 50%, #ffff00 75%, transparent 75%, transparent);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+}
+
+.card-bg {
+    @apply bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800;
+}

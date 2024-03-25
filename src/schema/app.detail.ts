@@ -2,12 +2,12 @@ import { Prisma } from "@prisma/client"
 import { createAppSchema } from "./app.create"
 import { modelViewSchema } from "./model"
 import { IAppResponse } from "./query"
-import { userListViewSchema } from "./user.base"
+import { userSummarySchema } from "./user.summary"
 import { z } from "zod"
 
 export const appDetailSchema = Prisma.validator<Prisma.AppDefaultArgs>()({
   include: {
-    fromUser: userListViewSchema,
+    fromUser: userSummarySchema,
     model: modelViewSchema, // model虽然在系统里已经事先获取了一份，但可能不全
   },
 })

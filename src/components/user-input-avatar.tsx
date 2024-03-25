@@ -1,24 +1,14 @@
-import { UserIcon } from "lucide-react"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
 import { useDraftSession } from "../../packages/common-hooks/use-user-draft-session"
 import { uploadFiles } from "../../packages/common-oss/upload"
+import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { UserAvatar } from "./user-avatar"
 
 export const UserInputAvatar = () => {
   const { draft, setDraft } = useDraftSession("image")
 
   return (
     <Label className={"hover:cursor-pointer shrink-0"}>
-      <Avatar className={"border w-16 h-16"}>
-        <AvatarImage src={draft ?? ""} />
-        <AvatarFallback>
-          <UserIcon className={"w-full h-full"} />
-        </AvatarFallback>
-      </Avatar>
+      <UserAvatar user={{ id: "", image: draft ?? "", name: "" }} />
 
       <input
         hidden

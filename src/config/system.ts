@@ -1,10 +1,9 @@
 import { ISubAppIcon } from "@/components/header-app"
 import { IMode, ModeType } from "@/schema/scenario"
-import { env } from "../env"
 
 export const config = {
   website: {
-    title: "P01",
+    title: "CS魔法社 P01",
   },
 }
 
