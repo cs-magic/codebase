@@ -30,11 +30,11 @@ export default function AuthPage() {
   }, [phoneOk, profileOk, wxidOk, isWechat])
 
   useEffect(() => {
-    if (devEnabled && process.env.NODE_ENV !== "production")
-      toast.info(JSON.stringify(session, null, 2), {
-        duration: Infinity,
-        closeButton: true,
-      })
+    // if (devEnabled && process.env.NODE_ENV !== "production")
+    // toast.info(JSON.stringify(session, null, 2), {
+    //   duration: Infinity,
+    //   closeButton: true,
+    // })
   }, [session])
 
   switch (session.status) {
