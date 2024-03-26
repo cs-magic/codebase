@@ -32,6 +32,7 @@ export interface IBilibiliVideoDetail {
 
 export interface IBilibiliVideo {
   url: string
+  title?: string
   width?: number // default: 1080, w>=420的时候有调控选项
   height?: number // default: 720
   enableDanmu?: number // 0: disable; 1: enable; default: 0

@@ -12,18 +12,17 @@ import { config } from "../config/system"
 import { IUserSummary } from "../schema/user.summary"
 import { UserAvatar } from "./user-avatar"
 
-export type CardType = "plain" | "bilibili"
+export type CardType = "text-image" | "text-video" | "text-gif"
 
-export type ICardBase<T extends CardType> = {
-  user: IUserSummary
-  content: string
-  updatedAt: Date
+export type ICard<T extends CardType = any> = {
   type: T
-}
 
-export type ICard<T extends CardType> = T extends "bilibili"
-  ? ICardBase<T> & { src: string; displayType: BilibiliDisplayType }
-  : ICardBase<T> & { backgroundImage: string }
+  user?: IUserSummary
+  updatedAt: Date
+
+  resourceUrl?: string
+  content?: string
+}
 
 export const Card = <T extends CardType>({
   card,
@@ -41,26 +40,26 @@ export const Card = <T extends CardType>({
     >
       <div className={"w-full "}>
         <AspectRatio ratio={16 / 9}>
-          {card.type === "plain" && (
+          {card.type === "text-image" && card.resourceUrl && (
             <Image
-              src={"https://picsum.photos/300/200"}
+              src={
+                // "https://picsum.photos/300/200"
+                card.resourceUrl
+              }
               alt={""}
               fill
               className={"w-full h-auto"}
             />
           )}
 
-          {card.type === "bilibili" && (
-            <BilibiliVideo
-              displayType={card.displayType}
-              video={{ url: card.src, height: 240 }}
-            />
+          {card.type === "text-video" && card.resourceUrl && (
+            <BilibiliVideo video={{ url: card.resourceUrl, height: 240 }} />
           )}
         </AspectRatio>
       </div>
 
       <div className={"flex flex-col gap-2 p-4"}>
-        <MarkdownComp>{card.content}</MarkdownComp>
+        <MarkdownComp>{card.content ?? "No Content Yet"}</MarkdownComp>
 
         <Separator orientation={"horizontal"} className={"bg-gray-100/10"} />
 
@@ -70,8 +69,14 @@ export const Card = <T extends CardType>({
           }
         >
           <div className={"flex gap-2 items-center justify-end"}>
-            <UserAvatar user={card.user} />
-            <Label>{card.user.name}</Label>
+            {card.user ? (
+              <>
+                <UserAvatar user={card.user} />
+                <Label>{card.user.name}</Label>
+              </>
+            ) : (
+              "no user"
+            )}
           </div>
 
           <div className={"flex items-center gap-2"}>

@@ -1,12 +1,4 @@
-import Image from "next/image"
-import { useEffect, useState } from "react"
-
-import { getBilibiliDetail } from "./actions-client"
-import {
-  BilibiliDisplayType,
-  IBilibiliVideo,
-  IBilibiliVideoDetail,
-} from "./schema"
+import { IBilibiliVideo } from "./schema"
 import { getBilibiliIFrameUrl, getBvidFromUrl } from "./utils"
 
 /**
@@ -30,43 +22,18 @@ import { getBilibiliIFrameUrl, getBvidFromUrl } from "./utils"
  * @param displayType
  * @constructor
  */
-export const BilibiliVideo = ({
-  video,
-  displayType = "video",
-}: {
-  video: IBilibiliVideo
-  displayType?: BilibiliDisplayType
-}) => {
+export const BilibiliVideo = ({ video }: { video: IBilibiliVideo }) => {
   const bvid = getBvidFromUrl(video.url)
-  const [detail, setDetail] = useState<IBilibiliVideoDetail | null>(null)
-  console.log({ bvid, detail })
 
   const url = getBilibiliIFrameUrl(video)
-  const cover = detail?.View.pic
-  console.log({ url, cover })
 
-  useEffect(() => {
-    if (!bvid) return
-    void getBilibiliDetail(bvid).then(setDetail)
-  }, [bvid])
-
-  switch (displayType) {
-    case "video":
-      return !bvid ? null : (
-        <iframe
-          title={detail?.View.title}
-          src={url}
-          width={video.width ?? "100%"}
-          height={video.height ?? "100%"}
-          allowFullScreen
-        />
-      )
-
-    case "cover":
-      return !cover ? null : <Image src={cover} alt={"cover"} fill />
-
-    case "gif":
-    default:
-      console.error("unexpected")
-  }
+  return !bvid ? null : (
+    <iframe
+      title={video.title}
+      src={url}
+      width={video.width ?? "100%"}
+      height={video.height ?? "100%"}
+      allowFullScreen
+    />
+  )
 }
