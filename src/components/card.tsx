@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
-import { HTMLAttributes } from "react"
+import { forwardRef, HTMLAttributes } from "react"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { BilibiliDisplayType } from "../../packages/common-bilibili/schema"
 import moment from "../../packages/common-datetime/moment"
@@ -24,24 +24,25 @@ export type ICard<T extends CardType = any> = {
   resourceUrl?: string
   content?: string
   sourceUrl?: string
+  coverRatio?: number
 }
 
-export const Card = <T extends CardType>({
-  card,
-  className,
-  ...props
-}: { card: ICard<T> } & HTMLAttributes<HTMLDivElement>) => {
+export const Card = forwardRef<
+  HTMLDivElement,
+  { card: ICard } & HTMLAttributes<HTMLDivElement>
+>(({ card, className, ...props }, ref) => {
   return (
     <div
+      ref={ref}
       className={cn(
-        "rounded-lg overflow-auto card-bg flex flex-col",
-        "w-[420px]",
+        // 如果加overflow-auto，可以实现图片的圆角，但会导致 html-to-image 的bug
+        "rounded-lg card-bg flex flex-col",
         className,
       )}
       {...props}
     >
       <div className={"w-full"}>
-        <AspectRatio>
+        <AspectRatio ratio={card.coverRatio ?? 1}>
           {card.type === "text-image" && card.resourceUrl && (
             <Image
               src={
@@ -50,7 +51,7 @@ export const Card = <T extends CardType>({
               }
               alt={""}
               fill
-              className={"w-full h-auto"}
+              className={"w-full h-auto rounded-t-lg"}
             />
           )}
 
@@ -99,4 +100,5 @@ export const Card = <T extends CardType>({
       </div>
     </div>
   )
-}
+})
+Card.displayName = "Card"

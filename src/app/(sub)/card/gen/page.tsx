@@ -1,6 +1,8 @@
 "use client"
 
+import { toBlob } from "html-to-image"
 import { useAtom } from "jotai"
+import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { getBilibiliDetail } from "../../../../../packages/common-bilibili/actions-client"
 import {
@@ -19,6 +21,7 @@ import {
   SelectValue,
 } from "../../../../../packages/common-ui-shadcn/components/select"
 import { Switch } from "../../../../../packages/common-ui-shadcn/components/switch"
+import { ButtonWithLoading } from "../../../../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
 import { parseXiaoHongShuPage } from "../../../../../packages/common-xiaohongshu/actions"
 import { Card, CardType, ICard } from "../../../../components/card"
@@ -42,6 +45,8 @@ export default function GenCardPage() {
   const [cover] = useAtom(cardCoverUrlAtom)
   const [content] = useAtom(cardContentAtom)
   const [urlToParse] = useAtom(urlToParseAtom)
+  const refCard = useRef<HTMLDivElement>(null)
+  const [sourceType] = useAtom(sourceTypeAtom)
 
   const card: ICard = {
     user: user ?? undefined,
@@ -55,6 +60,42 @@ export default function GenCardPage() {
           : "",
     type: cardType,
     sourceUrl: urlToParse,
+    coverRatio: sourceType === "xiaohongshu" ? 3 / 4 : 16 / 9,
+  }
+
+  // const [copied, copy] = useCopyToClipboard()
+  // useEffect(() => {
+  //   if (copied.value) toast.success(`copied ok: ${copied.value}`)
+  //   else if (copied.error) toast.error(`copied error: ${copied.error.message}`)
+  // }, [copied])
+
+  const copyCard = async () => {
+    if (!refCard.current) return console.error("no refCard current")
+
+    // 保存原始尺寸以便恢复
+    const originalHeight = refCard.current.clientHeight
+    // 计算应有的高度来容纳所有内容，可能需要根据实际情况调整这里的计算方法
+    const scrollHeight = refCard.current.scrollHeight
+    console.log({ originalHeight, scrollHeight })
+
+    // 临时调整高度以包含所有内容
+    refCard.current.style.height = `${scrollHeight}px`
+
+    const blob = await toBlob(refCard.current, {
+      pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
+    })
+
+    // 恢复原始高度
+    // refCard.current.style.height = `${originalHeight}px`
+
+    if (!blob) return
+
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "image/png": blob,
+      }),
+    ])
+    toast.success("copied image to clipboard")
   }
 
   return (
@@ -64,12 +105,13 @@ export default function GenCardPage() {
     >
       <InputLine />
 
-      <Controls />
+      <Controls copyCard={copyCard} />
 
       {!card ? (
         "You should login first."
       ) : (
         <Card
+          ref={refCard}
           style={{
             width: bilibiliVideoControlEnabled ? 420 : 419,
           }}
@@ -145,11 +187,13 @@ const InputLine = () => {
   )
 }
 
-const Controls = () => {
+const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
   const [cardType, setCardType] = useAtom(cardTypeAtom)
   const [bilibiliVideoControlEnabled, setBilibiliVideoControlEnabled] = useAtom(
     bilibiliVideoControlEnabledAtom,
   )
+  const [coping, setCoping] = useState(false)
+  const [sourceType] = useAtom(sourceTypeAtom)
 
   return (
     <div className={"flex items-center gap-2"}>
@@ -167,7 +211,10 @@ const Controls = () => {
             <SelectItem value={"text-image" as CardType}>
               Text with Image
             </SelectItem>
-            <SelectItem value={"text-video" as CardType}>
+            <SelectItem
+              value={"text-video" as CardType}
+              disabled={sourceType !== "bilibili"}
+            >
               Text with Video
             </SelectItem>
             <SelectItem value={"text" as CardType} disabled>
@@ -189,6 +236,17 @@ const Controls = () => {
           />
         </>
       )}
+
+      <ButtonWithLoading
+        loading={coping}
+        onClick={async () => {
+          setCoping(true)
+          await copyCard()
+          setCoping(false)
+        }}
+      >
+        Copy Card
+      </ButtonWithLoading>
     </div>
   )
 }

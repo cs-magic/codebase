@@ -26,7 +26,7 @@ export const MarkdownComp = ({
       rehypePlugins={[rehypeKatex]}
       components={{
         h1: (props) => {
-          console.log("h1: ", { props })
+          // console.log("h1: ", { props })
           return <h1 className={"text-xl font-medium"}>{props.children}</h1>
         },
         code(props: JSX.IntrinsicElements["code"] & ExtraProps) {
