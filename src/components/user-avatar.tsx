@@ -3,8 +3,8 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+} from "../../packages/common-ui-shadcn/components/avatar"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { IUserSummary } from "../schema/user.summary"
 
 export const UserAvatar = ({

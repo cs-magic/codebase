@@ -4,14 +4,14 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../packages/common-ui/shadcn/shadcn-components/card"
+} from "../../packages/common-ui-shadcn/components/card"
 
-export const ConfigCard = ({
+export const StandardCard = ({
   title,
   children,
 }: { title: string } & PropsWithChildren) => {
   return (
-    <Card>
+    <Card className={"w-full"}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

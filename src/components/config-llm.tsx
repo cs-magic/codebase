@@ -10,8 +10,8 @@ import { TransportType } from "../../packages/common-transport/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
-import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { Input } from "../../packages/common-ui-shadcn/components/input"
+import { Label } from "../../packages/common-ui-shadcn/components/label"
 import {
   Select,
   SelectContent,
@@ -19,8 +19,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../packages/common-ui/shadcn/shadcn-components/select"
-import { ConfigCard } from "./config-card"
+} from "../../packages/common-ui-shadcn/components/select"
+import { StandardCard } from "./standard-card"
 
 export const ConfigLLMCard = () => {
   const [llmDelay, setLLMDelay] = useAtom(llmDelayAtom)
@@ -34,7 +34,7 @@ export const ConfigLLMCard = () => {
   )
 
   return (
-    <ConfigCard title={"LLM"}>
+    <StandardCard title={"LLM"}>
       <Label>System Prompt For Conv Summary</Label>
       <TextareaAuto
         minRows={6}
@@ -103,6 +103,6 @@ export const ConfigLLMCard = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-    </ConfigCard>
+    </StandardCard>
   )
 }

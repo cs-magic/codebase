@@ -1,5 +1,5 @@
 import { ComponentProps } from "react"
-import { Button } from "../shadcn/shadcn-components/button"
+import { Button } from "../../common-ui-shadcn/components/button"
 import { LoaderIcon } from "lucide-react"
 
 export const ButtonWithLoading = ({

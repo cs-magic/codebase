@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { uiAlertDialogContent } from "../../packages/common-ui/store"
-import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { Button } from "../../packages/common-ui-shadcn/components/button"
 import React from "react"
 import { ContentAlertDialog } from "../../packages/common-ui/components/content-alert-dialog"
 import { useAtom } from "jotai"

@@ -4,7 +4,7 @@ import { ImageEqualHeight } from "../../packages/common-ui/components/image-equa
 import {
   Avatar,
   AvatarImage,
-} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
+} from "../../packages/common-ui-shadcn/components/avatar"
 
 export const BrandingPartners = () => {
   return (

@@ -12,7 +12,7 @@ import { range } from "lodash"
 import { PropsWithChildren, useRef } from "react"
 import { useFullscreen, useMeasure } from "react-use"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 
 /**
  * tv, ref: https://codepen.io/manz/pen/MWoRMja

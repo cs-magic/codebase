@@ -6,8 +6,8 @@ import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
 } from "../../packages/common-auth-sms/store"
-import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { Input } from "../../packages/common-ui-shadcn/components/input"
+import { Label } from "../../packages/common-ui-shadcn/components/label"
 import {
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../packages/common-ui/shadcn/shadcn-components/select"
+} from "../../packages/common-ui-shadcn/components/select"
 
-import { ConfigCard } from "./config-card"
+import { StandardCard } from "./standard-card"
 
 export const ConfigSMSCard = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
@@ -25,7 +25,7 @@ export const ConfigSMSCard = () => {
     smsCodeToCountdownSecondsAtom,
   )
   return (
-    <ConfigCard title={"SMS"}>
+    <StandardCard title={"SMS"}>
       <Label>Provider Type</Label>
       <Select
         value={smsProvider}
@@ -55,6 +55,6 @@ export const ConfigSMSCard = () => {
         }
         type={"number"}
       />
-    </ConfigCard>
+    </StandardCard>
   )
 }

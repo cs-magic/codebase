@@ -9,8 +9,8 @@ import {
   smsCodeAtom,
   smsSignInPayloadAtom,
 } from "../../packages/common-auth-sms/store"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { Label } from "../../packages/common-ui-shadcn/components/label"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { uiLoadingAlertDialogAtom } from "../../packages/common-ui/store"
 import { SMS_DIGIT_SIZE } from "../config/sms"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"

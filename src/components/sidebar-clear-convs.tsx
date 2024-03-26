@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import { devEnabledAtom } from "../../packages/common-dev/store"
-import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { useDelAllConvs } from "../hooks/use-conv-del-all"
 import { MinusIcon } from "lucide-react"
 

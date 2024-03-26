@@ -7,19 +7,19 @@ import { useSnapshot } from "valtio"
 import { api } from "../../packages/common-trpc/react"
 
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { buttonVariants } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { buttonVariants } from "../../packages/common-ui-shadcn/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../packages/common-ui/shadcn/shadcn-components/dropdown-menu"
+} from "../../packages/common-ui-shadcn/components/dropdown-menu"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "../../packages/common-ui/shadcn/shadcn-components/tooltip"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+} from "../../packages/common-ui-shadcn/components/tooltip"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 
 import { IConvBase } from "../schema/conv.base"
 import { coreStore } from "../store/core.valtio"

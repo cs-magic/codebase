@@ -6,7 +6,7 @@ import * as React from "react"
 import { useSnapshot } from "valtio"
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { useConvRequestSlider } from "../hooks/use-conv-request-slider"
 import { useSoftKeyboardOn } from "../hooks/use-soft-keyboard-on"
 import { coreStore } from "../store/core.valtio"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useSnapshot } from "valtio"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { useLLMForChat } from "../hooks/use-llm-for-app-chat"
 import { RoleType } from "../schema/message"
 import { IResponse } from "../schema/response"

@@ -13,7 +13,7 @@ import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import { callLLM } from "../../packages/common-llm/actions/llm-caller"
 import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { IResponse } from "../schema/response"
 
 import { coreStore } from "../store/core.valtio"

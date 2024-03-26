@@ -1,4 +1,5 @@
 "use server"
+
 import { IBilibiliVideoDetail } from "./schema"
 
 export const getBilibiliDetail = async (
@@ -8,7 +9,10 @@ export const getBilibiliDetail = async (
   console.log({ url })
 
   const res = await fetch(url, {
-    // mode: "no-cors",
+    headers: {
+      Cookie:
+        "SESSDATA=e4af78fd%2C1726891541%2C3bae6%2A32CjD_F64Z3XX4qdJKQGL2z8q63OzAqcVkS15xyt_roEp3gF1_3jVXkGxGrjYyBiOTZlISVjlodklKckE5TlIzYmZZNHJsSWY1clZsLUxKcWJCMVJCV3RuWnhndWV2RVRfNVlJamZka1V0SmdZYTc4M1phd3VlYWJka0NncnFXZGRDVlhySVN4cjdnIIEC",
+    },
   })
 
   const data = await res.json()

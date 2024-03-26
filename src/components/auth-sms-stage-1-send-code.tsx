@@ -16,8 +16,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../packages/common-ui/shadcn/shadcn-components/form"
-import { Input } from "../../packages/common-ui/shadcn/shadcn-components/input"
+} from "../../packages/common-ui-shadcn/components/form"
+import { Input } from "../../packages/common-ui-shadcn/components/input"
 
 export const AuthSmsStage1SendCode = () => {
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)

@@ -3,7 +3,7 @@
 import { useEnvironments } from "../../packages/common-hooks/use-environments"
 import JoinComponents from "../../packages/common-ui/components/join-components"
 import { SeparatorContainer } from "../../packages/common-ui/components/separator-container"
-import { Label } from "../../packages/common-ui/shadcn/shadcn-components/label"
+import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { AuthSmsSignIn } from "./auth-sms-sign-in"
 import { AuthWechatSignIn } from "./auth-wechat-sign-in"
 import { BrandingTitle } from "./branding-title"

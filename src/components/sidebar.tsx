@@ -1,6 +1,6 @@
 "use client"
 import { HTMLAttributes } from "react"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { useLLMForConvTitle } from "../hooks/use-llm-for-conv-title"
 import { SidebarClearConvs } from "./sidebar-clear-convs"
 import { SidebarConvs } from "./sidebar-convs"

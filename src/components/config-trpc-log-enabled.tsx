@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
 import { trpcReactLogEnabledAtom } from "../../packages/common-trpc/store"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
+import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 
 export const TrpcLogEnabled = () => {
   const [trpcReactLogEnabled, setTrpcReactLogEnabled] = useAtom(

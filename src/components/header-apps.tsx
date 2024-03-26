@@ -7,8 +7,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../../packages/common-ui/shadcn/shadcn-components/dropdown-menu"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+} from "../../packages/common-ui-shadcn/components/dropdown-menu"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 
 export const Apps = () => {
   return (

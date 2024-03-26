@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import { Separator } from "../shadcn/shadcn-components/separator"
+import { Separator } from "../../common-ui-shadcn/components/separator"
 
 export const SeparatorContainer = ({ children }: PropsWithChildren) => {
   return (

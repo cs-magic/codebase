@@ -13,7 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../packages/common-ui/shadcn/shadcn-components/sheet"
+} from "../../packages/common-ui-shadcn/components/sheet"
 import {
   uiInnerHeight,
   uiScreenAtom,

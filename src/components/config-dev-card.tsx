@@ -1,9 +1,9 @@
 import { useAtom } from "jotai"
 import { devEnabledAtom } from "../../packages/common-dev/store"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { Switch } from "../../packages/common-ui/shadcn/shadcn-components/switch"
+import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
-import { ConfigCard } from "./config-card"
+import { StandardCard } from "./standard-card"
 
 export const ConfigDevCard = () => {
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
@@ -12,7 +12,7 @@ export const ConfigDevCard = () => {
   )
 
   return (
-    <ConfigCard title={"Dev"}>
+    <StandardCard title={"Dev"}>
       <LabelLine title={"Dev Enabled"}>
         <Switch checked={devEnabled} onCheckedChange={setDevEnabled} />
       </LabelLine>
@@ -23,6 +23,6 @@ export const ConfigDevCard = () => {
           onCheckedChange={setRequestsSlideTextDisplay}
         />
       </LabelLine>
-    </ConfigCard>
+    </StandardCard>
   )
 }

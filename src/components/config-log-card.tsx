@@ -3,7 +3,7 @@ import { SelectLogLevel } from "../../packages/common-log/components/select-log-
 import { pusherLogLevelAtom } from "../../packages/common-pusher/store"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { convLogLevelAtom } from "../store/dev.atom"
-import { ConfigCard } from "./config-card"
+import { StandardCard } from "./standard-card"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 
 export const ConfigLogCard = () => {
@@ -12,7 +12,7 @@ export const ConfigLogCard = () => {
   // const [routeLogLevel, setRouteLogLevel] = useAtom(routeLogLevelAtom)
 
   return (
-    <ConfigCard title={"log"}>
+    <StandardCard title={"log"}>
       <LabelLine title={"Conv Log Level"}>
         <SelectLogLevel value={convLogLevel} setValue={setConvLogLevel} />
       </LabelLine>
@@ -26,6 +26,6 @@ export const ConfigLogCard = () => {
       <LabelLine title={"Pusher Log Level"}>
         <SelectLogLevel value={pusherLogLevel} setValue={setPusherLogLevel} />
       </LabelLine>
-    </ConfigCard>
+    </StandardCard>
   )
 }

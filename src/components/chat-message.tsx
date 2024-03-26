@@ -6,8 +6,8 @@ import { MarkdownComp } from "../../packages/common-markdown/component"
 import {
   Avatar,
   AvatarImage,
-} from "../../packages/common-ui/shadcn/shadcn-components/avatar"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+} from "../../packages/common-ui-shadcn/components/avatar"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 
 export const ChatMessage = ({
   m,

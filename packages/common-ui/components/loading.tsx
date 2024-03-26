@@ -4,7 +4,7 @@ import { LoaderIcon } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
-} from "../shadcn/shadcn-components/alert-dialog"
+} from "../../common-ui-shadcn/components/alert-dialog"
 import { uiLoadingAlertDialogAtom } from "../store"
 import { useAtom } from "jotai"
 

@@ -7,13 +7,13 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../packages/common-ui/shadcn/components/ui/tabs"
+} from "../../packages/common-ui-shadcn/components/tabs"
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../packages/common-ui/shadcn/shadcn-components/sheet"
-import { cn } from "../../packages/common-ui/shadcn/utils"
+} from "../../packages/common-ui-shadcn/components/sheet"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { ConfigDevCard } from "./config-dev-card"
 import { ConfigLLMCard } from "./config-llm"
 import { ConfigLogCard } from "./config-log-card"

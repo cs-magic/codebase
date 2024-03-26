@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../common-ui/shadcn/shadcn-components/select"
+} from "../../common-ui-shadcn/components/select"
 import { LogLevel } from "../schema"
 
 export const SelectLogLevel = ({

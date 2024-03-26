@@ -1,15 +1,15 @@
 import { api } from "../../packages/common-trpc/react"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { Button } from "../../packages/common-ui/shadcn/shadcn-components/button"
+import { Button } from "../../packages/common-ui-shadcn/components/button"
 
-import { ConfigCard } from "./config-card"
+import { StandardCard } from "./standard-card"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 
 export const ConfigTRPCCard = () => {
   const utils = api.useUtils()
 
   return (
-    <ConfigCard title={"TRPC"}>
+    <StandardCard title={"TRPC"}>
       <TrpcLogEnabled />
 
       <LabelLine title={"Invalidate ALL"}>
@@ -21,6 +21,6 @@ export const ConfigTRPCCard = () => {
           Invalidate
         </Button>
       </LabelLine>
-    </ConfigCard>
+    </StandardCard>
   )
 }

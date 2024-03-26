@@ -4,9 +4,9 @@ import { useRef, useState } from "react"
 
 import { BilibiliDisplayType } from "../../../../../packages/common-bilibili/schema"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
-import { Button } from "../../../../../packages/common-ui/shadcn/shadcn-components/button"
-import { Input } from "../../../../../packages/common-ui/shadcn/shadcn-components/input"
-import { Label } from "../../../../../packages/common-ui/shadcn/shadcn-components/label"
+import { Button } from "../../../../../packages/common-ui-shadcn/components/button"
+import { Input } from "../../../../../packages/common-ui-shadcn/components/input"
+import { Label } from "../../../../../packages/common-ui-shadcn/components/label"
 import {
   Select,
   SelectContent,
@@ -14,8 +14,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../packages/common-ui/shadcn/shadcn-components/select"
-import { Switch } from "../../../../../packages/common-ui/shadcn/shadcn-components/switch"
+} from "../../../../../packages/common-ui-shadcn/components/select"
+import { Switch } from "../../../../../packages/common-ui-shadcn/components/switch"
 import { Card, CardType } from "../../../../components/card"
 import { useUserSummary } from "../../../../hooks/use-user-summary"
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { Text2ImageAppSVG, Text2TextAppSVG, V2AGIBrand } from "@/config/assets"
-import { Label } from "../../../../packages/common-ui/shadcn/shadcn-components/label"
+import { Label } from "../../../../packages/common-ui-shadcn/components/label"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 
 export default function TestSVGPage() {

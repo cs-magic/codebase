@@ -5,7 +5,7 @@ import { useAtom } from "jotai"
 import { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"
 import { useMounted } from "../../common-hooks/use-mounted"
-import { cn } from "../shadcn/utils"
+import { cn } from "../../common-ui-shadcn/utils"
 
 export const TextareaAuto = forwardRef<
   HTMLTextAreaElement,
@@ -26,6 +26,7 @@ export const TextareaAuto = forwardRef<
       ref={ref}
       cacheMeasurements
       className={cn(
+        "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         "block", // 不加这个会导致高度超标
         "resize-none focus-visible:outline-none bg-transparent",
         className,

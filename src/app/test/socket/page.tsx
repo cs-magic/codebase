@@ -9,7 +9,7 @@ import {
   pusherServerIdAtom,
 } from "../../../../packages/common-pusher/store"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
-import { Button } from "../../../../packages/common-ui/shadcn/shadcn-components/button"
+import { Button } from "../../../../packages/common-ui-shadcn/components/button"
 import {
   Select,
   SelectContent,
@@ -17,7 +17,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../packages/common-ui/shadcn/shadcn-components/select"
+} from "../../../../packages/common-ui-shadcn/components/select"
 
 export default function TestSocketPage() {
   const [serverId, setServerId] = useAtom(pusherServerIdAtom)
