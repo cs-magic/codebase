@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
-import { forwardRef, HTMLAttributes } from "react"
+import { forwardRef, HTMLAttributes, useRef } from "react"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { BilibiliDisplayType } from "../../packages/common-bilibili/schema"
 import moment from "../../packages/common-datetime/moment"
@@ -31,6 +31,11 @@ export const Card = forwardRef<
   HTMLDivElement,
   { card: ICard } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
+  const refText = useRef<HTMLDivElement>(null)
+  const overflow =
+    !!refText.current &&
+    refText.current.scrollHeight > refText.current.clientHeight
+
   return (
     <div
       ref={ref}
@@ -46,7 +51,7 @@ export const Card = forwardRef<
 
           <div
             className={
-              "grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-4"
+              "grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
             }
           >
             <div className={"shrink-0"}>
@@ -71,17 +76,37 @@ export const Card = forwardRef<
               </AspectRatio>
             </div>
 
-            <div className={"grow overflow-hidden flex flex-col gap-2 px-2"}>
-              <MarkdownComp className={"line-clamp-[10]"}>
-                {card.content ?? "No Content Yet"}
-              </MarkdownComp>
+            <div ref={refText} className={"px-2 grow overflow-hidden relative"}>
+              <div
+                className={
+                  "w-12 h-full float-right flex flex-col justify-end ml-2"
+                }
+                style={{
+                  shapeOutside: "inset(calc(100% - 56px) 0 8px 0)",
+                }}
+              >
+                {card.sourceUrl && (
+                  <QRCodeSVG
+                    value={card.sourceUrl}
+                    className={"w-12 h-12 mb-2"}
+                  />
+                )}
+              </div>
 
-              {card.sourceUrl && (
-                <QRCodeSVG
-                  value={card.sourceUrl}
-                  className={"w-12 h-12 m-2 ml-auto shrink-0"}
-                />
-              )}
+              <MarkdownComp>{card.content ?? "No Content Yet"}</MarkdownComp>
+
+              {/*{overflow && (*/}
+              {/*  <div*/}
+              {/*    className={*/}
+              {/*      "absolute right-[72px] bottom-0 bg-white text-black"*/}
+              {/*    }*/}
+              {/*  >*/}
+              {/*    <div*/}
+              {/*      className={"bg-gradient-to-r from-transparent to-white w-8"}*/}
+              {/*    />*/}
+              {/*    ……*/}
+              {/*  </div>*/}
+              {/*)}*/}
             </div>
           </div>
 

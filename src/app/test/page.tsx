@@ -18,6 +18,8 @@ export default function TestPage() {
       <ButtonLink href={"test/trpc/router-in-client"}>
         trpc server update in client
       </ButtonLink>
+
+      <ButtonLink href={"test/css/wrap"}>css wrap</ButtonLink>
     </FlexContainer>
   )
 }

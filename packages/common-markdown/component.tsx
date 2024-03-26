@@ -29,6 +29,17 @@ export const MarkdownComp = ({
           // console.log("h1: ", { props })
           return <h1 className={"text-xl font-medium"}>{props.children}</h1>
         },
+        p: (props) => {
+          return (
+            <p
+              className={cn()
+              // "truncate"
+              }
+            >
+              {props.children}
+            </p>
+          )
+        },
         code(props: JSX.IntrinsicElements["code"] & ExtraProps) {
           const { children, className, node, ref, ...rest } = props
           const match = /language-(\w+)/.exec(className ?? "")

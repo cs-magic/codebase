@@ -115,8 +115,23 @@ export default function GenCardPage() {
   )
 }
 
+function extractFirstURL(text: string): string | null {
+  // This regex is designed to find URLs within a string.
+  // It looks for strings that start with http://, https://, or www., and captures
+  // everything until it encounters a space or the end of the string.
+  const regex = /https?:\/\/[^\s，。]+|www\.[^\s，。]+/
+
+  // The match() method searches a string for a match against a regular expression,
+  // and returns the matches, as an Array object.
+  // Using match instead of matchAll since we only want the first match.
+  const match = text.match(regex)
+
+  // match is an array where the first element is the matched string, or null if no match was found.
+  return match ? match[0] : null // This will be the first URL found in the text or null if no URL is found.
+}
+
 const InputLine = () => {
-  const [urlToParse, setUrlToParse] = useAtom(urlToParseAtom)
+  const [inputUrl, setInputUrl] = useAtom(urlToParseAtom)
   const [, setSourceType] = useAtom(sourceTypeAtom)
   const [, setBilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
   const [, setCover] = useAtom(cardCoverUrlAtom)
@@ -127,30 +142,34 @@ const InputLine = () => {
       <Input
         placeholder={"支持小红书、Bilibili……"}
         className={"grow"}
-        value={urlToParse}
+        value={inputUrl}
         onChange={(event) => {
-          setUrlToParse(event.currentTarget.value)
+          setInputUrl(event.currentTarget.value)
         }}
       />
 
       <Button
         onClick={async () => {
+          const urlParsed = extractFirstURL(inputUrl)
+          console.log({ urlParsed })
+          if (!urlParsed) return
+
           console.log("-- generating ...")
-          if (/xhslink|xiaohongshu/.test(urlToParse)) {
+          if (/xhslink|xiaohongshu/.test(urlParsed)) {
             // 小红书
             setSourceType("xiaohongshu")
-            const data = await parseXiaoHongShuPage(urlToParse)
+            const data = await parseXiaoHongShuPage(urlParsed)
             setContent(`# ${data.title}\n\n${data.description}\n\n`)
             if (data.images.length) setCover(data.images[0]!)
             console.log({ content: data })
-          } else if (/bilibili/.test(urlToParse)) {
+          } else if (/bilibili/.test(urlParsed)) {
             // 哔哩哔哩
             setSourceType("bilibili")
-            const bvid = getBvidFromUrl(urlToParse)
+            const bvid = getBvidFromUrl(urlParsed)
             if (!bvid) return toast.error("invalid bilibili url")
             const bilibiliDetail = await getBilibiliDetail(bvid)
             setCover(bilibiliDetail.View.pic)
-            setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlToParse }))
+            setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlParsed }))
             setContent(bilibiliDetail.View.desc)
           }
         }}
