@@ -41,6 +41,7 @@ export default function GenCardPage() {
   const [bilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
   const [cover] = useAtom(cardCoverUrlAtom)
   const [content] = useAtom(cardContentAtom)
+  const [urlToParse] = useAtom(urlToParseAtom)
 
   const card: ICard = {
     user: user ?? undefined,
@@ -53,6 +54,7 @@ export default function GenCardPage() {
           ? cover
           : "",
     type: cardType,
+    sourceUrl: urlToParse,
   }
 
   return (

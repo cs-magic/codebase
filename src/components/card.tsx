@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { QRCodeSVG } from "qrcode.react"
 import { HTMLAttributes } from "react"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { BilibiliDisplayType } from "../../packages/common-bilibili/schema"
@@ -22,6 +23,7 @@ export type ICard<T extends CardType = any> = {
 
   resourceUrl?: string
   content?: string
+  sourceUrl?: string
 }
 
 export const Card = <T extends CardType>({
@@ -59,7 +61,16 @@ export const Card = <T extends CardType>({
       </div>
 
       <div className={"flex flex-col gap-2 p-4"}>
-        <MarkdownComp>{card.content ?? "No Content Yet"}</MarkdownComp>
+        <MarkdownComp className={"line-clamp-[10]"}>
+          {card.content ?? "No Content Yet"}
+        </MarkdownComp>
+
+        {card.sourceUrl && (
+          <QRCodeSVG
+            value={card.sourceUrl}
+            className={"w-12 h-12 m-2 ml-auto"}
+          />
+        )}
 
         <Separator orientation={"horizontal"} className={"bg-gray-100/10"} />
 
