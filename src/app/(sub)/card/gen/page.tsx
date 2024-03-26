@@ -96,6 +96,7 @@ export default function GenCardPage() {
               const bilibiliDetail = await getBilibiliDetail(bvid)
               setBilibiliCoverUrl(bilibiliDetail.View.pic)
               setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlToParse }))
+              setBilibiliContent(bilibiliDetail.View.desc)
             }
           }}
         >
