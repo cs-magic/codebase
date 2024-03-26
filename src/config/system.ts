@@ -46,3 +46,6 @@ export const subAppsIcons: ISubAppIcon[] = [
   // { fromMode: "video", toMode: "sound" },
   // { fromMode: "video", toMode: "video" },
 ]
+export const sampleXiaoHongShuVideoUrl =
+  "https://sns-video-al.xhscdn.com/stream/110/259/01e5f031772b1784010370038e32417132_259.mp4"
+export const sampleLocalVideoUrl = "/demo.mp4"
