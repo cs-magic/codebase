@@ -43,9 +43,6 @@ export default function GenCardPage() {
       </div>
 
       <div className={"flex items-center gap-2"}>
-        <Label className={"shrink-0"}>Show Controls</Label>
-        <Switch checked={showControl} onCheckedChange={setShowControl} />
-
         <Label className={"shrink-0"}>Display Type</Label>
         <Select
           defaultValue={displayType}
@@ -59,10 +56,19 @@ export default function GenCardPage() {
             <SelectGroup>
               <SelectItem value={"video"}>Video</SelectItem>
               <SelectItem value={"cover"}>Cover</SelectItem>
-              <SelectItem value={"gif"}>GIF</SelectItem>
+              <SelectItem value={"gif"} disabled>
+                GIF (todo)
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
+
+        {displayType === "video" && (
+          <>
+            <Label className={"shrink-0"}>Show Video Controls</Label>
+            <Switch checked={showControl} onCheckedChange={setShowControl} />
+          </>
+        )}
       </div>
 
       {!user ? (

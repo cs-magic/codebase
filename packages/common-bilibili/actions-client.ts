@@ -20,5 +20,5 @@ export const getBilibiliDetail = async (
 
   if (data.code !== 0) throw new Error(JSON.stringify(data))
 
-  return data.data[0]
+  return data.data
 }
