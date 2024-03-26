@@ -25,7 +25,7 @@ export default function GenCardPage() {
   const [cardType, setCardType] = useState<CardType>("bilibili")
   const [displayType, setDisplayType] = useState<BilibiliDisplayType>("video")
   const refInput = useRef<HTMLInputElement>(null)
-  const [showContorl, setShowControl] = useState(false)
+  const [showControl, setShowControl] = useState(false)
 
   return (
     <FlexContainer orientation={"vertical"}>
@@ -44,7 +44,7 @@ export default function GenCardPage() {
 
       <div className={"flex items-center gap-2"}>
         <Label className={"shrink-0"}>Show Controls</Label>
-        <Switch checked={showContorl} onCheckedChange={setShowControl} />
+        <Switch checked={showControl} onCheckedChange={setShowControl} />
 
         <Label className={"shrink-0"}>Display Type</Label>
         <Select
@@ -65,10 +65,12 @@ export default function GenCardPage() {
         </Select>
       </div>
 
-      {user && (
+      {!user ? (
+        "You should login first."
+      ) : (
         <Card
           style={{
-            width: showContorl ? 420 : 419,
+            width: showControl ? 420 : 419,
           }}
           card={{
             user,
