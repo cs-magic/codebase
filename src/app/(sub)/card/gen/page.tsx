@@ -32,7 +32,6 @@ import {
   cardContentAtom,
   cardCoverUrlAtom,
   cardTypeAtom,
-  SourceType,
   sourceTypeAtom,
   urlToParseAtom,
 } from "./store"
@@ -62,12 +61,6 @@ export default function GenCardPage() {
     sourceUrl: urlToParse,
     coverRatio: sourceType === "xiaohongshu" ? 3 / 4 : 16 / 9,
   }
-
-  // const [copied, copy] = useCopyToClipboard()
-  // useEffect(() => {
-  //   if (copied.value) toast.success(`copied ok: ${copied.value}`)
-  //   else if (copied.error) toast.error(`copied error: ${copied.error.message}`)
-  // }, [copied])
 
   const copyCard = async () => {
     if (!refCard.current) return console.error("no refCard current")
@@ -124,7 +117,7 @@ export default function GenCardPage() {
 
 const InputLine = () => {
   const [urlToParse, setUrlToParse] = useAtom(urlToParseAtom)
-  const [sourceType, setSourceType] = useAtom(sourceTypeAtom)
+  const [, setSourceType] = useAtom(sourceTypeAtom)
   const [, setBilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
   const [, setCover] = useAtom(cardCoverUrlAtom)
   const [, setContent] = useAtom(cardContentAtom)
@@ -132,6 +125,7 @@ const InputLine = () => {
   return (
     <div className={"w-full flex items-center gap-4"}>
       <Input
+        placeholder={"支持小红书、Bilibili……"}
         className={"grow"}
         value={urlToParse}
         onChange={(event) => {
@@ -139,45 +133,25 @@ const InputLine = () => {
         }}
       />
 
-      <Select
-        value={sourceType}
-        onValueChange={(v) => setSourceType(v as SourceType)}
-      >
-        <SelectTrigger className={"w-32"}>
-          <SelectValue />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value={"bilibili" as SourceType}>哔哩哔哩</SelectItem>
-            <SelectItem value={"xiaohongshu" as SourceType}>小红书</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
       <Button
         onClick={async () => {
           console.log("-- generating ...")
-
-          switch (sourceType) {
-            case "bilibili":
-              const bvid = getBvidFromUrl(urlToParse)
-              if (!bvid) return toast.error("invalid bilibili url")
-              const bilibiliDetail = await getBilibiliDetail(bvid)
-              setCover(bilibiliDetail.View.pic)
-              setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlToParse }))
-              setContent(bilibiliDetail.View.desc)
-              break
-
-            case "xiaohongshu":
-              const data = await parseXiaoHongShuPage(urlToParse)
-              setContent(`# ${data.title}\n\n${data.description}\n\n`)
-              if (data.images.length) setCover(data.images[0]!)
-              console.log({ content: data })
-              break
-
-            default:
-              console.error("unexpected")
+          if (/xhslink|xiaohongshu/.test(urlToParse)) {
+            // 小红书
+            setSourceType("xiaohongshu")
+            const data = await parseXiaoHongShuPage(urlToParse)
+            setContent(`# ${data.title}\n\n${data.description}\n\n`)
+            if (data.images.length) setCover(data.images[0]!)
+            console.log({ content: data })
+          } else if (/bilibili/.test(urlToParse)) {
+            // 哔哩哔哩
+            setSourceType("bilibili")
+            const bvid = getBvidFromUrl(urlToParse)
+            if (!bvid) return toast.error("invalid bilibili url")
+            const bilibiliDetail = await getBilibiliDetail(bvid)
+            setCover(bilibiliDetail.View.pic)
+            setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlToParse }))
+            setContent(bilibiliDetail.View.desc)
           }
         }}
       >
