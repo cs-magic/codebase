@@ -1,15 +1,11 @@
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
-import { forwardRef, HTMLAttributes, useRef } from "react"
+import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
-import { BilibiliDisplayType } from "../../packages/common-bilibili/schema"
-import moment from "../../packages/common-datetime/moment"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
-import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { config } from "../config/system"
 import { IUserSummary } from "../schema/user.summary"
 import { UserAvatar } from "./user-avatar"
 
@@ -23,7 +19,7 @@ export type ICard<T extends CardType = any> = {
 
   resourceUrl?: string
   content?: string
-  sourceUrl?: string
+  sourceUrl?: string | null
   coverRatio?: number
 }
 
@@ -31,10 +27,28 @@ export const Card = forwardRef<
   HTMLDivElement,
   { card: ICard } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
+  const [content, setContent] = useState("")
+  useEffect(() => {
+    if (!card.content) return
+
+    setContent(card.content)
+  }, [card.content])
+
   const refText = useRef<HTMLDivElement>(null)
-  const overflow =
-    !!refText.current &&
-    refText.current.scrollHeight > refText.current.clientHeight
+  useEffect(() => {
+    if (!refText.current) return
+
+    const { scrollHeight, clientHeight } = refText.current
+    const overflow = scrollHeight > clientHeight
+    // console.log({ content, scrollHeight, clientHeight, overflow })
+    if (!overflow) return
+
+    setContent(
+      (content) => content?.slice(0, Math.min(content?.length - 5, 100)) + "…",
+    )
+  }, [content])
+
+  console.log({ content, source: card.sourceUrl })
 
   return (
     <div
@@ -76,37 +90,17 @@ export const Card = forwardRef<
               </AspectRatio>
             </div>
 
-            <div ref={refText} className={"px-2 grow overflow-hidden relative"}>
-              <div
-                className={
-                  "w-12 h-full float-right flex flex-col justify-end ml-2"
-                }
-                style={{
-                  shapeOutside: "inset(calc(100% - 56px) 0 8px 0)",
-                }}
-              >
-                {card.sourceUrl && (
-                  <QRCodeSVG
-                    value={card.sourceUrl}
-                    className={"w-12 h-12 mb-2"}
-                  />
-                )}
+            <div className={"px-2 grow overflow-hidden relative flex flex-col"}>
+              <div ref={refText} className={"grow overflow-hidden"}>
+                <MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>
               </div>
 
-              <MarkdownComp>{card.content ?? "No Content Yet"}</MarkdownComp>
-
-              {/*{overflow && (*/}
-              {/*  <div*/}
-              {/*    className={*/}
-              {/*      "absolute right-[72px] bottom-0 bg-white text-black"*/}
-              {/*    }*/}
-              {/*  >*/}
-              {/*    <div*/}
-              {/*      className={"bg-gradient-to-r from-transparent to-white w-8"}*/}
-              {/*    />*/}
-              {/*    ……*/}
-              {/*  </div>*/}
-              {/*)}*/}
+              {card.sourceUrl && (
+                <QRCodeSVG
+                  value={card.sourceUrl}
+                  className={"w-12 h-12 m-2 ml-auto shrink-0"}
+                />
+              )}
             </div>
           </div>
 

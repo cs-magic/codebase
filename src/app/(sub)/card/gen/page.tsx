@@ -33,19 +33,22 @@ import {
   cardCoverUrlAtom,
   cardTypeAtom,
   sourceTypeAtom,
+  urlParsedAtom,
   urlToParseAtom,
 } from "./store"
+import { extractFirstURL } from "./utils"
 
 export default function GenCardPage() {
-  const user = useUserSummary()
   const [cardType] = useAtom(cardTypeAtom)
   const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
   const [bilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
   const [cover] = useAtom(cardCoverUrlAtom)
   const [content] = useAtom(cardContentAtom)
-  const [urlToParse] = useAtom(urlToParseAtom)
-  const refCard = useRef<HTMLDivElement>(null)
+  const [urlParsed] = useAtom(urlParsedAtom)
   const [sourceType] = useAtom(sourceTypeAtom)
+
+  const user = useUserSummary()
+  const refCard = useRef<HTMLDivElement>(null)
 
   const card: ICard = {
     user: user ?? undefined,
@@ -58,28 +61,17 @@ export default function GenCardPage() {
           ? cover
           : "",
     type: cardType,
-    sourceUrl: urlToParse,
+    sourceUrl: urlParsed,
     coverRatio: sourceType === "xiaohongshu" ? 3 / 4 : 16 / 9,
   }
 
   const copyCard = async () => {
     if (!refCard.current) return console.error("no refCard current")
 
-    // 保存原始尺寸以便恢复
-    const originalHeight = refCard.current.clientHeight
-    // 计算应有的高度来容纳所有内容，可能需要根据实际情况调整这里的计算方法
-    const scrollHeight = refCard.current.scrollHeight
-    console.log({ originalHeight, scrollHeight })
-
-    // 临时调整高度以包含所有内容
-    refCard.current.style.height = `${scrollHeight}px`
-
     const blob = await toBlob(refCard.current, {
       pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
+      backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
     })
-
-    // 恢复原始高度
-    // refCard.current.style.height = `${originalHeight}px`
 
     if (!blob) return
 
@@ -113,21 +105,6 @@ export default function GenCardPage() {
       )}
     </FlexContainer>
   )
-}
-
-function extractFirstURL(text: string): string | null {
-  // This regex is designed to find URLs within a string.
-  // It looks for strings that start with http://, https://, or www., and captures
-  // everything until it encounters a space or the end of the string.
-  const regex = /https?:\/\/[^\s，。]+|www\.[^\s，。]+/
-
-  // The match() method searches a string for a match against a regular expression,
-  // and returns the matches, as an Array object.
-  // Using match instead of matchAll since we only want the first match.
-  const match = text.match(regex)
-
-  // match is an array where the first element is the matched string, or null if no match was found.
-  return match ? match[0] : null // This will be the first URL found in the text or null if no URL is found.
 }
 
 const InputLine = () => {
