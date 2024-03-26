@@ -9,7 +9,12 @@ export const sourceTypeAtom = atomWithStorage<SourceType>(
   "bilibili",
 )
 
-export type CardType = "text" | "text-image" | "text-video" | "text-gif"
+export type CardType =
+  | "text"
+  | "text-image"
+  | "text-video"
+  | "text-iframe"
+  | "text-gif"
 export const cardTypeAtom = atomWithStorage<CardType>("card.type", "text-image")
 
 export const bilibiliVideoControlEnabledAtom = atomWithStorage(
@@ -20,6 +25,9 @@ export const bilibiliVideoControlEnabledAtom = atomWithStorage(
 export const urlToParseAtom = atomWithStorage("url.toParse", "")
 export const urlParsedAtom = atom((get) => extractFirstURL(get(urlToParseAtom)))
 
-export const bilibiliIFrameUrlAtom = atom("")
+// 用于bilibili
+export const cardIFrameUrlAtom = atom("")
+// 用于小红书
+export const cardVideoAtom = atom("")
 export const cardCoverUrlAtom = atom("")
 export const cardContentAtom = atom("")

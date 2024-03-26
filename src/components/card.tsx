@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
 import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react"
+import ReactPlayer from "react-player"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
@@ -8,11 +9,10 @@ import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { IUserSummary } from "../schema/user.summary"
 import { UserAvatar } from "./user-avatar"
+import { CardType } from "@/app/(sub)/card/gen/store"
 
-export type CardType = "text-image" | "text-video" | "text-gif"
-
-export type ICard<T extends CardType = any> = {
-  type: T
+export type ICard = {
+  type: CardType
 
   user?: IUserSummary
   updatedAt: Date
@@ -48,7 +48,7 @@ export const Card = forwardRef<
     )
   }, [content])
 
-  console.log({ content, source: card.sourceUrl })
+  console.log("-- card: ", card)
 
   return (
     <div
@@ -60,15 +60,15 @@ export const Card = forwardRef<
       {...props}
     >
       <AspectRatio ratio={8 / 16}>
-        <div className={"h-full overflow-hidden flex flex-col"}>
+        <div className={"w-full h-full overflow-hidden flex flex-col"}>
           <h1 className={"text-black font-medium my-2 shrink-0"}>Area #1</h1>
 
           <div
             className={
-              "grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
+              "w-full grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
             }
           >
-            <div className={"shrink-0"}>
+            <div className={"w-full shrink-0"}>
               <AspectRatio ratio={card.coverRatio ?? 1}>
                 {card.type === "text-image" && card.resourceUrl && (
                   <Image
@@ -82,9 +82,18 @@ export const Card = forwardRef<
                   />
                 )}
 
-                {card.type === "text-video" && card.resourceUrl && (
+                {card.type === "text-iframe" && card.resourceUrl && (
+                  // todo: more iframe
                   <BilibiliVideo
                     video={{ url: card.resourceUrl, height: 240 }}
+                  />
+                )}
+
+                {card.type === "text-video" && card.resourceUrl && (
+                  <ReactPlayer
+                    playing
+                    url={card.resourceUrl}
+                    style={{ width: "100%", border: "1px solid black" }}
                   />
                 )}
               </AspectRatio>

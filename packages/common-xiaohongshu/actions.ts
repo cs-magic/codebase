@@ -6,6 +6,7 @@ export interface IXiaoHongShuPage {
   url: string
   title?: string
   description?: string
+  video?: string
   images: string[]
 }
 
@@ -37,6 +38,10 @@ export const parseXiaoHongShuPage = async (
     .querySelectorAll('meta[name="og:image"]')
     .map((r) => r.getAttribute("content")!)
 
+  const video = root
+    .querySelector('meta[name="og:video"]')
+    ?.getAttribute("content")
+
   // console.log({ data })
 
   return {
@@ -44,5 +49,6 @@ export const parseXiaoHongShuPage = async (
     description,
     title,
     images,
+    video,
   }
 }

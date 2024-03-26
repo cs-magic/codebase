@@ -27,11 +27,12 @@ import { parseXiaoHongShuPage } from "../../../../../packages/common-xiaohongshu
 import { Card, CardType, ICard } from "../../../../components/card"
 import { useUserSummary } from "../../../../hooks/use-user-summary"
 import {
-  bilibiliIFrameUrlAtom,
+  cardIFrameUrlAtom,
   bilibiliVideoControlEnabledAtom,
   cardContentAtom,
   cardCoverUrlAtom,
   cardTypeAtom,
+  cardVideoAtom,
   sourceTypeAtom,
   urlParsedAtom,
   urlToParseAtom,
@@ -41,7 +42,8 @@ import { extractFirstURL } from "./utils"
 export default function GenCardPage() {
   const [cardType] = useAtom(cardTypeAtom)
   const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
-  const [bilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
+  const [iFrameUrl] = useAtom(cardIFrameUrlAtom)
+  const [videoUrl] = useAtom(cardVideoAtom)
   const [cover] = useAtom(cardCoverUrlAtom)
   const [content] = useAtom(cardContentAtom)
   const [urlParsed] = useAtom(urlParsedAtom)
@@ -55,11 +57,13 @@ export default function GenCardPage() {
     updatedAt: new Date(),
     content,
     resourceUrl:
-      cardType === "text-video"
-        ? bilibiliIFrameUrl
-        : cardType === "text-image"
-          ? cover
-          : "",
+      cardType === "text-iframe"
+        ? iFrameUrl
+        : cardType === "text-video"
+          ? videoUrl
+          : cardType === "text-image"
+            ? cover
+            : "",
     type: cardType,
     sourceUrl: urlParsed,
     coverRatio: sourceType === "xiaohongshu" ? 3 / 4 : 16 / 9,
@@ -110,7 +114,8 @@ export default function GenCardPage() {
 const InputLine = () => {
   const [inputUrl, setInputUrl] = useAtom(urlToParseAtom)
   const [, setSourceType] = useAtom(sourceTypeAtom)
-  const [, setBilibiliIFrameUrl] = useAtom(bilibiliIFrameUrlAtom)
+  const [, setIFrameUrl] = useAtom(cardIFrameUrlAtom)
+  const [, setVideoUrl] = useAtom(cardVideoAtom)
   const [, setCover] = useAtom(cardCoverUrlAtom)
   const [, setContent] = useAtom(cardContentAtom)
 
@@ -137,6 +142,7 @@ const InputLine = () => {
             setSourceType("xiaohongshu")
             const data = await parseXiaoHongShuPage(urlParsed)
             setContent(`# ${data.title}\n\n${data.description}\n\n`)
+            if (data.video) setVideoUrl(data.video)
             if (data.images.length) setCover(data.images[0]!)
             console.log({ content: data })
           } else if (/bilibili/.test(urlParsed)) {
@@ -146,7 +152,7 @@ const InputLine = () => {
             if (!bvid) return toast.error("invalid bilibili url")
             const bilibiliDetail = await getBilibiliDetail(bvid)
             setCover(bilibiliDetail.View.pic)
-            setBilibiliIFrameUrl(getBilibiliIFrameUrl({ url: urlParsed }))
+            setIFrameUrl(getBilibiliIFrameUrl({ url: urlParsed }))
             setContent(bilibiliDetail.View.desc)
           }
         }}
@@ -181,10 +187,7 @@ const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
             <SelectItem value={"text-image" as CardType}>
               Text with Image
             </SelectItem>
-            <SelectItem
-              value={"text-video" as CardType}
-              disabled={sourceType !== "bilibili"}
-            >
+            <SelectItem value={"text-video" as CardType}>
               Text with Video
             </SelectItem>
             <SelectItem value={"text" as CardType} disabled>
