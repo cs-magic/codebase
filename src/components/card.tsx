@@ -1,5 +1,8 @@
 import Image from "next/image"
-import { BilibiliVideo } from "../../packages/common-bilibili/componnets"
+import {
+  BilibiliDisplayType,
+  BilibiliVideo,
+} from "../../packages/common-bilibili/componnets"
 import moment from "../../packages/common-datetime/moment"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui/shadcn/shadcn-components/aspect-ratio"
@@ -19,7 +22,7 @@ export type ICardBase<T extends CardType> = {
 }
 
 export type ICard<T extends CardType> = T extends "bilibili"
-  ? ICardBase<T> & { src: string }
+  ? ICardBase<T> & { src: string; displayType: BilibiliDisplayType }
   : ICardBase<T> & { backgroundImage: string }
 
 export const Card = <T extends CardType>({ card }: { card: ICard<T> }) => {
@@ -41,7 +44,10 @@ export const Card = <T extends CardType>({ card }: { card: ICard<T> }) => {
       )}
 
       {card.type === "bilibili" && (
-        <BilibiliVideo video={{ url: card.src, height: 240 }} />
+        <BilibiliVideo
+          displayType={card.displayType}
+          video={{ url: card.src, height: 240 }}
+        />
       )}
 
       <div className={"flex flex-col gap-2 p-4"}>
