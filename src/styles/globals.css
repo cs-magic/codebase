@@ -144,13 +144,13 @@ ref: https://chat.openai.com/c/91b8bb72-01f9-49d8-8a4f-19a92adabd33
     animation: blink 1s infinite;
 }
 
-.radial-bg {
-    background: radial-gradient(circle at top left, #ff0000 0%, #ff0000 25%, transparent 25%, transparent 50%, #00ff00 50%, #00ff00 75%, transparent 75%, transparent),
-    radial-gradient(circle at top right, #0000ff 0%, #0000ff 25%, transparent 25%, transparent 50%, #ffff00 50%, #ffff00 75%, transparent 75%, transparent);
-    background-size: 50% 100%;
-    background-repeat: no-repeat;
-}
 
 .card-bg {
     @apply bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800;
+}
+
+
+.corner-gradient {
+    background: conic-gradient(#F2E7DA 0deg, #F3EDD7 30deg, #F0D1DF 150deg, #EEBDE3 210deg, #F1DDDB 330deg, #F2E7DA 360deg);
+    background-blend-mode: screen;
 }

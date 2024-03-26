@@ -31,6 +31,7 @@ export const parseXiaoHongShuPage = async (
   const title = root
     .querySelector('meta[name="og:title"]')
     ?.getAttribute("content")
+    ?.replace(" - 小红书", "")
 
   const images = root
     .querySelectorAll('meta[name="og:image"]')

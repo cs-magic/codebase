@@ -35,69 +35,80 @@ export const Card = forwardRef<
     <div
       ref={ref}
       className={cn(
-        // 如果加overflow-auto，可以实现图片的圆角，但会导致 html-to-image 的bug
-        "rounded-lg card-bg flex flex-col",
+        "rounded-lg overflow-hidden corner-gradient p-6 w-[367px]",
         className,
       )}
       {...props}
     >
-      <div className={"w-full"}>
-        <AspectRatio ratio={card.coverRatio ?? 1}>
-          {card.type === "text-image" && card.resourceUrl && (
-            <Image
-              src={
-                // "https://picsum.photos/300/200"
-                card.resourceUrl
-              }
-              alt={""}
-              fill
-              className={"w-full h-auto rounded-t-lg"}
-            />
-          )}
+      <AspectRatio ratio={8 / 16}>
+        <div className={"h-full overflow-hidden flex flex-col"}>
+          <h1 className={"text-black font-medium my-2 shrink-0"}>Area #1</h1>
 
-          {card.type === "text-video" && card.resourceUrl && (
-            <BilibiliVideo video={{ url: card.resourceUrl, height: 240 }} />
-          )}
-        </AspectRatio>
-      </div>
+          <div
+            className={
+              "grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-4"
+            }
+          >
+            <div className={"shrink-0"}>
+              <AspectRatio ratio={card.coverRatio ?? 1}>
+                {card.type === "text-image" && card.resourceUrl && (
+                  <Image
+                    src={
+                      // "https://picsum.photos/300/200"
+                      card.resourceUrl
+                    }
+                    alt={""}
+                    fill
+                    className={"w-full h-auto"}
+                  />
+                )}
 
-      <div className={"flex flex-col gap-2 p-4"}>
-        <MarkdownComp className={"line-clamp-[10]"}>
-          {card.content ?? "No Content Yet"}
-        </MarkdownComp>
+                {card.type === "text-video" && card.resourceUrl && (
+                  <BilibiliVideo
+                    video={{ url: card.resourceUrl, height: 240 }}
+                  />
+                )}
+              </AspectRatio>
+            </div>
 
-        {card.sourceUrl && (
-          <QRCodeSVG
-            value={card.sourceUrl}
-            className={"w-12 h-12 m-2 ml-auto"}
-          />
-        )}
+            <div className={"grow overflow-hidden flex flex-col gap-2 px-2"}>
+              <MarkdownComp className={"line-clamp-[10]"}>
+                {card.content ?? "No Content Yet"}
+              </MarkdownComp>
 
-        <Separator orientation={"horizontal"} className={"bg-gray-100/10"} />
-
-        <div
-          className={
-            "text-muted-foreground text-xs flex items-center justify-between"
-          }
-        >
-          <div className={"flex gap-2 items-center justify-end"}>
-            {card.user ? (
-              <>
-                <UserAvatar user={card.user} />
-                <Label>{card.user.name}</Label>
-              </>
-            ) : (
-              "no user"
-            )}
+              {card.sourceUrl && (
+                <QRCodeSVG
+                  value={card.sourceUrl}
+                  className={"w-12 h-12 m-2 ml-auto shrink-0"}
+                />
+              )}
+            </div>
           </div>
 
-          <div className={"flex items-center gap-2"}>
-            <span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>
+          <div
+            className={
+              "text-muted-foreground text-xs flex items-center justify-between p-2"
+            }
+          >
+            <div className={"flex gap-2 items-center justify-end"}>
+              {card.user ? (
+                <>
+                  <UserAvatar user={card.user} />
+                  <Label>{card.user.name}</Label>
+                </>
+              ) : (
+                "no user"
+              )}
+            </div>
 
-            <span>from {config.website.title}</span>
+            <div className={"flex items-center gap-2"}>
+              {/*<span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>*/}
+
+              <span>PROJECT 1</span>
+            </div>
           </div>
         </div>
-      </div>
+      </AspectRatio>
     </div>
   )
 })
