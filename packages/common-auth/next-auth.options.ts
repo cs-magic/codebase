@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // compatible with credential providers
     jwt: ({ session, user, profile, token }) => {
-      console.log("[next-auth] jwt: ", { token, user, profile })
+      // console.log("[next-auth] jwt: ", { token, user, profile })
 
       // 首次注册入表 （user中有userId）
       if (user) {
@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     session: ({ session, user, token }) => {
-      console.log("[next-auth] session: ", { session, user })
+      // console.log("[next-auth] session: ", { session, user })
       return {
         ...session,
         user: {

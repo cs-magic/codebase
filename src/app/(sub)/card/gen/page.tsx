@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { BilibiliDisplayType } from "../../../../../packages/common-bilibili/componnets"
+import { useRef, useState } from "react"
+
+import { BilibiliDisplayType } from "../../../../../packages/common-bilibili/schema"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
 import { Button } from "../../../../../packages/common-ui/shadcn/shadcn-components/button"
 import { Input } from "../../../../../packages/common-ui/shadcn/shadcn-components/input"
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../../packages/common-ui/shadcn/shadcn-components/select"
+import { Switch } from "../../../../../packages/common-ui/shadcn/shadcn-components/switch"
 import { Card, CardType } from "../../../../components/card"
 import { useUserSummary } from "../../../../hooks/use-user-summary"
 
@@ -22,19 +24,28 @@ export default function GenCardPage() {
   const user = useUserSummary()
   const [cardType, setCardType] = useState<CardType>("bilibili")
   const [displayType, setDisplayType] = useState<BilibiliDisplayType>("video")
+  const refInput = useRef<HTMLInputElement>(null)
+  const [showContorl, setShowControl] = useState(false)
 
   return (
     <FlexContainer orientation={"vertical"}>
-      <Input
-        value={v}
-        onChange={(event) => {
-          setV(event.currentTarget.value)
-        }}
-      />
+      <div className={"w-full flex items-center gap-4"}>
+        <Input defaultValue={v} ref={refInput} />
 
-      <Button>Generate</Button>
+        <Button
+          onClick={() => {
+            if (!refInput.current) return
+            setV(refInput.current.value)
+          }}
+        >
+          Generate
+        </Button>
+      </div>
 
       <div className={"flex items-center gap-2"}>
+        <Label className={"shrink-0"}>Show Controls</Label>
+        <Switch checked={showContorl} onCheckedChange={setShowControl} />
+
         <Label className={"shrink-0"}>Display Type</Label>
         <Select
           defaultValue={displayType}
@@ -56,6 +67,9 @@ export default function GenCardPage() {
 
       {user && (
         <Card
+          style={{
+            width: showContorl ? 420 : 419,
+          }}
           card={{
             user,
             updatedAt: new Date(),
