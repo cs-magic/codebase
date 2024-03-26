@@ -2,7 +2,7 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { ICard } from "../../../../components/card"
 
-export type SourceType = "bilibili"
+export type SourceType = "bilibili" | "xiaohongshu"
 export const sourceTypeAtom = atomWithStorage<SourceType>(
   "source.type",
   "bilibili",
@@ -19,5 +19,5 @@ export const bilibiliVideoControlEnabledAtom = atomWithStorage(
 export const urlToParseAtom = atomWithStorage("url.toParse", "")
 
 export const bilibiliIFrameUrlAtom = atom("")
-export const bilibiliCoverUrlAtom = atom("")
-export const bilibiliContentAtom = atom("")
+export const cardCoverUrlAtom = atom("")
+export const cardContentAtom = atom("")

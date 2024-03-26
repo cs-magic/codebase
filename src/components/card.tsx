@@ -32,14 +32,14 @@ export const Card = <T extends CardType>({
   return (
     <div
       className={cn(
-        "rounded-lg overflow-hidden card-bg flex flex-col",
+        "rounded-lg overflow-auto card-bg flex flex-col",
         "w-[420px]",
         className,
       )}
       {...props}
     >
-      <div className={"w-full "}>
-        <AspectRatio ratio={16 / 9}>
+      <div className={"w-full"}>
+        <AspectRatio>
           {card.type === "text-image" && card.resourceUrl && (
             <Image
               src={
