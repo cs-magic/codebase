@@ -57,7 +57,7 @@ export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
 
     return {
       success: true,
-      data: bilibili2card(resDetail.data!),
+      data: bilibili2card(resDetail.data),
     }
   }
 
