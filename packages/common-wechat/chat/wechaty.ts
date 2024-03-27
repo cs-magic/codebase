@@ -1,11 +1,16 @@
+import { GEN_CARD_INPUT_PLACEHOLDER } from "@/config/card"
+import { env } from "@/env"
+import { chromium } from "playwright"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
+import { fetchBvidFromb23tv } from "../../common-bilibili/actions"
 import { fetchBilibiliDetail } from "../../common-bilibili/actions-client"
-import { getBvidFromb23tv } from "../../common-bilibili/utils"
 
 const wechaty = WechatyBuilder.build({
   name: "mark0", // 加了名字后就可以自动存储了
 })
+
+const browser = await chromium.launch() // Or 'firefox' or 'webkit'.
 
 void wechaty
   .on("scan", (qrcode, status) =>
@@ -26,11 +31,12 @@ void wechaty
         const m = /<url>(.*?)<\/url>/.exec(text)
         const url = m?.[1]
         if (url) {
-          const { success, data: bvid } = await getBvidFromb23tv(url)
-          if (success && bvid) {
-            const detail = await fetchBilibiliDetail(bvid)
-            console.log({ detail })
-          }
+          const page = await browser.newPage()
+          await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)
+          await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
+          await page.getByRole("button", { name: /generate/i }).click()
+
+          await browser.close()
         }
       }
     }

@@ -1,3 +1,3 @@
-import { getBvidFromb23tv } from "../../packages/common-bilibili/utils"
+import { fetchBvidFromb23tv } from "../../packages/common-bilibili/actions"
 
-void getBvidFromb23tv("https://b23.tv/sbodfSp")
+void fetchBvidFromb23tv("https://b23.tv/sbodfSp")

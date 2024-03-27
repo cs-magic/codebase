@@ -1,4 +1,5 @@
 import { IApi } from "../../packages/common-api/schema"
+import { fetchBvidFromb23tv } from "../../packages/common-bilibili/actions"
 import { fetchBilibiliDetail } from "../../packages/common-bilibili/actions-client"
 import { IBilibiliVideoDetail } from "../../packages/common-bilibili/schema"
 import {
@@ -37,8 +38,11 @@ export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
     }
   }
 
-  if (/bilibili/.test(urlParsed)) {
-    const bvid = getBvidFromUrl(urlParsed)
+  if (/bilibili|b23.tv/.test(urlParsed)) {
+    let bvid: string | null
+    if (/bilibili/.test(urlParsed)) bvid = getBvidFromUrl(urlParsed)
+    else bvid = (await fetchBvidFromb23tv(urlParsed)).data ?? null
+
     if (!bvid)
       return {
         success: false,

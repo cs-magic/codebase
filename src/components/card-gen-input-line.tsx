@@ -1,10 +1,10 @@
 "use client"
 
 import { useAtom, useSetAtom } from "jotai"
-import { useEffect } from "react"
 import { toast } from "sonner"
 import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
+import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 
 import {
   cardContentAtom,
@@ -27,7 +27,8 @@ export const InputLine = () => {
   return (
     <div className={"w-full flex items-center gap-4"}>
       <Input
-        placeholder={"支持小红书、Bilibili……"}
+        id={"input-url"}
+        placeholder={GEN_CARD_INPUT_PLACEHOLDER}
         className={"grow"}
         value={inputUrl}
         onChange={(event) => {
