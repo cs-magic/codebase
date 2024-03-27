@@ -1,7 +1,7 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import {
   Select,
@@ -26,7 +26,18 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
     bilibiliVideoControlEnabledAtom,
   )
   const [coping, setCoping] = useState(false)
-  const [platformType] = useAtom(platformTypeAtom)
+  const [platformType, setPlatformType] = useAtom(platformTypeAtom)
+
+  useEffect(() => {
+    if (
+      (platformType === "bilibili" &&
+        !["text-image", "text-iframe"].includes(cardType)) ||
+      (platformType === "xiaohongshu" &&
+        !["text-image", "text-video"].includes(cardType))
+    ) {
+      setCardType("text-image")
+    }
+  }, [platformType])
 
   return (
     <div className={"flex items-center gap-2"}>

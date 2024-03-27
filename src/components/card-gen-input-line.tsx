@@ -1,6 +1,7 @@
 "use client"
 
 import { useAtom, useSetAtom } from "jotai"
+import { useEffect } from "react"
 import { toast } from "sonner"
 import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { Input } from "../../packages/common-ui-shadcn/components/input"

@@ -24,9 +24,16 @@ export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
     }
 
   if (/xhslink|xiaohongshu/.test(urlParsed)) {
+    const data = await fetchXiaoHongShuDetail(urlParsed)
+    if (!data)
+      return {
+        success: false,
+        message: `failed to fetch xiaohongshu detail from url ${urlParsed}, please try again`,
+      }
+
     return {
       success: true,
-      data: xiaohongshu2card(await fetchXiaoHongShuDetail(urlParsed)),
+      data: xiaohongshu2card(data),
     }
   }
 

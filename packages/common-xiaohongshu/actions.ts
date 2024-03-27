@@ -30,7 +30,7 @@ import { IXiaoHongShuNotePageData } from "./schema"
  */
 export const fetchXiaoHongShuDetail = async (
   url: string,
-): Promise<IXiaoHongShuNotePageData> => {
+): Promise<IXiaoHongShuNotePageData | null> => {
   console.log({ url })
 
   const res = await fetch(url, {
@@ -44,6 +44,11 @@ export const fetchXiaoHongShuDetail = async (
     html,
   )
 
-  if (!jsonData) throw new Error("no json data")
-  return deserialize(jsonData[1]!) as IXiaoHongShuNotePageData
+  if (!jsonData?.[1]) return null
+
+  const data = deserialize(jsonData[1]) as IXiaoHongShuNotePageData
+
+  // console.log({ data })
+
+  return data
 }
