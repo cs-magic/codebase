@@ -50,10 +50,7 @@ export const Card = forwardRef<
   return (
     <div
       ref={ref}
-      className={cn(
-        "rounded-lg overflow-hidden corner-gradient p-6 min-w-[367px]",
-        className,
-      )}
+      className={cn("rounded-lg corner-gradient p-6 min-w-[367px]", className)}
       style={{
         padding,
         width:
@@ -73,8 +70,8 @@ export const Card = forwardRef<
               "w-full grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
             }
           >
-            {media && (
-              <div className={"w-full shrink-0"}>
+            <div id={"card-media"} className={"w-full shrink-0"}>
+              {media && (
                 <AspectRatio ratio={media.width / media.height} ref={refMedia}>
                   <CardMedia
                     width={width}
@@ -83,8 +80,8 @@ export const Card = forwardRef<
                     type={card.type}
                   />
                 </AspectRatio>
-              </div>
-            )}
+              )}
+            </div>
 
             <div className={"px-2 grow overflow-hidden relative flex flex-col"}>
               <div ref={refText} className={"grow overflow-hidden"}>

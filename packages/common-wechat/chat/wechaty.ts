@@ -1,25 +1,17 @@
-import { GEN_CARD_INPUT_PLACEHOLDER } from "@/config/card"
-import { env } from "@/env"
-import { chromium } from "playwright"
+import { downloadCardFromServer } from "@/utils/server-download-card"
+import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
-import {
-  fetchBilibiliDetail,
-  fetchBvidFromb23tv,
-} from "../../common-bilibili/actions"
 
-const wechaty = WechatyBuilder.build({
+void WechatyBuilder.build({
   name: "mark0", // 加了名字后就可以自动存储了
 })
-
-const browser = await chromium.launch() // Or 'firefox' or 'webkit'.
-
-void wechaty
-  .on("scan", (qrcode, status) =>
+  .on("scan", (value, status) => {
     console.log(
-      `Scan QR Code to login: ${status}\nhttps://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
-    ),
-  )
+      `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
+    )
+    qrcodeTerminal.generate(value, { small: true })
+  })
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
     const text = message.text()
@@ -30,16 +22,10 @@ void wechaty
     // link
     if (message.type() === types.Message.Url) {
       if (text.includes("哔哩哔哩")) {
+        console.log("-- parsing bilibili")
         const m = /<url>(.*?)<\/url>/.exec(text)
         const url = m?.[1]
-        if (url) {
-          const page = await browser.newPage()
-          await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)
-          await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
-          await page.getByRole("button", { name: /generate/i }).click()
-
-          await browser.close()
-        }
+        if (url) await downloadCardFromServer(url)
       }
     }
   })
