@@ -18,7 +18,7 @@ export const UserInputAvatar = () => {
           const files = event.currentTarget.files
           if (!files?.length) return
           const data = await uploadFiles(files)
-          if (data.success) setDraft(data.data![0])
+          if (data.success) setDraft(data.data[0])
         }}
       />
     </Label>
