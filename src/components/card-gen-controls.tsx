@@ -13,12 +13,12 @@ import {
 } from "../../packages/common-ui-shadcn/components/select"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
+import { CardType } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
-  CardType,
   cardTypeAtom,
   platformTypeAtom,
-} from "../app/(sub)/card/gen/store"
+} from "../store/card.atom"
 
 export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
   const [cardType, setCardType] = useAtom(cardTypeAtom)
@@ -26,7 +26,7 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
     bilibiliVideoControlEnabledAtom,
   )
   const [coping, setCoping] = useState(false)
-  const [sourceType] = useAtom(platformTypeAtom)
+  const [platformType] = useAtom(platformTypeAtom)
 
   return (
     <div className={"flex items-center gap-2"}>
@@ -41,25 +41,36 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
 
         <SelectContent>
           <SelectGroup>
-            <SelectItem value={"text-image" as CardType}>
-              Text with Image
+            <SelectItem value={"text-image" as CardType}>Image</SelectItem>
+
+            <SelectItem
+              value={"text-video" as CardType}
+              disabled={platformType !== "xiaohongshu"}
+            >
+              Video （目前支持：小红书）
             </SelectItem>
-            <SelectItem value={"text-video" as CardType}>
-              Text with Video
+
+            <SelectItem
+              value={"text-iframe" as CardType}
+              disabled={platformType !== "bilibili"}
+            >
+              IFrame （目前支持：B站）
             </SelectItem>
+
             <SelectItem value={"text" as CardType} disabled>
               Plain Text (todo)
             </SelectItem>
+
             <SelectItem value={"text-gif" as CardType} disabled>
-              Text with GIF (todo)
+              GIF (todo)
             </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
 
-      {cardType === "text-video" && (
+      {cardType === "text-iframe" && (
         <>
-          <Label className={"shrink-0"}>Show Video Controls</Label>
+          <Label className={"shrink-0"}>Show IFrame Controls</Label>
           <Switch
             checked={bilibiliVideoControlEnabled}
             onCheckedChange={setBilibiliVideoControlEnabled}

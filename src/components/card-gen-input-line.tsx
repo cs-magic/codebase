@@ -4,6 +4,7 @@ import { useAtom, useSetAtom } from "jotai"
 import { toast } from "sonner"
 import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
+
 import {
   cardContentAtom,
   cardIFramesAtom,
@@ -11,7 +12,7 @@ import {
   cardVideosAtom,
   platformTypeAtom,
   urlToParseAtom,
-} from "../app/(sub)/card/gen/store"
+} from "../store/card.atom"
 import { url2card } from "../utils/parse-card"
 
 export const InputLine = () => {
@@ -35,11 +36,12 @@ export const InputLine = () => {
 
       <Button
         onClick={async () => {
-          const res = await url2card(inputUrl)
-          if (!res.data || !res.success) return toast.error(res.message)
+          const card = await url2card(inputUrl)
+          console.log("-- parsed card: ", card)
+          if (!card.data || !card.success) return toast.error(card.message)
 
           const { iFrames, videos, content, images, platform, sourceUrl } =
-            res.data
+            card.data
 
           if (platform) setPlatformType(platform)
           if (content) setContent(content)

@@ -23,16 +23,14 @@ import { getBilibiliIFrameUrl, getBvidFromUrl } from "./utils"
  * @constructor
  */
 export const BilibiliVideo = ({ video }: { video: IBilibiliVideo }) => {
-  const bvid = getBvidFromUrl(video.url)
-
   const url = getBilibiliIFrameUrl(video)
 
-  return !bvid ? null : (
+  return (
     <iframe
-      title={video.title}
       src={url}
-      width={video.width ?? "100%"}
-      height={video.height ?? "100%"}
+      title={video.title}
+      width={video.width}
+      height={video.height}
       allowFullScreen
     />
   )

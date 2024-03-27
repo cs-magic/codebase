@@ -1,8 +1,9 @@
 import Image from "next/image"
 import ReactPlayer from "react-player"
+import { toast } from "sonner"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
-import { CardType } from "../app/(sub)/card/gen/store"
-import { IMedia } from "../schema/card"
+import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
+import { CardType, IMedia } from "../schema/card"
 
 export const CardMedia = ({
   width,
@@ -29,10 +30,13 @@ export const CardMedia = ({
         />
       )
 
+    // todo: more iframe
     case "text-iframe":
-      return (
-        // todo: more iframe
-        <BilibiliVideo video={{ url, height, width }} />
-      )
+      const bvid = getBvidFromUrl(url)
+      if (!bvid) {
+        toast.error(`no bvid parsed from url: ${url}`)
+        return
+      }
+      return <BilibiliVideo video={{ bvid, height, width }} />
   }
 }

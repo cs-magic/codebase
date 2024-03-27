@@ -3,14 +3,21 @@
 import { useAtom } from "jotai"
 import { first } from "lodash"
 import { QRCodeSVG } from "qrcode.react"
-import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react"
+import { forwardRef, HTMLAttributes, useRef } from "react"
 import { useMeasure } from "react-use"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { CardType, cardTypeAtom } from "../app/(sub)/card/gen/store"
-import { ICard, IMedia } from "../schema/card"
+import {
+  useAutoCardContent,
+  useInitCardContent,
+} from "../hooks/use-card-content"
+import { CardType, ICard, IMedia } from "../schema/card"
+import {
+  bilibiliVideoControlEnabledAtom,
+  realtimeContentAtom,
+} from "../store/card.atom"
 import { CardMedia } from "./card-media"
 import { UserAvatar } from "./user-avatar"
 
@@ -18,29 +25,13 @@ export const Card = forwardRef<
   HTMLDivElement,
   { card: ICard } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
-  const [cardType] = useAtom(cardTypeAtom)
-  const [content, setContent] = useState("")
+  const [content] = useAtom(realtimeContentAtom)
+  const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
 
-  // 1. init content
-  useEffect(() => {
-    if (!card.body.content) return
-    setContent(card.body.content)
-  }, [card.body.content, cardType])
+  useInitCardContent({ card })
 
-  // 2. overflow
   const refText = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (!refText.current) return
-
-    const { scrollHeight, clientHeight } = refText.current
-    const overflow = scrollHeight > clientHeight
-    // console.log({ content, scrollHeight, clientHeight, overflow })
-    if (!overflow) return
-
-    setContent(
-      (content) => content?.slice(0, Math.min(content?.length - 5, 100)) + "…",
-    )
-  }, [content])
+  useAutoCardContent({ refText })
 
   const { type, body } = card
   const m: Partial<Record<CardType, IMedia[] | undefined>> = {
@@ -52,13 +43,23 @@ export const Card = forwardRef<
 
   const [refMedia, { width, height }] = useMeasure<HTMLDivElement>()
 
+  const padding = 24
+
   return (
     <div
       ref={ref}
       className={cn(
-        "rounded-lg overflow-hidden corner-gradient p-6 w-[367px]",
+        "rounded-lg overflow-hidden corner-gradient p-6 min-w-[367px]",
         className,
       )}
+      style={{
+        padding,
+        width:
+          padding * 2 +
+          (card.type === "text-iframe" && bilibiliVideoControlEnabled
+            ? 420
+            : 419),
+      }}
       {...props}
     >
       <AspectRatio ratio={8 / 16}>

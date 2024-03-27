@@ -5,9 +5,9 @@ import {
   getBilibiliIFrameUrl,
   getBvidFromUrl,
 } from "../../packages/common-bilibili/utils"
+import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { IXiaoHongShuNotePageData } from "../../packages/common-xiaohongshu/schema"
-import { extractFirstURL } from "../app/(sub)/card/gen/utils"
 import { ICardBody } from "../schema/card"
 
 /**

@@ -11,18 +11,16 @@ import { InputLine } from "../../../../components/card-gen-input-line"
 import { useUserSummary } from "../../../../hooks/use-user-summary"
 import { ICard } from "../../../../schema/card"
 import {
-  bilibiliVideoControlEnabledAtom,
   cardContentAtom,
   cardIFramesAtom,
   cardImagesAtom,
   cardTypeAtom,
   cardVideosAtom,
   urlParsedAtom,
-} from "./store"
+} from "../../../../store/card.atom"
 
 export default function GenCardPage() {
   const [cardType] = useAtom(cardTypeAtom)
-  const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
   const [content] = useAtom(cardContentAtom)
   const [urlParsed] = useAtom(urlParsedAtom)
   const [images] = useAtom(cardImagesAtom)
@@ -72,17 +70,7 @@ export default function GenCardPage() {
 
       <Controls copyCard={copyCard} />
 
-      {!card ? (
-        "You should login first."
-      ) : (
-        <Card
-          ref={refCard}
-          style={{
-            width: bilibiliVideoControlEnabled ? 420 : 419,
-          }}
-          card={card}
-        />
-      )}
+      {!card ? "You should login first." : <Card ref={refCard} card={card} />}
     </FlexContainer>
   )
 }
