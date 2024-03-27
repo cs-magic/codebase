@@ -1,3 +1,6 @@
+# wechaty
+**/*.memory-card.json
+
 .env.cs-magic.cn
 # zod
 prisma/generated

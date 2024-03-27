@@ -25,8 +25,9 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
   const [bilibiliVideoControlEnabled, setBilibiliVideoControlEnabled] = useAtom(
     bilibiliVideoControlEnabledAtom,
   )
+  const [platformType] = useAtom(platformTypeAtom)
+
   const [coping, setCoping] = useState(false)
-  const [platformType, setPlatformType] = useAtom(platformTypeAtom)
 
   useEffect(() => {
     if (
