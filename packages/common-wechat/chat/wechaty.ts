@@ -1,4 +1,5 @@
 import { downloadCardFromServer } from "@/utils/server-download-card"
+import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
@@ -25,7 +26,16 @@ void WechatyBuilder.build({
         console.log("-- parsing bilibili")
         const m = /<url>(.*?)<\/url>/.exec(text)
         const url = m?.[1]
-        if (url) await downloadCardFromServer(url)
+        if (!url) return
+        const { success, data } = await downloadCardFromServer(url)
+        if (!success) return
+
+        // const file = FileBox.fromBuffer(Buffer.from([]))
+        // const file = FileBox.fromUrl(data.filePath)
+        const file = FileBox.fromStream(data.stream, data.fileName)
+        // console.log("-- sending file: ", file)
+        await message.say(file)
+        console.log("-- ✅ sent file")
       }
     }
   })

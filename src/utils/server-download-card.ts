@@ -2,10 +2,15 @@
 
 import path from "path"
 import { chromium } from "playwright"
+import internal from "stream"
+import { IApi } from "../../packages/common-api/schema"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
 
-export const downloadCardFromServer = async (url: string) => {
+export const downloadCardFromServer = async (
+  url: string,
+  // type: "buffer" | "download",
+) => {
   const browser = await chromium.launch({}) // Or 'firefox' or 'webkit'.
 
   const downloadsPath = "/tmp"
@@ -20,28 +25,39 @@ export const downloadCardFromServer = async (url: string) => {
     },
   })
 
-  page.on("download", async (download) => {
-    // console.log("-- download: ", download)
-    await download.saveAs(
-      path.join(downloadsPath, download.suggestedFilename()),
-    )
+  return new Promise<
+    IApi<{ fileName: string; filePath: string; stream: internal.Readable }>
+  >(async (resolve, reject) => {
+    page.on("download", async (download) => {
+      // console.log("-- download: ", download)
 
-    console.log("-- ✅ downloaded, to close page")
-    await page.close()
+      const fileName = download.suggestedFilename()
+      const filePath = path.join(downloadsPath, fileName)
+      await download.saveAs(filePath)
+
+      const stream = await download.createReadStream()
+
+      resolve({ success: true, data: { fileName, filePath, stream } })
+
+      console.log("-- ✅ downloaded, to close page")
+      await page.close()
+    })
+
+    const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
+    console.log("-- to visit targetUrl: ", targetUrl)
+    await page.goto(targetUrl)
+    console.log("-- to input: ", url)
+    await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
+    console.log("-- to click generate button")
+    await page.getByRole("button", { name: /generate/i }).click()
+    await page.waitForFunction(() => {
+      const h = document.getElementById("card-media")?.clientHeight
+      return !!h && h > 0
+    })
+
+    console.log("-- to click download button")
+    await page
+      .getByRole("button", { name: /download/i })
+      .click({ timeout: 3000 })
   })
-
-  const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
-  console.log("-- to visit targetUrl: ", targetUrl)
-  await page.goto(targetUrl)
-  console.log("-- to input: ", url)
-  await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
-  console.log("-- to click generate button")
-  await page.getByRole("button", { name: /generate/i }).click()
-  await page.waitForFunction(() => {
-    const h = document.getElementById("card-media")?.clientHeight
-    return !!h && h > 0
-  })
-
-  console.log("-- to click download button")
-  await page.getByRole("button", { name: /download/i }).click({ timeout: 3000 })
 }
