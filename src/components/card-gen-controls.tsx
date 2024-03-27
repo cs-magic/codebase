@@ -17,7 +17,7 @@ import {
   bilibiliVideoControlEnabledAtom,
   CardType,
   cardTypeAtom,
-  sourceTypeAtom,
+  platformTypeAtom,
 } from "../app/(sub)/card/gen/store"
 
 export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
@@ -26,7 +26,7 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
     bilibiliVideoControlEnabledAtom,
   )
   const [coping, setCoping] = useState(false)
-  const [sourceType] = useAtom(sourceTypeAtom)
+  const [sourceType] = useAtom(platformTypeAtom)
 
   return (
     <div className={"flex items-center gap-2"}>

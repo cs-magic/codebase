@@ -1,5 +1,10 @@
 export interface IBilibiliVideoDetail {
   View: {
+    dimension: {
+      width: number
+      height: number
+      rotate: number // 0
+    }
     bvid: string
     aid: number
     cid: number
@@ -31,7 +36,7 @@ export interface IBilibiliVideoDetail {
 }
 
 export interface IBilibiliVideo {
-  url: string
+  bvid: string
   title?: string
   width?: number // default: 1080, w>=420的时候有调控选项
   height?: number // default: 720

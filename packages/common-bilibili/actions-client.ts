@@ -2,11 +2,11 @@
 
 import { IBilibiliVideoDetail } from "./schema"
 
-export const getBilibiliDetail = async (
+export const fetchBilibiliDetail = async (
   bvid: string,
 ): Promise<IBilibiliVideoDetail> => {
   const url = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&need_view=1`
-  console.log({ url })
+  console.debug({ url })
 
   const res = await fetch(url, {
     headers: {
@@ -16,7 +16,7 @@ export const getBilibiliDetail = async (
   })
 
   const data = await res.json()
-  console.log("getBilibiliDetail: ", data)
+  console.debug("getBilibiliDetail: ", data)
 
   if (data.code !== 0) throw new Error(JSON.stringify(data))
 

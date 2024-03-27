@@ -7,14 +7,12 @@ import { IBilibiliVideo } from "./schema"
  */
 export const getBvidFromUrl = (url: string): string | null => {
   const m = url.match(/(BV.*?)(?=(\/|$))/)
-  return m ? m[1] ?? null : m
+  return m?.[1] ?? null
 }
 
 export const getBilibiliIFrameUrl = (video: IBilibiliVideo) => {
-  const bvid = getBvidFromUrl(video.url)
-
   let url = "//player.bilibili.com/player.html"
-  url += `?bvid=${bvid}&cid=794775520`
+  url += `?bvid=${video.bvid}&cid=794775520`
   // url += `&cid=${cid}`
   url += `&danmaku=${video.enableDanmu ?? 0}`
   url += `&high_quality=${video.enableHighQuality ?? 1}`

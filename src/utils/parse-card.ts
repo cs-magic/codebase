@@ -1,0 +1,84 @@
+import { IApi } from "../../packages/common-api/schema"
+import { fetchBilibiliDetail } from "../../packages/common-bilibili/actions-client"
+import { IBilibiliVideoDetail } from "../../packages/common-bilibili/schema"
+import {
+  getBilibiliIFrameUrl,
+  getBvidFromUrl,
+} from "../../packages/common-bilibili/utils"
+import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
+import { IXiaoHongShuNotePageData } from "../../packages/common-xiaohongshu/schema"
+import { extractFirstURL } from "../app/(sub)/card/gen/utils"
+import { ICardBody } from "../schema/card"
+
+/**
+ * 从用户输入的 url 中返回解析出的结构
+ * @param url
+ */
+export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
+  const urlParsed = extractFirstURL(url)
+  console.log({ urlParsed })
+  if (!urlParsed)
+    return {
+      success: false,
+      message: `invalid url to be parsed from ${url}`,
+    }
+
+  if (/xhslink|xiaohongshu/.test(urlParsed)) {
+    return {
+      success: true,
+      data: xiaohongshu2card(await fetchXiaoHongShuDetail(urlParsed)),
+    }
+  }
+
+  if (/bilibili/.test(urlParsed)) {
+    const bvid = getBvidFromUrl(urlParsed)
+    if (!bvid)
+      return {
+        success: false,
+        message: `invalid bilibili url to be parsed from ${urlParsed}`,
+      }
+
+    return {
+      success: true,
+      data: bilibili2card(await fetchBilibiliDetail(bvid)),
+    }
+  }
+
+  return { success: false, message: "couldn't decide which platform is" }
+}
+
+export const bilibili2card = (data: IBilibiliVideoDetail): ICardBody => {
+  const { width, height } = data.View.dimension
+  return {
+    platform: "bilibili",
+    content: data.View.desc,
+    images: [{ url: data.View.pic, width, height }],
+    iFrames: [
+      {
+        url: getBilibiliIFrameUrl({ bvid: data.View.bvid }),
+        width,
+        height,
+      },
+    ],
+  }
+}
+
+export const xiaohongshu2card = (data: IXiaoHongShuNotePageData): ICardBody => {
+  const note = data.note.noteDetailMap[data.note.firstNoteId]?.note
+  if (!note) throw new Error("no note")
+
+  return {
+    platform: "xiaohongshu",
+    content: `# ${note.title}\n\n${note.desc}\n\n`,
+    videos: note.video.media.stream.h264.map((v) => ({
+      url: `/api/video-proxy?url=${v.masterUrl}`,
+      height: v.height,
+      width: v.width,
+    })),
+    images: note.imageList.map((i) => ({
+      url: i.urlDefault,
+      width: i.width,
+      height: i.height,
+    })),
+  }
+}

@@ -1,12 +1,12 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
-import { ICard, IMedia } from "../../../../schema/card"
+import { IMedia } from "../../../../schema/card"
 import { extractFirstURL } from "./utils"
 
-export type SourceType = "bilibili" | "xiaohongshu"
-export const sourceTypeAtom = atomWithStorage<SourceType>(
-  "source.type",
+export type PlatformType = "bilibili" | "xiaohongshu"
+export const platformTypeAtom = atomWithStorage<PlatformType>(
+  "platform.type",
   "bilibili",
 )
 

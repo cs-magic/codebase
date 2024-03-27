@@ -1,5 +1,5 @@
-import { parseXiaoHongShuPage } from "../packages/common-xiaohongshu/actions"
+import { fetchXiaoHongShuDetail } from "../packages/common-xiaohongshu/actions"
 
-void parseXiaoHongShuPage(
+void fetchXiaoHongShuDetail(
   "https://www.xiaohongshu.com/explore/65f11790000000000d00cd04",
 )
