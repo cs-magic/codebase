@@ -1,41 +1,33 @@
-import { useElementSize } from "@mantine/hooks"
-import Image from "next/image"
+"use client"
+
+import { useAtom } from "jotai"
+import { first } from "lodash"
 import { QRCodeSVG } from "qrcode.react"
 import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react"
-import ReactPlayer from "react-player"
 import { useMeasure } from "react-use"
-import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { IUserSummary } from "../schema/user.summary"
+import { CardType, cardTypeAtom } from "../app/(sub)/card/gen/store"
+import { ICard, IMedia } from "../schema/card"
+import { CardMedia } from "./card-media"
 import { UserAvatar } from "./user-avatar"
-import { CardType } from "@/app/(sub)/card/gen/store"
-
-export type ICard = {
-  type: CardType
-
-  user?: IUserSummary
-  updatedAt: Date
-
-  resourceUrl?: string
-  content?: string
-  sourceUrl?: string | null
-  coverRatio?: number
-}
 
 export const Card = forwardRef<
   HTMLDivElement,
   { card: ICard } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
+  const [cardType] = useAtom(cardTypeAtom)
   const [content, setContent] = useState("")
+
+  // 1. init content
   useEffect(() => {
-    if (!card.content) return
+    if (!card.body.content) return
+    setContent(card.body.content)
+  }, [card.body.content, cardType])
 
-    setContent(card.content)
-  }, [card.content])
-
+  // 2. overflow
   const refText = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (!refText.current) return
@@ -52,7 +44,15 @@ export const Card = forwardRef<
 
   console.log("-- card: ", card)
 
-  const [refPlayer, { width, height }] = useMeasure<HTMLDivElement>()
+  const { type, body } = card
+  const m: Partial<Record<CardType, IMedia[] | undefined>> = {
+    "text-image": body.images,
+    "text-iframe": body.iFrames,
+    "text-video": body.videos,
+  }
+  const media = first(m[type])
+
+  const [refMedia, { width, height }] = useMeasure<HTMLDivElement>()
 
   return (
     <div
@@ -72,47 +72,27 @@ export const Card = forwardRef<
               "w-full grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
             }
           >
-            <div className={"w-full shrink-0"}>
-              <AspectRatio ratio={card.coverRatio ?? 1} ref={refPlayer}>
-                {card.type === "text-image" && card.resourceUrl && (
-                  <Image
-                    src={
-                      // "https://picsum.photos/300/200"
-                      card.resourceUrl
-                    }
-                    alt={""}
-                    fill
-                    className={"w-full h-auto"}
-                  />
-                )}
-
-                {card.type === "text-iframe" && card.resourceUrl && (
-                  // todo: more iframe
-                  <BilibiliVideo
-                    video={{ url: card.resourceUrl, height: 240 }}
-                  />
-                )}
-
-                {card.type === "text-video" && card.resourceUrl && (
-                  <ReactPlayer
-                    // playing
-                    controls
-                    url={card.resourceUrl}
+            {media && (
+              <div className={"w-full shrink-0"}>
+                <AspectRatio ratio={media.width / media.height} ref={refMedia}>
+                  <CardMedia
                     width={width}
                     height={height}
+                    url={media.url}
+                    type={card.type}
                   />
-                )}
-              </AspectRatio>
-            </div>
+                </AspectRatio>
+              </div>
+            )}
 
             <div className={"px-2 grow overflow-hidden relative flex flex-col"}>
               <div ref={refText} className={"grow overflow-hidden"}>
                 <MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>
               </div>
 
-              {card.sourceUrl && (
+              {card.body.sourceUrl && (
                 <QRCodeSVG
-                  value={card.sourceUrl}
+                  value={card.body.sourceUrl}
                   className={"w-12 h-12 m-2 ml-auto shrink-0"}
                 />
               )}

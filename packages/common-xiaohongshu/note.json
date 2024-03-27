@@ -1,0 +1,143 @@
+{
+  "shareInfo": {
+    "unShare": false
+  },
+  "interactInfo": {
+    "collected": false,
+    "collectedCount": "100+",
+    "commentCount": "10+",
+    "shareCount": "7",
+    "followed": false,
+    "relation": "none",
+    "liked": false,
+    "likedCount": "1k+"
+  },
+  "desc": "这算爆改成功了吗[害羞R]原作者也是我@姜姜今天买点啥 ，平台大大不要误判#关于我的crush[话题]# #我的暗恋日记[话题]# #颜值[话题]# #爆改[话题]#",
+  "video": {
+    "consumer": {
+      "originVideoKey": "pre_post/1040g0cg31092ndsgmo405oljq53msjlaapjnq5o"
+    },
+    "media": {
+      "videoId": 136780447177259550,
+      "video": {
+        "bizName": 110,
+        "bizId": "280895635286445316",
+        "duration": 14,
+        "md5": "6820bd7dd034cd804d88a7f5748ae79f",
+        "hdrType": 0,
+        "drmType": 0,
+        "streamTypes": [
+          258
+        ]
+      },
+      "stream": {
+        "h264": [
+          {
+            "vmaf": -1,
+            "ssim": 0,
+            "fps": 30,
+            "videoBitrate": 663302,
+            "videoDuration": 13466,
+            "rotate": 0,
+            "streamType": 258,
+            "defaultStream": 0,
+            "format": "mp4",
+            "backupUrls": [
+              "http://sns-video-qc.xhscdn.com/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4?sign=b30a79c88dffd57ddaaafdeabc7b17a7&t=660592d4",
+              "http://sns-video-hw.xhscdn.com/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4",
+              "http://sns-video-al.xhscdn.com/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4",
+              "http://sns-video-hw.xhscdn.net/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4",
+              "https://rcdn.xiaohongshu.com/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4?sign=b30a79c88dffd57ddaaafdeabc7b17a7&t=660592d4"
+            ],
+            "avgBitrate": 727252,
+            "videoCodec": "h264",
+            "height": 1280,
+            "audioCodec": "aac",
+            "audioChannels": 2,
+            "masterUrl": "http://sns-video-bd.xhscdn.com/stream/110/258/01e5f1178e383a1b010370038e36b72b23_258.mp4",
+            "hdrType": 0,
+            "audioBitrate": 56747,
+            "audioDuration": 13467,
+            "weight": 62,
+            "streamDesc": "X264_MP4",
+            "duration": 13468,
+            "size": 1224330,
+            "width": 720,
+            "volume": 0,
+            "psnr": 0,
+            "qualityType": "HD"
+          }
+        ],
+        "h265": [],
+        "av1": []
+      }
+    },
+    "image": {
+      "firstFrameFileid": "110/0/01e5f1178e383a1b0010000000018e35c41668_0.jpg",
+      "thumbnailFileid": "110/0/01e5f1178e383a1b0010000000018e36b705b2_0.webp"
+    },
+    "capa": {
+      "duration": 13
+    }
+  },
+  "ipLocation": "山东",
+  "type": "video",
+  "title": "高中拒绝我的男生后悔了吗 非主流爆改",
+  "tagList": [
+    {
+      "id": "623d5674000000000101f7ab",
+      "name": "关于我的crush",
+      "type": "topic"
+    },
+    {
+      "id": "5d90cce20000000001038915",
+      "name": "我的暗恋日记",
+      "type": "topic"
+    },
+    {
+      "id": "5cb0d404000000000f004996",
+      "name": "颜值",
+      "type": "topic"
+    },
+    {
+      "id": "5be6da0f50fe560001fffc4c",
+      "name": "爆改",
+      "type": "topic"
+    }
+  ],
+  "time": 1710299024000,
+  "noteId": "65f11790000000000d00cd04",
+  "imageList": [
+    {
+      "urlDefault": "http://sns-webpic-qc.xhscdn.com/202403271851/36b09bc831ca1d604a46b21d066e6dcf/1040g00831094bs04mg6g5oljq53msjlalbusrqo!nd_dft_wlteh_jpg_3",
+      "fileId": "",
+      "height": 1012,
+      "width": 759,
+      "url": "",
+      "traceId": "",
+      "infoList": [
+        {
+          "imageScene": "WB_PRV",
+          "url": "http://sns-webpic-qc.xhscdn.com/202403271851/d95a31e94b0d5f4036f42d935b9a67b2/1040g00831094bs04mg6g5oljq53msjlalbusrqo!nd_prv_wlteh_jpg_3"
+        },
+        {
+          "imageScene": "WB_DFT",
+          "url": "http://sns-webpic-qc.xhscdn.com/202403271851/36b09bc831ca1d604a46b21d066e6dcf/1040g00831094bs04mg6g5oljq53msjlalbusrqo!nd_dft_wlteh_jpg_3"
+        }
+      ],
+      "urlPre": "http://sns-webpic-qc.xhscdn.com/202403271851/d95a31e94b0d5f4036f42d935b9a67b2/1040g00831094bs04mg6g5oljq53msjlalbusrqo!nd_prv_wlteh_jpg_3"
+    }
+  ],
+  "atUserList": [
+    {
+      "userId": "62a146800000000015018bd7",
+      "nickname": "姜姜今天买点啥"
+    }
+  ],
+  "lastUpdateTime": 1710314938000,
+  "user": {
+    "userId": "62b3d147000000001b024eaa",
+    "nickname": "姜白开",
+    "avatar": "https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30vlpini9m0605oljq53msjlaq8bl0ao"
+  }
+}

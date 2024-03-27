@@ -1,3 +1,6 @@
+"use client"
+
+import { useAtom } from "jotai"
 import { toast } from "sonner"
 import { getBilibiliDetail } from "../../packages/common-bilibili/actions-client"
 import {
