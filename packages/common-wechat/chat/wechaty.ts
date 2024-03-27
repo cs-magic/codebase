@@ -3,8 +3,10 @@ import { env } from "@/env"
 import { chromium } from "playwright"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
-import { fetchBvidFromb23tv } from "../../common-bilibili/actions"
-import { fetchBilibiliDetail } from "../../common-bilibili/actions-client"
+import {
+  fetchBilibiliDetail,
+  fetchBvidFromb23tv,
+} from "../../common-bilibili/actions"
 
 const wechaty = WechatyBuilder.build({
   name: "mark0", // 加了名字后就可以自动存储了

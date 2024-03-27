@@ -1,6 +1,8 @@
 import { IApi } from "../../packages/common-api/schema"
-import { fetchBvidFromb23tv } from "../../packages/common-bilibili/actions"
-import { fetchBilibiliDetail } from "../../packages/common-bilibili/actions-client"
+import {
+  fetchBilibiliDetail,
+  fetchBvidFromb23tv,
+} from "../../packages/common-bilibili/actions"
 import { IBilibiliVideoDetail } from "../../packages/common-bilibili/schema"
 import {
   getBilibiliIFrameUrl,
@@ -49,9 +51,13 @@ export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
         message: `invalid bilibili url to be parsed from ${urlParsed}`,
       }
 
+    const resDetail = await fetchBilibiliDetail(bvid)
+    if (!resDetail.success)
+      return { success: false, message: resDetail.message }
+
     return {
       success: true,
-      data: bilibili2card(await fetchBilibiliDetail(bvid)),
+      data: bilibili2card(resDetail.data!),
     }
   }
 
@@ -62,7 +68,7 @@ export const bilibili2card = (data: IBilibiliVideoDetail): ICardBody => {
   const { width, height } = data.View.dimension
   return {
     platform: "bilibili",
-    content: data.View.desc,
+    content: `# ${data.View.title}\n\n${data.View.desc}`,
     images: [{ url: data.View.pic, width, height }],
     iFrames: [
       {
