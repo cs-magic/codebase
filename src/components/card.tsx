@@ -16,7 +16,7 @@ import {
 import { CardType, ICard, IMedia } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
-  realtimeContentAtom,
+  cardRenderedContentAtom,
 } from "../store/card.atom"
 import { CardMedia } from "./card-media"
 import { UserAvatar } from "./user-avatar"
@@ -25,7 +25,7 @@ export const Card = forwardRef<
   HTMLDivElement,
   { card: ICard } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
-  const [content] = useAtom(realtimeContentAtom)
+  const [content] = useAtom(cardRenderedContentAtom)
   const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
 
   useInitCardContent({ card })
@@ -35,15 +35,17 @@ export const Card = forwardRef<
 
   const { type, body } = card
   const m: Partial<Record<CardType, IMedia[] | undefined>> = {
-    "text-image": body.images,
-    "text-iframe": body.iFrames,
-    "text-video": body.videos,
+    "text-image": body?.images,
+    "text-iframe": body?.iFrames,
+    "text-video": body?.videos,
   }
   const media = first(m[type])
 
   const [refMedia, { width, height }] = useMeasure<HTMLDivElement>()
 
   const padding = 24
+
+  console.log("-- card: ", { content })
 
   return (
     <div
@@ -89,7 +91,7 @@ export const Card = forwardRef<
                 <MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>
               </div>
 
-              {card.body.sourceUrl && (
+              {card.body?.sourceUrl && (
                 <QRCodeSVG
                   value={card.body.sourceUrl}
                   className={"w-12 h-12 m-2 ml-auto shrink-0"}

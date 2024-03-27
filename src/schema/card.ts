@@ -12,6 +12,7 @@ export type ICardBody = {
   images?: IMedia[]
   iFrames?: IMedia[]
 
+  title?: string
   content?: string
 }
 
@@ -24,8 +25,8 @@ export type CardType =
 
 export type ICard = {
   type: CardType
-  user?: IUserSummary
+  user: IUserSummary | null
   updatedAt: Date
 
-  body: ICardBody
+  body: ICardBody | null
 }

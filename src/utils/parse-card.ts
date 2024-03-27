@@ -68,7 +68,8 @@ export const bilibili2card = (data: IBilibiliVideoDetail): ICardBody => {
   const { width, height } = data.View.dimension
   return {
     platform: "bilibili",
-    content: `# ${data.View.title}\n\n${data.View.desc}`,
+    title: data.View.title,
+    content: data.View.desc,
     images: [{ url: data.View.pic, width, height }],
     iFrames: [
       {
@@ -86,7 +87,8 @@ export const xiaohongshu2card = (data: IXiaoHongShuNotePageData): ICardBody => {
 
   return {
     platform: "xiaohongshu",
-    content: `# ${note.title}\n\n${note.desc}\n\n`,
+    title: note.title,
+    content: note.desc,
     videos: note.video.media.stream.h264.map((v) => ({
       url: `/api/video-proxy?url=${v.masterUrl}`,
       height: v.height,

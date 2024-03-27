@@ -16,18 +16,26 @@ import { ButtonWithLoading } from "../../packages/common-ui/components/button-wi
 import { CardType } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
+  cardBodyAtom,
   cardTypeAtom,
-  platformTypeAtom,
 } from "../store/card.atom"
 
-export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
+export const Controls = ({
+  copyCard,
+  downloadCard,
+}: {
+  copyCard: () => Promise<void>
+  downloadCard: () => Promise<void>
+}) => {
+  const [cardBody] = useAtom(cardBodyAtom)
+  const platformType = cardBody?.platform
   const [cardType, setCardType] = useAtom(cardTypeAtom)
   const [bilibiliVideoControlEnabled, setBilibiliVideoControlEnabled] = useAtom(
     bilibiliVideoControlEnabledAtom,
   )
-  const [platformType] = useAtom(platformTypeAtom)
 
   const [coping, setCoping] = useState(false)
+  const [downloading, setDownloading] = useState(false)
 
   useEffect(() => {
     if (
@@ -99,6 +107,17 @@ export const Controls = ({ copyCard }: { copyCard: () => Promise<void> }) => {
         }}
       >
         Copy Card
+      </ButtonWithLoading>
+
+      <ButtonWithLoading
+        loading={downloading}
+        onClick={async () => {
+          setDownloading(true)
+          await downloadCard()
+          setDownloading(false)
+        }}
+      >
+        Download Card
       </ButtonWithLoading>
     </div>
   )

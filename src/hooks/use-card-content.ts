@@ -1,30 +1,26 @@
+import { useAtom, useSetAtom } from "jotai"
 import { RefObject, useEffect } from "react"
 import { ICard } from "../schema/card"
-import { useAtom, useSetAtom } from "jotai"
-import { realtimeContentAtom } from "../store/card.atom"
+import { cardRenderedContentAtom } from "../store/card.atom"
 
-export const useInitCardContent = ({
-  card: {
-    body: { content: cardContent },
-    type,
-  },
-}: {
-  card: ICard
-}) => {
-  const setContent = useSetAtom(realtimeContentAtom)
+export const useInitCardContent = ({ card }: { card: ICard }) => {
+  const setContent = useSetAtom(cardRenderedContentAtom)
+
+  console.log("-- useInitCardContent: ", { card })
 
   // 1. init content
   useEffect(() => {
-    if (!cardContent) return
-    setContent(cardContent)
-  }, [cardContent, type])
+    if (!card.body) return
+
+    setContent(`# ${card.body.title}\n\n${card.body.content}`)
+  }, [card])
 }
 export const useAutoCardContent = ({
   refText,
 }: {
   refText: RefObject<HTMLDivElement>
 }) => {
-  const [content, setContent] = useAtom(realtimeContentAtom)
+  const [content, setContent] = useAtom(cardRenderedContentAtom)
 
   // 2. overflow
   useEffect(() => {

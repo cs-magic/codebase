@@ -60,6 +60,7 @@
     "clsx": "^2.1.0",
     "colors": "^1.4.0",
     "dotenv": "^16.4.5",
+    "downloadjs": "^1.4.7",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.1.0",
     "eventsource": "^2.0.2",
@@ -116,6 +117,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/downloadjs": "^1.4.6",
     "@types/eslint": "^8.56.2",
     "@types/eventsource": "^1.1.15",
     "@types/node": "^20.11.20",
