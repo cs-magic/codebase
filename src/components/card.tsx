@@ -1,7 +1,9 @@
+import { useElementSize } from "@mantine/hooks"
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
 import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react"
 import ReactPlayer from "react-player"
+import { useMeasure } from "react-use"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
@@ -50,6 +52,8 @@ export const Card = forwardRef<
 
   console.log("-- card: ", card)
 
+  const [refPlayer, { width, height }] = useMeasure<HTMLDivElement>()
+
   return (
     <div
       ref={ref}
@@ -69,7 +73,7 @@ export const Card = forwardRef<
             }
           >
             <div className={"w-full shrink-0"}>
-              <AspectRatio ratio={card.coverRatio ?? 1}>
+              <AspectRatio ratio={card.coverRatio ?? 1} ref={refPlayer}>
                 {card.type === "text-image" && card.resourceUrl && (
                   <Image
                     src={
@@ -91,9 +95,11 @@ export const Card = forwardRef<
 
                 {card.type === "text-video" && card.resourceUrl && (
                   <ReactPlayer
-                    playing
+                    // playing
+                    controls
                     url={card.resourceUrl}
-                    style={{ width: "100%", border: "1px solid black" }}
+                    width={width}
+                    height={height}
                   />
                 )}
               </AspectRatio>

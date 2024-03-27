@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 import fetch from "node-fetch"
-import { sampleXiaoHongShuVideoUrl } from "../../../config/system"
 
 /**
  * ref: https://chat.openai.com/c/a9684099-c18c-410b-a0ff-ffe418f41283
  * @constructor
  */
 export async function GET(req: NextRequest) {
-  // const videoUrl = "http://localhost:3000/demo.mp4"
-  const videoUrl = sampleXiaoHongShuVideoUrl
+  const videoUrl = new URL(req.url).searchParams.get("url")
+
+  if (!videoUrl)
+    return new NextResponse("请求失败，原因：没有目标网址", { status: 500 })
 
   try {
     console.log("-- fetching")
@@ -27,6 +28,7 @@ export async function GET(req: NextRequest) {
     }
 
     // 创建一个NextResponse对象来转发视频流
+    // @ts-ignore
     return new NextResponse(videoResponse.body, {
       status: videoResponse.status,
       statusText: videoResponse.statusText,
@@ -34,6 +36,6 @@ export async function GET(req: NextRequest) {
     })
   } catch (error) {
     console.error("视频代理请求失败:", error)
-    return new NextResponse("代理请求失败", { status: 500 })
+    return new NextResponse(`请求失败`, { status: 500 })
   }
 }

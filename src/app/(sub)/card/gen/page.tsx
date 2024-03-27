@@ -24,13 +24,14 @@ import { Switch } from "../../../../../packages/common-ui-shadcn/components/swit
 import { ButtonWithLoading } from "../../../../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
 import { parseXiaoHongShuPage } from "../../../../../packages/common-xiaohongshu/actions"
-import { Card, CardType, ICard } from "../../../../components/card"
+import { Card, ICard } from "../../../../components/card"
 import { useUserSummary } from "../../../../hooks/use-user-summary"
 import {
-  cardIFrameUrlAtom,
   bilibiliVideoControlEnabledAtom,
   cardContentAtom,
   cardCoverUrlAtom,
+  cardIFrameUrlAtom,
+  CardType,
   cardTypeAtom,
   cardVideoAtom,
   sourceTypeAtom,
@@ -142,7 +143,7 @@ const InputLine = () => {
             setSourceType("xiaohongshu")
             const data = await parseXiaoHongShuPage(urlParsed)
             setContent(`# ${data.title}\n\n${data.description}\n\n`)
-            if (data.video) setVideoUrl(data.video)
+            if (data.video) setVideoUrl(`/api/video-proxy?url=${data.video}`)
             if (data.images.length) setCover(data.images[0]!)
             console.log({ content: data })
           } else if (/bilibili/.test(urlParsed)) {

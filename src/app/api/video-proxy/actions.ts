@@ -2,28 +2,12 @@
 
 import axios from "axios"
 import { promises } from "fs"
-import { request, ProxyAgent, setGlobalDispatcher } from "undici"
-import { sampleXiaoHongShuVideoUrl } from "../../../config/system"
-import { env } from "process"
 
 import nodeFetch from "node-fetch"
-import HttpsProxyAgent from "https-proxy-agent"
-
-const proxy = env.https_proxy
-console.log({ proxy })
-//
-// if (proxy) {
-//   // Corporate proxy uses CA not in undici's certificate store
-//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
-//   const dispatcher = new ProxyAgent({
-//     uri: new URL(proxy).toString(),
-//   })
-//   setGlobalDispatcher(dispatcher)
-// }
+import { request } from "undici"
+import { sampleXiaoHongShuVideoUrl } from "../../../config/system"
 
 export type FetchType = "fetch" | "node-fetch" | "undici" | "axios"
-
-// const proxyAgent = HttpsProxyAgent("http://localhost:5050")
 
 const fetchArrayBuffer = async (lib: FetchType): Promise<ArrayBuffer> => {
   console.log("-- fetching using: ", lib)
