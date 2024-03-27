@@ -6,8 +6,3 @@ export type IBaseResponse = {
   error?: string | null
   updatedAt?: Date
 }
-
-export type IAppResponse = IBaseResponse & {
-  requestId: string
-  appId: string
-}

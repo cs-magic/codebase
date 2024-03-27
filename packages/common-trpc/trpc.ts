@@ -7,12 +7,11 @@
  * need to use are documented accordingly near the end.
  */
 
-import { convDetailSchema } from "@/schema/conv.detail"
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
-import { z, ZodError } from "zod"
-import { Context } from "./context"
+import { ZodError } from "zod"
 import { prisma } from "../common-db/providers/prisma/connection"
+import { Context } from "./context"
 
 /**
  * 2. INITIALIZATION
@@ -67,7 +66,7 @@ export const publicProcedure = t.procedure
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
+  if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" })
   }
   return next({
@@ -79,21 +78,3 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   })
 })
-
-export const convProcedure = protectedProcedure
-  .input(z.object({ convId: z.string() }))
-  .use(async ({ ctx, next, input }) => {
-    const conv = await prisma.conv.findUniqueOrThrow({
-      where: {
-        id: input.convId,
-        fromUserId: ctx.user.id,
-      },
-      ...convDetailSchema,
-    })
-
-    return next({
-      ctx: {
-        conv,
-      },
-    })
-  })

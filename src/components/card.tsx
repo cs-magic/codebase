@@ -42,8 +42,6 @@ export const Card = forwardRef<
     )
   }, [content])
 
-  console.log("-- card: ", card)
-
   const { type, body } = card
   const m: Partial<Record<CardType, IMedia[] | undefined>> = {
     "text-image": body.images,

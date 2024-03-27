@@ -41,8 +41,6 @@ export default function SpiderPage() {
     setCookies(parsedCookie)
   }, [inputCookie])
 
-  console.log({ url, cookie: inputCookie })
-
   const validateCookie = async (cookies: ICookie[]) => {
     for (const cookie of cookies) {
       setCookies((cookies) =>

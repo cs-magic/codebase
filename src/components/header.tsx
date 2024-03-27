@@ -2,11 +2,7 @@
 
 import { BrandingTitle } from "@/components/branding-title"
 import { UserButton } from "@/components/header-user"
-import { useAtom } from "jotai"
 import { MenuIcon } from "lucide-react"
-import { useWindowSize } from "react-use"
-import { useSnapshot } from "valtio"
-import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import {
   Sheet,
   SheetContent,
@@ -14,22 +10,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../packages/common-ui-shadcn/components/sheet"
-import {
-  uiInnerHeight,
-  uiScreenAtom,
-  uiViewportHeight,
-} from "../../packages/common-ui/store"
-import { coreStore } from "../store/core.valtio"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { Sidebar } from "./sidebar"
 
 export const Header = () => {
-  const [vh] = useAtom(uiViewportHeight)
-  const [sh] = useAtom(uiScreenAtom)
-  const [ih] = useAtom(uiInnerHeight)
-  const { height: wh } = useWindowSize()
-
-  const { title } = useSnapshot(coreStore)
-
   return (
     <div
       className={
@@ -40,10 +24,6 @@ export const Header = () => {
         <MobileConversations />
 
         <BrandingTitle className={"text-2xl"} withDescription />
-      </div>
-
-      <div className={"block grow sm:hidden justify-center truncate max-w-1/2"}>
-        {title}
       </div>
 
       <div className={"ml-auto shrink-0 flex items-center gap-2"}>
