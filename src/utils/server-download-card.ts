@@ -35,12 +35,14 @@ export const downloadCardFromServer = async (
       const filePath = path.join(downloadsPath, fileName)
       await download.saveAs(filePath)
 
+      console.log("-- streaming")
       const stream = await download.createReadStream()
 
       resolve({ success: true, data: { fileName, filePath, stream } })
-
-      console.log("-- ✅ downloaded, to close page")
-      await browser.close()
+      stream.on("close", async () => {
+        console.log("-- streaming closed, closing page")
+        await browser.close()
+      })
     })
 
     const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
