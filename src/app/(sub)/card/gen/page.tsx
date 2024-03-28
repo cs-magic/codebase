@@ -47,7 +47,10 @@ export default function GenCardPage() {
         break
 
       case "download":
-        download(blob, `${card.body?.title}.png`)
+        download(
+          blob,
+          `${encodeURI(card.body?.title ?? new Date().toString())}.png`,
+        )
         break
     }
   }
