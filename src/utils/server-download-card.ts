@@ -40,7 +40,7 @@ export const downloadCardFromServer = async (
       resolve({ success: true, data: { fileName, filePath, stream } })
 
       console.log("-- ✅ downloaded, to close page")
-      await page.close()
+      await browser.close()
     })
 
     const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
