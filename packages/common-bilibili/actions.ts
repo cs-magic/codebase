@@ -66,7 +66,7 @@ export const fetchBilibiliDetail = async (
 
   const data = json.data as IBilibiliVideoDetail
   console.log(
-    "-- got bilibili detail: ",
+    "-- got bilibili detail",
     // data.View
   )
   return { success: true, data }
