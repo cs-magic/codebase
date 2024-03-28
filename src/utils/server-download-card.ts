@@ -28,7 +28,7 @@ export const downloadCardFromServer = async (
   return new Promise<IApi<{ fileName: string; stream: internal.Readable }>>(
     async (resolve, reject) => {
       page.on("download", async (download) => {
-        // console.log("-- download: ", download)
+        console.log("-- download: ", download)
 
         const fileName = download.suggestedFilename()
         // const filePath = path.join(downloadsPath, fileName)
