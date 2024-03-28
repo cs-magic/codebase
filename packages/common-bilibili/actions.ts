@@ -59,12 +59,15 @@ export const fetchBilibiliDetail = async (
   })
 
   const json = await res.json()
-  console.debug("getBilibiliDetail: ", JSON.stringify(json, null, 2))
+  // console.debug("getBilibiliDetail: ", JSON.stringify(json, null, 2))
 
   if (json.code !== 0)
     return { success: false, message: JSON.stringify(json, null, 2) }
 
   const data = json.data as IBilibiliVideoDetail
-  console.log("-- bilibili detail: ", data.View)
+  console.log(
+    "-- got bilibili detail: ",
+    // data.View
+  )
   return { success: true, data }
 }
