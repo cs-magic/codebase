@@ -4,6 +4,11 @@ import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
 
+export const parseUrlFromWechatUrlMessage = (text: string): string | null => {
+  const m = /<url>(.*?)<\/url>/.exec(text)
+  return m?.[1] ?? null
+}
+
 void WechatyBuilder.build({
   name: "mark0", // 加了名字后就可以自动存储了
 })
@@ -17,26 +22,28 @@ void WechatyBuilder.build({
   .on("message", async (message) => {
     const text = message.text()
     // suppress other messages
-    if (!message.talker().name().toLowerCase().includes("mark")) return
+    if (!/mark|小野|我的文件助手/.test(message.talker().name().toLowerCase()))
+      return
 
-    console.log(`<< message: `, message)
+    console.log(`<< message: `, message.payload)
+
     // link
     if (message.type() === types.Message.Url) {
+      const url = parseUrlFromWechatUrlMessage(text)
+      if (!url) return
+
       if (text.includes("哔哩哔哩")) {
         console.log("-- parsing bilibili")
-        const m = /<url>(.*?)<\/url>/.exec(text)
-        const url = m?.[1]
-        if (!url) return
         const { success, data } = await downloadCardFromServer(url)
         if (!success) return
 
-        // const file = FileBox.fromBuffer(Buffer.from([]))
-        // const file = FileBox.fromUrl(data.filePath)
         const file = FileBox.fromStream(data.stream, data.fileName)
-        // console.log("-- sending file: ", file)
         await message.say(file)
         console.log("-- ✅ sent file")
+        return
       }
     }
+
+    // await message.say("ok ~")
   })
   .start()
