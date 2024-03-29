@@ -1,7 +1,7 @@
 import axios from "axios"
 import { api } from "../../../../../common-api"
 import {
-  FetchWechatArticleDetail,
+  IFetchWechatArticleDetail,
   IWechatArticleComment,
   IWechatArticleStat,
 } from "../schema"
@@ -55,7 +55,7 @@ export const fetchWechatArticleComments = async (url: string) => {
   return res
 }
 
-export const fetchWechatArticleDetailViaWxapi: FetchWechatArticleDetail =
+export const fetchWechatArticleDetailViaWxapi: IFetchWechatArticleDetail =
   async (url) => {
     const resStat = await fetchWechatArticleStat(url)
     const resComments = await fetchWechatArticleComments(url)

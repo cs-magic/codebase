@@ -1,5 +1,5 @@
 import { api } from "../../../../../common-api"
-import { FetchWechatArticleDetail, IFetchWechatArticleStat } from "../schema"
+import { IFetchWechatArticleDetail, IFetchWechatArticleStat } from "../schema"
 
 /**
  *
@@ -67,11 +67,10 @@ export const fetchWechatArticleStat = async ({
   return data
 }
 
-export const fetchWechatArticleDetailViaMock: FetchWechatArticleDetail = async (
-  url,
-) => {
-  return {
-    success: false,
-    message: "todo",
+export const fetchWechatArticleDetailViaMock: IFetchWechatArticleDetail =
+  async (url) => {
+    return {
+      success: false,
+      message: "todo",
+    }
   }
-}
