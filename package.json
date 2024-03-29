@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
     "build": "next build",
     "db:push": "prisma db push",
@@ -122,6 +125,7 @@
     "@types/downloadjs": "^1.4.6",
     "@types/eslint": "^8.56.2",
     "@types/eventsource": "^1.1.15",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/react": "^18.2.57",
@@ -130,6 +134,8 @@
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "jest": "^29.7.0",
+    "mocha": "^10.4.0",
     "postcss": "^8.4.34",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
