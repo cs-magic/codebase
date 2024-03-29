@@ -1,15 +1,15 @@
 {
-  "name": "v2agi",
+  "name": "p01",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "postinstall": "patch-package && prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "dev": "next dev",
-    "postinstall": "prisma generate",
     "lint": "next lint",
+    "build": "next build",
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
     "auto-update": "git add . && git stash && git pull -f && yarn",
@@ -90,7 +90,9 @@
     "next-themes": "^0.2.1",
     "node-html-markdown": "^1.3.0",
     "node-html-parser": "^6.1.12",
+    "patch-package": "^8.0.0",
     "playwright": "^1.42.1",
+    "postinstall-postinstall": "^2.1.0",
     "prisma": "^5.10.2",
     "prisma-json-types-generator": "^3.0.4",
     "pusher": "^5.2.0",
@@ -157,7 +159,7 @@
   "ct3aMetadata": {
     "initVersion": "7.27.0"
   },
-  "packageManager": "yarn@1.22.17",
+  "packageManager": "yarn@4.1.1",
   "resolutions": {
     "jackspeak": "2.1.1"
   }
