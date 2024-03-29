@@ -4,7 +4,12 @@
   "private": true,
   "type": "module",
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    }
   },
   "scripts": {
     "build": "next build",
@@ -15,7 +20,7 @@
     "lint": "next lint",
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
-    "update": "git add . && git stash && git pull -f && yarn",
+    "auto-update": "git add . && git stash && git pull -f && yarn",
     "postupdate": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart p01"
   },
   "dependencies": {
