@@ -1,11 +1,10 @@
 import dotenv from "dotenv"
+import { wechatArticleUrlSample } from "../../config"
 import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
-
-const url = "https://mp.weixin.qq.com/s/OdmjL50Jy8ZYFesKNsvutg"
 
 describe("wxapi without token", () => {
   test("no token", async () => {
-    const stat = await fetchWechatArticleStat(url)
+    const stat = await fetchWechatArticleStat(wechatArticleUrlSample)
     expect(stat.code).toBe(-1002)
     expect(stat.msg).toBe("无此用户")
   })
@@ -17,13 +16,13 @@ describe("wxapi with token", () => {
   })
 
   test("stat ok", async () => {
-    const resStat = await fetchWechatArticleStat(url)
+    const resStat = await fetchWechatArticleStat(wechatArticleUrlSample)
     expect(resStat.code).toBe(0)
     expect(resStat.data!.readnum).toBeGreaterThan(0)
   })
 
   test("comments ok", async () => {
-    const resComments = await fetchWechatArticleComments(url)
+    const resComments = await fetchWechatArticleComments(wechatArticleUrlSample)
     expect(resComments.code).toBe(0)
     expect(resComments.data!.length).toBeGreaterThan(0)
   })

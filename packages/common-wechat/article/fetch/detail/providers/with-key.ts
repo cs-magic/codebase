@@ -1,4 +1,4 @@
-import { api } from "packages/common-api"
+import { api } from "../../../../../common-api"
 import { FetchWechatArticleDetail, IFetchWechatArticleStat } from "../schema"
 
 /**

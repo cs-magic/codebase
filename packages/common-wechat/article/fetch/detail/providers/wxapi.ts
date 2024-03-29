@@ -1,5 +1,5 @@
 import axios from "axios"
-import { api } from "../../../../common-api"
+import { api } from "../../../../../common-api"
 import {
   FetchWechatArticleDetail,
   IWechatArticleComment,

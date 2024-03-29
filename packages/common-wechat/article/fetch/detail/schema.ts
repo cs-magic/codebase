@@ -1,4 +1,4 @@
-import { IApi } from "../../../common-api/schema"
+import { IApi } from "../../../../common-api/schema"
 
 export type IFetchWechatArticleStat = {
   // query
