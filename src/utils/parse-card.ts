@@ -5,6 +5,7 @@ import {
 } from "../../packages/common-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
+import { fetchWechatArticle } from "../../packages/common-wechat/article/fetch"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
 import { bilibili2card } from "./provider-to-card/bilibili"
@@ -12,19 +13,21 @@ import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
- * @param url
+ * @param inputUrl
  */
-export const url2card = async (url: string): Promise<IApi<ICardBody>> => {
-  const urlParsed = extractFirstURL(url)
+export const url2card = async (inputUrl: string): Promise<IApi<ICardBody>> => {
+  const urlParsed = extractFirstURL(inputUrl)
   console.log({ urlParsed })
   if (!urlParsed)
     return {
       success: false,
-      message: `invalid url to be parsed from ${url}`,
+      message: `invalid url to be parsed from ${inputUrl}`,
     }
 
   if (/mp.weixin.qq.com\/s\?__biz/.test(urlParsed)) {
     console.log("wechat matched")
+    const article = await fetchWechatArticle(urlParsed)
+    console.log("-- article: ", article)
 
     return {
       success: false,

@@ -16,6 +16,7 @@ export const fetchWechatArticle = async (
   return {
     url,
     content,
+    diagram: null,
     detail,
   }
 }
