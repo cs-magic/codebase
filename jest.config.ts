@@ -4,6 +4,12 @@
  */
 
 import type { Config } from "jest"
+import nextJest from "next/jest"
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: "./",
+})
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -176,9 +182,6 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
-  transform: {
-    "^.+\\.(t|j)sx?$": "babel-jest",
-  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -199,4 +202,4 @@ const config: Config = {
   // watchman: true,
 }
 
-export default config
+export default createJestConfig(config)

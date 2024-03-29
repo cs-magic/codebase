@@ -121,8 +121,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@types/downloadjs": "^1.4.6",
@@ -152,5 +150,8 @@
   "ct3aMetadata": {
     "initVersion": "7.27.0"
   },
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.17",
+  "resolutions": {
+    "jackspeak": "2.1.1"
+  }
 }
