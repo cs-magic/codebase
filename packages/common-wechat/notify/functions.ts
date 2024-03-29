@@ -1,5 +1,6 @@
 "use server"
 
+import { api } from "../../common-api"
 import { fetchWechatApi } from "../functions"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
 import { sha1 } from "js-sha1"
@@ -70,11 +71,9 @@ export async function sendWechatNotification(
   const body = JSON.stringify(payload)
   console.log("[wx-sdk] notification req: ", { targetUrl, body })
 
-  const res = await fetch(targetUrl, {
-    method: "POST",
+  const { data: resData } = await api.post(targetUrl, {
     body,
   })
-  const resData = (await res.json()) as unknown
   console.log("[wx-sdk] notification res: ", resData)
   return resData
 }

@@ -3,14 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "jest": {
-    "verbose": true,
-    "globals": {
-      "ts-jest": {
-        "useESM": true
-      }
-    }
-  },
   "scripts": {
     "build": "next build",
     "db:push": "prisma db push",
@@ -21,7 +13,9 @@
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
     "auto-update": "git add . && git stash && git pull -f && yarn",
-    "postupdate": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart p01"
+    "postupdate": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && pm2 restart p01",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",
@@ -127,6 +121,10 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.3",
+    "@babel/preset-typescript": "^7.24.1",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
     "@types/downloadjs": "^1.4.6",
     "@types/eslint": "^8.56.2",
     "@types/eventsource": "^1.1.15",
@@ -140,11 +138,12 @@
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "jest": "^29.7.0",
-    "mocha": "^10.4.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.34",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",

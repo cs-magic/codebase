@@ -1,15 +1,13 @@
 "use server"
 
+import { api } from "../common-api"
 import { IApi } from "../common-api/schema"
 import { IBilibiliVideoDetail } from "./schema"
 
 export const getBilibiliSummary = async (bvid: string) => {
-  const res = await fetch(
+  const { data } = await api.get(
     `https://api.bilibili.com/x/player/pagelist?bvid=${bvid}&jsonp=jsonp`,
   )
-
-  const data = await res.json()
-
   console.log("getBilibiliDetail: ", data)
 
   if (data.code !== 0) throw new Error(JSON.stringify(data))
@@ -51,20 +49,21 @@ export const fetchBilibiliDetail = async (
   const url = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&need_view=1`
   console.debug({ url })
 
-  const res = await fetch(url, {
+  const { data: resData } = await api.get<{
+    code: number
+    data: IBilibiliVideoDetail
+  }>(url, {
     headers: {
       Cookie:
         "SESSDATA=e4af78fd%2C1726891541%2C3bae6%2A32CjD_F64Z3XX4qdJKQGL2z8q63OzAqcVkS15xyt_roEp3gF1_3jVXkGxGrjYyBiOTZlISVjlodklKckE5TlIzYmZZNHJsSWY1clZsLUxKcWJCMVJCV3RuWnhndWV2RVRfNVlJamZka1V0SmdZYTc4M1phd3VlYWJka0NncnFXZGRDVlhySVN4cjdnIIEC",
     },
   })
-
-  const json = await res.json()
   // console.debug("getBilibiliDetail: ", JSON.stringify(json, null, 2))
 
-  if (json.code !== 0)
-    return { success: false, message: JSON.stringify(json, null, 2) }
+  if (resData.code !== 0)
+    return { success: false, message: JSON.stringify(resData, null, 2) }
 
-  const data = json.data as IBilibiliVideoDetail
+  const data = resData.data
   console.log(
     "-- got bilibili detail",
     // data.View

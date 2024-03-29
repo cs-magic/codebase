@@ -1,5 +1,6 @@
 "use server"
 
+import { api } from "../common-api"
 import { deserialize } from "../common-utils/io"
 import { IXiaoHongShuNotePageData } from "./schema"
 
@@ -33,13 +34,12 @@ export const fetchXiaoHongShuDetail = async (
 ): Promise<IXiaoHongShuNotePageData | null> => {
   console.log({ url })
 
-  const res = await fetch(url, {
+  const { data: html } = await api.get<string>(url, {
     headers: {
       "User-Agent": "PostmanRuntime/7.36.3", // 不加的话会提示系统版本过低
     },
   })
 
-  const html = await res.text()
   const jsonData = /window.__INITIAL_STATE__\s*=\s*(.*?)\s*<\/script>/.exec(
     html,
   )

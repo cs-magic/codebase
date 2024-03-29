@@ -1,5 +1,6 @@
 import { toast } from "sonner"
 import { v4 } from "uuid"
+import { api } from "../common-api"
 import { IApi } from "../common-api/schema"
 import { getOssSignatureUrl } from "./server/actons"
 
@@ -13,14 +14,12 @@ export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
 
       if (isHttps) signatureUrl = signatureUrl.replace("http://", "https://")
 
-      const resPut = await fetch(signatureUrl, {
-        method: "PUT",
+      await api.post(signatureUrl, {
         headers: new Headers({
           "Content-Type": "image/png",
         }),
         body: file,
       })
-      if (!resPut.ok) return
 
       return signatureUrl.split("?")[0] ?? signatureUrl
     }),
@@ -29,9 +28,9 @@ export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
   console.log("response: ", images)
   if (images.every((s) => !!s)) {
     toast.success("上传成功！")
-    return { success: true, data: images as string[] }
+    return { success: true, data: images }
   } else {
     toast.error("上传失败！")
-    return { success: false, data: images as string[] }
+    return { success: false, data: images }
   }
 }

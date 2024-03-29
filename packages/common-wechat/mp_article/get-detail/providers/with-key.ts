@@ -1,3 +1,4 @@
+import { api } from "packages/common-api"
 import { FetchWechatArticleDetail, IFetchWechatArticleStat } from "../schema"
 
 /**
@@ -54,8 +55,7 @@ export const fetchWechatArticleStat = async ({
 }: IFetchWechatArticleStat) => {
   const url = `https://mp.weixin.qq.com/mp/getappmsgext?f=json&uin=${uin}&key=${key}&__biz=${__biz}`
 
-  const res = await fetch(url, {
-    method: "POST",
+  const { data } = await api.post(url, {
     body: new URLSearchParams({
       mid,
       sn,
@@ -63,8 +63,6 @@ export const fetchWechatArticleStat = async ({
       is_only_read,
     }),
   })
-
-  const data = await res.json()
   console.log("-- fetched wxmp article stat: ", data)
   return data
 }
