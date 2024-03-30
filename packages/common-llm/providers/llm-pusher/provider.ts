@@ -1,5 +1,5 @@
 import Pusher from "pusher"
-import { redis } from "../../../common-db"
+import { redis } from "../../../common-db/providers/redis"
 import { PusherServerId } from "../../../common-pusher/schema"
 import { ITransEvent } from "../../../common-sse/schema"
 import { pusherServerConfigs } from "../../../common-pusher/config"

@@ -1,15 +1,13 @@
+import { Prisma } from "@prisma/client"
 import parse from "node-html-parser"
 import OpenAI from "openai"
 import { api } from "../../../../common-api"
 import { html2md } from "../../../../common-markdown/html2md"
-import { IFetchWechatArticleSummaryConfig } from "./schema"
+import {
+  IFetchWechatArticleSummaryConfig,
+  IWechatArticleSummary,
+} from "./schema"
 import ChatCompletion = OpenAI.ChatCompletion
-
-export type IWechatArticleSummary = {
-  contentHtml: string | null
-  contentMd?: string | null
-  contentSummary?: string | null
-}
 
 export const fetchWechatArticleSummary = async (
   id: string,
@@ -21,7 +19,12 @@ export const fetchWechatArticleSummary = async (
   // console.log("-- fetchWechatArticlePage: ", page)
 
   const html = parse(page)
-  const contentHtml = html.getElementById("js_content")?.innerHTML ?? null
+  const contentHtml =
+    html.getElementById("js_content")?.getAttribute("content") ?? null
+
+  const title = html.getElementById("og:title")?.innerHTML ?? null
+  const coverUrl =
+    html.getElementById("og:image")?.getAttribute("content") ?? null
 
   let contentMd: string | null | undefined = undefined
   let contentSummary: string | null | undefined = undefined
@@ -58,6 +61,13 @@ export const fetchWechatArticleSummary = async (
   }
 
   return {
+    title,
+    cover: coverUrl
+      ? {
+          url: coverUrl,
+          type: "image",
+        }
+      : null,
     contentHtml,
     contentMd,
     contentSummary,

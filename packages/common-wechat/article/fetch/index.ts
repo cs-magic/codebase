@@ -1,8 +1,8 @@
 "use server"
 
 import { Prisma } from "@prisma/client"
-import { fetchWechatArticleSummary } from "./content"
-import { IFetchWechatArticleSummaryConfig } from "./content/schema"
+import { fetchWechatArticleSummary } from "./summary"
+import { IFetchWechatArticleSummaryConfig } from "./summary/schema"
 import { fetchWechatArticleDetail } from "./detail"
 import { IFetchWechatArticleDetailConfig } from "./detail/schema"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput

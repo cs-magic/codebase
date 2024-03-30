@@ -3,7 +3,7 @@ import ReactPlayer from "react-player"
 import { toast } from "sonner"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
-import { CardType, IMedia } from "../schema/card"
+import { CardType, Media } from "../schema/card"
 
 export const CardMedia = ({
   width,
@@ -12,7 +12,7 @@ export const CardMedia = ({
   type,
 }: {
   type: CardType
-} & IMedia) => {
+} & Media) => {
   console.log("-- card media: ", { type, url, width, height })
 
   switch (type) {

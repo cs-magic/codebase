@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers"
-import { prisma } from "../common-db"
 import { WECHAT_PROVIDER_ID } from "./config"
 import { getWechatAuthorizationUrl } from "./funcs/client"
 import {

@@ -72,8 +72,8 @@ model Media {
 
   url           String
   type          MediaType
-  width         Int             @default(320)
-  height        Int             @default(240)
+  width         Int?
+  height        Int?
   WechatArticle WechatArticle[]
 }
 

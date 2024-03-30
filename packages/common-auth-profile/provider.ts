@@ -1,6 +1,6 @@
 import { userDetailSchema } from "@/schema/user.detail"
 import { PROFILE_UPDATE_PROVIDER_ID } from "../common-auth-sms/const"
-import { prisma } from "../common-db"
+import { prisma } from "../common-db/providers/prisma"
 import Credentials from "next-auth/providers/credentials"
 
 export const ProfileUpdateProvider = Credentials({

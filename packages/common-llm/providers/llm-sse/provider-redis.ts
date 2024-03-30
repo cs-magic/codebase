@@ -1,4 +1,4 @@
-import { redis } from "../../../common-db"
+import { redis } from "../../../common-db/providers/redis"
 import {
   ITransClient,
   ITransEvent,

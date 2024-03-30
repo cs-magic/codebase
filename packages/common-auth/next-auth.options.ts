@@ -6,7 +6,7 @@ import { ProfileUpdateProvider } from "../common-auth-profile/provider"
 import { SmsProvider } from "../common-auth-sms/provider"
 import WechatProvider from "../common-auth-wechat/provider"
 import { IWechatProfile } from "../common-auth-wechat/schema"
-import { prisma } from "../common-db"
+import { prisma } from "../common-db/providers/prisma"
 
 import { WECHAT_APP_ID } from "../common-wechat/config"
 import { tokenExpireSeconds } from "./config"

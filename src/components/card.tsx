@@ -13,7 +13,7 @@ import {
   useAutoCardContent,
   useInitCardContent,
 } from "../hooks/use-card-content"
-import { CardType, ICard, IMedia } from "../schema/card"
+import { CardType, ICard, Media } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
   cardRenderedContentAtom,
@@ -34,7 +34,7 @@ export const Card = forwardRef<
   useAutoCardContent({ refText })
 
   const { type, body } = card
-  const m: Partial<Record<CardType, IMedia[] | undefined>> = {
+  const m: Partial<Record<CardType, Media[] | undefined>> = {
     "text-image": body?.images,
     "text-iframe": body?.iFrames,
     "text-video": body?.videos,
