@@ -2,6 +2,11 @@ import { IDimension } from "../../packages/common-ui/schema"
 import { IUserSummary } from "./user.summary"
 
 export type PlatformType = "bilibili" | "xiaohongshu" | "wechat-article"
+export type ICardStat = {
+  reads?: number
+  likes?: number
+  comments?: number
+}
 
 export type IMedia = {
   url: string
@@ -17,8 +22,14 @@ export type ICardBody = {
   images?: IMedia[]
   iFrames?: IMedia[]
 
-  title?: string
-  content?: string
+  title?: string | null
+  content?: string | null
+  mindmap?: string | null // markdown mindmap
+  stat?: ICardStat | null
+
+  author?: IUserSummary | null
+  time?: Date | null
+  source?: string | null
 }
 
 export type CardType =

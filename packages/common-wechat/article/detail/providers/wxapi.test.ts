@@ -1,5 +1,5 @@
 import dotenv from "dotenv"
-import { wechatArticleUrlSample } from "../../config"
+import { wechatArticleUrlSample } from "../../sample"
 import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
 
 describe("wxapi without token", () => {

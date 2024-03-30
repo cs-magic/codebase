@@ -16,7 +16,11 @@ export default function MarkMap({ content }: { content: string }) {
     if (!refSvg.current) return
     // Create markmap and save to refMm
     const mm = Markmap.create(refSvg.current)
+    // console.log({ mm })
     refMm.current = mm
+    return () => {
+      mm.destroy()
+    }
   }, [refSvg.current])
 
   useEffect(() => {

@@ -131,4 +131,9 @@ model WechatArticle {
 
   user           PlatformUser? @relation(fields: [platformUserId], references: [id], onDelete: Cascade)
   platformUserId String?
+
+  /// [IUserSummary]
+  author Json?
+  source String?
+  time   DateTime?
 }

@@ -12,7 +12,7 @@ export const CardMedia = ({
   cardType: CardType
   media: IMedia
 }) => {
-  console.log("-- card media: ", { cardType, media })
+  // console.log("-- card media: ", { cardType, media })
 
   const { url, dimension } = media
 

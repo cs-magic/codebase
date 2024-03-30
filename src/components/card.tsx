@@ -2,13 +2,30 @@
 
 import { useAtom } from "jotai"
 import { first } from "lodash"
+import {
+  EyeIcon,
+  HeartIcon,
+  LucideIcon,
+  MessageSquareTextIcon,
+} from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
-import { forwardRef, HTMLAttributes, useRef } from "react"
+import {
+  Component,
+  ComponentType,
+  forwardRef,
+  HTMLAttributes,
+  ReactNode,
+  useRef,
+} from "react"
 import { useMeasure } from "react-use"
+import moment from "../../packages/common-datetime/moment"
 import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
+import { Separator } from "../../packages/common-ui-shadcn/components/separator"
+import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { cn } from "../../packages/common-ui-shadcn/utils"
+import MarkMap from "../../packages/common-visualization/markmap"
 import {
   useAutoCardContent,
   useInitCardContent,
@@ -47,7 +64,7 @@ export const Card = forwardRef<
 
   const padding = 24
 
-  console.log("-- card: ", { content })
+  // console.log("-- card: ", { content })
 
   return (
     <div
@@ -89,17 +106,53 @@ export const Card = forwardRef<
               )}
             </div>
 
-            <div className={"px-2 grow overflow-hidden relative flex flex-col"}>
-              <div ref={refText} className={"grow overflow-hidden"}>
-                <MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>
-              </div>
+            <div className={"p-2 grow overflow-hidden relative flex flex-col"}>
+              <div
+                ref={refText}
+                className={"grow overflow-hidden flex flex-col gap-2"}
+              >
+                {body?.title && (
+                  <h1 className={"truncate text-xl font-medium"}>
+                    {body.title}
+                  </h1>
+                )}
 
-              {card.body?.sourceUrl && (
-                <QRCodeSVG
-                  value={card.body.sourceUrl}
-                  className={"w-12 h-12 m-2 ml-auto shrink-0"}
-                />
-              )}
+                <div className={"flex gap-2 items-center shrink-0 h-12"}>
+                  {!!body?.author && (
+                    <UserAvatar user={body.author} size={"md"} />
+                  )}
+
+                  <div className={"flex flex-col"}>
+                    <span>{body?.author?.name}</span>
+                    {!!body?.time && (
+                      <span className={"text-muted-foreground text-xs"}>
+                        {moment(body.time).format("ll")}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className={"ml-auto flex flex-col items-end"}>
+                    {card.body?.sourceUrl && (
+                      <div className={"w-8"}>
+                        <AspectRatio ratio={1}>
+                          <QRCodeSVG
+                            value={card.body.sourceUrl}
+                            className={"w-full h-full"}
+                          />
+                        </AspectRatio>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {body?.mindmap && (
+                  <div className={"grow overflow-hidden"}>
+                    <MarkMap content={body.mindmap} />
+                  </div>
+                )}
+
+                {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
+              </div>
             </div>
           </div>
 
@@ -131,3 +184,27 @@ export const Card = forwardRef<
   )
 })
 Card.displayName = "Card"
+
+export const StatItem = ({
+  Icon,
+  value,
+}: {
+  Icon: LucideIcon
+  value: number
+}) => {
+  const v =
+    value >= 1e5
+      ? "10w+"
+      : value >= 1e4
+        ? `${Math.floor(value / 1e4)}w+`
+        : value >= 1e3
+          ? `${Math.floor(value / 1e3)}k+`
+          : value
+
+  return (
+    <div className={"flex flex-col items-center w-8"}>
+      <Icon className={"w-8"} />
+      <span className={"text-muted-foreground"}>{v}</span>
+    </div>
+  )
+}

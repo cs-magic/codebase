@@ -1,6 +1,6 @@
 import axios from "axios"
-import { api } from "../../../../../common-api"
-import { getWechatArticleUrlFromId } from "../../../utils"
+import { api } from "../../../../common-api"
+import { getWechatArticleUrlFromId } from "../../utils"
 import {
   IFetchWechatArticleDetail,
   IWechatArticleComment,

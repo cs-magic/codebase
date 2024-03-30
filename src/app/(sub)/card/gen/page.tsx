@@ -55,6 +55,8 @@ export default function GenCardPage() {
     }
   }
 
+  console.log("-- card: ", card)
+
   return (
     <FlexContainer
       orientation={"vertical"}

@@ -7,19 +7,22 @@ import {
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
 import { prisma } from "../../packages/common-db/providers/prisma"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
-import { fetchWechatArticle } from "../../packages/common-wechat/article/fetch"
+import { fetchWechatArticle } from "../../packages/common-wechat/article"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
 import { wechatArticleDetailSchema } from "../schema/wechat-article.detail"
 import { bilibili2card } from "./provider-to-card/bilibili"
-import { wechatArticle2card } from "./provider-to-card/wechat-article"
+import {
+  fetchWechatArticleWithCache,
+  wechatArticle2card,
+} from "./provider-to-card/wechat-article"
 import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
  * @param inputUrlLike
  */
-export const url2card = async (
+export const genCardFromUrl = async (
   inputUrlLike: string,
 ): Promise<IApi<ICardBody>> => {
   const urlParsed = extractFirstURL(inputUrlLike)
@@ -33,40 +36,9 @@ export const url2card = async (
   const wechatArticleId =
     /mp.weixin.qq.com\/s\/(.*)$/.exec(urlParsed)?.[1] ?? null
   if (wechatArticleId) {
-    console.log("wechat matched")
-    const dataInDB = await prisma.wechatArticle.findUnique({
-      where: { id: wechatArticleId },
-    })
-
-    const article = await fetchWechatArticle(
-      wechatArticleId,
-      {
-        get: async (id) => dataInDB?.contentSummary ?? null,
-      },
-      {
-        provider: "wxapi",
-        get: async (url) =>
-          // obj
-          dataInDB?.stat !== null
-            ? {
-                stat: dataInDB?.stat,
-                comments: dataInDB?.comments ?? [],
-              }
-            : null,
-      },
-    )
-    const wechatArticle = await prisma.wechatArticle.upsert({
-      where: { id: wechatArticleId },
-      create: article,
-      update: article,
-      ...wechatArticleDetailSchema,
-    })
-    const { comments, ...props } = article
-    console.log("-- article: ", { ...props, commentsLen: comments.length })
-
     return {
       success: true,
-      data: wechatArticle2card(wechatArticle),
+      data: await fetchWechatArticleWithCache(wechatArticleId),
     }
   }
 
