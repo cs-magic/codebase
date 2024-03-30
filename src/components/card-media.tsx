@@ -3,19 +3,20 @@ import ReactPlayer from "react-player"
 import { toast } from "sonner"
 import { BilibiliVideo } from "../../packages/common-bilibili/component"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
-import { CardType, Media } from "../schema/card"
+import { CardType, IMedia } from "../schema/card"
 
 export const CardMedia = ({
-  width,
-  height,
-  url,
-  type,
+  cardType,
+  media,
 }: {
-  type: CardType
-} & Media) => {
-  console.log("-- card media: ", { type, url, width, height })
+  cardType: CardType
+  media: IMedia
+}) => {
+  console.log("-- card media: ", { cardType, media })
 
-  switch (type) {
+  const { url, dimension } = media
+
+  switch (cardType) {
     case "text-image":
       return <Image src={url} alt={""} fill className={"w-full h-auto"} />
 
@@ -25,8 +26,8 @@ export const CardMedia = ({
           // playing
           // controls
           url={url}
-          width={width}
-          height={height}
+          width={dimension?.width}
+          height={dimension?.height}
         />
       )
 
@@ -35,8 +36,8 @@ export const CardMedia = ({
       const bvid = getBvidFromUrl(url)
       if (!bvid) {
         toast.error(`no bvid parsed from url: ${url}`)
-        return
+        return null
       }
-      return <BilibiliVideo video={{ bvid, height, width }} />
+      return <BilibiliVideo video={{ bvid, dimension }} />
   }
 }

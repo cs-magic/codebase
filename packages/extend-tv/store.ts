@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { IDisplay } from "../common-ui/schema"
+import { IDimension } from "../common-ui/schema"
 import { uiScreenAtom } from "../common-ui/store"
 
 //////////////////////////////
@@ -9,7 +9,7 @@ import { uiScreenAtom } from "../common-ui/store"
 export const tvFullScreenAtom = atom(false)
 export const tvScreenOnAtom = atom(true)
 
-export const tvViewportAtom = atom<IDisplay>({ width: 0, height: 0 })
+export const tvViewportAtom = atom<IDimension>({ width: 0, height: 0 })
 
 //////////////////////////////
 // derived
@@ -30,5 +30,5 @@ export const tvScaleAtom = atom((get) => {
   return get(tvTargetWidthAtom) / 420 // css中的固定尺寸
 })
 
-export const getTvScale = ({ width, height }: IDisplay) =>
+export const getTvScale = ({ width, height }: IDimension) =>
   Math.min(width, height) / 420

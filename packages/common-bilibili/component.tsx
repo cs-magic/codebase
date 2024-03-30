@@ -1,5 +1,5 @@
 import { IBilibiliVideo } from "./schema"
-import { getBilibiliIFrameUrl, getBvidFromUrl } from "./utils"
+import { getBilibiliIFrameUrl } from "./utils"
 
 /**
  *
@@ -29,8 +29,8 @@ export const BilibiliVideo = ({ video }: { video: IBilibiliVideo }) => {
     <iframe
       src={url}
       title={video.title}
-      width={video.width}
-      height={video.height}
+      width={video.dimension?.width}
+      height={video.dimension?.height}
       allowFullScreen
     />
   )

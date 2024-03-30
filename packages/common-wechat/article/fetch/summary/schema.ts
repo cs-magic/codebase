@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client"
+import { IMedia } from "@/schema/card"
 
 export type IFetchWechatArticleSummaryConfig = {
   // db hook
@@ -8,8 +8,8 @@ export type IFetchWechatArticleSummaryConfig = {
 
 export type IWechatArticleSummary = {
   title: string | null
-  cover: Prisma.MediaUncheckedCreateInput | null
-  contentHtml: string | null
+  cover: IMedia | null
+  contentHtml?: string | null
   contentMd?: string | null
   contentSummary?: string | null
 }

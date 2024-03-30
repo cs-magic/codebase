@@ -1,5 +1,6 @@
 declare global {
   // 要放在里面
+  import { IMedia } from "@/schema/card"
   import {
     IWechatArticleStat,
     IWechatArticleComment,
@@ -8,5 +9,6 @@ declare global {
   namespace PrismaJson {
     type IWechatArticleStat = IWechatArticleStat
     type IWechatArticleComment = IWechatArticleComment
+    type IMedia = IMedia
   }
 }

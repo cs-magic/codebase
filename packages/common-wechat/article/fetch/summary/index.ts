@@ -1,8 +1,9 @@
-import { Prisma } from "@prisma/client"
 import parse from "node-html-parser"
 import OpenAI from "openai"
 import { api } from "../../../../common-api"
+import { parseMetaContent } from "../../../../common-html/utils"
 import { html2md } from "../../../../common-markdown/html2md"
+import { getWechatArticleUrlFromId } from "../../utils"
 import {
   IFetchWechatArticleSummaryConfig,
   IWechatArticleSummary,
@@ -13,18 +14,17 @@ export const fetchWechatArticleSummary = async (
   id: string,
   summaryConfig?: IFetchWechatArticleSummaryConfig,
 ): Promise<IWechatArticleSummary> => {
-  const { data: page } = await api.get<string>(
-    `https://mp.weixin.qq.com/s/${id}`,
-  )
-  // console.log("-- fetchWechatArticlePage: ", page)
+  const url = getWechatArticleUrlFromId(id)
+  const { data: page } = await api.get<string>(url)
+  console.log("-- fetchWechatArticleSummary: ", { id, url })
 
   const html = parse(page)
-  const contentHtml =
-    html.getElementById("js_content")?.getAttribute("content") ?? null
+  const contentHtml = html.getElementById("page-content")?.innerHTML ?? null
+  console.log("-- contentHtml isFetched: ", !!contentHtml)
 
-  const title = html.getElementById("og:title")?.innerHTML ?? null
-  const coverUrl =
-    html.getElementById("og:image")?.getAttribute("content") ?? null
+  const title = parseMetaContent(html, "og:title")
+  const coverUrl = parseMetaContent(html, "og:image")
+  console.log({ title, coverUrl })
 
   let contentMd: string | null | undefined = undefined
   let contentSummary: string | null | undefined = undefined
@@ -37,6 +37,7 @@ export const fetchWechatArticleSummary = async (
       if (contentSummary) console.log("-- summary cached")
     }
 
+    console.log({ contentSummary })
     if (!contentSummary) {
       console.log("-- summary fetching")
       const { data } = await api.postForm<ChatCompletion>(
@@ -68,7 +69,7 @@ export const fetchWechatArticleSummary = async (
           type: "image",
         }
       : null,
-    contentHtml,
+    // contentHtml,
     contentMd,
     contentSummary,
   }

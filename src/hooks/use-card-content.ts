@@ -6,7 +6,7 @@ import { cardRenderedContentAtom } from "../store/card.atom"
 export const useInitCardContent = ({ card }: { card: ICard }) => {
   const setContent = useSetAtom(cardRenderedContentAtom)
 
-  console.log("-- useInitCardContent: ", { card })
+  // console.log("-- useInitCardContent: ", { card })
 
   // 1. init content
   useEffect(() => {

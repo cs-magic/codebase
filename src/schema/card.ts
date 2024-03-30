@@ -1,15 +1,21 @@
-import { Media } from "@prisma/client"
+import { IDimension } from "../../packages/common-ui/schema"
 import { IUserSummary } from "./user.summary"
 
 export type PlatformType = "bilibili" | "xiaohongshu" | "wechat-article"
+
+export type IMedia = {
+  url: string
+  type: "image" | "video" | "iFrame"
+  dimension?: IDimension
+}
 
 export type ICardBody = {
   platform?: PlatformType
   sourceUrl?: string | null
 
-  videos?: Media[]
-  images?: Media[]
-  iFrames?: Media[]
+  videos?: IMedia[]
+  images?: IMedia[]
+  iFrames?: IMedia[]
 
   title?: string
   content?: string

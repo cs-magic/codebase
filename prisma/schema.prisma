@@ -65,24 +65,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Media {
-  id        String    @id @default(nanoid(5))
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-
-  url           String
-  type          MediaType
-  width         Int?
-  height        Int?
-  WechatArticle WechatArticle[]
-}
-
-enum MediaType {
-  image
-  video
-  iFrame
-}
-
 model PlatformUser {
   id        String    @id @default(nanoid(5))
   createdAt DateTime? @default(now())
@@ -133,9 +115,10 @@ model WechatArticle {
 
   sourceUrl String? // 这个其实不重要
 
-  title   String?
-  cover   Media?  @relation(fields: [coverId], references: [id], onDelete: SetNull)
-  coverId String?
+  title String?
+
+  /// [IMedia]
+  cover Json?
 
   contentHtml    String?
   contentMd      String?

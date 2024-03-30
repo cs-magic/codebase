@@ -1,4 +1,3 @@
-import { fetchWechatArticleDetailViaMock } from "./providers/with-key"
 import { fetchWechatArticleDetailViaWxapi } from "./providers/wxapi"
 import { IFetchWechatArticleDetailConfig, IWechatArticleDetail } from "./schema"
 
@@ -18,12 +17,8 @@ export const fetchWechatArticleDetail = async (
 
   if (detail === null) {
     console.log("-- detail fetching")
-    const fetchDetail =
-      provider === "mock"
-        ? fetchWechatArticleDetailViaMock
-        : fetchWechatArticleDetailViaWxapi
 
-    const data = await fetchDetail(id)
+    const data = await fetchWechatArticleDetailViaWxapi(id)
     if (data.success) {
       detail = data.data
       console.log("-- detailed fetched: ", detail)

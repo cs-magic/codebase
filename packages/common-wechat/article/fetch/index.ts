@@ -1,10 +1,11 @@
 "use server"
 
 import { Prisma } from "@prisma/client"
-import { fetchWechatArticleSummary } from "./summary"
-import { IFetchWechatArticleSummaryConfig } from "./summary/schema"
+import { getWechatArticleUrlFromId } from "../utils"
 import { fetchWechatArticleDetail } from "./detail"
 import { IFetchWechatArticleDetailConfig } from "./detail/schema"
+import { fetchWechatArticleSummary } from "./summary"
+import { IFetchWechatArticleSummaryConfig } from "./summary/schema"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
 
 export const fetchWechatArticle = async (
@@ -19,5 +20,6 @@ export const fetchWechatArticle = async (
     id,
     ...content,
     ...detail,
+    sourceUrl: getWechatArticleUrlFromId(id),
   }
 }

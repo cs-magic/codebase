@@ -55,17 +55,18 @@ export const url2card = async (
             : null,
       },
     )
-    const wechatArticleDetail = await prisma.wechatArticle.upsert({
+    const wechatArticle = await prisma.wechatArticle.upsert({
       where: { id: wechatArticleId },
       create: article,
       update: article,
       ...wechatArticleDetailSchema,
     })
-    console.log("-- article: ", article)
+    const { comments, ...props } = article
+    console.log("-- article: ", { ...props, commentsLen: comments.length })
 
     return {
       success: true,
-      data: wechatArticle2card(wechatArticleDetail),
+      data: wechatArticle2card(wechatArticle),
     }
   }
 

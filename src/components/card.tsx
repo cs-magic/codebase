@@ -13,7 +13,7 @@ import {
   useAutoCardContent,
   useInitCardContent,
 } from "../hooks/use-card-content"
-import { CardType, ICard, Media } from "../schema/card"
+import { CardType, ICard, IMedia } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
   cardRenderedContentAtom,
@@ -23,7 +23,9 @@ import { UserAvatar } from "./user-avatar"
 
 export const Card = forwardRef<
   HTMLDivElement,
-  { card: ICard } & HTMLAttributes<HTMLDivElement>
+  {
+    card: ICard
+  } & HTMLAttributes<HTMLDivElement>
 >(({ card, className, ...props }, ref) => {
   const [content] = useAtom(cardRenderedContentAtom)
   const [bilibiliVideoControlEnabled] = useAtom(bilibiliVideoControlEnabledAtom)
@@ -34,7 +36,7 @@ export const Card = forwardRef<
   useAutoCardContent({ refText })
 
   const { type, body } = card
-  const m: Partial<Record<CardType, Media[] | undefined>> = {
+  const m: Partial<Record<CardType, IMedia[] | undefined>> = {
     "text-image": body?.images,
     "text-iframe": body?.iFrames,
     "text-video": body?.videos,
@@ -72,13 +74,17 @@ export const Card = forwardRef<
           >
             <div id={"card-media"} className={"w-full shrink-0"}>
               {media && (
-                <AspectRatio ratio={media.width / media.height} ref={refMedia}>
-                  <CardMedia
-                    width={width}
-                    height={height}
-                    url={media.url}
-                    type={card.type}
-                  />
+                <AspectRatio
+                  ratio={
+                    media.dimension
+                      ? media.dimension.width / media.dimension.height
+                      : card.body?.platform === "wechat-article"
+                        ? 2.35 // ref: 微信公众号文章封面尺寸, https://developers.weixin.qq.com/community/develop/article/doc/0004cebac584a8fcd55bad86656413
+                        : 16 / 9
+                  }
+                  ref={refMedia}
+                >
+                  <CardMedia cardType={card.type} media={media} />
                 </AspectRatio>
               )}
             </div>

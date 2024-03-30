@@ -1,3 +1,5 @@
+import { IDimension } from "../common-ui/schema"
+
 export interface IBilibiliVideoDetail {
   View: {
     dimension: {
@@ -38,8 +40,9 @@ export interface IBilibiliVideoDetail {
 export interface IBilibiliVideo {
   bvid: string
   title?: string
-  width?: number // default: 1080, w>=420的时候有调控选项
-  height?: number // default: 720
+  // w: default: 1080, w>=420的时候有调控选项
+  // h: default: 720
+  dimension?: IDimension
   enableDanmu?: number // 0: disable; 1: enable; default: 0
   enableHighQuality?: number // 0: disable; 1: enable; default: 1
 }

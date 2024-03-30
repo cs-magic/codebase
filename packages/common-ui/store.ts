@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { IDisplay } from "./schema"
+import { IDimension } from "./schema"
 
 /**
  * alert dialog for loading
@@ -8,7 +8,7 @@ export const uiLoadingAlertDialogAtom = atom(false)
 /**
  * main-area
  */
-export const uiScreenAtom = atom<IDisplay>({ width: 0, height: 0 })
+export const uiScreenAtom = atom<IDimension>({ width: 0, height: 0 })
 /**
  * alert dialog with content
  */
