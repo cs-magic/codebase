@@ -28,9 +28,10 @@ export const Card = forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("rounded-lg corner-gradient p-6 min-w-[367px]", className)}
+      className={cn("rounded-lg corner-gradient min-w-[367px]", className)}
       style={{
-        padding,
+        paddingLeft: padding,
+        paddingRight: padding,
         width:
           padding * 2 +
           (card.type === "text-iframe" && bilibiliVideoControlEnabled
@@ -40,7 +41,7 @@ export const Card = forwardRef<
       {...props}
     >
       <AspectRatio ratio={8 / 16}>
-        <div className={"w-full h-full overflow-hidden flex flex-col"}>
+        <div className={"w-full h-full overflow-hidden flex flex-col pt-4"}>
           <CardHeader user={card.user} />
 
           <CardContent card={card} />
