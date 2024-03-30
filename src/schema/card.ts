@@ -1,3 +1,4 @@
+import { IArticleSummary } from "../../packages/common-article/schema"
 import { IDimension } from "../../packages/common-ui/schema"
 import { IUserSummary } from "./user.summary"
 
@@ -24,7 +25,7 @@ export type ICardBody = {
 
   title?: string | null
   content?: string | null
-  mindmap?: string | null // markdown mindmap
+  summary?: IArticleSummary | null
   stat?: ICardStat | null
 
   author?: IUserSummary | null

@@ -1,6 +1,7 @@
 import { first } from "lodash"
 import { useRef } from "react"
 import { useMeasure } from "react-use"
+import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
@@ -51,15 +52,28 @@ export const CardContent = ({ card }: { card: ICard }) => {
           ref={refText}
           className={"grow overflow-hidden flex flex-col gap-2"}
         >
+          {body?.summary?.title && (
+            <h1 className={"text-xl font-medium truncate shrink-0"}>
+              {body.summary.title}
+            </h1>
+          )}
           {body?.title && (
-            <h1 className={"truncate text-xl font-medium"}>{body.title}</h1>
+            <span className={"text-xs text-muted-foreground truncate shrink-0"}>
+              原标题：{body.title}
+            </span>
           )}
 
-          {body?.mindmap && (
-            <div className={"grow overflow-hidden"}>
-              <MarkMap content={body.mindmap} />
+          {body?.summary?.description && (
+            <div className={"bg-slate-100 p-2 rounded-lg"}>
+              AI 摘要：{body.summary.description}
             </div>
           )}
+
+          {body?.summary?.mindmap && <MarkMap content={body.summary.mindmap} />}
+
+          {body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}
+
+          <div className={"grow"} />
 
           {body && <AuthorLine body={body} />}
 

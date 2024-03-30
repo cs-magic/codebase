@@ -5,17 +5,11 @@ import {
   fetchBvidFromb23tv,
 } from "../../packages/common-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
-import { prisma } from "../../packages/common-db/providers/prisma"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
-import { fetchWechatArticle } from "../../packages/common-wechat/article"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
-import { wechatArticleDetailSchema } from "../schema/wechat-article.detail"
 import { bilibili2card } from "./provider-to-card/bilibili"
-import {
-  fetchWechatArticleWithCache,
-  wechatArticle2card,
-} from "./provider-to-card/wechat-article"
+import { fetchWechatArticleWithCache } from "./provider-to-card/wechat-article"
 import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 
 /**

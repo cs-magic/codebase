@@ -12,10 +12,10 @@ export const fetchWechatArticleWithCache = async (id: string) => {
     where: { id },
   })
 
-  const article = await fetchWechatArticle(
+  const wechatArticle = await fetchWechatArticle(
     id,
     {
-      get: async (id) => dataInDB?.contentSummary ?? null,
+      get: (id) => dataInDB?.summary ?? null,
     },
     {
       provider: "wxapi",
@@ -29,14 +29,16 @@ export const fetchWechatArticleWithCache = async (id: string) => {
           : null,
     },
   )
-  const wechatArticle = await prisma.wechatArticle.upsert({
+  console.log("-- fetched wechat article: ", wechatArticle)
+
+  const wechatArticleInDB = await prisma.wechatArticle.upsert({
     where: { id: id },
-    create: article,
-    update: article,
+    create: wechatArticle,
+    update: wechatArticle,
     ...wechatArticleDetailSchema,
   })
   // console.debug("-- article: ", article)
-  return wechatArticle2card(wechatArticle)
+  return wechatArticle2card(wechatArticleInDB)
 }
 
 export const wechatArticle2card = (data: IWechatArticleDetail): ICardBody => {
@@ -46,11 +48,11 @@ export const wechatArticle2card = (data: IWechatArticleDetail): ICardBody => {
     content: data.contentMd!,
     images: [data.cover],
     sourceUrl: data.sourceUrl,
-    mindmap: data.contentSummary,
+    summary: data.summary,
     stat: {
-      reads: data.stat.readnum,
-      likes: data.stat.likenum,
-      comments: data.stat.comment_count,
+      reads: data.stat?.readnum,
+      likes: data.stat?.likenum,
+      comments: data.stat?.comment_count,
     },
     author: data.author,
     source: data.source,

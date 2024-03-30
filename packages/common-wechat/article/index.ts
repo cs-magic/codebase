@@ -3,12 +3,12 @@
 import { IUserSummary } from "@/schema/user.summary"
 import { Prisma } from "@prisma/client"
 import parse from "node-html-parser"
-import OpenAI from "openai"
 import { api } from "../../common-api"
+import { fetchArticleSummary } from "../../common-article/core"
+import { IArticleSummary } from "../../common-article/schema"
+import { parseSummary } from "../../common-article/utils"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
-import { IFetchWechatArticleSummaryConfig } from "./schema"
-import { getWechatArticleUrlFromId } from "./utils"
 import { fetchWechatArticleDetailViaWxapi } from "./detail/providers/wxapi"
 import {
   IFetchWechatArticleDetailConfig,
@@ -16,7 +16,8 @@ import {
   IWechatArticleDetail,
   IWechatArticleStat,
 } from "./detail/schema"
-import ChatCompletion = OpenAI.ChatCompletion
+import { IFetchWechatArticleSummaryConfig } from "./schema"
+import { getWechatArticleUrlFromId } from "./utils"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
 
 export const fetchWechatArticle = async (
@@ -46,45 +47,28 @@ export const fetchWechatArticle = async (
   }
   let comments: IWechatArticleComment[] = []
   let stat: IWechatArticleStat | null = null
-  let contentMd: string | null | undefined = undefined
-  let contentSummary: string | null | undefined = undefined
+  let contentMd: string | null = null
+  let summary: IArticleSummary | null = null
 
   if (contentHtml) {
     contentMd = html2md(contentHtml)
 
     // 2.1. cache summary
     if (summaryConfig?.get) {
-      contentSummary = await summaryConfig.get(id)
-      if (contentSummary) console.log("-- summary cached")
+      summary = await summaryConfig.get(id)
+      if (summary) console.log("-- summary cached: ", summary)
     }
 
     // 2.2. fetch summary
-    if (!contentSummary) {
-      console.log("-- summary fetching")
-      const { data } = await api.postForm<ChatCompletion>(
-        "https://openapi.cs-magic.cn/agent/call",
-        {
-          content: contentHtml,
-        },
-        {
-          params: {
-            agent_type: "article-summariser",
-            model_type: "moonshot-v1-8k", // 这个效果显著比gpt3.5好，也略胜于gpt4
-          },
-        },
-      )
-      contentSummary = data.choices[0]?.message.content
-      console.log("-- summary fetched")
-      if (contentSummary && summaryConfig?.set) {
-        console.log("-- summary persisting")
-        await summaryConfig.set(id, contentSummary)
-      }
+    if (!summary) {
+      summary = await fetchArticleSummary(contentMd)
     }
   }
+  console.log("-- summary: ", summary)
 
   // 3. detail
   if (detailConfig) {
-    const { provider, get, set } = detailConfig
+    const { provider, get } = detailConfig
 
     let detail: IWechatArticleDetail | null = null
     // 3.1. cache detail
@@ -101,7 +85,6 @@ export const fetchWechatArticle = async (
       if (data.success) {
         detail = data.data
         console.log("-- detailed fetched")
-        if (set) await set(id, detail)
       }
     }
 
@@ -109,12 +92,16 @@ export const fetchWechatArticle = async (
     if (detail?.comments) comments = detail.comments
   }
 
+  console.log("-- summary1: ", summary)
+  const summary2 = parseSummary(summary)
+  console.log("-- summary2: ", summary2)
+
   return {
     id,
     sourceUrl: getWechatArticleUrlFromId(id),
     comments,
     author,
-    contentSummary,
+    summary: summary2,
     contentMd,
     contentHtml,
     cover: {

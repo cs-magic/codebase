@@ -37,5 +37,4 @@ export type IFetchWechatArticleDetailConfig = {
   provider: "mock" | "wxapi"
   // db hook
   get?: (id: string) => Promise<IWechatArticleDetail | null>
-  set?: (id: string, data: IWechatArticleDetail) => Promise<void>
 }

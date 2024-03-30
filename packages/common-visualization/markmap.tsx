@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Markmap } from "markmap-view"
 import { Transformer } from "markmap-lib"
+import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 
 const transformer = new Transformer()
 
@@ -11,6 +12,7 @@ export default function MarkMap({ content }: { content: string }) {
   const refSvg = useRef<SVGSVGElement>(null)
   // Ref for markmap object
   const refMm = useRef<Markmap>()
+  const [ratio, setRatio] = useState(1)
 
   useEffect(() => {
     if (!refSvg.current) return
@@ -27,10 +29,24 @@ export default function MarkMap({ content }: { content: string }) {
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
-    const { root } = transformer.transform(content)
+    const { root } = transformer.transform(content, {})
     mm.setData(root)
-    mm.fit()
+
+    // ref: https://github.com/markmap/markmap/issues/134#issuecomment-1267967814
+    const { maxY, maxX, minX, minY } = mm.state
+    const w = maxY - minY
+    const h = maxX - minX
+    const ratio = w / h
+    setRatio(ratio)
+
+    void mm.fit()
   }, [refMm.current, content])
 
-  return <svg className="w-full h-full" ref={refSvg} />
+  return (
+    <div className={"w-full"}>
+      <AspectRatio ratio={ratio}>
+        <svg className="w-full h-full" ref={refSvg} />
+      </AspectRatio>
+    </div>
+  )
 }

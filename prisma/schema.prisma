@@ -120,9 +120,11 @@ model WechatArticle {
   /// [IMedia]
   cover Json?
 
-  contentHtml    String?
-  contentMd      String?
-  contentSummary String?
+  contentHtml String?
+  contentMd   String?
+
+  /// [IArticleSummary]
+  summary Json?
 
   /// [IWechatArticleStat]
   stat     Json?
