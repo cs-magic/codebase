@@ -65,6 +65,35 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Media {
+  id        String    @id @default(nanoid(5))
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  url           String
+  type          MediaType
+  width         Int             @default(320)
+  height        Int             @default(240)
+  WechatArticle WechatArticle[]
+}
+
+enum MediaType {
+  image
+  video
+  iFrame
+}
+
+model PlatformUser {
+  id        String    @id @default(nanoid(5))
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  platform      String
+  name          String?
+  image         String?
+  WechatArticle WechatArticle[]
+}
+
 model Session {
   id           String   @id @default(nanoid(5))
   sessionToken String   @unique
@@ -104,6 +133,10 @@ model WechatArticle {
 
   sourceUrl String? // 这个其实不重要
 
+  title   String?
+  cover   Media?  @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  coverId String?
+
   contentHtml    String?
   contentMd      String?
   contentSummary String?
@@ -112,4 +145,7 @@ model WechatArticle {
   stat     Json?
   /// [IWechatArticleComment]
   comments Json[]
+
+  user           PlatformUser? @relation(fields: [platformUserId], references: [id], onDelete: Cascade)
+  platformUserId String?
 }

@@ -1,4 +1,4 @@
-import { prisma } from "../packages/common-db"
+import { prisma } from "../packages/common-db/providers/prisma"
 
 const cleanTable = async () => {
   const tableName = process.argv[2]
@@ -10,4 +10,6 @@ const cleanTable = async () => {
   console.log("cleaned result: ", result)
 }
 
-void cleanTable()
+void cleanTable().finally(async () => {
+  await prisma.$disconnect()
+})

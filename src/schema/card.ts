@@ -5,7 +5,7 @@ export type PlatformType = "bilibili" | "xiaohongshu"
 export type IMedia = { url: string; width: number; height: number }
 
 export type ICardBody = {
-  platform?: "bilibili" | "xiaohongshu"
+  platform?: "bilibili" | "xiaohongshu" | "wechat-article"
   sourceUrl?: string | null
 
   videos?: IMedia[]

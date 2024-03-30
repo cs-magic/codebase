@@ -1,4 +1,4 @@
-import { prisma } from "../packages/common-db"
+import { prisma } from "../packages/common-db/providers/prisma"
 
 const deleteMe = async () => {
   const result = await prisma.user.deleteMany({

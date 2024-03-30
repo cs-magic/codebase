@@ -5721,6 +5721,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/wtfnode@npm:^0":
+  version: 0.7.3
+  resolution: "@types/wtfnode@npm:0.7.3"
+  checksum: 10c0/23accc6f11a15bdb8e8b3f410d3b56a26659707da5adde7ce025de597c8af23b6895c79f8e51a9ef2030d35fd617f0e3bff92f4dfbeae4aaa01c79eaaa3c3e54
+  languageName: node
+  linkType: hard
+
 "@types/xml2js@npm:^0.4.5":
   version: 0.4.14
   resolution: "@types/xml2js@npm:0.4.14"
@@ -14427,6 +14434,7 @@ __metadata:
     "@types/turndown": "npm:^5.0.4"
     "@types/video-react": "npm:^0.15.6"
     "@types/ws": "npm:^8.5.10"
+    "@types/wtfnode": "npm:^0"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     ali-oss: "npm:^6.20.0"
@@ -14511,6 +14519,7 @@ __metadata:
     video-react: "npm:^0.16.0"
     wechaty: "npm:^1.20.2"
     ws: "npm:^8.16.0"
+    wtfnode: "npm:^0.9.1"
     zod: "npm:3.21.1"
     zod-prisma: "npm:^0.5.4"
     zustand: "npm:^4.5.2"
@@ -18471,6 +18480,15 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10c0/a7783bb421c648b1e622b423409cb2a58ac5839521d2f689e84bc9dc41d59379c692dd405b15a997ea1d4c0c2e5314ad707332d0c558f15232d2bc07c0b4618a
+  languageName: node
+  linkType: hard
+
+"wtfnode@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "wtfnode@npm:0.9.1"
+  bin:
+    wtfnode: proxy.js
+  checksum: 10c0/9f643066b2e54f7bdd87489a75c7f9029ac83835ccc110dc3d01d0b05aa21049b9c3e923056afdeaf18e9c5c7fe99ec29d124ac5dd41ea81ed3f172ba95122dd
   languageName: node
   linkType: hard
 

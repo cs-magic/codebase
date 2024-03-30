@@ -5,12 +5,14 @@ import {
   fetchBvidFromb23tv,
 } from "../../packages/common-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
-import { prisma } from "../../packages/common-db"
+import { prisma } from "../../packages/common-db/providers/prisma"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchWechatArticle } from "../../packages/common-wechat/article/fetch"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
+import { wechatArticleDetailSchema } from "../schema/wechat-article.detail"
 import { bilibili2card } from "./provider-to-card/bilibili"
+import { wechatArticle2card } from "./provider-to-card/wechat-article"
 import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 
 /**
@@ -53,16 +55,17 @@ export const url2card = async (
             : null,
       },
     )
-    await prisma.wechatArticle.upsert({
+    const wechatArticleDetail = await prisma.wechatArticle.upsert({
       where: { id: wechatArticleId },
       create: article,
       update: article,
+      ...wechatArticleDetailSchema,
     })
     console.log("-- article: ", article)
 
     return {
-      success: false,
-      message: "todo",
+      success: true,
+      data: wechatArticle2card(wechatArticleDetail),
     }
   }
 

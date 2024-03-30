@@ -1,4 +1,4 @@
-import { prisma } from "../../../../packages/common-db/providers/prisma/connection"
+import { prisma } from "../../../../packages/common-db/providers/prisma"
 import {
   createTRPCRouter,
   protectedProcedure,
