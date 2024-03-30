@@ -1,9 +1,11 @@
+"use server"
 import { IApi } from "../../packages/common-api/schema"
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
 } from "../../packages/common-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
+import { prisma } from "../../packages/common-db"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchWechatArticle } from "../../packages/common-wechat/article/fetch"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
@@ -13,24 +15,54 @@ import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
- * @param inputUrl
+ * @param inputUrlLike
  */
-export const url2card = async (inputUrl: string): Promise<IApi<ICardBody>> => {
-  const urlParsed = extractFirstURL(inputUrl)
+export const url2card = async (
+  inputUrlLike: string,
+): Promise<IApi<ICardBody>> => {
+  const urlParsed = extractFirstURL(inputUrlLike)
   console.log({ urlParsed })
   if (!urlParsed)
     return {
       success: false,
-      message: `invalid url to be parsed from ${inputUrl}`,
+      message: `invalid url to be parsed from ${inputUrlLike}`,
     }
 
-  if (/mp.weixin.qq.com\/s\?__biz/.test(urlParsed)) {
+  const wechatArticleId =
+    /mp.weixin.qq.com\/s\/(.*)$/.exec(urlParsed)?.[1] ?? null
+  if (wechatArticleId) {
     console.log("wechat matched")
-    const article = await fetchWechatArticle(urlParsed)
+    const dataInDB = await prisma.wechatArticle.findUnique({
+      where: { id: wechatArticleId },
+    })
+
+    const article = await fetchWechatArticle(
+      wechatArticleId,
+      {
+        get: async (id) => dataInDB?.contentSummary ?? null,
+      },
+      {
+        provider: "wxapi",
+        get: async (url) =>
+          // obj
+          dataInDB?.stat !== null
+            ? {
+                stat: dataInDB?.stat,
+                comments: dataInDB?.comments ?? [],
+              }
+            : null,
+      },
+    )
+    await prisma.wechatArticle.upsert({
+      where: { id: wechatArticleId },
+      create: article,
+      update: article,
+    })
     console.log("-- article: ", article)
 
     return {
       success: false,
+      message: "todo",
     }
   }
 

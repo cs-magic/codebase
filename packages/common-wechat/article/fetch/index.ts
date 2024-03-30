@@ -1,22 +1,23 @@
 "use server"
 
-import { fetchWechatArticleContent } from "./content"
-import { fetchDetail } from "./detail"
+import { Prisma } from "@prisma/client"
+import { fetchWechatArticleSummary } from "./content"
+import { IFetchWechatArticleSummaryConfig } from "./content/schema"
+import { fetchWechatArticleDetail } from "./detail"
 import { IFetchWechatArticleDetailConfig } from "./detail/schema"
-import { IWechatArticle } from "./schema"
+import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
 
 export const fetchWechatArticle = async (
-  url: string,
+  id: string,
+  summaryConfig?: IFetchWechatArticleSummaryConfig,
   detailConfig?: IFetchWechatArticleDetailConfig,
-): Promise<IWechatArticle> => {
-  const content = await fetchWechatArticleContent(url)
-
-  const detail = (await fetchDetail(url, detailConfig)).data ?? null
+): Promise<WechatArticleUncheckedCreateInput> => {
+  const content = await fetchWechatArticleSummary(id, summaryConfig)
+  const detail = await fetchWechatArticleDetail(id, detailConfig)
 
   return {
-    url,
-    content,
-    diagram: null,
-    detail,
+    id,
+    ...content,
+    ...detail,
   }
 }

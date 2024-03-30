@@ -1,11 +1,12 @@
 declare global {
   // 要放在里面
-  import { ILLMMessage } from "@/schema/message"
-  import { ConversationType } from "@prisma/client"
+  import {
+    IWechatArticleStat,
+    IWechatArticleComment,
+  } from "../packages/common-wechat/article/fetch/detail/schema"
 
   namespace PrismaJson {
-    type ConversationType = ConversationType
-
-    type QueryContext = ILLMMessage[]
+    type IWechatArticleStat = IWechatArticleStat
+    type IWechatArticleComment = IWechatArticleComment
   }
 }

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { api } from "../../../../../common-api"
+import { wechatArticleId2url } from "../../../utils"
 import {
   IFetchWechatArticleDetail,
   IWechatArticleComment,
@@ -22,13 +23,13 @@ type IWxapiResponse<T> = {
  *
  * @param url
  */
-export const fetchWechatArticleStat = async (url: string) => {
+export const fetchWechatArticleStat = async (id: string) => {
   const token = process.env.WXAPI_TOKEN!
 
   const { data: res } = await wxapiApi.post<IWxapiResponse<IWechatArticleStat>>(
     "/wxapi/readnum",
     new URLSearchParams({
-      url,
+      url: wechatArticleId2url(id),
       token,
     }),
     {
@@ -41,13 +42,13 @@ export const fetchWechatArticleStat = async (url: string) => {
   return res
 }
 
-export const fetchWechatArticleComments = async (url: string) => {
+export const fetchWechatArticleComments = async (id: string) => {
   const token = process.env.WXAPI_TOKEN!
 
   const { data: res } = await wxapiApi.postForm<
     IWxapiResponse<IWechatArticleComment[]>
   >("/wxapi/wxcoment", {
-    url,
+    url: wechatArticleId2url(id),
     token,
     comment_id: "",
   })
@@ -56,9 +57,9 @@ export const fetchWechatArticleComments = async (url: string) => {
 }
 
 export const fetchWechatArticleDetailViaWxapi: IFetchWechatArticleDetail =
-  async (url) => {
-    const resStat = await fetchWechatArticleStat(url)
-    const resComments = await fetchWechatArticleComments(url)
+  async (id) => {
+    const resStat = await fetchWechatArticleStat(id)
+    const resComments = await fetchWechatArticleComments(id)
 
     if (resStat.code !== 0 || resComments.code !== 0)
       return { success: false, message: "invalid res from wxapi" }

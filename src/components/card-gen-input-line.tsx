@@ -29,8 +29,7 @@ export const InputLine = () => {
         onClick={async () => {
           const card = await url2card(inputUrl)
           console.log("-- parsed card: ", card)
-          if (!card.data || !card.success) return toast.error(card.message)
-
+          if (!card.success) return toast.error(card.message)
           setCardBody(card.data)
         }}
       >
