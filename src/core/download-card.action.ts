@@ -2,6 +2,7 @@
 
 import { chromium } from "playwright"
 import internal from "stream"
+import { sleep } from "../../packages/common-algo/utils"
 import { IApi } from "../../packages/common-api/schema"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
@@ -50,10 +51,12 @@ export const downloadCardAction = async (
       await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
       console.log("-- to click generate button")
       await page.getByRole("button", { name: /generate card/i }).click()
-      await page.waitForFunction(() => {
-        const h = document.getElementById("card-media")?.clientHeight
-        return !!h && h > 0
-      })
+      console.log("-- to wait card generated")
+      await sleep(3000)
+      // await page.waitForFunction(() => {
+      //   const h = document.getElementById("card-media")?.clientHeight
+      //   return !!h && h > 0
+      // })
 
       console.log("-- to click download button")
       await page
