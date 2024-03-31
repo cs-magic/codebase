@@ -7,72 +7,71 @@ import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
-import { ICardStat } from "../schema/card"
-import {
-  cardBodyAtom,
-  cardCoverRatioAtom,
-  cardCoverUrlAtom,
-} from "../store/card.atom"
+import { ICardStat, IMedia } from "../schema/card"
+import { cardBodyAtom } from "../store/card.atom"
 import { ArticleAuthor } from "./card-view-content-author"
 
 export const CardContent = () => {
   const [body] = useAtom(cardBodyAtom)
-  const [coverRatio] = useAtom(cardCoverRatioAtom)
-  const [coverUrl] = useAtom(cardCoverUrlAtom)
-
   const refText = useRef<HTMLDivElement>(null)
   useAutoCardContent({ refText })
 
   return (
-    <div
-      className={
-        "w-full grow overflow-hidden rounded-lg flex flex-col bg-white text-black gap-2"
-      }
-    >
-      <div id={"card-media"} className={"w-full shrink-0"}>
-        <AspectRatio ratio={coverRatio}>
-          <Image src={coverUrl} alt={""} fill className={"w-full h-auto"} />
-        </AspectRatio>
-      </div>
+    <div className={"w-full grow gap-2 p-2 min-h-72"}>
+      <div
+        className={"overflow-hidden rounded-lg bg-white text-black relative"}
+      >
+        <div ref={refText} className={"grow overflow-hidden flex flex-col"}>
+          <Cover cover={body?.cover} />
 
-      <div className={"p-2 grow overflow-hidden relative flex flex-col"}>
-        <div
-          ref={refText}
-          className={"grow overflow-hidden flex flex-col gap-2"}
-        >
-          {body?.summary?.title && (
-            <h1 className={"text-xl font-medium truncate shrink-0"}>
-              {body.summary.title}
-            </h1>
-          )}
+          <div className={"p-2 flex flex-col gap-2"}>
+            {body?.summary?.title && (
+              <h1 className={"text-xl font-medium truncate shrink-0"}>
+                {body.summary.title}
+              </h1>
+            )}
 
-          <Tags tags={body?.summary?.tags} />
+            <Tags tags={body?.summary?.tags} />
 
-          <Stat stat={body?.stat} />
+            <Stat stat={body?.stat} />
 
-          {/*{body?.title && (*/}
-          {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
-          {/*    原标题：{body.title}*/}
-          {/*  </span>*/}
-          {/*)}*/}
+            {/*{body?.title && (*/}
+            {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
+            {/*    原标题：{body.title}*/}
+            {/*  </span>*/}
+            {/*)}*/}
 
-          {body?.summary?.description && (
-            <div className={"bg-slate-100 p-2 rounded-lg"}>
-              <div>AI 摘要：{body.summary.description}</div>
-            </div>
-          )}
+            {body?.summary?.description && (
+              <div className={"bg-slate-100 p-2 rounded-lg"}>
+                <div>AI 摘要：{body.summary.description}</div>
+              </div>
+            )}
 
-          {body?.summary?.mindmap && <MarkMap content={body.summary.mindmap} />}
+            {body?.summary?.mindmap && (
+              <MarkMap content={body.summary.mindmap} />
+            )}
 
-          {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
+            {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
 
-          <div className={"grow"} />
+            <div className={"grow"} />
 
-          {body && <ArticleAuthor body={body} />}
+            {body && <ArticleAuthor body={body} />}
 
-          {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
+            {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
+          </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+const Cover = ({ cover }: { cover?: IMedia }) => {
+  if (!cover) return null
+  return (
+    <div id={"card-media"} className={"w-full shrink-0"}>
+      <AspectRatio ratio={cover?.ratio ?? 2.35}>
+        <Image src={cover.url} alt={""} fill className={"w-full h-auto"} />
+      </AspectRatio>
     </div>
   )
 }

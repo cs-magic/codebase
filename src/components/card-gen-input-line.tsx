@@ -6,7 +6,7 @@ import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
-import { genCardFromUrl } from "../core/parse-card"
+import { genCardFromUrl } from "../core/gen-card"
 
 import {
   cardBodyAtom,
