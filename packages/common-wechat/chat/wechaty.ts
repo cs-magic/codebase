@@ -9,8 +9,11 @@ export const parseUrlFromWechatUrlMessage = (text: string): string | null => {
   return m?.[1] ?? null
 }
 
+const name = process.argv[2] ?? "default"
+console.log({ name })
+
 void WechatyBuilder.build({
-  name: "mark0", // 加了名字后就可以自动存储了
+  name, // 加了名字后就可以自动存储了
 })
   .on("scan", (value, status) => {
     console.log(
