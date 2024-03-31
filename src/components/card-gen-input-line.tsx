@@ -38,7 +38,7 @@ export const InputLine = () => {
           setCardBody(card.data)
         }}
       >
-        Generate
+        Generate Card
       </Button>
     </div>
   )
