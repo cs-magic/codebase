@@ -108,6 +108,7 @@ export const Controls = ({
         )}
 
         <ButtonWithLoading
+          id={"copy-card"}
           loading={coping}
           onClick={async () => {
             setCoping(true)
@@ -119,6 +120,7 @@ export const Controls = ({
         </ButtonWithLoading>
 
         <ButtonWithLoading
+          id={"download-card"}
           loading={downloading}
           onClick={async () => {
             setDownloading(true)

@@ -31,6 +31,7 @@ export const InputLine = () => {
       />
 
       <Button
+        id={"generate-card"}
         onClick={async () => {
           const card = await genCardFromUrl(inputUrl, options)
           console.log("-- parsed card: ", card)

@@ -50,7 +50,8 @@ export const downloadCardAction = async (
       console.log("-- to input: ", url)
       await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
       console.log("-- to click generate button")
-      await page.getByRole("button", { name: /generate card/i }).click()
+      await page.locator("#generate-card").click()
+      // await page.getByRole("button", { name: /generate card/i }).click()
       console.log("-- to wait card generated")
       await sleep(3000)
       // await page.waitForFunction(() => {
@@ -59,9 +60,10 @@ export const downloadCardAction = async (
       // })
 
       console.log("-- to click download button")
-      await page
-        .getByRole("button", { name: /download card/i })
-        .click({ timeout: 3000 })
+      await page.locator("#download-card").click()
+      // await page
+      //   .getByRole("button", { name: /download card/i })
+      //   .click({ timeout: 3000 })
     },
   )
 }
