@@ -1,21 +1,20 @@
-import { IArticleSummary } from "./schema"
+import { IArticleSummaryParsed } from "./schema"
 
 /**
  *  regex of `/ms`: ref:  https://stackoverflow.com/a/66001191/9422455
- * @param summary
+ * @param content
  */
 export const parseSummary = (
-  summary: IArticleSummary | null,
-): IArticleSummary | null => {
-  console.log("-- parseSummary: ", summary)
-  if (!summary?.response) return null
-  const { response } = summary
+  content?: string | null,
+): IArticleSummaryParsed | null => {
+  console.log("-- parseSummary: ", content)
+  if (!content) return null
 
   return {
-    response,
-    title: /<title>(.*?)<\/title>/ms.exec(response)?.[1],
-    description: /<description>(.*?)<\/description>/ms.exec(response)?.[1],
-    mindmap: /<mindmap>(.*?)<\/mindmap>/ms.exec(response)?.[1],
-    comment: /<comment>(.*?)<\/comment>/ms.exec(response)?.[1],
+    title: /<title>(.*?)<\/title>/ms.exec(content)?.[1],
+    description: /<description>(.*?)<\/description>/ms.exec(content)?.[1],
+    mindmap: /<mindmap>(.*?)<\/mindmap>/ms.exec(content)?.[1],
+    comment: /<comment>(.*?)<\/comment>/ms.exec(content)?.[1],
+    tags: /<comment>(.*?)<\/comment>/ms.exec(content)?.[1]?.split(","),
   }
 }

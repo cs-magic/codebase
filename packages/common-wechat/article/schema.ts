@@ -1,6 +1,6 @@
-import { IArticleSummary } from "../../common-article/schema"
+import { IArticleSummaryParsed } from "../../common-article/schema"
 
 export type IFetchWechatArticleSummaryConfig = {
   // db hook
-  get?: (id: string) => Promise<IArticleSummary | null>
+  get?: (id: string) => Promise<IArticleSummaryParsed | null>
 }

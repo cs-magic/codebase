@@ -123,8 +123,9 @@ model WechatArticle {
   contentHtml String?
   contentMd   String?
 
+  summaryContent String? // 从api获取
   /// [IArticleSummary]
-  summary Json?
+  summary        Json?
 
   /// [IWechatArticleStat]
   stat     Json?

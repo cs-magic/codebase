@@ -26,9 +26,9 @@ export const CardHeader = ({ user }: { user: IUserSummary | null }) => {
       <div className={"flex items-center gap-2"}>
         {/*<span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>*/}
 
-        <span className={"text-primary-foreground text-lg font-medium"}>
+        <div className={"text-primary-foreground text-lg font-medium shrink-0"}>
           {PROJECT_NAME}
-        </span>
+        </div>
       </div>
     </div>
   )

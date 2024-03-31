@@ -3,8 +3,5 @@ export type IArticleSummaryParsed = {
   description?: string
   mindmap?: string
   comment?: string
+  tags?: string[]
 }
-
-export type IArticleSummary = {
-  response?: string
-} & IArticleSummaryParsed

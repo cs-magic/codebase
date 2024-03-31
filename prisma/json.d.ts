@@ -2,7 +2,7 @@ declare global {
   // 要放在里面
 
   namespace PrismaJson {
-    export { IArticleSummary } from "../packages/common-article/schema"
+    export { IArticleSummaryParsed } from "../packages/common-article/schema"
     export { IUserSummary } from "@/schema/user.summary"
     export { IMedia } from "@/schema/card"
     export {

@@ -7,12 +7,25 @@ import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 
 const transformer = new Transformer()
 
+const transformContent = (content: string): string => {
+  return content
+    .split(/\n/g)
+    .map((s) => {
+      const N = 15
+      if (s.length > N) return s.slice(0, N) + "……"
+      return s
+    })
+    .join("\n")
+}
+
 export default function MarkMap({ content }: { content: string }) {
   // Ref for SVG element
   const refSvg = useRef<SVGSVGElement>(null)
   // Ref for markmap object
   const refMm = useRef<Markmap>()
   const [ratio, setRatio] = useState(1)
+
+  const contentTransformed = transformContent(content)
 
   useEffect(() => {
     if (!refSvg.current) return
@@ -29,7 +42,7 @@ export default function MarkMap({ content }: { content: string }) {
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
-    const { root } = transformer.transform(content, {})
+    const { root } = transformer.transform(contentTransformed, {})
     mm.setData(root)
 
     // ref: https://github.com/markmap/markmap/issues/134#issuecomment-1267967814
@@ -40,7 +53,7 @@ export default function MarkMap({ content }: { content: string }) {
     setRatio(ratio)
 
     void mm.fit()
-  }, [refMm.current, content])
+  }, [refMm.current, contentTransformed])
 
   return (
     <div className={"w-full"}>

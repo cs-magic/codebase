@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client"
 import parse from "node-html-parser"
 import { api } from "../../common-api"
 import { fetchArticleSummary } from "../../common-article/core"
-import { IArticleSummary } from "../../common-article/schema"
+import { IArticleSummaryParsed } from "../../common-article/schema"
 import { parseSummary } from "../../common-article/utils"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
@@ -19,6 +19,7 @@ import {
 import { IFetchWechatArticleSummaryConfig } from "./schema"
 import { getWechatArticleUrlFromId } from "./utils"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
+import { promises } from "fs"
 
 export const fetchWechatArticle = async (
   id: string,
@@ -45,10 +46,11 @@ export const fetchWechatArticle = async (
     image: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1] ?? null,
     id: /var user_name = "(.*?)"/.exec(pageText)?.[1] ?? "",
   }
-  let comments: IWechatArticleComment[] = []
-  let stat: IWechatArticleStat | null = null
-  let contentMd: string | null = null
-  let summary: IArticleSummary | null = null
+  let comments: IWechatArticleComment[] | null | undefined = undefined
+  let stat: IWechatArticleStat | null | undefined = undefined
+  let contentMd: string | null | undefined = undefined
+  let summary: IArticleSummaryParsed | null | undefined = undefined
+  let summaryContent: string | null | undefined = undefined
 
   if (contentHtml) {
     contentMd = html2md(contentHtml)
@@ -56,15 +58,18 @@ export const fetchWechatArticle = async (
     // 2.1. cache summary
     if (summaryConfig?.get) {
       summary = await summaryConfig.get(id)
-      if (summary) console.log("-- summary cached: ", summary)
+      if (summary) console.log("-- summary cached")
     }
 
     // 2.2. fetch summary
     if (!summary) {
-      summary = await fetchArticleSummary(contentMd)
+      console.log("-- contentMd: ", contentMd)
+      await promises.writeFile("content.md", contentMd)
+
+      summaryContent = (await fetchArticleSummary(contentMd)) ?? null
+      summary = parseSummary(summaryContent)
     }
   }
-  console.log("-- summary: ", summary)
 
   // 3. detail
   if (detailConfig) {
@@ -92,16 +97,13 @@ export const fetchWechatArticle = async (
     if (detail?.comments) comments = detail.comments
   }
 
-  console.log("-- summary1: ", summary)
-  const summary2 = parseSummary(summary)
-  console.log("-- summary2: ", summary2)
-
   return {
     id,
     sourceUrl: getWechatArticleUrlFromId(id),
     comments,
     author,
-    summary: summary2,
+    summaryContent,
+    summary,
     contentMd,
     contentHtml,
     cover: {

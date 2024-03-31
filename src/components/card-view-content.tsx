@@ -70,7 +70,7 @@ export const CardContent = ({ card }: { card: ICard }) => {
 
           {body?.summary?.mindmap && <MarkMap content={body.summary.mindmap} />}
 
-          {body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}
+          {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
 
           <div className={"grow"} />
 
