@@ -3,11 +3,7 @@ import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
-
-export const parseUrlFromWechatUrlMessage = (text: string): string | null => {
-  const m = /<url>(.*?)<\/url>/.exec(text)
-  return m?.[1] ?? null
-}
+import { parseUrlFromWechatUrlMessage } from "./utils"
 
 const name = process.argv[2] ?? "default"
 console.log({ name })
@@ -23,27 +19,28 @@ void WechatyBuilder.build({
   })
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
-    const text = message.text()
-    // suppress other messages
-    if (!/mark|小野|我的文件助手/.test(message.talker().name().toLowerCase()))
-      return
-
     console.log(`<< message: `, message.payload)
 
-    // link
-    if (message.type() === types.Message.Url) {
-      const url = parseUrlFromWechatUrlMessage(text)
-      if (!url) return
+    const text = message.text()
+    const room = message.room()
+    const roomName = room ? await room.topic() : ""
+    if (/CS魔法社|文案|test/.test(roomName)) {
+      // link
+      if (message.type() === types.Message.Url) {
+        const url = parseUrlFromWechatUrlMessage(text)
+        console.log({ url })
+        if (!url) return
 
-      if (text.includes("哔哩哔哩")) {
-        console.log("-- parsing bilibili")
-        const { success, data } = await downloadCardAction(url)
-        if (!success) return
+        if (text.includes("哔哩哔哩")) {
+          console.log("-- parsing bilibili")
+          const { success, data } = await downloadCardAction(url)
+          if (!success) return
 
-        const file = FileBox.fromStream(data.stream, data.fileName)
-        await message.say(file)
-        console.log("-- ✅ sent file")
-        return
+          const file = FileBox.fromStream(data.stream, data.fileName)
+          await message.say(file)
+          console.log("-- ✅ sent file")
+          return
+        }
       }
     }
 
