@@ -1,4 +1,5 @@
 import { downloadCardAction } from "@/core/download-card.action"
+import { isWechatArticleUrl } from "@/core/providers/wechat-article/utils"
 import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
@@ -31,8 +32,9 @@ void WechatyBuilder.build({
         console.log({ url })
         if (!url) return
 
-        if (text.includes("哔哩哔哩")) {
-          console.log("-- parsing bilibili")
+        if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
+          console.log(`-- trigger url: ${url}`)
+          await downloadCardAction(url)
           const { success, data } = await downloadCardAction(url)
           if (!success) return
 
