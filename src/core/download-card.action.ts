@@ -49,7 +49,7 @@ export const downloadCardAction = async (
       console.log("-- to input: ", url)
       await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
       console.log("-- to click generate button")
-      await page.getByRole("button", { name: /generate/i }).click()
+      await page.getByRole("button", { name: /generate card/i }).click()
       await page.waitForFunction(() => {
         const h = document.getElementById("card-media")?.clientHeight
         return !!h && h > 0
@@ -57,7 +57,7 @@ export const downloadCardAction = async (
 
       console.log("-- to click download button")
       await page
-        .getByRole("button", { name: /download/i })
+        .getByRole("button", { name: /download card/i })
         .click({ timeout: 3000 })
     },
   )
