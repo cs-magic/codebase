@@ -9,23 +9,11 @@ import { FlexContainer } from "../../../../../packages/common-ui/components/flex
 import { Card } from "../../../../components/card"
 import { Controls } from "../../../../components/card-gen-controls"
 import { InputLine } from "../../../../components/card-gen-input-line"
-import { useUserSummary } from "../../../../hooks/use-user-summary"
-import { ICard } from "../../../../schema/card"
-import { cardBodyAtom, cardTypeAtom } from "../../../../store/card.atom"
+import { cardBodyAtom } from "../../../../store/card.atom"
 
 export default function GenCardPage() {
-  const [cardType] = useAtom(cardTypeAtom)
-  const [cardBody] = useAtom(cardBodyAtom)
-
-  const user = useUserSummary()
   const refCard = useRef<HTMLDivElement>(null)
-
-  const card: ICard = {
-    type: cardType,
-    user: user ?? null,
-    updatedAt: new Date(),
-    body: cardBody,
-  }
+  const [cardBody] = useAtom(cardBodyAtom)
 
   const action = async (type: "copy" | "download") => {
     if (!refCard.current) return console.error("no refCard current")
@@ -49,13 +37,11 @@ export default function GenCardPage() {
       case "download":
         download(
           blob,
-          `${encodeURI(card.body?.title ?? new Date().toString())}.png`,
+          `${encodeURI(cardBody?.title ?? new Date().toString())}.png`,
         )
         break
     }
   }
-
-  console.log("-- card: ", card)
 
   return (
     <FlexContainer
@@ -69,7 +55,7 @@ export default function GenCardPage() {
         downloadCard={() => action("download")}
       />
 
-      {!card ? "You should login first." : <Card ref={refCard} card={card} />}
+      <Card ref={refCard} />
     </FlexContainer>
   )
 }

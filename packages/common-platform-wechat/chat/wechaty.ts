@@ -22,11 +22,7 @@ void WechatyBuilder.build({
   .on("message", async (message) => {
     const sender = message.talker()
     const avatar = await sender.avatar()
-    console.log(`<< message: `, {
-      message: message.payload,
-      sender: sender.payload,
-      avatar: avatar.toDataURL(),
-    })
+    console.log(`<< message: `, message.payload)
 
     const text = message.text()
     const room = message.room()
@@ -36,12 +32,16 @@ void WechatyBuilder.build({
       // link
       if (message.type() === types.Message.Url) {
         const url = parseUrlFromWechatUrlMessage(text)
-        console.log({ url })
+        console.log("-- url in message: ", url)
         if (!url) return
 
         if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
-          console.log(`-- trigger url: ${url}`)
-          const { success, data } = await downloadCardAction(url)
+          console.log(`-- triggering...`)
+          const { success, data } = await downloadCardAction(url, {
+            id: sender.id,
+            name: sender.name(),
+            image: await avatar.toDataURL(),
+          })
           if (!success) return
 
           const file = FileBox.fromStream(data.stream, data.fileName)

@@ -1,19 +1,24 @@
+import { useAtom } from "jotai"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { PROJECT_NAME } from "../config/card"
-import { IUserSummary } from "../schema/user.summary"
+import { cardUserAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
-export const CardHeader = ({ user }: { user: IUserSummary | null }) => {
+export const CardHeader = () => {
+  const [user] = useAtom(cardUserAtom)
+
   return (
     <div className={"text-xs flex items-center justify-between p-2"}>
-      <div className={"flex gap-2 items-center justify-end"}>
+      <div className={"flex gap-2 items-center justify-end mt-4"}>
         {user ? (
           <>
             <UserAvatar user={user} />
 
-            <Label className={"primary-gradient"}>
-              <span className={"font-bold text-lg"}>{user.name}</span>
-              分享给你一张卡片
+            <Label className={"text-primary-foreground"}>
+              <span className={"font-bold text-lg mr-1 primary-gradient"}>
+                {user.name}
+              </span>
+              分享给你一张卡片：
             </Label>
           </>
         ) : (

@@ -1,30 +1,27 @@
-import { first } from "lodash"
+import { useAtom } from "jotai"
 import { EyeIcon, HeartIcon, MessageSquareTextIcon } from "lucide-react"
+import Image from "next/image"
 import { useRef } from "react"
-import { useMeasure } from "react-use"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
-import { CardType, ICard, ICardStat, IMedia } from "../schema/card"
+import { ICardStat } from "../schema/card"
+import {
+  cardBodyAtom,
+  cardCoverRatioAtom,
+  cardCoverUrlAtom,
+} from "../store/card.atom"
 import { ArticleAuthor } from "./card-view-content-author"
-import { CardMedia } from "./card-view-content-media"
 
-export const CardContent = ({ card }: { card: ICard }) => {
-  const { type, body } = card
-  const m: Partial<Record<CardType, IMedia[] | undefined>> = {
-    "text-image": body?.images,
-    "text-iframe": body?.iFrames,
-    "text-video": body?.videos,
-  }
+export const CardContent = () => {
+  const [body] = useAtom(cardBodyAtom)
+  const [coverRatio] = useAtom(cardCoverRatioAtom)
+  const [coverUrl] = useAtom(cardCoverUrlAtom)
 
   const refText = useRef<HTMLDivElement>(null)
   useAutoCardContent({ refText })
-
-  const media = first(m[type])
-
-  const [refMedia, { width, height }] = useMeasure<HTMLDivElement>()
 
   return (
     <div
@@ -33,20 +30,9 @@ export const CardContent = ({ card }: { card: ICard }) => {
       }
     >
       <div id={"card-media"} className={"w-full shrink-0"}>
-        {media && (
-          <AspectRatio
-            ratio={
-              media.dimension
-                ? media.dimension.width / media.dimension.height
-                : card.body?.platform === "wechat-article"
-                  ? 2.35 // ref: 微信公众号文章封面尺寸, https://developers.weixin.qq.com/community/develop/article/doc/0004cebac584a8fcd55bad86656413
-                  : 16 / 9
-            }
-            ref={refMedia}
-          >
-            <CardMedia cardType={card.type} media={media} />
-          </AspectRatio>
-        )}
+        <AspectRatio ratio={coverRatio}>
+          <Image src={coverUrl} alt={""} fill className={"w-full h-auto"} />
+        </AspectRatio>
       </div>
 
       <div className={"p-2 grow overflow-hidden relative flex flex-col"}>

@@ -65,17 +65,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model PlatformUser {
-  id        String    @id @default(nanoid(5))
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-
-  platform      String
-  name          String?
-  image         String?
-  WechatArticle WechatArticle[]
-}
-
 model Session {
   id           String   @id @default(nanoid(5))
   sessionToken String   @unique
@@ -108,35 +97,60 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model WechatArticle {
-  id        String    @id
+model Card {
+  id        Int       @id @default(autoincrement())
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
-  sourceUrl String? // 这个其实不重要
-
-  title String?
-
-  /// [IMedia]
-  cover Json?
-
-  contentHtml String?
-  contentMd   String?
-
-  summaryContent String? // 从api获取
-  /// [IArticleSummary]
-  summary        Json?
-
-  /// [IWechatArticleStat]
-  stat     Json?
-  /// [IWechatArticleComment]
-  comments Json[]
-
-  user           PlatformUser? @relation(fields: [platformUserId], references: [id], onDelete: Cascade)
-  platformUserId String?
+  body             CardBody?     @relation(fields: [bodyPlatformType, bodyPlatformId], references: [platformType, platformId])
+  bodyPlatformType PlatformType?
+  bodyPlatformId   String?
 
   /// [IUserSummary]
-  author Json?
-  source String?
-  time   DateTime?
+  user Json?
+}
+
+model CardBody {
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  platformType PlatformType
+  platformId   String
+  /// [ICardPlatform]
+  platformData Json?
+
+  sourceUrl   String?
+  /// [IUserSummary]
+  author      Json?
+  time        DateTime?
+  title       String?
+  description String?
+
+  /// [IMedia]
+  cover   Json?
+  /// [IMedia]
+  images  Json[]
+  /// [IMedia]
+  iFrames Json[]
+  /// [IMedia]
+  videos  Json[]
+
+  // 公众号文章的核心内容（markdown格式）
+  contentMd String?
+  // 基于核心内容总结后的结果
+  /// [IArticleSummary]
+  summary   Json?
+
+  // todo: card comments
+  /// [ICardStat]
+  stat Json?
+  Card Card[]
+
+  @@id([platformType, platformId])
+}
+
+enum PlatformType {
+  wechatArticle
+  bilibiliVideo
+  xiaohongshuNote
 }

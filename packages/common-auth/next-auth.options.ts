@@ -8,7 +8,7 @@ import WechatProvider from "../common-auth-wechat/provider"
 import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db/providers/prisma"
 
-import { WECHAT_APP_ID } from "../common-wechat/config"
+import { WECHAT_APP_ID } from "../common-platform-wechat/config"
 import { tokenExpireSeconds } from "./config"
 
 /**

@@ -2,23 +2,19 @@
 
 import { chromium } from "playwright"
 import internal from "stream"
-import { sleep } from "../../packages/common-algo/utils"
 import { IApi } from "../../packages/common-api/schema"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
 import { IUserSummary } from "../schema/user.summary"
 
-export const downloadCardAction = async (
-  url: string,
-  user?: IUserSummary,
-  // type: "buffer" | "download",
-) => {
+export const downloadCardAction = async (url: string, user?: IUserSummary) => {
+  console.log("-- downloading card of url: ", url)
+
   const browser = await chromium.launch({}) // Or 'firefox' or 'webkit'.
 
   const downloadsPath = "/tmp"
   console.log({ downloadsPath })
 
-  console.log("-- parsed url: ", url)
   console.log("-- to open new page")
   const page = await browser.newPage({
     screen: {
@@ -50,7 +46,11 @@ export const downloadCardAction = async (
       console.log("-- to visit: ", targetUrl)
       await page.goto(targetUrl)
 
-      console.log("-- to fill user if necessary: ", user)
+      console.log("-- to fill user if necessary: ", {
+        id: user?.id,
+        name: user?.name,
+        imageLength: user?.image?.length,
+      })
       if (user?.name && user.image) {
         await page.locator("#user-name").fill(user.name)
         await page.locator("#user-avatar").fill(user.image)
@@ -63,11 +63,12 @@ export const downloadCardAction = async (
       await page.locator("#generate-card").click()
 
       console.log("-- to wait card generated")
-      await sleep(3000)
-      // await page.waitForFunction(() => {
-      //   const h = document.getElementById("card-media")?.clientHeight
-      //   return !!h && h > 0
-      // })
+      await page.waitForFunction(() => {
+        return (
+          document.getElementById("card-render-status")?.innerText ===
+          "renderedMindmap"
+        )
+      })
 
       console.log("-- to click download button")
       await page.locator("#download-card").click()

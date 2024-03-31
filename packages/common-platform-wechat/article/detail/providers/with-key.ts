@@ -8,8 +8,6 @@ import { IFetchWechatArticleStat } from "../schema"
 export const parseStatFromUrlMock = (
   url: string,
 ): IFetchWechatArticleStat | null => {
-  console.log({ url })
-
   const uin = "MTIyMzg1NDgyMQ=="
   const key =
     "e4c402a25dea14c8cc164316fc6d6f3abbc7137b5c9545c28a7ee773f256c25bf6fda91782b9c338a15207fb198f5892ecefd46d4b91bb7b250d54f13f34fa443552ebbfb0f867f2083f8550fe3a38fa0ae92b6864609841d54644244504351216f2d04d29f78c7f5025f110a1e61f80671d726a1b122159aa90f424f411ce2d"

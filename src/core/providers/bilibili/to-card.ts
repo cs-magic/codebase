@@ -1,20 +1,33 @@
-import { IBilibiliVideoDetail } from "../../../../packages/common-bilibili/schema"
-import { getBilibiliIFrameUrl } from "../../../../packages/common-bilibili/utils"
-import { ICardBody } from "../../../schema/card"
+import { CardBody } from "@prisma/client"
+import { IBilibiliVideoDetail } from "../../../../packages/common-platform-bilibili/schema"
+import { getBilibiliIFrameUrl } from "../../../../packages/common-platform-bilibili/utils"
 
-export const bilibili2card = (data: IBilibiliVideoDetail): ICardBody => {
+export const bilibili2card = (data: IBilibiliVideoDetail): CardBody => {
   const { width, height } = data.View.dimension
+  const ratio = width / height
   return {
-    platform: "bilibili",
+    createdAt: null,
+    updatedAt: null,
+    summary: null,
+    time: null,
+    contentMd: null,
+    author: null,
+    stat: null,
+    platformData: null,
+
+    sourceUrl: null,
+
+    platformId: data.View.bvid,
+    cover: { url: data.View.pic, ratio, type: "image" },
+    videos: [],
+    platformType: "bilibiliVideo",
     title: data.View.title,
-    content: data.View.desc,
-    images: [
-      { url: data.View.pic, dimension: { width, height }, type: "image" },
-    ],
+    description: data.View.desc,
+    images: [],
     iFrames: [
       {
         url: getBilibiliIFrameUrl({ bvid: data.View.bvid }),
-        dimension: { width, height },
+        ratio,
         type: "iFrame",
       },
     ],

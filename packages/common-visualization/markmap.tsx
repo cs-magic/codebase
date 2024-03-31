@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { Markmap } from "markmap-view"
+import { cardRenderStatusAtom } from "@/store/card.atom"
+import { useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
+import { Markmap } from "markmap-view"
+import { useEffect, useRef, useState } from "react"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 
 const transformer = new Transformer()
@@ -23,7 +25,8 @@ export default function MarkMap({ content }: { content: string }) {
   const refSvg = useRef<SVGSVGElement>(null)
   // Ref for markmap object
   const refMm = useRef<Markmap>()
-  const [ratio, setRatio] = useState(1)
+  const [ratio, setRatio] = useState(0)
+  const setCardRenderStatus = useSetAtom(cardRenderStatusAtom)
 
   const contentTransformed = transformContent(content)
 
@@ -35,10 +38,12 @@ export default function MarkMap({ content }: { content: string }) {
     refMm.current = mm
     return () => {
       mm.destroy()
+      setCardRenderStatus("default")
     }
   }, [refSvg.current])
 
   useEffect(() => {
+    setCardRenderStatus("renderingMindmap")
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
@@ -51,9 +56,14 @@ export default function MarkMap({ content }: { content: string }) {
     const h = maxX - minX
     const ratio = w / h
     setRatio(ratio)
-
-    void mm.fit()
   }, [refMm.current, contentTransformed])
+
+  useEffect(() => {
+    if (!ratio || !refMm.current) return
+    void refMm.current.fit().then(() => {
+      setCardRenderStatus("renderedMindmap")
+    })
+  }, [ratio])
 
   return (
     <div className={"w-full"}>

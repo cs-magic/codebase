@@ -1,12 +1,12 @@
+import { CardBody } from "@prisma/client"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { CardType, ICardBody } from "../schema/card"
+import { IMedia } from "../schema/card"
 import { IUserSummary } from "../schema/user.summary"
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
 
-export const cardTypeAtom = atomWithStorage<CardType>("card.type", "text-image")
-export const cardBodyAtom = atom<ICardBody | null>(null)
+export const cardBodyAtom = atom<CardBody | null>(null)
 export const cardRenderedContentAtom = atom("")
 export const bilibiliVideoControlEnabledAtom = atomWithStorage(
   "bilibili.video.control.enabled",
@@ -69,4 +69,15 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
   id: get(cardUserIdAtom),
   name: get(cardUserNameAtom),
   image: get(cardUserAvatarAtom),
+}))
+
+export const cardRenderStatusAtom = atom<
+  "default" | "renderingMindmap" | "renderedMindmap"
+>("default")
+
+export const cardCoverUrlAtom = atom("")
+export const cardCoverRatioAtom = atom<number>(2.35)
+export const cardCoverAtom = atom<IMedia>((get) => ({
+  url: get(cardCoverUrlAtom),
+  ratio: get(cardCoverRatioAtom),
 }))

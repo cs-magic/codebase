@@ -47,7 +47,7 @@ export const fetchBilibiliDetail = async (
   bvid: string,
 ): Promise<IApi<IBilibiliVideoDetail>> => {
   const url = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&need_view=1`
-  console.debug({ url })
+  console.debug("-- fetchBilibiliDetail:", url)
 
   const { data: resData } = await api.get<{
     code: number
