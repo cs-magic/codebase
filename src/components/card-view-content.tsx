@@ -68,9 +68,11 @@ export const CardContent = ({ card }: { card: ICard }) => {
             <div className={"bg-slate-100 p-2 rounded-lg"}>
               <div>AI 摘要：{body.summary.description}</div>
               {body.summary.tags?.length && (
-                <div className={"flex items-center gap-2"}>
+                <div className={"flex items-center"}>
                   {body.summary.tags.map((tag) => (
-                    <Badge key={tag}>{tag}</Badge>
+                    <Badge className={"text-nowrap bg-transparent"} key={tag}>
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
               )}

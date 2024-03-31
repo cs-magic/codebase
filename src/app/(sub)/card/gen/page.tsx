@@ -1,7 +1,7 @@
 "use client"
 
 import download from "downloadjs"
-import { toBlob } from "html-to-image"
+import * as html2image from "html-to-image"
 import { useAtom } from "jotai"
 import { useRef } from "react"
 import { toast } from "sonner"
@@ -30,7 +30,7 @@ export default function GenCardPage() {
   const action = async (type: "copy" | "download") => {
     if (!refCard.current) return console.error("no refCard current")
 
-    const blob = await toBlob(refCard.current, {
+    const blob = await html2image.toBlob(refCard.current, {
       pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
       backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
     })
