@@ -6,7 +6,6 @@ import { api } from "../common-api"
 export const fetchArticleSummary = async (
   content: string,
 ): Promise<string | null | undefined> => {
-  console.log("-- summary fetching")
   const { data } = await api.postForm<OpenAI.ChatCompletion>(
     "https://openapi.cs-magic.cn/agent/call",
     {

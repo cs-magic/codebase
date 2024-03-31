@@ -29,12 +29,10 @@ export const genCardFromUrl = async (
       message: `invalid url to be parsed from ${inputUrlLike}`,
     }
 
-  const wechatArticleId =
-    /mp.weixin.qq.com\/s\/(.*)$/.exec(urlParsed)?.[1] ?? null
-  if (wechatArticleId) {
+  if (/mp.weixin.qq.com/.test(urlParsed)) {
     return {
       success: true,
-      data: await fetchWechatArticleWithCacheAction(wechatArticleId, options),
+      data: await fetchWechatArticleWithCacheAction(urlParsed, options),
     }
   }
 

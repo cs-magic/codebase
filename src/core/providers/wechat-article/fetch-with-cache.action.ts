@@ -7,24 +7,21 @@ import { ICardGenOptions } from "../../../store/card.atom"
 import { wechatArticle2card } from "./to-card"
 
 export const fetchWechatArticleWithCacheAction = async (
-  id: string,
+  url: string,
   options: ICardGenOptions,
 ) => {
-  const dataInDB = await prisma.wechatArticle.findUnique({
-    where: { id },
-  })
-
   const wechatArticle = await fetchWechatArticle(
-    id,
+    url,
     options,
-    (id) => dataInDB?.summary ?? null,
-    () => dataInDB?.stat ?? null,
-    () => dataInDB?.comments ?? null,
+    async (id) =>
+      await prisma.wechatArticle.findUnique({
+        where: { id },
+      }),
   )
   console.log("-- wechat article fetched")
 
   const wechatArticleInDB = await prisma.wechatArticle.upsert({
-    where: { id: id },
+    where: { id: wechatArticle.id },
     create: wechatArticle,
     update: wechatArticle,
     ...wechatArticleDetailSchema,

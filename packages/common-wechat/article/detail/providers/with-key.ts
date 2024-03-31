@@ -1,5 +1,5 @@
 import { api } from "../../../../common-api"
-import { IFetchWechatArticleDetail, IFetchWechatArticleStat } from "../schema"
+import { IFetchWechatArticleStat } from "../schema"
 
 /**
  *

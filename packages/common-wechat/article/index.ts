@@ -1,6 +1,7 @@
 "use server"
 
 import { IUserSummary } from "@/schema/user.summary"
+import { IWechatArticleDetail } from "@/schema/wechat-article.detail"
 import { ICardGenOptions } from "@/store/card.atom"
 import { Prisma } from "@prisma/client"
 import { promises } from "fs"
@@ -20,20 +21,25 @@ import { getWechatArticleUrlFromId } from "./utils"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
 
 export const fetchWechatArticle = async (
-  id: string,
+  url: string,
   options: ICardGenOptions,
-  getSummary: (id: string) => IArticleSummaryParsed | null,
-  getStat: (id: string) => IWechatArticleStat | null,
-  getComments: (id: string) => IWechatArticleComment[] | null,
+  getData: (id: string) => Promise<IWechatArticleDetail | null>,
 ): Promise<WechatArticleUncheckedCreateInput> => {
-  const url = getWechatArticleUrlFromId(id)
-  console.log("-- fetchWechatArticle: ", { id, url })
+  console.log("-- fetchWechatArticle: ", { url })
 
   // 1. fetch page
   const { data: pageText } = await api.get<string>(url)
 
   // 2. parse page
   const html = parse(pageText)
+  const ogUrl = parseMetaFromHtml(html, "og:url", "property")
+
+  // 2.1. get id(sn) from page
+  const id = /sn=(.*?)&/.exec(ogUrl ?? "")![1]!
+
+  // 2.1.1 get data from id
+  const dataInDB = await getData(id)
+
   const contentHtml = html.getElementById("page-content")?.innerHTML ?? null
   const title = parseMetaFromHtml(html, "og:title")
   const coverUrl = parseMetaFromHtml(html, "og:image")
@@ -57,7 +63,7 @@ export const fetchWechatArticle = async (
 
     // 2.1. cache summary
     if (!options.summary.cacheIgnored) {
-      summary = getSummary(id)
+      summary = dataInDB?.summary
       if (summary) console.log("-- summary cached")
     }
 
@@ -73,13 +79,13 @@ export const fetchWechatArticle = async (
 
   // 3.1. stat
   if (options.stat.enabled) {
-    if (!options.stat.cacheIgnored) stat = getStat(id)
+    if (!options.stat.cacheIgnored) stat = dataInDB?.stat
     if (!stat) stat = (await fetchWechatArticleStat(id)).data
   }
 
   // 3.2. comments
   if (options.comments.enabled) {
-    if (!options.comments.cacheIgnored) comments = getComments(id)
+    if (!options.comments.cacheIgnored) comments = dataInDB?.comments
     if (!comments) comments = (await fetchWechatArticleComments(id)).data
   }
 
