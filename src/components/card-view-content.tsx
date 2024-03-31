@@ -2,6 +2,7 @@ import { first } from "lodash"
 import { useRef } from "react"
 import { useMeasure } from "react-use"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
+import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
 import { CardType, ICard, IMedia } from "../schema/card"
@@ -56,15 +57,23 @@ export const CardContent = ({ card }: { card: ICard }) => {
               {body.summary.title}
             </h1>
           )}
-          {body?.title && (
-            <span className={"text-xs text-muted-foreground truncate shrink-0"}>
-              原标题：{body.title}
-            </span>
-          )}
+
+          {/*{body?.title && (*/}
+          {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
+          {/*    原标题：{body.title}*/}
+          {/*  </span>*/}
+          {/*)}*/}
 
           {body?.summary?.description && (
             <div className={"bg-slate-100 p-2 rounded-lg"}>
-              AI 摘要：{body.summary.description}
+              <div>AI 摘要：{body.summary.description}</div>
+              {body.summary.tags?.length && (
+                <div className={"flex items-center gap-2"}>
+                  {body.summary.tags.map((tag) => (
+                    <Badge key={tag}>{tag}</Badge>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

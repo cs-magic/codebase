@@ -8,6 +8,7 @@ import { getBvidFromUrl } from "../../packages/common-bilibili/utils"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
+import { ICardGenOptions } from "../store/card.atom"
 import { bilibili2card } from "./provider-to-card/bilibili"
 import { fetchWechatArticleWithCache } from "./provider-to-card/wechat-article"
 import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
@@ -15,9 +16,11 @@ import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
 /**
  * 从用户输入的 url 中返回解析出的结构
  * @param inputUrlLike
+ * @param options
  */
 export const genCardFromUrl = async (
   inputUrlLike: string,
+  options: ICardGenOptions,
 ): Promise<IApi<ICardBody>> => {
   const urlParsed = extractFirstURL(inputUrlLike)
   console.log({ urlParsed })
@@ -32,7 +35,7 @@ export const genCardFromUrl = async (
   if (wechatArticleId) {
     return {
       success: true,
-      data: await fetchWechatArticleWithCache(wechatArticleId),
+      data: await fetchWechatArticleWithCache(wechatArticleId, options),
     }
   }
 

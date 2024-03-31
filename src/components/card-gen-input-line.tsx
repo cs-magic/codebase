@@ -6,12 +6,17 @@ import { Button } from "../../packages/common-ui-shadcn/components/button"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 
-import { cardBodyAtom, cardInputUrlAtom } from "../store/card.atom"
+import {
+  cardBodyAtom,
+  cardGenOptionsAtom,
+  cardInputUrlAtom,
+} from "../store/card.atom"
 import { genCardFromUrl } from "../utils/parse-card"
 
 export const InputLine = () => {
   const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)
   const setCardBody = useSetAtom(cardBodyAtom)
+  const [options] = useAtom(cardGenOptionsAtom)
 
   return (
     <div className={"w-full flex items-center gap-4"}>
@@ -27,7 +32,7 @@ export const InputLine = () => {
 
       <Button
         onClick={async () => {
-          const card = await genCardFromUrl(inputUrl)
+          const card = await genCardFromUrl(inputUrl, options)
           console.log("-- parsed card: ", card)
           if (!card.success) return toast.error(card.message)
           setCardBody(card.data)

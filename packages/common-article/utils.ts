@@ -15,6 +15,6 @@ export const parseSummary = (
     description: /<description>(.*?)<\/description>/ms.exec(content)?.[1],
     mindmap: /<mindmap>(.*?)<\/mindmap>/ms.exec(content)?.[1],
     comment: /<comment>(.*?)<\/comment>/ms.exec(content)?.[1],
-    tags: /<comment>(.*?)<\/comment>/ms.exec(content)?.[1]?.split(","),
+    tags: /<tags>(.*?)<\/tags>/ms.exec(content)?.[1]?.split(","),
   }
 }

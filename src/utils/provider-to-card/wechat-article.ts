@@ -6,30 +6,24 @@ import {
 import { prisma } from "../../../packages/common-db/providers/prisma"
 import { fetchWechatArticle } from "../../../packages/common-wechat/article"
 import { ICardBody } from "../../schema/card"
+import { ICardGenOptions } from "../../store/card.atom"
 
-export const fetchWechatArticleWithCache = async (id: string) => {
+export const fetchWechatArticleWithCache = async (
+  id: string,
+  options: ICardGenOptions,
+) => {
   const dataInDB = await prisma.wechatArticle.findUnique({
     where: { id },
   })
 
   const wechatArticle = await fetchWechatArticle(
     id,
-    {
-      get: (id) => dataInDB?.summary ?? null,
-    },
-    {
-      provider: "wxapi",
-      get: async (url) =>
-        // obj
-        dataInDB?.stat !== null
-          ? {
-              stat: dataInDB?.stat,
-              comments: dataInDB?.comments ?? [],
-            }
-          : null,
-    },
+    options,
+    (id) => dataInDB?.summary ?? null,
+    () => dataInDB?.stat ?? null,
+    () => dataInDB?.comments ?? null,
   )
-  console.log("-- fetched wechat article: ", wechatArticle)
+  console.log("-- fetched wechat article")
 
   const wechatArticleInDB = await prisma.wechatArticle.upsert({
     where: { id: id },

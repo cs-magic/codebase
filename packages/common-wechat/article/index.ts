@@ -1,7 +1,9 @@
 "use server"
 
 import { IUserSummary } from "@/schema/user.summary"
+import { ICardGenOptions } from "@/store/card.atom"
 import { Prisma } from "@prisma/client"
+import { promises } from "fs"
 import parse from "node-html-parser"
 import { api } from "../../common-api"
 import { fetchArticleSummary } from "../../common-article/core"
@@ -9,22 +11,20 @@ import { IArticleSummaryParsed } from "../../common-article/schema"
 import { parseSummary } from "../../common-article/utils"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
-import { fetchWechatArticleDetailViaWxapi } from "./detail/providers/wxapi"
 import {
-  IFetchWechatArticleDetailConfig,
-  IWechatArticleComment,
-  IWechatArticleDetail,
-  IWechatArticleStat,
-} from "./detail/schema"
-import { IFetchWechatArticleSummaryConfig } from "./schema"
+  fetchWechatArticleComments,
+  fetchWechatArticleStat,
+} from "./detail/providers/wxapi"
+import { IWechatArticleComment, IWechatArticleStat } from "./detail/schema"
 import { getWechatArticleUrlFromId } from "./utils"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
-import { promises } from "fs"
 
 export const fetchWechatArticle = async (
   id: string,
-  summaryConfig?: IFetchWechatArticleSummaryConfig,
-  detailConfig?: IFetchWechatArticleDetailConfig,
+  options: ICardGenOptions,
+  getSummary: (id: string) => IArticleSummaryParsed | null,
+  getStat: (id: string) => IWechatArticleStat | null,
+  getComments: (id: string) => IWechatArticleComment[] | null,
 ): Promise<WechatArticleUncheckedCreateInput> => {
   const url = getWechatArticleUrlFromId(id)
   console.log("-- fetchWechatArticle: ", { id, url })
@@ -56,45 +56,31 @@ export const fetchWechatArticle = async (
     contentMd = html2md(contentHtml)
 
     // 2.1. cache summary
-    if (summaryConfig?.get) {
-      summary = await summaryConfig.get(id)
+    if (!options.summary.cacheIgnored) {
+      summary = getSummary(id)
       if (summary) console.log("-- summary cached")
     }
 
     // 2.2. fetch summary
-    if (!summary) {
-      console.log("-- contentMd: ", contentMd)
+    if (options.summary.enabled && !summary) {
       await promises.writeFile("content.md", contentMd)
 
+      console.log("-- summary fetching")
       summaryContent = (await fetchArticleSummary(contentMd)) ?? null
       summary = parseSummary(summaryContent)
     }
   }
 
-  // 3. detail
-  if (detailConfig) {
-    const { provider, get } = detailConfig
+  // 3.1. stat
+  if (options.stat.enabled) {
+    if (!options.stat.cacheIgnored) stat = getStat(id)
+    if (!stat) stat = (await fetchWechatArticleStat(id)).data
+  }
 
-    let detail: IWechatArticleDetail | null = null
-    // 3.1. cache detail
-    if (get) {
-      detail = await get(id)
-      if (detail) console.log("-- detail cached")
-    }
-
-    // 3.2 fetch detail
-    if (!detail) {
-      console.log("-- detail fetching")
-
-      const data = await fetchWechatArticleDetailViaWxapi(id)
-      if (data.success) {
-        detail = data.data
-        console.log("-- detailed fetched")
-      }
-    }
-
-    if (detail?.stat) stat = detail.stat
-    if (detail?.comments) comments = detail.comments
+  // 3.2. comments
+  if (options.comments.enabled) {
+    if (!options.comments.cacheIgnored) comments = getComments(id)
+    if (!comments) comments = (await fetchWechatArticleComments(id)).data
   }
 
   return {

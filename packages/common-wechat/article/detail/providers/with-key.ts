@@ -66,11 +66,3 @@ export const fetchWechatArticleStat = async ({
   console.log("-- fetched wxmp article stat: ", data)
   return data
 }
-
-export const fetchWechatArticleDetailViaMock: IFetchWechatArticleDetail =
-  async (url) => {
-    return {
-      success: false,
-      message: "todo",
-    }
-  }

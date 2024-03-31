@@ -37,4 +37,8 @@ export type IFetchWechatArticleDetailConfig = {
   provider: "mock" | "wxapi"
   // db hook
   get?: (id: string) => Promise<IWechatArticleDetail | null>
+  commentsDisabled?: boolean
+  commentsCacheIgnored?: boolean
+  statDisabled?: boolean
+  statCacheIgnored?: boolean
 }

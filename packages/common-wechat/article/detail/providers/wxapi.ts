@@ -1,11 +1,7 @@
 import axios from "axios"
 import { api } from "../../../../common-api"
 import { getWechatArticleUrlFromId } from "../../utils"
-import {
-  IFetchWechatArticleDetail,
-  IWechatArticleComment,
-  IWechatArticleStat,
-} from "../schema"
+import { IWechatArticleComment, IWechatArticleStat } from "../schema"
 
 const wxapiApi = axios.create({
   ...api,
@@ -55,17 +51,3 @@ export const fetchWechatArticleComments = async (id: string) => {
   console.log("--   fetchWechatArticleComments")
   return res
 }
-
-export const fetchWechatArticleDetailViaWxapi: IFetchWechatArticleDetail =
-  async (id) => {
-    const resStat = await fetchWechatArticleStat(id)
-    const resComments = await fetchWechatArticleComments(id)
-
-    if (resStat.code !== 0 || resComments.code !== 0)
-      return { success: false, message: "invalid res from wxapi" }
-
-    return {
-      success: true,
-      data: { stat: resStat.data!, comments: resComments.data! },
-    }
-  }
