@@ -1,11 +1,13 @@
 import { first } from "lodash"
+import { EyeIcon, HeartIcon, MessageSquareTextIcon } from "lucide-react"
 import { useRef } from "react"
 import { useMeasure } from "react-use"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
+import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
-import { CardType, ICard, IMedia } from "../schema/card"
+import { CardType, ICard, ICardStat, IMedia } from "../schema/card"
 import { AuthorLine } from "./card-view-content-author"
 import { CardMedia } from "./card-view-content-media"
 
@@ -58,6 +60,10 @@ export const CardContent = ({ card }: { card: ICard }) => {
             </h1>
           )}
 
+          <Tags tags={body?.summary?.tags} />
+
+          <Stat stat={body?.stat} />
+
           {/*{body?.title && (*/}
           {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
           {/*    原标题：{body.title}*/}
@@ -67,15 +73,6 @@ export const CardContent = ({ card }: { card: ICard }) => {
           {body?.summary?.description && (
             <div className={"bg-slate-100 p-2 rounded-lg"}>
               <div>AI 摘要：{body.summary.description}</div>
-              {body.summary.tags?.length && (
-                <div className={"flex items-center"}>
-                  {body.summary.tags.map((tag) => (
-                    <Badge className={"text-nowrap bg-transparent"} key={tag}>
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              )}
             </div>
           )}
 
@@ -90,6 +87,31 @@ export const CardContent = ({ card }: { card: ICard }) => {
           {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
         </div>
       </div>
+    </div>
+  )
+}
+
+const Stat = ({ stat }: { stat: ICardStat | null | undefined }) => {
+  if (!stat) return null
+  return (
+    <div className={"flex items-center gap-2"}>
+      <StatItem Icon={EyeIcon} value={stat.reads} />
+      <StatItem Icon={HeartIcon} value={stat.likes} />
+      <StatItem Icon={MessageSquareTextIcon} value={stat.comments} />
+    </div>
+  )
+}
+
+const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
+  if (!tags?.length) return null
+
+  return (
+    <div className={"flex items-center"}>
+      {tags.map((tag) => (
+        <Badge className={"text-nowrap bg-transparent"} key={tag}>
+          #{tag}
+        </Badge>
+      ))}
     </div>
   )
 }

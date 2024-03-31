@@ -5,22 +5,20 @@ import { UserAvatar } from "./user-avatar"
 
 export const CardHeader = ({ user }: { user: IUserSummary | null }) => {
   return (
-    <div
-      className={
-        "text-muted-foreground text-xs flex items-center justify-between p-2"
-      }
-    >
+    <div className={"text-xs flex items-center justify-between p-2"}>
       <div className={"flex gap-2 items-center justify-end"}>
         {user ? (
           <>
             <UserAvatar user={user} />
-            <Label>{user.name}</Label>
+
+            <Label className={"primary-gradient"}>
+              <span className={"font-bold text-lg"}>{user.name}</span>
+              分享给你一张卡片
+            </Label>
           </>
         ) : (
           "no user"
-        )}{" "}
-        分享一张卡片
-        {/*推荐一张卡片，理由：我真的是会谢！*/}
+        )}
       </div>
 
       <div className={"flex items-center gap-2"}>

@@ -5,8 +5,10 @@ export const StatItem = ({
   value,
 }: {
   Icon: LucideIcon
-  value: number
+  value?: number
 }) => {
+  if (!value) return null
+
   const v =
     value >= 1e5
       ? "10w+"

@@ -38,15 +38,15 @@ export const Card = forwardRef<
       }}
       {...props}
     >
-      <AspectRatio ratio={8 / 16}>
-        <div className={"w-full h-full overflow-hidden flex flex-col pt-4"}>
-          <CardHeader user={card.user} />
+      {/*<AspectRatio ratio={8 / 16}>*/}
+      {/*  <div className={"w-full h-full overflow-hidden flex flex-col pt-4"}>*/}
+      <CardHeader user={card.user} />
 
-          <CardContent card={card} />
+      <CardContent card={card} />
 
-          <CardFooter />
-        </div>
-      </AspectRatio>
+      <CardFooter />
+      {/*</div>*/}
+      {/*</AspectRatio>*/}
     </div>
   )
 })
