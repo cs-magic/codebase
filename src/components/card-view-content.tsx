@@ -1,7 +1,6 @@
 import { first } from "lodash"
 import { useRef } from "react"
 import { useMeasure } from "react-use"
-import { MarkdownComp } from "../../packages/common-markdown/component"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"

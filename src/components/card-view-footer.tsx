@@ -5,12 +5,14 @@ export const CardFooter = () => {
     <div
       className={cn(
         // "h-16",
-        "shrink-0 flex justify-center items-center text-slate-500 py-2",
+        "shrink-0 flex justify-center items-center p-2",
+        // "text-slate-500",
       )}
     >
       {/*标题/思维导图由 <span className={"font-medium mx-1"}>Kimi大模型</span>生成*/}
-      {/*未经审视的人生不值得一过*/}
-      Inspire Your Day
+      <p className={cn("primary-gradient", " font-art text-xs leading-8")}>
+        Inspire Your Day
+      </p>
     </div>
   )
 }

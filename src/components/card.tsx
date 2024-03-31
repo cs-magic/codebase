@@ -7,11 +7,9 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 import { useInitCardContent } from "../hooks/use-card-content"
 import { ICard } from "../schema/card"
 import { bilibiliVideoControlEnabledAtom } from "../store/card.atom"
+import { CardHeader } from "./card-vidw-header"
 import { CardContent } from "./card-view-content"
 import { CardFooter } from "./card-view-footer"
-import { CardHeader } from "./card-vidw-header"
-
-export const PROJECT_NAME = "产品名"
 
 export const Card = forwardRef<
   HTMLDivElement,

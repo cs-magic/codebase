@@ -20,6 +20,23 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        art: [
+          "Zapfino", //这个花体最飘逸！
+          // "Trebuchet MS",
+          // "Snell Roundhand", // 这个花体还行
+          // "SignPainter",
+          // "Rockwell",
+          // "Party LET",
+          // "Optima",
+          // "Menlo",
+          // "HYShangWeiShouShu W",
+          // "Helvetica Neue",
+          // "Chalkduster",
+          // "Brush Script MT",
+          // "Apple Chancery",
+        ],
+      },
       colors: {
         wechat: "hsl(var(--wechat))",
         border: "hsl(var(--border))",

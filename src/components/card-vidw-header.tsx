@@ -1,6 +1,6 @@
 import { Label } from "../../packages/common-ui-shadcn/components/label"
+import { PROJECT_NAME } from "../config/card"
 import { IUserSummary } from "../schema/user.summary"
-import { PROJECT_NAME } from "./card"
 import { UserAvatar } from "./user-avatar"
 
 export const CardHeader = ({ user }: { user: IUserSummary | null }) => {
@@ -19,8 +19,8 @@ export const CardHeader = ({ user }: { user: IUserSummary | null }) => {
         ) : (
           "no user"
         )}{" "}
-        {/*分享给你一张卡片*/}
-        推荐一张卡片，理由：我真的是会谢！
+        分享一张卡片
+        {/*推荐一张卡片，理由：我真的是会谢！*/}
       </div>
 
       <div className={"flex items-center gap-2"}>
