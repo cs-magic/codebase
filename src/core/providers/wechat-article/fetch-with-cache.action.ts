@@ -16,6 +16,7 @@ export const fetchWechatArticleWithCacheAction = async (
     async (id) =>
       await prisma.wechatArticle.findUnique({
         where: { id },
+        ...wechatArticleDetailSchema,
       }),
   )
   console.log("-- wechat article fetched")
