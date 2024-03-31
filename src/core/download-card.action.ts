@@ -6,9 +6,11 @@ import { sleep } from "../../packages/common-algo/utils"
 import { IApi } from "../../packages/common-api/schema"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
+import { IUserSummary } from "../schema/user.summary"
 
 export const downloadCardAction = async (
   url: string,
+  user?: IUserSummary,
   // type: "buffer" | "download",
 ) => {
   const browser = await chromium.launch({}) // Or 'firefox' or 'webkit'.
@@ -28,7 +30,7 @@ export const downloadCardAction = async (
   return new Promise<IApi<{ fileName: string; stream: internal.Readable }>>(
     async (resolve, reject) => {
       page.on("download", async (download) => {
-        console.log("-- download: ", download)
+        // console.log("-- download: ", download)
 
         const fileName = download.suggestedFilename()
         // const filePath = path.join(downloadsPath, fileName)

@@ -8,7 +8,7 @@ import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
 import { CardType, ICard, ICardStat, IMedia } from "../schema/card"
-import { AuthorLine } from "./card-view-content-author"
+import { ArticleAuthor } from "./card-view-content-author"
 import { CardMedia } from "./card-view-content-media"
 
 export const CardContent = ({ card }: { card: ICard }) => {
@@ -82,7 +82,7 @@ export const CardContent = ({ card }: { card: ICard }) => {
 
           <div className={"grow"} />
 
-          {body && <AuthorLine body={body} />}
+          {body && <ArticleAuthor body={body} />}
 
           {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
         </div>

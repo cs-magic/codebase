@@ -1,6 +1,7 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { CardType, ICardBody } from "../schema/card"
+import { IUserSummary } from "../schema/user.summary"
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
 
@@ -59,4 +60,13 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
     enabled: get(cardCommentsEnabledAtom),
     cacheIgnored: get(cardCommentsCacheIgnoredAtom),
   },
+}))
+
+export const cardUserIdAtom = atomWithStorage("card.user.id", "")
+export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
+export const cardUserNameAtom = atomWithStorage("card.user.name", "")
+export const cardUserAtom = atom<IUserSummary>((get) => ({
+  id: get(cardUserIdAtom),
+  name: get(cardUserNameAtom),
+  image: get(cardUserAvatarAtom),
 }))

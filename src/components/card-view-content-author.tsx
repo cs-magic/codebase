@@ -4,7 +4,7 @@ import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-r
 import { ICardBody } from "../schema/card"
 import { UserAvatar } from "./user-avatar"
 
-export const AuthorLine = ({ body }: { body: ICardBody }) => {
+export const ArticleAuthor = ({ body }: { body: ICardBody }) => {
   return (
     <div className={"flex gap-2 items-center shrink-0 h-12"}>
       {!!body?.author && <UserAvatar user={body.author} />}

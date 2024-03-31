@@ -20,11 +20,18 @@ void WechatyBuilder.build({
   })
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
-    console.log(`<< message: `, message.payload)
+    const sender = message.talker()
+    const avatar = await sender.avatar()
+    console.log(`<< message: `, {
+      message: message.payload,
+      sender: sender.payload,
+      avatar: avatar.toDataURL(),
+    })
 
     const text = message.text()
     const room = message.room()
     const roomName = room ? await room.topic() : ""
+
     if (/CS魔法社|文案|test/.test(roomName)) {
       // link
       if (message.type() === types.Message.Url) {
@@ -34,7 +41,6 @@ void WechatyBuilder.build({
 
         if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
           console.log(`-- trigger url: ${url}`)
-          await downloadCardAction(url)
           const { success, data } = await downloadCardAction(url)
           if (!success) return
 

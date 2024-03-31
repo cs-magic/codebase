@@ -3,6 +3,7 @@
 import { useAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
 import { useEffect, useState } from "react"
+import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import {
   Select,
@@ -15,6 +16,7 @@ import {
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
+import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { CardType } from "../schema/card"
 import {
   bilibiliVideoControlEnabledAtom,
@@ -26,6 +28,8 @@ import {
   cardSummaryCacheIgnoredAtom,
   cardSummaryEnabledAtom,
   cardTypeAtom,
+  cardUserAvatarAtom,
+  cardUserNameAtom,
 } from "../store/card.atom"
 
 export const Controls = ({
@@ -41,6 +45,8 @@ export const Controls = ({
   const [bilibiliVideoControlEnabled, setBilibiliVideoControlEnabled] = useAtom(
     bilibiliVideoControlEnabledAtom,
   )
+  const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
+  const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
 
   const [coping, setCoping] = useState(false)
   const [downloading, setDownloading] = useState(false)
@@ -155,6 +161,28 @@ export const Controls = ({
           name={"Comments Cache Ignored"}
         />
       </div>
+
+      <FlexContainer>
+        <LabelLine title={"User Avatar"}>
+          <Input
+            id={"user-avatar"}
+            value={cardUserAvatar}
+            onChange={(event) => {
+              setCardUserAvatar(event.currentTarget.value)
+            }}
+          />
+        </LabelLine>
+
+        <LabelLine title={"User Name"}>
+          <Input
+            id={"user-name"}
+            value={cardUserName}
+            onChange={(event) => {
+              setCardUserName(event.currentTarget.value)
+            }}
+          />
+        </LabelLine>
+      </FlexContainer>
     </div>
   )
 }
