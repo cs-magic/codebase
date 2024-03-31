@@ -1,10 +1,10 @@
 "use server"
 
+import { IMedia } from "@/schema/card"
 import { IUserSummary } from "@/schema/user.summary"
 import { IWechatArticleDetail } from "@/schema/wechat-article.detail"
 import { ICardGenOptions } from "@/store/card.atom"
 import { Prisma } from "@prisma/client"
-import { promises } from "fs"
 import parse from "node-html-parser"
 import { api } from "../../common-api"
 import { fetchArticleSummary } from "../../common-article/core"
@@ -17,18 +17,17 @@ import {
   fetchWechatArticleStat,
 } from "./detail/providers/wxapi"
 import { IWechatArticleComment, IWechatArticleStat } from "./detail/schema"
-import { getWechatArticleUrlFromId } from "./utils"
 import WechatArticleUncheckedCreateInput = Prisma.WechatArticleUncheckedCreateInput
 
 export const fetchWechatArticle = async (
-  url: string,
+  sourceUrl: string,
   options: ICardGenOptions,
   getData: (id: string) => Promise<IWechatArticleDetail | null>,
 ): Promise<WechatArticleUncheckedCreateInput> => {
-  console.log("-- fetchWechatArticle: ", { url })
+  console.log("-- fetchWechatArticle: ", { url: sourceUrl })
 
   // 1. fetch page
-  const { data: pageText } = await api.get<string>(url)
+  const { data: pageText } = await api.get<string>(sourceUrl)
 
   // 2. parse page
   const html = parse(pageText)
@@ -42,7 +41,11 @@ export const fetchWechatArticle = async (
 
   const contentHtml = html.getElementById("page-content")?.innerHTML ?? null
   const title = parseMetaFromHtml(html, "og:title")
-  const coverUrl = parseMetaFromHtml(html, "og:image")
+  const coverUrl = parseMetaFromHtml(html, "og:image")!
+  const cover: IMedia = {
+    url: coverUrl,
+    type: "image",
+  }
   // const source = "公众号"
   const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
   const time =
@@ -69,8 +72,6 @@ export const fetchWechatArticle = async (
 
     // 2.2. fetch summary
     if (options.summary.enabled && !summary) {
-      await promises.writeFile("content.md", contentMd)
-
       console.log("-- summary fetching")
       summaryContent = (await fetchArticleSummary(contentMd)) ?? null
       summary = parseSummary(summaryContent)
@@ -89,21 +90,40 @@ export const fetchWechatArticle = async (
     if (!comments) comments = (await fetchWechatArticleComments(id)).data
   }
 
+  console.log("-- fetched: ", {
+    id,
+    sourceUrl,
+    source,
+    author,
+    time,
+    title,
+    cover,
+    length: {
+      html: contentHtml?.length,
+      md: contentMd?.length,
+      summary: summaryContent?.length,
+    },
+    summary,
+    stat,
+    comments: {
+      length: comments?.length,
+      first: comments?.[0],
+    },
+  })
+
   return {
     id,
-    sourceUrl: getWechatArticleUrlFromId(id),
-    comments,
-    author,
-    summaryContent,
-    summary,
-    contentMd,
-    contentHtml,
-    cover: {
-      url: coverUrl,
-    },
+    sourceUrl,
     source,
-    title,
-    stat,
+    author,
     time,
+    title,
+    cover,
+    contentHtml,
+    summaryContent,
+    contentMd,
+    summary,
+    stat,
+    comments,
   }
 }

@@ -1,8 +1,4 @@
 import { NodeHtmlMarkdown } from "node-html-markdown"
-import TurndownService from "turndown"
-// @ts-ignore
-import { gfm } from "turndown-plugin-gfm"
-import { z } from "zod"
 
 /**
  * ref:
@@ -15,30 +11,16 @@ import { z } from "zod"
  */
 export const html2md = (
   html: string,
-  type: "turndown" | "node-html-markdown" = "turndown",
+  type: "node-html-markdown" | "turndown" = "node-html-markdown",
 ) => {
   switch (type) {
     case "turndown":
-      return (
-        new TurndownService()
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          .use(gfm)
-          // ref: https://github.com/mixmark-io/turndown/issues/305#issuecomment-1202304816
-          // e.g. 微信文章内的：
-          .addRule("img", {
-            filter: "img",
-            replacement: function (content, node, options) {
-              if (!("getAttribute" in node)) return "![]()"
-
-              const src =
-                node.getAttribute("src") ?? node.getAttribute("data-src") ?? ""
-              return "![](" + src + ")"
-            },
-          })
-          .turndown(html)
+      throw new Error(
+        "尽管turndown star最多，而且支持plugin扩展，但是build有bug，以及ts支持很差，不要用它",
       )
 
     case "node-html-markdown":
       return NodeHtmlMarkdown.translate(html)
+      return html
   }
 }
