@@ -1,17 +1,24 @@
 "use client"
 
-import { useAtom, WritableAtom } from "jotai"
+import { useAtom, useSetAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
 import { useState } from "react"
+import { toast } from "sonner"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
+import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
+import { genCardFromUrl } from "../core/gen-card"
 import {
+  cardBodyAtom,
   cardCommentsCacheIgnoredAtom,
   cardCommentsEnabledAtom,
+  cardGenOptionsAtom,
+  cardInputUrlAtom,
+  cardRenderStatusAtom,
   cardStatCacheIgnoredAtom,
   cardStatEnabledAtom,
   cardSummaryCacheIgnoredAtom,
@@ -29,13 +36,43 @@ export const Controls = ({
 }) => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
+  const [options] = useAtom(cardGenOptionsAtom)
+  const [inputUrl] = useAtom(cardInputUrlAtom)
+  const setCardBody = useSetAtom(cardBodyAtom)
+  const [cardRenderStatus] = useAtom(cardRenderStatusAtom)
 
+  const [generating, setGenerating] = useState(false)
   const [coping, setCoping] = useState(false)
   const [downloading, setDownloading] = useState(false)
 
   return (
     <div className={"flex flex-col"}>
       <FlexContainer orientation={"horizontal"}>
+        <Label className={"text-primary-foreground text-lg font-medium"}>
+          Card
+        </Label>
+
+        <ButtonWithLoading
+          id={"generate-card"}
+          loading={generating}
+          onClick={() => {
+            setGenerating(true)
+            genCardFromUrl(inputUrl, options)
+              .then(setCardBody)
+              .catch((e) => {
+                console.error(e)
+                if ("message" in e) toast.error(e.message as string)
+              })
+              .finally(() => {
+                setGenerating(false)
+              })
+          }}
+        >
+          Generate
+        </ButtonWithLoading>
+
+        <Badge id={"card-render-status"}>{cardRenderStatus}</Badge>
+
         <ButtonWithLoading
           id={"copy-card"}
           loading={coping}
@@ -45,7 +82,7 @@ export const Controls = ({
             setCoping(false)
           }}
         >
-          Copy Card
+          Copy
         </ButtonWithLoading>
 
         <ButtonWithLoading
@@ -57,7 +94,7 @@ export const Controls = ({
             setDownloading(false)
           }}
         >
-          Download Card
+          Download
         </ButtonWithLoading>
       </FlexContainer>
 
@@ -86,7 +123,10 @@ export const Controls = ({
       </div>
 
       <FlexContainer>
-        <LabelLine title={"User Avatar"}>
+        <Label className={"text-primary-foreground text-lg font-medium"}>
+          User
+        </Label>
+        <LabelLine title={"Avatar"}>
           <Input
             id={"user-avatar"}
             value={cardUserAvatar}
@@ -96,7 +136,7 @@ export const Controls = ({
           />
         </LabelLine>
 
-        <LabelLine title={"User Name"}>
+        <LabelLine title={"Name"}>
           <Input
             id={"user-name"}
             value={cardUserName}
