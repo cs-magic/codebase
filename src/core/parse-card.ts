@@ -1,4 +1,3 @@
-"use server"
 import { IApi } from "../../packages/common-api/schema"
 import {
   fetchBilibiliDetail,
@@ -9,9 +8,9 @@ import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchXiaoHongShuDetail } from "../../packages/common-xiaohongshu/actions"
 import { ICardBody } from "../schema/card"
 import { ICardGenOptions } from "../store/card.atom"
-import { bilibili2card } from "./provider-to-card/bilibili"
-import { fetchWechatArticleWithCache } from "./provider-to-card/wechat-article"
-import { xiaohongshu2card } from "./provider-to-card/xiaohongshu"
+import { bilibili2card } from "./providers/bilibili/to-card"
+import { fetchWechatArticleWithCacheAction } from "./providers/wechat-article/fetch-with-cache.action"
+import { xiaohongshu2card } from "./providers/xiaohongshu/to-card"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
@@ -35,7 +34,7 @@ export const genCardFromUrl = async (
   if (wechatArticleId) {
     return {
       success: true,
-      data: await fetchWechatArticleWithCache(wechatArticleId, options),
+      data: await fetchWechatArticleWithCacheAction(wechatArticleId, options),
     }
   }
 

@@ -11,7 +11,7 @@ import {
   cardGenOptionsAtom,
   cardInputUrlAtom,
 } from "../store/card.atom"
-import { genCardFromUrl } from "../utils/parse-card"
+import { genCardFromUrl } from "../core/parse-card"
 
 export const InputLine = () => {
   const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)

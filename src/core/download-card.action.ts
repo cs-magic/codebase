@@ -1,13 +1,12 @@
 "use server"
 
-import path from "path"
 import { chromium } from "playwright"
 import internal from "stream"
 import { IApi } from "../../packages/common-api/schema"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
 
-export const downloadCardFromServer = async (
+export const downloadCardAction = async (
   url: string,
   // type: "buffer" | "download",
 ) => {

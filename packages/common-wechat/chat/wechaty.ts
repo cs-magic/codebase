@@ -1,4 +1,4 @@
-import { downloadCardFromServer } from "@/utils/server-download-card"
+import { downloadCardAction } from "@/core/download-card.action"
 import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
@@ -34,7 +34,7 @@ void WechatyBuilder.build({
 
       if (text.includes("哔哩哔哩")) {
         console.log("-- parsing bilibili")
-        const { success, data } = await downloadCardFromServer(url)
+        const { success, data } = await downloadCardAction(url)
         if (!success) return
 
         const file = FileBox.fromStream(data.stream, data.fileName)

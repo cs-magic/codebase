@@ -1,3 +1,3 @@
-import { downloadCardFromServer } from "@/utils/server-download-card"
+import { downloadCardAction } from "@/core/download-card.action"
 
-void downloadCardFromServer("https://www.bilibili.com/video/BV1yW4y1L7wA/")
+void downloadCardAction("https://www.bilibili.com/video/BV1yW4y1L7wA/")
