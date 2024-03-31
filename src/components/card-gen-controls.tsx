@@ -1,8 +1,10 @@
 "use client"
 
+import download from "downloadjs"
+import * as html2image from "html-to-image"
 import { useAtom, useSetAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
-import { useState } from "react"
+import { RefObject, useState } from "react"
 import { toast } from "sonner"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
@@ -27,23 +29,46 @@ import {
   cardUserNameAtom,
 } from "../store/card.atom"
 
-export const Controls = ({
-  copyCard,
-  downloadCard,
-}: {
-  copyCard: () => Promise<void>
-  downloadCard: () => Promise<void>
-}) => {
+export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
+  const [inputUrl] = useAtom(cardInputUrlAtom)
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
-  const [options] = useAtom(cardGenOptionsAtom)
-  const [inputUrl] = useAtom(cardInputUrlAtom)
-  const setCardBody = useSetAtom(cardBodyAtom)
+  const [cardOptions] = useAtom(cardGenOptionsAtom)
   const [cardRenderStatus] = useAtom(cardRenderStatusAtom)
+  const [cardBody] = useAtom(cardBodyAtom)
+  const setCardBody = useSetAtom(cardBodyAtom)
 
   const [generating, setGenerating] = useState(false)
   const [coping, setCoping] = useState(false)
   const [downloading, setDownloading] = useState(false)
+
+  const action = async (type: "copy" | "download") => {
+    if (!obj.current) return console.error("no refCard current")
+
+    const blob = await html2image.toBlob(obj.current, {
+      pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
+      backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
+    })
+    if (!blob) return
+
+    switch (type) {
+      case "copy":
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ])
+        toast.success("copied image to clipboard")
+        break
+
+      case "download":
+        download(
+          blob,
+          `${encodeURI(cardBody?.title ?? new Date().toString())}.png`,
+        )
+        break
+    }
+  }
 
   return (
     <div className={"flex flex-col"}>
@@ -57,7 +82,7 @@ export const Controls = ({
           loading={generating}
           onClick={() => {
             setGenerating(true)
-            genCardFromUrl(inputUrl, options)
+            genCardFromUrl(inputUrl, cardOptions)
               .then(setCardBody)
               .catch((e) => {
                 console.error(e)
@@ -78,7 +103,7 @@ export const Controls = ({
           loading={coping}
           onClick={async () => {
             setCoping(true)
-            await copyCard()
+            await action("copy")
             setCoping(false)
           }}
         >
@@ -90,7 +115,7 @@ export const Controls = ({
           loading={downloading}
           onClick={async () => {
             setDownloading(true)
-            await downloadCard()
+            await action("download")
             setDownloading(false)
           }}
         >
