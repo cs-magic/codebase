@@ -12,9 +12,7 @@
     "build": "next build",
     "start": "next start",
     "migrate-dev": "prisma migrate dev",
-    "prerebuild": "git add . && git stash && git pull -f && yarn",
-    "rebuild": "yarn prerebuild && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && yarn postrebuild",
-    "postrebuild": "p=p01 && pm2 restart $p && pm2 log $p",
+    "rebuild": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && p=p01 && pm2 restart $p && pm2 log $p",
     "test": "jest",
     "test:watch": "jest --watch"
   },
