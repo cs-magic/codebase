@@ -47,13 +47,21 @@ export const downloadCardAction = async (
       })
 
       const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
-      console.log("-- to visit targetUrl: ", targetUrl)
+      console.log("-- to visit: ", targetUrl)
       await page.goto(targetUrl)
+
+      console.log("-- to fill user if necessary: ", user)
+      if (user?.name && user.image) {
+        await page.locator("#user-name").fill(user.name)
+        await page.locator("#user-avatar").fill(user.image)
+      }
+
       console.log("-- to input: ", url)
       await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
+
       console.log("-- to click generate button")
       await page.locator("#generate-card").click()
-      // await page.getByRole("button", { name: /generate card/i }).click()
+
       console.log("-- to wait card generated")
       await sleep(3000)
       // await page.waitForFunction(() => {
@@ -63,9 +71,6 @@ export const downloadCardAction = async (
 
       console.log("-- to click download button")
       await page.locator("#download-card").click()
-      // await page
-      //   .getByRole("button", { name: /download card/i })
-      //   .click({ timeout: 3000 })
     },
   )
 }
