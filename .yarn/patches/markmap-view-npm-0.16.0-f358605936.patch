@@ -1,0 +1,13 @@
+diff --git a/dist/index.js b/dist/index.js
+index 03afc00e825e3e8bdcfed0b3bf4d86ce3cdd13ee..b1bf70a6a201703ea2473908cb988e95659caf7a 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -784,7 +784,7 @@ class et {
+       (r) => r,
+       (r) => r.remove()
+     );
+-    this.transition(nt).attr("x1", -1).attr("x2", (r) => r.ySize - n + 2).attr("y1", (r) => r.xSize).attr("y2", (r) => r.xSize).attr("stroke", (r) => c(r.data)).attr("stroke-width", W);
++    this.transition(nt).attr("x1", (r) => r.data.content ? -1 : r.ySize - n + 2/* avoid root extra line*/).attr("x2", (r) => r.ySize - n + 2).attr("y1", (r) => r.xSize).attr("y2", (r) => r.xSize).attr("stroke", (r) => c(r.data)).attr("stroke-width", W);
+     const it = E.selectAll(
+       C("circle")
+     ).data(
