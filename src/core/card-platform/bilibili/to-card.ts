@@ -1,13 +1,15 @@
-import { Prisma } from "@prisma/client"
+import { Card, Prisma } from "@prisma/client"
+import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { IBilibiliVideoDetail } from "../../../../packages/common-platform-bilibili/schema"
 import { getBilibiliIFrameUrl } from "../../../../packages/common-platform-bilibili/utils"
 
 export const bilibili2card = (
-  data: IBilibiliVideoDetail,
-): Prisma.CardUncheckedCreateInput => {
-  const { width, height } = data.View.dimension
+  inputData: IBilibiliVideoDetail,
+): Promise<Card> => {
+  const { width, height } = inputData.View.dimension
   const ratio = width / height
-  return {
+
+  const data: Prisma.CardUncheckedCreateInput = {
     createdAt: null,
     updatedAt: null,
     summary: null,
@@ -19,19 +21,30 @@ export const bilibili2card = (
 
     sourceUrl: null,
 
-    platformId: data.View.bvid,
-    cover: { url: data.View.pic, ratio, type: "image" },
+    platformId: inputData.View.bvid,
+    cover: { url: inputData.View.pic, ratio, type: "image" },
     videos: [],
     platformType: "bilibiliVideo",
-    title: data.View.title,
-    description: data.View.desc,
+    title: inputData.View.title,
+    description: inputData.View.desc,
     images: [],
     iFrames: [
       {
-        url: getBilibiliIFrameUrl({ bvid: data.View.bvid }),
+        url: getBilibiliIFrameUrl({ bvid: inputData.View.bvid }),
         ratio,
         type: "iFrame",
       },
     ],
   }
+
+  return prisma.card.upsert({
+    where: {
+      platformType_platformId: {
+        platformType: "bilibiliVideo",
+        platformId: inputData.View.bvid,
+      },
+    },
+    create: data,
+    update: data,
+  })
 }

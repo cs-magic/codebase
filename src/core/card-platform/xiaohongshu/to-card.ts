@@ -1,15 +1,17 @@
-import { Prisma } from "@prisma/client"
+import { Card, Prisma } from "@prisma/client"
+import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { IXiaoHongShuNotePageData } from "../../../../packages/common-platform-xiaohongshu/schema"
 
 export const xiaohongshu2card = (
-  data: IXiaoHongShuNotePageData,
-): Prisma.CardUncheckedCreateInput => {
-  const note = data.note.noteDetailMap[data.note.firstNoteId]?.note
+  inputData: IXiaoHongShuNotePageData,
+): Promise<Card> => {
+  const note = inputData.note.noteDetailMap[inputData.note.firstNoteId]?.note
   if (!note) throw new Error("no note")
 
-  return {
+  const data: Prisma.CardUncheckedCreateInput = {
     platformType: "xiaohongshuNote",
-    platformId: "1", // todo
+    platformId: "?",
+
     stat: null,
     sourceUrl: null,
     contentMd: null,
@@ -40,4 +42,15 @@ export const xiaohongshu2card = (
       type: "image",
     })),
   }
+
+  return prisma.card.upsert({
+    where: {
+      platformType_platformId: {
+        platformType: "xiaohongshuNote",
+        platformId: "?", // todo
+      },
+    },
+    update: data,
+    create: data,
+  })
 }
