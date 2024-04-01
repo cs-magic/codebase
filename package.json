@@ -82,7 +82,7 @@
     "lucide-react": "^0.336.0",
     "markmap-common": "^0.16.0",
     "markmap-lib": "^0.16.1",
-    "markmap-view": "^0.16.0",
+    "markmap-view": "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch",
     "moment": "^2.30.1",
     "nanoid": "^5.0.6",
     "net": "^1.0.2",
@@ -164,6 +164,7 @@
   },
   "packageManager": "yarn@4.1.1",
   "resolutions": {
-    "jackspeak": "2.1.1"
+    "jackspeak": "2.1.1",
+    "markmap-view@npm:0.16.0": "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch"
   }
 }
