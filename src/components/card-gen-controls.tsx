@@ -2,7 +2,7 @@
 
 import download from "downloadjs"
 import * as html2image from "html-to-image"
-import { useAtom, useSetAtom, WritableAtom } from "jotai"
+import { useAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
 import { RefObject, useState } from "react"
 import { toast } from "sonner"
@@ -16,7 +16,7 @@ import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { genCardFromUrl } from "../core/gen-card"
 import {
-  cardBodyAtom,
+  cardAtom,
   cardCommentsCacheIgnoredAtom,
   cardCommentsEnabledAtom,
   cardGenOptionsAtom,
@@ -38,9 +38,8 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
   const [cardOptions] = useAtom(cardGenOptionsAtom)
   const [cardRenderStatus] = useAtom(cardRenderStatusAtom)
-  const [cardBody] = useAtom(cardBodyAtom)
+  const [card, setCard] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
-  const setCardBody = useSetAtom(cardBodyAtom)
 
   const [generating, setGenerating] = useState(false)
   const [coping, setCoping] = useState(false)
@@ -67,10 +66,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
         break
 
       case "download":
-        download(
-          blob,
-          `${encodeURI(cardBody?.title ?? new Date().toString())}.png`,
-        )
+        download(blob, `${encodeURI(card?.title ?? new Date().toString())}.png`)
         break
 
       case "upload":
@@ -170,7 +166,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
               onClick={() => {
                 setGenerating(true)
                 genCardFromUrl(inputUrl, cardOptions)
-                  .then(setCardBody)
+                  .then(setCard)
                   .catch((e) => {
                     console.error(e)
                     if ("message" in e) toast.error(e.message as string)

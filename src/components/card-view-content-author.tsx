@@ -1,32 +1,32 @@
-import { CardBody } from "@prisma/client"
+import { Card } from "@prisma/client"
 import { QRCodeSVG } from "qrcode.react"
 import moment from "../../packages/common-datetime/moment"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
 import { UserAvatar } from "./user-avatar"
 
-export const ArticleAuthor = ({ body }: { body: CardBody }) => {
+export const ArticleAuthor = ({ card }: { card: Card }) => {
   return (
     <div className={"flex gap-2 items-center shrink-0 h-12"}>
-      {!!body?.author && <UserAvatar user={body.author} />}
+      {!!card?.author && <UserAvatar user={card.author} />}
 
       <div className={"flex flex-col"}>
         <span>
-          <span>{body?.author?.name}</span>
+          <span>{card?.author?.name}</span>
         </span>
-        {!!body?.time && (
+        {!!card?.time && (
           <span className={"text-muted-foreground text-xs"}>
-            {moment(body.time).format("ll")}（来自：
-            {getPlatformName(body.platformType)}）
+            {moment(card.time).format("ll")}（来自：
+            {getPlatformName(card.platformType)}）
           </span>
         )}
       </div>
 
       <div className={"ml-auto flex flex-col items-end"}>
-        {body?.sourceUrl && (
+        {card?.sourceUrl && (
           <div className={"w-8"}>
             <AspectRatio ratio={1}>
-              <QRCodeSVG value={body.sourceUrl} className={"w-full h-full"} />
+              <QRCodeSVG value={card.sourceUrl} className={"w-full h-full"} />
             </AspectRatio>
           </div>
         )}

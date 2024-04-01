@@ -1,4 +1,4 @@
-import { CardBody } from "@prisma/client"
+import { Card } from "@prisma/client"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { IUserSummary } from "../schema/user.summary"
@@ -6,7 +6,7 @@ import { getCardUrl } from "../utils"
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
 
-export const cardBodyAtom = atom<CardBody | null>(null)
+export const cardAtom = atom<Card | null>(null)
 export const cardRenderedContentAtom = atom("")
 
 export const cardCommentsEnabledAtom = atomWithStorage(
@@ -72,7 +72,7 @@ export const cardRenderStatusAtom = atom<
 >("default")
 
 export const cardOssIdAtom = atom<string | null>((get) => {
-  const body = get(cardBodyAtom)
+  const body = get(cardAtom)
   return getCardUrl(
     !body ? undefined : { type: body.platformType, id: body.platformId },
   )

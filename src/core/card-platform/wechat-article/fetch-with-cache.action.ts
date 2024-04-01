@@ -17,7 +17,7 @@ import {
   IWechatArticleStat,
 } from "../../../../packages/common-platform-wechat/article/detail/schema"
 import { ICardPlatform, IMedia } from "../../../schema/card"
-import { cardBodyBasicSchema } from "../../../schema/card.body"
+import { cardBasicSchema } from "../../../schema/card.basic"
 import { IUserSummary } from "../../../schema/user.summary"
 import { ICardGenOptions } from "../../../store/card.atom"
 import { $Enums } from ".prisma/client"
@@ -124,7 +124,7 @@ export const fetchWechatArticleAction = async (
       summary,
       sourceUrl,
     },
-    ...cardBodyBasicSchema,
+    ...cardBasicSchema,
   })
 
   console.log("-- wechat article upserted: ", {

@@ -1,7 +1,5 @@
-import { useAtom, useSetAtom } from "jotai"
+import { useAtom } from "jotai"
 import { RefObject, useEffect } from "react"
-
-import { ICardDetail } from "../schema/card.detail"
 import { cardRenderedContentAtom } from "../store/card.atom"
 
 export const useAutoCardContent = ({

@@ -1,4 +1,4 @@
-import { CardBody } from "@prisma/client"
+import { Card } from "@prisma/client"
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
@@ -20,7 +20,7 @@ import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
 export const genCardFromUrl = async (
   inputUrlLike: string,
   options: ICardGenOptions,
-): Promise<CardBody> => {
+): Promise<Card> => {
   const urlParsed = extractFirstURL(inputUrlLike)
   console.log({ urlParsed })
   if (!urlParsed)

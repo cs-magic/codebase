@@ -8,11 +8,11 @@ import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { useAutoCardContent } from "../hooks/use-card-content"
 import { ICardStat, IMedia } from "../schema/card"
-import { cardBodyAtom } from "../store/card.atom"
+import { cardAtom } from "../store/card.atom"
 import { ArticleAuthor } from "./card-view-content-author"
 
 export const CardContent = () => {
-  const [body] = useAtom(cardBodyAtom)
+  const [body] = useAtom(cardAtom)
   const refText = useRef<HTMLDivElement>(null)
   useAutoCardContent({ refText })
 
@@ -52,7 +52,7 @@ export const CardContent = () => {
 
           <div className={"grow"} />
 
-          {body && <ArticleAuthor body={body} />}
+          {body && <ArticleAuthor card={body} />}
 
           {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
         </div>

@@ -1,7 +1,9 @@
-import { CardBody } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { IXiaoHongShuNotePageData } from "../../../../packages/common-platform-xiaohongshu/schema"
 
-export const xiaohongshu2card = (data: IXiaoHongShuNotePageData): CardBody => {
+export const xiaohongshu2card = (
+  data: IXiaoHongShuNotePageData,
+): Prisma.CardUncheckedCreateInput => {
   const note = data.note.noteDetailMap[data.note.firstNoteId]?.note
   if (!note) throw new Error("no note")
 

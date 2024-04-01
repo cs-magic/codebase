@@ -98,19 +98,7 @@ model VerificationToken {
 }
 
 model Card {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-
-  body             CardBody?     @relation(fields: [bodyPlatformType, bodyPlatformId], references: [platformType, platformId])
-  bodyPlatformType PlatformType?
-  bodyPlatformId   String?
-
-  /// [IUserSummary]
-  user Json?
-}
-
-model CardBody {
+  id        String    @id @default(nanoid(7))
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
@@ -144,9 +132,8 @@ model CardBody {
   // todo: card comments
   /// [ICardStat]
   stat Json?
-  Card Card[]
 
-  @@id([platformType, platformId])
+  @@index([platformType, platformId])
 }
 
 enum PlatformType {

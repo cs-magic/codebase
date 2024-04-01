@@ -1,8 +1,10 @@
-import { CardBody } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { IBilibiliVideoDetail } from "../../../../packages/common-platform-bilibili/schema"
 import { getBilibiliIFrameUrl } from "../../../../packages/common-platform-bilibili/utils"
 
-export const bilibili2card = (data: IBilibiliVideoDetail): CardBody => {
+export const bilibili2card = (
+  data: IBilibiliVideoDetail,
+): Prisma.CardUncheckedCreateInput => {
   const { width, height } = data.View.dimension
   const ratio = width / height
   return {
