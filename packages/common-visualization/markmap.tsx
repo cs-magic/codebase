@@ -5,6 +5,7 @@ import { useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
+import { truncateString } from "../common-algo/string"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 
 const transformer = new Transformer()
@@ -13,9 +14,7 @@ const transformContent = (content: string): string => {
   return content
     .split(/\n/g)
     .map((s) => {
-      const N = 15
-      if (s.length > N) return s.slice(0, N) + "……"
-      return s
+      return truncateString(s, 20)
     })
     .join("\n")
 }
