@@ -227,12 +227,3 @@ export const AtomSwitcher = ({
     </div>
   )
 }
-
-const MenuLabel = ({ className, ...props }: ComponentProps<typeof Label>) => {
-  return (
-    <Label
-      className={cn("text-primary-foreground text-lg font-medium", className)}
-      {...props}
-    />
-  )
-}
