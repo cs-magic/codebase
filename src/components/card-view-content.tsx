@@ -25,7 +25,7 @@ export const CardContent = () => {
 
         <div className={"p-2 flex flex-col gap-2"}>
           {body?.summary?.title && (
-            <h1 className={"text-xl font-medium truncate shrink-0"}>
+            <h1 className={"text-xl font-bold truncate shrink-0"}>
               {body.summary.title}
             </h1>
           )}

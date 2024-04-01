@@ -1,6 +1,7 @@
 "use client"
 
 import { forwardRef, HTMLAttributes } from "react"
+import { cnPingFangFonts } from "../../packages/common-font"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { CardHeader } from "./card-vidw-header"
 import { CardContent } from "./card-view-content"
@@ -11,7 +12,11 @@ export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <div
         ref={ref}
-        className={cn("corner-gradient w-full max-w-[375px]", className)}
+        className={cn(
+          "corner-gradient w-full max-w-[375px]",
+          cnPingFangFonts.className,
+          className,
+        )}
         {...props}
       >
         <CardHeader />
