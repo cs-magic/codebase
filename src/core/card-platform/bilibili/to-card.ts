@@ -1,3 +1,5 @@
+"use server"
+
 import { Card, Prisma } from "@prisma/client"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { IBilibiliVideoDetail } from "../../../../packages/common-platform-bilibili/schema"

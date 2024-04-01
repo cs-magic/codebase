@@ -1,3 +1,5 @@
+"use server"
+
 import { Card, Prisma } from "@prisma/client"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { IXiaoHongShuNotePageData } from "../../../../packages/common-platform-xiaohongshu/schema"
@@ -50,7 +52,7 @@ export const xiaohongshu2card = (
         platformId: "?", // todo
       },
     },
-    update: data,
     create: data,
+    update: data,
   })
 }
