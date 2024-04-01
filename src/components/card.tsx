@@ -11,10 +11,7 @@ export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "rounded-lg corner-gradient w-full max-w-[375px]",
-          className,
-        )}
+        className={cn("corner-gradient w-full max-w-[375px]", className)}
         {...props}
       >
         <CardHeader />
