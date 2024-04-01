@@ -16,49 +16,45 @@ export const CardContent = () => {
   const refText = useRef<HTMLDivElement>(null)
   useAutoCardContent({ refText })
 
+  if (!body) return null
+
   return (
-    <div className={"w-full grow gap-2 p-2 min-h-72"}>
-      <div
-        className={"overflow-hidden rounded-lg bg-white text-black relative"}
-      >
-        <div ref={refText} className={"grow overflow-hidden flex flex-col"}>
-          <Cover cover={body?.cover} />
+    <div className={"overflow-hidden rounded-lg bg-white text-black relative"}>
+      <div ref={refText} className={"grow overflow-hidden flex flex-col"}>
+        <Cover cover={body?.cover} />
 
-          <div className={"p-2 flex flex-col gap-2"}>
-            {body?.summary?.title && (
-              <h1 className={"text-xl font-medium truncate shrink-0"}>
-                {body.summary.title}
-              </h1>
-            )}
+        <div className={"p-2 flex flex-col gap-2"}>
+          {body?.summary?.title && (
+            <h1 className={"text-xl font-medium truncate shrink-0"}>
+              {body.summary.title}
+            </h1>
+          )}
 
-            <Tags tags={body?.summary?.tags} />
+          <Tags tags={body?.summary?.tags} />
 
-            <Stat stat={body?.stat} />
+          <Stat stat={body?.stat} />
 
-            {/*{body?.title && (*/}
-            {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
-            {/*    原标题：{body.title}*/}
-            {/*  </span>*/}
-            {/*)}*/}
+          {/*{body?.title && (*/}
+          {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
+          {/*    原标题：{body.title}*/}
+          {/*  </span>*/}
+          {/*)}*/}
 
-            {body?.summary?.description && (
-              <div className={"bg-slate-100 p-2 rounded-lg"}>
-                <div>AI 摘要：{body.summary.description}</div>
-              </div>
-            )}
+          {body?.summary?.description && (
+            <div className={"bg-slate-100 p-2 rounded-lg"}>
+              <div>AI 摘要：{body.summary.description}</div>
+            </div>
+          )}
 
-            {body?.summary?.mindmap && (
-              <MarkMap content={body.summary.mindmap} />
-            )}
+          {body?.summary?.mindmap && <MarkMap content={body.summary.mindmap} />}
 
-            {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
+          {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
 
-            <div className={"grow"} />
+          <div className={"grow"} />
 
-            {body && <ArticleAuthor body={body} />}
+          {body && <ArticleAuthor body={body} />}
 
-            {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
-          </div>
+          {/*<MarkdownComp>{content ?? "No Content Yet"}</MarkdownComp>*/}
         </div>
       </div>
     </div>

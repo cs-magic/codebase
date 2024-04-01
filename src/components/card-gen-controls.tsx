@@ -4,15 +4,17 @@ import download from "downloadjs"
 import * as html2image from "html-to-image"
 import { useAtom, useSetAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
-import { RefObject, useState } from "react"
+import { ComponentProps, RefObject, useState } from "react"
 import { toast } from "sonner"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
+import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { genCardFromUrl } from "../core/gen-card"
 import {
   cardBodyAtom,
@@ -28,9 +30,11 @@ import {
   cardUserAvatarAtom,
   cardUserNameAtom,
 } from "../store/card.atom"
+import { ConfigDevCard } from "./config-dev-card"
+import { StandardCard } from "./standard-card"
 
 export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
-  const [inputUrl] = useAtom(cardInputUrlAtom)
+  const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
   const [cardOptions] = useAtom(cardGenOptionsAtom)
@@ -71,106 +75,136 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   }
 
   return (
-    <div className={"flex flex-col"}>
-      <FlexContainer orientation={"horizontal"}>
-        <Label className={"text-primary-foreground text-lg font-medium"}>
-          Card
-        </Label>
-
-        <ButtonWithLoading
-          id={"generate-card"}
-          loading={generating}
-          onClick={() => {
-            setGenerating(true)
-            genCardFromUrl(inputUrl, cardOptions)
-              .then(setCardBody)
-              .catch((e) => {
-                console.error(e)
-                if ("message" in e) toast.error(e.message as string)
-              })
-              .finally(() => {
-                setGenerating(false)
-              })
+    <div className={"w-full p-2 flex flex-col"}>
+      <StandardCard title={"Url"} type={"beauty"}>
+        <Input
+          id={"input-url"}
+          placeholder={GEN_CARD_INPUT_PLACEHOLDER}
+          className={"grow"}
+          value={inputUrl}
+          onChange={(event) => {
+            setInputUrl(event.currentTarget.value)
           }}
-        >
-          Generate
-        </ButtonWithLoading>
-
-        <Badge id={"card-render-status"}>{cardRenderStatus}</Badge>
-
-        <ButtonWithLoading
-          id={"copy-card"}
-          loading={coping}
-          onClick={async () => {
-            setCoping(true)
-            await action("copy")
-            setCoping(false)
-          }}
-        >
-          Copy
-        </ButtonWithLoading>
-
-        <ButtonWithLoading
-          id={"download-card"}
-          loading={downloading}
-          onClick={async () => {
-            setDownloading(true)
-            await action("download")
-            setDownloading(false)
-          }}
-        >
-          Download
-        </ButtonWithLoading>
-      </FlexContainer>
-
-      <div className={"grid grid-cols-3 p-2 gap-2"}>
-        <AtomSwitcher atom={cardSummaryEnabledAtom} name={"Summary Enabled"} />
-
-        <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
-
-        <AtomSwitcher
-          atom={cardCommentsEnabledAtom}
-          name={"Comments Enabled"}
         />
+      </StandardCard>
 
-        <AtomSwitcher
-          atom={cardSummaryCacheIgnoredAtom}
-          name={"Summary Cache Ignored"}
-        />
-        <AtomSwitcher
-          atom={cardStatCacheIgnoredAtom}
-          name={"Stat Cache Ignored"}
-        />
-        <AtomSwitcher
-          atom={cardCommentsCacheIgnoredAtom}
-          name={"Comments Cache Ignored"}
-        />
-      </div>
+      <StandardCard title={"Card"} type={"beauty"}>
+        <div className={"flex flex-col gap-2"}>
+          <span className={"mx-2 text-muted-foreground"}>
+            status:
+            <Label
+              className={"text-primary-foreground mx-2"}
+              id={"card-render-status"}
+            >
+              {cardRenderStatus}
+            </Label>
+          </span>
 
-      <FlexContainer>
-        <Label className={"text-primary-foreground text-lg font-medium"}>
-          User
-        </Label>
-        <LabelLine title={"Avatar"}>
-          <Input
-            id={"user-avatar"}
-            value={cardUserAvatar}
-            onChange={(event) => {
-              setCardUserAvatar(event.currentTarget.value)
-            }}
+          <div className={"flex gap-2"}>
+            <ButtonWithLoading
+              id={"generate-card"}
+              className={"w-24"}
+              size={"sm"}
+              loading={generating}
+              onClick={() => {
+                setGenerating(true)
+                genCardFromUrl(inputUrl, cardOptions)
+                  .then(setCardBody)
+                  .catch((e) => {
+                    console.error(e)
+                    if ("message" in e) toast.error(e.message as string)
+                  })
+                  .finally(() => {
+                    setGenerating(false)
+                  })
+              }}
+            >
+              Generate
+            </ButtonWithLoading>
+
+            <ButtonWithLoading
+              id={"copy-card"}
+              className={"w-24"}
+              size={"sm"}
+              loading={coping}
+              onClick={async () => {
+                setCoping(true)
+                await action("copy")
+                setCoping(false)
+              }}
+            >
+              Copy
+            </ButtonWithLoading>
+
+            <ButtonWithLoading
+              id={"download-card"}
+              className={"w-24"}
+              size={"sm"}
+              loading={downloading}
+              onClick={async () => {
+                setDownloading(true)
+                await action("download")
+                setDownloading(false)
+              }}
+            >
+              Download
+            </ButtonWithLoading>
+          </div>
+        </div>
+      </StandardCard>
+
+      <StandardCard title={"Control"} type={"beauty"}>
+        <div className={"grid sm:grid-cols-3 p-2 gap-4"}>
+          <AtomSwitcher
+            atom={cardSummaryEnabledAtom}
+            name={"Summary Enabled"}
           />
-        </LabelLine>
 
-        <LabelLine title={"Name"}>
-          <Input
-            id={"user-name"}
-            value={cardUserName}
-            onChange={(event) => {
-              setCardUserName(event.currentTarget.value)
-            }}
+          <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
+
+          <AtomSwitcher
+            atom={cardCommentsEnabledAtom}
+            name={"Comments Enabled"}
           />
-        </LabelLine>
-      </FlexContainer>
+
+          <AtomSwitcher
+            atom={cardSummaryCacheIgnoredAtom}
+            name={"Summary Cache Ignored"}
+          />
+          <AtomSwitcher
+            atom={cardStatCacheIgnoredAtom}
+            name={"Stat Cache Ignored"}
+          />
+          <AtomSwitcher
+            atom={cardCommentsCacheIgnoredAtom}
+            name={"Comments Cache Ignored"}
+          />
+        </div>
+      </StandardCard>
+
+      <StandardCard title={"User"} type={"beauty"}>
+        <FlexContainer className={"grid sm:grid-cols-2"}>
+          <LabelLine title={"Avatar"}>
+            <Input
+              id={"user-avatar"}
+              value={cardUserAvatar}
+              onChange={(event) => {
+                setCardUserAvatar(event.currentTarget.value)
+              }}
+            />
+          </LabelLine>
+
+          <LabelLine title={"Name"}>
+            <Input
+              id={"user-name"}
+              value={cardUserName}
+              onChange={(event) => {
+                setCardUserName(event.currentTarget.value)
+              }}
+            />
+          </LabelLine>
+        </FlexContainer>
+      </StandardCard>
     </div>
   )
 }
@@ -194,5 +228,14 @@ export const AtomSwitcher = ({
       <Label className={"shrink-0"}>{name}</Label>
       <Switch checked={v} onCheckedChange={setV} />
     </div>
+  )
+}
+
+const MenuLabel = ({ className, ...props }: ComponentProps<typeof Label>) => {
+  return (
+    <Label
+      className={cn("text-primary-foreground text-lg font-medium", className)}
+      {...props}
+    />
   )
 }

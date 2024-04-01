@@ -8,8 +8,8 @@ export const CardHeader = () => {
   const [user] = useAtom(cardUserAtom)
 
   return (
-    <div className={"text-xs flex items-center justify-between p-2"}>
-      <div className={"flex gap-2 items-center justify-end mt-4"}>
+    <div className={"text-xs flex items-center justify-between px-4 py-2 mt-6"}>
+      <div className={"flex gap-2 items-center justify-end"}>
         {user ? (
           <>
             <UserAvatar user={user} />

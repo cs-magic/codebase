@@ -4,7 +4,6 @@ import { useRef } from "react"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
 import { Card } from "../../../../components/card"
 import { Controls } from "../../../../components/card-gen-controls"
-import { InputLine } from "../../../../components/card-gen-input-line"
 
 export default function GenCardPage() {
   const refCard = useRef<HTMLDivElement>(null)
@@ -12,10 +11,8 @@ export default function GenCardPage() {
   return (
     <FlexContainer
       orientation={"vertical"}
-      className={"justify-start overflow-auto"}
+      className={"justify-start overflow-auto w-full sm:max-w-[720px] mx-auto"}
     >
-      <InputLine />
-
       <Controls obj={refCard} />
 
       <Card ref={refCard} />

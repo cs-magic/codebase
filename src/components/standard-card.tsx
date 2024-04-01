@@ -5,18 +5,31 @@ import {
   CardHeader,
   CardTitle,
 } from "../../packages/common-ui-shadcn/components/card"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 
 export const StandardCard = ({
   title,
   children,
-}: { title: string } & PropsWithChildren) => {
+  type = "normal",
+}: {
+  title: string
+  type?: "normal" | "beauty"
+} & PropsWithChildren) => {
   return (
-    <Card className={"w-full"}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
+    <Card className={cn("w-full", type === "beauty" && "border-none")}>
+      <CardHeader className={cn(type === "beauty" && "p-2")}>
+        <CardTitle
+          className={cn(type === "beauty" && "text-primary-foreground")}
+        >
+          {title}
+        </CardTitle>
       </CardHeader>
 
-      <CardContent className={"flex flex-col gap-4"}>{children}</CardContent>
+      <CardContent
+        className={cn("flex flex-col gap-4", type === "beauty" && "p-2")}
+      >
+        {children}
+      </CardContent>
     </Card>
   )
 }
