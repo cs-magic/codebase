@@ -109,7 +109,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
           <LabelLine title={"Name"}>
             <Input
-              id={"user-name"}
+              id={"card-user-name"}
               value={cardUserName}
               onChange={(event) => {
                 setCardUserName(event.currentTarget.value)

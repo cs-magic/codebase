@@ -34,8 +34,8 @@ export const downloadCardAction = async (
     imageLength: user?.image?.length,
   })
   if (user?.name && user.image) {
-    await page.locator("#user-name").fill(user.name)
-    await page.locator("#user-avatar").fill(user.image)
+    await page.locator("#card-user-name").fill(user.name)
+    await page.locator("#card-user-avatar").fill(user.image)
   }
 
   console.log("-- inputting: ", url)
