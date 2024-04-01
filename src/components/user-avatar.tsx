@@ -6,6 +6,7 @@ import {
   AvatarImage,
 } from "../../packages/common-ui-shadcn/components/avatar"
 import { cn } from "../../packages/common-ui-shadcn/utils"
+import { upgradeUrl } from "../../packages/common-utils/parse-url"
 import { IUserSummary } from "../schema/user.summary"
 
 export const UserAvatar = ({
@@ -29,7 +30,7 @@ export const UserAvatar = ({
           size === "lg" && "w-16 h-16",
         )}
       >
-        <AvatarImage src={user.image ?? ""} />
+        <AvatarImage src={upgradeUrl(user.image ?? "")} />
         <AvatarFallback>
           <UserIcon className={"w-full h-full"} />
         </AvatarFallback>

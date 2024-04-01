@@ -13,4 +13,5 @@ export function extractFirstURL(text: string): string | null {
   return match ? match[0] : null // This will be the first URL found in the text or null if no URL is found.
 }
 
-// console.log(extractFirstURL("uploaded at https://mark-vue-oss.oss-cn-hangzhou.aliyuncs.com/p01/wechatArticle/2776ecf380618499eba48c48c53420b5.png",),)
+export const upgradeUrl = (url: string) =>
+  location.href.includes("https") ? url.replace(/http:/g, "https:") : url

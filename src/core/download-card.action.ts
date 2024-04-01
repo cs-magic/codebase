@@ -32,9 +32,7 @@ export const downloadCardAction = async (
   console.log("-- inputting user if necessary: ", user)
   if (user?.name && user.image) {
     await page.locator("#card-user-name").fill(user.name)
-    await page
-      .locator("#card-user-avatar")
-      .fill(user.image.replace("http:", "https:"))
+    await page.locator("#card-user-avatar").fill(user.image)
   }
 
   console.log("-- inputting url: ", url)
