@@ -19,12 +19,7 @@ export const downloadCardAction = async (
   }) // Or 'firefox' or 'webkit'.
 
   console.log("-- opening page")
-  const page = (await browser.newPage({
-    screen: {
-      width: 600,
-      height: 2000,
-    },
-  })) as PuppetPage & PlaywrightPage
+  const page = (await browser.newPage({})) as PuppetPage & PlaywrightPage
 
   console.log("-- visiting")
   await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)

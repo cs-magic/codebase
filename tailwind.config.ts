@@ -21,6 +21,8 @@ const config = {
     },
     extend: {
       fontFamily: {
+        // 需要本地安装
+        card: ["PingFang SC"],
         art: [
           "Zapfino", //这个花体最飘逸！
           // "Trebuchet MS",
