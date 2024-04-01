@@ -5,7 +5,4 @@ void downloadCardAction(
   undefined,
   // "puppet",
   "playwright",
-).then(async (res) => {
-  // res.data?.stream.destroy()
-  console.log("finished")
-})
+)

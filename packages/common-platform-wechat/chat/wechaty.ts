@@ -1,6 +1,7 @@
 import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { downloadCardAction } from "@/core/download-card.action"
 import { FileBox } from "file-box"
+import pick from "lodash/pick"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
@@ -21,8 +22,9 @@ void WechatyBuilder.build({
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
     const sender = message.talker()
-    console.log(`<< message: `, message.payload)
     console.log("-- sender: ", sender.payload)
+    const senderPayload = pick(sender.payload, ["name", "avatar"])
+    console.log(`<< message: `, { ...message.payload, senderPayload })
 
     const text = message.text()
     const room = message.room()

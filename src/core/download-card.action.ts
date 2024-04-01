@@ -1,5 +1,3 @@
-"use server"
-
 import { chromium, Page as PlaywrightPage } from "playwright"
 import puppeteer, { Page as PuppetPage } from "puppeteer"
 import { IApi } from "../../packages/common-api/schema"
@@ -53,15 +51,13 @@ export const downloadCardAction = async (
   console.log("-- clicking uploading button")
   await page.locator("#upload-card").click()
 
+  console.log("-- waiting toast")
   const cardUrlHandler = await page.waitForFunction(() => {
-    return (
-      extractFirstURL(
-        document.querySelector(".toaster div[data-title]")?.innerHTML ?? "",
-      ) ?? ""
-    )
+    // 这里只能用浏览器的函数
+    return document.querySelector(".toaster div[data-title]")?.innerHTML ?? ""
   })
-  const cardUrl = await cardUrlHandler.jsonValue()
-  console.log("-- ossId: ", cardUrl)
+  const cardUrl = extractFirstURL(await cardUrlHandler.jsonValue()) ?? ""
+  console.log("-- cardUrl: ", cardUrl)
 
   await browser.close()
   return { success: true, data: { cardUrl } }
