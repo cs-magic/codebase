@@ -9,10 +9,8 @@ import { toast } from "sonner"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
-import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
-import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { genCardFromUrl } from "../core/gen-card"
@@ -30,7 +28,6 @@ import {
   cardUserAvatarAtom,
   cardUserNameAtom,
 } from "../store/card.atom"
-import { ConfigDevCard } from "./config-dev-card"
 import { StandardCard } from "./standard-card"
 
 export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
@@ -89,7 +86,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
       </StandardCard>
 
       <StandardCard title={"User"} type={"beauty"}>
-        <div className={"grid sm:grid-cols-2 gap-4"}>
+        <div className={"flex flex-col gap-4"}>
           <LabelLine title={"Avatar"}>
             <Input
               id={"user-avatar"}
@@ -113,7 +110,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
       </StandardCard>
 
       <StandardCard title={"Control"} type={"beauty"}>
-        <div className={"grid sm:grid-cols-3 gap-4"}>
+        <div className={"flex flex-col gap-4"}>
           <AtomSwitcher
             atom={cardSummaryEnabledAtom}
             name={"Summary Enabled"}

@@ -34,7 +34,7 @@ export default function MarkMap({ content }: { content: string }) {
     if (!refSvg.current) return
     // Create markmap and save to refMm
     const mm = Markmap.create(refSvg.current, {
-      // pan: false,
+      pan: false,
       // scrollForPan: false,
       zoom: false,
     })
