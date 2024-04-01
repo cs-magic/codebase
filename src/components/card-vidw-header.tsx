@@ -8,7 +8,7 @@ export const CardHeader = () => {
   const [user] = useAtom(cardUserAtom)
 
   return (
-    <div className={"text-xs flex items-center justify-between px-4 py-2 mt-6"}>
+    <div className={"text-xs flex items-center justify-between px-4 pb-2 pt-6"}>
       <div className={"flex gap-2 items-center justify-end"}>
         {user ? (
           <>
