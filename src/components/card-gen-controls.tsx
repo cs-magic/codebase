@@ -74,7 +74,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
     <div className={"w-full p-2 flex flex-col"}>
       <StandardCard title={"Url"} type={"beauty"}>
         <Input
-          id={"input-url"}
+          id={"card-input-url"}
           placeholder={GEN_CARD_INPUT_PLACEHOLDER}
           className={"grow"}
           value={inputUrl}
@@ -88,7 +88,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
         <div className={"flex flex-col gap-4"}>
           <LabelLine title={"Avatar"}>
             <Input
-              id={"user-avatar"}
+              id={"card-user-avatar"}
               value={cardUserAvatar}
               onChange={(event) => {
                 setCardUserAvatar(event.currentTarget.value)

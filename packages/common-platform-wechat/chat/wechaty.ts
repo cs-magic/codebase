@@ -1,5 +1,5 @@
 import { downloadCardAction } from "@/core/download-card.action"
-import { isWechatArticleUrl } from "@/core/providers/wechat-article/utils"
+import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"

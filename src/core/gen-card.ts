@@ -7,10 +7,10 @@ import { getBvidFromUrl } from "../../packages/common-platform-bilibili/utils"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchXiaoHongShuDetail } from "../../packages/common-platform-xiaohongshu/actions"
 import { ICardGenOptions } from "../store/card.atom"
-import { bilibili2card } from "./providers/bilibili/to-card"
-import { fetchWechatArticleAction } from "./providers/wechat-article/fetch-with-cache.action"
-import { isWechatArticleUrl } from "./providers/wechat-article/utils"
-import { xiaohongshu2card } from "./providers/xiaohongshu/to-card"
+import { bilibili2card } from "./card-platform/bilibili/to-card"
+import { fetchWechatArticleAction } from "./card-platform/wechat-article/fetch-with-cache.action"
+import { isWechatArticleUrl } from "./card-platform/wechat-article/utils"
+import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
