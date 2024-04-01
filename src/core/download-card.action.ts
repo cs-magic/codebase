@@ -10,11 +10,12 @@ export const downloadCardAction = async (
   user?: IUserSummary,
   type?: "playwright" | "puppet",
 ): Promise<IApi<{ cardUrl: string }>> => {
-  const driver = type === "playwright" ? chromium : puppeteer
+  const driver = type === "puppet" ? puppeteer : chromium
 
   console.log("-- opening browser")
   const browser = await driver.launch({
     downloadsPath: "/tmp",
+    // headless: false,
   }) // Or 'firefox' or 'webkit'.
 
   console.log("-- opening page")
@@ -31,7 +32,9 @@ export const downloadCardAction = async (
   console.log("-- inputting user if necessary: ", user)
   if (user?.name && user.image) {
     await page.locator("#card-user-name").fill(user.name)
-    await page.locator("#card-user-avatar").fill(user.image)
+    await page
+      .locator("#card-user-avatar")
+      .fill(user.image.replace("http:", "https:"))
   }
 
   console.log("-- inputting url: ", url)
@@ -48,7 +51,7 @@ export const downloadCardAction = async (
     )
   })
 
-  console.log("-- clicking uploading button")
+  console.log("-- clicking upload button")
   await page.locator("#upload-card").click()
 
   console.log("-- waiting toast")
