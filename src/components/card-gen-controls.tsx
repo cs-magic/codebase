@@ -7,6 +7,7 @@ import { RESET } from "jotai/utils"
 import { RefObject, useState } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
+import { getOssUrl } from "../../packages/common-oss/utils"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
@@ -77,7 +78,8 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
         const file = new File([blob], cardOssId, {
           type: blob.type,
         })
-        void uploadFile(file).catch(console.error).then(console.log)
+        await uploadFile(file)
+        toast.success(`uploaded at ${getOssUrl(cardOssId)}`, { duration: 0 })
     }
   }
 
@@ -97,22 +99,22 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
       <StandardCard title={"User"} type={"beauty"}>
         <div className={"flex flex-col gap-4"}>
-          <LabelLine title={"Avatar"}>
-            <Input
-              id={"card-user-avatar"}
-              value={cardUserAvatar}
-              onChange={(event) => {
-                setCardUserAvatar(event.currentTarget.value)
-              }}
-            />
-          </LabelLine>
-
           <LabelLine title={"Name"}>
             <Input
               id={"card-user-name"}
               value={cardUserName}
               onChange={(event) => {
                 setCardUserName(event.currentTarget.value)
+              }}
+            />
+          </LabelLine>
+
+          <LabelLine title={"Avatar"}>
+            <Input
+              id={"card-user-avatar"}
+              value={cardUserAvatar}
+              onChange={(event) => {
+                setCardUserAvatar(event.currentTarget.value)
               }}
             />
           </LabelLine>
@@ -157,10 +159,6 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             >
               {cardRenderStatus}
             </Label>
-          </LabelLine>
-
-          <LabelLine title={"OSS ID"}>
-            <Label id={"card-oss-id"}>{cardOssId}</Label>
           </LabelLine>
 
           <div className={"flex gap-2"}>

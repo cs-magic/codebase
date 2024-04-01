@@ -2,6 +2,8 @@
 
 import { chromium, Page as PlaywrightPage } from "playwright"
 import puppeteer, { Page as PuppetPage } from "puppeteer"
+import { IApi } from "../../packages/common-api/schema"
+import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { env } from "../env"
 import { IUserSummary } from "../schema/user.summary"
 
@@ -9,7 +11,7 @@ export const downloadCardAction = async (
   url: string,
   user?: IUserSummary,
   type?: "playwright" | "puppet",
-) => {
+): Promise<IApi<{ cardUrl: string }>> => {
   const driver = type === "playwright" ? chromium : puppeteer
 
   console.log("-- opening browser")
@@ -28,17 +30,13 @@ export const downloadCardAction = async (
   console.log("-- visiting")
   await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)
 
-  console.log("-- filling user if necessary: ", {
-    id: user?.id,
-    name: user?.name,
-    imageLength: user?.image?.length,
-  })
+  console.log("-- inputting user if necessary: ", user)
   if (user?.name && user.image) {
     await page.locator("#card-user-name").fill(user.name)
     await page.locator("#card-user-avatar").fill(user.image)
   }
 
-  console.log("-- inputting: ", url)
+  console.log("-- inputting url: ", url)
   await page.locator("#card-input-url").fill(url)
 
   console.log("-- clicking generate button")
@@ -55,9 +53,16 @@ export const downloadCardAction = async (
   console.log("-- clicking uploading button")
   await page.locator("#upload-card").click()
 
-  console.log("-- copying oss id")
-  const ossId = document.getElementById("card-oss-id")!.innerText
+  const cardUrlHandler = await page.waitForFunction(() => {
+    return (
+      extractFirstURL(
+        document.querySelector(".toaster div[data-title]")?.innerHTML ?? "",
+      ) ?? ""
+    )
+  })
+  const cardUrl = await cardUrlHandler.jsonValue()
+  console.log("-- ossId: ", cardUrl)
 
   await browser.close()
-  return { success: true, data: { ossId } }
+  return { success: true, data: { cardUrl } }
 }

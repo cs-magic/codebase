@@ -1,11 +1,9 @@
-import { downloadCardAction } from "@/core/download-card.action"
 import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
-import { getCardUrl } from "@/utils"
+import { downloadCardAction } from "@/core/download-card.action"
 import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
-import { getOssSignatureUrl } from "../../common-oss/server/actions"
 import { parseUrlFromWechatUrlMessage } from "./utils"
 
 const name = process.argv[2] ?? "default"
@@ -23,7 +21,6 @@ void WechatyBuilder.build({
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
     const sender = message.talker()
-    const avatar = await sender.avatar()
     console.log(`<< message: `, message.payload)
     console.log("-- sender: ", sender.payload)
 
@@ -39,17 +36,22 @@ void WechatyBuilder.build({
         if (!url) return
 
         if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
-          const image = await avatar.toDataURL()
+          // avatar 在 padLocal 下是带domain的；web下不稳定
+          const image = sender.payload?.avatar
+          const user = image
+            ? {
+                id: sender.id,
+                name: sender.name(),
+                image,
+              }
+            : undefined
           console.log(`-- triggering...`)
-          const { success, data } = await downloadCardAction(url, {
-            id: sender.id,
-            name: sender.name(),
-            image,
-          })
-          console.log("-- success: ", success)
+          const result = await downloadCardAction(url, user)
+          console.log("-- result: ", result)
+          const { success, data } = result
           if (!success) return
-          const file = FileBox.fromUrl(await getOssSignatureUrl(data.ossId))
-          await message.say(file)
+          console.log("-- sending file")
+          await message.say(FileBox.fromUrl(data.cardUrl))
           console.log("-- ✅ sent file")
           return
         }
