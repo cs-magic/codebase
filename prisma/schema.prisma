@@ -133,7 +133,7 @@ model Card {
   /// [ICardStat]
   stat Json?
 
-  @@index([platformType, platformId])
+  @@unique([platformType, platformId])
 }
 
 enum PlatformType {

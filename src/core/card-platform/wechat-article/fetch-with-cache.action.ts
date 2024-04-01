@@ -41,7 +41,7 @@ export const fetchWechatArticleAction = async (
   const platformId = /sn=(.*?)&/.exec(ogUrl ?? "")![1]!
 
   // 2.1.1 get data from id
-  const dataInDB = await prisma.cardBody.findUnique({
+  const dataInDB = await prisma.card.findUnique({
     where: { platformType_platformId: { platformType, platformId } },
   })
 
@@ -97,7 +97,7 @@ export const fetchWechatArticleAction = async (
       comments = (await fetchWechatArticleComments(platformId)).data
   }
 
-  const wechatArticleInDB = await prisma.cardBody.upsert({
+  const wechatArticleInDB = await prisma.card.upsert({
     where: { platformType_platformId: { platformId, platformType } },
     create: {
       platformType,
