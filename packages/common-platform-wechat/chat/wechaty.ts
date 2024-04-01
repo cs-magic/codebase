@@ -3,16 +3,21 @@ import { downloadCardAction } from "@/core/download-card.action"
 import { FileBox } from "file-box"
 import pick from "lodash/pick"
 import qrcodeTerminal from "qrcode-terminal"
-import { WechatyBuilder } from "wechaty"
+import wechaty, { Post, WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
+import moment from "../../common-datetime/moment"
 import { parseUrlFromWechatUrlMessage } from "./utils"
 
 const name = process.argv[2] ?? "default"
 console.log({ name })
 
-void WechatyBuilder.build({
+const bot = WechatyBuilder.build({
   name, // 加了名字后就可以自动存储了
+
+  puppetOptions: {},
 })
+
+bot
   .on("scan", (value, status) => {
     console.log(
       `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
@@ -30,7 +35,11 @@ void WechatyBuilder.build({
     const room = message.room()
     const roomName = room ? await room.topic() : ""
 
-    if (/CS魔法社|文案|test/.test(roomName)) {
+    if (/test/.test(roomName) && /南川/.test(sender.name())) {
+      await message.say(`@${sender.name()} ${moment().format("hh:mm")}`)
+    }
+
+    if (/CS魔法社|test/.test(roomName)) {
       // link
       if (message.type() === types.Message.Url) {
         const url = parseUrlFromWechatUrlMessage(text)

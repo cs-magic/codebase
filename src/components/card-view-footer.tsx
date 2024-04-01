@@ -1,6 +1,10 @@
+import { useAtom } from "jotai"
 import { cn } from "../../packages/common-ui-shadcn/utils"
+import { cardAtom } from "../store/card.atom"
 
 export const CardFooter = () => {
+  const [card] = useAtom(cardAtom)
+
   return (
     <div
       className={cn(
@@ -16,9 +20,10 @@ export const CardFooter = () => {
         </p>
       </div>
 
-      {/*<div className={"absolute right-2 bottom-2 text-white text-xs italic"}>*/}
-      {/*  1.1*/}
-      {/*</div>*/}
+      <div className={"absolute right-2 bottom-2 text-white/50 text-[8px]"}>
+        <div>{card?.id}</div>
+        <div>V0.1.0(α)</div>
+      </div>
     </div>
   )
 }

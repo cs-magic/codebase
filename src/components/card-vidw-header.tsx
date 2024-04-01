@@ -19,7 +19,8 @@ export const CardHeader = () => {
               <span className={"font-bold text-lg mr-1 primary-gradient"}>
                 {user.name}
               </span>
-              分享给你一张卡片 {card?.id && `#${card.id}`}
+              分享给你一张卡片
+              {/*{card?.id && `#${card.id}`}*/}
             </Label>
           </>
         ) : (
