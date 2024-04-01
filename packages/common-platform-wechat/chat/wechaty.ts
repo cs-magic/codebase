@@ -23,6 +23,7 @@ void WechatyBuilder.build({
     const sender = message.talker()
     const avatar = await sender.avatar()
     console.log(`<< message: `, message.payload)
+    console.log("-- sender: ", sender.payload)
 
     const text = message.text()
     const room = message.room()
