@@ -1,9 +1,11 @@
 import { downloadCardAction } from "@/core/download-card.action"
 import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
+import { getCardUrl } from "@/utils"
 import { FileBox } from "file-box"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
+import { getOssSignatureUrl } from "../../common-oss/server/actions"
 import { parseUrlFromWechatUrlMessage } from "./utils"
 
 const name = process.argv[2] ?? "default"
@@ -46,8 +48,7 @@ void WechatyBuilder.build({
           })
           console.log("-- success: ", success)
           if (!success) return
-
-          const file = FileBox.fromStream(data.stream, data.fileName)
+          const file = FileBox.fromUrl(await getOssSignatureUrl(data.ossId))
           await message.say(file)
           console.log("-- ✅ sent file")
           return

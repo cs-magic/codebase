@@ -1,28 +1,29 @@
 import { toast } from "sonner"
-import { v4 } from "uuid"
 import { api } from "../common-api"
 import { IApi } from "../common-api/schema"
-import { getOssSignatureUrl } from "./server/actons"
+import { getOssSignatureUrl } from "./server/actions"
+
+export const uploadFile = async (file: File) => {
+  let signatureUrl = await getOssSignatureUrl(file.name)
+
+  const isHttps = location.href.includes("https")
+  if (isHttps) signatureUrl = signatureUrl.replace("http://", "https://")
+
+  console.log("-- uploading fileUrl: ", signatureUrl)
+  await api.put(signatureUrl, file, {
+    headers: {
+      "Content-Type": "image/png",
+    },
+  })
+
+  const fileUrl = signatureUrl.split("?")[0] ?? signatureUrl
+  console.log("-- uploaded fileUrl: ", fileUrl)
+  return fileUrl
+}
 
 export const uploadFiles = async (files: FileList): Promise<IApi<string[]>> => {
-  // todo: cleaner approach
-  const isHttps = location.href.includes("https")
-
   const images = await Promise.all(
-    Object.values(files).map(async (file) => {
-      let signatureUrl = await getOssSignatureUrl(v4())
-
-      if (isHttps) signatureUrl = signatureUrl.replace("http://", "https://")
-
-      await api.post(signatureUrl, {
-        headers: new Headers({
-          "Content-Type": "image/png",
-        }),
-        body: file,
-      })
-
-      return signatureUrl.split("?")[0] ?? signatureUrl
-    }),
+    Object.values(files).map(async (file) => uploadFile(file)),
   )
 
   console.log("response: ", images)

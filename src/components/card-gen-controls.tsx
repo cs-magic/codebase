@@ -6,6 +6,7 @@ import { useAtom, useSetAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
 import { RefObject, useState } from "react"
 import { toast } from "sonner"
+import { uploadFile } from "../../packages/common-oss/upload"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
@@ -19,6 +20,7 @@ import {
   cardCommentsEnabledAtom,
   cardGenOptionsAtom,
   cardInputUrlAtom,
+  cardOssIdAtom,
   cardRenderStatusAtom,
   cardStatCacheIgnoredAtom,
   cardStatEnabledAtom,
@@ -36,13 +38,15 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   const [cardOptions] = useAtom(cardGenOptionsAtom)
   const [cardRenderStatus] = useAtom(cardRenderStatusAtom)
   const [cardBody] = useAtom(cardBodyAtom)
+  const [cardOssId] = useAtom(cardOssIdAtom)
   const setCardBody = useSetAtom(cardBodyAtom)
 
   const [generating, setGenerating] = useState(false)
   const [coping, setCoping] = useState(false)
   const [downloading, setDownloading] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
-  const action = async (type: "copy" | "download") => {
+  const action = async (type: "copy" | "download" | "upload") => {
     if (!obj.current) return console.error("no refCard current")
 
     const blob = await html2image.toBlob(obj.current, {
@@ -67,6 +71,13 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
           `${encodeURI(cardBody?.title ?? new Date().toString())}.png`,
         )
         break
+
+      case "upload":
+        if (!cardOssId) return toast.error("invalid info")
+        const file = new File([blob], cardOssId, {
+          type: blob.type,
+        })
+        void uploadFile(file).catch(console.error).then(console.log)
     }
   }
 
@@ -139,15 +150,18 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
       <StandardCard title={"Card"} type={"beauty"}>
         <div className={"flex flex-col gap-2"}>
-          <span className={"mx-2 text-muted-foreground"}>
-            status:
+          <LabelLine title={"status"}>
             <Label
               className={"text-primary-foreground mx-2"}
               id={"card-render-status"}
             >
               {cardRenderStatus}
             </Label>
-          </span>
+          </LabelLine>
+
+          <LabelLine title={"OSS ID"}>
+            <Label id={"card-oss-id"}>{cardOssId}</Label>
+          </LabelLine>
 
           <div className={"flex gap-2"}>
             <ButtonWithLoading
@@ -197,6 +211,20 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
               }}
             >
               Download
+            </ButtonWithLoading>
+
+            <ButtonWithLoading
+              id={"upload-card"}
+              className={"w-24"}
+              size={"sm"}
+              loading={uploading}
+              onClick={async () => {
+                setUploading(true)
+                await action("upload")
+                setUploading(false)
+              }}
+            >
+              Upload
             </ButtonWithLoading>
           </div>
         </div>
