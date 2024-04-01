@@ -7,24 +7,22 @@ import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
 import { env } from "../env"
 import { IUserSummary } from "../schema/user.summary"
 
-export const downloadCardAction = async (url: string, user?: IUserSummary) => {
-  console.log("-- downloading card of url: ", url)
-
-  const browser = await chromium.launch({}) // Or 'firefox' or 'webkit'.
-
-  const downloadsPath = "/tmp"
-  console.log({ downloadsPath })
-
-  console.log("-- to open new page")
-  const page = await browser.newPage({
-    screen: {
-      width: 600,
-      height: 2000,
-    },
-  })
-
-  return new Promise<IApi<{ fileName: string; stream: internal.Readable }>>(
+export const downloadCardAction = async (url: string, user?: IUserSummary) =>
+  new Promise<IApi<{ fileName: string; stream: internal.Readable }>>(
     async (resolve, reject) => {
+      console.log("-- downloading card of url: ", url)
+
+      console.log("-- opening browser")
+      const browser = await chromium.launch({}) // Or 'firefox' or 'webkit'.
+
+      console.log("-- opening page")
+      const page = await browser.newPage({
+        screen: {
+          width: 600,
+          height: 2000,
+        },
+      })
+
       page.on("download", async (download) => {
         // console.log("-- download: ", download)
 
@@ -43,10 +41,10 @@ export const downloadCardAction = async (url: string, user?: IUserSummary) => {
       })
 
       const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen`
-      console.log("-- to visit: ", targetUrl)
+      console.log("-- visiting: ", targetUrl)
       await page.goto(targetUrl)
 
-      console.log("-- to fill user if necessary: ", {
+      console.log("-- filling user if necessary: ", {
         id: user?.id,
         name: user?.name,
         imageLength: user?.image?.length,
@@ -56,13 +54,13 @@ export const downloadCardAction = async (url: string, user?: IUserSummary) => {
         await page.locator("#user-avatar").fill(user.image)
       }
 
-      console.log("-- to input: ", url)
+      console.log("-- inputting: ", url)
       await page.getByPlaceholder(GEN_CARD_INPUT_PLACEHOLDER).fill(url)
 
-      console.log("-- to click generate button")
+      console.log("-- clicking generate button")
       await page.locator("#generate-card").click()
 
-      console.log("-- to wait card generated")
+      console.log("-- waiting card generated")
       await page.waitForFunction(() => {
         return (
           document.getElementById("card-render-status")?.innerText ===
@@ -70,8 +68,8 @@ export const downloadCardAction = async (url: string, user?: IUserSummary) => {
         )
       })
 
-      console.log("-- to click download button")
+      console.log("-- clicking download button")
       await page.locator("#download-card").click()
+      console.log("-- clicked")
     },
   )
-}

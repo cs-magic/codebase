@@ -36,11 +36,12 @@ void WechatyBuilder.build({
         if (!url) return
 
         if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
+          const image = await avatar.toDataURL()
           console.log(`-- triggering...`)
           const { success, data } = await downloadCardAction(url, {
             id: sender.id,
             name: sender.name(),
-            image: await avatar.toDataURL(),
+            image,
           })
           console.log("-- success: ", success)
           if (!success) return
