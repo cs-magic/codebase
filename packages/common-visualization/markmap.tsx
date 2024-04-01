@@ -33,7 +33,11 @@ export default function MarkMap({ content }: { content: string }) {
   useEffect(() => {
     if (!refSvg.current) return
     // Create markmap and save to refMm
-    const mm = Markmap.create(refSvg.current)
+    const mm = Markmap.create(refSvg.current, {
+      // pan: false,
+      // scrollForPan: false,
+      zoom: false,
+    })
     // console.log({ mm })
     refMm.current = mm
     return () => {

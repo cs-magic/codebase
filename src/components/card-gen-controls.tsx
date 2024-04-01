@@ -88,6 +88,59 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
         />
       </StandardCard>
 
+      <StandardCard title={"User"} type={"beauty"}>
+        <div className={"grid sm:grid-cols-2 gap-4"}>
+          <LabelLine title={"Avatar"}>
+            <Input
+              id={"user-avatar"}
+              value={cardUserAvatar}
+              onChange={(event) => {
+                setCardUserAvatar(event.currentTarget.value)
+              }}
+            />
+          </LabelLine>
+
+          <LabelLine title={"Name"}>
+            <Input
+              id={"user-name"}
+              value={cardUserName}
+              onChange={(event) => {
+                setCardUserName(event.currentTarget.value)
+              }}
+            />
+          </LabelLine>
+        </div>
+      </StandardCard>
+
+      <StandardCard title={"Control"} type={"beauty"}>
+        <div className={"grid sm:grid-cols-3 gap-4"}>
+          <AtomSwitcher
+            atom={cardSummaryEnabledAtom}
+            name={"Summary Enabled"}
+          />
+
+          <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
+
+          <AtomSwitcher
+            atom={cardCommentsEnabledAtom}
+            name={"Comments Enabled"}
+          />
+
+          <AtomSwitcher
+            atom={cardSummaryCacheIgnoredAtom}
+            name={"Summary Cache Ignored"}
+          />
+          <AtomSwitcher
+            atom={cardStatCacheIgnoredAtom}
+            name={"Stat Cache Ignored"}
+          />
+          <AtomSwitcher
+            atom={cardCommentsCacheIgnoredAtom}
+            name={"Comments Cache Ignored"}
+          />
+        </div>
+      </StandardCard>
+
       <StandardCard title={"Card"} type={"beauty"}>
         <div className={"flex flex-col gap-2"}>
           <span className={"mx-2 text-muted-foreground"}>
@@ -151,59 +204,6 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             </ButtonWithLoading>
           </div>
         </div>
-      </StandardCard>
-
-      <StandardCard title={"Control"} type={"beauty"}>
-        <div className={"grid sm:grid-cols-3 p-2 gap-4"}>
-          <AtomSwitcher
-            atom={cardSummaryEnabledAtom}
-            name={"Summary Enabled"}
-          />
-
-          <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
-
-          <AtomSwitcher
-            atom={cardCommentsEnabledAtom}
-            name={"Comments Enabled"}
-          />
-
-          <AtomSwitcher
-            atom={cardSummaryCacheIgnoredAtom}
-            name={"Summary Cache Ignored"}
-          />
-          <AtomSwitcher
-            atom={cardStatCacheIgnoredAtom}
-            name={"Stat Cache Ignored"}
-          />
-          <AtomSwitcher
-            atom={cardCommentsCacheIgnoredAtom}
-            name={"Comments Cache Ignored"}
-          />
-        </div>
-      </StandardCard>
-
-      <StandardCard title={"User"} type={"beauty"}>
-        <FlexContainer className={"grid sm:grid-cols-2"}>
-          <LabelLine title={"Avatar"}>
-            <Input
-              id={"user-avatar"}
-              value={cardUserAvatar}
-              onChange={(event) => {
-                setCardUserAvatar(event.currentTarget.value)
-              }}
-            />
-          </LabelLine>
-
-          <LabelLine title={"Name"}>
-            <Input
-              id={"user-name"}
-              value={cardUserName}
-              onChange={(event) => {
-                setCardUserName(event.currentTarget.value)
-              }}
-            />
-          </LabelLine>
-        </FlexContainer>
       </StandardCard>
     </div>
   )
