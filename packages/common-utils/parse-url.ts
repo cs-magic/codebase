@@ -1,3 +1,5 @@
+import { isClient } from "../common-env/utils"
+
 export function extractFirstURL(text: string): string | null {
   // This regex is designed to find URLs within a string.
   // It looks for strings that start with http://, https://, or www., and captures
@@ -14,4 +16,6 @@ export function extractFirstURL(text: string): string | null {
 }
 
 export const upgradeUrl = (url: string) =>
-  location.href.includes("https") ? url.replace(/http:/g, "https:") : url
+  isClient && location.href.includes("https")
+    ? url.replace(/http:/g, "https:")
+    : url
