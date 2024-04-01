@@ -42,6 +42,7 @@ void WechatyBuilder.build({
             name: sender.name(),
             image: await avatar.toDataURL(),
           })
+          console.log("-- success: ", success)
           if (!success) return
 
           const file = FileBox.fromStream(data.stream, data.fileName)
