@@ -25,23 +25,24 @@ export const CardContent = () => {
 
         <div className={"p-2 flex flex-col gap-2"}>
           {body?.summary?.title && (
-            <h1 className={"text-xl font-bold truncate shrink-0"}>
-              {body.summary.title}
+            <h1 className={"text-lg font-bold shrink-0"}>
+              {body.title}
+              {/*{body.summary.title}*/}
             </h1>
           )}
 
-          {body?.title && (
-            <span className={"text-xs text-muted-foreground truncate shrink-0"}>
-              原标题：{body.title}
-            </span>
-          )}
+          {/*{body?.title && (*/}
+          {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
+          {/*    原标题：{body.title}*/}
+          {/*  </span>*/}
+          {/*)}*/}
 
           <Tags tags={body?.summary?.tags} />
 
           <Stat stat={body?.stat} />
 
           {body?.summary?.description && (
-            <div className={"bg-slate-100 p-2 rounded-lg"}>
+            <div className={"bg-slate-100 p-2 rounded-lg text-sm"}>
               <div>摘要：{body.summary.description}</div>
             </div>
           )}

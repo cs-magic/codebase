@@ -13358,12 +13358,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.336.0":
-  version: 0.336.0
-  resolution: "lucide-react@npm:0.336.0"
+"lucide-react@npm:^0.364.0":
+  version: 0.364.0
+  resolution: "lucide-react@npm:0.364.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/d0416a9fe1d90461d9797b2aadb34d4dcdd26ec708e685e2500d0cff868de3acfe067bb595ac964aa40b1fc422746f2dc51d4cd5c0ceaa601ccfd4df9a5d5e1e
+  checksum: 10c0/07e519f700081f6d9f063dc39d9b58da940a976bfc368dd67c272544cfba226b4663eadf1839f41c5014561408200c595ce566b0f07a747e2a69449beb384749
   languageName: node
   linkType: hard
 
@@ -15251,7 +15251,7 @@ __metadata:
     js-sha1: "npm:^0.7.0"
     langchain: "npm:^0.1.21"
     lodash: "npm:^4.17.21"
-    lucide-react: "npm:^0.336.0"
+    lucide-react: "npm:^0.364.0"
     markmap-common: "npm:^0.16.0"
     markmap-lib: "npm:^0.16.1"
     markmap-view: "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch"

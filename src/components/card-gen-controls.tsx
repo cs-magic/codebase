@@ -124,21 +124,23 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             name={"Summary Enabled"}
           />
 
+          <AtomSwitcher
+            atom={cardSummaryCacheIgnoredAtom}
+            name={"Summary Cache Ignored"}
+          />
+
           <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
+
+          <AtomSwitcher
+            atom={cardStatCacheIgnoredAtom}
+            name={"Stat Cache Ignored"}
+          />
 
           <AtomSwitcher
             atom={cardCommentsEnabledAtom}
             name={"Comments Enabled"}
           />
 
-          <AtomSwitcher
-            atom={cardSummaryCacheIgnoredAtom}
-            name={"Summary Cache Ignored"}
-          />
-          <AtomSwitcher
-            atom={cardStatCacheIgnoredAtom}
-            name={"Stat Cache Ignored"}
-          />
           <AtomSwitcher
             atom={cardCommentsCacheIgnoredAtom}
             name={"Comments Cache Ignored"}

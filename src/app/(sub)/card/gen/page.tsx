@@ -11,15 +11,13 @@ export default function GenCardPage() {
   return (
     <div
       className={cn(
-        "justify-start overflow-auto w-full sm:max-w-[1280px] mx-auto gap-4",
+        "justify-start overflow-auto w-full sm:max-w-[1280px] mx-auto gap-4 p-2 sm:p-4",
         "grid grid-cols-1 sm:grid-cols-2",
       )}
     >
       <Controls obj={refCard} />
 
-      <div className={"px-2"}>
-        <Card ref={refCard} />
-      </div>
+      <Card ref={refCard} />
     </div>
   )
 }

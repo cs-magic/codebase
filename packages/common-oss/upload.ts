@@ -1,9 +1,5 @@
-import { produce } from "immer"
-import { useState } from "react"
 import { api } from "../common-api"
 import { IApiResult } from "../common-api/schema"
-import { UnexpectedError } from "../common-general/schema"
-import { IUploadFile } from "./schema"
 import { getOssSignatureUrl } from "./server/actions"
 
 export const uploadFile = async (file: File): Promise<IApiResult<string>> => {
@@ -32,39 +28,4 @@ export const uploadFile = async (file: File): Promise<IApiResult<string>> => {
       "An unknown error occurred"
     return { success: false, message }
   }
-}
-
-export const useUploadFile = () => {
-  const [status, setStatus] = useState<IUploadFile>({ status: "idle" })
-
-  const upload = async (file: File) => {
-    setStatus({ status: "running", input: file })
-    const result = await uploadFile(file)
-    setStatus({ status: "finished", input: file, ...result })
-  }
-
-  return { status, upload }
-}
-
-export const useUploadFiles = () => {
-  const [status, setStatus] = useState<IUploadFile[]>([])
-
-  const upload = async (files: FileList | File[]) => {
-    const items = Object.values(files)
-    setStatus(items.map((item) => ({ status: "running", input: item })))
-    await Promise.all(
-      items.map(async (item, index) => {
-        const result = await uploadFile(item)
-        setStatus((status) =>
-          produce(status, (status) => {
-            const item = status[index]!
-            if (item.status !== "running") throw new UnexpectedError()
-            status[index] = { status: "finished", input: item.input, ...result }
-          }),
-        )
-      }),
-    )
-  }
-
-  return { status, upload }
 }

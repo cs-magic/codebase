@@ -80,7 +80,7 @@
     "js-sha1": "^0.7.0",
     "langchain": "^0.1.21",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.336.0",
+    "lucide-react": "^0.364.0",
     "markmap-common": "^0.16.0",
     "markmap-lib": "^0.16.1",
     "markmap-view": "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch",
