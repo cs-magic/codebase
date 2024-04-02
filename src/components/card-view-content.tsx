@@ -30,15 +30,15 @@ export const CardContent = () => {
             </h1>
           )}
 
-          <Tags tags={body?.summary?.tags} />
-
-          <Stat stat={body?.stat} />
-
           {body?.title && (
             <span className={"text-xs text-muted-foreground truncate shrink-0"}>
               原标题：{body.title}
             </span>
           )}
+
+          <Tags tags={body?.summary?.tags} />
+
+          <Stat stat={body?.stat} />
 
           {body?.summary?.description && (
             <div className={"bg-slate-100 p-2 rounded-lg"}>
