@@ -58,12 +58,16 @@ bot
           console.log(`-- triggering...`)
           const result = await downloadCardAction(url, user)
           console.log("-- result: ", result)
-          const { success, data } = result
-          if (!success) return
-          console.log("-- sending file")
-          await message.say(FileBox.fromUrl(data.cardUrl))
-          console.log("-- ✅ sent file")
-          return
+          const { success, data, message: resMessage } = result
+          if (success) {
+            await message.say(FileBox.fromUrl(data.cardUrl))
+            console.log("-- ✅ sent file")
+          } else {
+            const errMessage =
+              "解析失败" + (resMessage ? `，原因：${resMessage}` : "")
+            await message.say(errMessage)
+            console.log(`-- ❌ sent error message: ${errMessage}`)
+          }
         }
       }
     }
