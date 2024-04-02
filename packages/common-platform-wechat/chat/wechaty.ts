@@ -35,7 +35,7 @@ bot
     console.log(`<< message: `, { ...message.payload, senderPayload, isTest })
 
     if (isTest) {
-      await message.say(`@${sender.name()} ${moment().format("hh:mm")} 👌🏻`)
+      // await message.say(`@${sender.name()} ${moment().format("hh:mm")} 👌🏻`)
     }
 
     if (/CS魔法社|test/.test(roomName)) {

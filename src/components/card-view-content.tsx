@@ -66,7 +66,7 @@ const Cover = ({ cover }: { cover?: IMedia }) => {
   return (
     <div id={"card-media"} className={"w-full shrink-0"}>
       <AspectRatio ratio={cover?.ratio ?? 2.35}>
-        <Image src={cover.url} alt={""} fill className={"w-full h-auto"} />
+        <Image src={cover.url} alt={""} fill className={"object-cover"} />
       </AspectRatio>
     </div>
   )
