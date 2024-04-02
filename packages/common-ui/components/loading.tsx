@@ -1,17 +1,18 @@
 "use client"
 
+import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
 } from "../../common-ui-shadcn/components/alert-dialog"
 import { uiLoadingAlertDialogAtom } from "../store"
-import { useAtom } from "jotai"
+import { FlexContainer } from "./flex-container"
 
-export const LoadingTooltip = () => (
-  <div className={"flex justify-center my-8"}>
+export const Loading = () => (
+  <FlexContainer>
     <LoaderIcon className={"animate-spin"} />
-  </div>
+  </FlexContainer>
 )
 
 export const LoadingAlertDialog = () => {
@@ -25,7 +26,7 @@ export const LoadingAlertDialog = () => {
           "flex items-center justify-center bg-transparent border-none"
         }
       >
-        <LoaderIcon className={"animate-spin"} />
+        <Loading />
       </AlertDialogContent>
     </AlertDialog>
   )

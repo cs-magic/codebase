@@ -1,15 +1,27 @@
 "use client"
 
+import MdEditor from "@uiw/react-md-editor"
 import { useAtom } from "jotai"
-import { Button } from "../../../../../packages/common-ui-shadcn/components/button"
+import { useDrop } from "react-use"
+import { FileComp } from "../../../../../packages/common-file/components"
+import { useUploadFiles } from "../../../../../packages/common-oss/upload"
 import { cn } from "../../../../../packages/common-ui-shadcn/utils"
 import { ButtonWithLoading } from "../../../../../packages/common-ui/components/button-with-loading"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
-import { Textarea } from "../../../../../packages/common-ui/components/textarea-auto"
 import { cardNewContentAtom } from "../../../../store/card.atom"
 
 export default function NewCardPage() {
   const [v, setV] = useAtom(cardNewContentAtom)
+  const { status, upload } = useUploadFiles()
+
+  const state = useDrop({
+    onFiles: async (files) => {
+      console.log("files", files)
+      await upload(files)
+    },
+    onUri: (uri) => console.log("uri", uri),
+    onText: (text) => console.log("text", text),
+  })
 
   return (
     <FlexContainer
@@ -18,11 +30,31 @@ export default function NewCardPage() {
         " items-center",
       )}
     >
-      <FlexContainer orientation={"vertical"} className={"max-w-[720px]"}>
-        <Textarea
-          atom={cardNewContentAtom}
-          className={"bg-cyan-900 focus-visible:ring-cyan-800"}
-          minRows={4}
+      <FlexContainer
+        orientation={"vertical"}
+        className={
+          cn()
+          // "max-w-[720px]"
+          // "bg-cyan-700",
+        }
+      >
+        {!!status.length && (
+          <div className={"w-full flex items-center gap-2 "}>
+            {status.map((item, index) => (
+              <div
+                key={index}
+                className={"w-24 rounded-xl overflow-hidden border"}
+              >
+                <FileComp file={item} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <MdEditor
+          className={"w-full"}
+          value={v}
+          onChange={(v) => setV(v ?? "")}
         />
 
         <div className={"flex items-center w-full"}>

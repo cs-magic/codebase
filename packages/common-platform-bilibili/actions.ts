@@ -1,7 +1,7 @@
 "use server"
 
 import { api } from "../common-api"
-import { IApi } from "../common-api/schema"
+import { IApiResult } from "../common-api/schema"
 import { IBilibiliVideoDetail } from "./schema"
 
 export const getBilibiliSummary = async (bvid: string) => {
@@ -20,7 +20,7 @@ export const getBilibiliSummary = async (bvid: string) => {
  */
 export const fetchBvidFromb23tv = async (
   url: string,
-): Promise<IApi<string>> => {
+): Promise<IApiResult<string>> => {
   const res = await fetch(url, {
     method: "HEAD",
     redirect: "manual",
@@ -45,7 +45,7 @@ export const fetchBvidFromb23tv = async (
 
 export const fetchBilibiliDetail = async (
   bvid: string,
-): Promise<IApi<IBilibiliVideoDetail>> => {
+): Promise<IApiResult<IBilibiliVideoDetail>> => {
   const url = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&need_view=1`
   console.debug("-- fetchBilibiliDetail:", url)
 

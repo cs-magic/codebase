@@ -1,6 +1,6 @@
 import { chromium, Page as PlaywrightPage } from "playwright"
 import puppeteer, { Page as PuppetPage } from "puppeteer"
-import { IApi } from "../../packages/common-api/schema"
+import { IApiResult } from "../../packages/common-api/schema"
 import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { env } from "../env"
 import { IUserSummary } from "../schema/user.summary"
@@ -9,7 +9,7 @@ export const downloadCardAction = async (
   url: string,
   user?: IUserSummary,
   type?: "playwright" | "puppet",
-): Promise<IApi<{ cardUrl: string }>> => {
+): Promise<IApiResult<{ cardUrl: string }>> => {
   try {
     const driver = type === "puppet" ? puppeteer : chromium
 

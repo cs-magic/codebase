@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { devEnabledAtom } from "../../../../packages/common-dev/store"
 import { UnexpectedError } from "../../../../packages/common-general/schema"
 import { useEnvironments } from "../../../../packages/common-hooks/use-environments"
-import { LoadingTooltip } from "../../../../packages/common-ui/components/loading"
+import { Loading } from "../../../../packages/common-ui/components/loading"
 import { Label } from "../../../../packages/common-ui-shadcn/components/label"
 import { Auth } from "../../../components/auth"
 import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
@@ -58,10 +58,10 @@ export default function AuthPage() {
 
       if (!profileOk) return <AuthUpdateProfile />
 
-      return <LoadingTooltip />
+      return <Loading />
 
     case "loading":
-      return <LoadingTooltip />
+      return <Loading />
 
     case "unauthenticated":
       return <Auth />
