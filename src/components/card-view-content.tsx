@@ -42,7 +42,7 @@ export const CardContent = () => {
 
           {body?.summary?.description && (
             <div className={"bg-slate-100 p-2 rounded-lg"}>
-              <div>AI 摘要：{body.summary.description}</div>
+              <div>摘要：{body.summary.description}</div>
             </div>
           )}
 
