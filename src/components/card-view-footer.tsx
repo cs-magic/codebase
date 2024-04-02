@@ -1,4 +1,5 @@
 import { useAtom } from "jotai"
+import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { cardAtom } from "../store/card.atom"
 
@@ -21,6 +22,7 @@ export const CardFooter = () => {
       </div>
 
       <div className={"absolute right-2 bottom-2 text-white/50 text-[8px]"}>
+        <div>{moment().format("YYYY-MM-DD")}</div>
         <div>{card?.id}</div>
         <div>V0.1.0(α)</div>
       </div>
