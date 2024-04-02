@@ -2,12 +2,12 @@
 
 import download from "downloadjs"
 import * as html2image from "html-to-image"
-import { useAtom, WritableAtom } from "jotai"
-import { RESET } from "jotai/utils"
+import { useAtom } from "jotai"
 import { RefObject, useState } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
 import { getOssUrl } from "../../packages/common-oss/utils"
+import { Atom } from "../../packages/common-state-management/jotai/types"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
@@ -227,16 +227,11 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   )
 }
 
-type SetStateActionWithReset<Value> =
-  | Value
-  | typeof RESET
-  | ((prev: Value) => Value | typeof RESET)
-
 export const AtomSwitcher = ({
   atom,
   name,
 }: {
-  atom: WritableAtom<boolean, [SetStateActionWithReset<boolean>], void>
+  atom: Atom<boolean>
   name: string
 }) => {
   const [v, setV] = useAtom(atom)

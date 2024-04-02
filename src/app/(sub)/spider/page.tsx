@@ -21,7 +21,7 @@ import {
 import { Badge } from "../../../../packages/common-ui-shadcn/components/ui/badge"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../../../packages/common-ui/components/label-line"
-import { TextareaAuto } from "../../../../packages/common-ui/components/textarea-auto"
+import { Textarea } from "../../../../packages/common-ui/components/textarea-auto"
 import { StandardCard } from "../../../components/standard-card"
 import { serverFetch } from "./actions"
 import { cookie2headers } from "./utils"
@@ -118,7 +118,7 @@ export default function SpiderPage() {
         </LabelLine>
 
         <LabelLine title={"cookie"}>
-          <TextareaAuto
+          <Textarea
             minRows={2}
             maxRows={4}
             value={inputCookie}

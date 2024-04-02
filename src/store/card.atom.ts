@@ -77,3 +77,5 @@ export const cardOssIdAtom = atom<string | null>((get) => {
     !body ? undefined : { type: body.platformType, id: body.platformId },
   )
 })
+
+export const cardNewContentAtom = atomWithStorage("card.new.content", "")

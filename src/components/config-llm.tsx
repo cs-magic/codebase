@@ -9,7 +9,7 @@ import { pusherServerIdAtom } from "../../packages/common-pusher/store"
 import { TransportType } from "../../packages/common-transport/schema"
 import { transportTypeAtom } from "../../packages/common-transport/store"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { TextareaAuto } from "../../packages/common-ui/components/textarea-auto"
+import { Textarea } from "../../packages/common-ui/components/textarea-auto"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 import {
@@ -36,7 +36,7 @@ export const ConfigLLMCard = () => {
   return (
     <StandardCard title={"LLM"}>
       <Label>System Prompt For Conv Summary</Label>
-      <TextareaAuto
+      <Textarea
         minRows={6}
         className={"border p-2"}
         value={convSummaryPrompt}
