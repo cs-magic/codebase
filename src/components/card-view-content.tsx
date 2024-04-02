@@ -34,11 +34,11 @@ export const CardContent = () => {
 
           <Stat stat={body?.stat} />
 
-          {/*{body?.title && (*/}
-          {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
-          {/*    原标题：{body.title}*/}
-          {/*  </span>*/}
-          {/*)}*/}
+          {body?.title && (
+            <span className={"text-xs text-muted-foreground truncate shrink-0"}>
+              原标题：{body.title}
+            </span>
+          )}
 
           {body?.summary?.description && (
             <div className={"bg-slate-100 p-2 rounded-lg"}>

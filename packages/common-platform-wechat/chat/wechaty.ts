@@ -3,7 +3,7 @@ import { downloadCardAction } from "@/core/download-card.action"
 import { FileBox } from "file-box"
 import pick from "lodash/pick"
 import qrcodeTerminal from "qrcode-terminal"
-import wechaty, { Post, WechatyBuilder } from "wechaty"
+import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
 import moment from "../../common-datetime/moment"
 import { parseUrlFromWechatUrlMessage } from "./utils"
@@ -26,17 +26,16 @@ bot
   })
   .on("login", (user) => console.log(`User logged in: `, user))
   .on("message", async (message) => {
-    const sender = message.talker()
-    console.log("-- sender: ", sender.payload)
-    const senderPayload = pick(sender.payload, ["name", "avatar"])
-    console.log(`<< message: `, { ...message.payload, senderPayload })
-
     const text = message.text()
+    const sender = message.talker()
+    const senderPayload = pick(sender.payload, ["name", "avatar"])
     const room = message.room()
     const roomName = room ? await room.topic() : ""
+    const isTest = /test/.test(roomName) && !message.self()
+    console.log(`<< message: `, { ...message.payload, senderPayload, isTest })
 
-    if (/test/.test(roomName) && /南川/.test(sender.name())) {
-      await message.say(`@${sender.name()} ${moment().format("hh:mm")}`)
+    if (isTest) {
+      await message.say(`@${sender.name()} ${moment().format("hh:mm")} 👌🏻`)
     }
 
     if (/CS魔法社|test/.test(roomName)) {
@@ -46,7 +45,7 @@ bot
         console.log("-- url in message: ", url)
         if (!url) return
 
-        if (isWechatArticleUrl(url) || text.includes("哔哩哔哩")) {
+        if (isWechatArticleUrl(url)) {
           // avatar 在 padLocal 下是带domain的；web下不稳定
           const image = sender.payload?.avatar
           const user = image
