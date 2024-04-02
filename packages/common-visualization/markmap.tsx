@@ -14,7 +14,7 @@ const transformContent = (content: string): string => {
   return content
     .split(/\n/g)
     .map((s) => {
-      return truncateString(s, 20)
+      return truncateString(s, 30)
     })
     .join("\n")
 }
