@@ -38,7 +38,12 @@ export const downloadCardAction = async (
     console.log("-- clicking generate button")
     await page.locator("#generate-card").click()
 
-    console.log("-- to click upload button")
+    console.log("-- waiting generated")
+    await page.waitForFunction(
+      () => !document.getElementById("#upload-card")!.hasAttribute("disabled"),
+    )
+
+    console.log("-- clicking upload button")
     await page.locator("#upload-card").click()
 
     console.log("-- waiting toast")

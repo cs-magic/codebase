@@ -1,4 +1,3 @@
-import { IMedia } from "@/schema/card"
 import { IUserSummary } from "@/schema/user.summary"
 import parse from "node-html-parser"
 import { api } from "../../common-api"
