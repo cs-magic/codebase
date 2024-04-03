@@ -1,24 +1,20 @@
 import { useAtom } from "jotai"
 import { EyeIcon, HeartIcon, MessageSquareTextIcon } from "lucide-react"
 import Image from "next/image"
-import { useRef } from "react"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { Badge } from "../../packages/common-ui-shadcn/components/ui/badge"
 import { StatItem } from "../../packages/common-ui/components/stat-item"
 import MarkMap from "../../packages/common-visualization/markmap"
-import { useAutoCardContent } from "../hooks/use-card-content"
 import { ICardStat, IMedia } from "../schema/card"
 import { cardAtom } from "../store/card.atom"
 import { ArticleAuthor } from "./card-view-content-author"
 
 export const CardContent = () => {
   const [body] = useAtom(cardAtom)
-  const refText = useRef<HTMLDivElement>(null)
-  useAutoCardContent({ refText })
 
   return (
     <div className={"overflow-hidden rounded-lg bg-white text-black relative"}>
-      <div ref={refText} className={"grow overflow-hidden flex flex-col"}>
+      <div className={"grow overflow-hidden flex flex-col"}>
         <Cover cover={body?.cover} />
 
         <div className={"p-2 flex flex-col gap-2"}>

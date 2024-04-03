@@ -14,9 +14,8 @@ import {
   IWechatArticleStat,
 } from "../../../../packages/common-platform-wechat/article/detail/schema"
 import { parseWechatArticle } from "../../../../packages/common-platform-wechat/chat/utils"
-import { ICardPlatform, IModel } from "../../../schema/card"
+import { ICardGenOptions, ICardPlatform, IModel } from "../../../schema/card"
 import { cardBasicSchema } from "../../../schema/card.basic"
-import { ICardGenOptions } from "../../../store/card.atom"
 import { $Enums } from ".prisma/client"
 
 export const fetchWechatArticleAction = async (

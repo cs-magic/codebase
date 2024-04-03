@@ -26,3 +26,15 @@ export type IMedia = {
 export type IModel = {
   name: string
 }
+
+export type ActionType = "generate" | "copy" | "download" | "upload"
+
+export type ICardGenOption = {
+  enabled: boolean
+  cacheIgnored: boolean
+}
+export type ICardGenOptions = {
+  summary: ICardGenOption
+  stat: ICardGenOption
+  comments: ICardGenOption
+}

@@ -1,4 +1,4 @@
-import { WritableAtom } from "jotai"
+import { WritableAtom, PrimitiveAtom } from "jotai"
 import { RESET } from "jotai/utils"
 
 export type SetStateActionWithReset<Value> =
@@ -6,4 +6,13 @@ export type SetStateActionWithReset<Value> =
   | typeof RESET
   | ((prev: Value) => Value | typeof RESET)
 
-export type Atom<T> = WritableAtom<T, [SetStateActionWithReset<T>], void>
+export type WithInitialValue<Value> = {
+  init: Value
+}
+
+// type K = WritableStream  | PrimitiveAtom
+export type Atom<T> =
+  // primitive
+  | (PrimitiveAtom<T> & WithInitialValue<T>)
+  // storage
+  | WritableAtom<T, [SetStateActionWithReset<T>], void>
