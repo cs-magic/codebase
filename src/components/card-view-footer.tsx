@@ -45,7 +45,10 @@ export const VerticalItem = ({
   if (!value) return null
 
   return (
-    <FlexContainer orientation={"vertical"} className={"!gap-1"}>
+    <FlexContainer
+      orientation={"vertical"}
+      className={"!gap-1 overflow-hidden"}
+    >
       <Icon />
       <span className={"text-nowrap"}>{value}</span>
     </FlexContainer>
