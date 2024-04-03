@@ -40,8 +40,6 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
     mapSpacingVerticalAtom,
   )
 
-  console.log("-- CardControls: inputUrl: ", inputUrl)
-
   const action = async (type: ActionType) => {
     console.log({ type })
     if (type === "generate") {

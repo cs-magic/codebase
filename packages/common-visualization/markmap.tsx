@@ -33,8 +33,9 @@ export default function MarkMap({ content }: { content?: string }) {
 
     const { root } = transformer.transform(transformContent(content), {})
     console.log({ root })
-    root.content = "" // 去掉首结点，确保信息量
+    root.content = "" // 去掉首结点的内容
     mm.setData(root)
+    mm.state.minY = 20 // 首结点紧贴边缘
 
     // ref: https://github.com/markmap/markmap/issues/134#issuecomment-1267967814
     const { maxY, maxX, minX, minY } = mm.state
@@ -67,7 +68,7 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [ratio, content])
 
-  console.log("-- markmap: ", { content, ratio })
+  console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
 
   return (
     <div className={"w-full"}>
