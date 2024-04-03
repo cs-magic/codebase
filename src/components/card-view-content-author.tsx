@@ -34,8 +34,7 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
   const Line2 = () => (
     <div
       className={cn(
-        "flex gap-0.5 text-muted-foreground text-xs mt-1",
-        withRawTitle && "items-center",
+        "flex gap-0.5 text-muted-foreground text-xs ",
         !withRawTitle && "flex-col",
       )}
     >
@@ -50,7 +49,7 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
         {!!card?.author && <UserAvatar user={card.author} />}
       </VerticalAspectRatio>
 
-      <div className={"flex flex-col overflow-hidden mx-2"}>
+      <div className={"flex flex-col justify-center overflow-hidden mx-2"}>
         {withRawTitle ? (
           <>
             <Line1 />
