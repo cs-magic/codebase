@@ -67,9 +67,8 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
   image: get(cardUserAvatarAtom),
 }))
 
-export const cardRenderStatusAtom = atom<
-  "default" | "renderingMindmap" | "renderedMindmap"
->("default")
+export const cardGeneratingAtom = atom(false)
+export const cardRenderedAtom = atom(false)
 
 export const cardOssIdAtom = atom<string | null>((get) => {
   const body = get(cardAtom)

@@ -21,10 +21,11 @@ import {
   cardAuthorWithTitleAtom,
   cardCommentsCacheIgnoredAtom,
   cardCommentsEnabledAtom,
+  cardGeneratingAtom,
   cardGenOptionsAtom,
   cardInputUrlAtom,
   cardOssIdAtom,
-  cardRenderStatusAtom,
+  cardRenderedAtom,
   cardStatCacheIgnoredAtom,
   cardStatEnabledAtom,
   cardSummaryCacheIgnoredAtom,
@@ -39,11 +40,11 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
   const [cardOptions] = useAtom(cardGenOptionsAtom)
-  const [cardRenderStatus] = useAtom(cardRenderStatusAtom)
+  const [rendered] = useAtom(cardRenderedAtom)
   const [card, setCard] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
 
-  const [generating, setGenerating] = useState(false)
+  const [generating, setGenerating] = useAtom(cardGeneratingAtom)
   const [coping, setCoping] = useState(false)
   const [downloading, setDownloading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -151,15 +152,6 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
       </StandardCard>
 
       <StandardCard title={"Actions"} type={"beauty"}>
-        <LabelLine title={"status"}>
-          <Label
-            className={"text-primary-foreground mx-2"}
-            id={"card-render-status"}
-          >
-            {cardRenderStatus}
-          </Label>
-        </LabelLine>
-
         <div className={"flex gap-2"}>
           <ButtonWithLoading
             id={"generate-card"}
@@ -168,6 +160,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             loading={generating}
             onClick={() => {
               setGenerating(true)
+              setCard(null)
               genCardFromUrl(inputUrl, cardOptions)
                 .then(setCard)
                 .catch((e) => {
@@ -187,6 +180,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             className={"w-24"}
             size={"sm"}
             loading={coping}
+            disabled={!rendered}
             onClick={async () => {
               setCoping(true)
               await action("copy")
@@ -201,6 +195,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             className={"w-24"}
             size={"sm"}
             loading={downloading}
+            disabled={!rendered}
             onClick={async () => {
               setDownloading(true)
               await action("download")
@@ -215,6 +210,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
             className={"w-24"}
             size={"sm"}
             loading={uploading}
+            disabled={!rendered}
             onClick={async () => {
               setUploading(true)
               await action("upload")
@@ -223,26 +219,11 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
           >
             Upload
           </ButtonWithLoading>
-
-          <ButtonWithLoading
-            id={"clean-card"}
-            className={"w-24"}
-            size={"sm"}
-            loading={uploading}
-            onClick={async () => {
-              setUploading(true)
-              await action("upload")
-              setUploading(false)
-            }}
-          >
-            Clean
-          </ButtonWithLoading>
         </div>
       </StandardCard>
     </div>
   )
 }
-
 
 export const AtomSwitcher = ({
   atom,

@@ -16,20 +16,16 @@ export const CardContent = () => {
   const refText = useRef<HTMLDivElement>(null)
   useAutoCardContent({ refText })
 
-  if (!body) return null
-
   return (
     <div className={"overflow-hidden rounded-lg bg-white text-black relative"}>
       <div ref={refText} className={"grow overflow-hidden flex flex-col"}>
         <Cover cover={body?.cover} />
 
         <div className={"p-2 flex flex-col gap-2"}>
-          {body?.summary?.title && (
-            <h1 className={"text-lg font-bold shrink-0"}>
-              {body.title}
-              {/*{body.summary.title}*/}
-            </h1>
-          )}
+          <h1 className={"text-lg font-bold shrink-0"}>
+            {body?.title}
+            {/*{body.summary.title}*/}
+          </h1>
 
           {/*{body?.title && (*/}
           {/*  <span className={"text-xs text-muted-foreground truncate shrink-0"}>*/}
@@ -41,13 +37,11 @@ export const CardContent = () => {
 
           <Stat stat={body?.stat} />
 
-          {body?.summary?.description && (
-            <div className={"bg-slate-100 p-2 rounded-lg text-sm"}>
-              <div>摘要：{body.summary.description}</div>
-            </div>
-          )}
+          <div className={"bg-slate-100 p-2 rounded-lg text-sm"}>
+            <div>{body?.summary.description}</div>
+          </div>
 
-          {body?.summary?.mindmap && <MarkMap content={body.summary.mindmap} />}
+          <MarkMap content={body?.summary.mindmap} />
 
           {/*{body?.summary?.comment && <div>AI 评论：{body.summary.comment}</div>}*/}
 

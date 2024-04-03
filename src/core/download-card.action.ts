@@ -38,15 +38,7 @@ export const downloadCardAction = async (
     console.log("-- clicking generate button")
     await page.locator("#generate-card").click()
 
-    console.log("-- waiting card generated")
-    await page.waitForFunction(() => {
-      return (
-        document.getElementById("card-render-status")?.innerText ===
-        "renderedMindmap"
-      )
-    })
-
-    console.log("-- clicking upload button")
+    console.log("-- to click upload button")
     await page.locator("#upload-card").click()
 
     console.log("-- waiting toast")
