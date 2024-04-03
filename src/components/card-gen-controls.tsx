@@ -223,11 +223,26 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
           >
             Upload
           </ButtonWithLoading>
+
+          <ButtonWithLoading
+            id={"clean-card"}
+            className={"w-24"}
+            size={"sm"}
+            loading={uploading}
+            onClick={async () => {
+              setUploading(true)
+              await action("upload")
+              setUploading(false)
+            }}
+          >
+            Clean
+          </ButtonWithLoading>
         </div>
       </StandardCard>
     </div>
   )
 }
+
 
 export const AtomSwitcher = ({
   atom,

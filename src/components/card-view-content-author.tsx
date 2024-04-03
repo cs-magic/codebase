@@ -45,12 +45,12 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
   )
 
   return (
-    <div className={"flex items-center shrink-0 h-12"}>
+    <div className={"flex items-center shrink-0 h-8"}>
       <VerticalAspectRatio ratio={1} className={"shrink-0"}>
         {!!card?.author && <UserAvatar user={card.author} />}
       </VerticalAspectRatio>
 
-      <div className={"flex flex-col overflow-hidden"}>
+      <div className={"flex flex-col overflow-hidden mx-2"}>
         {withRawTitle ? (
           <>
             <Line1 />
@@ -61,15 +61,13 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
         )}
       </div>
 
-      <div className={"ml-auto pl-2 flex items-center shrink-0"}>
+      <div className={"ml-auto flex items-center shrink-0 h-full"}>
         {card?.sourceUrl && (
           <>
             {/*<div className={"w-8 text-xs text-muted-foreground"}>查看原文</div>*/}
-            <div className={"w-8"}>
-              <AspectRatio ratio={1}>
-                <QRCodeSVG value={card.sourceUrl} className={"w-full h-full"} />
-              </AspectRatio>
-            </div>
+            <VerticalAspectRatio ratio={1}>
+              <QRCodeSVG value={card.sourceUrl} className={"w-full h-full"} />
+            </VerticalAspectRatio>
           </>
         )}
       </div>

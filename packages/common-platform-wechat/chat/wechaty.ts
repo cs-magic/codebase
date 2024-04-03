@@ -5,7 +5,6 @@ import pick from "lodash/pick"
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { types } from "wechaty-puppet"
-import moment from "../../common-datetime/moment"
 import { parseUrlFromWechatUrlMessage } from "./utils"
 
 const name = process.argv[2] ?? "default"
