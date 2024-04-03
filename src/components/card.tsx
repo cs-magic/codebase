@@ -2,7 +2,7 @@
 
 import { forwardRef, HTMLAttributes } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { CardHeader } from "./card-vidw-header"
+import { CardHeader } from "./card-view-header"
 import { CardContent } from "./card-view-content"
 import { CardFooter } from "./card-view-footer"
 

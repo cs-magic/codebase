@@ -7,22 +7,29 @@ import { UserAvatar } from "./user-avatar"
 
 export const ArticleAuthor = ({ card }: { card: Card }) => {
   return (
-    <div className={"flex gap-2 items-center shrink-0 h-12"}>
-      {!!card?.author && <UserAvatar user={card.author} />}
+    <div className={"flex gap-2 items-center shrink-0 h-12 gap-4"}>
+      <div className={"flex flex-col overflow-hidden"}>
+        <div className={"text-muted-foreground text-xs truncate"}>
+          原标题：{card.title}
+        </div>
 
-      <div className={"flex flex-col"}>
-        <span>
-          <span>{card?.author?.name}</span>
-        </span>
-        {!!card?.time && (
-          <span className={"text-muted-foreground text-xs"}>
-            {moment(card.time).format("ll")}（来自：
-            {getPlatformName(card.platformType)}）
+        <div className={"flex items-center gap-1"}>
+          <span>
+            {!!card?.author && <UserAvatar user={card.author} withName />}
           </span>
-        )}
+
+          <div className={"text-muted-foreground text-xs mt-1"}>
+            {!!card?.time && (
+              <span>{moment(card.time).fromNow().replace(/\s+/g, "")}</span>
+            )}
+
+            <span>发表于</span>
+            <span>{getPlatformName(card.platformType)}</span>
+          </div>
+        </div>
       </div>
 
-      <div className={"ml-auto flex items-center"}>
+      <div className={"ml-auto flex items-center shrink-0"}>
         {card?.sourceUrl && (
           <>
             {/*<div className={"w-8 text-xs text-muted-foreground"}>查看原文</div>*/}
