@@ -2,6 +2,10 @@
 
 ## Todo
 
+## Release
+
+- [x] added commit-msg, 2024-04-04
+
 ## Architecture
 
 ## Tech
