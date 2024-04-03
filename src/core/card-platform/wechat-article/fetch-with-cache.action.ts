@@ -48,6 +48,7 @@ export const fetchWechatArticleAction = async (
       console.log("-- summary fetching")
       const { content, model: modelName } =
         (await fetchArticleSummary(contentMd)) ?? null
+      console.log("-- summary fetched")
       model = { name: modelName }
       summary = parseSummary(content)
     }
