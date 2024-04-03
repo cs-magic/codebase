@@ -1,12 +1,14 @@
 "use server"
 
-import OpenAI from "openai"
 import { api } from "../common-api"
 
-export const fetchArticleSummary = async (
-  content: string,
-): Promise<string | null | undefined> => {
-  const { data } = await api.postForm<OpenAI.ChatCompletion>(
+export type IAgentResponse = {
+  content: string
+  model: string
+}
+
+export const fetchArticleSummary = async (content: string) => {
+  const { data } = await api.postForm<IAgentResponse>(
     "https://openapi.cs-magic.cn/agent/call",
     {
       agent_type: "summariser",
@@ -14,5 +16,5 @@ export const fetchArticleSummary = async (
       content,
     },
   )
-  return data.choices[0]?.message.content
+  return data
 }

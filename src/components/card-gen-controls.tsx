@@ -13,7 +13,7 @@ import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { GEN_CARD_INPUT_PLACEHOLDER } from "../config/card"
+import { project } from "../config/card"
 import { genCardFromUrl } from "../core/gen-card"
 import {
   cardAtom,
@@ -84,7 +84,7 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
       <StandardCard title={"Url"} type={"beauty"}>
         <Input
           id={"card-input-url"}
-          placeholder={GEN_CARD_INPUT_PLACEHOLDER}
+          placeholder={project.card.genInputPlaceHolder}
           className={"grow"}
           value={inputUrl}
           onChange={(event) => {

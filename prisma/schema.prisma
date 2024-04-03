@@ -133,6 +133,9 @@ model Card {
   /// [ICardStat]
   stat Json?
 
+  /// [IModel]
+  model Json?
+
   @@unique([platformType, platformId])
 }
 

@@ -11,6 +11,7 @@ export const downloadCardAction = async (
   type?: "playwright" | "puppet",
 ): Promise<IApiResult<{ cardUrl: string }>> => {
   try {
+    console.log("-- deciding driver")
     const driver = type === "puppet" ? puppeteer : chromium
 
     console.log("-- opening browser")

@@ -22,13 +22,16 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
         )}
       </div>
 
-      <div className={"ml-auto flex flex-col items-end"}>
+      <div className={"ml-auto flex items-center"}>
         {card?.sourceUrl && (
-          <div className={"w-8"}>
-            <AspectRatio ratio={1}>
-              <QRCodeSVG value={card.sourceUrl} className={"w-full h-full"} />
-            </AspectRatio>
-          </div>
+          <>
+            {/*<div className={"w-8 text-xs text-muted-foreground"}>查看原文</div>*/}
+            <div className={"w-8"}>
+              <AspectRatio ratio={1}>
+                <QRCodeSVG value={card.sourceUrl} className={"w-full h-full"} />
+              </AspectRatio>
+            </div>
+          </>
         )}
       </div>
     </div>

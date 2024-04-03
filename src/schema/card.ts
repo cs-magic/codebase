@@ -22,3 +22,7 @@ export type IMedia = {
   url: string
   ratio?: number
 }
+
+export type IModel = {
+  name: string
+}

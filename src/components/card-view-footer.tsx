@@ -1,6 +1,15 @@
 import { useAtom } from "jotai"
+import {
+  CalendarHeartIcon,
+  FingerprintIcon,
+  LucideIcon,
+  MilestoneIcon,
+  PackageIcon,
+} from "lucide-react"
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
+import { FlexContainer } from "../../packages/common-ui/components/flex-container"
+import { project } from "../config/card"
 import { cardAtom } from "../store/card.atom"
 
 export const CardFooter = () => {
@@ -8,24 +17,37 @@ export const CardFooter = () => {
 
   return (
     <div
-      className={cn(
-        // "h-16",
-        "shrink-0 relative p-2",
-        // "text-slate-500",
-      )}
+      className={cn("shrink-0 pb-2 px-4 text-xs text-primary-foreground/50")}
     >
-      <div className={"flex justify-center items-center"}>
-        {/*标题/思维导图由 <span className={"font-medium mx-1"}>Kimi大模型</span>生成*/}
-        <p className={cn("primary-gradient", " font-art text-xs leading-8")}>
-          Inspire Your Day
-        </p>
-      </div>
-
-      <div className={"absolute right-2 bottom-2 text-white/50 text-[8px]"}>
-        <div>{moment().format("YYYY-MM-DD")}</div>
-        <div>{card?.id}</div>
-        <div>V0.1.0(α)</div>
+      <div className={"flex  items-center justify-center"}>
+        <VerticalItem
+          Icon={PackageIcon}
+          value={card?.model?.name.toUpperCase()}
+        />
+        <VerticalItem
+          Icon={CalendarHeartIcon}
+          value={moment().format("YYYY-MM-DD")}
+        />
+        <VerticalItem Icon={FingerprintIcon} value={card?.id} />
+        <VerticalItem Icon={MilestoneIcon} value={project.version} />
       </div>
     </div>
+  )
+}
+
+export const VerticalItem = ({
+  Icon,
+  value,
+}: {
+  Icon: LucideIcon
+  value?: string
+}) => {
+  if (!value) return null
+
+  return (
+    <FlexContainer orientation={"vertical"} className={"!gap-1"}>
+      <Icon />
+      <span className={"text-nowrap"}>{value}</span>
+    </FlexContainer>
   )
 }

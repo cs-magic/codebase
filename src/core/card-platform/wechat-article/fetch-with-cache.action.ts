@@ -14,7 +14,7 @@ import {
   IWechatArticleStat,
 } from "../../../../packages/common-platform-wechat/article/detail/schema"
 import { parseWechatArticle } from "../../../../packages/common-platform-wechat/chat/utils"
-import { ICardPlatform } from "../../../schema/card"
+import { ICardPlatform, IModel } from "../../../schema/card"
 import { cardBasicSchema } from "../../../schema/card.basic"
 import { ICardGenOptions } from "../../../store/card.atom"
 import { $Enums } from ".prisma/client"
@@ -33,6 +33,7 @@ export const fetchWechatArticleAction = async (
   const dataInDB = await prisma.card.findUnique({
     where: { platformType_platformId: { platformType, platformId } },
   })
+  let model: IModel | null = dataInDB?.model ?? null
 
   let summary: IArticleSummaryParsed | null | undefined = undefined
 
@@ -46,8 +47,10 @@ export const fetchWechatArticleAction = async (
     // 2.2. fetch summary
     if (options.summary.enabled && !summary) {
       console.log("-- summary fetching")
-      const summaryContent = (await fetchArticleSummary(contentMd)) ?? null
-      summary = parseSummary(summaryContent)
+      const { content, model: modelName } =
+        (await fetchArticleSummary(contentMd)) ?? null
+      model = { name: modelName }
+      summary = parseSummary(content)
     }
   }
 
@@ -80,6 +83,7 @@ export const fetchWechatArticleAction = async (
     summary,
     stat,
     sourceUrl,
+    model,
   }
   const wechatArticleInDB = await prisma.card.upsert({
     where: { platformType_platformId: { platformId, platformType } },

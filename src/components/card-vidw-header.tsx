@@ -1,11 +1,10 @@
 import { useAtom } from "jotai"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
-import { PROJECT_NAME } from "../config/card"
-import { cardAtom, cardUserAtom } from "../store/card.atom"
+import { project } from "../config/card"
+import { cardUserAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
 export const CardHeader = () => {
-  const [card] = useAtom(cardAtom)
   const [user] = useAtom(cardUserAtom)
 
   return (
@@ -16,9 +15,7 @@ export const CardHeader = () => {
             <UserAvatar user={user} />
 
             <Label className={"text-primary-foreground"}>
-              <span className={"font-bold text-lg mr-1 primary-gradient"}>
-                {user.name}
-              </span>
+              <span className={"font-bold text-lg mr-1"}>{user.name}</span>
               分享给你一张卡片
               {/*{card?.id && `#${card.id}`}*/}
             </Label>
@@ -32,7 +29,7 @@ export const CardHeader = () => {
         {/*<span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>*/}
 
         <div className={"text-primary-foreground text-lg font-medium shrink-0"}>
-          {PROJECT_NAME}
+          {project.name}
         </div>
       </div>
     </div>

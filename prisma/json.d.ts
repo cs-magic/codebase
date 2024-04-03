@@ -4,7 +4,7 @@ declare global {
   namespace PrismaJson {
     export { IArticleSummaryParsed } from "../packages/common-article/schema"
     export { IUserSummary } from "@/schema/user.summary"
-    export { IMedia, ICardStat, ICardPlatform } from "@/schema/card"
+    export { IMedia, ICardStat, ICardPlatform, IModel } from "@/schema/card"
     export {
       IWechatArticleStat,
       IWechatArticleComment,
