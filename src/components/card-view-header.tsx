@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
-import { project } from "../config/card"
+
+import { config } from "../config/system"
 import { cardUserAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
@@ -9,7 +10,7 @@ export const CardHeader = () => {
 
   return (
     <div className={"text-xs flex items-center justify-between px-4 pb-2 pt-6"}>
-      <div className={"flex gap-2 items-center justify-end"}>
+      <div className={"flex gap-2 items-center justify-end h-8"}>
         {user ? (
           <>
             <UserAvatar user={user} />
@@ -29,7 +30,7 @@ export const CardHeader = () => {
         {/*<span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>*/}
 
         <div className={"text-primary-foreground text-lg font-medium shrink-0"}>
-          {project.name}
+          {config.name}
         </div>
       </div>
     </div>

@@ -1,29 +1,25 @@
 "use client"
 
-import { forwardRef, HTMLAttributes } from "react"
+import { useRef } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { CardHeader } from "./card-view-header"
-import { CardContent } from "./card-view-content"
-import { CardFooter } from "./card-view-footer"
+import { Controls } from "./card-gen-controls"
+import { CardView } from "./card-view"
 
-export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "font-card corner-gradient w-full max-w-[375px]",
-          className,
-        )}
-        {...props}
-      >
-        <CardHeader />
-        <div className={"w-full grow gap-2 p-2 min-h-72"}>
-          <CardContent />
-        </div>
-        <CardFooter />
+export const Card = () => {
+  const refCard = useRef<HTMLDivElement>(null)
+
+  return (
+    <div
+      className={cn(
+        "justify-start overflow-auto w-full sm:max-w-[1280px] mx-auto gap-4 p-2 sm:p-4",
+        "grid grid-cols-1 sm:grid-cols-2",
+      )}
+    >
+      <Controls obj={refCard} />
+
+      <div>
+        <CardView ref={refCard} />
       </div>
-    )
-  },
-)
-Card.displayName = "Card"
+    </div>
+  )
+}

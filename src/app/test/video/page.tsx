@@ -1,10 +1,6 @@
 "use client"
 
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
-import {
-  sampleLocalVideoUrl,
-  sampleXiaoHongShuVideoUrl,
-} from "../../../config/system"
 
 const videoUrl = "/api/video-proxy"
 // sampleXiaoHongShuVideoUrl

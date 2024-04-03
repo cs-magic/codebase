@@ -7,7 +7,7 @@ export const UserInputAvatar = () => {
   const { draft, setDraft } = useDraftSession("image")
 
   return (
-    <Label className={"hover:cursor-pointer shrink-0"}>
+    <Label className={"hover:cursor-pointer shrink-0 h-12"}>
       <UserAvatar user={{ id: "", image: draft ?? "", name: "" }} />
 
       <input

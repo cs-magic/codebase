@@ -13,10 +13,12 @@ import { Label } from "../../packages/common-ui-shadcn/components/label"
 import { Switch } from "../../packages/common-ui-shadcn/components/switch"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { project } from "../config/card"
+
+import { config } from "../config/system"
 import { genCardFromUrl } from "../core/gen-card"
 import {
   cardAtom,
+  cardAuthorWithTitleAtom,
   cardCommentsCacheIgnoredAtom,
   cardCommentsEnabledAtom,
   cardGenOptionsAtom,
@@ -81,148 +83,146 @@ export const Controls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
   return (
     <div className={"w-full p-2 flex flex-col"}>
-      <StandardCard title={"Url"} type={"beauty"}>
-        <Input
-          id={"card-input-url"}
-          placeholder={project.card.genInputPlaceHolder}
-          className={"grow"}
-          value={inputUrl}
-          onChange={(event) => {
-            setInputUrl(event.currentTarget.value)
-          }}
+      <StandardCard title={"Input"} type={"beauty"}>
+        <LabelLine title={"Url"}>
+          <Input
+            id={"card-input-url"}
+            placeholder={config.card.genInputPlaceHolder}
+            className={"grow"}
+            value={inputUrl}
+            onChange={(event) => {
+              setInputUrl(event.currentTarget.value)
+            }}
+          />
+        </LabelLine>
+
+        <LabelLine title={"Name"}>
+          <Input
+            id={"card-user-name"}
+            value={cardUserName}
+            onChange={(event) => {
+              setCardUserName(event.currentTarget.value)
+            }}
+          />
+        </LabelLine>
+
+        <LabelLine title={"Avatar"}>
+          <Input
+            id={"card-user-avatar"}
+            value={cardUserAvatar}
+            onChange={(event) => {
+              setCardUserAvatar(event.currentTarget.value)
+            }}
+          />
+        </LabelLine>
+      </StandardCard>
+
+      <StandardCard title={"Generate"} type={"beauty"}>
+        <AtomSwitcher atom={cardSummaryEnabledAtom} name={"Summary Enabled"} />
+
+        <AtomSwitcher
+          atom={cardSummaryCacheIgnoredAtom}
+          name={"Summary Cache Ignored"}
+        />
+
+        <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
+
+        <AtomSwitcher
+          atom={cardStatCacheIgnoredAtom}
+          name={"Stat Cache Ignored"}
+        />
+
+        <AtomSwitcher
+          atom={cardCommentsEnabledAtom}
+          name={"Comments Enabled"}
+        />
+
+        <AtomSwitcher
+          atom={cardCommentsCacheIgnoredAtom}
+          name={"Comments Cache Ignored"}
         />
       </StandardCard>
 
-      <StandardCard title={"User"} type={"beauty"}>
-        <div className={"flex flex-col gap-4"}>
-          <LabelLine title={"Name"}>
-            <Input
-              id={"card-user-name"}
-              value={cardUserName}
-              onChange={(event) => {
-                setCardUserName(event.currentTarget.value)
-              }}
-            />
-          </LabelLine>
-
-          <LabelLine title={"Avatar"}>
-            <Input
-              id={"card-user-avatar"}
-              value={cardUserAvatar}
-              onChange={(event) => {
-                setCardUserAvatar(event.currentTarget.value)
-              }}
-            />
-          </LabelLine>
-        </div>
+      <StandardCard title={"Display"} type={"beauty"}>
+        <AtomSwitcher
+          atom={cardAuthorWithTitleAtom}
+          name={"Author With Title"}
+        />
       </StandardCard>
 
-      <StandardCard title={"Control"} type={"beauty"}>
-        <div className={"flex flex-col gap-4"}>
-          <AtomSwitcher
-            atom={cardSummaryEnabledAtom}
-            name={"Summary Enabled"}
-          />
+      <StandardCard title={"Actions"} type={"beauty"}>
+        <LabelLine title={"status"}>
+          <Label
+            className={"text-primary-foreground mx-2"}
+            id={"card-render-status"}
+          >
+            {cardRenderStatus}
+          </Label>
+        </LabelLine>
 
-          <AtomSwitcher
-            atom={cardSummaryCacheIgnoredAtom}
-            name={"Summary Cache Ignored"}
-          />
+        <div className={"flex gap-2"}>
+          <ButtonWithLoading
+            id={"generate-card"}
+            className={"w-24"}
+            size={"sm"}
+            loading={generating}
+            onClick={() => {
+              setGenerating(true)
+              genCardFromUrl(inputUrl, cardOptions)
+                .then(setCard)
+                .catch((e) => {
+                  console.error(e)
+                  if ("message" in e) toast.error(e.message as string)
+                })
+                .finally(() => {
+                  setGenerating(false)
+                })
+            }}
+          >
+            Generate
+          </ButtonWithLoading>
 
-          <AtomSwitcher atom={cardStatEnabledAtom} name={"Stat Enabled"} />
+          <ButtonWithLoading
+            id={"copy-card"}
+            className={"w-24"}
+            size={"sm"}
+            loading={coping}
+            onClick={async () => {
+              setCoping(true)
+              await action("copy")
+              setCoping(false)
+            }}
+          >
+            Copy
+          </ButtonWithLoading>
 
-          <AtomSwitcher
-            atom={cardStatCacheIgnoredAtom}
-            name={"Stat Cache Ignored"}
-          />
+          <ButtonWithLoading
+            id={"download-card"}
+            className={"w-24"}
+            size={"sm"}
+            loading={downloading}
+            onClick={async () => {
+              setDownloading(true)
+              await action("download")
+              setDownloading(false)
+            }}
+          >
+            Download
+          </ButtonWithLoading>
 
-          <AtomSwitcher
-            atom={cardCommentsEnabledAtom}
-            name={"Comments Enabled"}
-          />
-
-          <AtomSwitcher
-            atom={cardCommentsCacheIgnoredAtom}
-            name={"Comments Cache Ignored"}
-          />
-        </div>
-      </StandardCard>
-
-      <StandardCard title={"Card"} type={"beauty"}>
-        <div className={"flex flex-col gap-2"}>
-          <LabelLine title={"status"}>
-            <Label
-              className={"text-primary-foreground mx-2"}
-              id={"card-render-status"}
-            >
-              {cardRenderStatus}
-            </Label>
-          </LabelLine>
-
-          <div className={"flex gap-2"}>
-            <ButtonWithLoading
-              id={"generate-card"}
-              className={"w-24"}
-              size={"sm"}
-              loading={generating}
-              onClick={() => {
-                setGenerating(true)
-                genCardFromUrl(inputUrl, cardOptions)
-                  .then(setCard)
-                  .catch((e) => {
-                    console.error(e)
-                    if ("message" in e) toast.error(e.message as string)
-                  })
-                  .finally(() => {
-                    setGenerating(false)
-                  })
-              }}
-            >
-              Generate
-            </ButtonWithLoading>
-
-            <ButtonWithLoading
-              id={"copy-card"}
-              className={"w-24"}
-              size={"sm"}
-              loading={coping}
-              onClick={async () => {
-                setCoping(true)
-                await action("copy")
-                setCoping(false)
-              }}
-            >
-              Copy
-            </ButtonWithLoading>
-
-            <ButtonWithLoading
-              id={"download-card"}
-              className={"w-24"}
-              size={"sm"}
-              loading={downloading}
-              onClick={async () => {
-                setDownloading(true)
-                await action("download")
-                setDownloading(false)
-              }}
-            >
-              Download
-            </ButtonWithLoading>
-
-            <ButtonWithLoading
-              id={"upload-card"}
-              className={"w-24"}
-              size={"sm"}
-              loading={uploading}
-              onClick={async () => {
-                setUploading(true)
-                await action("upload")
-                setUploading(false)
-              }}
-            >
-              Upload
-            </ButtonWithLoading>
-          </div>
+          <ButtonWithLoading
+            id={"upload-card"}
+            className={"w-24"}
+            size={"sm"}
+            loading={uploading}
+            onClick={async () => {
+              setUploading(true)
+              await action("upload")
+              setUploading(false)
+            }}
+          >
+            Upload
+          </ButtonWithLoading>
         </div>
       </StandardCard>
     </div>

@@ -9,7 +9,8 @@ import {
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
-import { project } from "../config/card"
+
+import { config } from "../config/system"
 import { cardAtom } from "../store/card.atom"
 
 export const CardFooter = () => {
@@ -29,7 +30,7 @@ export const CardFooter = () => {
           value={moment().format("YYYY-MM-DD")}
         />
         <VerticalItem Icon={FingerprintIcon} value={card?.id} />
-        <VerticalItem Icon={MilestoneIcon} value={project.version} />
+        <VerticalItem Icon={MilestoneIcon} value={config.version} />
       </div>
     </div>
   )

@@ -79,3 +79,7 @@ export const cardOssIdAtom = atom<string | null>((get) => {
 })
 
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
+export const cardAuthorWithTitleAtom = atomWithStorage(
+  "card.author.with-title",
+  false,
+)

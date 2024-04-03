@@ -3,15 +3,22 @@
 import { BrandingTitle } from "@/components/branding-title"
 import { UserButton } from "@/components/header-user"
 import { MenuIcon } from "lucide-react"
+import Link from "next/link"
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "packages/common-ui-shadcn/components/ui/navigation-menu"
+import { cn } from "packages/common-ui-shadcn/utils"
+import React, { PropsWithChildren } from "react"
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "../../packages/common-ui-shadcn/components/sheet"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
-import { Sidebar } from "./sidebar"
 
 export const Header = () => {
   return (
@@ -23,8 +30,15 @@ export const Header = () => {
       <div className={"flex items-center"}>
         <MobileConversations />
 
-        <BrandingTitle className={"text-2xl"} withDescription />
+        <BrandingTitle withDescription />
       </div>
+
+      <NavigationMenu className={"hidden sm:flex"}>
+        <NavigationMenuList>
+          <LinkItem href={"/card/new"}>新建卡片</LinkItem>
+          <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
+        </NavigationMenuList>
+      </NavigationMenu>
 
       <div className={"ml-auto shrink-0 flex items-center gap-2"}>
         {/*<Apps />*/}
@@ -46,11 +60,26 @@ const MobileConversations = () => (
     </SheetTrigger>
 
     <SheetContent side={"left"}>
-      <SheetHeader>
-        <SheetTitle>会话列表</SheetTitle>
-      </SheetHeader>
-
-      <Sidebar className={"flex"} />
+      <NavigationMenu>
+        <NavigationMenuList className={"flex-col"}>
+          <LinkItem href={"/card/new"}>新建卡片</LinkItem>
+          <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </SheetContent>
   </Sheet>
 )
+
+const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
+  return (
+    <NavigationMenuItem className={"w-full"}>
+      <Link href={href} legacyBehavior passHref className={"w-full"}>
+        <NavigationMenuLink
+          className={cn(navigationMenuTriggerStyle(), "w-full")}
+        >
+          {children}
+        </NavigationMenuLink>
+      </Link>
+    </NavigationMenuItem>
+  )
+}

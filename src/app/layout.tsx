@@ -1,6 +1,6 @@
 import "@/styles/globals.css"
-import { Inter } from "next/font/google"
 import { type Viewport } from "next"
+import { Inter } from "next/font/google"
 
 import { TRPCReactProvider } from "../../packages/common-trpc/react"
 import { Toaster } from "../../packages/common-ui-shadcn/components/sonner"

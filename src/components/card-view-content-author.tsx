@@ -1,35 +1,67 @@
 import { Card } from "@prisma/client"
+import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
 import moment from "../../packages/common-datetime/moment"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
+import { cn } from "../../packages/common-ui-shadcn/utils"
+import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
+import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
 export const ArticleAuthor = ({ card }: { card: Card }) => {
+  const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)
+
+  const Line1 = () => (
+    <div className={"text-muted-foreground text-xs truncate"}>
+      原标题：{card.title}
+    </div>
+  )
+
+  const Line21 = () => <span className={"mr-1"}>{card.author?.name}</span>
+
+  const Line22 = () => (
+    <div>
+      {!!card?.time && (
+        <span>{moment(card.time).fromNow().replace(/\s+/g, "")}</span>
+      )}
+
+      <span>发表于</span>
+      <span>{getPlatformName(card.platformType)}</span>
+    </div>
+  )
+
+  const Line2 = () => (
+    <div
+      className={cn(
+        "flex gap-0.5 text-muted-foreground text-xs mt-1",
+        withRawTitle && "items-center",
+        !withRawTitle && "flex-col",
+      )}
+    >
+      <Line21 />
+      <Line22 />
+    </div>
+  )
+
   return (
-    <div className={"flex gap-2 items-center shrink-0 h-12 gap-4"}>
+    <div className={"flex items-center shrink-0 h-12"}>
+      <VerticalAspectRatio ratio={1} className={"shrink-0"}>
+        {!!card?.author && <UserAvatar user={card.author} />}
+      </VerticalAspectRatio>
+
       <div className={"flex flex-col overflow-hidden"}>
-        <div className={"text-muted-foreground text-xs truncate"}>
-          原标题：{card.title}
-        </div>
-
-        <div className={"flex items-center gap-1"}>
-          <span>
-            {!!card?.author && <UserAvatar user={card.author} withName />}
-          </span>
-
-          <div className={"text-muted-foreground text-xs mt-1"}>
-            {!!card?.time && (
-              <span>{moment(card.time).fromNow().replace(/\s+/g, "")}</span>
-            )}
-
-            <span>发表于</span>
-            <span>{getPlatformName(card.platformType)}</span>
-          </div>
-        </div>
+        {withRawTitle ? (
+          <>
+            <Line1 />
+            <Line2 />
+          </>
+        ) : (
+          <Line2 />
+        )}
       </div>
 
-      <div className={"ml-auto flex items-center shrink-0"}>
+      <div className={"ml-auto pl-2 flex items-center shrink-0"}>
         {card?.sourceUrl && (
           <>
             {/*<div className={"w-8 text-xs text-muted-foreground"}>查看原文</div>*/}
