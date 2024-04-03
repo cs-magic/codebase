@@ -1,12 +1,13 @@
 "use client"
 
 import { cardRenderedAtom } from "@/store/card.atom"
-import { useSetAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
 import { truncateString } from "../common-algo/string"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
+import { mapSpacingVerticalAtom } from "./store"
 
 const transformer = new Transformer()
 
@@ -18,13 +19,14 @@ export default function MarkMap({ content }: { content?: string }) {
 
   const [ratio, setRatio] = useState(0)
   const setCardRendered = useSetAtom(cardRenderedAtom)
+  const [spacingVertical] = useAtom(mapSpacingVerticalAtom)
 
   useEffect(() => {
     if (!refSvg.current || !content) return
 
     const mm = Markmap.create(refSvg.current, {
       pan: false,
-      // scrollForPan: false,
+      spacingVertical,
       zoom: false,
     })
     refMm.current = mm
@@ -44,7 +46,7 @@ export default function MarkMap({ content }: { content?: string }) {
     return () => {
       mm.destroy()
     }
-  }, [content])
+  }, [spacingVertical, content])
 
   /**
    * 当填充数据，并且初始化了ratio之后，才要 fit

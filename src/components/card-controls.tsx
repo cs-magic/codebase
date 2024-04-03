@@ -10,6 +10,7 @@ import { getOssUrl } from "../../packages/common-oss/utils"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { AtomSwitcher } from "../../packages/common-ui/components/atom-switcher"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
+import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
 
 import { config } from "../config/system"
 import { genCardFromUrl } from "../core/gen-card"
@@ -32,10 +33,12 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
   const [rendered] = useAtom(cardRenderedAtom)
-
   const [cardOptions] = useAtom(cardGenOptionsAtom)
   const [card, setCard] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
+  const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
+    mapSpacingVerticalAtom,
+  )
 
   console.log("-- CardControls: inputUrl: ", inputUrl)
 
@@ -128,6 +131,15 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
           atom={cardAuthorWithTitleAtom}
           name={"Author With Title"}
         />
+        <LabelLine title={"Map Vertical Space"}>
+          <Input
+            type={"number"}
+            value={mapSpacingVertical ?? 0}
+            onChange={(event) => {
+              setMapSpacingVertical(Number(event.currentTarget.value))
+            }}
+          />
+        </LabelLine>
       </StandardCard>
 
       <StandardCard title={"Actions"} type={"beauty"}>
