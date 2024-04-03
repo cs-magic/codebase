@@ -26,15 +26,22 @@ export const parseWechatArticle = async (sourceUrl: string) => {
   const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
   const time =
     new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) ?? null // 1711455495
-  const author: IUserSummary = {
-    name: parseMetaFromHtml(html, "author", "name"),
+
+  const authorAccount: IUserSummary = {
+    name: /var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1] ?? null,
     image: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1] ?? null,
     id: /var user_name = "(.*?)"/.exec(pageText)?.[1] ?? "",
+  }
+  const authorPublisher: IUserSummary = {
+    name: parseMetaFromHtml(html, "author", "name"),
+    image: null, // author 有可能没有头像，比如里帮助
+    id: "",
   }
 
   return {
     platformId,
-    author,
+    // 微信公众号使用主体名，而非原创作者名
+    author: authorAccount,
     time,
     title,
     cover,
