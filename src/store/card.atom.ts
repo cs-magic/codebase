@@ -31,7 +31,6 @@ export const cardCopyingAtom = atom(false)
 export const cardDownloadingAtom = atom(false)
 export const cardUploadingAtom = atom(false)
 export const cardRenderedAtom = atom(false)
-export const cardRenderedContentAtom = atom("")
 
 export const cardAuthorWithTitleAtom = atomWithStorage(
   "card.author.with-title",

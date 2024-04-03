@@ -46,6 +46,7 @@ export const ActionButton = ({
     if (type === "generate") {
       setCard(null)
       const card = await genCardFromUrl(inputUrl, cardOptions)
+      console.log("-- generated card: ", card)
       setCard(card)
     }
 
