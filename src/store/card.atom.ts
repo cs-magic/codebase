@@ -6,8 +6,8 @@ import { ICardGenOptions } from "../schema/card"
 import { IUserSummary } from "../schema/user.summary"
 import { getCardUrl } from "../utils"
 
-const createCardBoolStorageAtom = (s: string) =>
-  createBoolStorageAtom(s, "card")
+const createCardBoolStorageAtom = (s: string, init = false) =>
+  createBoolStorageAtom(s, init, "card")
 
 export const cardAtom = atom<Card | null>(null)
 
@@ -18,7 +18,7 @@ export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
 export const cardUserNameAtom = atomWithStorage("card.user.name", "")
 
 export const cardControls = [
-  createCardBoolStorageAtom("Summary Enabled"),
+  createCardBoolStorageAtom("Summary Enabled", true),
   createCardBoolStorageAtom("Summary Cache Enabled"),
   createCardBoolStorageAtom("Stat Enabled"),
   createCardBoolStorageAtom("Stat Cache Enabled"),

@@ -3,8 +3,8 @@ import { lowerCase } from "lodash"
 
 export const createBoolStorageAtom = (
   name: string,
-  prefix = "",
   init = false,
+  prefix = "",
 ) => ({
   atom: atomWithStorage(
     `${prefix}.${name.split(" ").map(lowerCase).join(".")}`,
