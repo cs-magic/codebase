@@ -2,23 +2,22 @@ import { Card } from "@prisma/client"
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
 import moment from "../../packages/common-datetime/moment"
-import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
-export const ArticleAuthor = ({ card }: { card: Card }) => {
+export const ArticleAuthor = ({ card }: { card: Card | null }) => {
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)
 
   const Line1 = () => (
     <div className={"text-muted-foreground text-xs truncate"}>
-      原标题：{card.title}
+      原标题：{card?.title}
     </div>
   )
 
-  const Line21 = () => <span className={"mr-1"}>{card.author?.name}</span>
+  const Line21 = () => <span className={"mr-1"}>{card?.author?.name}</span>
 
   const Line22 = () => (
     <div>
@@ -27,7 +26,7 @@ export const ArticleAuthor = ({ card }: { card: Card }) => {
       )}
 
       <span>发表于</span>
-      <span>{getPlatformName(card.platformType)}</span>
+      <span>{getPlatformName(card?.platformType)}</span>
     </div>
   )
 

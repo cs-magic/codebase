@@ -19,10 +19,10 @@ import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
  */
 export const genCardFromUrl = async (
   inputUrlLike: string,
-  options: ICardGenOptions,
+  options?: ICardGenOptions,
 ): Promise<Card> => {
   const urlParsed = extractFirstURL(inputUrlLike)
-  console.log({ urlParsed })
+  console.log("-- genCardFromUrl: ", { inputUrlLike, urlParsed })
   if (!urlParsed)
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`)
 

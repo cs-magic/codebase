@@ -5,6 +5,6 @@ export const metadata = {
   title: genPageTitle("渲染卡片"),
 }
 
-export default function CardPage() {
+export default async function CardPage() {
   return <Card />
 }

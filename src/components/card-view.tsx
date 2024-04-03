@@ -3,7 +3,7 @@
 import { forwardRef, HTMLAttributes } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { CardHeader } from "./card-view-header"
-import { CardContent } from "./card-view-content"
+import { CardViewContent } from "./card-view-content"
 import { CardFooter } from "./card-view-footer"
 
 export const CardView = forwardRef<
@@ -22,11 +22,11 @@ export const CardView = forwardRef<
       <CardHeader />
 
       <div className={"w-full grow gap-2 p-2 min-h-72"}>
-        <CardContent />
+        <CardViewContent />
       </div>
 
       <CardFooter />
     </div>
   )
 })
-CardView.displayName = "Card"
+CardView.displayName = "CardView"

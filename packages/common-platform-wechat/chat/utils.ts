@@ -30,6 +30,7 @@ export const parseWechatArticle = async (sourceUrl: string) => {
   // 去除作者信息，否则会有干扰, case-id: fq-Bb_v
   html.getElementById("meta_content")?.remove()
 
+  console.log({ ogUrl })
   return {
     platformId: /sn=(.*?)&/.exec(ogUrl ?? "")![1]!, // get id(sn) from page
     // 微信公众号使用主体名，而非原创作者名

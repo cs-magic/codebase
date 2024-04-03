@@ -20,7 +20,7 @@ import { $Enums } from ".prisma/client"
 
 export const fetchWechatArticleAction = async (
   sourceUrl: string,
-  options: ICardGenOptions,
+  options?: ICardGenOptions,
 ) => {
   const platformType: $Enums.PlatformType = "wechatArticle"
   console.log("-- fetchWechatArticle: ", { url: sourceUrl })
@@ -38,13 +38,13 @@ export const fetchWechatArticleAction = async (
 
   if (contentMd) {
     // 2.1. cache summary
-    if (!options.summary.cacheIgnored) {
+    if (!options?.summary.cacheIgnored) {
       summary = dataInDB?.summary
       if (summary) console.log("-- summary cached")
     }
 
     // 2.2. fetch summary
-    if (options.summary.enabled && !summary) {
+    if (options?.summary.enabled && !summary) {
       console.log("-- summary fetching")
       const { content, model: modelName } =
         (await fetchArticleSummary(contentMd)) ?? null
@@ -57,13 +57,13 @@ export const fetchWechatArticleAction = async (
   let comments: IWechatArticleComment[] | null | undefined = undefined
   let stat: IWechatArticleStat | null | undefined = undefined
   // 3.1. stat
-  if (options.stat.enabled) {
-    if (!options.stat.cacheIgnored) stat = dataInDB?.stat
+  if (options?.stat.enabled) {
+    if (!options?.stat.cacheIgnored) stat = dataInDB?.stat
     if (!stat) stat = (await fetchWechatArticleStat(platformId)).data
   }
 
   // 3.2. comments
-  if (options.comments.enabled) {
+  if (options?.comments.enabled) {
     if (!options.comments.cacheIgnored)
       platformData.comments = dataInDB?.platformData.comments // todo: type safe
     if (!comments)

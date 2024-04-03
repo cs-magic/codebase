@@ -5,6 +5,6 @@ export const metadata = {
   title: genPageTitle("新建卡片"),
 }
 
-export default function NewCardPage() {
+export default async function NewCardPage() {
   return <NewCard />
 }

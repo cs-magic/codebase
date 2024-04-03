@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { Controls } from "./card-gen-controls"
+import { CardControls } from "./card-controls"
 import { CardView } from "./card-view"
 
 export const Card = () => {
@@ -15,7 +15,7 @@ export const Card = () => {
         "grid grid-cols-1 sm:grid-cols-2",
       )}
     >
-      <Controls obj={refCard} />
+      <CardControls obj={refCard} />
 
       <div>
         <CardView ref={refCard} />

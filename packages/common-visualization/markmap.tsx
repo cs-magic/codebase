@@ -1,7 +1,7 @@
 "use client"
 
-import { cardGeneratingAtom, cardRenderedAtom } from "@/store/card.atom"
-import { useAtom, useSetAtom } from "jotai"
+import { cardRenderedAtom } from "@/store/card.atom"
+import { useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
@@ -9,15 +9,6 @@ import { truncateString } from "../common-algo/string"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 
 const transformer = new Transformer()
-
-const transformContent = (content?: string): string => {
-  return (content ?? "")
-    .split(/\n/g)
-    .map((s) => {
-      return truncateString(s, 30)
-    })
-    .join("\n")
-}
 
 export default function MarkMap({ content }: { content?: string }) {
   // Ref for SVG element
@@ -59,7 +50,11 @@ export default function MarkMap({ content }: { content?: string }) {
    * 当填充数据，并且初始化了ratio之后，才要 fit
    */
   useEffect(() => {
-    if (ratio && content) {
+    if (
+      // todo: ratio, content all not reliable
+      ratio &&
+      content
+    ) {
       void refMm.current?.fit().then(() => {
         console.log("-- rendered")
         setCardRendered(true)
@@ -70,7 +65,7 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [ratio, content])
 
-  // console.log({ content, ratio, rendered })
+  console.log("-- markmap: ", { content, ratio })
 
   return (
     <div className={"w-full"}>
@@ -79,4 +74,13 @@ export default function MarkMap({ content }: { content?: string }) {
       </AspectRatio>
     </div>
   )
+}
+
+const transformContent = (content?: string): string => {
+  return (content ?? "")
+    .split(/\n/g)
+    .map((s) => {
+      return truncateString(s, 30)
+    })
+    .join("\n")
 }
