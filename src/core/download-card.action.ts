@@ -40,7 +40,7 @@ export const downloadCardAction = async (
 
     console.log("-- waiting generated")
     await page.waitForFunction(
-      () => !document.getElementById("#upload-card")!.hasAttribute("disabled"),
+      () => !document.getElementById("upload-card")!.hasAttribute("disabled"),
     )
 
     console.log("-- clicking upload button")
