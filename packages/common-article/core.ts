@@ -18,5 +18,6 @@ export const fetchArticleSummary = async (content: string) => {
   console.log("-- fetching summary: ", { url, body })
 
   const { data } = await api.postForm<IAgentResponse>(url, body)
+
   return data
 }

@@ -1,8 +1,4 @@
-import axios from "axios"
+import { AxiosInstance } from "axios"
+import { createHttpInstance } from "./core"
 
-export const api = axios.create({
-  // timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-})
+export const api: AxiosInstance = createHttpInstance()
