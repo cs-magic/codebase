@@ -13,7 +13,7 @@
     "start": "next start",
     "build-start": "yarn build && yarn start",
     "migrate-dev": "prisma migrate dev",
-    "rebuild": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && p=p01 && pm2 restart $p && pm2 log $p",
+    "cicd": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && p=p01 && pm2 restart $p && pm2 log $p",
     "test": "jest",
     "test:watch": "jest --watch"
   },
