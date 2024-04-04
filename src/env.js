@@ -1,8 +1,8 @@
 import dotenv from "dotenv"
-dotenv.config()
-
 import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
+
+dotenv.config()
 
 export const env = createEnv({
   /**
@@ -52,6 +52,7 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_APP_URL: z.string(),
     NEXT_PUBLIC_PUSHER_APP_KEY: z.string(),
+    NEXT_PUBLIC_BACKEND_URL: z.string(),
   },
 
   /**
@@ -74,6 +75,7 @@ export const env = createEnv({
     PUSHER_APP_ID: process.env.PUSHER_APP_ID,
     NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
     PUSHER_APP_SECRET: process.env.PUSHER_APP_SECRET,
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -13,7 +13,7 @@ import {
   IWechatArticleComment,
   IWechatArticleStat,
 } from "../../../../packages/common-platform-wechat/article/detail/schema"
-import { parseWechatArticle } from "../../../../packages/common-platform-wechat/chat/utils"
+import { parseWechatArticle } from "../../../../packages/common-platform-wechat/article/utils"
 import { ICardGenOptions, ICardPlatform, IModel } from "../../../schema/card"
 import { cardBasicSchema } from "../../../schema/card.basic"
 import { $Enums } from ".prisma/client"

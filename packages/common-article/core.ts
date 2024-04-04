@@ -1,5 +1,6 @@
 "use server"
 
+import { env } from "@/env"
 import { api } from "../common-api"
 
 export type IAgentResponse = {
@@ -9,7 +10,7 @@ export type IAgentResponse = {
 
 export const fetchArticleSummary = async (content: string) => {
   const { data } = await api.postForm<IAgentResponse>(
-    "https://openapi.cs-magic.cn/agent/call",
+    `${env.NEXT_PUBLIC_BACKEND_URL}/agent/call`,
     {
       agent_type: "summariser",
       model_type: "gpt-4",
