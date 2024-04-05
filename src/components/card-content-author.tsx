@@ -2,11 +2,11 @@ import { Card } from "@prisma/client"
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
 import moment from "../../packages/common-datetime/moment"
+import { safeParseJson } from "../../packages/common-general/safe-parse-json"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
-import { safeParse } from "./gen-card-config-display"
 import { UserAvatar } from "./user-avatar"
 
 export const CardContentAuthor = ({ card }: { card: Card | null }) => {
@@ -21,7 +21,7 @@ export const CardContentAuthor = ({ card }: { card: Card | null }) => {
   )
 
   const Line21 = () => (
-    <span className={"mr-1"}>{safeParse(card?.author)?.name}</span>
+    <span className={"mr-1"}>{safeParseJson(card?.author)?.name}</span>
   )
 
   const Line22 = () => (

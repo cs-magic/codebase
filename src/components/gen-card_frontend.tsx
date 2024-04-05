@@ -34,15 +34,8 @@ export const GenCardViaFrontend = () => {
 
       <Separator orientation={"horizontal"} />
 
-      <AtomSelector
-        atom={cardFetchEngineAtom}
-        name={"fetch engine"}
-        vs={fetchEngines}
-      />
-
       <>
         {[
-          { atom: cardMdWithImgAtom, name: "md-with-img" },
           { atom: refetchCardPageAtom, name: "refetch-page" },
           { atom: refetchCardSummaryAtom, name: "refetch-summary" },
           { atom: refetchCardStatAtom, name: "refetch-stat" },
@@ -50,6 +43,21 @@ export const GenCardViaFrontend = () => {
         ].map((item, index) => (
           <AtomSwitcher {...item} key={index} />
         ))}
+      </>
+
+      <Separator orientation={"horizontal"} />
+
+      <AtomSelector
+        atom={cardFetchEngineAtom}
+        name={"fetch engine"}
+        vs={fetchEngines}
+      />
+      <>
+        {[{ atom: cardMdWithImgAtom, name: "md-with-img" }].map(
+          (item, index) => (
+            <AtomSwitcher {...item} key={index} />
+          ),
+        )}
       </>
 
       <Separator orientation={"horizontal"} />
