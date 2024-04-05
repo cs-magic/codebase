@@ -20,6 +20,14 @@ import {
 } from "../../packages/common-ui-shadcn/components/sheet"
 import { IconContainer } from "../../packages/common-ui/components/icon-container"
 
+const Menus = () => (
+  <>
+    <LinkItem href={"/card/new"}>新建卡片</LinkItem>
+    <LinkItem href={"/card/fgen"}>渲染卡片</LinkItem>
+    <LinkItem href={"/card/bgen"}>渲染卡片（后端）</LinkItem>
+  </>
+)
+
 export const Header = () => {
   return (
     <div
@@ -29,14 +37,12 @@ export const Header = () => {
     >
       <div className={"flex items-center"}>
         <MobileConversations />
-
         <BrandingTitle withDescription />
       </div>
 
       <NavigationMenu className={"hidden sm:flex"}>
         <NavigationMenuList>
-          <LinkItem href={"/card/new"}>新建卡片</LinkItem>
-          <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
+          <Menus />
         </NavigationMenuList>
       </NavigationMenu>
 
@@ -62,8 +68,7 @@ const MobileConversations = () => (
     <SheetContent side={"left"}>
       <NavigationMenu>
         <NavigationMenuList className={"flex-col"}>
-          <LinkItem href={"/card/new"}>新建卡片</LinkItem>
-          <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
+          <Menus />
         </NavigationMenuList>
       </NavigationMenu>
     </SheetContent>
@@ -75,7 +80,7 @@ const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
     <NavigationMenuItem className={"w-full"}>
       <Link href={href} legacyBehavior passHref className={"w-full"}>
         <NavigationMenuLink
-          className={cn(navigationMenuTriggerStyle(), "w-full")}
+          className={cn(navigationMenuTriggerStyle(), "w-full text-nowrap")}
         >
           {children}
         </NavigationMenuLink>

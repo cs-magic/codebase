@@ -11,8 +11,6 @@ import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { AtomSwitcher } from "../../packages/common-ui/components/atom-switcher"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
-
-import { config } from "../config/system"
 import { genCardFromUrl } from "../core/gen-card"
 import { ActionType } from "../schema/card"
 import {
@@ -22,16 +20,19 @@ import {
   cardInputUrlAtom,
   cardOssIdAtom,
   cardRenderedAtom,
-  cardUserAvatarAtom,
-  cardUserNameAtom,
 } from "../store/card.atom"
-import { ActionButton } from "./card-action-button"
+
+import { GenCardActionButton } from "./gen-card-action-button"
+import { GenCardInputUrl } from "./gen-card-input-url"
+import { GenCardInputUser } from "./gen-card-input-user"
 import { StandardCard } from "./standard-card"
 
-export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
-  const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)
-  const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
-  const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
+export const GenCardControls = ({
+  obj,
+}: {
+  obj: RefObject<HTMLDivElement>
+}) => {
+  const [inputUrl] = useAtom(cardInputUrlAtom)
   const [rendered] = useAtom(cardRenderedAtom)
   const [cardOptions] = useAtom(cardGenOptionsAtom)
   const [card, setCard] = useAtom(cardAtom)
@@ -44,10 +45,9 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
     console.log({ type })
     if (type === "generate") {
       setCard(null)
-      const card = await genCardFromUrl(inputUrl, cardOptions)
-      console.log("-- generated card: ", card)
-      setCard(card)
-      return
+      genCardFromUrl(inputUrl, cardOptions)
+        .then(setCard)
+        .catch((err) => toast.error((err as unknown as Error).message))
     }
 
     if (!obj.current) return
@@ -84,39 +84,9 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
   return (
     <div className={"w-full p-2 flex flex-col"}>
-      <StandardCard title={"Input"} type={"beauty"}>
-        <LabelLine title={"Url"}>
-          <Input
-            id={"card-input-url"}
-            placeholder={config.card.genInputPlaceHolder}
-            className={"grow"}
-            value={inputUrl}
-            onChange={(event) => {
-              setInputUrl(event.currentTarget.value)
-            }}
-          />
-        </LabelLine>
+      <GenCardInputUrl />
 
-        <LabelLine title={"Name"}>
-          <Input
-            id={"card-user-name"}
-            value={cardUserName}
-            onChange={(event) => {
-              setCardUserName(event.currentTarget.value)
-            }}
-          />
-        </LabelLine>
-
-        <LabelLine title={"Avatar"}>
-          <Input
-            id={"card-user-avatar"}
-            value={cardUserAvatar}
-            onChange={(event) => {
-              setCardUserAvatar(event.currentTarget.value)
-            }}
-          />
-        </LabelLine>
-      </StandardCard>
+      <GenCardInputUser />
 
       <StandardCard title={"Generate"} type={"beauty"}>
         {/*{cardControls.map((item, index) => (*/}
@@ -142,14 +112,22 @@ export const CardControls = ({ obj }: { obj: RefObject<HTMLDivElement> }) => {
 
       <StandardCard title={"Actions"} type={"beauty"}>
         <div className={"flex gap-2"}>
-          <ActionButton action={action} type={"generate"} />
-          <ActionButton action={action} type={"copy"} disabled={!rendered} />
-          <ActionButton
+          <GenCardActionButton action={action} type={"generate"} />
+          <GenCardActionButton
+            action={action}
+            type={"copy"}
+            disabled={!rendered}
+          />
+          <GenCardActionButton
             action={action}
             type={"download"}
             disabled={!rendered}
           />
-          <ActionButton action={action} type={"upload"} disabled={!rendered} />
+          <GenCardActionButton
+            action={action}
+            type={"upload"}
+            disabled={!rendered}
+          />
         </div>
       </StandardCard>
     </div>

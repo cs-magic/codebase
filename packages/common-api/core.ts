@@ -1,3 +1,6 @@
+/**
+ * error handler: Axios & Error handling like a boss 😎 - DEV Community, https://dev.to/mperon/axios-error-handling-like-a-boss-333d
+ */
 import axios, { AxiosError, AxiosResponse } from "axios"
 import { toast } from "sonner"
 
@@ -28,10 +31,12 @@ type THttpError = Error | AxiosError | null
 
 // object that can be passed to our registy
 interface ErrorHandlerObject {
-  after?(error?: THttpError, options?: ErrorHandlerObject): void
-  before?(error?: THttpError, options?: ErrorHandlerObject): void
   message?: string
   notify?: object
+
+  after?(error?: THttpError, options?: ErrorHandlerObject): void
+
+  before?(error?: THttpError, options?: ErrorHandlerObject): void
 }
 
 //signature of error function that can be passed to ours registry
@@ -128,7 +133,7 @@ class ErrorHandlerRegistry {
   }
 
   // this is the function that will be registered in interceptor.
-  resposeErrorHandler(
+  responseErrorHandler(
     this: ErrorHandlerRegistry,
     error: THttpError,
     direct?: boolean,
@@ -161,6 +166,7 @@ class ErrorHandlerRegistry {
     throw error
   }
 }
+
 // create ours globalHandlers object
 const globalHandlers = new ErrorHandlerRegistry()
 
@@ -193,7 +199,7 @@ export function dealWith(solutions: ErrorHandlerMany, ignoreGlobal?: boolean) {
   let global
   if (ignoreGlobal === false) global = globalHandlers
   const localHandlers = new ErrorHandlerRegistry(global, solutions)
-  return (error: THttpError) => localHandlers.resposeErrorHandler(error, true)
+  return (error: THttpError) => localHandlers.responseErrorHandler(error, true)
 }
 
 function responseHandler(response: AxiosResponse<any>) {
@@ -213,8 +219,10 @@ function responseHandler(response: AxiosResponse<any>) {
 
 export function createHttpInstance() {
   const instance = axios.create({})
+
   const responseError = (error: THttpError) =>
-    globalHandlers.resposeErrorHandler(error)
+    globalHandlers.responseErrorHandler(error)
+
   instance.interceptors.response.use(responseHandler, responseError)
   return instance
 }

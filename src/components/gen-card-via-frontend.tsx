@@ -2,10 +2,10 @@
 
 import { useRef } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { CardControls } from "./card-controls"
-import { CardView } from "./card-view"
+import { GenCardControls } from "./gen-card-controls"
+import { GenCardView } from "./gen-card-view"
 
-export const Card = () => {
+export const GenCardViaFrontend = () => {
   const refCard = useRef<HTMLDivElement>(null)
 
   return (
@@ -15,10 +15,10 @@ export const Card = () => {
         "grid grid-cols-1 sm:grid-cols-2",
       )}
     >
-      <CardControls obj={refCard} />
+      <GenCardControls obj={refCard} />
 
       <div>
-        <CardView ref={refCard} />
+        <GenCardView ref={refCard} />
       </div>
     </div>
   )

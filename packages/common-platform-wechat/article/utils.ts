@@ -16,14 +16,14 @@ export const parseWechatArticle = async (sourceUrl: string) => {
   const ogUrl = parseMetaFromHtml(html, "og:url", "property")
   const title = parseMetaFromHtml(html, "og:title")
   const coverUrl = parseMetaFromHtml(html, "og:image")!
-  const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
-  const authorPublisherName = parseMetaFromHtml(html, "author", "name")
+  // const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
+  // const authorPublisherName = parseMetaFromHtml(html, "author", "name")
 
-  const authorPublisher: IUserSummary = {
-    name: authorPublisherName,
-    image: null, // author 有可能没有头像，比如里帮助
-    id: "",
-  }
+  // const authorPublisher: IUserSummary = {
+  //   name: authorPublisherName,
+  //   image: null, // author 有可能没有头像，比如里帮助
+  //   id: "",
+  // }
   const authorAccount: IUserSummary = {
     name: /var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1] ?? null,
     image: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1] ?? null,
@@ -42,6 +42,6 @@ export const parseWechatArticle = async (sourceUrl: string) => {
       new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) ?? null, // 1711455495
     title,
     cover: { url: coverUrl },
-    contentMd: html2md(html.getElementById("page-content")?.innerHTML ?? ""),
+    contentMd: html2md(html.getElementById("img-content")?.innerHTML ?? ""),
   }
 }

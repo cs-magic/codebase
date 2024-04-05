@@ -1,10 +1,8 @@
-"use client"
-
-import { ActionType } from "@/schema/card"
 import { useAtom } from "jotai"
 import { capitalize } from "lodash"
 import { Atom } from "../../packages/common-state-management/jotai/types"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
+import { ActionType } from "../schema/card"
 import {
   cardCopyingAtom,
   cardDownloadingAtom,
@@ -12,14 +10,7 @@ import {
   cardUploadingAtom,
 } from "../store/card.atom"
 
-const atomMap: Record<ActionType, Atom<boolean>> = {
-  generate: cardGeneratingAtom,
-  copy: cardCopyingAtom,
-  download: cardDownloadingAtom,
-  upload: cardUploadingAtom,
-}
-
-export const ActionButton = ({
+export const GenCardActionButton = ({
   disabled,
   type,
   action,
@@ -28,6 +19,13 @@ export const ActionButton = ({
   disabled?: boolean
   type: ActionType
 }) => {
+  const atomMap: Record<ActionType, Atom<boolean>> = {
+    generate: cardGeneratingAtom,
+    copy: cardCopyingAtom,
+    download: cardDownloadingAtom,
+    upload: cardUploadingAtom,
+  }
+
   const [v, setV] = useAtom(atomMap[type])
 
   return (

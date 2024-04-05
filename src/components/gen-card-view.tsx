@@ -2,11 +2,11 @@
 
 import { forwardRef, HTMLAttributes } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { CardHeader } from "./card-view-header"
-import { CardViewContent } from "./card-view-content"
-import { CardFooter } from "./card-view-footer"
+import { CardHeader } from "./card-header"
+import { CardContent } from "./card-content"
+import { CardFooter } from "./card-footer"
 
-export const CardView = forwardRef<
+export const GenCardView = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
@@ -22,11 +22,11 @@ export const CardView = forwardRef<
       <CardHeader />
 
       <div className={"w-full grow gap-2 p-2 min-h-72"}>
-        <CardViewContent />
+        <CardContent />
       </div>
 
       <CardFooter />
     </div>
   )
 })
-CardView.displayName = "CardView"
+GenCardView.displayName = "CardView"

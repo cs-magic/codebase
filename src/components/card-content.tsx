@@ -3,12 +3,12 @@
 import { useAtom } from "jotai"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { cardAtom } from "../store/card.atom"
-import { Cover } from "./card-view-content-cover"
-import { Stat } from "./card-view-content-stat"
-import { Tags } from "./card-view-content-tags"
-import { ArticleAuthor } from "./card-view-content-author"
+import { Cover } from "./card-content-cover"
+import { Stat } from "./card-content-stat"
+import { Tags } from "./card-content-tags"
+import { ArticleAuthor } from "./card-content-author"
 
-export const CardViewContent = () => {
+export const CardContent = () => {
   const [card] = useAtom(cardAtom)
 
   return (

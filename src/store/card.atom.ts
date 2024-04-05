@@ -1,5 +1,6 @@
 import { Card } from "@prisma/client"
 import { atom } from "jotai"
+import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { createBoolStorageAtom } from "../../packages/common-state-management/jotai/create-atom"
 import { ICardGenOptions } from "../schema/card"
@@ -12,6 +13,9 @@ const createCardBoolStorageAtom = (s: string, init = false) =>
 export const cardAtom = atom<Card | null>(null)
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
+export const cardInputUrlsAtom = withImmer(
+  atomWithStorage<{ url: string; disabled?: boolean }[]>("urls.toParse", []),
+)
 
 export const cardUserIdAtom = atomWithStorage("card.user.id", "")
 export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
