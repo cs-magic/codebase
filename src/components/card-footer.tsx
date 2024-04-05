@@ -25,7 +25,7 @@ export const CardFooter = () => {
       <div className={"flex  items-center justify-center"}>
         <VerticalItem
           Icon={PackageIcon}
-          value={card?.model?.name.toUpperCase()}
+          value={card?.contentSummary?.modelType?.toUpperCase()}
         />
         <VerticalItem
           Icon={CalendarHeartIcon}
@@ -45,15 +45,13 @@ export const VerticalItem = ({
   Icon: LucideIcon
   value?: string
 }) => {
-  if (!value) return null
-
   return (
     <FlexContainer
       orientation={"vertical"}
       className={"!gap-1 overflow-hidden"}
     >
       <Icon />
-      <span className={"text-nowrap"}>{value}</span>
+      <span className={"text-nowrap"}>{value ?? "Unknown"}</span>
     </FlexContainer>
   )
 }

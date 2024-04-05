@@ -3,7 +3,7 @@ import { FetchEngine } from "../../packages/common-general/schema"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../packages/common-platform-wechat/article/detail/schema"
+} from "../../packages/common-platform-wechat/wxmp-article/detail/schema"
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends "wechatArticle"
@@ -26,8 +26,9 @@ export type IMedia = {
   ratio?: number
 }
 
-export type IModel = {
-  name: string
+export type ISummary = {
+  modelType: string
+  result: string
 }
 
 export type ActionType = "generate" | "copy" | "download" | "upload"

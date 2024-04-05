@@ -1,10 +1,8 @@
 "use server"
 
 import { prisma } from "../../../../packages/common-db/providers/prisma"
-import {
-  ensureWxmpArticleLongId,
-  fetchWechatArticle,
-} from "../../../../packages/common-platform-wechat/article/utils"
+import { fetchWxmpArticle } from "../../../../packages/common-platform-wechat/wxmp-article/fetch-wxmp-article"
+import { ensureWxmpArticleLongId } from "../../../../packages/common-platform-wechat/wxmp-article/utils"
 import { ICardGenOptions } from "../../../schema/card"
 import { cardDetailSchema, ICardDetail } from "../../../schema/card.basic"
 import { $Enums } from ".prisma/client"
@@ -25,7 +23,7 @@ export const fetchWechatArticleAction = async (
   })
 
   if (!dataInDB || options?.refetchPage) {
-    const fetched = await fetchWechatArticle(sourceUrl, options)
+    const fetched = await fetchWxmpArticle(sourceUrl, options)
     dataInDB = await prisma.card.upsert({
       where: {
         platformType_platformId: {

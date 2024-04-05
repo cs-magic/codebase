@@ -12,7 +12,7 @@ import { CardContentAuthor } from "./card-content-author"
 export const CardContent = () => {
   const [card] = useAtom(cardAtom)
 
-  const summary = parseSummary(card.contentSummary)
+  const summary = parseSummary(card?.contentSummary?.result)
 
   // console.log("-- summary: ", summary)
 

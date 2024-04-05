@@ -1,12 +1,12 @@
-import { Card } from "@prisma/client"
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
 } from "../../packages/common-platform-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-platform-bilibili/utils"
-import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { fetchXiaoHongShuDetail } from "../../packages/common-platform-xiaohongshu/actions"
+import { extractFirstURL } from "../../packages/common-utils/parse-url"
 import { ICardGenOptions } from "../schema/card"
+import { ICardDetail } from "../schema/card.basic"
 import { bilibili2card } from "./card-platform/bilibili/to-card"
 import { fetchWechatArticleAction } from "./card-platform/wechat-article/fetch-with-cache.action"
 import { isWechatArticleUrl } from "./card-platform/wechat-article/utils"
@@ -20,7 +20,7 @@ import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
 export const genCardFromUrl = async (
   inputUrlLike: string,
   options?: ICardGenOptions,
-): Promise<Card> => {
+): Promise<ICardDetail> => {
   const urlParsed = extractFirstURL(inputUrlLike)
   console.log("-- genCardFromUrl: ", { inputUrlLike, urlParsed })
   if (!urlParsed)

@@ -1,14 +1,14 @@
-import { Card } from "@prisma/client"
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { FetchEngine } from "../../packages/common-general/schema"
 import { ICardGenOptions } from "../schema/card"
-import { IUserSummary } from "../schema/user.summary"
+import { ICardDetail } from "../schema/card.basic"
+import { IUserBasic } from "../schema/user.summary"
 import { getCardUrl } from "../utils"
 
 export const cardAtom = withImmer(
-  atomWithStorage<Card>("card", {
+  atomWithStorage<ICardDetail>("card", {
     id: "",
 
     platformType: "wxmpArticle",
@@ -17,7 +17,6 @@ export const cardAtom = withImmer(
     contentSummary: null,
     stat: null,
     author: null,
-    model: null,
     cover: null,
     time: null,
     createdAt: null,
@@ -76,10 +75,10 @@ export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
 // derived
 //////////////////////////////
 
-export const cardUserAtom = atom<IUserSummary>((get) => ({
+export const cardUserAtom = atom<IUserBasic>((get) => ({
   id: get(cardUserIdAtom),
   name: get(cardUserNameAtom),
-  image: get(cardUserAvatarAtom),
+  avatar: get(cardUserAvatarAtom),
 }))
 
 export const cardOssIdAtom = atom<string | null>((get) => {

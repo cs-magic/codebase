@@ -2,13 +2,13 @@ import { $Enums } from "@prisma/client"
 
 export const getPlatformName = (type?: $Enums.PlatformType): string => {
   switch (type) {
-    case "wechatArticle":
+    case "wxmpArticle":
       return "公众号"
 
     case "bilibiliVideo":
       return "B站"
 
-    case "xiaohongshuNote":
+    case "xhsNote":
       return "小红书"
 
     default:

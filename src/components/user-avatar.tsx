@@ -8,7 +8,7 @@ import {
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { upgradeUrl } from "../../packages/common-utils/parse-url"
-import { IUserSummary } from "../schema/user.summary"
+import { IUserBasic } from "../schema/user.summary"
 
 export const UserAvatar = ({
   user,
@@ -16,14 +16,14 @@ export const UserAvatar = ({
   className,
   ...props
 }: {
-  user: IUserSummary
+  user: IUserBasic
   withName?: boolean
 } & HTMLAttributes<HTMLDivElement>) => {
   return (
     <div className={cn("flex items-center gap-2 h-full", className)} {...props}>
       <VerticalAspectRatio ratio={1}>
         <Avatar className={cn("border-none w-full h-full")}>
-          <AvatarImage src={upgradeUrl(user.image ?? "")} />
+          <AvatarImage src={upgradeUrl(user.avatar ?? "")} />
           <AvatarFallback>
             <UserIcon className={"w-full h-full"} />
           </AvatarFallback>
