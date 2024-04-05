@@ -15,7 +15,9 @@ export const CardContent = () => {
   const summary = parseSummary(card.contentSummary)
 
   return (
-    <div className={"overflow-hidden rounded-lg bg-white text-black relative"}>
+    <div
+      className={"m-2 overflow-hidden rounded-lg bg-white text-black relative"}
+    >
       <div className={"grow overflow-hidden flex flex-col"}>
         <Cover cover={card?.cover} />
 

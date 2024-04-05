@@ -13,7 +13,7 @@ export const GenCardInputUser = () => {
 
   return (
     <>
-      <LabelLine title={"User.Name"}>
+      <LabelLine title={"user.name"}>
         <Input
           id={"card-user-name"}
           value={cardUserName}
@@ -23,7 +23,7 @@ export const GenCardInputUser = () => {
         />
       </LabelLine>
 
-      <LabelLine title={"User.Avatar"}>
+      <LabelLine title={"user.avatar"}>
         <Input
           id={"card-user-avatar"}
           value={cardUserAvatar}

@@ -11,7 +11,7 @@ export const GenCardInputUrl = () => {
   const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)
 
   return (
-    <LabelLine title={"Url"}>
+    <LabelLine title={"url"}>
       <Input
         id={"card-input-url"}
         placeholder={config.card.genInputPlaceHolder}

@@ -13,7 +13,6 @@ import {
 } from "../store/card.atom"
 import { GenCardActionButton } from "./gen-card-action-button"
 import { GenCardInputUrl } from "./gen-card-input-url"
-import { GenCardInputUser } from "./gen-card-input-user"
 
 export const GenCardViaFrontend = () => {
   const [inputUrl] = useAtom(cardInputUrlAtom)
@@ -23,10 +22,6 @@ export const GenCardViaFrontend = () => {
   return (
     <>
       <GenCardInputUrl />
-
-      <Separator orientation={"horizontal"} />
-
-      <GenCardInputUser />
 
       <Separator orientation={"horizontal"} />
 

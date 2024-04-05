@@ -3,7 +3,7 @@
 import download from "downloadjs"
 import * as html2image from "html-to-image"
 import { useAtom } from "jotai"
-import { useRef } from "react"
+import { RefObject, useRef } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
 import { getOssUrl } from "../../packages/common-oss/utils"
@@ -17,10 +17,44 @@ import { GenCardActionButton } from "./gen-card-action-button"
 import { StandardCard } from "./standard-card"
 
 export const GenCardPreview = () => {
+  const obj = useRef<HTMLDivElement>(null)
+
+  const Action = ({ type }: { type: ActionType }) => (
+    <PreviewActionButton type={type} obj={obj} />
+  )
+
+  return (
+    <StandardCard
+      title={"Preview"}
+      className={cn(" w-full sm:max-w-[375px] flex flex-col gap-2")}
+    >
+      <div className={"flex justify-around gap-2"}>
+        <Action type={"copy"} />
+        <Action type={"download"} />
+        <Action type={"upload"} />
+      </div>
+
+      <div ref={obj} className={"w-full font-card corner-gradient"}>
+        <CardHeader />
+
+        <CardContent />
+
+        <CardFooter />
+      </div>
+    </StandardCard>
+  )
+}
+
+const PreviewActionButton = ({
+  type,
+  obj,
+}: {
+  type: ActionType
+  obj: RefObject<HTMLDivElement>
+}) => {
   const [rendered] = useAtom(cardRenderedAtom)
   const [card] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
-  const obj = useRef<HTMLDivElement>(null)
 
   const action = async (type: ActionType) => {
     console.log({ type })
@@ -57,37 +91,6 @@ export const GenCardPreview = () => {
   }
 
   return (
-    <StandardCard
-      title={"Preview"}
-      className={cn(" w-full sm:max-w-[375px] flex flex-col gap-2")}
-    >
-      <div className={"flex justify-around gap-2"}>
-        <GenCardActionButton
-          action={action}
-          type={"copy"}
-          disabled={!rendered}
-        />
-        <GenCardActionButton
-          action={action}
-          type={"download"}
-          disabled={!rendered}
-        />
-        <GenCardActionButton
-          action={action}
-          type={"upload"}
-          disabled={!rendered}
-        />
-      </div>
-
-      <div ref={obj} className={"w-full font-card corner-gradient"}>
-        <CardHeader />
-
-        <div className={"w-full grow gap-2 p-2 min-h-72"}>
-          <CardContent />
-        </div>
-
-        <CardFooter />
-      </div>
-    </StandardCard>
+    <GenCardActionButton action={action} type={type} disabled={!rendered} />
   )
 }

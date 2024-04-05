@@ -46,12 +46,12 @@ export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
 export const cardUserNameAtom = atomWithStorage("card.user.name", "")
 
 export const cardControls = [
-  createCardBoolStorageAtom("Summary.Enabled", true),
-  createCardBoolStorageAtom("Summary.Cache.Enabled"),
-  createCardBoolStorageAtom("Stat.Enabled"),
-  createCardBoolStorageAtom("Stat.Cache.Enabled"),
-  createCardBoolStorageAtom("Comments.Enabled"),
-  createCardBoolStorageAtom("Comments.Cache.Enabled"),
+  createCardBoolStorageAtom("summary.enabled", true),
+  createCardBoolStorageAtom("summary.cache.enabled"),
+  createCardBoolStorageAtom("stat.enabled"),
+  createCardBoolStorageAtom("stat.cache.enabled"),
+  createCardBoolStorageAtom("comments.enabled"),
+  createCardBoolStorageAtom("comments.cache.enabled"),
 ]
 
 export const cardGeneratingAtom = atom(false)
