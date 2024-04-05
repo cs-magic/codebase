@@ -7,7 +7,7 @@ import { cardAtom } from "../store/card.atom"
 import { Cover } from "./card-content-cover"
 import { Stat } from "./card-content-stat"
 import { Tags } from "./card-content-tags"
-import { ArticleAuthor } from "./card-content-author"
+import { CardContentAuthor } from "./card-content-author"
 
 export const CardContent = () => {
   const [card] = useAtom(cardAtom)
@@ -34,7 +34,7 @@ export const CardContent = () => {
 
           <MarkMap content={summary?.mindmap} />
 
-          <ArticleAuthor card={card} />
+          <CardContentAuthor card={card} />
         </div>
       </div>
     </div>

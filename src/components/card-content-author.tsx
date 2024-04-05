@@ -6,9 +6,12 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
+import { safeParse } from "./gen-card-config-display"
 import { UserAvatar } from "./user-avatar"
 
-export const ArticleAuthor = ({ card }: { card: Card | null }) => {
+export const CardContentAuthor = ({ card }: { card: Card | null }) => {
+  console.log("-- author: ", card?.author)
+
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)
 
   const Line1 = () => (
@@ -17,7 +20,9 @@ export const ArticleAuthor = ({ card }: { card: Card | null }) => {
     </div>
   )
 
-  const Line21 = () => <span className={"mr-1"}>{card?.author?.name}</span>
+  const Line21 = () => (
+    <span className={"mr-1"}>{safeParse(card?.author)?.name}</span>
+  )
 
   const Line22 = () => (
     <div>
