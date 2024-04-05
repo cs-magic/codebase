@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react"
+import { HTMLAttributes } from "react"
 import {
   Card,
   CardContent,
@@ -10,13 +10,18 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 export const StandardCard = ({
   title,
   children,
-  type = "normal",
+  type = "beauty",
+  className,
+  ...props
 }: {
   title: string
   type?: "normal" | "beauty"
-} & PropsWithChildren) => {
+} & HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Card className={cn("w-full", type === "beauty" && "border-none")}>
+    <Card
+      className={cn("w-full", type === "beauty" && "border-none", className)}
+      {...props}
+    >
       <CardHeader className={cn(type === "beauty" && "p-2")}>
         <CardTitle
           className={cn(type === "beauty" && "text-primary-foreground")}

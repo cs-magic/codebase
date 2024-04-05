@@ -1,17 +1,19 @@
+"use client"
+
 import { useAtom } from "jotai"
 import React from "react"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.atom"
-import { StandardCard } from "./standard-card"
+import { Label } from "packages/common-ui-shadcn/components/label"
 
 export const GenCardInputUser = () => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
 
   return (
-    <StandardCard title={"Input User"} type={"beauty"}>
-      <LabelLine title={"Name"}>
+    <>
+      <LabelLine title={"User.Name"}>
         <Input
           id={"card-user-name"}
           value={cardUserName}
@@ -21,7 +23,7 @@ export const GenCardInputUser = () => {
         />
       </LabelLine>
 
-      <LabelLine title={"Avatar"}>
+      <LabelLine title={"User.Avatar"}>
         <Input
           id={"card-user-avatar"}
           value={cardUserAvatar}
@@ -30,6 +32,6 @@ export const GenCardInputUser = () => {
           }}
         />
       </LabelLine>
-    </StandardCard>
+    </>
   )
 }

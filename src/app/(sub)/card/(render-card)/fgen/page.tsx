@@ -1,5 +1,5 @@
-import { GenCardViaFrontend } from "../../../../components/gen-card-via-frontend"
-import { genPageTitle } from "../../../../utils"
+import { GenCardViaFrontend } from "../../../../../components/gen-card_frontend"
+import { genPageTitle } from "../../../../../utils"
 
 export const metadata = {
   title: genPageTitle("渲染卡片"),

@@ -1,6 +1,6 @@
 import { Card } from "@prisma/client"
 import { atom } from "jotai"
-import { withImmer } from "jotai-immer"
+import { atomWithImmer, withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { createBoolStorageAtom } from "../../packages/common-state-management/jotai/create-atom"
 import { ICardGenOptions } from "../schema/card"
@@ -10,7 +10,31 @@ import { getCardUrl } from "../utils"
 const createCardBoolStorageAtom = (s: string, init = false) =>
   createBoolStorageAtom(s, init, "card")
 
-export const cardAtom = atom<Card | null>(null)
+export const cardAtom = withImmer(
+  atomWithStorage<Card>("card", {
+    id: "",
+
+    platformType: "wechatArticle",
+    platformId: "",
+
+    contentSummary: null,
+    stat: null,
+    author: null,
+    model: null,
+    cover: null,
+    time: null,
+    createdAt: null,
+    updatedAt: null,
+    contentMd: null,
+    sourceUrl: null,
+    title: null,
+    description: null,
+    platformData: null,
+    iFrames: [],
+    videos: [],
+    images: [],
+  }),
+)
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
 export const cardInputUrlsAtom = withImmer(
@@ -22,12 +46,12 @@ export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
 export const cardUserNameAtom = atomWithStorage("card.user.name", "")
 
 export const cardControls = [
-  createCardBoolStorageAtom("Summary Enabled", true),
-  createCardBoolStorageAtom("Summary Cache Enabled"),
-  createCardBoolStorageAtom("Stat Enabled"),
-  createCardBoolStorageAtom("Stat Cache Enabled"),
-  createCardBoolStorageAtom("Comments Enabled"),
-  createCardBoolStorageAtom("Comments Cache Enabled"),
+  createCardBoolStorageAtom("Summary.Enabled", true),
+  createCardBoolStorageAtom("Summary.Cache.Enabled"),
+  createCardBoolStorageAtom("Stat.Enabled"),
+  createCardBoolStorageAtom("Stat.Cache.Enabled"),
+  createCardBoolStorageAtom("Comments.Enabled"),
+  createCardBoolStorageAtom("Comments.Cache.Enabled"),
 ]
 
 export const cardGeneratingAtom = atom(false)

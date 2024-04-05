@@ -7,7 +7,6 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { config } from "../config/system"
 import { cardInputUrlsAtom } from "../store/card.atom"
-import { StandardCard } from "./standard-card"
 
 export const GenCardInputUrls = () => {
   const [items, setItems] = useAtom(cardInputUrlsAtom)
@@ -18,7 +17,7 @@ export const GenCardInputUrls = () => {
     })
 
   return (
-    <StandardCard title={"Input Urls"} type={"beauty"}>
+    <>
       <LabelLine title={"Url"}>
         <div className={"flex flex-col gap-2 p-2"}>
           {items.map((item, index) => {
@@ -59,9 +58,11 @@ export const GenCardInputUrls = () => {
               </div>
             )
           })}
-          <Button onClick={addNewUrl}>Add New Url</Button>
+          <Button onClick={addNewUrl} variant={"outline"}>
+            Add New Url
+          </Button>
         </div>
       </LabelLine>
-    </StandardCard>
+    </>
   )
 }

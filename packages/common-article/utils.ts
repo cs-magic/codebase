@@ -10,13 +10,15 @@ export const parseSummary = (
   console.log("-- parseSummary: ", content)
   if (!content) return null
 
+  const parse = (key: string) =>
+    new RegExp(`<${key}>(.*?)</${key}>`, "ms").exec(content)?.[1]
+
   return {
-    title: /<title>(.*?)<\/title>/ms.exec(content)?.[1],
-    description: /<description>(.*?)<\/description>/ms.exec(content)?.[1],
-    mindmap: /<mindmap>(.*?)<\/mindmap>/ms.exec(content)?.[1],
-    comment: /<comment>(.*?)<\/comment>/ms.exec(content)?.[1],
-    tags: /<tags>(.*?)<\/tags>/ms
-      .exec(content)?.[1]
+    title: parse("title"),
+    description: parse("description"),
+    mindmap: parse("mindmap"),
+    comment: parse("comment"),
+    tags: parse("tags")
       ?.split(/[,，]/)
       .map((s) => s.replace(/\s+/g, "")),
   }

@@ -34,23 +34,23 @@ export const fetchWechatArticleAction = async (
   })
   let model: IModel | null = dataInDB?.model ?? null
 
-  let summary: IArticleSummaryParsed | null | undefined = undefined
+  let contentSummary: string | null | undefined = undefined
 
   if (contentMd) {
     // 2.1. cache summary
     if (!options?.summary.cacheIgnored) {
-      summary = dataInDB?.summary
-      if (summary) console.log("-- summary cached")
+      contentSummary = dataInDB?.contentSummary
+      if (contentSummary) console.log("-- summary cached")
     }
 
     // 2.2. fetch summary
-    if (options?.summary.enabled && !summary) {
+    if (options?.summary.enabled && !contentSummary) {
       console.log("-- summary fetching")
       const { content, model: modelName } =
         (await fetchArticleSummary(contentMd)) ?? null
       console.log("-- summary fetched")
       model = { name: modelName }
-      summary = parseSummary(content)
+      contentSummary = content
     }
   }
 
@@ -80,7 +80,7 @@ export const fetchWechatArticleAction = async (
     cover,
     platformData,
     contentMd,
-    summary,
+    contentSummary,
     stat,
     sourceUrl,
     model,

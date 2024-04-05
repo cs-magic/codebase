@@ -1,3 +1,5 @@
+"use client"
+
 import { useAtom } from "jotai"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 
