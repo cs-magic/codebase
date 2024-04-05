@@ -8,3 +8,4 @@ export class UnexpectedError extends Error {
 }
 
 export type FetchEngine = "nodejs" | "fastapi"
+export const fetchEngines: FetchEngine[] = ["fastapi", "nodejs"]

@@ -11,19 +11,19 @@ export const xiaohongshu2card = (
   if (!note) throw new Error("no note")
 
   const data: Prisma.CardUncheckedCreateInput = {
-    platformType: "xiaohongshuNote",
+    platformType: "xhsNote",
     platformId: "?",
 
     stat: null,
     sourceUrl: null,
     contentMd: null,
+    contentSummary: null,
     platformData: null,
     updatedAt: null,
     createdAt: null,
     cover: null,
     author: null,
     time: null,
-    summary: null,
     iFrames: [],
     title: note.title,
     description: note.desc,
@@ -48,7 +48,7 @@ export const xiaohongshu2card = (
   return prisma.card.upsert({
     where: {
       platformType_platformId: {
-        platformType: "xiaohongshuNote",
+        platformType: "xhsNote",
         platformId: "?", // todo
       },
     },

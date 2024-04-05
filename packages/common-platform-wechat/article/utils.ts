@@ -1,10 +1,11 @@
 import { env } from "@/env"
-import { IUserSummary } from "@/schema/user.summary"
+import { ICardGenOptions } from "@/schema/card"
+import { IUserBasic } from "@/schema/user.summary"
 import parse from "node-html-parser"
-import { FetchEngine } from "packages/common-general/schema"
 import { api } from "../../common-api"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
+import { IFetchWxmpArticleRes } from "../schema"
 
 export const getWechatArticleUrlFromShortId = (shortId: string) =>
   `https://mp.weixin.qq.com/s/${shortId}`
@@ -22,11 +23,17 @@ export const parseWxmpArticleLongId = (url: string) =>
  */
 export const ensureWxmpArticleLongId = async (url: string) => {
   let longId = parseWxmpArticleLongId(url)
+  // console.log({ url, longId })
   if (!longId) {
     const { data: pageText } = await api.get<string>(url)
+    // console.log({ pageText })
+    if (!pageText) throw new Error(`no page content found!`)
+
     const html = parse(pageText)
     const newUrl = parseMetaFromHtml(html, "og:url", "property")
+    // console.log({ newUrl })
     if (newUrl) longId = parseWxmpArticleLongId(newUrl)
+    // console.log({ longId })
   }
   if (!longId) throw new Error(`failed to parse longId from url: ${url}`)
   return longId
@@ -34,18 +41,18 @@ export const ensureWxmpArticleLongId = async (url: string) => {
 
 export const fetchWechatArticle = async (
   url: string,
-  withSummary?: boolean,
-  engine?: FetchEngine,
-) => {
-  if (engine === "nodejs") {
+  options?: ICardGenOptions,
+): Promise<IFetchWxmpArticleRes> => {
+  if (options?.fetchEngine === "nodejs") {
     // 1. fetch page
     const { data: pageText } = await api.get<string>(url)
 
     // 2. parse page
     const html = parse(pageText)
     const ogUrl = parseMetaFromHtml(html, "og:url", "property")
-    const title = parseMetaFromHtml(html, "og:title")
+    const title = parseMetaFromHtml(html, "og:title") ?? ""
     const coverUrl = parseMetaFromHtml(html, "og:image")!
+    const description = parseMetaFromHtml(html, "og:description", "property")!
     // const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
     // const authorPublisherName = parseMetaFromHtml(html, "author", "name")
 
@@ -54,10 +61,10 @@ export const fetchWechatArticle = async (
     //   image: null, // author 有可能没有头像，比如里帮助
     //   id: "",
     // }
-    const authorAccount: IUserSummary = {
-      name: /var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1] ?? null,
-      image: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1] ?? null,
-      id: /var user_name = "(.*?)"/.exec(pageText)?.[1] ?? "",
+    const authorAccount: IUserBasic = {
+      name: /var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1],
+      avatar: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1],
+      id: /var user_name = "(.*?)"/.exec(pageText)?.[1],
     }
 
     // 去除作者信息，否则会有干扰, case-id: fq-Bb_v
@@ -69,18 +76,21 @@ export const fetchWechatArticle = async (
 
     console.log({ ogUrl })
 
-    if (withSummary) {
+    if (options.refetchSummary) {
     }
 
     return {
       platformId: /sn=(.*?)&/.exec(ogUrl ?? "")![1]!, // get id(sn) from page
+      platformType: "wxmpArticle",
       // 微信公众号使用主体名，而非原创作者名
       author: authorAccount,
       time:
         new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) ?? null, // 1711455495
       title,
-      cover: { url: coverUrl },
+      description,
+      cover: { url: coverUrl, width: null, height: null },
       contentMd,
+      contentSummary: undefined,
     }
   }
 
@@ -89,9 +99,11 @@ export const fetchWechatArticle = async (
     {
       params: {
         url,
-        with_summary: withSummary,
+        with_summary: options?.refetchSummary,
+        md_with_img: options?.mdWithImg,
       },
     },
   )
+  data.time = new Date((data as { time: string }).time)
   return data
 }

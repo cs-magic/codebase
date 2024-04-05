@@ -202,7 +202,13 @@ export function dealWith(solutions: ErrorHandlerMany, ignoreGlobal?: boolean) {
   return (error: THttpError) => localHandlers.responseErrorHandler(error, true)
 }
 
-function responseHandler(response: AxiosResponse<any>) {
+function responseHandler<T>(
+  response: AxiosResponse<T> & { config: { raw: true } },
+): AxiosResponse<T>
+function responseHandler<T>(
+  response: AxiosResponse<T> & { config?: { raw?: false } },
+): T
+function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> | T {
   const config = response?.config
   if (config.raw) {
     return response
@@ -218,11 +224,18 @@ function responseHandler(response: AxiosResponse<any>) {
 }
 
 export function createHttpInstance() {
-  const instance = axios.create({})
+  const instance = axios.create({
+    headers: {
+      "Content-Type":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+    },
+  })
 
   const responseError = (error: THttpError) =>
     globalHandlers.responseErrorHandler(error)
 
-  instance.interceptors.response.use(responseHandler, responseError)
+  // todo
+  // @ts-ignore
+  // instance.interceptors.response.use(responseHandler, responseError)
   return instance
 }

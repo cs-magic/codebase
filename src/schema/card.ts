@@ -1,4 +1,5 @@
 import { $Enums } from "@prisma/client"
+import { FetchEngine } from "../../packages/common-general/schema"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
@@ -32,6 +33,8 @@ export type IModel = {
 export type ActionType = "generate" | "copy" | "download" | "upload"
 
 export type ICardGenOptions = {
+  fetchEngine?: FetchEngine
+  mdWithImg?: boolean
   refetchPage?: boolean
   refetchSummary?: boolean
   refetchStat?: boolean

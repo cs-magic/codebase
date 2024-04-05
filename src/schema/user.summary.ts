@@ -8,3 +8,9 @@ export const userSummarySchema = Prisma.validator<Prisma.UserDefaultArgs>()({
   },
 })
 export type IUserSummary = Prisma.UserGetPayload<typeof userSummarySchema>
+
+export type IUserBasic = {
+  id?: string
+  name?: string
+  avatar?: string
+}

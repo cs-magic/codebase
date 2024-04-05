@@ -14,7 +14,7 @@ export const bilibili2card = (
   const data: Prisma.CardUncheckedCreateInput = {
     createdAt: null,
     updatedAt: null,
-    summary: null,
+    contentSummary: null,
     time: null,
     contentMd: null,
     author: null,

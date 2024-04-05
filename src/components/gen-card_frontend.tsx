@@ -2,14 +2,23 @@
 
 import { useAtom, useSetAtom } from "jotai"
 import { toast } from "sonner"
+import { fetchEngines } from "../../packages/common-general/schema"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
-import { AtomSwitcher } from "../../packages/common-ui/components/atom-switcher"
+import {
+  AtomSelector,
+  AtomSwitcher,
+} from "../../packages/common-ui/components/atom-switcher"
 import { genCardFromUrl } from "../core/gen-card"
 import {
   cardAtom,
-  cardControls,
+  cardFetchEngineAtom,
   cardGenOptionsAtom,
   cardInputUrlAtom,
+  cardMdWithImgAtom,
+  refetchCardCommentsAtom,
+  refetchCardPageAtom,
+  refetchCardStatAtom,
+  refetchCardSummaryAtom,
 } from "../store/card.atom"
 import { GenCardActionButton } from "./gen-card-action-button"
 import { GenCardInputUrl } from "./gen-card-input-url"
@@ -17,7 +26,7 @@ import { GenCardInputUrl } from "./gen-card-input-url"
 export const GenCardViaFrontend = () => {
   const [inputUrl] = useAtom(cardInputUrlAtom)
   const setCard = useSetAtom(cardAtom)
-  const [cardOptions] = useAtom(cardGenOptionsAtom)
+  const [options] = useAtom(cardGenOptionsAtom)
 
   return (
     <>
@@ -25,8 +34,20 @@ export const GenCardViaFrontend = () => {
 
       <Separator orientation={"horizontal"} />
 
+      <AtomSelector
+        atom={cardFetchEngineAtom}
+        name={"fetch engine"}
+        vs={fetchEngines}
+      />
+
       <>
-        {cardControls.map((item, index) => (
+        {[
+          { atom: cardMdWithImgAtom, name: "md-with-img" },
+          { atom: refetchCardPageAtom, name: "refetch-page" },
+          { atom: refetchCardSummaryAtom, name: "refetch-summary" },
+          { atom: refetchCardStatAtom, name: "refetch-stat" },
+          { atom: refetchCardCommentsAtom, name: "refetch-comments" },
+        ].map((item, index) => (
           <AtomSwitcher {...item} key={index} />
         ))}
       </>
@@ -36,7 +57,7 @@ export const GenCardViaFrontend = () => {
       <GenCardActionButton
         className={"w-full"}
         action={async () => {
-          genCardFromUrl(inputUrl, cardOptions)
+          await genCardFromUrl(inputUrl, options)
             .then(setCard)
             .catch((err) => toast.error((err as unknown as Error).message))
         }}

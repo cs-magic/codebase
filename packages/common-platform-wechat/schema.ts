@@ -1,3 +1,6 @@
+import { IUserBasic } from "@/schema/user.summary"
+import { $Enums } from ".prisma/client"
+
 export type IWechatError = {
   errcode: number
   errmsg: string
@@ -8,3 +11,19 @@ export const isWechatError = <T extends object>(
 ): res is IWechatError => "errcode" in res
 
 export type IWechatSDKToken = { access_token: string; expires_in: number }
+
+export type IFetchWxmpArticleRes = {
+  platformId: string
+  platformType: $Enums.PlatformType
+  author: IUserBasic
+  time: Date
+  title: string
+  cover: {
+    url: string
+    width: null
+    height: null
+  }
+  description: string
+  contentMd: string
+  contentSummary?: string
+}

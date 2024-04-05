@@ -1,20 +1,17 @@
 import { Card } from "@prisma/client"
 import { atom } from "jotai"
-import { atomWithImmer, withImmer } from "jotai-immer"
+import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
-import { createBoolStorageAtom } from "../../packages/common-state-management/jotai/create-atom"
+import { FetchEngine } from "../../packages/common-general/schema"
 import { ICardGenOptions } from "../schema/card"
 import { IUserSummary } from "../schema/user.summary"
 import { getCardUrl } from "../utils"
-
-const createCardBoolStorageAtom = (s: string, init = false) =>
-  createBoolStorageAtom(s, init, "card")
 
 export const cardAtom = withImmer(
   atomWithStorage<Card>("card", {
     id: "",
 
-    platformType: "wechatArticle",
+    platformType: "wxmpArticle",
     platformId: "",
 
     contentSummary: null,
@@ -45,15 +42,6 @@ export const cardUserIdAtom = atomWithStorage("card.user.id", "")
 export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
 export const cardUserNameAtom = atomWithStorage("card.user.name", "")
 
-export const cardControls = [
-  createCardBoolStorageAtom("summary.enabled", true),
-  createCardBoolStorageAtom("summary.cache.enabled"),
-  createCardBoolStorageAtom("stat.enabled"),
-  createCardBoolStorageAtom("stat.cache.enabled"),
-  createCardBoolStorageAtom("comments.enabled"),
-  createCardBoolStorageAtom("comments.cache.enabled"),
-]
-
 export const cardGeneratingAtom = atom(false)
 export const cardCopyingAtom = atom(false)
 export const cardDownloadingAtom = atom(false)
@@ -67,6 +55,23 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
 
+export const refetchCardPageAtom = atomWithStorage("card.page.refetch", false)
+export const refetchCardSummaryAtom = atomWithStorage(
+  "card.summary.refetch",
+  false,
+)
+export const refetchCardStatAtom = atomWithStorage("card.stat.refetch", false)
+export const refetchCardCommentsAtom = atomWithStorage(
+  "card.comments.refetch",
+  false,
+)
+export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
+  "card.fetch-engine",
+  "fastapi",
+)
+
+export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
+
 ///////////////////////////////
 // derived
 //////////////////////////////
@@ -78,23 +83,17 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
 }))
 
 export const cardOssIdAtom = atom<string | null>((get) => {
-  const body = get(cardAtom)
+  const card = get(cardAtom)
   return getCardUrl(
-    !body ? undefined : { type: body.platformType, id: body.platformId },
+    !card ? undefined : { type: card.platformType, id: card.platformId },
   )
 })
 
 export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
-  summary: {
-    enabled: get(cardControls[0]!.atom),
-    cacheIgnored: get(cardControls[1]!.atom),
-  },
-  stat: {
-    enabled: get(cardControls[2]!.atom),
-    cacheIgnored: get(cardControls[3]!.atom),
-  },
-  comments: {
-    enabled: get(cardControls[4]!.atom),
-    cacheIgnored: get(cardControls[5]!.atom),
-  },
+  fetchEngine: get(cardFetchEngineAtom),
+  mdWithImg: get(cardMdWithImgAtom),
+  refetchPage: get(refetchCardPageAtom),
+  refetchSummary: get(refetchCardSummaryAtom),
+  refetchStat: get(refetchCardStatAtom),
+  refetchComments: get(refetchCardCommentsAtom),
 }))
