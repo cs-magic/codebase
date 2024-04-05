@@ -7,6 +7,8 @@ import {
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends "wechatArticle"
     ? {
+        shortId?: string
+        longId: string
         stat?: IWechatArticleStat
         comments?: IWechatArticleComment[]
       }
@@ -29,12 +31,9 @@ export type IModel = {
 
 export type ActionType = "generate" | "copy" | "download" | "upload"
 
-export type ICardGenOption = {
-  enabled: boolean
-  cacheIgnored: boolean
-}
 export type ICardGenOptions = {
-  summary: ICardGenOption
-  stat: ICardGenOption
-  comments: ICardGenOption
+  refetchPage?: boolean
+  refetchSummary?: boolean
+  refetchStat?: boolean
+  refetchComments?: boolean
 }

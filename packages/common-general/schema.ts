@@ -6,3 +6,5 @@ export class UnexpectedError extends Error {
     super("Unexpected!")
   }
 }
+
+export type FetchEngine = "nodejs" | "fastapi"

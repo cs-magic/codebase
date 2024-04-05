@@ -14,6 +14,8 @@ export const CardContent = () => {
 
   const summary = parseSummary(card.contentSummary)
 
+  // console.log("-- summary: ", summary)
+
   return (
     <div
       className={"m-2 overflow-hidden rounded-lg bg-white text-black relative"}

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { api } from "../../../../common-api"
-import { getWechatArticleUrlFromId } from "../../utils"
+import { getWechatArticleUrlFromShortId } from "../../utils"
 import { IWechatArticleComment, IWechatArticleStat } from "../schema"
 
 const wxapiApi = axios.create({
@@ -25,7 +25,7 @@ export const fetchWechatArticleStat = async (id: string) => {
   const { data: res } = await wxapiApi.post<IWxapiResponse<IWechatArticleStat>>(
     "/wxapi/readnum",
     new URLSearchParams({
-      url: getWechatArticleUrlFromId(id),
+      url: getWechatArticleUrlFromShortId(id),
       token,
     }),
     {
@@ -44,7 +44,7 @@ export const fetchWechatArticleComments = async (id: string) => {
   const { data: res } = await wxapiApi.postForm<
     IWxapiResponse<IWechatArticleComment[]>
   >("/wxapi/wxcoment", {
-    url: getWechatArticleUrlFromId(id),
+    url: getWechatArticleUrlFromShortId(id),
     token,
     comment_id: "",
   })

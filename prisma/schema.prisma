@@ -139,7 +139,7 @@ model Card {
 }
 
 enum PlatformType {
-  wechatArticle
+  wxmpArticle
   bilibiliVideo
-  xiaohongshuNote
+  xhsNote
 }
