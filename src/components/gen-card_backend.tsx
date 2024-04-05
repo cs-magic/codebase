@@ -4,9 +4,6 @@ import { useState } from "react"
 import { ActionType } from "../schema/card"
 
 import { GenCardActionButton } from "./gen-card-action-button"
-import { GenCardInputUrls } from "./gen-card-input-urls"
-import { GenCardInputUser } from "./gen-card-input-user"
-import { StandardCard } from "./standard-card"
 
 export const GenCardViaBackend = () => {
   const [ossUrl, setOssUrl] = useState("")
@@ -17,9 +14,7 @@ export const GenCardViaBackend = () => {
 
   return (
     <>
-      <GenCardInputUrls />
-
-      <GenCardInputUser />
+      {/*<GenCardInputUrls />*/}
 
       <GenCardActionButton
         className={"w-full"}

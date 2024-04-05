@@ -24,10 +24,7 @@ export const GenCardPreview = () => {
   )
 
   return (
-    <StandardCard
-      title={"Preview"}
-      className={cn(" w-full sm:max-w-[375px] flex flex-col gap-2")}
-    >
+    <StandardCard title={"Preview"}>
       <div className={"flex justify-around gap-2"}>
         <Action type={"copy"} />
         <Action type={"download"} />

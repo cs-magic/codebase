@@ -8,15 +8,18 @@ const RenderCardContainer = ({ children }: PropsWithChildren) => {
   return (
     <div
       className={cn(
-        "justify-start overflow-auto w-full mx-auto gap-4 p-2 sm:p-4",
-        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+        "w-full h-full mx-auto gap-4 p-2 sm:p-4 flex flex-wrap overflow-auto",
       )}
     >
-      <StandardCard title={"Input Control"}>{children}</StandardCard>
+      <div className={"grow overflow-auto h-full p-2 -mx-2"}>
+        <StandardCard title={"Input Control"}>{children}</StandardCard>
 
-      <GenCardConfigDisplay />
+        <GenCardConfigDisplay />
+      </div>
 
-      <GenCardPreview />
+      <div className={"w-full sm:max-w-[375px] overflow-auto"}>
+        <GenCardPreview />
+      </div>
     </div>
   )
 }
