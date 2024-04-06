@@ -4,16 +4,15 @@ import { useAtom, useAtomValue } from "jotai"
 import {
   CalendarHeartIcon,
   FingerprintIcon,
-  LucideIcon,
   MilestoneIcon,
   PackageIcon,
 } from "lucide-react"
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 
 import { config } from "../config/system"
 import { cardAtom, summaryAtom } from "../store/card.atom"
+import { CardFooterItem } from "./card-footer-item"
 
 export const CardFooter = () => {
   const summary = useAtomValue(summaryAtom)
@@ -24,35 +23,17 @@ export const CardFooter = () => {
       className={cn("shrink-0 pb-2 px-4 text-xs text-primary-foreground/50")}
     >
       <div className={"flex  items-center justify-center"}>
-        <VerticalItem
+        <CardFooterItem
           Icon={PackageIcon}
           value={summary?.modelType?.toUpperCase()}
         />
-        <VerticalItem
+        <CardFooterItem
           Icon={CalendarHeartIcon}
           value={moment().format("YYYY-MM-DD")}
         />
-        <VerticalItem Icon={FingerprintIcon} value={card?.id} />
-        <VerticalItem Icon={MilestoneIcon} value={config.version} />
+        <CardFooterItem Icon={FingerprintIcon} value={card?.id} />
+        <CardFooterItem Icon={MilestoneIcon} value={config.version} />
       </div>
     </div>
-  )
-}
-
-export const VerticalItem = ({
-  Icon,
-  value,
-}: {
-  Icon: LucideIcon
-  value?: string
-}) => {
-  return (
-    <FlexContainer
-      orientation={"vertical"}
-      className={"!gap-1 overflow-hidden"}
-    >
-      <Icon />
-      <span className={"text-nowrap"}>{value ?? "Unknown"}</span>
-    </FlexContainer>
   )
 }
