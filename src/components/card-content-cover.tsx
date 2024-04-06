@@ -18,8 +18,8 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
   return (
     <div id={"card-media"} className={"w-full shrink-0"}>
       <AspectRatio ratio={cover?.ratio ?? 2.35}>
+        {/*  公众号不能用 img，会显示此图片来自微信公众平台，未经允许不可引用 */}
         <Image
-          priority
           onLoad={() => {
             console.log("-- cover loaded")
             setCardCoverRendered(true)
@@ -27,7 +27,7 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
           src={cover.url}
           alt={""}
           fill
-          className={"object-cover"}
+          className={"object-cover "}
           sizes={"367px"}
         />
       </AspectRatio>

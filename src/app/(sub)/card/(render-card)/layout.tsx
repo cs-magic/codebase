@@ -1,10 +1,11 @@
 import { PropsWithChildren } from "react"
 import { cn } from "../../../../../packages/common-ui-shadcn/utils"
-import { GenCardDisplayControl } from "../../../../components/gen-card-display-control"
 import { GenCardPreview } from "../../../../components/gen-card-preview"
 import { StandardCard } from "../../../../components/standard-card"
 
-const RenderCardContainer = ({ children }: PropsWithChildren) => {
+export default async function GenCardViaFrontendPage({
+  children,
+}: PropsWithChildren) {
   return (
     <div
       className={cn(
@@ -13,8 +14,6 @@ const RenderCardContainer = ({ children }: PropsWithChildren) => {
     >
       <div className={"grow overflow-auto h-full p-2 -mx-2"}>
         <StandardCard title={"Input Control"}>{children}</StandardCard>
-
-        <GenCardDisplayControl />
       </div>
 
       <div className={"w-full sm:max-w-[375px] overflow-auto"}>
@@ -23,5 +22,3 @@ const RenderCardContainer = ({ children }: PropsWithChildren) => {
     </div>
   )
 }
-
-export default RenderCardContainer

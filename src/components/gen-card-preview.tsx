@@ -2,12 +2,12 @@
 
 import { useAtom } from "jotai"
 import { useRef } from "react"
-import { ActionType } from "../schema/card"
+import { Action2Type } from "../schema/card"
 import { cardRenderedAtom } from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
-import { GenCardPreviewAction } from "./gen-card-preview-action"
+import { GenCardAction2 } from "./gen-card-action-2"
 import { StandardCard } from "./standard-card"
 
 export const GenCardPreview = () => {
@@ -16,8 +16,8 @@ export const GenCardPreview = () => {
 
   console.log("-- preview: ", { rendered })
 
-  const Action = ({ type }: { type: ActionType }) => (
-    <GenCardPreviewAction type={type} obj={obj} rendered={rendered} />
+  const Action = ({ type }: { type: Action2Type }) => (
+    <GenCardAction2 type={type} obj={obj} rendered={rendered} />
   )
 
   return (

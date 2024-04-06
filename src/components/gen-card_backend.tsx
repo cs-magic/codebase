@@ -1,25 +1,22 @@
 "use client"
 
-import { useState } from "react"
-import { ActionType } from "../schema/card"
-
-import { GenCardActionButton } from "./gen-card-action-button"
+import { useAtom } from "jotai"
+import { Textarea } from "../../packages/common-ui/components/textarea-auto"
+import { cardInputAtom } from "../store/card.atom"
 
 export const GenCardViaBackend = () => {
-  const [ossUrl, setOssUrl] = useState("")
-
-  const action = async (type: ActionType) => {
-    console.log("action")
-  }
+  const [cardInput, setCardInput] = useAtom(cardInputAtom)
 
   return (
     <>
-      {/*<GenCardInputUrls />*/}
-
-      <GenCardActionButton
-        className={"w-full"}
-        action={action}
-        type={"generate"}
+      <Textarea
+        id={"card-content"}
+        minRows={10}
+        maxRows={20}
+        value={cardInput}
+        onChange={(event) => {
+          setCardInput(event.currentTarget.value)
+        }}
       />
     </>
   )

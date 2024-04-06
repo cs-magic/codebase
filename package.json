@@ -75,6 +75,7 @@
     "etcd3": "^1.1.2",
     "eventsource": "^2.0.2",
     "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
     "https": "^1.0.0",
     "immer": "^10.0.3",
     "ioredis": "^5.3.2",

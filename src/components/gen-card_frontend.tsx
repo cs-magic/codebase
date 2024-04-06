@@ -1,36 +1,38 @@
 "use client"
 
-import { useAtom, useSetAtom } from "jotai"
-import { toast } from "sonner"
+import { useAtom } from "jotai"
 import { fetchEngines } from "../../packages/common-general/schema"
+import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import {
   AtomSelector,
   AtomSwitcher,
 } from "../../packages/common-ui/components/atom-switcher"
-import { genCardFromUrl } from "../core/gen-card"
+import { LabelLine } from "../../packages/common-ui/components/label-line"
+import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
 import {
+  cardAuthorWithTitleAtom,
   cardFetchEngineAtom,
-  cardGenOptionsAtom,
-  cardInputAtom,
-  cardInputUrlAtom,
   cardMdWithImgAtom,
   refetchCardCommentsAtom,
   refetchCardPageAtom,
   refetchCardStatAtom,
   refetchCardSummaryAtom,
 } from "../store/card.atom"
-import { GenCardActionButton } from "./gen-card-action-button"
+import { GenCardAction1 } from "./gen-card-action-1"
 import { GenCardInputUrl } from "./gen-card-input-url"
+import { GenCardInputUser } from "./gen-card-input-user"
 
 export const GenCardViaFrontend = () => {
-  const [inputUrl] = useAtom(cardInputUrlAtom)
-  const [options] = useAtom(cardGenOptionsAtom)
-  const setCardInput = useSetAtom(cardInputAtom)
+  const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
+    mapSpacingVerticalAtom,
+  )
 
   return (
     <>
       <GenCardInputUrl />
+
+      <GenCardInputUser />
 
       <Separator orientation={"horizontal"} />
 
@@ -62,15 +64,23 @@ export const GenCardViaFrontend = () => {
 
       <Separator orientation={"horizontal"} />
 
-      <GenCardActionButton
-        className={"w-full"}
-        action={async () => {
-          await genCardFromUrl(inputUrl, options)
-            .then((card) => setCardInput(JSON.stringify(card)))
-            .catch((err) => toast.error((err as unknown as Error).message))
-        }}
-        type={"generate"}
-      />
+      <AtomSwitcher atom={cardAuthorWithTitleAtom} name={"author.with-title"} />
+      <LabelLine title={"map.vertical.space"}>
+        <Input
+          type={"number"}
+          value={mapSpacingVertical ?? 0}
+          onChange={(event) => {
+            setMapSpacingVertical(Number(event.currentTarget.value))
+          }}
+        />
+      </LabelLine>
+
+      <Separator orientation={"horizontal"} />
+
+      <div className={"flex items-center gap-2"}>
+        <GenCardAction1 type={"generate"} />
+        <GenCardAction1 type={"reset"} />
+      </div>
     </>
   )
 }

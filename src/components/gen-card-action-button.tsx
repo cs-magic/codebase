@@ -3,6 +3,7 @@
 import { useAtom } from "jotai"
 import { capitalize } from "lodash"
 import { HTMLAttributes } from "react"
+import { sleep } from "../../packages/common-datetime/utils"
 import { Atom } from "../../packages/common-state-management/jotai/types"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { ButtonWithLoading } from "../../packages/common-ui/components/button-with-loading"
@@ -11,6 +12,7 @@ import {
   cardCopyingAtom,
   cardDownloadingAtom,
   cardGeneratingAtom,
+  cardResettingAtom,
   cardUploadingAtom,
 } from "../store/card.atom"
 
@@ -31,6 +33,7 @@ export const GenCardActionButton = ({
     copy: cardCopyingAtom,
     download: cardDownloadingAtom,
     upload: cardUploadingAtom,
+    reset: cardResettingAtom,
   }
 
   const [v, setV] = useAtom(atomMap[type])
@@ -44,6 +47,7 @@ export const GenCardActionButton = ({
       disabled={disabled}
       onClick={async () => {
         setV(true)
+        // await sleep(3000)
         await action(type).finally(() => {
           setV(false)
         })

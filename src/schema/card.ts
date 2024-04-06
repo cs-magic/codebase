@@ -37,7 +37,9 @@ export type ISummaryParsed = {
   result?: IArticleSummaryParsed
 }
 
-export type ActionType = "generate" | "copy" | "download" | "upload"
+export type Action1Type = "generate" | "reset"
+export type Action2Type = "copy" | "download" | "upload"
+export type ActionType = Action1Type | Action2Type
 
 export type ICardGenOptions = {
   fetchEngine?: FetchEngine

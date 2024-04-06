@@ -12,15 +12,10 @@ import { GenCardInputUser } from "./gen-card-input-user"
 import { StandardCard } from "./standard-card"
 
 export const GenCardDisplayControl = () => {
-  const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
-    mapSpacingVerticalAtom,
-  )
   const [cardInput, setCardInput] = useAtom(cardInputAtom)
 
   return (
     <StandardCard title={"Display Control"}>
-      <GenCardInputUser />
-
       <Textarea
         id={"card-content"}
         value={cardInput}
@@ -28,19 +23,6 @@ export const GenCardDisplayControl = () => {
           setCardInput(event.currentTarget.value)
         }}
       />
-
-      <Separator orientation={"horizontal"} />
-
-      <AtomSwitcher atom={cardAuthorWithTitleAtom} name={"author.with-title"} />
-      <LabelLine title={"map.vertical.space"}>
-        <Input
-          type={"number"}
-          value={mapSpacingVertical ?? 0}
-          onChange={(event) => {
-            setMapSpacingVertical(Number(event.currentTarget.value))
-          }}
-        />
-      </LabelLine>
     </StandardCard>
   )
 }
