@@ -100,5 +100,5 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
 
 export const summaryAtom = atom<ISummaryParsed>((get) => {
   const card = get(cardAtom)
-  return parseSummary(card?.contentSummary)
+  return parseSummary(JSON.stringify(card?.contentSummary))
 })
