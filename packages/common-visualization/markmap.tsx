@@ -32,7 +32,7 @@ export default function MarkMap({ content }: { content?: string }) {
     refMm.current = mm
 
     const { root } = transformer.transform(transformMindmapContent(content), {})
-    console.log({ root })
+    // console.log({ root })
     root.content = "" // 去掉首结点的内容
     mm.setData(root)
     mm.state.minY = 20 // 首结点紧贴边缘
@@ -59,7 +59,6 @@ export default function MarkMap({ content }: { content?: string }) {
       content
     ) {
       void refMm.current?.fit().then(() => {
-        console.log("-- rendered")
         setCardRendered(true)
       })
     }
@@ -68,7 +67,7 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [ratio, content])
 
-  console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
+  // console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
 
   return (
     <div className={"w-full"}>
@@ -87,6 +86,6 @@ const transformMindmapContent = (input?: string): string => {
     })
     .join("\n")
 
-  console.log("-- transformed mindmap content: ", { input, output })
+  // console.log("-- transformed mindmap content: ", { input, output })
   return output
 }

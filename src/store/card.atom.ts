@@ -89,9 +89,3 @@ export const summaryAtom = atom<ISummaryParsed>((get) => {
   const card = get(cardAtom)
   return parseSummary(JSON.stringify(card?.contentSummary))
 })
-
-export const cardInputValidAtom = atom((get) => {
-  const v = get(cardInputAtom)
-  const p = parseJS<ICardDetail>(v)
-  return !!p
-})

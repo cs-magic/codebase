@@ -10,6 +10,7 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
 
   useEffect(() => {
     return () => {
+      console.log("-- cover destroyed")
       setCardCoverRendered(false)
     }
   }, [cover])
@@ -20,7 +21,9 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
     <div id={"card-media"} className={"w-full shrink-0"}>
       <AspectRatio ratio={cover?.ratio ?? 2.35}>
         <Image
-          onLoadingComplete={() => {
+          priority
+          onLoad={(event) => {
+            console.log("-- cover ok")
             setCardCoverRendered(true)
           }}
           src={cover.url}

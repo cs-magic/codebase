@@ -10,7 +10,7 @@ import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
 export const CardContentAuthor = ({ card }: { card: Card | null }) => {
-  console.log("-- author: ", card?.author)
+  // console.log("-- author: ", card?.author)
 
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)
 

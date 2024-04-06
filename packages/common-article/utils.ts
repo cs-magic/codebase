@@ -22,7 +22,7 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
     modelType: /"modelType":\s*"(.*?)"/.exec(input)?.[1],
   }
 
-  console.log("-- parsed summary: ", { input, output })
+  // console.log("-- parsed summary: ", { input, output })
 
   return output
 }
