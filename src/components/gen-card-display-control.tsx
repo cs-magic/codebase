@@ -1,14 +1,15 @@
 "use client"
 
 import { useAtom } from "jotai"
+import { useEffect, useState } from "react"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import { AtomSwitcher } from "../../packages/common-ui/components/atom-switcher"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { Textarea } from "../../packages/common-ui/components/textarea-auto"
 import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
+import { ICardDetail } from "../schema/card.basic"
 import { cardAtom, cardAuthorWithTitleAtom } from "../store/card.atom"
-import { GenCardInputUser } from "./gen-card-input-user"
 import { StandardCard } from "./standard-card"
 
 export const GenCardDisplayControl = () => {
@@ -16,28 +17,25 @@ export const GenCardDisplayControl = () => {
     mapSpacingVerticalAtom,
   )
   const [card, setCard] = useAtom(cardAtom)
+  const [v, setV] = useState("")
+  useEffect(() => {
+    setV(JSON.stringify(card))
+  }, [card])
 
   return (
     <StandardCard title={"Display Control"}>
-      <GenCardInputUser />
-
-      <Separator orientation={"horizontal"} />
-
-      <LabelLine title={"card.content"}>
-        <Textarea
-          id={"card-content"}
-          value={
-            typeof card.contentSummary === "object"
-              ? JSON.stringify(card.contentSummary)
-              : card.contentSummary
-          }
-          onChange={(event) => {
-            setCard((card) => {
-              card.contentSummary = event.currentTarget.value
-            })
-          }}
-        />
-      </LabelLine>
+      <Textarea
+        id={"card-content"}
+        value={v}
+        onChange={(event) => {
+          try {
+            const v = event.currentTarget.value
+            setV(v)
+            const card = JSON.parse(v) as ICardDetail
+            setCard(card)
+          } catch (err) {}
+        }}
+      />
 
       <Separator orientation={"horizontal"} />
 

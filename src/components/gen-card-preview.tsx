@@ -77,7 +77,7 @@ const PreviewActionButton = ({
         break
 
       case "download":
-        const fp = `${encodeURI(card?.title ?? new Date().toString())}.png`
+        const fp = `${card.platformType}_${card.platformId}.png`
         download(blob, fp)
         toast.success(`downloaded at ${fp}`)
         break
