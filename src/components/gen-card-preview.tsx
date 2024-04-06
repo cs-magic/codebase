@@ -31,7 +31,7 @@ export const GenCardPreview = () => {
       <AtomSelector
         atom={cardPreviewEngineAtom}
         name={"preview-engine"}
-        vs={["html2image", "html2canvas"]}
+        vs={["html2image", "html2canvas", "modern-screenshot"]}
       />
 
       <div className={"flex justify-around gap-2"}>

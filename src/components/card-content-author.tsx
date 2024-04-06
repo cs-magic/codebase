@@ -25,7 +25,9 @@ export const CardContentAuthor = ({ card }: { card: Card | null }) => {
   )
 
   const Line21 = () => (
-    <span className={"mr-1"}>{safeParseJson(card?.author)?.name}</span>
+    <span className={"mr-1 text-nowrap"}>
+      {safeParseJson(card?.author)?.name}
+    </span>
   )
 
   const Line22 = () => (

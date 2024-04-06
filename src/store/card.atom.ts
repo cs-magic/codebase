@@ -54,10 +54,13 @@ export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
 
 export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
 
-export type CardPreviewEngine = "html2image" | "html2canvas"
+export type CardPreviewEngine =
+  | "html2image"
+  | "html2canvas"
+  | "modern-screenshot"
 export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngine>(
   "card.preview.engine",
-  "html2image",
+  "modern-screenshot",
 )
 
 ///////////////////////////////

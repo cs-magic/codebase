@@ -3,6 +3,7 @@ import download from "downloadjs"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"
 import { useAtom } from "jotai"
+import { domToBlob } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
@@ -33,23 +34,27 @@ export const GenCardAction2 = ({
     if (!obj.current || !card) return
 
     const blob =
-      engine === "html2image"
-        ? await html2image.toBlob(obj.current, {
-            pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
-            backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
+      engine === "modern-screenshot"
+        ? await domToBlob(obj.current, {
+            scale: 4,
           })
-        : await new Promise<Blob | null>(async (resolve, reject) => {
-            if (!obj.current || !card) return
-
-            const canvas = await html2canvas(obj.current, {
-              scale: 4,
+        : engine === "html2image"
+          ? await html2image.toBlob(obj.current, {
+              pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
+              backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
             })
+          : await new Promise<Blob | null>(async (resolve, reject) => {
+              if (!obj.current || !card) return
 
-            canvas.toBlob((data) => {
-              console.log("blobCallback: ", data)
-              resolve(data)
+              const canvas = await html2canvas(obj.current, {
+                scale: 4,
+              })
+
+              canvas.toBlob((data) => {
+                console.log("blobCallback: ", data)
+                resolve(data)
+              })
             })
-          })
     if (!blob) return
 
     switch (type) {

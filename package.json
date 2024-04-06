@@ -90,6 +90,7 @@
     "markmap-common": "^0.16.0",
     "markmap-lib": "^0.16.1",
     "markmap-view": "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch",
+    "modern-screenshot": "^4.4.38",
     "moment": "^2.30.1",
     "nanoid": "^5.0.6",
     "net": "^1.0.2",

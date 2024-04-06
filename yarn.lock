@@ -14630,6 +14630,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"modern-screenshot@npm:^4.4.38":
+  version: 4.4.38
+  resolution: "modern-screenshot@npm:4.4.38"
+  checksum: 10c0/db72a42a6f9d54bda8391f1d4f42c53639320bf994290f51387acdae3864a32133db147ddc17d0ba4b74b22407160b53d555648811bf41da1f2154b934b888bd
+  languageName: node
+  linkType: hard
+
 "moment@npm:^2.30.1":
   version: 2.30.1
   resolution: "moment@npm:2.30.1"
@@ -15489,6 +15496,7 @@ __metadata:
     markmap-common: "npm:^0.16.0"
     markmap-lib: "npm:^0.16.1"
     markmap-view: "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch"
+    modern-screenshot: "npm:^4.4.38"
     moment: "npm:^2.30.1"
     nanoid: "npm:^5.0.6"
     net: "npm:^1.0.2"
