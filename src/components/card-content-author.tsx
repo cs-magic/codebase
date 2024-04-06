@@ -1,12 +1,16 @@
 import { Card } from "@prisma/client"
-import { useAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
+import { useEffect } from "react"
 import moment from "../../packages/common-datetime/moment"
 import { safeParseJson } from "../../packages/common-general/safe-parse-json"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
-import { cardAuthorWithTitleAtom } from "../store/card.atom"
+import {
+  cardAuthorRenderedAtom,
+  cardAuthorWithTitleAtom,
+} from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
 export const CardContentAuthor = ({ card }: { card: Card | null }) => {
@@ -47,10 +51,20 @@ export const CardContentAuthor = ({ card }: { card: Card | null }) => {
     </div>
   )
 
+  const setAuthorRendered = useSetAtom(cardAuthorRenderedAtom)
+  useEffect(() => {
+    setAuthorRendered(false)
+  }, [card?.author?.avatar])
+
   return (
     <div className={"flex items-center shrink-0 h-8"}>
       <VerticalAspectRatio ratio={1} className={"shrink-0"}>
-        {!!card?.author && <UserAvatar user={card.author} />}
+        {!!card?.author && (
+          <UserAvatar
+            imageProps={{ onLoad: () => setAuthorRendered(true) }}
+            user={card.author}
+          />
+        )}
       </VerticalAspectRatio>
 
       <div className={"flex flex-col justify-center overflow-hidden mx-2"}>

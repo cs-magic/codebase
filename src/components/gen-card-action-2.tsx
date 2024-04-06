@@ -61,7 +61,7 @@ export const GenCardAction2 = ({
       case "download":
         const fp = `${card.platformType}_${card.platformId}.png`
         download(blob, fp)
-        toast.success(`downloaded at ${fp}`)
+        toast.success(`downloaded at ${fp}`, { closeButton: true, duration: 0 })
         break
 
       case "upload":
@@ -70,7 +70,9 @@ export const GenCardAction2 = ({
           type: blob.type,
         })
         await uploadFile(file)
-        toast.success(`uploaded at ${getOssUrl(cardOssId)}`)
+        toast.success(`uploaded at ${getOssUrl(cardOssId)}`, {
+          closeButton: true,
+        })
     }
   }
 

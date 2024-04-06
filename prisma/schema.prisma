@@ -108,7 +108,7 @@ model Card {
   platformData Json?
 
   sourceUrl   String?
-  /// [IUserSummary]
+  /// [IUserBasic]
   author      Json?
   time        DateTime?
   title       String?

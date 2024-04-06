@@ -27,6 +27,8 @@ export const cardDownloadingAtom = atom(false)
 export const cardUploadingAtom = atom(false)
 export const cardMindmapRenderedAtom = atom(false)
 export const cardCoverRenderedAtom = atom(false)
+export const cardAuthorRenderedAtom = atom(false)
+export const cardUserRenderedAtom = atom(false)
 
 export const cardAuthorWithTitleAtom = atomWithStorage(
   "card.author.with-title",
@@ -61,7 +63,11 @@ export const cardAtom = atom((get) => {
 })
 
 export const cardRenderedAtom = atom(
-  (get) => get(cardCoverRenderedAtom) && get(cardMindmapRenderedAtom),
+  (get) =>
+    get(cardCoverRenderedAtom) &&
+    get(cardMindmapRenderedAtom) &&
+    get(cardUserRenderedAtom) &&
+    get(cardAuthorRenderedAtom),
 )
 
 export const cardUserAtom = atom<IUserBasic>((get) => ({

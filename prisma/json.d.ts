@@ -2,7 +2,7 @@ declare global {
   // 要放在里面
 
   namespace PrismaJson {
-    export { IUserSummary } from "@/schema/user.summary"
+    export { IUserSummary, IUserBasic } from "@/schema/user.summary"
     export { IMedia, ICardStat, ICardPlatform, ISummary } from "@/schema/card"
     export {
       IWechatArticleStat,

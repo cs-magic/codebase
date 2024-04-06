@@ -53,17 +53,11 @@ export default function MarkMap({ content }: { content?: string }) {
    * 当填充数据，并且初始化了ratio之后，才要 fit
    */
   useEffect(() => {
-    if (
-      // todo: ratio, content all not reliable
-      ratio &&
-      content
-    ) {
+    if (content) {
+      setCardRendered(false)
       void refMm.current?.fit().then(() => {
         setCardRendered(true)
       })
-    }
-    return () => {
-      setCardRendered(false)
     }
   }, [ratio, content])
 
