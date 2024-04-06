@@ -83,7 +83,7 @@ const PreviewActionButton = ({
         break
 
       case "download":
-        const fp = `${card.platformType}_${card.platformId}.png`
+        const fp = `${card?.platformType}_${card?.platformId}.png`
         download(blob, fp)
         toast.success(`downloaded at ${fp}`)
         break

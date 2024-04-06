@@ -10,9 +10,9 @@ import {
 } from "../../packages/common-ui/components/atom-switcher"
 import { genCardFromUrl } from "../core/gen-card"
 import {
-  cardAtom,
   cardFetchEngineAtom,
   cardGenOptionsAtom,
+  cardInputAtom,
   cardInputUrlAtom,
   cardMdWithImgAtom,
   refetchCardCommentsAtom,
@@ -25,8 +25,8 @@ import { GenCardInputUrl } from "./gen-card-input-url"
 
 export const GenCardViaFrontend = () => {
   const [inputUrl] = useAtom(cardInputUrlAtom)
-  const setCard = useSetAtom(cardAtom)
   const [options] = useAtom(cardGenOptionsAtom)
+  const setCardInput = useSetAtom(cardInputAtom)
 
   return (
     <>
@@ -66,7 +66,7 @@ export const GenCardViaFrontend = () => {
         className={"w-full"}
         action={async () => {
           await genCardFromUrl(inputUrl, options)
-            .then(setCard)
+            .then((card) => setCardInput(JSON.stringify(card)))
             .catch((err) => toast.error((err as unknown as Error).message))
         }}
         type={"generate"}

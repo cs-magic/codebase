@@ -9,31 +9,6 @@ import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
 
-export const cardAtom = withImmer(
-  atomWithStorage<ICardDetail>("card", {
-    id: "",
-
-    platformType: "wxmpArticle",
-    platformId: "",
-
-    contentSummary: null,
-    stat: null,
-    author: null,
-    cover: null,
-    time: null,
-    createdAt: null,
-    updatedAt: null,
-    contentMd: null,
-    sourceUrl: null,
-    title: null,
-    description: null,
-    platformData: null,
-    iFrames: [],
-    videos: [],
-    images: [],
-  }),
-)
-
 export const cardInputAtom = atomWithStorage("card.input", "")
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
@@ -49,7 +24,8 @@ export const cardGeneratingAtom = atom(false)
 export const cardCopyingAtom = atom(false)
 export const cardDownloadingAtom = atom(false)
 export const cardUploadingAtom = atom(false)
-export const cardRenderedAtom = atom(false)
+export const cardMindmapRenderedAtom = atom(false)
+export const cardCoverRenderedAtom = atom(false)
 
 export const cardAuthorWithTitleAtom = atomWithStorage(
   "card.author.with-title",
@@ -78,6 +54,14 @@ export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
 ///////////////////////////////
 // derived
 //////////////////////////////
+
+export const cardAtom = atom((get) => {
+  return parseJS<ICardDetail>(get(cardInputAtom))
+})
+
+export const cardRenderedAtom = atom(
+  (get) => get(cardCoverRenderedAtom) && get(cardMindmapRenderedAtom),
+)
 
 export const cardUserAtom = atom<IUserBasic>((get) => ({
   id: get(cardUserIdAtom),

@@ -1,6 +1,6 @@
 "use client"
 
-import { cardRenderedAtom } from "@/store/card.atom"
+import { cardMindmapRenderedAtom } from "@/store/card.atom"
 import { useAtom, useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
@@ -18,7 +18,7 @@ export default function MarkMap({ content }: { content?: string }) {
   const refMm = useRef<Markmap>()
 
   const [ratio, setRatio] = useState(0)
-  const setCardRendered = useSetAtom(cardRenderedAtom)
+  const setCardRendered = useSetAtom(cardMindmapRenderedAtom)
   const [spacingVertical] = useAtom(mapSpacingVerticalAtom)
 
   useEffect(() => {
