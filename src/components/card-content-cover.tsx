@@ -9,11 +9,9 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
   const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom)
 
   useEffect(() => {
-    return () => {
-      console.log("-- cover destroyed")
-      setCardCoverRendered(false)
-    }
-  }, [cover])
+    console.log("-- src changed")
+    setCardCoverRendered(false)
+  }, [cover?.url])
 
   if (!cover) return null
 
@@ -22,8 +20,8 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
       <AspectRatio ratio={cover?.ratio ?? 2.35}>
         <Image
           priority
-          onLoad={(event) => {
-            console.log("-- cover ok")
+          onLoad={() => {
+            console.log("-- cover loaded")
             setCardCoverRendered(true)
           }}
           src={cover.url}
