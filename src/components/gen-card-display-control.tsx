@@ -15,6 +15,7 @@ import {
   cardAuthorWithTitleAtom,
   cardInputAtom,
 } from "../store/card.atom"
+import { GenCardInputUser } from "./gen-card-input-user"
 import { StandardCard } from "./standard-card"
 
 export const GenCardDisplayControl = () => {
@@ -29,6 +30,8 @@ export const GenCardDisplayControl = () => {
 
   return (
     <StandardCard title={"Display Control"}>
+      <GenCardInputUser />
+
       <Textarea
         id={"card-content"}
         value={cardInput}
