@@ -30,7 +30,11 @@ export const GenCardPreview = () => {
         <Action type={"upload"} />
       </div>
 
-      <div ref={obj} className={"w-full font-card corner-gradient"}>
+      <div
+        ref={obj}
+        id={"card-preview"}
+        className={"w-full font-card corner-gradient"}
+      >
         <CardHeader />
 
         <CardContent />
@@ -73,7 +77,9 @@ const PreviewActionButton = ({
         break
 
       case "download":
-        download(blob, `${encodeURI(card?.title ?? new Date().toString())}.png`)
+        const fp = `${encodeURI(card?.title ?? new Date().toString())}.png`
+        download(blob, fp)
+        toast.success(`downloaded at ${fp}`)
         break
 
       case "upload":
@@ -82,7 +88,7 @@ const PreviewActionButton = ({
           type: blob.type,
         })
         await uploadFile(file)
-        toast.success(`uploaded at ${getOssUrl(cardOssId)}`, { duration: 0 })
+        toast.success(`uploaded at ${getOssUrl(cardOssId)}`)
     }
   }
 

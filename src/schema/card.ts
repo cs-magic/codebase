@@ -1,4 +1,5 @@
 import { $Enums } from "@prisma/client"
+import { IArticleSummaryParsed } from "../../packages/common-article/schema"
 import { FetchEngine } from "../../packages/common-general/schema"
 import {
   IWechatArticleComment,
@@ -29,6 +30,11 @@ export type IMedia = {
 export type ISummary = {
   modelType: string
   result: string
+}
+
+export type ISummaryParsed = {
+  modelType?: string
+  result?: IArticleSummaryParsed
 }
 
 export type ActionType = "generate" | "copy" | "download" | "upload"

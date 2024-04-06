@@ -1,10 +1,11 @@
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
+import { parseSummary } from "../../packages/common-article/utils"
 import { FetchEngine } from "../../packages/common-general/schema"
-import { ICardGenOptions } from "../schema/card"
+import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
-import { IUserBasic } from "../schema/user.summary"
+import { IUserBasic } from "@/schema/user.summary"
 import { getCardUrl } from "../utils"
 
 export const cardAtom = withImmer(
@@ -96,3 +97,8 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
   refetchStat: get(refetchCardStatAtom),
   refetchComments: get(refetchCardCommentsAtom),
 }))
+
+export const summaryAtom = atom<ISummaryParsed>((get) => {
+  const card = get(cardAtom)
+  return parseSummary(card?.contentSummary)
+})

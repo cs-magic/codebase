@@ -31,7 +31,7 @@ export default function MarkMap({ content }: { content?: string }) {
     })
     refMm.current = mm
 
-    const { root } = transformer.transform(transformContent(content), {})
+    const { root } = transformer.transform(transformMindmapContent(content), {})
     console.log({ root })
     root.content = "" // 去掉首结点的内容
     mm.setData(root)
@@ -79,11 +79,14 @@ export default function MarkMap({ content }: { content?: string }) {
   )
 }
 
-const transformContent = (content?: string): string => {
-  return (content ?? "")
-    .split(/\n/g)
+const transformMindmapContent = (input?: string): string => {
+  const output = (input ?? "")
+    .split(/\\n/g)
     .map((s) => {
       return truncateString(s, 30)
     })
     .join("\n")
+
+  console.log("-- transformed mindmap content: ", { input, output })
+  return output
 }

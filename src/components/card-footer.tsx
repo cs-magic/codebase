@@ -1,6 +1,6 @@
 "use client"
 
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import {
   CalendarHeartIcon,
   FingerprintIcon,
@@ -13,9 +13,10 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 import { FlexContainer } from "../../packages/common-ui/components/flex-container"
 
 import { config } from "../config/system"
-import { cardAtom } from "../store/card.atom"
+import { cardAtom, summaryAtom } from "../store/card.atom"
 
 export const CardFooter = () => {
+  const summary = useAtomValue(summaryAtom)
   const [card] = useAtom(cardAtom)
 
   return (
@@ -25,7 +26,7 @@ export const CardFooter = () => {
       <div className={"flex  items-center justify-center"}>
         <VerticalItem
           Icon={PackageIcon}
-          value={card?.contentSummary?.modelType?.toUpperCase()}
+          value={summary?.modelType?.toUpperCase()}
         />
         <VerticalItem
           Icon={CalendarHeartIcon}

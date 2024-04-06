@@ -1,18 +1,16 @@
 "use client"
 
-import { useAtom } from "jotai"
-import { parseSummary } from "../../packages/common-article/utils"
+import { useAtomValue } from "jotai"
 import MarkMap from "../../packages/common-visualization/markmap"
-import { cardAtom } from "../store/card.atom"
+import { cardAtom, summaryAtom } from "../store/card.atom"
+import { CardContentAuthor } from "./card-content-author"
 import { Cover } from "./card-content-cover"
 import { Stat } from "./card-content-stat"
 import { Tags } from "./card-content-tags"
-import { CardContentAuthor } from "./card-content-author"
 
 export const CardContent = () => {
-  const [card] = useAtom(cardAtom)
-
-  const summary = parseSummary(card?.contentSummary?.result)
+  const card = useAtomValue(cardAtom)
+  const summary = useAtomValue(summaryAtom)
 
   // console.log("-- summary: ", summary)
 
@@ -26,15 +24,15 @@ export const CardContent = () => {
         <div className={"p-2 flex flex-col gap-2"}>
           <h1 className={"text-lg font-bold shrink-0"}>{card?.title}</h1>
 
-          <Tags tags={summary?.tags} />
+          <Tags tags={summary?.result?.tags} />
 
           <Stat stat={card?.stat} />
 
           <div className={"bg-slate-100 p-2 rounded-lg text-sm"}>
-            {summary?.description}
+            {summary?.result?.description}
           </div>
 
-          <MarkMap content={summary?.mindmap} />
+          <MarkMap content={summary?.result?.mindmap} />
 
           <CardContentAuthor card={card} />
         </div>
