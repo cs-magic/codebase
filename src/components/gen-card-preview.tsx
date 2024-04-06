@@ -8,7 +8,12 @@ import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
 import { getOssUrl } from "../../packages/common-oss/utils"
 import { ActionType } from "../schema/card"
-import { cardAtom, cardOssIdAtom, cardRenderedAtom } from "../store/card.atom"
+import {
+  cardAtom,
+  cardInputValidAtom,
+  cardOssIdAtom,
+  cardRenderedAtom,
+} from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
@@ -53,6 +58,7 @@ const PreviewActionButton = ({
   obj: RefObject<HTMLDivElement>
 }) => {
   const [rendered] = useAtom(cardRenderedAtom)
+  const [cardInputValid] = useAtom(cardInputValidAtom)
   const [card] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
 
@@ -93,6 +99,10 @@ const PreviewActionButton = ({
   }
 
   return (
-    <GenCardActionButton action={action} type={type} disabled={!rendered} />
+    <GenCardActionButton
+      action={action}
+      type={type}
+      disabled={!cardInputValid || !rendered}
+    />
   )
 }

@@ -1,11 +1,12 @@
+import { IUserBasic } from "@/schema/user.summary"
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { parseSummary } from "../../packages/common-article/utils"
+import { parseJS } from "../../packages/common-general/safe-parse-json"
 import { FetchEngine } from "../../packages/common-general/schema"
 import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
-import { IUserBasic } from "@/schema/user.summary"
 import { getCardUrl } from "../utils"
 
 export const cardAtom = withImmer(
@@ -32,6 +33,8 @@ export const cardAtom = withImmer(
     images: [],
   }),
 )
+
+export const cardInputAtom = atomWithStorage("card.input", "")
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "")
 export const cardInputUrlsAtom = withImmer(
@@ -101,4 +104,10 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
 export const summaryAtom = atom<ISummaryParsed>((get) => {
   const card = get(cardAtom)
   return parseSummary(JSON.stringify(card?.contentSummary))
+})
+
+export const cardInputValidAtom = atom((get) => {
+  const v = get(cardInputAtom)
+  const p = parseJS<ICardDetail>(v)
+  return !!p
 })
