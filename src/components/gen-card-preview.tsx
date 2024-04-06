@@ -2,8 +2,14 @@
 
 import { useAtom } from "jotai"
 import { useRef } from "react"
+import { AtomSelector } from "../../packages/common-ui/components/atom-switcher"
+import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { Action2Type } from "../schema/card"
-import { cardRenderedAtom } from "../store/card.atom"
+import {
+  cardFetchEngineAtom,
+  cardPreviewEngineAtom,
+  cardRenderedAtom,
+} from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
@@ -22,6 +28,12 @@ export const GenCardPreview = () => {
 
   return (
     <StandardCard title={"Preview"}>
+      <AtomSelector
+        atom={cardPreviewEngineAtom}
+        name={"preview-engine"}
+        vs={["html2image", "html2canvas"]}
+      />
+
       <div className={"flex justify-around gap-2"}>
         <Action type={"copy"} />
         <Action type={"download"} />

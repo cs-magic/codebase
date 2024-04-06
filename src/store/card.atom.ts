@@ -25,7 +25,7 @@ export const cardResettingAtom = atom(false)
 export const cardCopyingAtom = atom(false)
 export const cardDownloadingAtom = atom(false)
 export const cardUploadingAtom = atom(false)
-export const cardMindmapRenderedAtom = atom(false)
+export const cardMindmapRenderedAtom = atom(true)
 export const cardCoverRenderedAtom = atom(false)
 export const cardAuthorRenderedAtom = atom(false)
 export const cardUserRenderedAtom = atom(false)
@@ -54,6 +54,12 @@ export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
 
 export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
 
+export type CardPreviewEngine = "html2image" | "html2canvas"
+export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngine>(
+  "card.preview.engine",
+  "html2image",
+)
+
 ///////////////////////////////
 // derived
 //////////////////////////////
@@ -62,13 +68,22 @@ export const cardAtom = atom((get) => {
   return parseJS<ICardDetail>(get(cardInputAtom))
 })
 
-export const cardRenderedAtom = atom(
-  (get) =>
-    get(cardCoverRenderedAtom) &&
-    get(cardMindmapRenderedAtom) &&
-    get(cardUserRenderedAtom) &&
-    get(cardAuthorRenderedAtom),
-)
+export const cardRenderedAtom = atom((get) => {
+  const cover = get(cardCoverRenderedAtom)
+  const mindmap = get(cardMindmapRenderedAtom)
+  const user = get(cardUserRenderedAtom)
+  const author = get(cardAuthorRenderedAtom)
+  const rendered = cover && mindmap && user && author
+
+  console.log({
+    cover,
+    mindmap,
+    user,
+    author,
+    rendered,
+  })
+  return rendered
+})
 
 export const cardUserAtom = atom<IUserBasic>((get) => ({
   id: get(cardUserIdAtom),

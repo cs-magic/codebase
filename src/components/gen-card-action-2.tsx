@@ -1,15 +1,19 @@
 import download from "downloadjs"
+
+import * as html2image from "html-to-image"
+import html2canvas from "html2canvas"
 import { useAtom } from "jotai"
 import { RefObject } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
 import { getOssUrl } from "../../packages/common-oss/utils"
 import { Action2Type, ActionType } from "../schema/card"
-import { cardAtom, cardOssIdAtom } from "../store/card.atom"
+import {
+  cardAtom,
+  cardOssIdAtom,
+  cardPreviewEngineAtom,
+} from "../store/card.atom"
 import { GenCardActionButton } from "./gen-card-action-button"
-
-import * as html2image from "html-to-image"
-import html2canvas from "html2canvas"
 
 export const GenCardAction2 = ({
   type,
@@ -22,12 +26,10 @@ export const GenCardAction2 = ({
 }) => {
   const [card] = useAtom(cardAtom)
   const [cardOssId] = useAtom(cardOssIdAtom)
+  const [engine] = useAtom(cardPreviewEngineAtom)
 
-  const action = async (
-    type: ActionType,
-    engine: "html2image" | "html2canvas" = "html2canvas",
-  ) => {
-    console.log({ type })
+  const action = async (type: ActionType) => {
+    console.log({ type, engine })
     if (!obj.current || !card) return
 
     const blob =
@@ -38,12 +40,14 @@ export const GenCardAction2 = ({
           })
         : await new Promise<Blob | null>(async (resolve, reject) => {
             if (!obj.current || !card) return
-            const h = await html2canvas(obj.current, {
+
+            const canvas = await html2canvas(obj.current, {
               scale: 4,
             })
-            return h.toBlob((data) => {
+
+            canvas.toBlob((data) => {
               console.log("blobCallback: ", data)
-              return resolve(data)
+              resolve(data)
             })
           })
     if (!blob) return
