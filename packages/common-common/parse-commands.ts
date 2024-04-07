@@ -1,5 +1,9 @@
 export type NormalCommand = "help" | "ding" | "status"
 export const normalCommands = ["help", "ding", "status"] as NormalCommand[]
+
+export type SuperCommand = "set-llm-model"
+export const superCommands = ["set-llm-model"] as SuperCommand[]
+
 export const parseCommands = <T extends string>(
   text: string,
   commands: T[],
