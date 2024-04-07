@@ -4,7 +4,7 @@ import {
 } from "../../packages/common-platform-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/common-platform-bilibili/utils"
 import { fetchXiaoHongShuDetail } from "../../packages/common-platform-xiaohongshu/actions"
-import { extractFirstURL } from "../../packages/common-utils/parse-url"
+import { extractFirstURL } from "../../packages/common-common/parse-url"
 import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { bilibili2card } from "./card-platform/bilibili/to-card"

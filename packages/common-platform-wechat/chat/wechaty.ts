@@ -1,3 +1,3 @@
-import { createBot } from "./core"
+import { createWechatyBot } from "./create-wechaty-bot"
 
-void createBot({ name: process.argv[2] ?? "default" })
+void createWechatyBot({ name: process.argv[2] ?? "default" })

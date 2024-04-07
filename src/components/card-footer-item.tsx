@@ -14,7 +14,7 @@ export const CardFooterItem = ({
       className={"!gap-1 overflow-hidden"}
     >
       <Icon />
-      <span className={"text-nowrap"}>{value ?? "-"}</span>
+      <span className={"text-nowrap truncate text-sm"}>{value ?? "-"}</span>
     </FlexContainer>
   )
 }

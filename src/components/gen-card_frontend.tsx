@@ -1,7 +1,7 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { fetchEngines } from "../../packages/common-general/schema"
+import { fetchEngines } from "../../packages/common-common/schema"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import {
@@ -17,7 +17,7 @@ import {
   refetchCardCommentsAtom,
   refetchCardPageAtom,
   refetchCardStatAtom,
-  refetchCardSummaryAtom,
+  summaryModelAtom,
 } from "../store/card.atom"
 import { GenCardAction1 } from "./gen-card-action-1"
 import { GenCardInputUrl } from "./gen-card-input-url"
@@ -39,7 +39,7 @@ export const GenCardViaFrontend = () => {
       <>
         {[
           { atom: refetchCardPageAtom, name: "refetch-page" },
-          { atom: refetchCardSummaryAtom, name: "refetch-summary" },
+          { atom: summaryModelAtom, name: "refetch-summary" },
           { atom: refetchCardStatAtom, name: "refetch-stat" },
           { atom: refetchCardCommentsAtom, name: "refetch-comments" },
         ].map((item, index) => (

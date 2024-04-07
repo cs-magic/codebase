@@ -20,7 +20,7 @@ export const GenCardPreview = () => {
   const obj = useRef<HTMLDivElement>(null)
   const [rendered] = useAtom(cardRenderedAtom)
 
-  console.log("-- preview: ", { rendered })
+  // console.log("-- preview: ", { rendered })
 
   const Action = ({ type }: { type: Action2Type }) => (
     <GenCardAction2 type={type} obj={obj} rendered={rendered} />

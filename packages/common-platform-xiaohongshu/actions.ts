@@ -1,7 +1,7 @@
 "use server"
 
 import { api } from "../common-api"
-import { parseJS } from "../common-general/safe-parse-json"
+import { parseJS } from "../common-common/safe-parse-json"
 import { IXiaoHongShuNotePageData } from "./schema"
 
 /**

@@ -29,9 +29,15 @@ export const CardHeader = () => {
               }}
             />
 
-            <Label className={"text-primary-foreground"}>
-              <span className={"font-bold text-lg mr-1"}>{user.name}</span>
-              分享给你一张卡片
+            <Label
+              className={
+                "text-primary-foreground w-full flex items-center gap-2"
+              }
+            >
+              <span className={"font-bold text-lg mr-1 truncate"}>
+                {user.name}
+              </span>
+              <span className={"text-nowrap"}>分享给你一张卡片</span>
               {/*{card?.id && `#${card.id}`}*/}
             </Label>
           </>

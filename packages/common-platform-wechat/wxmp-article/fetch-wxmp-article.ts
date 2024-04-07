@@ -1,7 +1,7 @@
 import { env } from "@/env"
 import { ICardGenOptions } from "@/schema/card"
 import { IUserBasic } from "@/schema/user.summary"
-import parse from "node-html-parser"
+import { parse } from "node-html-parser"
 import { api } from "../../common-api"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
@@ -44,9 +44,6 @@ export const fetchWxmpArticle = async (
 
     console.log({ ogUrl })
 
-    if (options.refetchSummary) {
-    }
-
     return {
       platformId: /sn=(.*?)&/.exec(ogUrl ?? "")![1]!, // get id(sn) from page
       platformType: "wxmpArticle",
@@ -67,7 +64,7 @@ export const fetchWxmpArticle = async (
     {
       params: {
         url,
-        with_summary: options?.refetchSummary,
+        summary_model: options?.summary_model,
         md_with_img: options?.mdWithImg,
       },
     },

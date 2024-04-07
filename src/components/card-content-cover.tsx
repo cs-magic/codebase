@@ -9,7 +9,7 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
   const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom)
 
   useEffect(() => {
-    console.log("-- src changed")
+    // console.log("-- src changed")
     setCardCoverRendered(false)
   }, [cover?.url])
 
@@ -21,7 +21,7 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
         {/*  公众号不能用 img，会显示此图片来自微信公众平台，未经允许不可引用 */}
         <Image
           onLoad={() => {
-            console.log("-- cover loaded")
+            // console.log("-- cover loaded")
             setCardCoverRendered(true)
           }}
           src={cover.url}

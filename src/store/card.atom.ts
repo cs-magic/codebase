@@ -3,8 +3,8 @@ import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { parseSummary } from "../../packages/common-article/utils"
-import { parseJS } from "../../packages/common-general/safe-parse-json"
-import { FetchEngine } from "../../packages/common-general/schema"
+import { parseJS } from "../../packages/common-common/safe-parse-json"
+import { FetchEngine } from "../../packages/common-common/schema"
 import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
@@ -38,9 +38,9 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
 
 export const refetchCardPageAtom = atomWithStorage("card.page.refetch", false)
-export const refetchCardSummaryAtom = atomWithStorage(
-  "card.summary.refetch",
-  false,
+export const summaryModelAtom = atomWithStorage<string>(
+  "card.summary.model",
+  "", // gpt-3.5-turbo
 )
 export const refetchCardStatAtom = atomWithStorage("card.stat.refetch", false)
 export const refetchCardCommentsAtom = atomWithStorage(
@@ -78,13 +78,7 @@ export const cardRenderedAtom = atom((get) => {
   const author = get(cardAuthorRenderedAtom)
   const rendered = cover && mindmap && user && author
 
-  console.log({
-    cover,
-    mindmap,
-    user,
-    author,
-    rendered,
-  })
+  // console.log({ cover, mindmap, user, author, rendered })
   return rendered
 })
 
@@ -105,7 +99,7 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
   fetchEngine: get(cardFetchEngineAtom),
   mdWithImg: get(cardMdWithImgAtom),
   refetchPage: get(refetchCardPageAtom),
-  refetchSummary: get(refetchCardSummaryAtom),
+  summary_model: get(summaryModelAtom),
   refetchStat: get(refetchCardStatAtom),
   refetchComments: get(refetchCardCommentsAtom),
 }))
