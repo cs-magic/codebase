@@ -39,7 +39,8 @@ export const GenCardViaFrontend = () => {
       <>
         {[
           { atom: refetchCardPageAtom, name: "refetch-page" },
-          { atom: summaryModelAtom, name: "refetch-summary" },
+          //   todo: string model
+          // { atom: summaryModelAtom, name: "refetch-summary" },
           { atom: refetchCardStatAtom, name: "refetch-stat" },
           { atom: refetchCardCommentsAtom, name: "refetch-comments" },
         ].map((item, index) => (
