@@ -8,7 +8,7 @@ export const UserInputAvatar = () => {
 
   return (
     <Label className={"hover:cursor-pointer shrink-0 h-12"}>
-      <UserAvatar user={{ id: "", image: draft ?? "", name: "" }} />
+      <UserAvatar user={{ id: "", avatar: draft ?? "", name: "" }} />
 
       <input
         hidden
