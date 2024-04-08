@@ -13,7 +13,7 @@ import { cache } from "react"
 import { transformer } from "./shared"
 import { createTRPCContext } from "./context"
 import { appRouter } from "@/app/api/trpc"
-import { env } from "@/env"
+import { env } from "@/env.js"
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

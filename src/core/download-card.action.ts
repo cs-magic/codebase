@@ -10,7 +10,7 @@ import puppeteer, {
   PuppeteerNode,
 } from "puppeteer"
 import { extractFirstURL } from "../../packages/common-common/parse-url"
-import { env } from "../env"
+import { env } from "../env.js"
 import { IUserSummary } from "../schema/user.summary"
 
 export type DriverType = "playwright" | "puppet"

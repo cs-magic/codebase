@@ -8,6 +8,12 @@
 
 ## Architecture
 
+## BugFix
+
+### `@t3-oss/env-nextjs` 在 jest 下有问题，现已弃用
+
+last-commit@ee897b2
+
 ## Tech
 
 ### 字体

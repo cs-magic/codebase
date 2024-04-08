@@ -2,7 +2,7 @@
 
 import { IPusherServerConfig } from "../schema"
 import PusherJS from "pusher-js"
-import { env } from "@/env"
+import { env } from "@/env.js"
 
 export const initPusherClient = (
   config: IPusherServerConfig,

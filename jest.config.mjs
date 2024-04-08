@@ -3,15 +3,15 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { Config } from "jest"
-import nextJest from "next/jest"
+// import type { Config } from "jest"
+import nextJest from "next/jest.js"
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: "./",
 })
 
-const config: Config = {
+const config = {
   // preset: "ts-jest", // ref: https://stackoverflow.com/a/64223627/9422455
 
   // All imported modules in your tests should be mocked automatically
@@ -36,9 +36,7 @@ const config: Config = {
   coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  // coveragePathIgnorePatterns: ["/node_modules/"],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: "v8",
@@ -101,6 +99,8 @@ const config: Config = {
   // moduleNameMapper: {},
   moduleNameMapper: {
     "^@/(.*)$": "./src/$1",
+    "^@t3-oss/env-nextjs$":
+      "<rootDir>/node_modules/@t3-oss/env-nextjs/dist/index.js",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -160,6 +160,7 @@ const config: Config = {
   // testEnvironment: "node",
   // testEnvironment: "jest-environment-node",
   // testEnvironment: "jsdom",
+  // testEnvironment: "jest-environment-node@esm", // Or 'jest-environment-jsdom@esm' for DOM-related tests
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -189,16 +190,13 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
-  // transform: {
-  //   "^.+\\.(ts|tsx)?$": "ts-jest",
-  //   "^.+\\.(js|jsx)$": "babel-jest",
-  // },
+  transform: {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx|mjs)$": "babel-jest",
+  },
 
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "/node_modules/",
-  //   "\\.pnp\\.[^\\/]+$"
-  // ],
+  // 对于 ECMAScript 模块，可能还需要设置 transformIgnorePatterns 以包含 @t3-oss/env-nextjs
+  transformIgnorePatterns: ["node_modules/(?!(t3-oss/env-nextjs)/)"],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
