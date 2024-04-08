@@ -99,8 +99,8 @@ const config = {
   // moduleNameMapper: {},
   moduleNameMapper: {
     "^@/(.*)$": "./src/$1",
-    "^@t3-oss/env-nextjs$":
-      "<rootDir>/node_modules/@t3-oss/env-nextjs/dist/index.js",
+    // "^@t3-oss/env-nextjs$":
+    //   "<rootDir>/node_modules/@t3-oss/env-nextjs/dist/index.js",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -190,13 +190,13 @@ const config = {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
-  transform: {
-    "^.+\\.(ts|tsx)?$": "ts-jest",
-    "^.+\\.(js|jsx|mjs)$": "babel-jest",
-  },
+  // transform: {
+  //   "^.+\\.(ts|tsx)?$": "ts-jest",
+  //   "^.+\\.(js|jsx|mjs)$": "babel-jest",
+  // },
 
   // 对于 ECMAScript 模块，可能还需要设置 transformIgnorePatterns 以包含 @t3-oss/env-nextjs
-  transformIgnorePatterns: ["node_modules/(?!(t3-oss/env-nextjs)/)"],
+  // transformIgnorePatterns: ["node_modules/(?!(t3-oss/env-nextjs)/)"],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

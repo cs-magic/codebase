@@ -3,7 +3,7 @@ import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
 import { callLLM } from "../call-llm"
-import { LLMMType } from "../schema/models"
+import { LLMModelType } from "../schema/models"
 
 dotenv.config()
 
@@ -16,13 +16,13 @@ export type AgentConfig = {
   name?: string
   author?: string
   version?: string
-  model?: LLMMType
+  model?: LLMModelType
   total_tokens?: number // 8912
   system_prompt?: string
 }
 
 export type ICallLLMOptions = {
-  model: LLMMType
+  model: LLMModelType
   messages: ILLMMessage[]
   temperature?: number
   topP?: number
@@ -36,7 +36,7 @@ export const callAgent = async ({
   model,
 }: {
   input: string
-  model?: LLMMType
+  model?: LLMModelType
   agentType?: "default" | "summarize-content"
 } & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
   console.debug("-- agent calling: ", { input, agentType, model, options })

@@ -4,8 +4,8 @@ import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { parseSummary } from "../../packages/common-article/utils"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
-import { FetchEngine } from "../../packages/common-common/schema"
-import { LLMMType } from "../../packages/common-llm/schema/models"
+import { BackendEngineType } from "../../packages/common-common/schema"
+import { LLMModelType } from "../../packages/common-llm/schema/models"
 import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
@@ -48,12 +48,12 @@ export const cardRefetchCommentsAtom = atomWithStorage(
   "card.comments.refetch",
   false,
 )
-export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
+export const cardFetchEngineAtom = atomWithStorage<BackendEngineType>(
   "card.fetch-engine",
   "fastapi",
 )
 
-export const cardLLMTypeAtom = atomWithStorage<LLMMType>(
+export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
   "card.llm.type",
   "gpt-3.5-turbo",
 )
@@ -107,10 +107,10 @@ export const cardOssIdAtom = atom<string | null>((get) => {
 })
 
 export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
-  fetchEngine: get(cardFetchEngineAtom),
+  backendEngineType: get(cardFetchEngineAtom),
   mdWithImg: get(cardMdWithImgAtom),
   refetchPage: get(cardRefetchPageAtom),
-  summary_model: get(summaryModelAtom),
+  summaryModel: get(summaryModelAtom),
   refetchStat: get(cardRefetchCardAtom),
   refetchComments: get(cardRefetchCommentsAtom),
 }))

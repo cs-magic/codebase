@@ -25,5 +25,5 @@ export type IFetchWxmpArticleRes = {
   }
   description: string
   contentMd: string
-  contentSummary?: string
+  contentSummary?: string | null
 }

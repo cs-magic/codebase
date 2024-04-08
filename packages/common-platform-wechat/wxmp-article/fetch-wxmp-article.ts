@@ -4,6 +4,7 @@ import { IUserBasic } from "@/schema/user.summary"
 import { parse } from "node-html-parser"
 import { api, backendApi } from "../../common-api"
 import { parseMetaFromHtml } from "../../common-html/utils"
+import { callAgent } from "../../common-llm/agents/call-agent"
 import { html2md } from "../../common-markdown/html2md"
 import { IFetchWxmpArticleRes } from "../schema"
 
@@ -11,7 +12,7 @@ export const fetchWxmpArticle = async (
   url: string,
   options?: ICardGenOptions,
 ): Promise<IFetchWxmpArticleRes> => {
-  if (options?.fetchEngine === "nodejs") {
+  if (options?.backendEngineType === "nodejs") {
     // 1. fetch page
     const { data: pageText } = await api.get<string>(url)
 
@@ -42,7 +43,14 @@ export const fetchWxmpArticle = async (
       html.getElementById("img-content")?.innerHTML ?? "",
     )
 
-    console.log({ ogUrl })
+    console.log("-- parsed url: ", ogUrl)
+    let contentSummary: string | null | undefined = undefined
+    if (options.summaryModel) {
+      contentSummary = await callAgent({
+        input: contentMd,
+        agentType: "summarize-content",
+      })
+    }
 
     return {
       platformId: /sn=(.*?)&/.exec(ogUrl ?? "")![1]!, // get id(sn) from page
@@ -55,7 +63,7 @@ export const fetchWxmpArticle = async (
       description,
       cover: { url: coverUrl, width: null, height: null },
       contentMd,
-      contentSummary: undefined, // todo: llm
+      contentSummary,
     }
   }
 
@@ -64,7 +72,7 @@ export const fetchWxmpArticle = async (
     {
       params: {
         url,
-        summary_model: options?.summary_model,
+        summary_model: options?.summaryModel,
         md_with_img: options?.mdWithImg,
       },
     },

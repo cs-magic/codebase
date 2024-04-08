@@ -7,5 +7,8 @@ export class UnexpectedError extends Error {
   }
 }
 
-export type FetchEngine = "nodejs" | "fastapi"
-export const fetchEngines: FetchEngine[] = ["fastapi", "nodejs"]
+export type BackendEngineType = "nodejs" | "fastapi"
+export const supportedBackendEngineTypes: BackendEngineType[] = [
+  "fastapi",
+  "nodejs",
+]
