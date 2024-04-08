@@ -10,6 +10,11 @@ import {
 import { Switch } from "../../common-ui-shadcn/components/switch"
 import { LabelLine } from "./label-line"
 
+/**
+ * @param atom
+ * @param name todo: how to retrieve the name from input atom's variable name so that we can omit the name param
+ * @constructor
+ */
 export const AtomSwitcher = ({
   atom,
   name,

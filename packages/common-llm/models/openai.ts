@@ -12,7 +12,8 @@ import {
   SystemMessage,
 } from "@langchain/core/messages"
 import { ChatOpenAI } from "@langchain/openai"
-import { ICreateCallLLM } from "../schema"
+
+import { ICreateCallLLM } from "../schema/call-llm"
 
 /**
  * todo: 用更好的接口，langchain 这个不太对齐（但兼容性应该是最好的）

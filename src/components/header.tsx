@@ -23,7 +23,7 @@ import { IconContainer } from "../../packages/common-ui/components/icon-containe
 const Menus = () => (
   <>
     <LinkItem href={"/card/new"}>新建卡片</LinkItem>
-    <LinkItem href={"/card/fgen"}>渲染卡片</LinkItem>
+    <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
     {/*<LinkItem href={"/card/bgen"}>渲染卡片（后端）</LinkItem>*/}
   </>
 )

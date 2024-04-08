@@ -1,4 +1,4 @@
-import { ICreateCallLLM } from "../../packages/common-llm/schema"
+import { ICreateCallLLM } from "../../packages/common-llm/schema/call-llm"
 
 import { PusherServerId } from "../../packages/common-pusher/schema"
 import { ILLMMessage } from "./message"

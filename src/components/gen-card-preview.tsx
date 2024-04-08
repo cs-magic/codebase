@@ -3,20 +3,19 @@
 import { useAtom } from "jotai"
 import { useRef } from "react"
 import { AtomSelector } from "../../packages/common-ui/components/atom-switcher"
-import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { Action2Type } from "../schema/card"
-import {
-  cardFetchEngineAtom,
-  cardPreviewEngineAtom,
-  cardRenderedAtom,
-} from "../store/card.atom"
+import { Action2Type, GenCardRenderType } from "../schema/card"
+import { cardPreviewEngineAtom, cardRenderedAtom } from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
 import { GenCardAction2 } from "./gen-card-action-2"
 import { StandardCard } from "./standard-card"
 
-export const GenCardPreview = () => {
+export const GenCardPreview = ({
+  renderType,
+}: {
+  renderType?: GenCardRenderType
+}) => {
   const obj = useRef<HTMLDivElement>(null)
   const [rendered] = useAtom(cardRenderedAtom)
 
@@ -37,7 +36,7 @@ export const GenCardPreview = () => {
       <div className={"flex justify-around gap-2"}>
         <Action type={"copy"} />
         <Action type={"download"} />
-        <Action type={"upload"} />
+        {renderType === "backend" && <Action type={"upload"} />}
       </div>
 
       <div

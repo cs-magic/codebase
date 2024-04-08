@@ -49,3 +49,5 @@ export type ICardGenOptions = {
   refetchStat?: boolean
   refetchComments?: boolean
 }
+
+export type GenCardRenderType = "frontend" | "backend"

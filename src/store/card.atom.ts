@@ -5,6 +5,7 @@ import { atomWithStorage } from "jotai/utils"
 import { parseSummary } from "../../packages/common-article/utils"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 import { FetchEngine } from "../../packages/common-common/schema"
+import { LLMModelType } from "../../packages/common-llm/schema/models"
 import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
@@ -37,19 +38,29 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
 
-export const refetchCardPageAtom = atomWithStorage("card.page.refetch", false)
+export const cardRefetchPageAtom = atomWithStorage("card.page.refetch", false)
 export const summaryModelAtom = atomWithStorage<string>(
   "card.summary.model",
   "", // gpt-3.5-turbo
 )
-export const refetchCardStatAtom = atomWithStorage("card.stat.refetch", false)
-export const refetchCardCommentsAtom = atomWithStorage(
+export const cardRefetchCardAtom = atomWithStorage("card.stat.refetch", false)
+export const cardRefetchCommentsAtom = atomWithStorage(
   "card.comments.refetch",
   false,
 )
 export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
   "card.fetch-engine",
   "fastapi",
+)
+
+export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
+  "card.llm.type",
+  "gpt-3.5-turbo",
+)
+
+export const cardLLMEnabledAtom = atomWithStorage(
+  "card.llm-model.enabled",
+  true,
 )
 
 export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
@@ -98,10 +109,10 @@ export const cardOssIdAtom = atom<string | null>((get) => {
 export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
   fetchEngine: get(cardFetchEngineAtom),
   mdWithImg: get(cardMdWithImgAtom),
-  refetchPage: get(refetchCardPageAtom),
+  refetchPage: get(cardRefetchPageAtom),
   summary_model: get(summaryModelAtom),
-  refetchStat: get(refetchCardStatAtom),
-  refetchComments: get(refetchCardCommentsAtom),
+  refetchStat: get(cardRefetchCardAtom),
+  refetchComments: get(cardRefetchCommentsAtom),
 }))
 
 export const summaryAtom = atom<ISummaryParsed>((get) => {
