@@ -12,8 +12,26 @@ import {
   SystemMessage,
 } from "@langchain/core/messages"
 import { ChatOpenAI } from "@langchain/openai"
+import OpenAI from "openai"
+import { ICallLLMOptions } from "../agents/call-agent"
 
 import { ICreateCallLLM } from "../schema/call-llm"
+
+export const callChatGPTV2 = async (options: ICallLLMOptions) => {
+  const baseURL = options.model?.startsWith("moonshot")
+    ? "https://api.moonshot.cn/v1"
+    : undefined
+
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
+    baseURL,
+  })
+  const chatCompletion = await client.chat.completions.create({
+    messages: options.messages ?? [],
+    model: options.model ?? "gpt-3.5-turbo",
+  })
+  return chatCompletion.choices[0]?.message.content
+}
 
 /**
  * todo: 用更好的接口，langchain 这个不太对齐（但兼容性应该是最好的）

@@ -4,7 +4,7 @@ import {
   SuperCommand,
   superCommands,
 } from "../../../common-common/parse-commands"
-import { BaseMessageHandler } from "./_base.mh"
+import { BaseMessageHandler } from "./_base"
 
 export class SuperCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {

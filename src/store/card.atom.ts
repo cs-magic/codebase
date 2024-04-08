@@ -5,7 +5,7 @@ import { atomWithStorage } from "jotai/utils"
 import { parseSummary } from "../../packages/common-article/utils"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 import { FetchEngine } from "../../packages/common-common/schema"
-import { LLMModelType } from "../../packages/common-llm/schema/models"
+import { LLMMType } from "../../packages/common-llm/schema/models"
 import { ICardGenOptions, ISummaryParsed } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
@@ -53,7 +53,7 @@ export const cardFetchEngineAtom = atomWithStorage<FetchEngine>(
   "fastapi",
 )
 
-export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
+export const cardLLMTypeAtom = atomWithStorage<LLMMType>(
   "card.llm.type",
   "gpt-3.5-turbo",
 )

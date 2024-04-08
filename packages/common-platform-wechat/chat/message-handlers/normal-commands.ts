@@ -4,7 +4,7 @@ import {
   normalCommands,
   parseCommands,
 } from "../../../common-common/parse-commands"
-import { BaseMessageHandler } from "./_base.mh"
+import { BaseMessageHandler } from "./_base"
 
 export class NormalCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {

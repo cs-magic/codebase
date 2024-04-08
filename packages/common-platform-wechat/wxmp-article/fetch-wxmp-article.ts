@@ -1,8 +1,8 @@
-import { env } from "@/env"
+// import { env } from "@/env"
 import { ICardGenOptions } from "@/schema/card"
 import { IUserBasic } from "@/schema/user.summary"
 import { parse } from "node-html-parser"
-import { api } from "../../common-api"
+import { api, backendApi } from "../../common-api"
 import { parseMetaFromHtml } from "../../common-html/utils"
 import { html2md } from "../../common-markdown/html2md"
 import { IFetchWxmpArticleRes } from "../schema"
@@ -55,12 +55,12 @@ export const fetchWxmpArticle = async (
       description,
       cover: { url: coverUrl, width: null, height: null },
       contentMd,
-      contentSummary: undefined,
+      contentSummary: undefined, // todo: llm
     }
   }
 
-  const { data } = await api.get(
-    `${env.NEXT_PUBLIC_BACKEND_URL}/spider/parse-url`,
+  const { data } = await backendApi.get(
+    `http://127.0.0.1:40330/spider/parse-url`,
     {
       params: {
         url,

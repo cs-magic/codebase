@@ -6,7 +6,7 @@ import { MessageInterface } from "wechaty/impls"
 import { initLog } from "../../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../../common-common/parse-url-from-wechat-url-message"
 import { fetchWxmpArticle } from "../../wxmp-article/fetch-wxmp-article"
-import { BaseMessageHandler } from "./_base.mh"
+import { BaseMessageHandler } from "./_base"
 
 export class LinkParserMessageHandler extends BaseMessageHandler {
   private uniParser: UniParser

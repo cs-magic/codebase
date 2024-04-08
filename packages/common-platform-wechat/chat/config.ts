@@ -1,6 +1,6 @@
-import { LinkParserMessageHandler } from "./message-handlers/link-parser.mh"
-import { NormalCommandsMessageHandler } from "./message-handlers/normal-commands.mh"
-import { SuperCommandsMessageHandler } from "./message-handlers/super-commands.mh"
+import { LinkParserMessageHandler } from "./message-handlers/link-parser"
+import { NormalCommandsMessageHandler } from "./message-handlers/normal-commands"
+import { SuperCommandsMessageHandler } from "./message-handlers/super-commands"
 
 export const MessageHandlers = [
   LinkParserMessageHandler,

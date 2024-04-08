@@ -1,7 +1,7 @@
 /**
  * error handler: Axios & Error handling like a boss 😎 - DEV Community, https://dev.to/mperon/axios-error-handling-like-a-boss-333d
  */
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults } from "axios"
 import { toast } from "sonner"
 
 declare module "axios" {
@@ -223,12 +223,13 @@ function responseHandler<T>(response: AxiosResponse<T>): AxiosResponse<T> | T {
   throw new HttpError("API Error! Invalid status code!")
 }
 
-export function createHttpInstance() {
+export function createHttpInstance(config?: CreateAxiosDefaults) {
   const instance = axios.create({
     headers: {
       "Content-Type":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
     },
+    ...config,
   })
 
   const responseError = (error: THttpError) =>
