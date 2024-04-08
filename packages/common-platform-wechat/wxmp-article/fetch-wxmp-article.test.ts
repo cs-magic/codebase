@@ -6,11 +6,15 @@ const f = async () => {
     "2b63ef4bf6ecd706c43f86a12824dc329406&amp;mpshare=1&amp;scene=1&amp;srcid=0404tbqm2VUZRS72SUkVwq94&amp;sharer_shareinfo=481652bc83d18c4898309e7f413e6bae&amp;sharer_shareinfo_first=ae44e63fe8de9e05a5b6d5dfef67ce2c#rd"
 
   try {
-    const result = await fetchWxmpArticle(url, {})
+    const result = await fetchWxmpArticle(url, {
+      // summary_model: "gpt-4",
+      // summary_model: "gpt-3.5-turbo",
+      summary_model: "moonshot-v1-8k",
+    })
     console.log({ result })
   } catch (e) {
     console.error(e instanceof Error ? e.message : e)
   }
 }
 
-it("should ", f, 10e3)
+it("should ", f, 30e3)

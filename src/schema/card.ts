@@ -1,6 +1,7 @@
 import { $Enums } from "@prisma/client"
 import { IArticleSummaryParsed } from "../../packages/common-article/schema"
 import { FetchEngine } from "../../packages/common-common/schema"
+import { LLMMType } from "../../packages/common-llm/schema/models"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
@@ -44,7 +45,7 @@ export type ActionType = Action1Type | Action2Type
 export type ICardGenOptions = {
   fetchEngine?: FetchEngine
   mdWithImg?: boolean
-  summary_model?: string
+  summary_model?: LLMMType
   refetchPage?: boolean
   refetchStat?: boolean
   refetchComments?: boolean
