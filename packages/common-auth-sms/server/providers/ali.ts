@@ -1,6 +1,6 @@
 "use server"
 
-import { env } from "@/env.js"
+import { env } from "@/env"
 /**
  * `yarn add @alicloud/dysmsapi20170525@2.0.24`
  * ref: https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?version=2017-05-25&language=nodejs-tea

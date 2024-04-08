@@ -39,7 +39,9 @@ const config = {
         '@typescript-eslint/no-unsafe-return': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/ban-ts-comment': 'warn',
-        '@typescript-eslint/no-floating-promises': 'warn'
+        '@typescript-eslint/no-floating-promises': 'warn',
+        // no-infer 没有意义
+        "@typescript-eslint/no-inferrable-types": "off"
     },
 };
 

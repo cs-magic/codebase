@@ -7,13 +7,15 @@ import { ensureLLMProviderType } from "./utils"
 export const callLLM = async (options: ICallLLMOptions) => {
   console.debug("-- llm calling: ", options)
 
-  const providerType = ensureLLMProviderType(options.model)
+  const modelType = options.model
+  const providerType = ensureLLMProviderType(modelType)
 
   const baseURL =
     providerType === "moonshot" ? "https://api.moonshot.cn/v1" : undefined
 
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
+  console.log({ providerType, modelType, apiKey, baseURL })
 
   const opts = {
     apiKey,

@@ -49,6 +49,7 @@ export const fetchWxmpArticle = async (
       contentSummary = await callAgent({
         input: contentMd,
         agentType: "summarize-content",
+        model: options.summaryModel,
       })
     }
 

@@ -4,14 +4,10 @@ import {
   chromium,
   Page as PlaywrightPage,
 } from "playwright"
-import puppeteer, {
-  Browser as PuppetBrowser,
-  Page as PuppetPage,
-  PuppeteerNode,
-} from "puppeteer"
-import { extractFirstURL } from "../../packages/common-common/parse-url"
+import { Page as PuppetPage } from "puppeteer"
 import { env } from "../env.js"
 import { IUserSummary } from "../schema/user.summary"
+import { compressContent } from "packages/common-common/compress-content.js"
 
 export type DriverType = "playwright" | "puppet"
 
@@ -28,11 +24,7 @@ export class UniParser {
 
   constructor(driverType: DriverType = "playwright") {
     console.log("-- init UniParserBot: ", { driverType })
-    this.driver =
-      // driverType === "puppet" ?
-      // puppeteer
-      // :
-      chromium
+    this.driver = chromium
 
     process.on("exit", () => this.cleanup())
     process.on("SIGINT", () => this.cleanup())
@@ -66,7 +58,7 @@ export class UniParser {
     })) as PuppetPage & PlaywrightPage
     this.page.on("console", (msg) => console.log("[console] ", msg.text()))
 
-    const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/bgen`
+    const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen?renderType=backend`
     console.log(`-- visiting: ${targetUrl}`)
     await this.page.goto(targetUrl)
   }

@@ -1,4 +1,4 @@
-import { env } from "@/env.js"
+import { env } from "@/env"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"

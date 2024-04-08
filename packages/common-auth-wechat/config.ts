@@ -1,4 +1,4 @@
-import { env } from "@/env.js"
+import { env } from "@/env"
 
 export const WECHAT_AUTH_DOC_URL =
   "https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html"

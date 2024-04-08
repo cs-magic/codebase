@@ -21,7 +21,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
       qrcodeTerminal.generate(value, { small: true })
     })
     .on("login", async (user) => {
-      console.log(`User logged in: `, user)
+      console.log(`User logged in: `, user.payload)
     })
     .on("message", async (message) => {
       const room = message.room()

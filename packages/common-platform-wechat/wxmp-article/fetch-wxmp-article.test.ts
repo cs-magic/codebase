@@ -9,9 +9,9 @@ it("should run wxmp article ok", async () => {
   try {
     const result = await fetchWxmpArticle(url, {
       backendEngineType: "nodejs",
-      // summary_model: "gpt-4",
-      summaryModel: "gpt-3.5-turbo",
-      // summary_model: "moonshot-v1-8k",
+      summaryModel: "gpt-4",
+      // summaryModel: "gpt-3.5-turbo",
+      // summaryModel: "moonshot-v1-8k",
     })
     console.log({ result })
   } catch (err) {

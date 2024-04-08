@@ -39,9 +39,9 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
 
 export const cardRefetchPageAtom = atomWithStorage("card.page.refetch", false)
-export const summaryModelAtom = atomWithStorage<string>(
+export const summaryModelAtom = atomWithStorage<LLMModelType>(
   "card.summary.model",
-  "", // gpt-3.5-turbo
+  "gpt-3.5-turbo", // gpt-3.5-turbo
 )
 export const cardRefetchCardAtom = atomWithStorage("card.stat.refetch", false)
 export const cardRefetchCommentsAtom = atomWithStorage(

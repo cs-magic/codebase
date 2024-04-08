@@ -1,6 +1,6 @@
 "use server"
 
-import { env } from "@/env.js"
+import { env } from "@/env"
 import { api } from "../common-api"
 
 export type IAgentResponse = {

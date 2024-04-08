@@ -2,6 +2,8 @@ import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { UniParser } from "@/core/download-card.action"
 import { FileBox } from "file-box"
 import { promises } from "fs"
+import { absolutePathToPage } from "next/dist/shared/lib/page-path/absolute-path-to-page"
+import { fileURLToPath } from "url"
 import { types, Wechaty } from "wechaty"
 import { MessageInterface } from "wechaty/impls"
 import { initLog } from "../../../common-common/init-log"
@@ -21,13 +23,12 @@ import path from "path"
 import Mustache from "mustache"
 
 export class LinkParserMessageHandler extends BaseMessageHandler {
-  private uniParser: UniParser
+  private uniParser: UniParser | null = null
   private backendEngineType: BackendEngineType = "nodejs"
   private summaryModel: LLMModelType = "gpt-4"
 
   constructor(bot: Wechaty) {
     super(bot)
-    this.uniParser = new UniParser()
   }
 
   async onMessage(message: MessageInterface): Promise<void> {
@@ -41,10 +42,10 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
 
     const backendEngineType = this.backendEngineType
     const summaryModel = this.summaryModel
-
+    const __filename = fileURLToPath(import.meta.url)
     if (result.command === "parser-status") {
       const template = await promises.readFile(
-        path.join(__dirname, "../template.yml"),
+        path.join(__filename, "../../template.yml"),
         { encoding: "utf-8" },
       )
       const config = Mustache.render(template, {
@@ -127,6 +128,7 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
       : undefined
 
     console.log(`-- parsing content`)
+    if (!this.uniParser) this.uniParser = new UniParser()
     const { cardUrl } = await this.uniParser.genCard(
       JSON.stringify(content), // 需要文字形式
       user,
