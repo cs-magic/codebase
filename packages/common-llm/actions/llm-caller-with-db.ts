@@ -1,6 +1,6 @@
 import { IBaseResponse } from "@/schema/query"
 import { LLMActionPayload } from "@/schema/sse"
-import { callLLM } from "./llm-caller"
+import { callLLM_V1 } from "./llm-caller"
 
 export const callLLMWithDB = async <T extends IBaseResponse>(
   payload: LLMActionPayload,
@@ -10,7 +10,7 @@ export const callLLMWithDB = async <T extends IBaseResponse>(
     tStart: new Date(),
     content: "",
   } as T
-  await callLLM(payload, {
+  await callLLM_V1(payload, {
     onData: (data) => {
       response.content += data
     },

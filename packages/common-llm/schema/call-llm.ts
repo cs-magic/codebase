@@ -16,3 +16,5 @@ export const createCallLLMSchema = z.object({
   openAIApiKey: z.string().optional(),
 })
 export type ICreateCallLLM = z.infer<typeof createCallLLMSchema>
+
+export type LLMProviderType = "openai" | "zhipu" | "moonshot"

@@ -34,4 +34,11 @@ export const env = {
   PUSHER_APP_ID: process.env.PUSHER_APP_ID,
   PUSHER_APP_SECRET: process.env.PUSHER_APP_SECRET,
   NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
+
+  // llm
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  MOONSHOT_API_KEY: process.env.MOONSHOT_API_KEY,
+  ZHIPU_API_KEY: process.env.ZHIPU_API_KEY,
+  MINIMAX_API_KEY: process.env.MINIMAX_API_KEY,
+  MINIMAX_GROUP_ID: process.env.MINIMAX_GROUP_ID,
 }

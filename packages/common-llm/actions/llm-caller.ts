@@ -1,11 +1,11 @@
 "use server"
 
 import { sleep } from "../../common-datetime/utils"
-import { callChatGPT, callLLMApiMock } from "../models/openai"
+import { callChatGPT, callLLMApiMock } from "../@deprecated/models/openai"
 import { getChannelIdFomRequest, LLMActionPayload } from "@/schema/sse"
 import { PusherLLMManager } from "../providers/llm-pusher"
 
-export const callLLM = async (
+export const callLLM_V1 = async (
   payload: LLMActionPayload,
   options: {
     onInit?: () => void

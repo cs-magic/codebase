@@ -1,3 +1,4 @@
+import { prettyError } from "../../common-common/pretty-error"
 import { fetchWxmpArticle } from "./fetch-wxmp-article"
 
 const f = async () => {
@@ -8,12 +9,12 @@ const f = async () => {
   try {
     const result = await fetchWxmpArticle(url, {
       // summary_model: "gpt-4",
-      // summary_model: "gpt-3.5-turbo",
-      summary_model: "moonshot-v1-8k",
+      summary_model: "gpt-3.5-turbo",
+      // summary_model: "moonshot-v1-8k",
     })
     console.log({ result })
-  } catch (e) {
-    console.error(e instanceof Error ? e.message : e)
+  } catch (err) {
+    prettyError(err)
   }
 }
 

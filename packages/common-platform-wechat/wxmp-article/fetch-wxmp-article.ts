@@ -1,4 +1,4 @@
-// import { env } from "@/env"
+import { env } from "@/env"
 import { ICardGenOptions } from "@/schema/card"
 import { IUserBasic } from "@/schema/user.summary"
 import { parse } from "node-html-parser"
@@ -60,7 +60,7 @@ export const fetchWxmpArticle = async (
   }
 
   const { data } = await backendApi.get(
-    `http://127.0.0.1:40330/spider/parse-url`,
+    `${env.NEXT_PUBLIC_BACKEND_URL}/spider/parse-url`,
     {
       params: {
         url,

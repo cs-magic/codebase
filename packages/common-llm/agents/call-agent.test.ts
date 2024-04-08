@@ -1,20 +1,7 @@
-import dotenv from "dotenv"
-import { callZhipu } from "../models/zhipu"
-dotenv.config()
+import { callAgent } from "./call-agent"
 
-const f = async () => {
-  const result = await callZhipu({
-    model: "glm-4",
-    messages: [
-      {
-        content: "hello",
-        role: "user",
-      },
-    ],
-    stream: false,
+it("should ", async () => {
+  await callAgent({
+    input: "hello",
   })
-
-  console.log("-- result: ", result)
-}
-
-it("test glm-4", f, 10e3)
+})

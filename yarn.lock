@@ -5066,34 +5066,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@t3-oss/env-core@npm:0.9.2":
-  version: 0.9.2
-  resolution: "@t3-oss/env-core@npm:0.9.2"
-  peerDependencies:
-    typescript: ">=5.0.0"
-    zod: ^3.0.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/2e87aff2e811535eaa8cbc85f26a44fddf5af4428add237fc75770978ef6c43914031bc3d827c5face170632cd08fb7af8d037379f30b8d73fceaf6b1b746e0b
-  languageName: node
-  linkType: hard
-
-"@t3-oss/env-nextjs@npm:^0.9.2":
-  version: 0.9.2
-  resolution: "@t3-oss/env-nextjs@npm:0.9.2"
-  dependencies:
-    "@t3-oss/env-core": "npm:0.9.2"
-  peerDependencies:
-    typescript: ">=5.0.0"
-    zod: ^3.0.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/2defb935eb65f87eb6dd620cd46a2a873ca2283076b4e0ba8acd30e5e6c7c425cb144668a6830977dc4b4467b645a04056b9dd258a04c51871a223fc351368b7
-  languageName: node
-  linkType: hard
-
 "@tanstack/query-core@npm:4.36.1":
   version: 4.36.1
   resolution: "@tanstack/query-core@npm:4.36.1"
@@ -15772,7 +15744,6 @@ __metadata:
     "@svgr/webpack": "npm:^8.1.0"
     "@swc-jotai/debug-label": "npm:^0.1.0"
     "@swc-jotai/react-refresh": "npm:^0.1.0"
-    "@t3-oss/env-nextjs": "npm:^0.9.2"
     "@tanstack/react-query": "npm:^4.36.1"
     "@testing-library/jest-dom": "npm:^6.4.2"
     "@testing-library/react": "npm:^14.2.2"

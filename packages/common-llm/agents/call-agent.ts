@@ -2,11 +2,15 @@ import dotenv from "dotenv"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
-import { callChatGPTV2 } from "../models/openai"
-import { callZhipu } from "../models/zhipu"
+import { callLLM } from "../call-llm"
 import { LLMMType } from "../schema/models"
 
 dotenv.config()
+
+export type ILLMMessage = {
+  role: "system" | "user" | "assistant"
+  content: string
+}
 
 export type AgentConfig = {
   name?: string
@@ -19,42 +23,48 @@ export type AgentConfig = {
 
 export type ICallLLMOptions = {
   model: LLMMType
-  messages: { role: "system" | "user" | "assistant"; content: string }[]
+  messages: ILLMMessage[]
   temperature?: number
   topP?: number
   stream?: boolean
 }
 
-export const callLLMBase = async (options: ICallLLMOptions) => {
-  console.log("-- callLLMBase options: ", options)
-  let result
-  if (options.model.startsWith("glm")) {
-    result = await callZhipu(options)
-  } else {
-    result = await callChatGPTV2(options)
-  }
-  console.log("-- callLLMBase result: ", result)
-  return result
-}
-
 export const callAgent = async ({
   input,
   agentType = "default",
-  llmType = "gpt-3.5-turbo",
+  options,
+  model,
 }: {
   input: string
+  model?: LLMMType
   agentType?: "default" | "summarize-content"
-  llmType?: LLMMType
-}) => {
-  console.log({ input, agentType })
+} & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
+  console.debug("-- agent calling: ", { input, agentType, model, options })
 
   const yamlConfig = await promises.readFile(
-    path.join(__dirname, `${agentType}.agent.yml`),
+    path.join(__dirname, `config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface
   const agent = yaml.load(yamlConfig) as AgentConfig
-  if (llmType) agent.model = llmType
 
-  return {}
+  model = model ?? agent.model
+  if (!model) throw new Error("no model found")
+
+  const messages: ILLMMessage[] = []
+  if (agent.system_prompt)
+    messages.push({
+      role: "system",
+      content: agent.system_prompt,
+    })
+  messages.push({
+    role: "user",
+    content: input,
+  })
+
+  return callLLM({
+    model,
+    messages,
+    ...options,
+  })
 }
