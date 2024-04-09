@@ -2,8 +2,8 @@ import { Card } from "@prisma/client"
 import { useAtom, useSetAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
 import { useEffect } from "react"
-import moment from "../../packages/common-datetime/moment"
 import { safeParseJson } from "../../packages/common-common/safe-parse-json"
+import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../packages/common-ui/components/aspect-ratio"
 import { getPlatformName } from "../core/utils"
@@ -13,7 +13,7 @@ import {
 } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
-export const CardContentAuthor = ({ card }: { card: Card | null }) => {
+export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
   // console.log("-- author: ", card?.author)
 
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)

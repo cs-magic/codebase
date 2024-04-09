@@ -102,6 +102,9 @@ model Card {
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
+  /// [IUserBasic]
+  user Json?
+
   platformType PlatformType
   platformId   String
   /// [ICardPlatform]

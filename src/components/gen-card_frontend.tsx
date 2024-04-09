@@ -1,6 +1,6 @@
 "use client"
 
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import React from "react"
 import { supportedBackendEngineTypes } from "../../packages/common-common/schema"
 import { useSearchParam } from "../../packages/common-hooks/use-search-param"
@@ -15,13 +15,16 @@ import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { Textarea } from "../../packages/common-ui/components/textarea-auto"
 import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
 import { GenCardRenderType } from "../schema/card"
+import { ICardDetail } from "../schema/card.basic"
 import {
+  cardAtom,
   cardAuthorWithTitleAtom,
   cardFetchEngineAtom,
   cardInputAtom,
   cardLLMEnabledAtom,
   cardLLMTypeAtom,
   cardMdWithImgAtom,
+  cardPreviewEngineAtom,
   cardRefetchCardAtom,
   cardRefetchCommentsAtom,
   cardRefetchPageAtom,
@@ -33,6 +36,7 @@ import { GenCardPreview } from "./gen-card-preview"
 import { StandardCard } from "./standard-card"
 
 export const GenCard = () => {
+  const card = useAtomValue(cardAtom)
   const renderType =
     useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
 
@@ -50,10 +54,29 @@ export const GenCard = () => {
         </StandardCard>
       </div>
 
-      <div className={"w-full sm:max-w-[375px] overflow-auto"}>
-        <GenCardPreview renderType={renderType} />
-      </div>
+      <GenCardPreviews cards={card ? [card] : []} />
     </div>
+  )
+}
+
+const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
+  const renderType =
+    useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
+
+  return (
+    <StandardCard
+      title={"Preview"}
+      className={"w-full sm:max-w-[375px] overflow-auto"}
+    >
+      <AtomSelector
+        atom={cardPreviewEngineAtom}
+        name={"preview-engine"}
+        vs={["html2image", "html2canvas", "modern-screenshot"]}
+      />
+      {cards.map((card, index) => (
+        <GenCardPreview key={index} renderType={renderType} card={card} />
+      ))}
+    </StandardCard>
   )
 }
 

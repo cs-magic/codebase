@@ -1,16 +1,15 @@
 "use client"
 
-import { useAtomValue } from "jotai"
+import { parseSummary } from "../../packages/common-article/parse-summary"
 import MarkMap from "../../packages/common-visualization/markmap"
-import { cardAtom, summaryAtom } from "../store/card.atom"
+import { ICardDetail } from "../schema/card.basic"
 import { CardContentAuthor } from "./card-content-author"
 import { Cover } from "./card-content-cover"
 import { Stat } from "./card-content-stat"
 import { Tags } from "./card-content-tags"
 
-export const CardContent = () => {
-  const card = useAtomValue(cardAtom)
-  const summary = useAtomValue(summaryAtom)
+export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
+  const summary = parseSummary(card?.contentSummary)
 
   console.log("-- summary: ", summary)
 

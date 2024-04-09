@@ -1,23 +1,25 @@
 "use client"
 
-import { useAtom } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { useRef } from "react"
-import { AtomSelector } from "../../packages/common-ui/components/atom-switcher"
 import { Action2Type, GenCardRenderType } from "../schema/card"
-import { cardPreviewEngineAtom, cardRenderedAtom } from "../store/card.atom"
+import { ICardDetail } from "../schema/card.basic"
+import { cardRenderedAtom, cardUserAtom } from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
 import { GenCardAction2 } from "./gen-card-action-2"
-import { StandardCard } from "./standard-card"
 
 export const GenCardPreview = ({
   renderType,
+  card,
 }: {
   renderType?: GenCardRenderType
+  card?: ICardDetail | null
 }) => {
   const obj = useRef<HTMLDivElement>(null)
   const [rendered] = useAtom(cardRenderedAtom)
+  const user = useAtomValue(cardUserAtom)
 
   // console.log("-- preview: ", { rendered })
 
@@ -26,14 +28,8 @@ export const GenCardPreview = ({
   )
 
   return (
-    <StandardCard title={"Preview"}>
-      <AtomSelector
-        atom={cardPreviewEngineAtom}
-        name={"preview-engine"}
-        vs={["html2image", "html2canvas", "modern-screenshot"]}
-      />
-
-      <div className={"flex justify-around gap-2"}>
+    <>
+      <div className={"flex gap-2"}>
         <Action type={"copy"} />
         <Action type={"download"} />
         {renderType === "backend" && <Action type={"upload"} />}
@@ -44,12 +40,12 @@ export const GenCardPreview = ({
         id={"card-preview"}
         className={"w-full font-card corner-gradient"}
       >
-        <CardHeader />
+        <CardHeader user={card?.user ?? user} />
 
-        <CardContent />
+        <CardContent card={card} />
 
-        <CardFooter />
+        <CardFooter card={card} />
       </div>
-    </StandardCard>
+    </>
   )
 }

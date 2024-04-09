@@ -1,23 +1,14 @@
 "use client"
 
-import { useAtom, useAtomValue } from "jotai"
-import {
-  CalendarHeartIcon,
-  FingerprintIcon,
-  MilestoneIcon,
-  PackageIcon,
-} from "lucide-react"
+import { CalendarHeartIcon, FingerprintIcon, MilestoneIcon } from "lucide-react"
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 
 import { config } from "../config/system"
-import { cardAtom, summaryAtom } from "../store/card.atom"
+import { ICardDetail } from "../schema/card.basic"
 import { CardFooterItem } from "./card-footer-item"
 
-export const CardFooter = () => {
-  const summary = useAtomValue(summaryAtom)
-  const [card] = useAtom(cardAtom)
-
+export const CardFooter = ({ card }: { card?: ICardDetail | null }) => {
   return (
     <div
       className={cn("shrink-0 pb-2 px-4 text-xs text-primary-foreground/50")}

@@ -1,19 +1,19 @@
 "use client"
 
-import { useAtom, useSetAtom } from "jotai"
+import { useSetAtom } from "jotai"
 import { useEffect } from "react"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 
 import { config } from "../config/system"
-import { cardUserAtom, cardUserRenderedAtom } from "../store/card.atom"
+import { IUserBasic } from "../schema/user.summary"
+import { cardUserRenderedAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 
-export const CardHeader = () => {
-  const [user] = useAtom(cardUserAtom)
+export const CardHeader = ({ user }: { user?: IUserBasic | null }) => {
   const setUserRendered = useSetAtom(cardUserRenderedAtom)
   useEffect(() => {
     setUserRendered(false)
-  }, [user.avatar])
+  }, [user?.avatar])
 
   return (
     <div className={"text-xs flex items-center justify-between px-4 pb-2 pt-6"}>
