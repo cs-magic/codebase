@@ -26,10 +26,10 @@ export default function MarkMap({ content }: { content?: string }) {
       pan: false,
       spacingVertical,
       zoom: false,
-      maxWidth: 200,
+      maxWidth: 300, // 300大概一行20个字这样子
       duration: 0, // 这样就不用检测动画了
       initialExpandLevel: 3,
-      autoFit: true,
+      autoFit: false,
     })
     refMm.current = mm
 
@@ -51,17 +51,17 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [spacingVertical, content])
 
-  // /**
-  //  * 当填充数据，并且初始化了ratio之后，才要 fit
-  //  */
-  // useEffect(() => {
-  //   if (content) {
-  //     setCardRendered(false)
-  //     void refMm.current?.fit().then(() => {
-  //       setCardRendered(true)
-  //     })
-  //   }
-  // }, [ratio, content])
+  /**
+   * 当填充数据，并且初始化了ratio之后，才要 fit
+   */
+  useEffect(() => {
+    if (content) {
+      setCardRendered(false)
+      void refMm.current?.fit().then(() => {
+        setCardRendered(true)
+      })
+    }
+  }, [ratio, content])
 
   console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
 
