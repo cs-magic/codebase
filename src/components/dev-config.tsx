@@ -1,28 +1,26 @@
+import { useHotkeys } from "@mantine/hooks"
+import { useAtom } from "jotai"
+import { SettingsIcon } from "lucide-react"
 import * as process from "process"
 import { useState } from "react"
 import { devEnabledAtom } from "../../packages/common-dev/store"
-import { IconContainer } from "../../packages/common-ui/components/icon-container"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "../../packages/common-ui-shadcn/components/sheet"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../packages/common-ui-shadcn/components/tabs"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "../../packages/common-ui-shadcn/components/sheet"
 import { cn } from "../../packages/common-ui-shadcn/utils"
+import { IconContainer } from "../../packages/common-ui/components/icon-container"
 import { ConfigDevCard } from "./config-dev-card"
-import { ConfigLLMCard } from "./config-llm"
 import { ConfigLogCard } from "./config-log-card"
 import { ConfigSMSCard } from "./config-sms"
 import { ConfigTRPCCard } from "./config-trpc"
-
-import { useHotkeys } from "@mantine/hooks"
-import { SettingsIcon } from "lucide-react"
-import { useAtom } from "jotai"
 import { UserSignOutButton } from "./user-sign-out-button"
 
 export const DevConfig = () => {
@@ -68,9 +66,7 @@ export const DevConfig = () => {
             <UserSignOutButton />
           </TabsContent>
 
-          <TabsContent value={"llm"}>
-            <ConfigLLMCard />
-          </TabsContent>
+          <TabsContent value={"llm"}></TabsContent>
 
           <TabsContent value={"sms"}>
             <ConfigSMSCard />

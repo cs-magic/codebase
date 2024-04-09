@@ -1,8 +1,9 @@
 import { env } from "@/env"
 import OpenAI from "openai/index"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
+import { api } from "../common-api"
 import { ICallLLMOptions } from "./agents/call-agent"
-import { ensureLLMProviderType } from "./utils"
+import { model2provider } from "./model2provider"
 
 export const callLLM = async (options: ICallLLMOptions) => {
   console.debug(
@@ -11,7 +12,7 @@ export const callLLM = async (options: ICallLLMOptions) => {
   )
 
   const model = options.model
-  const providerType = ensureLLMProviderType(model)
+  const providerType = model2provider(model)
 
   const baseURL =
     providerType === "moonshot" ? "https://api.moonshot.cn/v1" : undefined
@@ -42,6 +43,16 @@ export const callLLM = async (options: ICallLLMOptions) => {
     result = (await client.createCompletions(
       args,
     )) as unknown as OpenAI.Chat.Completions.ChatCompletion
+  } else if (providerType === "baichuan") {
+    result = await api.post(
+      "https://api.baichuan-ai.com/v1/chat/completions",
+      args,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      },
+    )
   } else {
     const client = new OpenAI(opts)
     result = await client.chat.completions.create(args)
