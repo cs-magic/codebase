@@ -2,11 +2,12 @@
 
 import { cardMindmapRenderedAtom } from "@/store/card.atom"
 import { useAtom, useSetAtom } from "jotai"
+import { IPureNode } from "markmap-common"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
-import { mapSpacingVerticalAtom } from "./store"
+import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "./store"
 
 const transformer = new Transformer()
 
@@ -18,6 +19,7 @@ export default function MarkMap({ content }: { content?: string }) {
   const [ratio, setRatio] = useState(1)
   const setCardRendered = useSetAtom(cardMindmapRenderedAtom)
   const [spacingVertical] = useAtom(mapSpacingVerticalAtom)
+  const [maxLevels] = useAtom(mapLevelsMaxAtom)
 
   useEffect(() => {
     if (!refSvg.current || !content) return
@@ -41,11 +43,16 @@ export default function MarkMap({ content }: { content?: string }) {
     root.content = ""
 
     // // 去掉第三层即以下的结点
-    // root.children.forEach((item) => {
-    //   item.children.forEach((item) => {
-    //     item.children = []
-    //   })
-    // })
+    const dropLevel = (item: IPureNode, level: number) => {
+      if (level >= maxLevels) {
+        item.children = []
+      } else {
+        item.children.forEach((item) => {
+          dropLevel(item, level + 1)
+        })
+      }
+    }
+    dropLevel(root, 1)
 
     mm.setData(root)
     mm.state.minY = 20 // 首结点紧贴边缘

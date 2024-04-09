@@ -1,7 +1,6 @@
 import { promises } from "fs"
 import path from "path"
 import React from "react"
-import { parseSummary } from "../../../packages/common-llm/parse-summary"
 import { generatedPath } from "../../../packages/common-common/path"
 import moment from "../../../packages/common-datetime/moment"
 import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
@@ -11,8 +10,20 @@ import { StandardCard } from "../../components/standard-card"
 import { ICardDetail } from "../../schema/card.basic"
 
 export default async function CompareModelsPage() {
-  // const t = 1712651015842
-  const t = 1712652669879
+  const ts = (await promises.readdir(generatedPath)).filter((n) =>
+    /^\d+$/.test(n),
+  )
+
+  return (
+    <FlexContainer orientation={"vertical"} className={"justify-start"}>
+      {ts.map((t) => (
+        <RenderT t={Number(t)} key={t} />
+      ))}
+    </FlexContainer>
+  )
+}
+
+const RenderT = async ({ t }: { t: number }) => {
   const dir = path.join(generatedPath, t.toString())
 
   const cardNames = (await promises.readdir(dir)).filter((s) =>
@@ -30,25 +41,30 @@ export default async function CompareModelsPage() {
   )
 
   return (
-    <FlexContainer className={"items-start"}>
-      <StandardCard title={"Params"} className={"w-fit"}>
-        <LabelLine title={"Date"}>{moment(t).format("MM/DD HH:mm")}</LabelLine>
-      </StandardCard>
+    <StandardCard title={moment(t).format("MM/DD HH:mm")}>
+      <FlexContainer className={"items-start"}>
+        {cards.map((card, index) => {
+          const options = card.contentSummary?.options
+          const query = card.contentSummary?.query
+          return (
+            <div className={"flex flex-col gap-2"} key={index}>
+              <LabelLine title={"Model"}>{options.model}</LabelLine>
 
-      {cards.map((card, index) => {
-        const summary = parseSummary(card.contentSummary)
-        return (
-          <div className={"flex flex-col gap-2"} key={index}>
-            <LabelLine title={"Model"}>{summary.model?.name}</LabelLine>
-            <LabelLine title={"TopP"}>{summary.model?.topP ?? "-"}</LabelLine>
-            <LabelLine title={"Temperature"}>
-              {summary.model?.temperature ?? "-"}
-            </LabelLine>
+              <LabelLine title={"TopP"}>{options.topP ?? "-"}</LabelLine>
 
-            <CardPreview key={index} card={card} />
-          </div>
-        )
-      })}
-    </FlexContainer>
+              <LabelLine title={"Temperature"}>
+                {options.temperature ?? "-"}
+              </LabelLine>
+
+              <LabelLine
+                title={"Latency"}
+              >{`${((query?.end - query?.start) / 1e3).toFixed(2)}s`}</LabelLine>
+
+              <CardPreview key={index} card={card} />
+            </div>
+          )
+        })}
+      </FlexContainer>
+    </StandardCard>
   )
 }

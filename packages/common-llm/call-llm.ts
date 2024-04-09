@@ -2,7 +2,7 @@ import { env } from "@/env"
 import dotenv from "dotenv"
 import OpenAI from "openai/index"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
-import { api } from "../common-api"
+import { api, backendApi } from "../common-api"
 import { prettyError } from "../common-common/pretty-error"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
@@ -61,6 +61,18 @@ export const callLLM = async (
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${apiKey}`,
+          },
+        },
+      )
+      response = res.data
+    } else if (providerType === "ali") {
+      console.log("-- args: ", args)
+      const res = await backendApi.post<OpenAI.Chat.Completions.ChatCompletion>(
+        "/llm/base",
+        args,
+        {
+          headers: {
+            ContentType: "application/json",
           },
         },
       )

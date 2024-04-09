@@ -42,4 +42,5 @@ export const env = {
   MINIMAX_API_KEY: process.env.MINIMAX_API_KEY,
   MINIMAX_GROUP_ID: process.env.MINIMAX_GROUP_ID,
   BAICHUAN_API_KEY: process.env.BAICHUAN_API_KEY,
+  DASHSCOPE_API_KEY: process.env.DASHSCOPE_API_KEY,
 }

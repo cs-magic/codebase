@@ -9,11 +9,14 @@ export const compareModels = async (url?: string) => {
   if (!url) throw new Error("no url found")
 
   const models: LLMModelType[] = [
-    "gpt-3.5-turbo",
-    "gpt-4",
-    "glm-4",
-    "moonshot-v1-8k",
-    "Baichuan2-Turbo",
+    // "gpt-3.5-turbo",
+    // "gpt-4",
+    // "glm-4",
+    // "moonshot-v1-8k",
+    // "Baichuan2-Turbo",
+    "qwen-turbo",
+    // "qwen-pro",
+    // "qwen-max",
   ]
 
   const dir = path.join(generatedPath, Date.now().toString())
