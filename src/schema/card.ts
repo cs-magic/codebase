@@ -29,7 +29,11 @@ export type IMedia = {
 }
 
 export type ISummaryParsed = {
-  model?: string
+  model?: {
+    name?: string
+    temperature?: number
+    topP?: number
+  }
   result?: IArticleSummaryParsed
   title?: string
   description?: string

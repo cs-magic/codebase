@@ -15,7 +15,6 @@ import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { Textarea } from "../../packages/common-ui/components/textarea-auto"
 import { mapSpacingVerticalAtom } from "../../packages/common-visualization/store"
 import { GenCardRenderType } from "../schema/card"
-import { ICardDetail } from "../schema/card.basic"
 import {
   cardAtom,
   cardAuthorWithTitleAtom,
@@ -45,40 +44,25 @@ export const GenCard = () => {
   return (
     <div
       className={cn(
-        "w-full h-full mx-auto gap-4 p-2 sm:p-4 flex flex-wrap overflow-auto",
+        "w-full h-full mx-auto gap-4 p-2 sm:p-4 grid grid-cols-1 sm:grid-cols-2",
       )}
     >
-      <div className={"grow overflow-auto h-full p-2 -mx-2"}>
-        <StandardCard title={"Input Control"}>
-          <Input />
-        </StandardCard>
-      </div>
+      <StandardCard title={"Input Control"}>
+        <Input />
+      </StandardCard>
 
-      <GenCardPreviews cards={card ? [card] : []} />
+      <StandardCard title={"Preview"} id={"card-previews"}>
+        <AtomSelector
+          atom={cardPreviewEngineAtom}
+          name={"preview-engine"}
+          vs={["html2image", "html2canvas", "modern-screenshot"]}
+        />
+
+        <Separator orientation={"horizontal"} />
+
+        <GenCardPreview renderType={renderType} card={card} />
+      </StandardCard>
     </div>
-  )
-}
-
-export const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
-  const renderType =
-    useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
-
-  return (
-    <StandardCard title={"Preview"} className={"grow overflow-auto"}>
-      <AtomSelector
-        atom={cardPreviewEngineAtom}
-        name={"preview-engine"}
-        vs={["html2image", "html2canvas", "modern-screenshot"]}
-      />
-
-      <Separator orientation={"horizontal"} />
-
-      <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2"}>
-        {cards.map((card, index) => (
-          <GenCardPreview key={index} renderType={renderType} card={card} />
-        ))}
-      </div>
-    </StandardCard>
   )
 }
 

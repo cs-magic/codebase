@@ -21,6 +21,8 @@ export type AgentConfig = {
   model?: LLMModelType
   total_tokens?: number // 8912
   system_prompt?: string
+  temperature?: number
+  top_p?: number
 }
 
 export type ICallLLMOptions = {
@@ -41,7 +43,12 @@ export const callAgent = async ({
   model?: LLMModelType
   agentType?: "default" | "summarize-content"
 } & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
-  console.debug("-- agent calling: ", { input, agentType, model, options })
+  console.debug("-- agent calling: ", {
+    agentType,
+    model,
+    options,
+    inputLength: input.length,
+  })
 
   const __filename = fileURLToPath(import.meta.url)
   const yamlConfig = await promises.readFile(
@@ -76,7 +83,14 @@ export const callAgent = async ({
   const result = await callLLM({
     model,
     messages,
+    topP: agent.top_p,
+    temperature: agent.temperature,
     ...options,
   })
-  return `<model>${model}</model>\n${result}`
+  return [
+    `<model.name>${model}</model.name>`,
+    `<model.temperature>${agent.temperature}</model.temperature>`,
+    `<model.topP>${agent.top_p}</model.topP>`,
+    result,
+  ].join("\n")
 }

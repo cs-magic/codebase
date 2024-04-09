@@ -26,16 +26,27 @@ export default function MarkMap({ content }: { content?: string }) {
       pan: false,
       spacingVertical,
       zoom: false,
-      maxWidth: 300, // 300大概一行20个字这样子
+      maxWidth: 250, // 300大概一行20个字这样子
       duration: 0, // 这样就不用检测动画了
-      initialExpandLevel: 3,
       autoFit: false,
+
+      // initialExpandLevel: 3,
     })
     refMm.current = mm
 
     const { root } = transformer.transform(content, {})
     // console.log({ root })
-    root.content = "" // 去掉首结点的内容
+
+    // 去掉首结点的内容
+    root.content = ""
+
+    // // 去掉第三层即以下的结点
+    // root.children.forEach((item) => {
+    //   item.children.forEach((item) => {
+    //     item.children = []
+    //   })
+    // })
+
     mm.setData(root)
     mm.state.minY = 20 // 首结点紧贴边缘
 

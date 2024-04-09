@@ -2,14 +2,13 @@ import { promises } from "fs"
 import path from "path"
 import { generatedPath } from "../../../../../packages/common-common/path"
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
+import { CardPreviews } from "../../../../components/card-previews"
 import { ICardDetail } from "../../../../schema/card.basic"
-import { GenCardPreviews } from "../../../../components/gen-card_frontend"
 
 export default async function CompareModelsPage() {
-  const cardNames = [
-    "wxmp-article.sample.1712638182102.json",
-    "wxmp-article.sample.1712638245494.json",
-  ]
+  const cardNames = (await promises.readdir(generatedPath)).filter((s) =>
+    s.startsWith("wxmp-article"),
+  )
 
   const cards = await Promise.all(
     cardNames.map(async (cardName) => {
@@ -22,8 +21,8 @@ export default async function CompareModelsPage() {
   )
 
   return (
-    <FlexContainer orientation={"horizontal"}>
-      <GenCardPreviews cards={cards} />
+    <FlexContainer id={"container-comp-models"} className={"items-start"}>
+      <CardPreviews cards={cards} />
     </FlexContainer>
   )
 }

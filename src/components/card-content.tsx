@@ -38,7 +38,7 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
           <div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>
             该卡片由
             <span className={"underline mx-1"}>
-              {summary.model?.toUpperCase()}大模型
+              {summary.model?.name?.toUpperCase()}大模型
             </span>
             生成，请仔细甄别
           </div>

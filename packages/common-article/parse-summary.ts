@@ -17,7 +17,11 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
     tags: parse("tags")
       ?.split(/[,，]/)
       .map((s) => s.replace(/\s+/g, "")),
-    model: parse("model"),
+    model: {
+      name: parse("model.name"),
+      temperature: Number(parse("model.temperature")),
+      topP: Number(parse("model.topP")),
+    },
   }
 
   // console.log("-- parsed summary output: ", JSON.stringify(output))

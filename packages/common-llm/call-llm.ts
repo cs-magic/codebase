@@ -18,7 +18,12 @@ export const callLLM = async (options: ICallLLMOptions) => {
 
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
-  console.log({ providerType, model, apiKey, baseURL })
+  console.log({
+    providerType,
+    model,
+    // apiKey,
+    baseURL,
+  })
 
   const opts = {
     apiKey,

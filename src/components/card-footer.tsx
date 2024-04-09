@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  CalendarHeartIcon,
-  FingerprintIcon,
-  MilestoneIcon,
-  PackageIcon,
-} from "lucide-react"
-import { parseSummary } from "../../packages/common-article/parse-summary"
+import { CalendarHeartIcon, FingerprintIcon, MilestoneIcon } from "lucide-react"
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 
@@ -15,18 +9,11 @@ import { ICardDetail } from "../schema/card.basic"
 import { CardFooterItem } from "./card-footer-item"
 
 export const CardFooter = ({ card }: { card?: ICardDetail | null }) => {
-  const summary = parseSummary(card?.contentSummary)
-
   return (
     <div
       className={cn("shrink-0 py-4 px-4 text-xs text-primary-foreground/50")}
     >
       <div className={"flex items-center justify-center gap-2"}>
-        {/*<CardFooterItem*/}
-        {/*  Icon={PackageIcon}*/}
-        {/*  value={summary?.model?.toUpperCase()}*/}
-        {/*/>*/}
-
         <CardFooterItem
           Icon={CalendarHeartIcon}
           value={moment().format("YYYY-MM-DD")}
