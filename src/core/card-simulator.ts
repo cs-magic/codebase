@@ -1,11 +1,11 @@
 import { Page as PlaywrightPage } from "playwright-core"
 import { Page as PuppetPage } from "puppeteer"
 import { UnexpectedError } from "../../packages/common-common/schema"
-import { ParserBase } from "../../packages/common-spider/parser"
+import { BaseSimulator } from "../../packages/common-spider/base-simulator"
 import { env } from "../env"
 import { IUserSummary } from "../schema/user.summary"
 
-export class UniParser extends ParserBase {
+export class CardSimulator extends BaseSimulator {
   async genCard(
     content: string,
     user?: IUserSummary,

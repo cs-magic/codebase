@@ -12,7 +12,7 @@ export const CardContent = () => {
   const card = useAtomValue(cardAtom)
   const summary = useAtomValue(summaryAtom)
 
-  // console.log("-- summary: ", summary)
+  console.log("-- summary: ", summary)
 
   return (
     <div

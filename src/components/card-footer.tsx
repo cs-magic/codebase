@@ -23,10 +23,10 @@ export const CardFooter = () => {
       className={cn("shrink-0 pb-2 px-4 text-xs text-primary-foreground/50")}
     >
       <div className={"flex  items-center justify-center"}>
-        <CardFooterItem
-          Icon={PackageIcon}
-          value={summary?.model?.toUpperCase()}
-        />
+        {/*<CardFooterItem*/}
+        {/*  Icon={PackageIcon}*/}
+        {/*  value={summary?.model?.toUpperCase()}*/}
+        {/*/>*/}
         <CardFooterItem
           Icon={CalendarHeartIcon}
           value={moment().format("YYYY-MM-DD")}

@@ -5,19 +5,17 @@ import { useAtom, useSetAtom } from "jotai"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
-import { truncateString } from "../common-algo/string"
 import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 import { mapSpacingVerticalAtom } from "./store"
 
 const transformer = new Transformer()
 
 export default function MarkMap({ content }: { content?: string }) {
-  // Ref for SVG element
   const refSvg = useRef<SVGSVGElement>(null)
-  // Ref for markmap object
   const refMm = useRef<Markmap>()
 
-  const [ratio, setRatio] = useState(0)
+  // 不能设置 ratio 为 0，否则会导致 svg 渲染算法出错
+  const [ratio, setRatio] = useState(1)
   const setCardRendered = useSetAtom(cardMindmapRenderedAtom)
   const [spacingVertical] = useAtom(mapSpacingVerticalAtom)
 
@@ -28,10 +26,14 @@ export default function MarkMap({ content }: { content?: string }) {
       pan: false,
       spacingVertical,
       zoom: false,
+      maxWidth: 200,
+      duration: 0, // 这样就不用检测动画了
+      initialExpandLevel: 3,
+      autoFit: true,
     })
     refMm.current = mm
 
-    const { root } = transformer.transform(transformMindmapContent(content), {})
+    const { root } = transformer.transform(content, {})
     // console.log({ root })
     root.content = "" // 去掉首结点的内容
     mm.setData(root)
@@ -49,19 +51,19 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [spacingVertical, content])
 
-  /**
-   * 当填充数据，并且初始化了ratio之后，才要 fit
-   */
-  useEffect(() => {
-    if (content) {
-      setCardRendered(false)
-      void refMm.current?.fit().then(() => {
-        setCardRendered(true)
-      })
-    }
-  }, [ratio, content])
+  // /**
+  //  * 当填充数据，并且初始化了ratio之后，才要 fit
+  //  */
+  // useEffect(() => {
+  //   if (content) {
+  //     setCardRendered(false)
+  //     void refMm.current?.fit().then(() => {
+  //       setCardRendered(true)
+  //     })
+  //   }
+  // }, [ratio, content])
 
-  // console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
+  console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
 
   return (
     <div className={"w-full"}>
@@ -70,16 +72,4 @@ export default function MarkMap({ content }: { content?: string }) {
       </AspectRatio>
     </div>
   )
-}
-
-const transformMindmapContent = (input?: string): string => {
-  const output = (input ?? "")
-    .split(/\\n/g)
-    .map((s) => {
-      return truncateString(s, 30)
-    })
-    .join("\n")
-
-  // console.log("-- transformed mindmap content: ", { input, output })
-  return output
 }

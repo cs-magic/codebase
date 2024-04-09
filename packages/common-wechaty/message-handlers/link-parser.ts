@@ -1,5 +1,5 @@
 import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
-import { UniParser } from "@/core/uni-parser"
+import { CardSimulator } from "@/core/card-simulator"
 import { FileBox } from "file-box"
 import { promises } from "fs"
 import Mustache from "mustache"
@@ -22,7 +22,7 @@ import { fetchWxmpArticle } from "../../3rd-wechat/wxmp-article/fetch-wxmp-artic
 import { BaseMessageHandler } from "./_base"
 
 export class LinkParserMessageHandler extends BaseMessageHandler {
-  private uniParser: UniParser | null = null
+  private uniParser: CardSimulator | null = null
   private backendEngineType: BackendEngineType = "nodejs"
   private summaryModel: LLMModelType = "gpt-3.5-turbo"
 
@@ -128,7 +128,7 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
       : undefined
 
     console.log(`-- parsing content`)
-    if (!this.uniParser) this.uniParser = new UniParser()
+    if (!this.uniParser) this.uniParser = new CardSimulator()
 
     const cardContent = JSON.stringify(content)
     console.log(cardContent)

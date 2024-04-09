@@ -1,3 +1,4 @@
+import { dumpJSON } from "../../common-common/dump-json"
 import { prettyError } from "../../common-common/pretty-error"
 import { fetchWxmpArticle } from "./fetch-wxmp-article"
 
@@ -9,11 +10,11 @@ it("should run wxmp article ok", async () => {
   try {
     const result = await fetchWxmpArticle(url, {
       backendEngineType: "nodejs",
-      summaryModel: "gpt-4",
-      // summaryModel: "gpt-3.5-turbo",
+      // summaryModel: "gpt-4",
+      summaryModel: "gpt-3.5-turbo",
       // summaryModel: "moonshot-v1-8k",
     })
-    console.log({ result })
+    await dumpJSON(result, `wxmp-article.sample.${Date.now()}.json`)
   } catch (err) {
     prettyError(err)
   }

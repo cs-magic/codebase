@@ -6,7 +6,7 @@ import {
 } from "playwright"
 import { DriverType } from "./schema"
 
-export class ParserBase {
+export class BaseSimulator {
   protected driver: BrowserType
   protected browser: PlaywrightBrowser | null = null
   protected launchOptions?: LaunchOptions
