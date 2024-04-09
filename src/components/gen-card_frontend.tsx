@@ -73,6 +73,9 @@ const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
         name={"preview-engine"}
         vs={["html2image", "html2canvas", "modern-screenshot"]}
       />
+
+      <Separator orientation={"horizontal"} />
+
       {cards.map((card, index) => (
         <GenCardPreview key={index} renderType={renderType} card={card} />
       ))}

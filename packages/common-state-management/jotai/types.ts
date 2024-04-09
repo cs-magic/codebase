@@ -16,3 +16,5 @@ export type Atom<T> =
   | (PrimitiveAtom<T> & WithInitialValue<T>)
   // storage
   | WritableAtom<T, [SetStateActionWithReset<T>], void>
+
+export type SetAtom<Args extends unknown[], Result> = (...args: Args) => Result

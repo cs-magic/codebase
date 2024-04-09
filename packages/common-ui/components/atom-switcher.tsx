@@ -1,5 +1,5 @@
-import { useAtom } from "jotai"
-import { Atom } from "../../common-state-management/jotai/types"
+import { SetStateAction, useAtom } from "jotai"
+import { Atom, SetAtom } from "../../common-state-management/jotai/types"
 import {
   Select,
   SelectContent,
@@ -36,12 +36,25 @@ export const AtomSelector = <T extends string>({
   name,
   vs,
 }: {
-  atom: Atom<T>
   name: string
   vs: T[]
+  atom: Atom<T>
 }) => {
   const [v, setV] = useAtom(atom)
+  return <BaseSelector v={v} setV={setV} name={name} vs={vs} />
+}
 
+export const BaseSelector = <T extends string>({
+  name,
+  v,
+  setV,
+  vs,
+}: {
+  name: string
+  v: T
+  setV: (v: T) => void
+  vs: T[]
+}) => {
   return (
     <LabelLine title={name}>
       <Select value={v} onValueChange={(v) => setV(v as T)}>

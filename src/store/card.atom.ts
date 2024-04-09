@@ -2,11 +2,10 @@ import { IUserBasic } from "@/schema/user.summary"
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
-import { parseSummary } from "../../packages/common-article/parse-summary"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 import { BackendEngineType } from "../../packages/common-common/schema"
 import { LLMModelType } from "../../packages/common-llm/schema/models"
-import { ICardGenOptions, ISummaryParsed } from "../schema/card"
+import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
 
@@ -50,12 +49,16 @@ export const cardRefetchCommentsAtom = atomWithStorage(
 )
 export const cardFetchEngineAtom = atomWithStorage<BackendEngineType>(
   "card.fetch-engine",
-  "fastapi",
+  "nodejs",
 )
 
 export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
   "card.llm.type",
   "gpt-3.5-turbo",
+)
+export const cardLLMModelTypesAtom = atomWithStorage<LLMModelType[]>(
+  "card.llm.types",
+  ["gpt-3.5-turbo"],
 )
 
 export const cardLLMEnabledAtom = atomWithStorage(
@@ -114,9 +117,3 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
   refetchStat: get(cardRefetchCardAtom),
   refetchComments: get(cardRefetchCommentsAtom),
 }))
-
-export const summaryAtom = atom<ISummaryParsed>((get) => {
-  const card = get(cardAtom)
-  console.log("-- card: ", card)
-  return parseSummary(card?.contentSummary)
-})
