@@ -10,7 +10,7 @@ export const compareModels = async (url?: string) => {
     "gpt-3.5-turbo",
     "gpt-4",
     "glm-4",
-    // "moonshot-v1-8k",
+    "moonshot-v1-8k",
   ]
 
   await Promise.all(
