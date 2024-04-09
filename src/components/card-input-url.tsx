@@ -7,7 +7,7 @@ import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { config } from "../config/system"
 import { cardInputUrlAtom } from "../store/card.atom"
 
-export const GenCardInputUrl = () => {
+export const CardInputUrl = () => {
   const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom)
 
   return (

@@ -1,4 +1,4 @@
-import { GenCard } from "../../../../components/gen-card_frontend"
+import { Card } from "../../../../components/card"
 import { genPageTitle } from "../../../../utils"
 
 export const metadata = {
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default async function GenCardViaFrontendPage() {
-  return <GenCard />
+  return <Card />
 }

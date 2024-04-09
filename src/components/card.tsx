@@ -28,13 +28,13 @@ import {
   cardRefetchCommentsAtom,
   cardRefetchPageAtom,
 } from "../store/card.atom"
-import { GenCardAction1 } from "./gen-card-action-1"
-import { GenCardInputUrl } from "./gen-card-input-url"
-import { GenCardInputUser } from "./gen-card-input-user"
-import { GenCardPreview } from "./gen-card-preview"
+import { CardAction1 } from "./card-action1"
+import { CardInputUrl } from "./card-input-url"
+import { CardInputUser } from "./card-input-user"
+import { CardPreview } from "./card-preview"
 import { StandardCard } from "./standard-card"
 
-export const GenCard = () => {
+export const Card = () => {
   const card = useAtomValue(cardAtom)
   const renderType =
     useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
@@ -60,7 +60,7 @@ export const GenCard = () => {
 
         <Separator orientation={"horizontal"} />
 
-        <GenCardPreview renderType={renderType} card={card} withActions />
+        <CardPreview renderType={renderType} card={card} withActions />
       </StandardCard>
     </div>
   )
@@ -72,9 +72,9 @@ const InputFrontend = () => {
   )
   return (
     <>
-      <GenCardInputUrl />
+      <CardInputUrl />
 
-      <GenCardInputUser />
+      <CardInputUser />
 
       <Separator orientation={"horizontal"} />
 
@@ -126,8 +126,8 @@ const InputFrontend = () => {
       <Separator orientation={"horizontal"} />
 
       <div className={"flex items-center gap-2"}>
-        <GenCardAction1 type={"generate"} />
-        <GenCardAction1 type={"reset"} />
+        <CardAction1 type={"generate"} />
+        <CardAction1 type={"reset"} />
       </div>
     </>
   )
@@ -138,7 +138,7 @@ const InputBackend = () => {
 
   return (
     <>
-      <GenCardInputUser />
+      <CardInputUser />
 
       <Textarea
         id={"card-content"}

@@ -10,7 +10,7 @@ export const prettyAction = async (func: () => any, name = "doing action") => {
     console.log(`-- started ${name}`)
     const result = func() // This will immediately return for sync functions, and return a Promise for async functions
     if (result instanceof Promise) await result // Only waits if func is async
-    console.log(`-- done ${name}`)
+    console.log(`-- ✅ ${name}`)
   } catch (e) {
     console.log(`-- failed ${name}`)
     prettyError(e)

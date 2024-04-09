@@ -10,7 +10,7 @@ export default function SubLayout({ children }: PropsWithChildren) {
     <FlexContainer
       orientation={"vertical"}
       className={cn(
-        "!p-0 !gap-0 h-full overflow-hidden ",
+        "!p-0 !gap-0 h-full max-w-[1080px] mx-auto overflow-hidden ",
         // "bg-cyan-800"
       )}
     >

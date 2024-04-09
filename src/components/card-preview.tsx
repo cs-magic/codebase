@@ -8,9 +8,9 @@ import { cardRenderedAtom, cardUserAtom } from "../store/card.atom"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
-import { GenCardAction2 } from "./gen-card-action-2"
+import { CardAction2 } from "./card-action2"
 
-export const GenCardPreview = ({
+export const CardPreview = ({
   renderType,
   card,
   withActions,
@@ -26,11 +26,11 @@ export const GenCardPreview = ({
   // console.log("-- preview: ", { rendered })
 
   const Action = ({ type }: { type: Action2Type }) => (
-    <GenCardAction2 type={type} obj={obj} rendered={rendered} />
+    <CardAction2 type={type} obj={obj} rendered={rendered} />
   )
 
   return (
-    <div className={"flex flex-col gap-2"}>
+    <div className={"w-full max-w-[375px] flex flex-col gap-2"}>
       {withActions && (
         <div className={"flex gap-2"}>
           <Action type={"copy"} />

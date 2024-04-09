@@ -16,9 +16,9 @@ import {
   cardOssIdAtom,
   cardPreviewEngineAtom,
 } from "../store/card.atom"
-import { GenCardActionButton } from "./gen-card-action-button"
+import { CardAction } from "./card-action"
 
-export const GenCardAction2 = ({
+export const CardAction2 = ({
   type,
   obj,
   rendered,
@@ -87,7 +87,5 @@ export const GenCardAction2 = ({
     }
   }
 
-  return (
-    <GenCardActionButton action={action} type={type} disabled={!rendered} />
-  )
+  return <CardAction action={action} type={type} disabled={!rendered} />
 }

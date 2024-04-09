@@ -7,7 +7,7 @@ import { AtomSelector } from "../../packages/common-ui/components/atom-switcher"
 import { GenCardRenderType } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { cardPreviewEngineAtom } from "../store/card.atom"
-import { GenCardPreview } from "./gen-card-preview"
+import { CardPreview } from "./card-preview"
 import { StandardCard } from "./standard-card"
 
 export const CardPreviews = ({
@@ -21,7 +21,11 @@ export const CardPreviews = ({
     useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
 
   return (
-    <StandardCard title={"Preview"} id={"card-previews"}>
+    <StandardCard
+      title={"Preview"}
+      id={"card-previews"}
+      className={"overflow-auto"}
+    >
       {withActions && (
         <>
           <AtomSelector
@@ -34,13 +38,9 @@ export const CardPreviews = ({
         </>
       )}
 
-      <div
-        className={
-          "w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 "
-        }
-      >
+      <div className={"w-full flex flex-wrap gap-2"}>
         {cards.map((card, index) => (
-          <GenCardPreview
+          <CardPreview
             key={index}
             renderType={renderType}
             card={card}

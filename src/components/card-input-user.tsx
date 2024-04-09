@@ -6,7 +6,7 @@ import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
 import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.atom"
 
-export const GenCardInputUser = () => {
+export const CardInputUser = () => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
 

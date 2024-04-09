@@ -7,9 +7,9 @@ import {
   cardUserAvatarAtom,
   cardUserNameAtom,
 } from "../store/card.atom"
-import { GenCardActionButton } from "./gen-card-action-button"
+import { CardAction } from "./card-action"
 
-export const GenCardAction1 = ({ type }: { type: Action1Type }) => {
+export const CardAction1 = ({ type }: { type: Action1Type }) => {
   const [inputUrl] = useAtom(cardInputAtom)
   const [options] = useAtom(cardGenOptionsAtom)
   const setCardInput = useSetAtom(cardInputAtom)
@@ -31,5 +31,5 @@ export const GenCardAction1 = ({ type }: { type: Action1Type }) => {
     }
   }
 
-  return <GenCardActionButton action={action} type={type} />
+  return <CardAction action={action} type={type} />
 }

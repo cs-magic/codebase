@@ -55,12 +55,7 @@ export default function RootLayout({
                   <ScreenProvider>
                     {/* 3. hooks layer */}
                     <GlobalHooksProviders>
-                      <main
-                        className={cn(
-                          "max-w-[1080px] mx-auto overflow-hidden relative",
-                          //"bg-cyan-900"
-                        )}
-                      >
+                      <main className={cn("relative")}>
                         {children}
 
                         <Toaster

@@ -1,9 +1,9 @@
 import { promises } from "fs"
 import path from "path"
-import { generatedPath } from "../../../../../packages/common-common/path"
-import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container"
-import { CardPreviews } from "../../../../components/card-previews"
-import { ICardDetail } from "../../../../schema/card.basic"
+import { generatedPath } from "../../../packages/common-common/path"
+import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
+import { CardPreviews } from "../../components/card-previews"
+import { ICardDetail } from "../../schema/card.basic"
 
 export default async function CompareModelsPage() {
   const cardNames = (await promises.readdir(generatedPath)).filter((s) =>
@@ -21,7 +21,7 @@ export default async function CompareModelsPage() {
   )
 
   return (
-    <FlexContainer id={"container-comp-models"} className={"items-start"}>
+    <FlexContainer className={"mx-auto "}>
       <CardPreviews cards={cards} withActions={false} />
     </FlexContainer>
   )

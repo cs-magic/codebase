@@ -6,11 +6,6 @@ import { ICallLLMOptions } from "./agents/call-agent"
 import { model2provider } from "./model2provider"
 
 export const callLLM = async (options: ICallLLMOptions) => {
-  console.debug(
-    "-- llm calling... ",
-    // options
-  )
-
   const model = options.model
   const providerType = model2provider(model)
 
@@ -19,12 +14,6 @@ export const callLLM = async (options: ICallLLMOptions) => {
 
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
-  console.log({
-    providerType,
-    model,
-    // apiKey,
-    baseURL,
-  })
 
   const opts = {
     apiKey,
@@ -44,23 +33,22 @@ export const callLLM = async (options: ICallLLMOptions) => {
       args,
     )) as unknown as OpenAI.Chat.Completions.ChatCompletion
   } else if (providerType === "baichuan") {
-    result = await api.post(
+    const res = await api.post<OpenAI.Chat.Completions.ChatCompletion>(
       "https://api.baichuan-ai.com/v1/chat/completions",
       args,
       {
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${apiKey}`,
         },
       },
     )
+    result = res.data
   } else {
     const client = new OpenAI(opts)
     result = await client.chat.completions.create(args)
   }
-  console.debug(
-    `-- llm called`,
-    // JSON.stringify(result)
-  )
+  console.debug(`-- llm called`, JSON.stringify(result))
 
   return result.choices[0]?.message.content
 }

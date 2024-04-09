@@ -7,10 +7,11 @@ export const compareModels = async (url?: string) => {
   if (!url) throw new Error("no url found")
 
   const models: LLMModelType[] = [
-    "gpt-3.5-turbo",
-    "gpt-4",
-    "glm-4",
-    "moonshot-v1-8k",
+    // "gpt-3.5-turbo",
+    // "gpt-4",
+    // "glm-4",
+    // "moonshot-v1-8k",
+    "Baichuan2-Turbo",
   ]
 
   await Promise.all(
