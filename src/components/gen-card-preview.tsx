@@ -13,9 +13,11 @@ import { GenCardAction2 } from "./gen-card-action-2"
 export const GenCardPreview = ({
   renderType,
   card,
+  withActions,
 }: {
   renderType?: GenCardRenderType
   card?: ICardDetail | null
+  withActions?: boolean
 }) => {
   const obj = useRef<HTMLDivElement>(null)
   const [rendered] = useAtom(cardRenderedAtom)
@@ -29,11 +31,13 @@ export const GenCardPreview = ({
 
   return (
     <div className={"flex flex-col gap-2"}>
-      <div className={"flex gap-2"}>
-        <Action type={"copy"} />
-        <Action type={"download"} />
-        {renderType === "backend" && <Action type={"upload"} />}
-      </div>
+      {withActions && (
+        <div className={"flex gap-2"}>
+          <Action type={"copy"} />
+          <Action type={"download"} />
+          {renderType === "backend" && <Action type={"upload"} />}
+        </div>
+      )}
 
       <div
         ref={obj}

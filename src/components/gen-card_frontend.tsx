@@ -60,7 +60,7 @@ export const GenCard = () => {
 
         <Separator orientation={"horizontal"} />
 
-        <GenCardPreview renderType={renderType} card={card} />
+        <GenCardPreview renderType={renderType} card={card} withActions />
       </StandardCard>
     </div>
   )

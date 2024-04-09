@@ -10,19 +10,29 @@ import { cardPreviewEngineAtom } from "../store/card.atom"
 import { GenCardPreview } from "./gen-card-preview"
 import { StandardCard } from "./standard-card"
 
-export const CardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
+export const CardPreviews = ({
+  cards,
+  withActions,
+}: {
+  cards: ICardDetail[]
+  withActions?: boolean
+}) => {
   const renderType =
     useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
 
   return (
     <StandardCard title={"Preview"} id={"card-previews"}>
-      <AtomSelector
-        atom={cardPreviewEngineAtom}
-        name={"preview-engine"}
-        vs={["html2image", "html2canvas", "modern-screenshot"]}
-      />
+      {withActions && (
+        <>
+          <AtomSelector
+            atom={cardPreviewEngineAtom}
+            name={"preview-engine"}
+            vs={["html2image", "html2canvas", "modern-screenshot"]}
+          />
 
-      <Separator orientation={"horizontal"} />
+          <Separator orientation={"horizontal"} />
+        </>
+      )}
 
       <div
         className={
@@ -30,7 +40,12 @@ export const CardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
         }
       >
         {cards.map((card, index) => (
-          <GenCardPreview key={index} renderType={renderType} card={card} />
+          <GenCardPreview
+            key={index}
+            renderType={renderType}
+            card={card}
+            withActions={withActions}
+          />
         ))}
       </div>
     </StandardCard>

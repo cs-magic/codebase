@@ -22,7 +22,7 @@ export default async function CompareModelsPage() {
 
   return (
     <FlexContainer id={"container-comp-models"} className={"items-start"}>
-      <CardPreviews cards={cards} />
+      <CardPreviews cards={cards} withActions={false} />
     </FlexContainer>
   )
 }
