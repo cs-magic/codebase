@@ -24,7 +24,11 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
       console.log(`User logged in: `, user.payload)
     })
     .on("message", async (message) => {
-      console.log("<< message: ", message.payload)
+      const sender = message.talker()
+      console.log("<< message: ", {
+        ...message.payload,
+        user: { name: sender.name(), avatar: sender.payload?.avatar },
+      })
 
       const room = message.room()
       const roomName = (await room?.topic()) ?? ""

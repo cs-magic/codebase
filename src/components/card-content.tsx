@@ -1,6 +1,7 @@
 "use client"
 
 import { parseSummary } from "../../packages/common-article/parse-summary"
+import { cn } from "../../packages/common-ui-shadcn/utils"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { ICardDetail } from "../schema/card.basic"
 import { CardContentAuthor } from "./card-content-author"
@@ -36,11 +37,17 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
           <CardContentAuthor card={card} />
 
           <div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>
-            该卡片由
-            <span className={"underline mx-1"}>
-              {summary.model?.name?.toUpperCase()}大模型
+            该内容由
+            <span
+              className={cn(
+                // "underline",
+                " mx-1",
+              )}
+            >
+              {/*{summary.model?.name?.toUpperCase()}大模型*/}
+              大模型
             </span>
-            生成，请仔细甄别
+            生成，如有偏差请反馈
           </div>
         </div>
       </div>

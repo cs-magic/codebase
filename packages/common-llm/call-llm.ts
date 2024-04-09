@@ -20,9 +20,21 @@ export const callLLM = async (options: ICallLLMOptions) => {
     baseURL,
   }
 
+  const messages =
+    providerType === "baichuan"
+      ? [
+          {
+            role: "user" as const,
+            content: options.messages
+              .map((r) => r.content)
+              .join("\n\n## 输入\n\n"),
+          },
+        ]
+      : options.messages
+
   const args = {
-    messages: options.messages ?? [],
     model,
+    messages,
   }
 
   let result: OpenAI.Chat.Completions.ChatCompletion

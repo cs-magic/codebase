@@ -89,8 +89,8 @@ export const callAgent = async ({
   })
   return [
     `<model.name>${model}</model.name>`,
-    `<model.temperature>${agent.temperature}</model.temperature>`,
-    `<model.topP>${agent.top_p}</model.topP>`,
+    `<model.temperature>${agent.temperature ?? ""}</model.temperature>`,
+    `<model.topP>${agent.top_p ?? ""}</model.topP>`,
     result,
   ].join("\n")
 }
