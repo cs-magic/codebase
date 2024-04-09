@@ -59,15 +59,12 @@ export const GenCard = () => {
   )
 }
 
-const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
+export const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
   const renderType =
     useSearchParam<GenCardRenderType>("renderType") ?? "frontend"
 
   return (
-    <StandardCard
-      title={"Preview"}
-      className={"w-full sm:max-w-[375px] overflow-auto"}
-    >
+    <StandardCard title={"Preview"} className={"grow overflow-auto"}>
       <AtomSelector
         atom={cardPreviewEngineAtom}
         name={"preview-engine"}
@@ -76,9 +73,11 @@ const GenCardPreviews = ({ cards }: { cards: ICardDetail[] }) => {
 
       <Separator orientation={"horizontal"} />
 
-      {cards.map((card, index) => (
-        <GenCardPreview key={index} renderType={renderType} card={card} />
-      ))}
+      <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2"}>
+        {cards.map((card, index) => (
+          <GenCardPreview key={index} renderType={renderType} card={card} />
+        ))}
+      </div>
     </StandardCard>
   )
 }

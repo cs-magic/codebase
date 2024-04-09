@@ -5,7 +5,7 @@ import { ISummaryParsed } from "@/schema/card"
  * @param input
  */
 export const parseSummary = (input?: string | null): ISummaryParsed => {
-  console.log("-- parsed summary input: \n", input)
+  // console.log("-- parsed summary input: \n", input)
   const parse = (key: string) =>
     new RegExp(`<${key}>(.*?)</${key}>`, "ms").exec(input ?? "")?.[1]
 
@@ -20,6 +20,6 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
     model: parse("model"),
   }
 
-  console.log("-- parsed summary output: ", JSON.stringify(output))
+  // console.log("-- parsed summary output: ", JSON.stringify(output))
   return output
 }

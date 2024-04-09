@@ -63,7 +63,7 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [ratio, content])
 
-  console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
+  // console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
 
   return (
     <div className={"w-full"}>

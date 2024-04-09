@@ -11,7 +11,7 @@ import { Tags } from "./card-content-tags"
 export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
   const summary = parseSummary(card?.contentSummary)
 
-  console.log("-- summary: ", summary)
+  // console.log("-- summary: ", summary)
 
   return (
     <div
@@ -34,6 +34,14 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
           <MarkMap content={summary?.mindmap} />
 
           <CardContentAuthor card={card} />
+
+          <div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>
+            该卡片由
+            <span className={"underline mx-1"}>
+              {summary.model?.toUpperCase()}大模型
+            </span>
+            生成，请仔细甄别
+          </div>
         </div>
       </div>
     </div>

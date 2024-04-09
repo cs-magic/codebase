@@ -28,7 +28,7 @@ export const GenCardPreview = ({
   )
 
   return (
-    <>
+    <div className={"flex flex-col gap-2"}>
       <div className={"flex gap-2"}>
         <Action type={"copy"} />
         <Action type={"download"} />
@@ -46,6 +46,6 @@ export const GenCardPreview = ({
 
         <CardFooter card={card} />
       </div>
-    </>
+    </div>
   )
 }

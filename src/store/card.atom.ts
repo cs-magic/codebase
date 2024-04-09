@@ -56,10 +56,6 @@ export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
   "card.llm.type",
   "gpt-3.5-turbo",
 )
-export const cardLLMModelTypesAtom = atomWithStorage<LLMModelType[]>(
-  "card.llm.types",
-  ["gpt-3.5-turbo"],
-)
 
 export const cardLLMEnabledAtom = atomWithStorage(
   "card.llm-model.enabled",
