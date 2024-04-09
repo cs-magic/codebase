@@ -129,7 +129,8 @@ model Card {
   // 公众号文章的核心内容（markdown格式）
   contentMd      String?
   // 基于核心内容总结后的结果
-  contentSummary String?
+  /// [ICallLLMResponse]
+  contentSummary Json?
 
   /// [ICardStat]
   stat Json?

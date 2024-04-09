@@ -3,7 +3,7 @@ import { fetchWxmpArticle } from "../packages/3rd-wechat/wxmp-article/fetch-wxmp
 import { dumpJSON } from "../packages/common-common/dump-json"
 import { generatedPath } from "../packages/common-common/path"
 import { prettyError } from "../packages/common-common/pretty-error"
-import { LLMModelType } from "../packages/common-llm/schema/models"
+import { LLMModelType } from "../packages/common-llm/schema/providers"
 
 export const compareModels = async (url?: string) => {
   if (!url) throw new Error("no url found")

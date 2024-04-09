@@ -13,7 +13,7 @@ import {
 import { IterableReadableStream } from "@langchain/core/utils/stream"
 import { ChatOpenAI } from "@langchain/openai"
 
-import { ICreateCallLLM } from "../../schema/call-llm"
+import { ICreateCallLLM } from "../../schema/llm"
 
 /**
  * todo: 用更好的接口，langchain 这个不太对齐（但兼容性应该是最好的）

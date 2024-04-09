@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-import { ITransEvent } from "../../../common-sse/schema"
+import { ITransEvent } from "../../../../common-sse/schema"
 import { StaticLLMManager } from "./provider-static"
 import { llmEncoder } from "./utils"
 

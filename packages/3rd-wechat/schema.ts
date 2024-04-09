@@ -1,10 +1,13 @@
 import { IUserBasic } from "@/schema/user.summary"
+
+import { ICallLLMResponse } from "../common-llm/schema/llm"
 import { $Enums } from ".prisma/client"
 
 export type IWechatError = {
   errcode: number
   errmsg: string
 } // e.g. {"errcode":40029,"errmsg":"invalid code"}
+
 export type IWechatRes<T extends object> = T | IWechatError
 export const isWechatError = <T extends object>(
   res: IWechatRes<T>,
@@ -26,5 +29,5 @@ export type IFetchWxmpArticleRes = {
   }
   description: string
   contentMd?: string
-  contentSummary?: string | null
+  contentSummary: ICallLLMResponse | null
 }

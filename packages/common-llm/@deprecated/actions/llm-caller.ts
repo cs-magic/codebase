@@ -1,7 +1,7 @@
 "use server"
 
-import { sleep } from "../../common-datetime/utils"
-import { callChatGPT, callLLMApiMock } from "../@deprecated/models/openai"
+import { sleep } from "../../../common-datetime/utils"
+import { callChatGPT, callLLMApiMock } from "../models/openai"
 import { getChannelIdFomRequest, LLMActionPayload } from "@/schema/sse"
 import { PusherLLMManager } from "../providers/llm-pusher"
 

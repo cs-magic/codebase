@@ -1,4 +1,4 @@
-import { ITransEvent, ITransChannel } from "../../../common-sse/schema"
+import { ITransEvent, ITransChannel } from "../../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 
 export interface ILLMManagerPusher {

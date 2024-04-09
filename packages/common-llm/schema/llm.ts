@@ -1,4 +1,6 @@
+import OpenAI from "openai"
 import { z } from "zod"
+import { LLMModelType } from "./providers"
 
 export const createCallLLMSchema = z.object({
   modelName: z.string(),
@@ -16,3 +18,26 @@ export const createCallLLMSchema = z.object({
   openAIApiKey: z.string().optional(),
 })
 export type ICreateCallLLM = z.infer<typeof createCallLLMSchema>
+
+export type ILLMMessage = {
+  role: "system" | "user" | "assistant"
+  content: string
+}
+
+export type ICallLLMOptions = {
+  model: LLMModelType
+  messages: ILLMMessage[]
+  temperature?: number
+  topP?: number
+  stream?: boolean
+}
+
+export type ICallLLMResponse = {
+  options: ICallLLMOptions
+  response: OpenAI.Chat.Completions.ChatCompletion | null
+  query: {
+    start: number
+    end?: number
+    success: boolean
+  }
+}

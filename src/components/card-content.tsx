@@ -1,6 +1,6 @@
 "use client"
 
-import { parseSummary } from "../../packages/common-article/parse-summary"
+import { parseSummary } from "../../packages/common-llm/parse-summary"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import MarkMap from "../../packages/common-visualization/markmap"
 import { ICardDetail } from "../schema/card.basic"

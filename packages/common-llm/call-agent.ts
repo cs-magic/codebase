@@ -1,37 +1,12 @@
-import dotenv from "dotenv"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
 import { fileURLToPath } from "url"
-import { compressContent } from "../../common-common/compress-content"
-import { callLLM } from "../call-llm"
-import { LLMModelType } from "../schema/models"
-
-dotenv.config()
-
-export type ILLMMessage = {
-  role: "system" | "user" | "assistant"
-  content: string
-}
-
-export type AgentConfig = {
-  name?: string
-  author?: string
-  version?: string
-  model?: LLMModelType
-  total_tokens?: number // 8912
-  system_prompt?: string
-  temperature?: number
-  top_p?: number
-}
-
-export type ICallLLMOptions = {
-  model: LLMModelType
-  messages: ILLMMessage[]
-  temperature?: number
-  topP?: number
-  stream?: boolean
-}
+import { compressContent } from "../common-common/compress-content"
+import { callLLM } from "./call-llm"
+import { AgentConfig } from "./schema/agent"
+import { ICallLLMOptions, ILLMMessage } from "./schema/llm"
+import { LLMModelType } from "./schema/providers"
 
 export const callAgent = async ({
   input,
@@ -80,17 +55,11 @@ export const callAgent = async ({
     content,
   })
 
-  const result = await callLLM({
+  return await callLLM({
     model,
     messages,
     topP: agent.top_p,
     temperature: agent.temperature,
     ...options,
   })
-  return [
-    `<model.name>${model}</model.name>`,
-    `<model.temperature>${agent.temperature ?? ""}</model.temperature>`,
-    `<model.topP>${agent.top_p ?? ""}</model.topP>`,
-    result,
-  ].join("\n")
 }

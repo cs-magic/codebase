@@ -4,7 +4,8 @@ import { IUserBasic } from "@/schema/user.summary"
 import { parse } from "node-html-parser"
 import { api, backendApi } from "../../common-api"
 import { parseMetaFromHtml } from "../../common-html/utils"
-import { callAgent } from "../../common-llm/agents/call-agent"
+import { callAgent } from "../../common-llm/call-agent"
+import { ICallLLMResponse } from "../../common-llm/schema/llm"
 import { html2md } from "../../common-markdown/html2md"
 import { IFetchWxmpArticleRes } from "../schema"
 
@@ -59,7 +60,7 @@ const fetchWxmpArticleViaNodeJS = async (
   const contentMd = html2md(html.getElementById("img-content")?.innerHTML ?? "")
 
   console.log("-- parsed url: ", ogUrl)
-  let contentSummary: string | null | undefined = undefined
+  let contentSummary: ICallLLMResponse | null = null
   if (options?.summaryModel) {
     contentSummary = await callAgent({
       input: contentMd,

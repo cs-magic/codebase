@@ -3,7 +3,7 @@ import {
   ITransClient,
   ITransEvent,
   ITransChannel,
-} from "../../../common-sse/schema"
+} from "../../../../common-sse/schema"
 import { ResponseFinalStatus } from "@/schema/sse"
 import { ILLMManagerTraditional } from "./schema"
 

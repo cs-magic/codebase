@@ -17,7 +17,7 @@ import {
 import {
   LLMModelType,
   supportedLLMModelTypes,
-} from "../../common-llm/schema/models"
+} from "../../common-llm/schema/providers"
 import { fetchWxmpArticle } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article"
 import { BaseMessageHandler } from "./_base"
 

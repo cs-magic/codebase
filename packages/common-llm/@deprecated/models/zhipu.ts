@@ -1,6 +1,7 @@
 import OpenAI from "openai"
 import { ZhipuAI } from "zhipuai-sdk-nodejs-v4"
-import { ICallLLMOptions } from "../../agents/call-agent"
+
+import { ICallLLMOptions } from "../../schema/llm"
 
 export const callZhipu = async (options: ICallLLMOptions) => {
   // console.log(process.env)

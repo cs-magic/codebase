@@ -1,11 +1,17 @@
 import { env } from "@/env"
+import dotenv from "dotenv"
 import OpenAI from "openai/index"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api } from "../common-api"
-import { ICallLLMOptions } from "./agents/call-agent"
+import { prettyError } from "../common-common/pretty-error"
 import { model2provider } from "./model2provider"
+import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
 
-export const callLLM = async (options: ICallLLMOptions) => {
+dotenv.config()
+
+export const callLLM = async (
+  options: ICallLLMOptions,
+): Promise<ICallLLMResponse> => {
   const model = options.model
   const providerType = model2provider(model)
 
@@ -37,30 +43,45 @@ export const callLLM = async (options: ICallLLMOptions) => {
     messages,
   }
 
-  let result: OpenAI.Chat.Completions.ChatCompletion
+  let response: OpenAI.Chat.Completions.ChatCompletion | null = null
+  const start = Date.now()
+  let success = false
 
-  if (providerType === "zhipu") {
-    const client = new ZhipuAi(opts)
-    result = (await client.createCompletions(
-      args,
-    )) as unknown as OpenAI.Chat.Completions.ChatCompletion
-  } else if (providerType === "baichuan") {
-    const res = await api.post<OpenAI.Chat.Completions.ChatCompletion>(
-      "https://api.baichuan-ai.com/v1/chat/completions",
-      args,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+  try {
+    if (providerType === "zhipu") {
+      const client = new ZhipuAi(opts)
+      response = (await client.createCompletions(
+        args,
+      )) as unknown as OpenAI.Chat.Completions.ChatCompletion
+    } else if (providerType === "baichuan") {
+      const res = await api.post<OpenAI.Chat.Completions.ChatCompletion>(
+        "https://api.baichuan-ai.com/v1/chat/completions",
+        args,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
         },
-      },
-    )
-    result = res.data
-  } else {
-    const client = new OpenAI(opts)
-    result = await client.chat.completions.create(args)
-  }
-  console.debug(`-- llm called`, JSON.stringify(result))
+      )
+      response = res.data
+    } else {
+      const client = new OpenAI(opts)
+      response = await client.chat.completions.create(args)
+    }
 
-  return result.choices[0]?.message.content
+    success = true
+  } catch (e) {
+    prettyError(e)
+  }
+
+  return {
+    options,
+    response,
+    query: {
+      start,
+      end: Date.now(),
+      success,
+    },
+  }
 }

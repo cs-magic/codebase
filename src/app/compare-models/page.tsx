@@ -1,7 +1,7 @@
 import { promises } from "fs"
 import path from "path"
 import React from "react"
-import { parseSummary } from "../../../packages/common-article/parse-summary"
+import { parseSummary } from "../../../packages/common-llm/parse-summary"
 import { generatedPath } from "../../../packages/common-common/path"
 import moment from "../../../packages/common-datetime/moment"
 import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
@@ -11,7 +11,8 @@ import { StandardCard } from "../../components/standard-card"
 import { ICardDetail } from "../../schema/card.basic"
 
 export default async function CompareModelsPage() {
-  const t = 1712651015842
+  // const t = 1712651015842
+  const t = 1712652669879
   const dir = path.join(generatedPath, t.toString())
 
   const cardNames = (await promises.readdir(dir)).filter((s) =>
@@ -31,7 +32,7 @@ export default async function CompareModelsPage() {
   return (
     <FlexContainer className={"items-start"}>
       <StandardCard title={"Params"} className={"w-fit"}>
-        <LabelLine title={"Date"}>{moment(t).format("MM/DD HH:MM")}</LabelLine>
+        <LabelLine title={"Date"}>{moment(t).format("MM/DD HH:mm")}</LabelLine>
       </StandardCard>
 
       {cards.map((card, index) => {

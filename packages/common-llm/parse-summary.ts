@@ -1,5 +1,4 @@
-import { ISummaryParsed } from "@/schema/card"
-import { isNumeric } from "../common-common/is-numeric"
+import {ISummaryParsed} from "@/schema/card"
 
 /**
  *  regex of `/ms`: ref:  https://stackoverflow.com/a/66001191/9422455
@@ -10,12 +9,7 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
   const parse = (key: string) =>
     new RegExp(`<${key}>(.*?)</${key}>`, "ms").exec(input ?? "")?.[1]
 
-  const parseNumber = (key: string) => {
-    const v = parse(key)
-    return isNumeric(v) ? Number(v) : undefined
-  }
-
-  const output = {
+  return {
     title: parse("title"),
     description: parse("description"),
     mindmap: parse("mindmap"),
@@ -23,13 +17,12 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
     tags: parse("tags")
       ?.split(/[,，]/)
       .map((s) => s.replace(/\s+/g, "")),
-    model: {
-      name: parse("model.name"),
-      temperature: parseNumber("model.temperature"),
-      topP: parseNumber("model.topP"),
-    },
   }
-
-  // console.log("-- parsed summary output: ", JSON.stringify(output))
-  return output
+}
+export type IArticleSummaryParsed = {
+  title?: string
+  description?: string
+  mindmap?: string
+  comment?: string
+  tags?: string[]
 }
