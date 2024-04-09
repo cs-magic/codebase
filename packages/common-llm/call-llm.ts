@@ -66,7 +66,6 @@ export const callLLM = async (
       )
       response = res.data
     } else if (providerType === "ali") {
-      console.log("-- args: ", args)
       const res = await backendApi.post<OpenAI.Chat.Completions.ChatCompletion>(
         "/llm/base",
         args,

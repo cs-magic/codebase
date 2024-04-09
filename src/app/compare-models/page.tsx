@@ -1,4 +1,5 @@
 import { promises } from "fs"
+import { sortBy } from "lodash"
 import path from "path"
 import React from "react"
 import { generatedPath } from "../../../packages/common-common/path"
@@ -42,8 +43,15 @@ const RenderT = async ({ t }: { t: number }) => {
 
   return (
     <StandardCard title={moment(t).format("MM/DD HH:mm")}>
-      <FlexContainer className={"items-start"}>
-        {cards.map((card, index) => {
+      <div
+        className={
+          "w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+        }
+      >
+        {sortBy(
+          cards,
+          (c) => c.contentSummary?.query.end - c.contentSummary?.query.start,
+        ).map((card, index) => {
           const options = card.contentSummary?.options
           const query = card.contentSummary?.query
           return (
@@ -64,7 +72,7 @@ const RenderT = async ({ t }: { t: number }) => {
             </div>
           )
         })}
-      </FlexContainer>
+      </div>
     </StandardCard>
   )
 }
