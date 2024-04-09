@@ -1,8 +1,8 @@
 "use server"
 
 import { prisma } from "../../../../packages/common-db/providers/prisma"
-import { fetchWxmpArticle } from "../../../../packages/common-platform-wechat/wxmp-article/fetch-wxmp-article"
-import { ensureWxmpArticleLongId } from "../../../../packages/common-platform-wechat/wxmp-article/utils"
+import { fetchWxmpArticle } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article"
+import { ensureWxmpArticleLongId } from "../../../../packages/3rd-wechat/wxmp-article/utils"
 import { ICardGenOptions } from "../../../schema/card"
 import { cardDetailSchema, ICardDetail } from "../../../schema/card.basic"
 import { $Enums } from ".prisma/client"

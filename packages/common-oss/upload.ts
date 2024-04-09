@@ -1,3 +1,5 @@
+"use client"
+
 import { api } from "../common-api"
 import { IApiResult } from "../common-api/schema"
 import { getOssSignatureUrl } from "./server/actions"

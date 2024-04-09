@@ -7,7 +7,7 @@ export const safeParseJson = (s?: any) => {
   }
 }
 
-export const parseJS = <T = any>(s?: string) => {
+export const parseJS = <T = any>(s?: string): T | null => {
   try {
     return eval(`( ${s} )`) as T
   } catch (e) {

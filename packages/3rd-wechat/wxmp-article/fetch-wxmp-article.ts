@@ -54,6 +54,7 @@ export const fetchWxmpArticle = async (
     }
 
     return {
+      sourceUrl: url,
       platformId: /sn=(.*?)&/.exec(ogUrl ?? "")![1]!, // get id(sn) from page
       platformType: "wxmpArticle",
       // 微信公众号使用主体名，而非原创作者名
@@ -63,7 +64,7 @@ export const fetchWxmpArticle = async (
       title,
       description,
       cover: { url: coverUrl, width: null, height: null },
-      contentMd,
+      // contentMd,
       contentSummary,
     }
   }

@@ -1,9 +1,9 @@
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
-} from "../../packages/common-platform-bilibili/actions"
-import { getBvidFromUrl } from "../../packages/common-platform-bilibili/utils"
-import { fetchXiaoHongShuDetail } from "../../packages/common-platform-xiaohongshu/actions"
+} from "../../packages/3rd-bilibili/actions"
+import { getBvidFromUrl } from "../../packages/3rd-bilibili/utils"
+import { fetchXiaoHongShuDetail } from "../../packages/3rd-xhs/actions"
 import { extractFirstURL } from "../../packages/common-common/parse-url"
 import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"

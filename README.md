@@ -8,6 +8,16 @@
 
 ## Architecture
 
+### wechaty - web
+
+
+1. wechat receive message: `packages/common-wechaty/message-handlers/link-parser.ts` (url: string)
+2. fetch card content: `packages/3rd-wechat/wxmp-article/fetch-wxmp-article.ts` (IFetchWxmpArticleRes)
+   1. parse summary: `packages/common-article/parse-summary.ts`
+3. start simulator: `src/core/uni-parser.ts` (FileBox)
+   1. generate card in simulator: `src/components/gen-card_frontend.tsx` ({cardContent, user} --> FileBox)
+4. FileBox back to reply message: `packages/common-wechaty/message-handlers/link-parser.ts`
+
 ## BugFix
 
 ### `@t3-oss/env-nextjs` 在 jest 下有问题，现已弃用

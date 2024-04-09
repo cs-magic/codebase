@@ -24,15 +24,15 @@ export const CardContent = () => {
         <div className={"p-2 flex flex-col gap-2"}>
           <h1 className={"text-lg font-bold shrink-0"}>{card?.title}</h1>
 
-          <Tags tags={summary?.result?.tags} />
+          <Tags tags={summary?.tags} />
 
           <Stat stat={card?.stat} />
 
           <div className={"bg-slate-100 p-2 rounded-lg text-sm"}>
-            {summary?.result?.description}
+            {summary?.description}
           </div>
 
-          <MarkMap content={summary?.result?.mindmap} />
+          <MarkMap content={summary?.mindmap} />
 
           <CardContentAuthor card={card} />
         </div>

@@ -70,7 +70,9 @@ const InputFrontend = () => {
       <Separator orientation={"horizontal"} />
 
       <AtomSwitcher atom={cardRefetchPageAtom} name={"refetch-page"} />
+
       <AtomSwitcher atom={cardLLMEnabledAtom} name={"llm-enabled"} />
+
       <AtomSelector
         atom={cardLLMTypeAtom}
         name={"llm-type"}
@@ -83,7 +85,9 @@ const InputFrontend = () => {
           "moonshot-v1-128k",
         ]}
       />
+
       <AtomSwitcher atom={cardRefetchCardAtom} name={"refetch-stat"} />
+
       <AtomSwitcher atom={cardRefetchCommentsAtom} name={"refetch-comments"} />
 
       <Separator orientation={"horizontal"} />
@@ -93,17 +97,13 @@ const InputFrontend = () => {
         name={"fetch engine"}
         vs={supportedBackendEngineTypes}
       />
-      <>
-        {[{ atom: cardMdWithImgAtom, name: "md-with-img" }].map(
-          (item, index) => (
-            <AtomSwitcher {...item} key={index} />
-          ),
-        )}
-      </>
+
+      <AtomSwitcher atom={cardMdWithImgAtom} name={"md-with-img"} />
 
       <Separator orientation={"horizontal"} />
 
       <AtomSwitcher atom={cardAuthorWithTitleAtom} name={"author.with-title"} />
+
       <LabelLine title={"map.vertical.space"}>
         <Input
           type={"number"}

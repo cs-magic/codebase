@@ -3,7 +3,7 @@ import {
   NormalCommand,
   normalCommands,
   parseCommands,
-} from "../../../common-common/parse-commands"
+} from "../../common-common/parse-commands"
 import { BaseMessageHandler } from "./_base"
 
 export class NormalCommandsMessageHandler extends BaseMessageHandler {

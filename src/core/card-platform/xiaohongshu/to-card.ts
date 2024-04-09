@@ -2,7 +2,7 @@
 
 import { Card, Prisma } from "@prisma/client"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
-import { IXiaoHongShuNotePageData } from "../../../../packages/common-platform-xiaohongshu/schema"
+import { IXiaoHongShuNotePageData } from "../../../../packages/3rd-xhs/schema"
 
 export const xiaohongshu2card = (
   inputData: IXiaoHongShuNotePageData,

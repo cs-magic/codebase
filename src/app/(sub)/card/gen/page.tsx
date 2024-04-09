@@ -6,5 +6,6 @@ export const metadata = {
 }
 
 export default async function GenCardViaFrontendPage() {
+  // return null
   return <GenCard />
 }

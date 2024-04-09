@@ -5,7 +5,7 @@ import { LLMModelType } from "../../packages/common-llm/schema/models"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../packages/common-platform-wechat/wxmp-article/detail/schema"
+} from "../../packages/3rd-wechat/wxmp-article/detail/schema"
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends "wechatArticle"
@@ -28,14 +28,14 @@ export type IMedia = {
   ratio?: number
 }
 
-export type ISummary = {
-  modelType: string
-  result: string
-}
-
 export type ISummaryParsed = {
-  modelType?: string
+  model?: string
   result?: IArticleSummaryParsed
+  title?: string
+  description?: string
+  mindmap?: string
+  tags?: string[]
+  comment?: string
 }
 
 export type Action1Type = "generate" | "reset"

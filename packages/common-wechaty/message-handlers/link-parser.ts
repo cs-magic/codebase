@@ -1,31 +1,30 @@
 import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
-import { UniParser } from "@/core/download-card.action"
+import { UniParser } from "@/core/uni-parser"
 import { FileBox } from "file-box"
 import { promises } from "fs"
-import { absolutePathToPage } from "next/dist/shared/lib/page-path/absolute-path-to-page"
+import Mustache from "mustache"
+import path from "path"
 import { fileURLToPath } from "url"
 import { types, Wechaty } from "wechaty"
 import { MessageInterface } from "wechaty/impls"
-import { initLog } from "../../../common-common/init-log"
-import { parseCommands } from "../../../common-common/parse-commands"
-import { parseUrlFromWechatUrlMessage } from "../../../common-common/parse-url-from-wechat-url-message"
+import { initLog } from "../../common-common/init-log"
+import { parseCommands } from "../../common-common/parse-commands"
+import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 import {
   BackendEngineType,
   supportedBackendEngineTypes,
-} from "../../../common-common/schema"
+} from "../../common-common/schema"
 import {
   LLMModelType,
   supportedLLMModelTypes,
-} from "../../../common-llm/schema/models"
-import { fetchWxmpArticle } from "../../wxmp-article/fetch-wxmp-article"
+} from "../../common-llm/schema/models"
+import { fetchWxmpArticle } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article"
 import { BaseMessageHandler } from "./_base"
-import path from "path"
-import Mustache from "mustache"
 
 export class LinkParserMessageHandler extends BaseMessageHandler {
   private uniParser: UniParser | null = null
   private backendEngineType: BackendEngineType = "nodejs"
-  private summaryModel: LLMModelType = "gpt-4"
+  private summaryModel: LLMModelType = "gpt-3.5-turbo"
 
   constructor(bot: Wechaty) {
     super(bot)
@@ -89,6 +88,7 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
         // Here we use a type assertion. Be cautious as this bypasses type safety.
         // @ts-ignore // todo
         this[field] = args
+        await message.say("ok")
       } else {
         await message.say(
           `failed to change the ${result.command} into ${args}, the available is ${JSON.stringify(supportedBackendEngineTypes)}`,
@@ -129,12 +129,12 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
 
     console.log(`-- parsing content`)
     if (!this.uniParser) this.uniParser = new UniParser()
-    const { cardUrl } = await this.uniParser.genCard(
-      JSON.stringify(content), // 需要文字形式
-      user,
-    )
 
-    console.log("-- sending file")
+    const cardContent = JSON.stringify(content)
+    console.log(cardContent)
+    const { cardUrl } = await this.uniParser.genCard(cardContent, user)
+
+    console.log(`-- sending file: ${cardUrl}`)
     await message.say(FileBox.fromUrl(cardUrl))
     console.log("-- ✅ sent file")
   }

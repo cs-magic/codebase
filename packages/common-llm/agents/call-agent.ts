@@ -73,9 +73,10 @@ export const callAgent = async ({
     content,
   })
 
-  return callLLM({
+  const result = await callLLM({
     model,
     messages,
     ...options,
   })
+  return `<model>${model}</model>\n${result}`
 }

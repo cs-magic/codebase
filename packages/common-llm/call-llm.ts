@@ -5,17 +5,20 @@ import { ICallLLMOptions } from "./agents/call-agent"
 import { ensureLLMProviderType } from "./utils"
 
 export const callLLM = async (options: ICallLLMOptions) => {
-  console.debug("-- llm calling: ", options)
+  console.debug(
+    "-- llm calling... ",
+    // options
+  )
 
-  const modelType = options.model
-  const providerType = ensureLLMProviderType(modelType)
+  const model = options.model
+  const providerType = ensureLLMProviderType(model)
 
   const baseURL =
     providerType === "moonshot" ? "https://api.moonshot.cn/v1" : undefined
 
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
-  console.log({ providerType, modelType, apiKey, baseURL })
+  console.log({ providerType, model, apiKey, baseURL })
 
   const opts = {
     apiKey,
@@ -24,7 +27,7 @@ export const callLLM = async (options: ICallLLMOptions) => {
 
   const args = {
     messages: options.messages ?? [],
-    model: options.model,
+    model,
   }
 
   let result: OpenAI.Chat.Completions.ChatCompletion
@@ -38,7 +41,10 @@ export const callLLM = async (options: ICallLLMOptions) => {
     const client = new OpenAI(opts)
     result = await client.chat.completions.create(args)
   }
-  console.debug(`-- llm result: ${JSON.stringify(result)}`)
+  console.debug(
+    `-- llm called`,
+    // JSON.stringify(result)
+  )
 
   return result.choices[0]?.message.content
 }

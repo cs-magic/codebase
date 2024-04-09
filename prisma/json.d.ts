@@ -3,10 +3,10 @@ declare global {
 
   namespace PrismaJson {
     export { IUserSummary, IUserBasic } from "@/schema/user.summary"
-    export { IMedia, ICardStat, ICardPlatform, ISummary } from "@/schema/card"
+    export { IMedia, ICardStat, ICardPlatform } from "@/schema/card"
     export {
       IWechatArticleStat,
       IWechatArticleComment,
-    } from "../packages/common-platform-wechat/wxmp-article/detail/schema"
+    } from "../packages/3rd-wechat/wxmp-article/detail/schema"
   }
 }

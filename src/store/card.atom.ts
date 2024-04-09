@@ -2,7 +2,7 @@ import { IUserBasic } from "@/schema/user.summary"
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
-import { parseSummary } from "../../packages/common-article/utils"
+import { parseSummary } from "../../packages/common-article/parse-summary"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 import { BackendEngineType } from "../../packages/common-common/schema"
 import { LLMModelType } from "../../packages/common-llm/schema/models"
@@ -78,7 +78,7 @@ export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngine>(
 // derived
 //////////////////////////////
 
-export const cardAtom = atom((get) => {
+export const cardAtom = atom<ICardDetail | null>((get) => {
   return parseJS<ICardDetail>(get(cardInputAtom))
 })
 
@@ -117,5 +117,6 @@ export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
 
 export const summaryAtom = atom<ISummaryParsed>((get) => {
   const card = get(cardAtom)
-  return parseSummary(JSON.stringify(card?.contentSummary))
+  console.log("-- card: ", card)
+  return parseSummary(card?.contentSummary)
 })

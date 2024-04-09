@@ -25,7 +25,7 @@ export const CardFooter = () => {
       <div className={"flex  items-center justify-center"}>
         <CardFooterItem
           Icon={PackageIcon}
-          value={summary?.modelType?.toUpperCase()}
+          value={summary?.model?.toUpperCase()}
         />
         <CardFooterItem
           Icon={CalendarHeartIcon}

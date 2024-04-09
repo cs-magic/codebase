@@ -1,7 +1,7 @@
 import { promises } from "fs"
 import * as path from "path"
 import { fileURLToPath } from "url"
-import { fetchBilibiliDetail } from "../packages/common-platform-bilibili/actions"
+import { fetchBilibiliDetail } from "../packages/3rd-bilibili/actions"
 
 void fetchBilibiliDetail("BV1yW4y1L7wA").then(async (data) => {
   await promises.writeFile(

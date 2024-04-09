@@ -1,3 +1,5 @@
+"use client"
+
 import download from "downloadjs"
 
 import * as html2image from "html-to-image"
@@ -58,21 +60,21 @@ export const GenCardAction2 = ({
     if (!blob) return
 
     switch (type) {
-      case "copy":
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            "image/png": blob,
-          }),
-        ])
-        toast.success("copied image to clipboard")
-        break
-
-      case "download":
-        const fp = `${card.platformType}_${card.platformId}.png`
-        download(blob, fp)
-        toast.success(`downloaded at ${fp}`, { closeButton: true, duration: 0 })
-        break
-
+      //   case "copy":
+      //     await navigator.clipboard.write([
+      //       new ClipboardItem({
+      //         "image/png": blob,
+      //       }),
+      //     ])
+      //     toast.success("copied image to clipboard")
+      //     break
+      //
+      //   case "download":
+      //     const fp = `${card.platformType}_${card.platformId}.png`
+      //     download(blob, fp)
+      //     toast.success(`downloaded at ${fp}`, { closeButton: true, duration: 0 })
+      //     break
+      //
       case "upload":
         if (!cardOssId) return
         const file = new File([blob], cardOssId, {

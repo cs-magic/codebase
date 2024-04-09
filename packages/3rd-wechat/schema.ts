@@ -13,6 +13,7 @@ export const isWechatError = <T extends object>(
 export type IWechatSDKToken = { access_token: string; expires_in: number }
 
 export type IFetchWxmpArticleRes = {
+  sourceUrl: string
   platformId: string
   platformType: $Enums.PlatformType
   author: IUserBasic
@@ -24,6 +25,6 @@ export type IFetchWxmpArticleRes = {
     height: null
   }
   description: string
-  contentMd: string
+  contentMd?: string
   contentSummary?: string | null
 }
