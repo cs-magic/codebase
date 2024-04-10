@@ -1,35 +1,32 @@
 import { MessageInterface } from "wechaty/impls"
-import {
-  NormalCommand,
-  normalCommands,
-  parseCommands,
-} from "../../common-common/parse-commands"
+import { ERR_MSG_INADEQUATE_PERMISSION } from "../../common-common/messages"
+import { parseCommands } from "../../common-common/parse-commands"
+import { getBotConfig } from "../get-bot-config"
 import { BaseMessageHandler } from "./_base"
 
 export class NormalCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {
-    const { command, args } = parseCommands<NormalCommand>(
-      message.text(),
-      normalCommands,
-    )
+    const result = parseCommands(message.text(), ["/help", "/status", "/shelp"])
 
-    // 回复自己需要
-    // web端会直接抛error，pad端会ignore
-    const listener = message.listener()
+    const isAdmin = message.talker().name().includes("南川")
 
-    if (!command) return
+    if (!result.command) return
 
-    switch (command) {
-      case "ding":
-        await message.say("dong")
+    const config = await getBotConfig({})
+
+    switch (result.command) {
+      case "/help":
+        await message.say(config.help)
         break
 
-      case "help":
-        await message.say("todo")
+      case "/status":
+        await message.say(config.status)
         break
 
-      case "status":
-        await message.say("todo")
+      case "/shelp":
+        await message.say(
+          isAdmin ? config.shelp : ERR_MSG_INADEQUATE_PERMISSION,
+        )
         break
     }
 

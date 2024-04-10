@@ -2,7 +2,7 @@
 
 import { useAtom, useAtomValue } from "jotai"
 import React from "react"
-import { supportedBackendEngineTypes } from "../../packages/common-common/schema"
+import { backendEngineTypes } from "../../packages/common-common/schema"
 import { useSearchParam } from "../../packages/common-hooks/use-search-param"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
@@ -104,7 +104,7 @@ const InputFrontend = () => {
       <AtomSelector
         atom={cardFetchEngineAtom}
         name={"fetch engine"}
-        vs={supportedBackendEngineTypes}
+        vs={backendEngineTypes}
       />
 
       <AtomSwitcher atom={cardMdWithImgAtom} name={"md-with-img"} />

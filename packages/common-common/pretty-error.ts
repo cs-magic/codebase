@@ -1,11 +1,12 @@
 import { AxiosError } from "axios"
 
 export const prettyError = (e: unknown) => {
-  console.error(
+  const s =
     e instanceof AxiosError
       ? `${e.message}: ${JSON.stringify(e.response?.data)}}`
       : e instanceof Error
         ? e.message
-        : e,
-  )
+        : (e as string)
+  console.error(s)
+  return s
 }

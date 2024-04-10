@@ -1,17 +1,17 @@
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
 import { MessageHandlers } from "./config"
+import { botContext } from "./schema"
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- createBot: ", { name })
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
-
     puppetOptions: {},
   })
 
-  const handlers = MessageHandlers.map((H) => new H(bot))
+  const handlers = MessageHandlers.map((H) => new H(bot, botContext))
 
   await bot
     .on("scan", (value, status) => {
@@ -29,6 +29,11 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         ...message.payload,
         user: { name: sender.name(), avatar: sender.payload?.avatar },
       })
+
+      if (message.text() === "ding") {
+        await message.say("dong")
+        return
+      }
 
       const room = message.room()
       const roomName = (await room?.topic()) ?? ""
