@@ -29,7 +29,7 @@ export const CardFooterItem = ({
       <div
         style={{ fontSize }}
         ref={ref}
-        className={"w-full overflow-auto text-nowrap text-center"}
+        className={"text-nowrap text-center truncate"}
       >
         {value ?? "-"}
       </div>
