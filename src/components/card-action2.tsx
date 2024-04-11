@@ -10,6 +10,7 @@ import { RefObject } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../packages/common-oss/upload"
 import { getOssUrl } from "../../packages/common-oss/utils"
+import { updateOssUrl } from "../core/update-oss-url.action"
 import { Action2Type, ActionType } from "../schema/card"
 import {
   cardAtom,
@@ -81,7 +82,11 @@ export const CardAction2 = ({
           type: blob.type,
         })
         await uploadFile(file)
-        toast.success(`uploaded at ${getOssUrl(cardOssId)}`, {
+        const ossUrl = getOssUrl(cardOssId)
+
+        await updateOssUrl(card.id, ossUrl)
+
+        toast.success(`uploaded at ${ossUrl}`, {
           closeButton: true,
         })
     }

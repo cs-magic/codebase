@@ -36,11 +36,12 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
 
     await message.say("正在解析……")
 
-    const content = await fetchWxmpArticleWithCache(url, {
+    const card = await fetchWxmpArticleWithCache(url, {
       backendEngineType: this.context.backendEngineType,
       summaryModel: this.context.summaryModel,
     })
-
+    // todo: dynamic sender with fixed card url
+    // let cardUrl = card.ossUrl
     const sender = message.talker()
 
     // avatar 在 padLocal 下是带domain的；web下不稳定
@@ -56,11 +57,12 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
     console.log(`-- parsing content`)
     if (!this.uniParser) this.uniParser = new CardSimulator()
 
-    const cardContent = JSON.stringify(content)
+    const cardContent = JSON.stringify(card)
     console.log(cardContent)
     const { cardUrl } = await this.uniParser.genCard(cardContent, user)
 
     console.log(`-- sending file: ${cardUrl}`)
+
     await message.say(FileBox.fromUrl(cardUrl))
     console.log("-- ✅ sent file")
   }
