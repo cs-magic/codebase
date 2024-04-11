@@ -32,7 +32,7 @@ const RenderT = async ({ t }: { t: number }) => {
     s.startsWith("wxmp-article"),
   )
 
-  const cards = await Promise.all(
+  const cards: ICardDetail[] = await Promise.all(
     cardNames.map(async (cardName) => {
       return JSON.parse(
         await promises.readFile(path.join(dir, cardName), {
@@ -49,10 +49,12 @@ const RenderT = async ({ t }: { t: number }) => {
           "w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
         }
       >
-        {sortBy(
-          cards,
-          (c) => c.contentSummary?.query.end - c.contentSummary?.query.start,
-        ).map((card, index) => {
+        {sortBy(cards, (c: ICardDetail) => {
+          const contentSummary = c.contentSummary as ICallLLMResponse | null
+          const query = contentSummary?.query
+          if (!query?.end) return 99999 // 没有完成的，放最后
+          return query.end - query.start
+        }).map((card, index) => {
           const summary = card.contentSummary as ICallLLMResponse | null
           const options = summary?.options
           const query = summary?.query
