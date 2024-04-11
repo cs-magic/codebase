@@ -1,7 +1,7 @@
 export const parseCommand = <T extends string>(
   text: string,
   commands: T[],
-): { command?: T; args?: string } => {
+): null | { command: T; args?: string } => {
   // 正则使用 `` 而非 // 的时候要 \s --> \\s
   // - /A, ok
   // - /A b, ok
@@ -10,7 +10,7 @@ export const parseCommand = <T extends string>(
     text,
   )
 
-  if (!m) return {}
+  if (!m) return null
 
   const command = m[1] as T
   const args = m[2] ?? ""

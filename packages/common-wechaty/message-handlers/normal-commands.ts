@@ -9,12 +9,13 @@ export class NormalCommandsMessageHandler extends BaseMessageHandler {
   name = "normal-commands"
 
   public async onMessage(message: MessageInterface) {
-    const result = parseCommand(message.text(), ["help", "status", "shelp"])
-    if (!result.command) return
+    const result = parseCommand(message.text(), ["", "help", "status", "shelp"])
+    if (!result) return
 
     const config = await getBotConfig({})
 
     switch (result.command) {
+      case "":
       case "help":
         await message.say(config.help)
         break

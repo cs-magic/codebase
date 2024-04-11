@@ -14,7 +14,7 @@ export class SuperCommandsMessageHandler extends BaseMessageHandler<IBotContext>
       "set-backend-engine-type",
       "set-summary-model",
     ])
-    if (!result.command) return
+    if (!result) return
 
     switch (result.command) {
       case "set-backend-engine-type":

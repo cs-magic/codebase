@@ -7,7 +7,7 @@ export class HeartbeatMessageHandler extends BaseMessageHandler {
 
   public async onMessage(message: MessageInterface) {
     const result = parseCommand(message.text(), ["ding"])
-    if (!result.command) return
+    if (!result) return
 
     switch (result.command) {
       case "ding":
