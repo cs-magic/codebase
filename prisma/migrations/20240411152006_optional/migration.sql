@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "WechatUser" ALTER COLUMN "city" DROP NOT NULL,
+ALTER COLUMN "province" DROP NOT NULL,
+ALTER COLUMN "signature" DROP NOT NULL;

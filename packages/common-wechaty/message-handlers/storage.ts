@@ -29,9 +29,9 @@ export class StorageMessageHandler extends BaseMessageHandler<IBotContext> {
           ? {
               connectOrCreate: {
                 where: {
-                  id: room?.id,
+                  id: room.id,
                 },
-                create: room?.payload,
+                create: room.payload!,
               },
             }
           : undefined,

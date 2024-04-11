@@ -159,13 +159,13 @@ model WechatMessage {
   talker   WechatUser @relation(fields: [talkerId], references: [id], onDelete: Cascade)
   talkerId String // 'wxid_ck85xup8b1bj21',
 
-  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  roomId String? // : '47778688503@chatroom',
+  room WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
-  text      String // '现在我们要支持 card - model 的一对多关系了',
   timestamp Int // 1712846017,
   type      Int //: 7,
 
+  text          String? // '现在我们要支持 card - model 的一对多关系了',
+  roomId        String? // : '47778688503@chatroom',
   mentionIdList String[] // : [],
 }
 
@@ -178,15 +178,16 @@ model WechatUser {
   avatar   String //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
   messages WechatMessage[]
 
-  alias     String //: "",
-  city      String //: "Haidian",
-  friend    Boolean //: true,
-  gender    Int //: 1,
-  phone     String[] //: [],
-  province  String // : "Beijing",
-  signature String //: "Run, don’t look back.",
-  type      Int //: 1,
-  weixin    String //: "youshouldspeakhow",
+  friend    Boolean? //: true,
+  gender    Int? //: 1,
+  type      Int? //: 1,
+  weixin    String? //: "youshouldspeakhow",
+  alias     String? //: "",
+  city      String? //: "Haidian",
+  province  String? // : "Beijing",
+  signature String? //: "Run, don’t look back.",
+
+  phone String[] //: [],
 }
 
 model WechatRoom {
@@ -197,10 +198,11 @@ model WechatRoom {
   messages WechatMessage[]
 
   adminIdList  String[] //: [],
-  avatar       String //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
   memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
-  ownerId      String // : "wxid_ck85xup8b1bj21",
-  topic        String //: "test bot 0-1"
+  avatar       String? //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
+  topic        String? //: "test bot 0-1"
 
+  // todo: owner
+  ownerId      String? // : "wxid_ck85xup8b1bj21",
   chatbotTopic String? @default("默认话题")
 }
