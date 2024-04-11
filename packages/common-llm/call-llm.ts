@@ -1,5 +1,6 @@
 import { env } from "@/env"
 import dotenv from "dotenv"
+import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api, backendApi } from "../common-api"
@@ -21,9 +22,12 @@ export const callLLM = async (
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
 
-  const opts = {
+  const httpAgent = env.PROXY ? new HttpsProxyAgent(env.PROXY) : undefined
+
+  const clientConfig = {
     apiKey,
     baseURL,
+    httpAgent,
   }
 
   const messages =
@@ -38,12 +42,15 @@ export const callLLM = async (
         ]
       : options.messages
 
-  const args = {
+  const queryConfig = {
     model,
     messages,
   }
 
-  console.debug("-- calling LLM: ", args)
+  console.debug(`-- calling LLM: `, {
+    clientConfig: JSON.stringify(clientConfig),
+    queryConfig: JSON.stringify(queryConfig),
+  })
 
   let response: OpenAI.Chat.Completions.ChatCompletion | null = null
   const start = Date.now()
@@ -51,14 +58,16 @@ export const callLLM = async (
 
   try {
     if (providerType === "zhipu") {
-      const client = new ZhipuAi(opts)
+      console.debug("-- calling ZhiPu")
+      const client = new ZhipuAi(clientConfig)
       response = (await client.createCompletions(
-        args,
+        queryConfig,
       )) as unknown as OpenAI.Chat.Completions.ChatCompletion
     } else if (providerType === "baichuan") {
+      console.debug("-- calling BaiChuan")
       const res = await api.post<OpenAI.Chat.Completions.ChatCompletion>(
         "https://api.baichuan-ai.com/v1/chat/completions",
-        args,
+        queryConfig,
         {
           headers: {
             "Content-Type": "application/json",
@@ -68,9 +77,10 @@ export const callLLM = async (
       )
       response = res.data
     } else if (providerType === "ali") {
+      console.debug("-- calling Ali")
       const res = await backendApi.post<OpenAI.Chat.Completions.ChatCompletion>(
         "/llm/base",
-        args,
+        queryConfig,
         {
           headers: {
             ContentType: "application/json",
@@ -79,10 +89,9 @@ export const callLLM = async (
       )
       response = res.data
     } else {
-      const client = new OpenAI(opts)
-      response = await client.chat.completions.create(args, {
-        timeout: 10000,
-      })
+      console.debug("-- calling OpenAI")
+      const client = new OpenAI({ ...clientConfig, timeout: 10e3, httpAgent })
+      response = await client.chat.completions.create(queryConfig)
     }
 
     success = true
@@ -90,12 +99,14 @@ export const callLLM = async (
     prettyError(e)
   }
 
+  const end = Date.now()
   const res = {
     options,
     response,
     query: {
       start,
-      end: Date.now(),
+      end,
+      duration: (end - start) / 1e3,
       success,
     },
   }

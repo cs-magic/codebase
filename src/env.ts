@@ -1,4 +1,5 @@
 import dotenv from "dotenv"
+import * as process from "process"
 
 dotenv.config()
 
@@ -43,4 +44,12 @@ export const env = {
   MINIMAX_GROUP_ID: process.env.MINIMAX_GROUP_ID,
   BAICHUAN_API_KEY: process.env.BAICHUAN_API_KEY,
   DASHSCOPE_API_KEY: process.env.DASHSCOPE_API_KEY,
+
+  PROXY:
+    process.env.proxy ??
+    process.env.PROXY ??
+    process.env.http_proxy ??
+    process.env.HTTP_PROXY ??
+    process.env.https_proxy ??
+    process.env.HTTPS_PROXY,
 }
