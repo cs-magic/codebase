@@ -3,12 +3,12 @@ import { fetchWxmpArticleWithCache } from "../packages/3rd-wechat/wxmp-article/f
 import { dumpJSON } from "../packages/common-common/dump-json"
 import { generatedPath } from "../packages/common-common/path"
 import { prettyError } from "../packages/common-common/pretty-error"
-import { LLMModelType } from "../packages/common-llm/schema/providers"
+import { LlmModelType } from "../packages/common-llm/schema/providers"
 
 export const compareModels = async (url?: string) => {
   if (!url) throw new Error("no url found")
 
-  const models: LLMModelType[] = [
+  const models: LlmModelType[] = [
     "gpt-3.5-turbo",
     "gpt-4",
 

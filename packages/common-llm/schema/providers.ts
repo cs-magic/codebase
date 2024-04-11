@@ -22,7 +22,7 @@ export const llmModelTypeSchema = z.union([
   z.literal("qwen-plus"),
 ])
 
-export type LLMModelType =
+export type LlmModelType =
   | "gpt-3.5-turbo"
   | "gpt-4"
   | "glm-3-turbo"
@@ -35,7 +35,7 @@ export type LLMModelType =
   | "qwen-turbo"
   | "qwen-max"
   | "qwen-plus"
-export const llmModelTypes: LLMModelType[] = [
+export const llmModelTypes: LlmModelType[] = [
   "gpt-3.5-turbo",
   "gpt-4",
   "glm-3-turbo",

@@ -1,10 +1,10 @@
-import { LLMModelType } from "./providers"
+import { LlmModelType } from "./providers"
 
 export type AgentConfig = {
   name?: string
   author?: string
   version?: string
-  model?: LLMModelType
+  model?: LlmModelType
   total_tokens?: number // 8912
   system_prompt?: string
   temperature?: number

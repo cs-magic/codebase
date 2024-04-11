@@ -137,6 +137,8 @@ model Card {
   /// [ICardStat]
   stat Json?
 
+  ossUrl String?
+
   // todo: card comments
   @@unique([platformType, platformId])
 }

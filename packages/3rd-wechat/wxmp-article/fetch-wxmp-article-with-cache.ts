@@ -14,7 +14,7 @@ export const fetchWxmpArticleWithCache = async (
 ): Promise<ICardDetail> => {
   const data = parseWxmpArticleUrl(url)
 
-  let found = await findWxmpArticle(data)
+  let found = await findWxmpArticle(data, options?.summaryModel)
 
   console.log({ found })
 

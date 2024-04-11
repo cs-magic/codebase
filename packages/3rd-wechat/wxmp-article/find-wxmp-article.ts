@@ -1,8 +1,12 @@
 import { IWxmpArticleUrlParsed } from "@/core/card-platform/wechat-article/utils"
 import { cardDetailSchema } from "@/schema/card.basic"
 import { prisma } from "../../common-db/providers/prisma"
+import { LlmModelType } from "../../common-llm/schema/providers"
 
-export const findWxmpArticle = async (data: IWxmpArticleUrlParsed) => {
+export const findWxmpArticle = async (
+  data: IWxmpArticleUrlParsed,
+  specificModel?: LlmModelType,
+) => {
   const found = await prisma.card.findFirst({
     where: {
       OR: [
@@ -17,11 +21,17 @@ export const findWxmpArticle = async (data: IWxmpArticleUrlParsed) => {
           },
         },
       ],
+      contentSummary: specificModel
+        ? {
+            path: ["options", "model"],
+            equals: specificModel,
+          }
+        : undefined,
     },
     ...cardDetailSchema,
   })
 
-  // console.log(JSON.stringify({ found }, null, 2))
+  console.log(JSON.stringify({ found, specificModel }, null, 2))
 
   return found
 }

@@ -6,7 +6,7 @@ import { compressContent } from "../common-common/compress-content"
 import { callLLM } from "./call-llm"
 import { AgentConfig } from "./schema/agent"
 import { ICallLLMOptions, ILLMMessage } from "./schema/llm"
-import { LLMModelType } from "./schema/providers"
+import { LlmModelType } from "./schema/providers"
 
 export const callAgent = async ({
   input,
@@ -15,7 +15,7 @@ export const callAgent = async ({
   model,
 }: {
   input: string
-  model?: LLMModelType
+  model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
 } & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
   console.debug("-- agent calling: ", {

@@ -5,7 +5,7 @@ import { atomWithStorage } from "jotai/utils"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 
 import { BackendEngineType } from "../../packages/common-llm/schema/llm"
-import { LLMModelType } from "../../packages/common-llm/schema/providers"
+import { LlmModelType } from "../../packages/common-llm/schema/providers"
 import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { getCardUrl } from "../utils"
@@ -39,7 +39,7 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
 
 export const cardRefetchPageAtom = atomWithStorage("card.page.refetch", false)
-export const summaryModelAtom = atomWithStorage<LLMModelType>(
+export const summaryModelAtom = atomWithStorage<LlmModelType>(
   "card.summary.model",
   "gpt-3.5-turbo", // gpt-3.5-turbo
 )
@@ -53,7 +53,7 @@ export const cardFetchEngineAtom = atomWithStorage<BackendEngineType>(
   "nodejs",
 )
 
-export const cardLLMTypeAtom = atomWithStorage<LLMModelType>(
+export const cardLLMTypeAtom = atomWithStorage<LlmModelType>(
   "card.llm.type",
   "gpt-3.5-turbo",
 )

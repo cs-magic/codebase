@@ -1,11 +1,11 @@
 import { config } from "@/config/system"
 
 import { BackendEngineType } from "../common-llm/schema/llm"
-import { LLMModelType } from "../common-llm/schema/providers"
+import { LlmModelType } from "../common-llm/schema/providers"
 
 export type IBotContext = {
   backendEngineType: BackendEngineType
-  summaryModel: LLMModelType
+  summaryModel: LlmModelType
   version: string
   featuresEnabled?: boolean
   startTime: number

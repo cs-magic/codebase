@@ -1,6 +1,6 @@
 import OpenAI from "openai"
 import { z } from "zod"
-import { LLMModelType } from "./providers"
+import { LlmModelType } from "./providers"
 
 export const createCallLLMSchema = z.object({
   modelName: z.string(),
@@ -25,7 +25,7 @@ export type ILLMMessage = {
 }
 
 export type ICallLLMOptions = {
-  model: LLMModelType
+  model: LlmModelType
   messages: ILLMMessage[]
   temperature?: number
   topP?: number
