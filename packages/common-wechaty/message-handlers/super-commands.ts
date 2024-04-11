@@ -7,6 +7,8 @@ import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
 export class SuperCommandsMessageHandler extends BaseMessageHandler<IBotContext> {
+  name = "super-commands"
+
   public async onMessage(message: MessageInterface) {
     const result = parseCommands(message.text(), [
       "/set-backend-engine-type",

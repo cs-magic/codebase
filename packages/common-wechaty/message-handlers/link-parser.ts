@@ -17,17 +17,20 @@ import {
   LLMModelType,
   llmModelTypeSchema,
 } from "../../common-llm/schema/providers"
-import { isTest } from "../create-wechaty-bot"
+
+import { isTestMessage } from "../is-test-message"
 import { BaseMessageHandler } from "./_base"
 
 export class LinkParserMessageHandler extends BaseMessageHandler<{
   backendEngineType: BackendEngineType
   summaryModel: LLMModelType
 }> {
+  name = "link-parser"
+
   private uniParser: CardSimulator | null = null
 
   async onMessage(message: MessageInterface): Promise<void> {
-    if (!(await isTest(message))) return
+    if (!(await isTestMessage(message))) return
 
     initLog()
 

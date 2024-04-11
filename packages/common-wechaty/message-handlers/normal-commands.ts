@@ -2,15 +2,14 @@ import { MessageInterface } from "wechaty/impls"
 import { ERR_MSG_INADEQUATE_PERMISSION } from "../../common-common/messages"
 import { parseCommands } from "../../common-common/parse-commands"
 import { getBotConfig } from "../get-bot-config"
-import { IBotContext } from "../schema"
+import { isSenderAdmin } from "../is-sender-admin"
 import { BaseMessageHandler } from "./_base"
 
 export class NormalCommandsMessageHandler extends BaseMessageHandler {
+  name = "normal-commands"
+
   public async onMessage(message: MessageInterface) {
     const result = parseCommands(message.text(), ["/help", "/status", "/shelp"])
-
-    const isAdmin = message.talker().name().includes("南川")
-
     if (!result.command) return
 
     const config = await getBotConfig({})
@@ -26,7 +25,7 @@ export class NormalCommandsMessageHandler extends BaseMessageHandler {
 
       case "/shelp":
         await message.say(
-          isAdmin ? config.shelp : ERR_MSG_INADEQUATE_PERMISSION,
+          isSenderAdmin(message) ? config.shelp : ERR_MSG_INADEQUATE_PERMISSION,
         )
         break
     }

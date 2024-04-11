@@ -4,6 +4,7 @@ import { LiteralUnionSchema } from "../../common-llm/schema/llm"
 export class BaseMessageHandler<T = object> {
   public bot: Wechaty
   public context: T
+  public name: string = "_base"
 
   constructor(bot: Wechaty, context: T) {
     this.bot = bot

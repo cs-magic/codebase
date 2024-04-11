@@ -1,24 +1,22 @@
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
-import { MessageInterface } from "wechaty/impls"
+import { prettyError } from "../common-common/pretty-error"
 import { MessageHandlers } from "./config"
 import { botContext } from "./schema"
 
-export const isTest = async (message: MessageInterface) => {
-  const room = message.room()
-  const roomName = (await room?.topic()) ?? ""
-  return /test/.exec(roomName)
-}
-
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- createBot: ", { name })
-
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
     puppetOptions: {},
   })
 
-  const handlers = MessageHandlers.map((H) => new H(bot, botContext))
+  console.log("-- registering handlers")
+  const handlers = MessageHandlers.map((H) => {
+    const h = new H(bot, botContext)
+    console.log(`-- registering handler(name=${h.name})`)
+    return h
+  })
 
   await bot
     .on("scan", (value, status) => {
@@ -37,21 +35,15 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         user: { name: sender.name(), avatar: sender.payload?.avatar },
       })
 
-      if (message.text() === "ding") {
-        await message.say("dong")
-        return
-      }
-
       try {
         for (const handler of handlers) {
           const res = await handler.onMessage(message)
+          // if handled, then prevent going through the following ones
           if (res) return
         }
       } catch (e) {
-        console.error(e instanceof Error ? e.message : e)
-        await message.say(
-          `哎呀出错啦！原因： ${e instanceof Error ? e.message : "未知"}`,
-        )
+        const s = prettyError(e)
+        await message.say(`哎呀出错啦！原因： ${s}`)
       }
     })
     .start()
