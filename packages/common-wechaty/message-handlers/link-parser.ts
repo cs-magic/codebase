@@ -5,18 +5,10 @@ import { types } from "wechaty"
 import { MessageInterface } from "wechaty/impls"
 import { fetchWxmpArticle } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article"
 import { initLog } from "../../common-common/init-log"
-import { parseCommands } from "../../common-common/parse-commands"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
-import { prettyError } from "../../common-common/pretty-error"
 
-import {
-  BackendEngineType,
-  backendEngineTypeSchema,
-} from "../../common-llm/schema/llm"
-import {
-  LLMModelType,
-  llmModelTypeSchema,
-} from "../../common-llm/schema/providers"
+import { BackendEngineType } from "../../common-llm/schema/llm"
+import { LLMModelType } from "../../common-llm/schema/providers"
 
 import { isTestMessage } from "../is-test-message"
 import { BaseMessageHandler } from "./_base"

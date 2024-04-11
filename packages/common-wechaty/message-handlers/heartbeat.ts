@@ -1,12 +1,12 @@
 import { MessageInterface } from "wechaty/impls"
-import { parseCommands } from "../../common-common/parse-commands"
+import { parseCommand } from "../parse-command"
 import { BaseMessageHandler } from "./_base"
 
 export class HeartbeatMessageHandler extends BaseMessageHandler {
   name = "heartbeat"
 
   public async onMessage(message: MessageInterface) {
-    const result = parseCommands(message.text(), ["ding"])
+    const result = parseCommand(message.text(), ["ding"])
     if (!result.command) return
 
     switch (result.command) {

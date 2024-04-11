@@ -1,8 +1,8 @@
 import { MessageInterface } from "wechaty/impls"
-import { parseCommands } from "../../common-common/parse-commands"
 
 import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
 import { llmModelTypeSchema } from "../../common-llm/schema/providers"
+import { parseCommand } from "../parse-command"
 import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
@@ -10,14 +10,14 @@ export class SuperCommandsMessageHandler extends BaseMessageHandler<IBotContext>
   name = "super-commands"
 
   public async onMessage(message: MessageInterface) {
-    const result = parseCommands(message.text(), [
-      "/set-backend-engine-type",
-      "/set-summary-model",
+    const result = parseCommand(message.text(), [
+      "set-backend-engine-type",
+      "set-summary-model",
     ])
     if (!result.command) return
 
     switch (result.command) {
-      case "/set-backend-engine-type":
+      case "set-backend-engine-type":
         return this.handleCommand(
           message,
           "backendEngineType",
@@ -25,7 +25,7 @@ export class SuperCommandsMessageHandler extends BaseMessageHandler<IBotContext>
           result.args,
         )
 
-      case "/set-summary-model":
+      case "set-summary-model":
         return this.handleCommand(
           message,
           "summaryModel",
