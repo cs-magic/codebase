@@ -204,5 +204,5 @@ model WechatRoom {
 
   // todo: owner
   ownerId      String? // : "wxid_ck85xup8b1bj21",
-  chatbotTopic String? @default("默认话题")
+  chatbotTopic String?
 }
