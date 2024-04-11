@@ -49,10 +49,10 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
                 " mx-1",
               )}
             >
-              {card?.contentSummary?.options.model?.name?.toUpperCase()} 大模型
+              {card?.contentSummary?.options.model?.toUpperCase()} 大模型
               {/*大模型*/}
             </span>
-            生成，如有偏差请反馈
+            生成
           </div>
         </div>
       </div>
