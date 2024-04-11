@@ -1,4 +1,4 @@
-import { MessageInterface } from "wechaty/impls"
+import { Message } from "wechaty"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
 import { isTestMessage } from "../is-test-message"
@@ -9,7 +9,7 @@ import { BaseMessageHandler } from "./_base"
 export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
   name = "chatbot"
 
-  public async onMessage(message: MessageInterface) {
+  public async onMessage(message: Message) {
     const result = parseCommand(message.text(), [
       "topic",
       "set-topic",
