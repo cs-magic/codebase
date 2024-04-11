@@ -24,10 +24,7 @@ export const fetchWxmpArticleViaNodejs = async (
   if (!urlParsed.platformData.sn) {
     // e.g 1. http://mp.weixin.qq.com/s?__biz=MzAxNTg4NzAxOA==&amp;mid=2247511106&amp;idx=1&amp;sn=fa43c16f05693f6a13d10e8c6aef325f&amp;chksm=9bffd387ac885a9133f51cee60cf6dbd4f89e6c2eeb57710d2f33a3a2a7caecd7fd34a4d1a80#rd
     // e.g 2. http://mp.weixin.qq.com/s?__biz=MzAxNTg4NzAxOA==&mid=2247511106&idx=1&sn=fa43c16f05693f6a13d10e8c6aef325f&chksm=9bffd387ac885a9133f51cee60cf6dbd4f89e6c2eeb57710d2f33a3a2a7caecd7fd34a4d1a80#rd
-    const ogUrl = parseMetaFromHtml(html, "og:url", "property")!.replace(
-      /&amp;/g,
-      "&",
-    )
+    const ogUrl = parseMetaFromHtml(html, "og:url", "property")!
     urlParsed.platformData = parseWxmpArticleUrl(ogUrl).platformData
   }
 

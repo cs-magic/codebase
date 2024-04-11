@@ -43,6 +43,8 @@ export const callLLM = async (
     messages,
   }
 
+  console.debug("-- calling LLM: ", args)
+
   let response: OpenAI.Chat.Completions.ChatCompletion | null = null
   const start = Date.now()
   let success = false
@@ -78,7 +80,9 @@ export const callLLM = async (
       response = res.data
     } else {
       const client = new OpenAI(opts)
-      response = await client.chat.completions.create(args)
+      response = await client.chat.completions.create(args, {
+        timeout: 10000,
+      })
     }
 
     success = true
@@ -86,7 +90,7 @@ export const callLLM = async (
     prettyError(e)
   }
 
-  return {
+  const res = {
     options,
     response,
     query: {
@@ -95,4 +99,6 @@ export const callLLM = async (
       success,
     },
   }
+  console.log("-- called: ", res)
+  return res
 }

@@ -10,7 +10,6 @@ export const fetchWxmpArticle = async (
   options?: ICardGenOptions,
 ): Promise<ICardDetail> => {
   const data = parseWxmpArticleUrl(url)
-  console.log({ data })
 
   let found = await prisma.card.findFirst({
     where: {

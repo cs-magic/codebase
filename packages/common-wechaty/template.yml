@@ -29,9 +29,6 @@ shelp: |
 status: |
   version: {{ version }}
   features-enabled: {{featuresEnabled}}
-  summary-model: {{summaryModel}}
-  alive-time: {{aliveTime}}
-
-parser-status: |
   backend-engine-type: {{backendEngineType}}
   summary-model: {{summaryModel}}
+  alive-time: {{aliveTime}}

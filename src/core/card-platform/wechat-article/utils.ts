@@ -3,7 +3,7 @@ import { ICardPlatform } from "../../../schema/card"
 export const isWxmpArticleUrl = (url: string) => /mp.weixin.qq.com/.test(url)
 
 export const parseWxmpArticleUrl = (url: string) => {
-  const params = new URL(url).searchParams
+  const params = new URL(url.replace(/&amp;/g, "&")).searchParams
 
   const platformId = /mp.weixin.qq.com\/s\/(.*?)$/.exec(url)?.[1]
 
@@ -17,7 +17,7 @@ export const parseWxmpArticleUrl = (url: string) => {
     comments: undefined,
   }
 
-  // console.log({ url, platformId, platformData })
+  console.log({ url, platformId, platformData })
 
   return {
     platformId,
