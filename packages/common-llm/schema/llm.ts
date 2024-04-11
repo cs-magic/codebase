@@ -41,3 +41,17 @@ export type ICallLLMResponse = {
     success: boolean
   }
 }
+
+export const backendEngineTypeSchema = z.union([
+  z.literal("fastapi"),
+  z.literal("nodejs"),
+])
+// todo: how to define the LiteralUnionSchema, so that backendEngineTypeSchema: LiteralUnionSchema = ... is ok
+// export type LiteralUnionSchema = z.ZodUnion<...>
+
+// Define a type that transforms a string array into a union of ZodLiterals
+export type LiteralUnionSchema = z.ZodUnion<
+  [z.ZodLiteral<string>, ...z.ZodLiteral<string>[]]
+>
+
+export type BackendEngineType = z.infer<typeof backendEngineTypeSchema>

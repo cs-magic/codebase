@@ -1,24 +1,35 @@
 import { MessageInterface } from "wechaty/impls"
-import {
-  parseCommands,
-  SuperCommand,
-  superCommands,
-} from "../../common-common/parse-commands"
+import { parseCommands } from "../../common-common/parse-commands"
+
+import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
+import { llmModelTypeSchema } from "../../common-llm/schema/providers"
+import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class SuperCommandsMessageHandler extends BaseMessageHandler {
+export class SuperCommandsMessageHandler extends BaseMessageHandler<IBotContext> {
   public async onMessage(message: MessageInterface) {
-    const { command, args } = parseCommands<SuperCommand>(
-      message.text(),
-      superCommands,
-    )
+    const result = parseCommands(message.text(), [
+      "/set-backend-engine-type",
+      "/set-summary-model",
+    ])
+    if (!result.command) return
 
-    if (!command) return
+    switch (result.command) {
+      case "/set-backend-engine-type":
+        return this.handleCommand(
+          message,
+          "backendEngineType",
+          backendEngineTypeSchema,
+          result.args,
+        )
 
-    switch (command) {
-      case "set-llm-model":
-        // how to communicate with other plugins
-        console.log("todo")
+      case "/set-summary-model":
+        return this.handleCommand(
+          message,
+          "summaryModel",
+          llmModelTypeSchema,
+          result.args,
+        )
     }
 
     return true

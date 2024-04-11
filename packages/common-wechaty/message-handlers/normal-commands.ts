@@ -2,6 +2,7 @@ import { MessageInterface } from "wechaty/impls"
 import { ERR_MSG_INADEQUATE_PERMISSION } from "../../common-common/messages"
 import { parseCommands } from "../../common-common/parse-commands"
 import { getBotConfig } from "../get-bot-config"
+import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
 export class NormalCommandsMessageHandler extends BaseMessageHandler {

@@ -1,4 +1,5 @@
 import { Message, Wechaty } from "wechaty"
+import { LiteralUnionSchema } from "../../common-llm/schema/llm"
 
 export class BaseMessageHandler<T = object> {
   public bot: Wechaty
@@ -23,5 +24,23 @@ export class BaseMessageHandler<T = object> {
     // const listener = message.listener()
 
     throw new Error("onMessage not implemented.")
+  }
+
+  public async handleCommand<K extends keyof T>(
+    message: Message,
+    field: K,
+    schema: LiteralUnionSchema,
+    value?: string,
+  ) {
+    try {
+      await schema.parseAsync(value)
+      this.context[field] = value as T[K]
+      await message.say("ok")
+    } catch (err) {
+      // prettyError(err)
+      await message.say(
+        `操作失败，原因：${value} ∉ {${schema.options.map((o) => o.value).join(",")}}`,
+      )
+    }
   }
 }

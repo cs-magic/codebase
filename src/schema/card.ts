@@ -1,6 +1,7 @@
 import { $Enums } from "@prisma/client"
-import {IArticleSummaryParsed} from "../../packages/common-llm/parse-summary";
-import { BackendEngineType } from "../../packages/common-common/schema"
+import { IArticleSummaryParsed } from "../../packages/common-llm/parse-summary"
+
+import { BackendEngineType } from "../../packages/common-llm/schema/llm"
 import { LLMModelType } from "../../packages/common-llm/schema/providers"
 import {
   IWechatArticleComment,

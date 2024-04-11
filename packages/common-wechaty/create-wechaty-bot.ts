@@ -1,7 +1,14 @@
 import qrcodeTerminal from "qrcode-terminal"
 import { WechatyBuilder } from "wechaty"
+import { MessageInterface } from "wechaty/impls"
 import { MessageHandlers } from "./config"
 import { botContext } from "./schema"
+
+export const isTest = async (message: MessageInterface) => {
+  const room = message.room()
+  const roomName = (await room?.topic()) ?? ""
+  return /test/.exec(roomName)
+}
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- createBot: ", { name })
@@ -34,10 +41,6 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         await message.say("dong")
         return
       }
-
-      const room = message.room()
-      const roomName = (await room?.topic()) ?? ""
-      if (!/test/.exec(roomName)) return
 
       try {
         for (const handler of handlers) {

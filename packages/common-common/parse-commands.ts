@@ -1,3 +1,5 @@
+import { IBotContext } from "../common-wechaty/schema"
+
 export type NormalCommand = "help" | "ding" | "status"
 export const normalCommands = ["help", "ding", "status"] as NormalCommand[]
 

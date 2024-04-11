@@ -18,8 +18,10 @@ shelp: |
   /shelp: 查询管理员帮助
   /start: 启用助手
   /stop: 停止助手
-  /enable-llm: 启用LLM接口
-  /disable-llm: 暂停LLM接口
+  - /enable-llm: 启用LLM接口
+  - /disable-llm: 暂停LLM接口
+  /set-backend-engine-type V [nodejs,fastapi]
+  /set-summary-model V [gpt-3.5-turbo,gpt-4,qwen-max...]
   ----------------
   - ……
   ----------------

@@ -1,5 +1,6 @@
 import { config } from "@/config/system"
-import { BackendEngineType } from "../common-common/schema"
+
+import { BackendEngineType } from "../common-llm/schema/llm"
 import { LLMModelType } from "../common-llm/schema/providers"
 
 export type IBotContext = {
@@ -16,4 +17,10 @@ export const botContext: IBotContext = {
   version: config.version,
   featuresEnabled: true,
   startTime: Date.now(),
+}
+
+export type IBotConfig = {
+  help: string
+  shelp: string
+  status: string
 }

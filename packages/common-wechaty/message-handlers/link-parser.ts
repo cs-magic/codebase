@@ -8,14 +8,16 @@ import { initLog } from "../../common-common/init-log"
 import { parseCommands } from "../../common-common/parse-commands"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 import { prettyError } from "../../common-common/pretty-error"
+
 import {
   BackendEngineType,
   backendEngineTypeSchema,
-} from "../../common-common/schema"
+} from "../../common-llm/schema/llm"
 import {
   LLMModelType,
   llmModelTypeSchema,
 } from "../../common-llm/schema/providers"
+import { isTest } from "../create-wechaty-bot"
 import { BaseMessageHandler } from "./_base"
 
 export class LinkParserMessageHandler extends BaseMessageHandler<{
@@ -25,36 +27,9 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
   private uniParser: CardSimulator | null = null
 
   async onMessage(message: MessageInterface): Promise<void> {
+    if (!(await isTest(message))) return
+
     initLog()
-
-    const result = parseCommands(message.text(), [
-      "/set-backend-engine-type",
-      "/set-summary-model",
-    ])
-
-    switch (result.command) {
-      case "/set-backend-engine-type":
-        try {
-          backendEngineTypeSchema.parse(result.args)
-          this.context.backendEngineType = result.args as BackendEngineType
-          await message.say("ok")
-        } catch (err) {
-          const s = prettyError(err)
-          await message.say(`操作失败，原因：${s}`)
-        }
-        break
-
-      case "/set-summary-model":
-        try {
-          llmModelTypeSchema.parse(result.args)
-          this.context.summaryModel = result.args as LLMModelType
-          await message.say("ok")
-        } catch (err) {
-          const s = prettyError(err)
-          await message.say(`操作失败，原因：${s}`)
-        }
-        break
-    }
 
     if (message.type() !== types.Message.Url) return
 
