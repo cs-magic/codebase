@@ -9,7 +9,7 @@ import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { bilibili2card } from "./card-platform/bilibili/to-card"
 import { fetchWechatArticleAction } from "./card-platform/wechat-article/fetch-with-cache.action"
-import { isWechatArticleUrl } from "./card-platform/wechat-article/utils"
+import { isWxmpArticleUrl } from "./card-platform/wechat-article/utils"
 import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
 
 /**
@@ -26,7 +26,7 @@ export const genCardFromUrl = async (
   if (!urlParsed)
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`)
 
-  if (isWechatArticleUrl(urlParsed))
+  if (isWxmpArticleUrl(urlParsed))
     return await fetchWechatArticleAction(urlParsed, options)
 
   if (/xhslink|xiaohongshu/.test(urlParsed)) {

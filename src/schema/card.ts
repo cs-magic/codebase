@@ -9,10 +9,13 @@ import {
 } from "../../packages/3rd-wechat/wxmp-article/detail/schema"
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
-  T extends "wechatArticle"
+  T extends typeof $Enums.PlatformType.wxmpArticle
     ? {
-        shortId?: string
-        longId: string
+        sn: string | null // 这个最重要
+        __biz: string | null
+        mid: string | null
+        idx: string | null
+        chksm: string | null
         stat?: IWechatArticleStat
         comments?: IWechatArticleComment[]
       }

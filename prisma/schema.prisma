@@ -106,7 +106,9 @@ model Card {
   user Json?
 
   platformType PlatformType
-  platformId   String
+
+  // 微信可能不知道实际id是多少
+  platformId   String?
   /// [ICardPlatform]
   platformData Json?
 

@@ -1,4 +1,4 @@
-import { isWechatArticleUrl } from "@/core/card-platform/wechat-article/utils"
+import { isWxmpArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { CardSimulator } from "@/core/card-simulator"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
@@ -32,7 +32,9 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
     console.log("-- url in message: ", url)
     if (!url) return
 
-    if (!isWechatArticleUrl(url)) return
+    if (!isWxmpArticleUrl(url)) return
+
+    await message.say("正在解析……")
 
     const content = await fetchWxmpArticle(url, {
       backendEngineType: this.context.backendEngineType,
