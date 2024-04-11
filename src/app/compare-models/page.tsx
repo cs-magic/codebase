@@ -1,9 +1,10 @@
 import { promises } from "fs"
-import { sortBy } from "lodash"
+import sortBy from "lodash/sortBy"
 import path from "path"
 import React from "react"
 import { generatedPath } from "../../../packages/common-common/path"
 import moment from "../../../packages/common-datetime/moment"
+import { ICallLLMResponse } from "../../../packages/common-llm/schema/llm"
 import { FlexContainer } from "../../../packages/common-ui/components/flex-container"
 import { LabelLine } from "../../../packages/common-ui/components/label-line"
 import { CardPreview } from "../../components/card-preview"
@@ -52,21 +53,25 @@ const RenderT = async ({ t }: { t: number }) => {
           cards,
           (c) => c.contentSummary?.query.end - c.contentSummary?.query.start,
         ).map((card, index) => {
-          const options = card.contentSummary?.options
-          const query = card.contentSummary?.query
+          const summary = card.contentSummary as ICallLLMResponse | null
+          const options = summary?.options
+          const query = summary?.query
+
           return (
             <div className={"flex flex-col gap-2"} key={index}>
-              <LabelLine title={"Model"}>{options.model}</LabelLine>
+              <LabelLine title={"Model"}>{options?.model}</LabelLine>
 
-              <LabelLine title={"TopP"}>{options.topP ?? "-"}</LabelLine>
+              <LabelLine title={"TopP"}>{options?.topP ?? "-"}</LabelLine>
 
               <LabelLine title={"Temperature"}>
-                {options.temperature ?? "-"}
+                {options?.temperature ?? "-"}
               </LabelLine>
 
-              <LabelLine
-                title={"Latency"}
-              >{`${((query?.end - query?.start) / 1e3).toFixed(2)}s`}</LabelLine>
+              <LabelLine title={"Latency"}>
+                {!query?.end
+                  ? "-"
+                  : `${((query.end - query.start) / 1e3).toFixed(2)}s`}
+              </LabelLine>
 
               <CardPreview key={index} card={card} />
             </div>
