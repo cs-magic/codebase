@@ -29,9 +29,21 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
 
       case "set-topic":
+        await prisma.wechatRoom.update({
+          where: { id: roomId },
+          data: {
+            chatbotTopic: result.args,
+          },
+        })
         return
 
       case "stop-topic":
+        await prisma.wechatRoom.update({
+          where: { id: roomId },
+          data: {
+            chatbotTopic: null,
+          },
+        })
         return
     }
 

@@ -38,6 +38,6 @@ export class StorageMessageHandler extends BaseMessageHandler<IBotContext> {
       },
     })
 
-    return true
+    return false // continue
   }
 }
