@@ -16,7 +16,7 @@ export const callAgent = async ({
 }: {
   input: string
   model?: LLMModelType
-  agentType?: "default" | "summarize-content"
+  agentType?: "default" | "summarize-content" | "summarize-ancient-title"
 } & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
   console.debug("-- agent calling: ", {
     agentType,
