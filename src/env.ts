@@ -30,6 +30,7 @@ export const env = {
 
   // wechat
   WECHAT_APP_SECRET: process.env.WECHAT_APP_SECRET,
+  NEXT_PUBLIC_WECHAT_APP_ID: process.env.NEXT_PUBLIC_WECHAT_APP_ID,
 
   // pusher
   PUSHER_APP_ID: process.env.PUSHER_APP_ID,

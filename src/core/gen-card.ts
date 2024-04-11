@@ -3,12 +3,12 @@ import {
   fetchBvidFromb23tv,
 } from "../../packages/3rd-bilibili/actions"
 import { getBvidFromUrl } from "../../packages/3rd-bilibili/utils"
+import { fetchWxmpArticleWithCache } from "../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { fetchXiaoHongShuDetail } from "../../packages/3rd-xhs/actions"
 import { extractFirstURL } from "../../packages/common-common/parse-url"
 import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { bilibili2card } from "./card-platform/bilibili/to-card"
-import { fetchWechatArticleAction } from "./card-platform/wechat-article/fetch-with-cache.action"
 import { isWxmpArticleUrl } from "./card-platform/wechat-article/utils"
 import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card"
 
@@ -27,7 +27,7 @@ export const genCardFromUrl = async (
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`)
 
   if (isWxmpArticleUrl(urlParsed))
-    return await fetchWechatArticleAction(urlParsed, options)
+    return await fetchWxmpArticleWithCache(urlParsed, options)
 
   if (/xhslink|xiaohongshu/.test(urlParsed)) {
     const data = await fetchXiaoHongShuDetail(urlParsed)

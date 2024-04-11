@@ -32,6 +32,8 @@ export const initPusherClient = (
   }
 
   console.log("initializing pusher client")
+  if (!env.NEXT_PUBLIC_PUSHER_APP_KEY)
+    throw new Error("no pusher app key in env")
   const pusherClient = new PusherJS(env.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,

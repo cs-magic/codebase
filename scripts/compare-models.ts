@@ -1,5 +1,5 @@
 import path from "path"
-import { fetchWxmpArticle } from "../packages/3rd-wechat/wxmp-article/fetch-wxmp-article"
+import { fetchWxmpArticleWithCache } from "../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { dumpJSON } from "../packages/common-common/dump-json"
 import { generatedPath } from "../packages/common-common/path"
 import { prettyError } from "../packages/common-common/pretty-error"
@@ -31,7 +31,7 @@ export const compareModels = async (url?: string) => {
 
   for (const model of models) {
     try {
-      const result = await fetchWxmpArticle(url, {
+      const result = await fetchWxmpArticleWithCache(url, {
         backendEngineType: "nodejs",
         summaryModel: model,
       })

@@ -10,9 +10,9 @@ import { Stat } from "./card-content-stat"
 import { Tags } from "./card-content-tags"
 
 export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
-  const summary = parseSummary(
-    card?.contentSummary?.response?.choices[0].message.content,
-  )
+  const summary_ = card?.contentSummary?.response?.choices[0].message
+    .content as string | null | undefined
+  const summary = parseSummary(summary_)
 
   // console.log("-- summary: ", summary)
 

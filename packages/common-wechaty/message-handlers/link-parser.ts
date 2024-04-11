@@ -3,7 +3,7 @@ import { CardSimulator } from "@/core/card-simulator"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
 import { MessageInterface } from "wechaty/impls"
-import { fetchWxmpArticle } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article"
+import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 
@@ -36,7 +36,7 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
 
     await message.say("正在解析……")
 
-    const content = await fetchWxmpArticle(url, {
+    const content = await fetchWxmpArticleWithCache(url, {
       backendEngineType: this.context.backendEngineType,
       summaryModel: this.context.summaryModel,
     })

@@ -1,5 +1,5 @@
 import { Message, Wechaty } from "wechaty"
-import { LiteralUnionSchema } from "../../common-llm/schema/llm"
+import { LiteralUnionSchema } from "../../common-common/schema"
 
 export class BaseMessageHandler<T = object> {
   public bot: Wechaty

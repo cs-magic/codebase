@@ -8,7 +8,6 @@ import WechatProvider from "../common-auth-wechat/provider"
 import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db/providers/prisma"
 
-import { WECHAT_APP_ID } from "../3rd-wechat/config"
 import { tokenExpireSeconds } from "./config"
 
 /**
@@ -79,7 +78,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     WechatProvider({
-      clientId: WECHAT_APP_ID,
+      clientId: env.NEXT_PUBLIC_WECHAT_APP_ID,
       clientSecret: env.WECHAT_APP_SECRET,
     }),
 

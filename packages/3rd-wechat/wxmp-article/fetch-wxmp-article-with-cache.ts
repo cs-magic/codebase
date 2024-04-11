@@ -1,3 +1,5 @@
+"use server"
+
 import { parseWxmpArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@/schema/card"
 import { cardDetailSchema, ICardDetail } from "@/schema/card.basic"
@@ -5,7 +7,7 @@ import { fetchWxmpArticleViaFastapi } from "./fetch-wxmp-article-via-fastapi"
 import { fetchWxmpArticleViaNodejs } from "./fetch-wxmp-article-via-nodejs"
 import { prisma } from "../../common-db/providers/prisma"
 
-export const fetchWxmpArticle = async (
+export const fetchWxmpArticleWithCache = async (
   url: string,
   options?: ICardGenOptions,
 ): Promise<ICardDetail> => {

@@ -1,6 +1,6 @@
 import { promises } from "fs"
 import path from "path"
-import { fetchWxmpArticle } from "../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article"
+import { fetchWxmpArticleWithCache } from "../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { dumpJSON } from "../../packages/common-common/dump-json"
 import { generatedPath } from "../../packages/common-common/path"
 import { CardSimulator } from "./card-simulator"
@@ -32,7 +32,7 @@ const sampleUrl =
 
 describe("", () => {
   it("should fetch article", async () => {
-    const res = await fetchWxmpArticle(sampleUrl, {
+    const res = await fetchWxmpArticleWithCache(sampleUrl, {
       // summaryModel: "gpt-3.5-turbo",
     })
     await dumpJSON(res, `wxmp-article.sample.${Date.now()}.json`)
@@ -46,7 +46,7 @@ describe("", () => {
   )
 
   it("should generate a right card via source url", async () => {
-    const res = await fetchWxmpArticle(sampleUrl, {
+    const res = await fetchWxmpArticleWithCache(sampleUrl, {
       // summaryModel: "gpt-3.5-turbo",
       summaryModel: "gpt-4",
     })

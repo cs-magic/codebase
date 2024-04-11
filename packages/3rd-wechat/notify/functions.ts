@@ -1,23 +1,26 @@
 "use server"
 
+import { env } from "@/env"
+import { sha1 } from "js-sha1"
 import { api } from "../../common-api"
 import { fetchWechatApi } from "../functions"
-import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
-import { sha1 } from "js-sha1"
-import { WECHAT_APP_ID, WECHAT_APP_SECRET } from "../config"
 import { IWechatSDKToken } from "../schema"
+import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
 
 /**
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
  */
 export const getWechatToken = async () => {
+  if (!env.NEXT_PUBLIC_WECHAT_APP_ID || !env.WECHAT_APP_SECRET)
+    throw new Error("invalid wechat app id/secret in env")
+
   return fetchWechatApi<IWechatSDKToken>(
     "get-wechat-sdk-token",
     "/cgi-bin/token",
     {
       grant_type: "client_credential",
-      appid: WECHAT_APP_ID,
-      secret: WECHAT_APP_SECRET,
+      appid: env.NEXT_PUBLIC_WECHAT_APP_ID,
+      secret: env.WECHAT_APP_SECRET,
     },
   )
 }

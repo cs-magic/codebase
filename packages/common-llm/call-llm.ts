@@ -28,6 +28,10 @@ export const callLLM = async (
     apiKey,
     baseURL,
     httpAgent,
+    // 最简单的响应是在 1-2 s 间
+    // 当 timeout后，会延迟3秒返回
+    // 如果不用stream的话，延迟可能会很长
+    timeout: 60e3, // ms
   }
 
   const messages =
@@ -90,7 +94,9 @@ export const callLLM = async (
       response = res.data
     } else {
       console.debug("-- calling OpenAI")
-      const client = new OpenAI({ ...clientConfig, timeout: 10e3, httpAgent })
+      const client = new OpenAI({
+        ...clientConfig,
+      })
       response = await client.chat.completions.create(queryConfig)
     }
 

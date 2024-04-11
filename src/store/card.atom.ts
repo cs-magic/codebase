@@ -101,9 +101,7 @@ export const cardUserAtom = atom<IUserBasic>((get) => ({
 
 export const cardOssIdAtom = atom<string | null>((get) => {
   const card = get(cardAtom)
-  return getCardUrl(
-    !card ? undefined : { type: card.platformType, id: card.platformId },
-  )
+  return getCardUrl(card?.id)
 })
 
 export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
