@@ -2,7 +2,11 @@ import { ICardPlatform } from "../../../schema/card"
 
 export const isWxmpArticleUrl = (url: string) => /mp.weixin.qq.com/.test(url)
 
-export const parseWxmpArticleUrl = (url: string) => {
+export type IWxmpArticleUrlParsed = {
+  platformId?: string
+  platformData: ICardPlatform<"wxmpArticle">
+}
+export const parseWxmpArticleUrl = (url: string): IWxmpArticleUrlParsed => {
   const params = new URL(url.replace(/&amp;/g, "&")).searchParams
 
   const platformId = /mp.weixin.qq.com\/s\/(.*?)$/.exec(url)?.[1]

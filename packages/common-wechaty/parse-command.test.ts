@@ -5,23 +5,23 @@ describe("parse command", () => {
     const result = parseCommand("/set-backend-engine-type", [
       "set-backend-engine-type",
     ])
-    expect(result.command).toBe("set-backend-engine-type")
-    expect(result.args).toBe("")
+    expect(result?.command).toBe("set-backend-engine-type")
+    expect(result?.args).toBe("")
   })
 
   it("", () => {
     const result = parseCommand("/set-backend-engine-type  ", [
       "set-backend-engine-type",
     ])
-    expect(result.command).toBe("set-backend-engine-type")
-    expect(result.args).toBe("")
+    expect(result?.command).toBe("set-backend-engine-type")
+    expect(result?.args).toBe("")
   })
 
   it("", () => {
     const result = parseCommand("/set-backend-engine-type  nodejs ss ", [
       "set-backend-engine-type",
     ])
-    expect(result.command).toBe("set-backend-engine-type")
-    expect(result.args).toBe("nodejs ss")
+    expect(result?.command).toBe("set-backend-engine-type")
+    expect(result?.args).toBe("nodejs ss")
   })
 })

@@ -10,9 +10,12 @@ import { Stat } from "./card-content-stat"
 import { Tags } from "./card-content-tags"
 
 export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
-  const summary_ = card?.contentSummary?.response?.choices[0].message
-    .content as string | null | undefined
-  const summary = parseSummary(summary_)
+  const summary = parseSummary(
+    card?.contentSummary?.response?.choices[0].message.content as
+      | string
+      | null
+      | undefined,
+  )
 
   // console.log("-- summary: ", summary)
 
@@ -38,19 +41,19 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
 
           <CardContentAuthor card={card} />
 
-          {/*<div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>*/}
-          {/*  该内容由*/}
-          {/*  <span*/}
-          {/*    className={cn(*/}
-          {/*      // "underline",*/}
-          {/*      " mx-1",*/}
-          {/*    )}*/}
-          {/*  >*/}
-          {/*    /!*{summary.model?.name?.toUpperCase()}大模型*!/*/}
-          {/*    大模型*/}
-          {/*  </span>*/}
-          {/*  生成，如有偏差请反馈*/}
-          {/*</div>*/}
+          <div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>
+            该内容由
+            <span
+              className={cn(
+                // "underline",
+                " mx-1",
+              )}
+            >
+              {card?.contentSummary?.options.model?.name?.toUpperCase()} 大模型
+              {/*大模型*/}
+            </span>
+            生成，如有偏差请反馈
+          </div>
         </div>
       </div>
     </div>
