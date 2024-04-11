@@ -38,19 +38,19 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
 
           <CardContentAuthor card={card} />
 
-          <div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>
-            该内容由
-            <span
-              className={cn(
-                // "underline",
-                " mx-1",
-              )}
-            >
-              {/*{summary.model?.name?.toUpperCase()}大模型*/}
-              大模型
-            </span>
-            生成，如有偏差请反馈
-          </div>
+          {/*<div className={"text-muted-foreground/25 mt-2 text-xs text-center"}>*/}
+          {/*  该内容由*/}
+          {/*  <span*/}
+          {/*    className={cn(*/}
+          {/*      // "underline",*/}
+          {/*      " mx-1",*/}
+          {/*    )}*/}
+          {/*  >*/}
+          {/*    /!*{summary.model?.name?.toUpperCase()}大模型*!/*/}
+          {/*    大模型*/}
+          {/*  </span>*/}
+          {/*  生成，如有偏差请反馈*/}
+          {/*</div>*/}
         </div>
       </div>
     </div>
