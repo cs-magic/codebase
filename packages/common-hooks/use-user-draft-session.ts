@@ -13,7 +13,7 @@ import { userImageAtom, userNameAtom } from "../common-auth/store"
 export const useDraftSession = (key: "name" | "image") => {
   const atom = key === "name" ? userImageAtom : userNameAtom
   const [draft, setDraft] = useAtom(atom)
-  const sessionValue = useSession().data?.user[key]
+  const sessionValue = useSession().data?.sender[key]
 
   const changed = draft !== sessionValue
 

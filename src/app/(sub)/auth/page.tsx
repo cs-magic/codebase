@@ -21,9 +21,9 @@ export default function AuthPage() {
   const { isWechat } = useEnvironments()
   const devEnabled = useAtom(devEnabledAtom)
 
-  const profileOk = !!session.data?.user.name && !!session.data.user.image
-  const phoneOk = !!session.data?.user.phone
-  const wxidOk = !!session.data?.user.wxid
+  const profileOk = !!session.data?.sender.name && !!session.data.sender.image
+  const phoneOk = !!session.data?.sender.phone
+  const wxidOk = !!session.data?.sender.wxid
 
   useEffect(() => {
     if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/")

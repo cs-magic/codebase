@@ -21,7 +21,7 @@ import { UserSignOutButton } from "../../../components/user-sign-out-button"
 
 export default function DashboardPage() {
   const session = useSession()
-  const user = session.data?.user
+  const user = session.data?.sender
   const { value: name, changed: nameChanged } = useDraftSession("name")
   const { changed: imageChanged } = useDraftSession("image")
 

@@ -44,7 +44,7 @@ export const CardPreview = ({
         id={"card-preview"}
         className={"w-full font-card corner-gradient"}
       >
-        <CardHeader user={card?.user ?? user} />
+        <CardHeader user={card?.sender ?? user} />
 
         <CardContent card={card} />
 

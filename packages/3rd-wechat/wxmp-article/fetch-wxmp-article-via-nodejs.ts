@@ -9,6 +9,11 @@ import { ICallLLMResponse } from "../../common-llm/schema/llm"
 import { html2md } from "../../common-markdown/html2md"
 import { Prisma } from ".prisma/client"
 
+/**
+ * todo: 有概率没拿到文章数据
+ * @param url
+ * @param options
+ */
 export const fetchWxmpArticleViaNodejs = async (
   url: string,
   options?: ICardGenOptions,

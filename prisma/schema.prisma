@@ -129,7 +129,9 @@ model Card {
   videos  Json[]
 
   // 公众号文章的核心内容（markdown格式）
-  contentMd      String?
+  contentMd String?
+
+  // todo: separate llm call
   // 基于核心内容总结后的结果
   /// [ICallLLMResponse]
   contentSummary Json?
@@ -147,4 +149,42 @@ enum PlatformType {
   wxmpArticle
   bilibiliVideo
   xhsNote
+}
+
+model WechatMessage {
+  id        String    @id // '3430847513737913148',
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  talker   WechatUser @relation(fields: [talkerId], references: [id], onDelete: Cascade)
+  talkerId String // 'wxid_ck85xup8b1bj21',
+
+  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId String? // : '47778688503@chatroom',
+
+  text      String // '现在我们要支持 card - model 的一对多关系了',
+  timestamp Int // 1712846017,
+  type      Int //: 7,
+
+  mentionIdList String[] // : [],
+}
+
+model WechatUser {
+  id        String    @id //
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  name     String //: '南川 Mark',
+  avatar   String //: 'https://wx.qlogo.cn/mmhead/ver_1/FrES @uniqueIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0'
+  messages WechatMessage[]
+}
+
+model WechatRoom {
+  id        String    @id //
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  messages WechatMessage[]
+
+  chatbotTopic String? @default("默认话题")
 }

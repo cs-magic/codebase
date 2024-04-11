@@ -73,8 +73,8 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     ctx: {
       db: prisma,
       // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-      user: ctx.session.user,
+      session: { ...ctx.session, sender: ctx.session.user },
+      sender: ctx.session.user,
     },
   })
 })
