@@ -10,9 +10,11 @@ export class StorageMessageHandler extends BaseMessageHandler<IBotContext> {
     const room = message.room()
     const talker = message.talker()
 
+    const { talkerId, roomId, ...messageData } = message.payload!
+
     await prisma.wechatMessage.create({
       data: {
-        ...message.payload!,
+        ...messageData,
 
         talker: {
           connectOrCreate: {

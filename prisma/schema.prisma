@@ -175,8 +175,18 @@ model WechatUser {
   updatedAt DateTime? @updatedAt
 
   name     String //: '南川 Mark',
-  avatar   String //: 'https://wx.qlogo.cn/mmhead/ver_1/FrES @uniqueIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0'
+  avatar   String //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
   messages WechatMessage[]
+
+  alias     String //: "",
+  city      String //: "Haidian",
+  friend    Boolean //: true,
+  gender    Int //: 1,
+  phone     String[] //: [],
+  province  String // : "Beijing",
+  signature String //: "Run, don’t look back.",
+  type      Int //: 1,
+  weixin    String //: "youshouldspeakhow",
 }
 
 model WechatRoom {
@@ -185,6 +195,12 @@ model WechatRoom {
   updatedAt DateTime? @updatedAt
 
   messages WechatMessage[]
+
+  adminIdList  String[] //: [],
+  avatar       String //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
+  memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
+  ownerId      String // : "wxid_ck85xup8b1bj21",
+  topic        String //: "test bot 0-1"
 
   chatbotTopic String? @default("默认话题")
 }
