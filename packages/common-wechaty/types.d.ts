@@ -7,6 +7,6 @@ declare module "wechaty" {
 
     prettyQuery: (title: string, content: string, tips?: string) => string
 
-    template: () => IBotTemplate
+    template: (context?: Partial<IBotContext>) => IBotTemplate
   }
 }

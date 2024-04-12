@@ -1,4 +1,5 @@
 import { type Message, type Wechaty } from "wechaty"
+import { prettyInvalidChoice } from "../../common-common/pretty-invalid-choice"
 import { type LiteralUnionSchema } from "../../common-common/schema"
 import { type IBotPreference } from "../schema"
 
@@ -44,9 +45,7 @@ export class BaseMessageHandler {
       )
     } catch (err) {
       // prettyError(err)
-      await message.say(
-        `操作失败，原因：${JSON.stringify(value)} ∉ {${schema.options.map((o) => o.value).join(",")}}`,
-      )
+      await message.say(prettyInvalidChoice(JSON.stringify(value), schema))
     }
   }
 }

@@ -12,6 +12,9 @@ export type IBotContext = {
   version: string
   startTime: number
   preference: IBotPreference
+  conv?: {
+    enabled: boolean
+  }
 }
 
 export type IBotTemplate = {

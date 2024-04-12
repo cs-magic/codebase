@@ -4,6 +4,7 @@ import { prettyError } from "../common-common/pretty-error"
 import { prettyQuery } from "../common-common/pretty-query"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
+import { IBotContext } from "./schema"
 import { initBotContext } from "./utils/bot-context"
 import { dumpBotPreference } from "./utils/bot-preference"
 import { renderBotTemplate } from "./utils/bot-template"
@@ -27,8 +28,8 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
     })
   }
 
-  bot.template = () => {
-    return renderBotTemplate(bot.context)
+  bot.template = (context?: Partial<IBotContext>) => {
+    return renderBotTemplate({ ...bot.context, ...context })
   }
 
   process.on("SIGINT", () => {

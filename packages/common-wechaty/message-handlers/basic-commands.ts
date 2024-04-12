@@ -8,6 +8,7 @@ import {
   LlmModelType,
   llmModelTypeSchema,
 } from "../../common-llm/schema/providers"
+import { getConv } from "../utils/get-conv"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 import { z } from "zod"
@@ -38,8 +39,16 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
         break
 
       case "status":
+        const conv = await getConv(message)
         await message.say(
-          this.bot.prettyQuery("实时状态", this.bot.template().status),
+          this.bot.prettyQuery(
+            "实时状态",
+            this.bot.template({
+              conv: {
+                enabled: !!conv!.chatbotEnabled,
+              },
+            }).status,
+          ),
         )
         break
 

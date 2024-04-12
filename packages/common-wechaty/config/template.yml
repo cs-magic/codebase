@@ -38,4 +38,4 @@ status: |-
     handlers: {{{prettyHandlers}}}
   ------------------------------
   Conv:
-    {{{conv}}}
+    enabled: {{{conv.enabled}}}
