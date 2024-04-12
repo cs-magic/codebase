@@ -7,8 +7,8 @@ import {
 } from "../../common-common/messages"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
-import { isSenderAdmin } from "../is-sender-admin"
-import { parseCommand } from "../parse-command"
+import { isSenderAdmin } from "../utils/is-sender-admin"
+import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 
 export class ChatbotMessageHandler extends BaseMessageHandler {

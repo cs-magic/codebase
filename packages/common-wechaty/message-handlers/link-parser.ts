@@ -7,7 +7,7 @@ import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-w
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 
-import { isTestMessage } from "../is-test-message"
+import { isTestMessage } from "../utils/is-test-message"
 import { BaseMessageHandler } from "./_base"
 
 export class LinkParserMessageHandler extends BaseMessageHandler {

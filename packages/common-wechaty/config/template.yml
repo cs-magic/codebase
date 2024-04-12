@@ -6,7 +6,7 @@ basic: |
   ------------------------------
   {{footer}}
   +----------------------------+
-  
+
 help: |
   {{name}}是一款 AI Native 的智能助手，可用于个人、群组智能管理、协同。
   ------------------------------
@@ -33,6 +33,4 @@ status: |
   version: {{ version }}
   alive-time: {{aliveTime}}
   model: {{model}}
-  ------------------------------
-  features-enabled: {{featuresEnabled}}
   backend-engine-type: {{backendEngineType}}

@@ -1,20 +1,19 @@
 import { MessageInterface } from "wechaty/impls"
 import { prisma } from "../../common-db/providers/prisma"
 import { BaseMessageHandler } from "./_base"
+import { omit } from "lodash"
 
 export class StorageMessageHandler extends BaseMessageHandler {
   name = "storage"
 
   public async onMessage(message: MessageInterface) {
-    const room = message.room()
     const talker = message.talker()
+    const room = message.room()
     const listener = message.listener()
-
-    const { talkerId, roomId, listenerId, ...messageData } = message.payload!
 
     await prisma.wechatMessage.create({
       data: {
-        ...messageData,
+        ...omit(message.payload, ["talkerId", "roomId", "listenerId"]),
 
         talker: {
           connectOrCreate: {
@@ -34,7 +33,7 @@ export class StorageMessageHandler extends BaseMessageHandler {
                 create: listener.payload!,
               },
             }
-          : undefined,
+          : {},
 
         room: room
           ? {
@@ -45,7 +44,7 @@ export class StorageMessageHandler extends BaseMessageHandler {
                 create: room.payload!,
               },
             }
-          : undefined,
+          : {},
       },
     })
 

@@ -1,8 +1,7 @@
 import { MessageInterface } from "wechaty/impls"
 import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
 import { llmModelTypeSchema } from "../../common-llm/schema/providers"
-import { getBotConfig } from "../get-bot-config"
-import { parseCommand } from "../parse-command"
+import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 
 export class CommandsMessageHandler extends BaseMessageHandler {
@@ -19,20 +18,20 @@ export class CommandsMessageHandler extends BaseMessageHandler {
     ])
     if (!result) return
 
-    const config = await getBotConfig({})
-
     switch (result.command) {
       case "":
       case "help":
         await message.say(
           this.prettyBotQuery(`${this.bot.context!.name}快捷帮助`, [
-            config.help,
+            this.template.help,
           ]),
         )
         break
 
       case "status":
-        await message.say(this.prettyBotQuery("实时状态", [config.status]))
+        await message.say(
+          this.prettyBotQuery("实时状态", [this.template.status]),
+        )
         break
 
       case "list-models":

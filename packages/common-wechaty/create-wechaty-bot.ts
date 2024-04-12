@@ -2,21 +2,24 @@ import qrcodeTerminal from "qrcode-terminal"
 import { Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
 import { sleep } from "../common-datetime/utils"
-import { MessageHandlers } from "./config"
-import { loadBotContext } from "./schema"
+import { MessageHandlerMap } from "./message-handlers/_all"
+import { loadBotContext } from "./utils/load-bot-context"
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- create bot: ", { name })
   const bot: Wechaty = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
   })
+
   console.log("-- loading context")
   bot.context = await loadBotContext()
 
   console.log("-- registering handlers")
-  const handlers = MessageHandlers.map((H) => {
-    const h = new H(bot)
-    console.log(`-- registering handler(name=${h.name})`)
+  const handlers = bot.context.handlers.map((handlerName) => {
+    console.log(`-- registering handler(name=${handlerName})`)
+    const h = new MessageHandlerMap[
+      handlerName as keyof typeof MessageHandlerMap
+    ](bot)
     return h
   })
 

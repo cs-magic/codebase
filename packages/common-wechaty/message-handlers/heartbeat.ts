@@ -1,5 +1,5 @@
 import { MessageInterface } from "wechaty/impls"
-import { parseCommand } from "../parse-command"
+import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 
 export class HeartbeatMessageHandler extends BaseMessageHandler {

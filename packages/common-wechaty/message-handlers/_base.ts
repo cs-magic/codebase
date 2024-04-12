@@ -1,7 +1,11 @@
+import jsYaml from "js-yaml"
+import Mustache from "mustache"
 import { Message, Wechaty } from "wechaty"
+import { prettyDuration } from "../../common-common/pretty-duration"
 import { prettyQuery } from "../../common-common/pretty-query"
 import { LiteralUnionSchema } from "../../common-common/schema"
-import { IBotContext } from "../schema"
+import { IBotContext, IBotTemplate } from "../schema"
+import { loadBotTemplate } from "../utils/load-bot-template"
 
 export class BaseMessageHandler {
   public bot: Wechaty
@@ -9,6 +13,23 @@ export class BaseMessageHandler {
 
   constructor(bot: Wechaty) {
     this.bot = bot
+    this._template = loadBotTemplate()
+  }
+
+  public _template: string
+
+  get template(): IBotTemplate {
+    const context = this.bot.context
+    if (!context) throw new Error("Missing Context")
+
+    return jsYaml.load(
+      Mustache.render(this._template, {
+        ...context,
+        title: `${context.name} ${context.version}`,
+        aliveTime: prettyDuration((Date.now() - context.startTime) / 1e3),
+      }),
+      {},
+    ) as IBotTemplate
   }
 
   /**

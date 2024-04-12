@@ -1,0 +1,8 @@
+model: gpt-3.5-turbo
+backendEngineType: nodejs
+handlers:
+  - storage
+  - heartbeat
+  - commands
+  - chatbot
+  - link-parser
