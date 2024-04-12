@@ -10,6 +10,7 @@ import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 import { prisma } from "../../common-db/providers/prisma"
 import { getConv } from "../utils/get-conv"
+import { getTalkerPreference } from "../utils/get-talker-preference"
 import { BaseMessageHandler } from "./_base"
 import { parseCommand } from "../utils/parse-command"
 
@@ -86,9 +87,11 @@ export class UniParserMessageHandler extends BaseMessageHandler {
 
     await message.say("正在解析……")
 
+    const talkerPreference = await getTalkerPreference(message)
+
     const card = await fetchWxmpArticleWithCache(url, {
-      backendEngineType: this.bot.context?.preference.backend,
-      summaryModel: this.bot.context?.preference.model,
+      backendEngineType: talkerPreference?.backend,
+      summaryModel: talkerPreference?.model,
     })
     // todo: dynamic sender with fixed card url
     // let cardUrl = card.ossUrl

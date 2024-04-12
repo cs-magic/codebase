@@ -1,5 +1,7 @@
+import { LangType } from "@/schema/wechat-user"
 import OpenAI from "openai"
 import { z } from "zod"
+import { LiteralUnionSchema } from "../../common-common/schema"
 import { LlmModelType } from "./providers"
 
 export const createCallLLMSchema = z.object({
@@ -47,3 +49,20 @@ export const backendEngineTypeSchema = z.union([
   z.literal("nodejs"),
 ])
 export type BackendType = z.infer<typeof backendEngineTypeSchema>
+
+export const langSchema = z.union([
+  z.literal("中文"),
+  z.literal("zh"),
+  z.literal("英文"),
+  z.literal("en"),
+])
+export type InputLangType = z.infer<typeof langSchema>
+export const langMap: Record<InputLangType, LangType> = {
+  en: "en",
+  英文: "en",
+  zh: "zh",
+  中文: "zh",
+}
+
+export const getChoices = (schema: LiteralUnionSchema): string[] =>
+  schema.options.map((o) => o.value)

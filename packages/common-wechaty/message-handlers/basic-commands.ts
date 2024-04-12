@@ -1,26 +1,33 @@
 import { type MessageInterface } from "wechaty/impls"
-import { isNumeric } from "../../common-common/is-numeric"
+import { z } from "zod"
 import {
   backendEngineTypeSchema,
-  BackendType,
+  langSchema,
 } from "../../common-llm/schema/llm"
-import {
-  LlmModelType,
-  llmModelTypeSchema,
-} from "../../common-llm/schema/providers"
+import { llmModelTypeSchema } from "../../common-llm/schema/providers"
+import { loadBotDynamicContext } from "../utils/bot-context"
+import { renderBotTemplate } from "../utils/bot-template"
 import { getConv } from "../utils/get-conv"
+import { getTalkerPreference } from "../utils/get-talker-preference"
 import { parseCommand } from "../utils/parse-command"
+import { updateTalkerPreference } from "../utils/update-talker-preference"
 import { BaseMessageHandler } from "./_base"
-import { z } from "zod"
 
 export const basicSchema = z.union([
-  z.literal("ding"),
   z.literal(""),
+  z.literal("ding"),
   z.literal("help"),
+  z.literal("帮助"),
   z.literal("status"),
+  z.literal("状态"),
   z.literal("list-models"),
+  z.literal("查询模型列表"),
   z.literal("set-model"),
+  z.literal("设置模型"),
   z.literal("set-backend"),
+  z.literal("设置后端"),
+  z.literal("set-lang"),
+  z.literal("设置语言"),
 ])
 
 export class BasicCommandsMessageHandler extends BaseMessageHandler {
@@ -31,6 +38,11 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
     )
     if (!result) return
 
+    const talkerPreference = await getTalkerPreference(message)
+    const lang = talkerPreference?.lang ?? "en"
+    const dynamicContext = await loadBotDynamicContext(lang)
+    const template = await renderBotTemplate({ lang })
+
     switch (result.command) {
       case "ding":
         await message.say("dong")
@@ -38,30 +50,20 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
 
       case "":
       case "help":
+      case "帮助":
         await message.say(
-          this.bot.prettyQuery(
-            `${this.bot.context.name}快捷帮助`,
-            this.bot.template().help,
-          ),
+          this.bot.prettyQuery(dynamicContext.name, template.help),
         )
         break
 
       case "status":
+      case "状态":
         const conv = await getConv(message)
-        await message.say(
-          this.bot.prettyQuery(
-            "实时状态",
-            this.bot.template({
-              conv: {
-                uniChatterEnabled: !!conv!.chatbotEnabled,
-                uniParserEnabled: !!conv!.uniParserEnabled,
-              },
-            }).status,
-          ),
-        )
+        await message.say(this.bot.prettyQuery("实时状态", template.status))
         break
 
       case "list-models":
+      case "查询模型列表":
         await message.say(
           this.bot.prettyQuery(
             `模型列表`,
@@ -76,26 +78,26 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
         break
 
       case "set-model":
-        await this.handleCommand(
+      case "设置模型":
+        return updateTalkerPreference(
           message,
+          result,
           "model",
           llmModelTypeSchema,
-          (isNumeric(result.args)
-            ? llmModelTypeSchema.options.map((o) => o.value)[
-                Number(result.args) - 1
-              ]
-            : result.args) as LlmModelType,
         )
-        break
 
       case "set-backend":
-        await this.handleCommand(
+      case "设置后端":
+        return updateTalkerPreference(
           message,
+          result,
           "backend",
           backendEngineTypeSchema,
-          result.args as BackendType,
         )
-        break
+
+      case "set-lang":
+      case "设置语言":
+        return updateTalkerPreference(message, result, "lang", langSchema)
     }
   }
 }

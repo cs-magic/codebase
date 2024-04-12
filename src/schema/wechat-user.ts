@@ -1,11 +1,16 @@
+import { BackendType } from "../../packages/common-llm/schema/llm"
+import { LlmModelType } from "../../packages/common-llm/schema/providers"
+
 export type LangType = "zh" | "en"
 
 /**
  * 用户偏好（可用户手动修改）
  */
 export type IWechatUserPreference = {
-  language: LangType
+  lang: LangType
   chatEnabled: boolean
+  model: LlmModelType
+  backend: BackendType
   parserEnabled: boolean
 }
 

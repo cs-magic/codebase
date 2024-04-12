@@ -1,43 +1,42 @@
+import { config } from "@/config/system"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
-import { prettyQuery } from "../common-common/pretty-query"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
-import { IBotContext } from "./schema"
-import { initBotContext } from "./utils/bot-context"
-import { dumpBotPreference } from "./utils/bot-preference"
-import { renderBotTemplate } from "./utils/bot-template"
+import { IBotStaticContext } from "./schema"
+
+// export const prettyQuery = async (
+//   type: LangType,
+//   title: string,
+//   content: string,
+//   tips?: string,
+// ) => {
+//   const context = await loadBotC
+//   if (!context) return prettyQuery("系统错误", "Missing Context")
+//
+//   return prettyQuery(title, content, {
+//     footer: `${context.name} ${context.version}`,
+//     tips,
+//   })
+// }
+
+export const botStaticContext: IBotStaticContext = {
+  version: config.version,
+  startTime: Date.now(),
+}
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- create bot: ", { name })
-  const context = await initBotContext()
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
   }) as Wechaty // 等会加上各种其他函数
 
-  bot.context = context
-
-  bot.prettyQuery = (title: string, content: string, tips?: string) => {
-    if (!context) return prettyQuery("系统错误", "Missing Context")
-
-    return prettyQuery(title, content, {
-      footer: `${context.name} ${context.version}`,
-      tips,
-    })
-  }
-
-  bot.template = (context?: Partial<IBotContext>) => {
-    return renderBotTemplate({ ...bot.context, ...context })
-  }
-
-  process.on("SIGINT", () => {
-    void dumpBotPreference(bot.context.preference)
-  })
+  bot.staticContext = botStaticContext
 
   console.log("-- registering handlers")
-  const handlers = bot.context.preference.handlers.map((handlerName) => {
+  const handlers = Object.keys(MessageHandlerMap).map((handlerName) => {
     console.log(`-- registering handler(name=${handlerName})`)
     const h = new MessageHandlerMap[
       handlerName as keyof typeof MessageHandlerMap

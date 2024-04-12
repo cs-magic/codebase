@@ -1,12 +1,10 @@
 import { WechatyBuilder } from "wechaty"
-import { type IBotContext, IBotTemplate } from "./schema"
+import { type IBotStaticContext } from "./schema"
 
 declare module "wechaty" {
   interface Wechaty extends ReturnType<typeof WechatyBuilder.build> {
-    context: IBotContext
+    staticContext: IBotStaticContext
 
     prettyQuery: (title: string, content: string, tips?: string) => string
-
-    template: (context?: Partial<IBotContext>) => IBotTemplate
   }
 }

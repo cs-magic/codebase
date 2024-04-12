@@ -61,22 +61,10 @@ export class TaskManagerMessageHandler extends BaseMessageHandler {
             ),
           )
         }
-
         break
 
       case "set-todo":
         const conv = await getConv(message)
-        await message.say(
-          this.bot.prettyQuery(
-            "实时状态",
-            this.bot.template({
-              conv: {
-                uniChatterEnabled: !!conv!.chatbotEnabled,
-                uniParserEnabled: !!conv!.uniParserEnabled,
-              },
-            }).status,
-          ),
-        )
         break
     }
   }

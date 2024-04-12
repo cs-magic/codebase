@@ -1,11 +1,13 @@
-import { config } from "@/config/system"
-import { loadBotPreference } from "./bot-preference"
+import { LangType } from "@/schema/wechat-user"
+import { IBotDynamicContext } from "../schema"
 
-export const initBotContext = async () => {
+export const loadBotDynamicContext = async (
+  lang: LangType,
+): Promise<IBotDynamicContext> => {
+  const data = (await import(`../config/bot.${lang}.json`)) as {
+    name: string
+  }
   return {
-    name: "小川助手",
-    version: config.version,
-    startTime: Date.now(),
-    preference: await loadBotPreference(),
+    ...data,
   }
 }

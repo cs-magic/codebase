@@ -1,9 +1,14 @@
 import { LiteralUnionSchema } from "../../common-common/schema"
 
+export type IParseCommandRes<T extends string> = null | {
+  command: T
+  args: string
+}
+
 export const parseCommand = <T extends string>(
   text: string,
   commands: T[] | LiteralUnionSchema,
-): null | { command: T; args: string } => {
+): IParseCommandRes<T> => {
   const ms =
     commands instanceof Array ? commands : commands.options.map((o) => o.value)
 

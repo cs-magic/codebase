@@ -7,15 +7,13 @@ export type IBotPreference = {
   handlers: string[]
 }
 
-export type IBotContext = {
-  name: string
+export type IBotStaticContext = {
   version: string
   startTime: number
-  preference: IBotPreference
-  conv?: {
-    uniChatterEnabled: boolean
-    uniParserEnabled: boolean
-  }
+}
+
+export type IBotDynamicContext = {
+  name: string
 }
 
 export type IBotTemplate = {

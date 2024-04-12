@@ -1,14 +1,5 @@
-basic: |-
-  +----------------------------+
-  {{title}}
-  ------------------------------
-  {{content}}
-  ------------------------------
-  {{footer}}
-  +----------------------------+
-
 help: |-
-  {{name}} Is an AI Native software, for individual, group intelligent management, collaboration.
+  [*name] Is an AI Native software, for individual, group intelligent management, collaboration.
   ------------------------------
   Features：
   - A1: Chat with AI
@@ -35,7 +26,7 @@ help: |-
   /set-model
   /help [FEAT]
   ------------------------------
-  切换为中文，请发送：设置语言 中文
+  切换为中文，请发送：/设置语言 中文
 
 status: |-
   Basic:
