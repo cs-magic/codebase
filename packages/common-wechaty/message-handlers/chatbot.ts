@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import { Message } from "wechaty"
 import {
   ERR_MSG_INADEQUATE_PERMISSION,
@@ -21,19 +22,20 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
       "stop",
     ])
 
-    const table = prisma[message.room() ? "wechatRoom" : "wechatUser"]
+    const table = prisma[
+      message.room() ? "wechatRoom" : "wechatUser"
+    ] as Prisma.WechatUserDelegate & Prisma.WechatRoomDelegate
 
     const convId = message.conversation().id
 
-    // @ts-ignore
-    const row = await table.findUnique({
+    const findRow = table.findUnique({
       where: { id: convId },
     })
 
     switch (result?.command) {
       case "start":
         if (isSenderAdmin(message)) {
-          await row.update({
+          await table.update({
             where: { id: convId },
             data: {
               // chatbotTopic: null,
@@ -48,11 +50,11 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
 
       case "topic":
-        await message.say(`当前话题为：${row?.chatbotTopic}`)
+        await message.say(`当前话题为：${(await findRow)?.chatbotTopic}`)
         return
 
       case "set-topic":
-        await row.update({
+        await table.update({
           where: { id: convId },
           data: {
             chatbotTopic: result.args,
@@ -62,7 +64,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
 
       case "stop":
-        await row.update({
+        await table.update({
           where: { id: convId },
           data: {
             // chatbotTopic: null,
@@ -73,7 +75,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
     }
 
-    if (!row?.chatbotEnabled || message.self()) return
+    if (!(await findRow)?.chatbotEnabled || message.self()) return
 
     const res = await callLLM({
       messages: [
