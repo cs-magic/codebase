@@ -203,6 +203,7 @@ model WechatRoom {
   topic        String? //: "test bot 0-1"
 
   // todo: owner
-  ownerId      String? // : "wxid_ck85xup8b1bj21",
-  chatbotTopic String?
+  ownerId        String? // : "wxid_ck85xup8b1bj21",
+  chatbotTopic   String?
+  chatbotEnabled Boolean? @default(false)
 }

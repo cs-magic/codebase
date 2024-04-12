@@ -11,9 +11,10 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
 
   public async onMessage(message: Message) {
     const result = parseCommand(message.text(), [
+      "start",
       "topic",
       "set-topic",
-      "stop-topic",
+      "stop",
     ])
 
     const roomId = message.room()?.id
@@ -24,6 +25,16 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
     })
 
     switch (result?.command) {
+      case "start":
+        await prisma.wechatRoom.update({
+          where: { id: roomId },
+          data: {
+            // chatbotTopic: null,
+            chatbotEnabled: true,
+          },
+        })
+        return
+
       case "topic":
         await message.say(`当前话题为：${roomInDB?.chatbotTopic}`)
         return
@@ -37,17 +48,18 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         })
         return
 
-      case "stop-topic":
+      case "stop":
         await prisma.wechatRoom.update({
           where: { id: roomId },
           data: {
-            chatbotTopic: null,
+            // chatbotTopic: null,
+            chatbotEnabled: false,
           },
         })
         return
     }
 
-    if (!roomInDB?.chatbotTopic || message.self()) return
+    if (!roomInDB?.chatbotEnabled || message.self()) return
 
     const res = await callLLM({
       messages: [
