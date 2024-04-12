@@ -1,7 +1,11 @@
 import { Message } from "wechaty"
+import {
+  ERR_MSG_INADEQUATE_PERMISSION,
+  ERR_MSG_SUCCESS,
+} from "../../common-common/messages"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
-import { isTestMessage } from "../is-test-message"
+import { isSenderAdmin } from "../is-sender-admin"
 import { parseCommand } from "../parse-command"
 import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
@@ -17,49 +21,59 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
       "stop",
     ])
 
-    const roomId = message.room()?.id
-    if (!(await isTestMessage(message)) || !roomId) return
+    const table = prisma[message.room() ? "wechatRoom" : "wechatUser"]
 
-    const roomInDB = await prisma.wechatRoom.findUnique({
-      where: { id: roomId },
+    const convId = message.conversation().id
+
+    // @ts-ignore
+    const row = await table.findUnique({
+      where: { id: convId },
     })
 
     switch (result?.command) {
       case "start":
-        await prisma.wechatRoom.update({
-          where: { id: roomId },
-          data: {
-            // chatbotTopic: null,
-            chatbotEnabled: true,
-          },
-        })
+        if (isSenderAdmin(message)) {
+          await row.update({
+            where: { id: convId },
+            data: {
+              // chatbotTopic: null,
+              chatbotEnabled: true,
+            },
+          })
+          await message.say(ERR_MSG_SUCCESS)
+        } else {
+          await message.say(ERR_MSG_INADEQUATE_PERMISSION)
+        }
+
         return
 
       case "topic":
-        await message.say(`当前话题为：${roomInDB?.chatbotTopic}`)
+        await message.say(`当前话题为：${row?.chatbotTopic}`)
         return
 
       case "set-topic":
-        await prisma.wechatRoom.update({
-          where: { id: roomId },
+        await row.update({
+          where: { id: convId },
           data: {
             chatbotTopic: result.args,
           },
         })
+        await message.say(ERR_MSG_SUCCESS)
         return
 
       case "stop":
-        await prisma.wechatRoom.update({
-          where: { id: roomId },
+        await row.update({
+          where: { id: convId },
           data: {
             // chatbotTopic: null,
             chatbotEnabled: false,
           },
         })
+        await message.say(ERR_MSG_SUCCESS)
         return
     }
 
-    if (!roomInDB?.chatbotEnabled || message.self()) return
+    if (!row?.chatbotEnabled || message.self()) return
 
     const res = await callLLM({
       messages: [

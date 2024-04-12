@@ -192,6 +192,9 @@ model WechatUser {
   signature String? //: "Run, don’t look back.",
 
   phone String[] //: [],
+
+  chatbotTopic   String?
+  chatbotEnabled Boolean? @default(false)
 }
 
 model WechatRoom {
@@ -207,7 +210,8 @@ model WechatRoom {
   topic        String? //: "test bot 0-1"
 
   // todo: owner
-  ownerId        String? // : "wxid_ck85xup8b1bj21",
+  ownerId String? // : "wxid_ck85xup8b1bj21",
+
   chatbotTopic   String?
   chatbotEnabled Boolean? @default(false)
 }
