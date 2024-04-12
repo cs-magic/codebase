@@ -5,6 +5,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import { prettyDuration } from "../../common-common/pretty-duration"
 import { IBotContext, IBotTemplate } from "../schema"
+import { wechatPadding } from "./wechat-padding"
 
 export const loadBotTemplate = () => {
   return fs.readFileSync(
@@ -16,7 +17,17 @@ export const loadBotTemplate = () => {
 export const renderBotTemplate = (context: IBotContext) => {
   const template = loadBotTemplate()
 
-  const prettyHandlers = context.preference.handlers.join(" --> ")
+  const prettyHandlers =
+    "\n" +
+    context.preference.handlers
+      .map((v, i) =>
+        wechatPadding(
+          `${i + 1}. ${v}`,
+          // padding logic: 1. Preference 2. handlers 3. handler
+          3,
+        ),
+      )
+      .join("\n")
 
   const templateString = Mustache.render(template, {
     ...context,
