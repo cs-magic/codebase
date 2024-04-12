@@ -68,7 +68,12 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
           await handler.onMessage(message)
         }
       } catch (e) {
-        const s = prettyError(e)
+        let s = prettyError(e)
+        // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292
+        // from wang, 2024-04-13 01:36:14
+        if (s.includes("filterValue not found for filterKey: id")) {
+          s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
+        }
         await message.say(bot.prettyQuery("哎呀出错啦", `原因： ${s}`))
       }
 

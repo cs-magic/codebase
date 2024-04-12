@@ -21,6 +21,11 @@ help: |-
   - A2: 信息总结（已支持：订阅号文章……）
     /enable-uni-parser: 启用万能解析器
     /disable-uni-parser: 停用万能解析器
+  
+  - A3: 任务管理
+    /todo: 查询个人任务列表
+    /add-todo [TITLE]: 新增个人任务
+    /set-todo [N] [STATUS]: 📌任务状态
   ------------------------------
   命令列表：
   /: 帮助

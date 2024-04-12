@@ -1,0 +1,50 @@
+basic: |-
+  +----------------------------+
+  {{title}}
+  ------------------------------
+  {{content}}
+  ------------------------------
+  {{footer}}
+  +----------------------------+
+
+help: |-
+  {{name}} Is an AI Native software, for individual, group intelligent management, collaboration.
+  ------------------------------
+  Features：
+  - A1: Chat with AI
+    /enable-uni-chatter
+    /disable-uni-chatter
+    /list-topics
+    /set-topic [N]
+    /new-topic [TITLE]
+  
+  - A2: Info Summarization（supported now：WxmpArticle...）
+    /enable-uni-parser
+    /disable-uni-parser
+  
+  - A3: Task Management
+    /todo
+    /add-todo [TITLE]
+    /set-todo [N] [STATUS]
+  ------------------------------
+  Basic Commands：
+  /
+  /ding
+  /status
+  /list-models
+  /set-model
+  /help [FEAT]
+  ------------------------------
+  切换为中文，请发送：设置语言 中文
+
+status: |-
+  Basic:
+    alive-time: {{aliveTime}}
+  ------------------------------
+  Preference:
+    model: {{preference.model}}
+    backend: {{preference.backend}}
+  ------------------------------
+  Conv:
+    uni-chatter-enabled: {{{conv.uniChatterEnabled}}}
+    uni-parser-enabled: {{{conv.uniParserEnabled}}}

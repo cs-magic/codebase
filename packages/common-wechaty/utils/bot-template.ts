@@ -1,3 +1,4 @@
+import { LangType } from "@/schema/wechat-user"
 import fs from "fs"
 import jsYaml from "js-yaml"
 import Mustache from "mustache"
@@ -7,15 +8,19 @@ import { prettyDuration } from "../../common-common/pretty-duration"
 import { IBotContext, IBotTemplate } from "../schema"
 import { wechatPadding } from "./wechat-padding"
 
-export const loadBotTemplate = () => {
+export const loadBotTemplate = (lang: LangType) => {
   return fs.readFileSync(
-    path.join(fileURLToPath(import.meta.url), "../../config/template.yml"),
+    path.join(
+      fileURLToPath(import.meta.url),
+      `../../config/template.${lang}.yml`,
+    ),
     { encoding: "utf8" },
   )
 }
 
 export const renderBotTemplate = (context: IBotContext) => {
-  const template = loadBotTemplate()
+  //   todo: zh
+  const template = loadBotTemplate("en")
 
   const prettyHandlers =
     "\n" +

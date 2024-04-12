@@ -68,7 +68,7 @@ export class UniParserMessageHandler extends BaseMessageHandler {
           break
       }
 
-      result
+      return
     }
 
     if (message.type() !== types.Message.Url) return

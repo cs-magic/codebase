@@ -33,6 +33,10 @@ export class TaskManagerMessageHandler extends BaseMessageHandler {
             tasks
               .map((t, i) => `${i + 1}) ${t.title} (${t.status})`)
               .join("\n"),
+            [
+              "/add-todo [TITLE]: 🆕个人任务",
+              "/set-todo [N] [STATUS]: 📌任务状态",
+            ].join("\n"),
           ),
         )
         break
@@ -50,7 +54,11 @@ export class TaskManagerMessageHandler extends BaseMessageHandler {
             },
           })
           await message.say(
-            this.bot.prettyQuery(`任务管理`, `添加任务成功：${args}`),
+            this.bot.prettyQuery(
+              `任务管理`,
+              `添加任务成功：${args}`,
+              "/todo: 查询个人任务列表",
+            ),
           )
         }
 

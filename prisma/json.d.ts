@@ -10,5 +10,10 @@ declare global {
       IWechatArticleStat,
       IWechatArticleComment,
     } from "../packages/3rd-wechat/wxmp-article/detail/schema"
+
+    export {
+      IWechatUserData,
+      IWechatUserPreference,
+    } from "../src/schema/wechat-user"
   }
 }

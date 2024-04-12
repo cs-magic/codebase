@@ -6,12 +6,10 @@ import { prettyInvalidChoice } from "../../common-common/pretty-invalid-choice"
 import { LiteralUnionSchema } from "../../common-common/schema"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
+import { listMessagesOfLatestTopic } from "../utils/list-messages-of-latest-topic"
+import { listMessagesOfSpecificTopic } from "../utils/list-messages-of-specific-topic"
+import { listTopics } from "../utils/list-topics"
 import { parseCommand } from "../utils/parse-command"
-import {
-  listMessagesOfLatestTopic,
-  listMessagesOfSpecificTopic,
-  listTopics,
-} from "../utils/uni-chatter-list-topics"
 import { BaseMessageHandler } from "./_base"
 
 export const uniChatterSchema = z.union([
@@ -220,17 +218,13 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
       message.text().startsWith("/") ||
       !conv?.chatbotEnabled ||
       message.self() ||
-      !(await message.mentionSelf())
+      !(await message.mentionSelf()) ||
+      !botWxid
     )
       return
 
-    const model = this.bot.context?.preference.model
-    if (!model) {
-      await message.say(this.bot.prettyQuery("系统错误", "暂未配置模型"))
-      return
-    }
-
-    const filteredMessages = await listMessagesOfLatestTopic(convId, botWxid)
+    const model = this.bot.context.preference.model
+    const filteredMessages = await listMessagesOfLatestTopic(botWxid, convId)
     const context = filteredMessages.map((m) => ({
       role: m.talkerId === botWxid ? ("assistant" as const) : ("user" as const),
       // todo: merge chats
