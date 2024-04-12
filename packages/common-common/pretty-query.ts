@@ -27,7 +27,7 @@ export const prettyQuery = (
 
   lines.push("+----------------------------+")
 
-  console.log({ contents, lines })
+  // console.log({ contents, lines })
 
   return lines.join("\n")
 }

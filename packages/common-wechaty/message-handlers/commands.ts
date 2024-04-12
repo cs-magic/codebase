@@ -3,11 +3,9 @@ import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
 import { llmModelTypeSchema } from "../../common-llm/schema/providers"
 import { getBotConfig } from "../get-bot-config"
 import { parseCommand } from "../parse-command"
-import { prettyBotQuery } from "../pretty-bot-query"
-import { IBotContext, loadBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class CommandsMessageHandler extends BaseMessageHandler<IBotContext> {
+export class CommandsMessageHandler extends BaseMessageHandler {
   name = "commands"
 
   public async onMessage(message: MessageInterface) {
@@ -26,19 +24,20 @@ export class CommandsMessageHandler extends BaseMessageHandler<IBotContext> {
     switch (result.command) {
       case "":
       case "help":
-        const botContext = await loadBotContext()
         await message.say(
-          await prettyBotQuery(`${botContext.name}快捷帮助`, [config.help]),
+          this.prettyBotQuery(`${this.bot.context!.name}快捷帮助`, [
+            config.help,
+          ]),
         )
         break
 
       case "status":
-        await message.say(await prettyBotQuery("实时状态", [config.status]))
+        await message.say(this.prettyBotQuery("实时状态", [config.status]))
         break
 
       case "list-models":
         await message.say(
-          await prettyBotQuery(`模型列表`, [
+          this.prettyBotQuery(`模型列表`, [
             llmModelTypeSchema.options
               .map((o, i) => `${i + 1}. ${o.value}`)
               .join("\n"),

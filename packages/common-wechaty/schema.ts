@@ -34,7 +34,9 @@ export const loadBotContext = async (): Promise<IBotContext> => {
     const context = await promises.readFile(preferenceFilePath, {
       encoding: "utf-8",
     })
+
     const preference = yaml.load(context) as IBotPreference
+
     _g.context = {
       ...preference,
       name: "小川助手",

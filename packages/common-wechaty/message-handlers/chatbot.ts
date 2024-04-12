@@ -9,10 +9,9 @@ import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
 import { isSenderAdmin } from "../is-sender-admin"
 import { parseCommand } from "../parse-command"
-import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
+export class ChatbotMessageHandler extends BaseMessageHandler {
   name = "chatbot"
 
   public async onMessage(message: Message) {
@@ -145,6 +144,12 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
      * 2. Q: ... --> Q: /set-topic --> ok --> Q: ...
      */
 
+    const model = this.bot.context?.model
+    if (!model) {
+      await message.say(this.prettyBotQuery("系统错误", ["暂未配置模型"]))
+      return true
+    }
+
     const res = await callLLM({
       messages: [
         {
@@ -152,7 +157,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
           content: message.text(),
         },
       ],
-      model: this.context.model,
+      model,
     })
     const content = res.response?.choices[0]?.message.content
     if (!content) throw new Error("LLM return nothing")

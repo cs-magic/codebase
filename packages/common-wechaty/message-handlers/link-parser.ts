@@ -8,10 +8,9 @@ import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 
 import { isTestMessage } from "../is-test-message"
-import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class LinkParserMessageHandler extends BaseMessageHandler<IBotContext> {
+export class LinkParserMessageHandler extends BaseMessageHandler {
   name = "link-parser"
 
   private uniParser: CardSimulator | null = null

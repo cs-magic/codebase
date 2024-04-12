@@ -10,7 +10,7 @@ import { IBotTemplate, IBotContext, loadBotContext } from "./schema"
 export const getBotConfig = async (
   config?: Partial<IBotContext>,
   yamlParser: "js-yaml" | "yaml" = "js-yaml",
-) => {
+): Promise<IBotTemplate> => {
   const __filename = fileURLToPath(import.meta.url)
 
   const template = await promises.readFile(
@@ -19,6 +19,7 @@ export const getBotConfig = async (
   )
 
   const botContext = await loadBotContext()
+
   const config_ = Mustache.render(template, {
     ...botContext,
     ...config,

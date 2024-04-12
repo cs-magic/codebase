@@ -1,9 +1,8 @@
 import { MessageInterface } from "wechaty/impls"
 import { prisma } from "../../common-db/providers/prisma"
-import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class StorageMessageHandler extends BaseMessageHandler<IBotContext> {
+export class StorageMessageHandler extends BaseMessageHandler {
   name = "storage"
 
   public async onMessage(message: MessageInterface) {

@@ -1,14 +1,14 @@
 import { Message, Wechaty } from "wechaty"
+import { prettyQuery } from "../../common-common/pretty-query"
 import { LiteralUnionSchema } from "../../common-common/schema"
+import { IBotContext } from "../schema"
 
-export class BaseMessageHandler<T = object> {
+export class BaseMessageHandler {
   public bot: Wechaty
-  public context: T
   public name: string = "_base"
 
-  constructor(bot: Wechaty, context: T) {
+  constructor(bot: Wechaty) {
     this.bot = bot
-    this.context = context
   }
 
   /**
@@ -27,7 +27,17 @@ export class BaseMessageHandler<T = object> {
     throw new Error("onMessage not implemented.")
   }
 
-  public async handleCommand<K extends keyof T>(
+  public prettyBotQuery = (title: string, contents: string[]) => {
+    const context = this.bot.context
+
+    if (!context) return prettyQuery("系统错误", ["Missing Context"])
+
+    return prettyQuery(title, contents, {
+      footer: `${context.name} ${context.version}`,
+    })
+  }
+
+  public async handleCommand<K extends keyof IBotContext>(
     message: Message,
     field: K,
     schema: LiteralUnionSchema,
@@ -35,7 +45,7 @@ export class BaseMessageHandler<T = object> {
   ) {
     try {
       await schema.parseAsync(value)
-      this.context[field] = value as T[K]
+      if (this.bot.context) this.bot.context[field] = value as IBotContext[K]
       await message.say("ok")
     } catch (err) {
       // prettyError(err)
