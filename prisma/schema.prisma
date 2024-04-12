@@ -159,17 +159,18 @@ model WechatMessage {
   talker   WechatUser @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
   talkerId String // 'wxid_ck85xup8b1bj21',
 
-  listener WechatUser @relation("listener", fields: [wechatUserId], references: [id])
+  listener   WechatUser @relation("listener", fields: [listenerId], references: [id])
+  listenerId String
 
-  room WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId String? // : '47778688503@chatroom',
 
-  timestamp Int // 1712846017,
-  type      Int //: 7,
-
+  timestamp     Int // 1712846017,
+  type          Int //: 7,
   text          String? // '现在我们要支持 card - model 的一对多关系了',
-  roomId        String? // : '47778688503@chatroom',
   mentionIdList String[] // : [],
-  wechatUserId  String
+
+  chatbotIsNotification Boolean? @default(false)
 }
 
 model WechatUser {

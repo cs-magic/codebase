@@ -19,6 +19,9 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
       "start",
       "topic",
       "set-topic",
+      "list-topics",
+      "select-topic",
+      "new-topic",
       "stop",
     ])
 
@@ -50,7 +53,51 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
 
       case "topic":
-        await message.say(`当前话题为：${(await findRow)?.chatbotTopic}`)
+        await message.say(
+          `当前话题为：${(await findRow)?.chatbotTopic ?? "暂无"}`,
+        )
+        return
+
+      case "list-topics":
+        const messages = await prisma.wechatMessage.findMany({
+          where: {
+            chatbotIsNotification: { not: true },
+            // 三者任一即可
+            OR: [
+              { roomId: convId },
+              { listenerId: convId },
+              { talkerId: convId },
+            ],
+          },
+          orderBy: { id: "asc" },
+        })
+        const topicDict: Record<string, number> = {}
+        const DEFAULT = "默认"
+        let lastTopic = DEFAULT
+        messages.forEach((row) => {
+          const parsed = parseCommand(row.text ?? "", ["set-topic"])
+          if (!parsed) {
+            ++topicDict[lastTopic]
+          } else {
+            switch (parsed?.command) {
+              case "set-topic":
+                lastTopic = parsed?.args ?? DEFAULT
+                if (!(lastTopic in topicDict)) topicDict[lastTopic] = 0
+                break
+            }
+          }
+        })
+        await message.say(
+          [
+            `# 历史话题`,
+            "---",
+            ...Object.keys(topicDict).map(
+              (k, indexk) => `${indexk + 1}. ${k} (${topicDict[k]})`,
+            ),
+            "---",
+            "您可以 「/select-topic [序号]」 继续某个话题，或者 「/new-topic [名称]」 开启新话题",
+          ].join("\n"),
+        )
         return
 
       case "set-topic":
@@ -60,7 +107,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
             chatbotTopic: result.args,
           },
         })
-        await message.say(ERR_MSG_SUCCESS)
+        await message.say(`[TOPIC_STARTED]`)
         return
 
       case "stop":
@@ -76,6 +123,11 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
     }
 
     if (!(await findRow)?.chatbotEnabled || message.self()) return
+
+    /**
+     * 1.        -->     Q: /start --> ok --> Q: ...
+     * 2. Q: ... --> Q: /set-topic --> ok --> Q: ...
+     */
 
     const res = await callLLM({
       messages: [
