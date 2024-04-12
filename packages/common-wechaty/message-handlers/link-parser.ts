@@ -7,16 +7,11 @@ import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-w
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 
-import { BackendEngineType } from "../../common-llm/schema/llm"
-import { LlmModelType } from "../../common-llm/schema/providers"
-
 import { isTestMessage } from "../is-test-message"
+import { IBotContext } from "../schema"
 import { BaseMessageHandler } from "./_base"
 
-export class LinkParserMessageHandler extends BaseMessageHandler<{
-  backendEngineType: BackendEngineType
-  summaryModel: LlmModelType
-}> {
+export class LinkParserMessageHandler extends BaseMessageHandler<IBotContext> {
   name = "link-parser"
 
   private uniParser: CardSimulator | null = null
@@ -38,7 +33,7 @@ export class LinkParserMessageHandler extends BaseMessageHandler<{
 
     const card = await fetchWxmpArticleWithCache(url, {
       backendEngineType: this.context.backendEngineType,
-      summaryModel: this.context.summaryModel,
+      summaryModel: this.context.model,
     })
     // todo: dynamic sender with fixed card url
     // let cardUrl = card.ossUrl

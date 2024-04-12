@@ -1,34 +1,38 @@
+basic: |
+  +----------------------------+
+  {{title}}
+  ------------------------------
+  {{content}}
+  ------------------------------
+  {{footer}}
+  +----------------------------+
+  
 help: |
-  ----------------
-    AI 助手 {{ version }}
-  ----------------
+  {{name}}是一款 AI Native 的智能助手，可用于个人、群组智能管理、协同。
+  ------------------------------
+  目前支持以下子功能：
+  - A1: 话题级别的 AI 聊天
+  - A2: 信息总结（已支持：订阅号文章……）
+  - ……
+  ------------------------------
+  命令列表：
+  /: 帮助
   /ding: 心跳检测
-  /help: 查询帮助
-  /status: 助手状态
-  ----------------
-  - A1: 微信文章自动总结 ✅
-  - A2: 微信视频号自动总结 ✈️
-  - ……
-  ----------------
-
-shelp: |
-  ----------------
-    AI 助手 {{ version }}（S）
-  ----------------
-  /shelp: 查询管理员帮助
-  /start: 启用助手
-  /stop: 停止助手
-  /enable-llm: 启用LLM接口 (-)
-  /disable-llm: 暂停LLM接口 (-)
-  /set-backend-engine-type V [nodejs,fastapi]
-  /set-summary-model V [gpt-3.5-turbo,gpt-4,qwen-max...]
-  ----------------
-  - ……
-  ----------------
+  /status: 查询状态
+  /list-models: 查询AI模型列表
+  /set-model: 设置AI模型
+  /start-chat: 开始AI聊天
+  /stop-chat: 结束AI聊天
+  /list-topics: 查询历史话题
+  /set-topic [N]: 继续第N个话题
+  /new-topic [TITLE]: 新建话题
+  /help [FEAT]: 查询子功能帮助
 
 status: |
+  name: {{name}}
   version: {{ version }}
+  alive-time: {{aliveTime}}
+  model: {{model}}
+  ------------------------------
   features-enabled: {{featuresEnabled}}
   backend-engine-type: {{backendEngineType}}
-  summary-model: {{summaryModel}}
-  alive-time: {{aliveTime}}

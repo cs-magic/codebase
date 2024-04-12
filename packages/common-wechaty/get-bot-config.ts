@@ -1,11 +1,11 @@
 import { promises } from "fs"
 import jsYaml from "js-yaml"
-import yaml from "yaml"
 import Mustache from "mustache"
 import path from "path"
 import { fileURLToPath } from "url"
+import yaml from "yaml"
 import { prettyDuration } from "../common-common/pretty-duration"
-import { botContext, IBotConfig, IBotContext } from "./schema"
+import { IBotTemplate, IBotContext, loadBotContext } from "./schema"
 
 export const getBotConfig = async (
   config?: Partial<IBotContext>,
@@ -17,18 +17,21 @@ export const getBotConfig = async (
     path.join(__filename, "../template.yml"),
     { encoding: "utf-8" },
   )
+
+  const botContext = await loadBotContext()
   const config_ = Mustache.render(template, {
     ...botContext,
     ...config,
+    title: `${botContext.name} ${botContext.version}`,
     aliveTime: prettyDuration((Date.now() - botContext.startTime) / 1e3),
   })
 
   switch (yamlParser) {
     case "js-yaml":
-      return jsYaml.load(config_, {}) as IBotConfig
+      return jsYaml.load(config_, {}) as IBotTemplate
 
     case "yaml":
     default:
-      return yaml.parse(config_) as unknown as IBotConfig
+      return yaml.parse(config_) as unknown as IBotTemplate
   }
 }

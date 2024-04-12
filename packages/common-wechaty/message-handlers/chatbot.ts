@@ -1,3 +1,4 @@
+import { config } from "@/config/system"
 import { Prisma } from "@prisma/client"
 import { Message } from "wechaty"
 import {
@@ -30,13 +31,21 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
 
     const convId = message.conversation().id
 
-    const findRow = table.findUnique({
+    const findConv = table.findUnique({
       where: { id: convId },
     })
 
     switch (result?.command) {
       case "start":
-        if (isSenderAdmin(message)) {
+        if (!(await findConv)?.chatbotEnabled) {
+          await message.say(
+            [
+              `# 超级小川助手 （${config.version}）使用说明`,
+              "/select-topic [序号]: 继续某个话题",
+              "/new-topic [名称]: 开启新话题",
+            ].join("\n"),
+          )
+        } else if (isSenderAdmin(message)) {
           await table.update({
             where: { id: convId },
             data: {
@@ -53,7 +62,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
 
       case "topic":
         await message.say(
-          `当前话题为：${(await findRow)?.chatbotTopic ?? "暂无"}`,
+          `当前话题为：${(await findConv)?.chatbotTopic ?? "暂无"}`,
         )
         return
 
@@ -69,31 +78,40 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
           },
           orderBy: { id: "asc" },
         })
+
         const topicDict: Record<string, number> = {}
-        const DEFAULT = "默认"
-        let lastTopic = DEFAULT
+        let lastTopic: string | null = null
+        let started = true // todo: switch
         messages.forEach((row) => {
-          const parsed = parseCommand(row.text ?? "", ["set-topic"])
-          if (!parsed) {
-            ++topicDict[lastTopic]
-          } else {
+          const parsed = parseCommand(row.text ?? "", ["new-topic"])
+          if (parsed) {
             switch (parsed?.command) {
-              case "set-topic":
-                lastTopic = parsed?.args ?? DEFAULT
+              case "new-topic":
+                lastTopic = parsed?.args ?? "默认"
                 if (!(lastTopic in topicDict)) topicDict[lastTopic] = 0
                 break
             }
+          } else if (
+            started &&
+            lastTopic !== null &&
+            !row.text?.startsWith("/")
+          ) {
+            ++topicDict[lastTopic]
+          } else {
+            // don't do anything
           }
         })
+
         await message.say(
           [
             `# 历史话题`,
-            "---",
             ...Object.keys(topicDict).map(
               (k, index) => `${index + 1}. ${k} (${topicDict[k]})`,
             ),
-            "---",
-            "您可以 「/select-topic [序号]」 继续某个话题，或者 「/new-topic [名称]」 开启新话题",
+            "\n",
+            "您可以选择以下命令：",
+            "/select-topic [序号]: 继续某个话题",
+            "/new-topic [名称]: 开启新话题",
           ].join("\n"),
         )
         return
@@ -120,7 +138,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         return
     }
 
-    if (!(await findRow)?.chatbotEnabled || message.self()) return
+    if (!(await findConv)?.chatbotEnabled || message.self()) return
 
     /**
      * 1.        -->     Q: /start --> ok --> Q: ...
@@ -134,7 +152,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
           content: message.text(),
         },
       ],
-      model: this.context.summaryModel,
+      model: this.context.model,
     })
     const content = res.response?.choices[0]?.message.content
     if (!content) throw new Error("LLM return nothing")

@@ -3,14 +3,17 @@ import { WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlers } from "./config"
-import { botContext } from "./schema"
+import { loadBotContext } from "./schema"
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
-  console.log("-- createBot: ", { name })
+  console.log("-- create bot: ", { name })
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
     puppetOptions: {},
   })
+
+  console.log("-- loading context")
+  const botContext = await loadBotContext()
 
   console.log("-- registering handlers")
   const handlers = MessageHandlers.map((H) => {
