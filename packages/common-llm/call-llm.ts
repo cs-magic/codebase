@@ -102,6 +102,7 @@ export const callLLM = async (
 
     success = true
   } catch (e) {
+    //   todo: return error
     prettyError(e)
   }
 

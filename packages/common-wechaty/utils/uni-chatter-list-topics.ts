@@ -1,26 +1,115 @@
+import { SEPARATOR_2 } from "../../common-common/pretty-query"
 import { prisma } from "../../common-db/providers/prisma"
 import { parseCommand } from "./parse-command"
+export const listMessagesOfSpecificTopic = async (
+  botWxid: string,
+  convId: string,
+  topic: string,
+) => {
+  const firstUserSetCommand = await prisma.wechatMessage.findFirst({
+    where: {
+      // 三者任一即可
+      OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
+      text: {
+        startsWith: "/new-topic ",
+        contains: topic,
+      },
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  })
+  if (!firstUserSetCommand) throw new Error("no lastUserSetCommand")
+
+  const nextUserSetCommand = await prisma.wechatMessage.findFirst({
+    where: {
+      // 三者任一即可
+      OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
+      text: {
+        startsWith: "/new-topic ",
+      },
+      createdAt: {
+        gt: firstUserSetCommand.createdAt!,
+      },
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  })
+  if (!nextUserSetCommand) throw new Error("no nextUserSetCommand")
+
+  const messages = await prisma.wechatMessage.findMany({
+    where: {
+      // AND, ref: https://chat.openai.com/c/895c1452-c3bd-4d5b-ba9f-c23c7750f412
+      AND: [
+        {
+          OR: [
+            { roomId: convId },
+            { listenerId: convId },
+            { talkerId: convId },
+          ],
+        },
+        {
+          OR: [
+            { talkerId: botWxid },
+            {
+              mentionIdList: {
+                has: botWxid,
+              },
+            },
+          ],
+          createdAt: {
+            gt: firstUserSetCommand.createdAt!,
+            lt: nextUserSetCommand.createdAt!,
+          },
+        },
+        {
+          text: {
+            not: {
+              startsWith: SEPARATOR_2,
+            },
+          },
+        },
+      ],
+    },
+    orderBy: { createdAt: "asc" },
+    include: {
+      talker: true,
+    },
+  })
+
+  // console.log({
+  //   lastUserSetCommand,
+  //   lastUserStartChat,
+  //   messagesLen: messages.length,
+  // })
+
+  return messages
+}
 
 /**
  * 获取最后一次
  * @param convId
  */
-export const listMessagesForTopic = async (convId: string, botId?: string) => {
-  // console.log({ convId, botId })
-
+export const listMessagesOfLatestTopic = async (
+  convId: string,
+  botWxid?: string,
+) => {
   const lastUserSetCommand = await prisma.wechatMessage.findFirst({
     where: {
       // 三者任一即可
       OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
       text: {
+        // 不能用 contains 否则会误包含
+        startsWith: "/new-topic",
         // todo: /new-topic /set-topic /start-chat
-        contains: "/new-topic",
       },
     },
     orderBy: {
       createdAt: "desc",
     },
   })
+  if (!lastUserSetCommand) throw new Error("no lastUserSetCommand")
 
   const lastUserStartChat = await prisma.wechatMessage.findFirst({
     where: {
@@ -31,26 +120,50 @@ export const listMessagesForTopic = async (convId: string, botId?: string) => {
           }
         : undefined,
       talkerId: {
-        not: botId,
+        not: botWxid,
       },
     },
     orderBy: {
       createdAt: "asc",
     },
   })
+  if (!lastUserStartChat) throw new Error("no lastUserStartChat")
 
   const messages = await prisma.wechatMessage.findMany({
     where: {
-      // 三者任一即可
-      OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
-      createdAt: lastUserStartChat
-        ? {
+      // AND, ref: https://chat.openai.com/c/895c1452-c3bd-4d5b-ba9f-c23c7750f412
+      AND: [
+        {
+          OR: [
+            { roomId: convId },
+            { listenerId: convId },
+            { talkerId: convId },
+          ],
+        },
+        {
+          OR: [
+            { talkerId: botWxid },
+            {
+              mentionIdList: {
+                has: botWxid,
+              },
+            },
+          ],
+          createdAt: {
             gte: lastUserStartChat.createdAt!,
-          }
-        : undefined,
+          },
+        },
+      ],
     },
     orderBy: { createdAt: "asc" },
   })
+
+  // console.log({
+  //   lastUserSetCommand,
+  //   lastUserStartChat,
+  //   messagesLen: messages.length,
+  // })
+
   return messages
 }
 
@@ -66,7 +179,7 @@ export const listMessages = async (convId: string, take?: number) => {
   return messages
 }
 
-export const uniChatterListTopics = async (convId: string) => {
+export const listTopics = async (convId: string) => {
   const messages = await listMessages(convId)
 
   const topicDict: Record<string, number> = {}

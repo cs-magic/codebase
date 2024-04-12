@@ -57,7 +57,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
     })
     .on("message", async (message) => {
       console.log("<< message: ", {
-        // message: message.payload,
+        message: message.payload,
         // talker: message.talker().payload,
         // listener: message.listener()?.payload,
         // room: message.room()?.payload,

@@ -14,6 +14,7 @@ import { BaseMessageHandler } from "./_base"
 import { z } from "zod"
 
 export const basicSchema = z.union([
+  z.literal("ding"),
   z.literal(""),
   z.literal("help"),
   z.literal("status"),
@@ -24,10 +25,17 @@ export const basicSchema = z.union([
 
 export class BasicCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {
-    const result = parseCommand(message.text(), basicSchema)
+    const result = parseCommand<z.infer<typeof basicSchema>>(
+      message.text(),
+      basicSchema,
+    )
     if (!result) return
 
     switch (result.command) {
+      case "ding":
+        await message.say("dong")
+        break
+
       case "":
       case "help":
         await message.say(

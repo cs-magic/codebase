@@ -1,6 +1,5 @@
 export const SEPARATOR = `------------------------------`
-export const QUERY_SEPARATOR_2 =
-  "+" + SEPARATOR.slice(0, SEPARATOR.length - 2) + "+"
+export const SEPARATOR_2 = "+" + SEPARATOR.slice(0, SEPARATOR.length - 2) + "+"
 
 /**
  * 可用于微信的回复
@@ -13,7 +12,7 @@ export const prettyQuery = (
   content: string,
   options?: { footer?: string; tips?: string },
 ) => {
-  const lines = [QUERY_SEPARATOR_2, "  " + title, SEPARATOR, content]
+  const lines = [SEPARATOR_2, "  " + title, SEPARATOR, content]
 
   if (options?.tips) {
     lines.push(SEPARATOR, "TIPS: ", options.tips)
@@ -23,7 +22,7 @@ export const prettyQuery = (
     lines.push(SEPARATOR, "  " + options.footer)
   }
 
-  lines.push(QUERY_SEPARATOR_2)
+  lines.push(SEPARATOR_2)
 
   // console.log({ contents, lines })
 

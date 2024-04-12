@@ -12,20 +12,22 @@ help: |-
   ------------------------------
   目前支持以下子功能：
   - A1: 话题级别的 AI 聊天
+    /enable-uni-chatter: 启用AI聊天
+    /disable-uni-chatter: 结束AI聊天
+    /list-topics: 查询历史话题
+    /set-topic [N]: 继续第N个话题
+    /new-topic [TITLE]: 开启新话题
+  
   - A2: 信息总结（已支持：订阅号文章……）
-  - ……
+    /enable-uni-parser: 启用万能解析器
+    /disable-uni-parser: 停用万能解析器
   ------------------------------
   命令列表：
   /: 帮助
   /ding: 心跳检测
   /status: 查询状态
-  /list-models: 查询AI模型列表
-  /set-model: 设置AI模型
-  /start-chat: 开始AI聊天
-  /stop-chat: 结束AI聊天
-  /list-topics: 查询历史话题
-  /set-topic [N]: 继续第N个话题
-  /new-topic [TITLE]: 开启新话题
+  /list-models: 查询模型列表
+  /set-model: 设置模型
   /help [FEAT]: 查询子功能帮助
 
 status: |-
@@ -35,7 +37,6 @@ status: |-
   Preference:
     model: {{preference.model}}
     backend: {{preference.backend}}
-    handlers: {{{prettyHandlers}}}
   ------------------------------
   Conv:
     uni-chatter-enabled: {{{conv.uniChatterEnabled}}}

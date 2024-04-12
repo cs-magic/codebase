@@ -3,8 +3,8 @@ import { z } from "zod"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 import { basicSchema } from "./basic-commands"
-import { heartbeatSchema } from "./heartbeat"
 import { uniChatterSchema } from "./uni-chatter"
+import { uniParserSchema } from "./uni-parser"
 
 export class ValidatorMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {
@@ -15,13 +15,22 @@ export class ValidatorMessageHandler extends BaseMessageHandler {
         message.text(),
         z.union([
           ...basicSchema.options,
-          ...heartbeatSchema.options,
           ...uniChatterSchema.options,
+          ...uniParserSchema.options,
         ]),
       )
 
       if (!result) {
-        throw new Error(`无效的命令：${text}`)
+        throw new Error(
+          `无效的命令：${text}，仅支持：\n${[
+            basicSchema,
+            uniChatterSchema,
+            uniParserSchema,
+          ]
+            .map((s) => s.options.map((o) => `/${o.value}`))
+            .flat()
+            .join("\n")}`,
+        )
       }
     }
   }

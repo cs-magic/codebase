@@ -2,32 +2,34 @@ import { type Prisma } from "@prisma/client"
 import { type Message } from "wechaty"
 import { z } from "zod"
 import { isNumeric } from "../../common-common/is-numeric"
-import { ERR_MSG_INADEQUATE_PERMISSION } from "../../common-common/messages"
 import { prettyInvalidChoice } from "../../common-common/pretty-invalid-choice"
 import { LiteralUnionSchema } from "../../common-common/schema"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
-import { isSenderAdmin } from "../utils/is-sender-admin"
 import { parseCommand } from "../utils/parse-command"
-import { BaseMessageHandler } from "./_base"
 import {
-  listMessages,
-  listMessagesForTopic,
-  uniChatterListTopics,
+  listMessagesOfLatestTopic,
+  listMessagesOfSpecificTopic,
+  listTopics,
 } from "../utils/uni-chatter-list-topics"
+import { BaseMessageHandler } from "./_base"
 
 export const uniChatterSchema = z.union([
-  z.literal("start-chat"),
-  z.literal("stop-chat"),
+  z.literal("enable-uni-chatter"),
+  z.literal("disable-uni-chatter"),
   z.literal("topic"),
   z.literal("list-topics"),
+  z.literal("check-topic"),
   z.literal("new-topic"),
   z.literal("set-topic"),
 ])
 
 export class UniChatterMessageHandler extends BaseMessageHandler {
   public async onMessage(message: Message) {
-    const result = parseCommand(message.text(), uniChatterSchema)
+    const result = parseCommand<z.infer<typeof uniChatterSchema>>(
+      message.text(),
+      uniChatterSchema,
+    )
 
     const table = prisma[
       message.room() ? "wechatRoom" : "wechatUser"
@@ -41,9 +43,28 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
 
     if (!conv) throw new Error("Missing Conv")
 
-    if (result?.command) {
+    const botWxid = this.bot.currentUser.payload?.id
+
+    if (result) {
+      const topicDict = await listTopics(convId)
+
+      const selectTopicSchema = z.union(
+        // @ts-ignore
+        Object.keys(topicDict).map((s: Readonly<string>) => z.literal(s)),
+      ) as unknown as LiteralUnionSchema
+
+      const topicChoices = selectTopicSchema.options.map((o) => o.value)
+
+      const topicTarget = isNumeric(result.args)
+        ? topicChoices[Number(result.args) - 1]
+        : result.args
+
+      const selectTopicResult =
+        await selectTopicSchema.safeParseAsync(topicTarget)
+      console.log({ selectTopicSchema, selectTopicResult })
+
       switch (result.command) {
-        case "start-chat":
+        case "enable-uni-chatter":
           await table.update({
             where: { id: convId },
             data: {
@@ -62,7 +83,25 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
               ].join("\n"),
             ),
           )
+          break
 
+        case "disable-uni-chatter":
+          await table.update({
+            where: { id: convId },
+            data: {
+              // chatbotTopic: null,
+              chatbotEnabled: false,
+            },
+          })
+          await message.say(
+            this.bot.prettyQuery(
+              "AI聊天",
+              "已关闭",
+              ["/start-chat: 开始AI聊天", "/list-topics: 查询历史话题"].join(
+                "\n",
+              ),
+            ),
+          )
           break
 
         case "new-topic":
@@ -89,44 +128,59 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
           break
 
         case "set-topic":
-          const topicDict = await uniChatterListTopics(convId)
-
-          const schema = z.union(
-            // @ts-ignore
-            Object.keys(topicDict).map((s: Readonly<string>) => z.literal(s)),
-          ) as unknown as LiteralUnionSchema
-
-          const choices = schema.options.map((o) => o.value)
-
-          const target = isNumeric(result.args)
-            ? choices[Number(result.args) - 1]
-            : result.args
-
-          const parsedResult = await schema.safeParseAsync(target)
-          console.log({ schema, parsedResult })
-
-          if (parsedResult.success) {
+          if (selectTopicResult.success) {
             await table.update({
               where: { id: convId },
               data: {
-                chatbotTopic: target,
+                chatbotTopic: topicTarget,
               },
             })
             await message.say(
               this.bot.prettyQuery(
                 "话题变更",
-                `修改成功，当前会话为：${target}`,
+                `修改成功，当前会话为：${topicTarget}`,
               ),
             )
           } else {
             await message.say(
               this.bot.prettyQuery(
                 "话题变更",
-                prettyInvalidChoice(target ?? "undefined", schema),
+                prettyInvalidChoice(
+                  topicTarget ?? "undefined",
+                  selectTopicSchema,
+                ),
               ),
             )
           }
 
+          break
+
+        case "check-topic":
+          if (selectTopicResult.success && botWxid && topicTarget) {
+            const messages = await listMessagesOfSpecificTopic(
+              botWxid,
+              convId,
+              topicTarget,
+            )
+            await message.say(
+              this.bot.prettyQuery(
+                "查看话题详情",
+                messages
+                  .map((m, i) => `${i + 1}) ${m.talker.name}: ${m.text}\n`)
+                  .join("\n"),
+              ),
+            )
+          } else {
+            await message.say(
+              this.bot.prettyQuery(
+                "查看话题详情",
+                prettyInvalidChoice(
+                  topicTarget ?? "undefined",
+                  selectTopicSchema,
+                ),
+              ),
+            )
+          }
           break
 
         case "topic":
@@ -139,7 +193,8 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
           break
 
         case "list-topics":
-          const topicDictListed = await uniChatterListTopics(convId)
+          const topicDictListed = await listTopics(convId)
+
           await message.say(
             this.bot.prettyQuery(
               "历史话题列表",
@@ -156,26 +211,9 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
             ),
           )
           break
-
-        case "stop-chat":
-          await table.update({
-            where: { id: convId },
-            data: {
-              // chatbotTopic: null,
-              chatbotEnabled: false,
-            },
-          })
-          await message.say(
-            this.bot.prettyQuery(
-              "AI聊天",
-              "已关闭",
-              ["/start-chat: 开始AI聊天", "/list-topics: 查询历史话题"].join(
-                "\n",
-              ),
-            ),
-          )
-          break
       }
+
+      return
     }
 
     if (
@@ -186,36 +224,22 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
     )
       return
 
-    /**
-     * 1.        -->     Q: /start --> ok --> Q: ...
-     * 2. Q: ... --> Q: /set-topic --> ok --> Q: ...
-     */
-
     const model = this.bot.context?.preference.model
     if (!model) {
       await message.say(this.bot.prettyQuery("系统错误", "暂未配置模型"))
       return
     }
 
-    const wxid = this.bot.currentUser.payload?.id
-    console.log({
-      bot: this.bot.id,
-      wxid,
-      talker: message.talker().id,
-      listener: message.listener()?.id,
-      room: message.room()?.id,
-    })
-    const latestMessage = await listMessagesForTopic(convId, wxid)
+    const filteredMessages = await listMessagesOfLatestTopic(convId, botWxid)
+    const context = filteredMessages.map((m) => ({
+      role: m.talkerId === botWxid ? ("assistant" as const) : ("user" as const),
+      // todo: merge chats
+      content: m.text ?? "",
+    }))
+    // console.log(`--  context(len=${context.length})`)
 
     const res = await callLLM({
-      messages: [
-        ...latestMessage.map((m) => ({
-          role:
-            m.talkerId === wxid ? ("assistant" as const) : ("user" as const),
-          // todo: merge chats
-          content: m.text ?? "",
-        })),
-      ],
+      messages: context,
       model,
     })
     const content = res.response?.choices[0]?.message.content
