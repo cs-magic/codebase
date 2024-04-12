@@ -1,14 +1,11 @@
-import { MessageInterface } from "wechaty/impls"
+import { type MessageInterface } from "wechaty/impls"
 import { isNumeric } from "../../common-common/is-numeric"
-import { QUERY_SEPARATOR } from "../../common-common/pretty-query"
 import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
 import { llmModelTypeSchema } from "../../common-llm/schema/providers"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
 
-export class CommandsMessageHandler extends BaseMessageHandler {
-  name = "commands"
-
+export class BasicCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {
     const result = parseCommand(message.text(), [
       "",
@@ -24,35 +21,35 @@ export class CommandsMessageHandler extends BaseMessageHandler {
       case "":
       case "help":
         await message.say(
-          this.prettyBotQuery(
-            `${this.bot.context!.name}快捷帮助`,
-            this.template.help,
+          this.bot.prettyQuery(
+            `${this.bot.context.name}快捷帮助`,
+            this.bot.template().help,
           ),
         )
         break
 
       case "status":
-        await message.say(this.prettyBotQuery("实时状态", this.template.status))
+        await message.say(
+          this.bot.prettyQuery("实时状态", this.bot.template().status),
+        )
         break
 
       case "list-models":
         await message.say(
-          this.prettyBotQuery(
+          this.bot.prettyQuery(
             `模型列表`,
             [
               ...llmModelTypeSchema.options.map(
                 (o, i) => `${i + 1}. ${o.value}`,
               ),
-              QUERY_SEPARATOR,
-              "TIPS:",
-              "/set-model [N]: 设置模型",
             ].join("\n"),
+            ["/set-model [N]: 设置模型"].join("\n"),
           ),
         )
         break
 
       case "set-model":
-        return this.handleCommand(
+        await this.handleCommand(
           message,
           "model",
           llmModelTypeSchema,
@@ -62,16 +59,16 @@ export class CommandsMessageHandler extends BaseMessageHandler {
               ]
             : result.args,
         )
+        break
 
       case "set-backend":
-        return this.handleCommand(
+        await this.handleCommand(
           message,
           "backend",
           backendEngineTypeSchema,
           result.args,
         )
+        break
     }
-
-    return true
   }
 }

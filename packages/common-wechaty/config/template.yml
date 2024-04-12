@@ -25,16 +25,17 @@ help: |-
   /stop-chat: 结束AI聊天
   /list-topics: 查询历史话题
   /set-topic [N]: 继续第N个话题
-  /new-topic [TITLE]: 新建话题
+  /new-topic [TITLE]: 开启新话题
   /help [FEAT]: 查询子功能帮助
 
 status: |-
   Basic:
-    name: {{name}}
-    version: {{ version }}
     alive-time: {{aliveTime}}
   ------------------------------
   Preference:
     model: {{preference.model}}
     backend: {{preference.backend}}
     handlers: {{{prettyHandlers}}}
+  ------------------------------
+  Conv:
+    {{{conv}}}

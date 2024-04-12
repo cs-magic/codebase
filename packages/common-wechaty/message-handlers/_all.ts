@@ -1,13 +1,15 @@
-import { ChatbotMessageHandler } from "./chatbot"
-import { CommandsMessageHandler } from "./commands"
+import { BasicCommandsMessageHandler } from "./basic-commands"
+import { UniChatterMessageHandler } from "./uni-chatter"
 import { HeartbeatMessageHandler } from "./heartbeat"
-import { LinkParserMessageHandler } from "./link-parser"
+import { UniParserMessageHandler } from "./uni-parser"
 import { StorageMessageHandler } from "./storage"
+import { ValidatorMessageHandler } from "./validator"
 
 export const MessageHandlerMap = {
-  chatbot: ChatbotMessageHandler,
-  commands: CommandsMessageHandler,
+  commands: BasicCommandsMessageHandler,
   heartbeat: HeartbeatMessageHandler,
-  "link-parser": LinkParserMessageHandler,
+  "uni-chatter": UniChatterMessageHandler,
+  "uni-parser": UniParserMessageHandler,
   storage: StorageMessageHandler,
+  validator: ValidatorMessageHandler,
 }

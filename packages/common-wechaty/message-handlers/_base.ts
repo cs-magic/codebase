@@ -1,25 +1,14 @@
-import { Message, Wechaty } from "wechaty"
-import { prettyQuery } from "../../common-common/pretty-query"
-import { LiteralUnionSchema } from "../../common-common/schema"
-import { IBotPreference, IBotTemplate } from "../schema"
-import { loadBotTemplate, renderBotTemplate } from "../utils/bot-template"
+import { type Message, type Wechaty } from "wechaty"
+import { type LiteralUnionSchema } from "../../common-common/schema"
+import { type IBotPreference } from "../schema"
 
 export class BaseMessageHandler {
   public bot: Wechaty
-  public name: string = "_base"
+  public name: string
 
-  constructor(bot: Wechaty) {
+  constructor(name: string, bot: Wechaty) {
+    this.name = name
     this.bot = bot
-    this._template = loadBotTemplate()
-  }
-
-  public _template: string
-
-  get template(): IBotTemplate {
-    const context = this.bot.context
-    if (!context) throw new Error("Missing Context")
-
-    return renderBotTemplate(context)
   }
 
   /**
@@ -36,16 +25,6 @@ export class BaseMessageHandler {
     // const listener = message.listener()
 
     throw new Error("onMessage not implemented.")
-  }
-
-  public prettyBotQuery = (title: string, content: string) => {
-    const context = this.bot.context
-
-    if (!context) return prettyQuery("系统错误", "Missing Context")
-
-    return prettyQuery(title, content, {
-      footer: `${context.name} ${context.version}`,
-    })
   }
 
   public async handleCommand<K extends keyof IBotPreference>(

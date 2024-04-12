@@ -2,7 +2,7 @@ import { isWxmpArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { CardSimulator } from "@/core/card-simulator"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
-import { MessageInterface } from "wechaty/impls"
+import { type MessageInterface } from "wechaty/impls"
 import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
@@ -10,17 +10,12 @@ import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from
 import { isTestMessage } from "../utils/is-test-message"
 import { BaseMessageHandler } from "./_base"
 
-export class LinkParserMessageHandler extends BaseMessageHandler {
-  name = "link-parser"
-
+export class UniParserMessageHandler extends BaseMessageHandler {
   private uniParser: CardSimulator | null = null
 
   async onMessage(message: MessageInterface): Promise<void> {
-    if (!(await isTestMessage(message))) return
-
-    initLog()
-
-    if (message.type() !== types.Message.Url) return
+    if (!(await isTestMessage(message)) || message.type() !== types.Message.Url)
+      return
 
     const url = parseUrlFromWechatUrlMessage(message.text())
     console.log("-- url in message: ", url)
@@ -28,11 +23,13 @@ export class LinkParserMessageHandler extends BaseMessageHandler {
 
     if (!isWxmpArticleUrl(url)) return
 
+    initLog()
+
     await message.say("正在解析……")
 
     const card = await fetchWxmpArticleWithCache(url, {
-      backendEngineType: this.context.backendEngineType,
-      summaryModel: this.context.model,
+      backendEngineType: this.bot.context?.preference.backend,
+      summaryModel: this.bot.context?.preference.model,
     })
     // todo: dynamic sender with fixed card url
     // let cardUrl = card.ossUrl

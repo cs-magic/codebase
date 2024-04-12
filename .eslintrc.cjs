@@ -42,7 +42,8 @@ const config = {
         '@typescript-eslint/no-floating-promises': 'warn',
         // no-infer 没有意义
         "@typescript-eslint/no-inferrable-types": "off",
-        "prefer-const": "warn"
+        "prefer-const": "warn",
+        "@typescript-eslint/prefer-nullish-coalescing": "warn"
     },
 };
 

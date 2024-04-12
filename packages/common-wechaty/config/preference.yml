@@ -1,8 +1,9 @@
 model: gpt-3.5-turbo
 backend: nodejs
 handlers:
-  - storage
   - heartbeat
+  - validator
+  - storage
   - commands
-  - chatbot
-  - link-parser
+  - uni-parser
+  - uni-chatter

@@ -1,21 +1,38 @@
 import qrcodeTerminal from "qrcode-terminal"
-import { Wechaty, WechatyBuilder } from "wechaty"
+import { type Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
+import { prettyQuery } from "../common-common/pretty-query"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
 import { initBotContext } from "./utils/bot-context"
 import { dumpBotPreference } from "./utils/bot-preference"
+import { renderBotTemplate } from "./utils/bot-template"
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- create bot: ", { name })
-  const bot: Wechaty = WechatyBuilder.build({
-    name, // 加了名字后就可以自动存储了
-  })
+  const context = await initBotContext()
 
-  console.log("-- loading context")
-  bot.context = await initBotContext()
+  const bot = WechatyBuilder.build({
+    name, // 加了名字后就可以自动存储了
+  }) as Wechaty // 等会加上各种其他函数
+
+  bot.context = context
+
+  bot.prettyQuery = (title: string, content: string, tips?: string) => {
+    if (!context) return prettyQuery("系统错误", "Missing Context")
+
+    return prettyQuery(title, content, {
+      footer: `${context.name} ${context.version}`,
+      tips,
+    })
+  }
+
+  bot.template = () => {
+    return renderBotTemplate(bot.context)
+  }
+
   process.on("SIGINT", () => {
-    if (bot.context) void dumpBotPreference(bot.context.preference)
+    void dumpBotPreference(bot.context.preference)
   })
 
   console.log("-- registering handlers")
@@ -23,7 +40,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
     console.log(`-- registering handler(name=${handlerName})`)
     const h = new MessageHandlerMap[
       handlerName as keyof typeof MessageHandlerMap
-    ](bot)
+    ](handlerName, bot)
     return h
   })
 
@@ -47,13 +64,11 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
 
       try {
         for (const handler of handlers) {
-          const res = await handler.onMessage(message)
-          // if handled, then prevent going through the following ones
-          if (res) return
+          await handler.onMessage(message)
         }
       } catch (e) {
         const s = prettyError(e)
-        await message.say(`哎呀出错啦！原因： ${s}`)
+        await message.say(bot.prettyQuery("哎呀出错啦", `原因： ${s}`))
       }
 
       await sleep(3e3)
