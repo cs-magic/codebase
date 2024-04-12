@@ -44,7 +44,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         }
       } catch (e) {
         const s = prettyError(e)
-        await message.say(`哎呀出错啦！原因： ${s}`)
+        // await message.say(`哎呀出错啦！原因： ${s}`)
       }
 
       await sleep(3e3)
