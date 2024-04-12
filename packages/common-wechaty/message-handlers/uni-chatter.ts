@@ -46,6 +46,7 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
     const botWxid = this.bot.currentUser.payload?.id
 
     if (result) {
+      const lang = (await getTalkerPreference(message))?.lang ?? "en"
       const topicDict = await listTopics(convId)
 
       const selectTopicSchema = z.union(
@@ -73,14 +74,11 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
             },
           })
           await message.say(
-            this.bot.prettyQuery(
+            await prettyBotQuery(
               "AI聊天",
               `已启动，当前话题：${conv.chatbotTopic}`,
-              [
-                "/list-topics: 查询历史话题",
-                "/new-topic [TITLE]: 开启新话题",
-                "/stop-chat: 结束AI聊天",
-              ].join("\n"),
+              lang,
+              ["list-topics", "new-topic", "disable-uni-chatter"],
             ),
           )
           break
@@ -94,20 +92,17 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
             },
           })
           await message.say(
-            this.bot.prettyQuery(
-              "AI聊天",
-              "已关闭",
-              ["/start-chat: 开始AI聊天", "/list-topics: 查询历史话题"].join(
-                "\n",
-              ),
-            ),
+            await prettyBotQuery("AI聊天", "已关闭", lang, [
+              "enable-uni-chatter",
+              "list-topics",
+            ]),
           )
           break
 
         case "new-topic":
           if (!result.args) {
             await message.say(
-              this.bot.prettyQuery("新增话题", `失败，原因：不能为空`),
+              await prettyBotQuery("新增话题", `失败，原因：不能为空`, lang),
             )
           } else {
             // 无法去重，因为已经入库了
@@ -118,9 +113,10 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
               },
             })
             await message.say(
-              this.bot.prettyQuery(
+              await prettyBotQuery(
                 "新增话题",
                 `成功，当前会话为：${result.args}`,
+                lang,
               ),
             )
           }
@@ -136,19 +132,21 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
               },
             })
             await message.say(
-              this.bot.prettyQuery(
+              await prettyBotQuery(
                 "话题变更",
                 `修改成功，当前会话为：${topicTarget}`,
+                lang,
               ),
             )
           } else {
             await message.say(
-              this.bot.prettyQuery(
+              await prettyBotQuery(
                 "话题变更",
                 prettyInvalidChoice(
                   topicTarget ?? "undefined",
                   selectTopicSchema,
                 ),
+                lang,
               ),
             )
           }
@@ -163,21 +161,23 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
               topicTarget,
             )
             await message.say(
-              this.bot.prettyQuery(
+              await prettyBotQuery(
                 "查看话题详情",
                 messages
                   .map((m, i) => `${i + 1}) ${m.talker.name}: ${m.text}\n`)
                   .join("\n"),
+                lang,
               ),
             )
           } else {
             await message.say(
-              this.bot.prettyQuery(
+              await prettyBotQuery(
                 "查看话题详情",
                 prettyInvalidChoice(
                   topicTarget ?? "undefined",
                   selectTopicSchema,
                 ),
+                lang,
               ),
             )
           }
@@ -185,9 +185,10 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
 
         case "topic":
           await message.say(
-            this.bot.prettyQuery(
+            await prettyBotQuery(
               "当前话题",
               `name: ${conv?.chatbotTopic ?? "暂无"}`,
+              lang,
             ),
           )
           break
@@ -196,7 +197,7 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
           const topicDictListed = await listTopics(convId)
 
           await message.say(
-            this.bot.prettyQuery(
+            await prettyBotQuery(
               "历史话题列表",
               Object.keys(topicDictListed)
                 .map(
@@ -204,10 +205,8 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
                     `${index + 1}. ${k} (${topicDictListed[k]}条消息)`,
                 )
                 .join("\n"),
-              [
-                "/set-topic [N]: 继续第N个话题",
-                "/new-topic [TITLE]: 开启新话题",
-              ].join("\n"),
+              lang,
+              ["set-topic", "new-topic"],
             ),
           )
           break

@@ -10,6 +10,7 @@ import { renderBotTemplate } from "../utils/bot-template"
 import { getConv } from "../utils/get-conv"
 import { getTalkerPreference } from "../utils/get-talker-preference"
 import { parseCommand } from "../utils/parse-command"
+import { prettyBotQuery } from "../utils/pretty-bot-query"
 import { updateTalkerPreference } from "../utils/update-talker-preference"
 import { BaseMessageHandler } from "./_base"
 
@@ -52,27 +53,30 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
       case "help":
       case "帮助":
         await message.say(
-          this.bot.prettyQuery(dynamicContext.name, template.help),
+          await prettyBotQuery(dynamicContext.name, template.help, lang),
         )
         break
 
       case "status":
       case "状态":
         const conv = await getConv(message)
-        await message.say(this.bot.prettyQuery("实时状态", template.status))
+        await message.say(
+          await prettyBotQuery("实时状态", template.status, lang),
+        )
         break
 
       case "list-models":
       case "查询模型列表":
         await message.say(
-          this.bot.prettyQuery(
+          await prettyBotQuery(
             `模型列表`,
             [
               ...llmModelTypeSchema.options.map(
                 (o, i) => `${i + 1}. ${o.value}`,
               ),
             ].join("\n"),
-            ["/set-model [N]: 设置模型"].join("\n"),
+            lang,
+            ["set-model"],
           ),
         )
         break

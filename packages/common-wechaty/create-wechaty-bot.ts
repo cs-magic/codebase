@@ -5,6 +5,7 @@ import { prettyError } from "../common-common/pretty-error"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
 import { IBotStaticContext } from "./schema"
+import { prettyBotQuery } from "./utils/pretty-bot-query"
 
 // export const prettyQuery = async (
 //   type: LangType,
@@ -73,7 +74,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         if (s.includes("filterValue not found for filterKey: id")) {
           s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
         }
-        await message.say(bot.prettyQuery("哎呀出错啦", `原因： ${s}`))
+        await message.say(await prettyBotQuery("哎呀出错啦", `原因： ${s}`))
       }
 
       await sleep(3e3)

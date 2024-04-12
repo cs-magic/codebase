@@ -1,23 +1,7 @@
 import { type MessageInterface } from "wechaty/impls"
-import { z } from "zod"
-import { LiteralUnionSchema } from "../../common-common/schema"
 import { parseCommand } from "../utils/parse-command"
+import { messageHandlerSchema, messageHandlerSchemas } from "./_all"
 import { BaseMessageHandler } from "./_base"
-import { basicSchema } from "./basic-commands"
-import { taskManagerSchema } from "./task-manager"
-import { uniChatterSchema } from "./uni-chatter"
-import { uniParserSchema } from "./uni-parser"
-
-export const messageHandlerSchemas = [
-  basicSchema,
-  uniChatterSchema,
-  uniParserSchema,
-  taskManagerSchema,
-]
-export const messageHandlerSchema = z.union(
-  // @ts-ignore
-  messageHandlerSchemas.map((s) => s.options).flat(),
-) as unknown as LiteralUnionSchema
 
 export class ValidatorMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {

@@ -11,8 +11,9 @@ import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from
 import { prisma } from "../../common-db/providers/prisma"
 import { getConv } from "../utils/get-conv"
 import { getTalkerPreference } from "../utils/get-talker-preference"
-import { BaseMessageHandler } from "./_base"
 import { parseCommand } from "../utils/parse-command"
+import { prettyBotQuery } from "../utils/pretty-bot-query"
+import { BaseMessageHandler } from "./_base"
 
 export const uniParserSchema = z.union([
   z.literal("enable-uni-parser"),
@@ -34,6 +35,7 @@ export class UniParserMessageHandler extends BaseMessageHandler {
       ] as Prisma.WechatUserDelegate & Prisma.WechatRoomDelegate
 
       const convId = message.conversation().id
+      const lang = (await getTalkerPreference(message))?.lang
 
       switch (result.command) {
         case "enable-uni-parser":
@@ -44,10 +46,11 @@ export class UniParserMessageHandler extends BaseMessageHandler {
             },
           })
           await message.say(
-            this.bot.prettyQuery(
+            await prettyBotQuery(
               "万能解析器",
               `万能解析器已启动，请发送一篇公众号文章让我解析吧！`,
-              ["/disable-uni-parser: 停用万能解析器"].join("\n"),
+              lang,
+              ["disable-uni-parser"],
             ),
           )
           break
@@ -60,11 +63,9 @@ export class UniParserMessageHandler extends BaseMessageHandler {
             },
           })
           await message.say(
-            this.bot.prettyQuery(
-              "万能解析器",
-              `万能解析器已关闭`,
-              ["/enable-uni-parser: 启用万能解析器"].join("\n"),
-            ),
+            await prettyBotQuery("万能解析器", `万能解析器已关闭`, lang, [
+              "enable-uni-chatter",
+            ]),
           )
           break
       }
