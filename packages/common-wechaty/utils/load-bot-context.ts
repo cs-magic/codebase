@@ -13,7 +13,7 @@ export const loadBotContext = async (): Promise<IBotContext> => {
   }
   const preferenceFilePath = path.join(
     fileURLToPath(import.meta.url),
-    "../config/preference.yml",
+    "../../config/preference.yml",
   )
 
   if (!_g.context) {
