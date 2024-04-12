@@ -151,6 +151,27 @@ enum PlatformType {
   xhsNote
 }
 
+model Task {
+  id        String    @id @default(nanoid(7))
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  title       String
+  description String?
+  status      TaskStatus @default(pending)
+
+  owner   WechatUser? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String?
+}
+
+enum TaskStatus {
+  pending
+  running
+  paused
+  done
+  discarded
+}
+
 model WechatMessage {
   id        String    @id // '3430847513737913148',
   createdAt DateTime? @default(now())
@@ -195,6 +216,8 @@ model WechatUser {
   chatbotTopic     String?
   chatbotEnabled   Boolean? @default(false)
   uniParserEnabled Boolean? @default(false)
+
+  tasks Task[]
 }
 
 model WechatRoom {

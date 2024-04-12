@@ -4,5 +4,6 @@ handlers:
   - validator
   - storage
   - commands
+  - task-manager
   - uni-parser
   - uni-chatter
