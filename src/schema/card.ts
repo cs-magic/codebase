@@ -1,7 +1,7 @@
 import { $Enums } from "@prisma/client"
 import { IArticleSummaryParsed } from "../../packages/common-llm/parse-summary"
 
-import { BackendEngineType } from "../../packages/common-llm/schema/llm"
+import { BackendType } from "../../packages/common-llm/schema/llm"
 import { LlmModelType } from "../../packages/common-llm/schema/providers"
 import {
   IWechatArticleComment,
@@ -51,7 +51,7 @@ export type Action2Type = "copy" | "download" | "upload"
 export type ActionType = Action1Type | Action2Type
 
 export type ICardGenOptions = {
-  backendEngineType?: BackendEngineType
+  backendEngineType?: BackendType
   mdWithImg?: boolean
   summaryModel?: LlmModelType
   refetchSummary?: boolean

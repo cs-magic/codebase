@@ -4,7 +4,7 @@ import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 
-import { BackendEngineType } from "../../packages/common-llm/schema/llm"
+import { BackendType } from "../../packages/common-llm/schema/llm"
 import { LlmModelType } from "../../packages/common-llm/schema/providers"
 import { ICardGenOptions } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
@@ -48,7 +48,7 @@ export const cardRefetchCommentsAtom = atomWithStorage(
   "card.comments.refetch",
   false,
 )
-export const cardFetchEngineAtom = atomWithStorage<BackendEngineType>(
+export const cardFetchEngineAtom = atomWithStorage<BackendType>(
   "card.fetch-engine",
   "nodejs",
 )

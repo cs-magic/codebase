@@ -144,9 +144,9 @@ export class ChatbotMessageHandler extends BaseMessageHandler {
      * 2. Q: ... --> Q: /set-topic --> ok --> Q: ...
      */
 
-    const model = this.bot.context?.model
+    const model = this.bot.context?.preference.model
     if (!model) {
-      await message.say(this.prettyBotQuery("系统错误", ["暂未配置模型"]))
+      await message.say(this.prettyBotQuery("系统错误", "暂未配置模型"))
       return true
     }
 

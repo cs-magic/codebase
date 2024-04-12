@@ -46,4 +46,4 @@ export const backendEngineTypeSchema = z.union([
   z.literal("fastapi"),
   z.literal("nodejs"),
 ])
-export type BackendEngineType = z.infer<typeof backendEngineTypeSchema>
+export type BackendType = z.infer<typeof backendEngineTypeSchema>

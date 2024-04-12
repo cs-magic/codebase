@@ -1,4 +1,4 @@
-basic: |
+basic: |-
   +----------------------------+
   {{title}}
   ------------------------------
@@ -7,7 +7,7 @@ basic: |
   {{footer}}
   +----------------------------+
 
-help: |
+help: |-
   {{name}}是一款 AI Native 的智能助手，可用于个人、群组智能管理、协同。
   ------------------------------
   目前支持以下子功能：
@@ -28,9 +28,13 @@ help: |
   /new-topic [TITLE]: 新建话题
   /help [FEAT]: 查询子功能帮助
 
-status: |
-  name: {{name}}
-  version: {{ version }}
-  alive-time: {{aliveTime}}
-  model: {{model}}
-  backend-engine-type: {{backendEngineType}}
+status: |-
+  Basic:
+    name: {{name}}
+    version: {{ version }}
+    alive-time: {{aliveTime}}
+  ------------------------------
+  Preference:
+    model: {{preference.model}}
+    backend: {{preference.backend}}
+    handlers: {{{prettyHandlers}}}

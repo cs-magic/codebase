@@ -4,8 +4,8 @@ import { Message, Wechaty } from "wechaty"
 import { prettyDuration } from "../../common-common/pretty-duration"
 import { prettyQuery } from "../../common-common/pretty-query"
 import { LiteralUnionSchema } from "../../common-common/schema"
-import { IBotContext, IBotTemplate } from "../schema"
-import { loadBotTemplate } from "../utils/load-bot-template"
+import { IBotPreference, IBotTemplate } from "../schema"
+import { loadBotTemplate } from "../utils/bot-template"
 
 export class BaseMessageHandler {
   public bot: Wechaty
@@ -22,14 +22,16 @@ export class BaseMessageHandler {
     const context = this.bot.context
     if (!context) throw new Error("Missing Context")
 
-    return jsYaml.load(
-      Mustache.render(this._template, {
-        ...context,
-        title: `${context.name} ${context.version}`,
-        aliveTime: prettyDuration((Date.now() - context.startTime) / 1e3),
-      }),
-      {},
-    ) as IBotTemplate
+    const templateString = Mustache.render(this._template, {
+      ...context,
+      title: `${context.name} ${context.version}`,
+      aliveTime: prettyDuration((Date.now() - context.startTime) / 1e3),
+      prettyHandlers: context.preference.handlers.join(" --> "),
+    })
+    const templateData = jsYaml.load(templateString, {}) as IBotTemplate
+
+    console.log({ templateString, templateData })
+    return templateData
   }
 
   /**
@@ -48,26 +50,29 @@ export class BaseMessageHandler {
     throw new Error("onMessage not implemented.")
   }
 
-  public prettyBotQuery = (title: string, contents: string[]) => {
+  public prettyBotQuery = (title: string, content: string) => {
     const context = this.bot.context
 
-    if (!context) return prettyQuery("系统错误", ["Missing Context"])
+    if (!context) return prettyQuery("系统错误", "Missing Context")
 
-    return prettyQuery(title, contents, {
+    return prettyQuery(title, content, {
       footer: `${context.name} ${context.version}`,
     })
   }
 
-  public async handleCommand<K extends keyof IBotContext>(
+  public async handleCommand<K extends keyof IBotPreference>(
     message: Message,
     field: K,
     schema: LiteralUnionSchema,
     value?: string,
   ) {
     try {
+      const preference = this.bot.context?.preference
+      if (!preference) throw new Error("Missing Preference")
       await schema.parseAsync(value)
-      if (this.bot.context) this.bot.context[field] = value as IBotContext[K]
-      await message.say("ok")
+      const old = preference[field]
+      preference[field] = value as IBotPreference[K]
+      await message.say(`[${field}] 更新成功： ${old} --> ${value}`)
     } catch (err) {
       // prettyError(err)
       await message.say(

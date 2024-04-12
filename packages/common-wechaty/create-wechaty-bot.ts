@@ -3,7 +3,8 @@ import { Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
-import { loadBotContext } from "./utils/load-bot-context"
+import { initBotContext } from "./utils/bot-context"
+import { dumpBotPreference } from "./utils/bot-preference"
 
 export const createWechatyBot = async ({ name }: { name?: string }) => {
   console.log("-- create bot: ", { name })
@@ -12,10 +13,13 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
   })
 
   console.log("-- loading context")
-  bot.context = await loadBotContext()
+  bot.context = await initBotContext()
+  process.on("SIGINT", () => {
+    if (bot.context) void dumpBotPreference(bot.context.preference)
+  })
 
   console.log("-- registering handlers")
-  const handlers = bot.context.handlers.map((handlerName) => {
+  const handlers = bot.context.preference.handlers.map((handlerName) => {
     console.log(`-- registering handler(name=${handlerName})`)
     const h = new MessageHandlerMap[
       handlerName as keyof typeof MessageHandlerMap
@@ -49,7 +53,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         }
       } catch (e) {
         const s = prettyError(e)
-        // await message.say(`哎呀出错啦！原因： ${s}`)
+        await message.say(`哎呀出错啦！原因： ${s}`)
       }
 
       await sleep(3e3)
