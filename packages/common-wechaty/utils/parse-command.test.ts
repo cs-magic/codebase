@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { parseCommand } from "./parse-command"
 
 describe("parse command", () => {
@@ -19,3 +20,6 @@ describe("parse command", () => {
     expect(result?.args).toBe("nodejs ss")
   })
 })
+
+const backendSchema = z.union([z.literal("a"), z.literal("b")])
+export type Backend = z.infer<typeof backendSchema>

@@ -1,20 +1,29 @@
 import { type MessageInterface } from "wechaty/impls"
 import { isNumeric } from "../../common-common/is-numeric"
-import { backendEngineTypeSchema } from "../../common-llm/schema/llm"
-import { llmModelTypeSchema } from "../../common-llm/schema/providers"
+import {
+  backendEngineTypeSchema,
+  BackendType,
+} from "../../common-llm/schema/llm"
+import {
+  LlmModelType,
+  llmModelTypeSchema,
+} from "../../common-llm/schema/providers"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
+import { z } from "zod"
+
+export const basicSchema = z.union([
+  z.literal(""),
+  z.literal("help"),
+  z.literal("status"),
+  z.literal("list-models"),
+  z.literal("set-model"),
+  z.literal("set-backend"),
+])
 
 export class BasicCommandsMessageHandler extends BaseMessageHandler {
   public async onMessage(message: MessageInterface) {
-    const result = parseCommand(message.text(), [
-      "",
-      "help",
-      "status",
-      "list-models",
-      "set-model",
-      "set-backend",
-    ])
+    const result = parseCommand(message.text(), basicSchema)
     if (!result) return
 
     switch (result.command) {
@@ -53,11 +62,11 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
           message,
           "model",
           llmModelTypeSchema,
-          isNumeric(result.args)
+          (isNumeric(result.args)
             ? llmModelTypeSchema.options.map((o) => o.value)[
                 Number(result.args) - 1
               ]
-            : result.args,
+            : result.args) as LlmModelType,
         )
         break
 
@@ -66,7 +75,7 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
           message,
           "backend",
           backendEngineTypeSchema,
-          result.args,
+          result.args as BackendType,
         )
         break
     }

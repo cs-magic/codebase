@@ -31,19 +31,21 @@ export class BaseMessageHandler {
     message: Message,
     field: K,
     schema: LiteralUnionSchema,
-    value?: string,
+    value: IBotPreference[K],
   ) {
     try {
-      const preference = this.bot.context?.preference
+      const preference = this.bot.context.preference
       if (!preference) throw new Error("Missing Preference")
       await schema.parseAsync(value)
       const old = preference[field]
-      preference[field] = value as IBotPreference[K]
-      await message.say(`[${field}] 更新成功： ${old} --> ${value}`)
+      preference[field] = value
+      await message.say(
+        `[${field}] 更新成功： ${JSON.stringify(old)} --> ${JSON.stringify(value)}`,
+      )
     } catch (err) {
       // prettyError(err)
       await message.say(
-        `操作失败，原因：${value} ∉ {${schema.options.map((o) => o.value).join(",")}}`,
+        `操作失败，原因：${JSON.stringify(value)} ∉ {${schema.options.map((o) => o.value).join(",")}}`,
       )
     }
   }

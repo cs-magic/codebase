@@ -9,17 +9,20 @@ import { callLLM } from "../../common-llm"
 import { isSenderAdmin } from "../utils/is-sender-admin"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
+import { z } from "zod"
+
+export const uniChatterSchema = z.union([
+  z.literal("start-chat"),
+  z.literal("stop-chat"),
+  z.literal("topic"),
+  z.literal("list-topics"),
+  z.literal("new-topic"),
+  z.literal("set-topic"),
+])
 
 export class UniChatterMessageHandler extends BaseMessageHandler {
   public async onMessage(message: Message) {
-    const result = parseCommand(message.text(), [
-      "start-chat",
-      "stop-chat",
-      "topic",
-      "list-topics",
-      "new-topic",
-      "set-topic",
-    ])
+    const result = parseCommand(message.text(), uniChatterSchema)
 
     const table = prisma[
       message.room() ? "wechatRoom" : "wechatUser"
