@@ -159,8 +159,8 @@ model WechatMessage {
   talker   WechatUser @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
   talkerId String // 'wxid_ck85xup8b1bj21',
 
-  listener   WechatUser @relation("listener", fields: [listenerId], references: [id])
-  listenerId String
+  listener   WechatUser? @relation("listener", fields: [listenerId], references: [id])
+  listenerId String?
 
   room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId String? // : '47778688503@chatroom',
