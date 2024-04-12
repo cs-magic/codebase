@@ -192,8 +192,9 @@ model WechatUser {
 
   phone String[] //: [],
 
-  chatbotTopic   String?
-  chatbotEnabled Boolean? @default(false)
+  chatbotTopic     String?
+  chatbotEnabled   Boolean? @default(false)
+  uniParserEnabled Boolean? @default(false)
 }
 
 model WechatRoom {
@@ -211,6 +212,7 @@ model WechatRoom {
   // todo: owner
   ownerId String? // : "wxid_ck85xup8b1bj21",
 
-  chatbotTopic   String?
-  chatbotEnabled Boolean? @default(false)
+  chatbotTopic     String?
+  chatbotEnabled   Boolean? @default(false)
+  uniParserEnabled Boolean? @default(false)
 }

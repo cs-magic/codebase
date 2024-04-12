@@ -10,6 +10,11 @@ import { callLLM } from "../../common-llm"
 import { isSenderAdmin } from "../utils/is-sender-admin"
 import { parseCommand } from "../utils/parse-command"
 import { BaseMessageHandler } from "./_base"
+import {
+  listMessages,
+  listMessagesForTopic,
+  uniChatterListTopics,
+} from "../utils/uni-chatter-list-topics"
 
 export const uniChatterSchema = z.union([
   z.literal("start-chat"),
@@ -19,37 +24,6 @@ export const uniChatterSchema = z.union([
   z.literal("new-topic"),
   z.literal("set-topic"),
 ])
-
-export const listTopics = async (convId: string) => {
-  const messages = await prisma.wechatMessage.findMany({
-    where: {
-      // 三者任一即可
-      OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
-    },
-    orderBy: { createdAt: "asc" },
-  })
-
-  const topicDict: Record<string, number> = {}
-  let lastTopic: string | null = null
-  const started = true // todo: switch
-  messages.forEach((row) => {
-    const parsed = parseCommand(row.text ?? "", ["new-topic"])
-    if (parsed) {
-      switch (parsed?.command) {
-        case "new-topic":
-          lastTopic = parsed?.args ?? "默认"
-          if (!(lastTopic in topicDict)) topicDict[lastTopic] = 0
-          break
-      }
-    } else if (started && lastTopic !== null && !row.text?.startsWith("/")) {
-      ++topicDict[lastTopic]
-    } else {
-      // don't do anything
-    }
-  })
-
-  return topicDict
-}
 
 export class UniChatterMessageHandler extends BaseMessageHandler {
   public async onMessage(message: Message) {
@@ -70,39 +44,25 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
     if (result?.command) {
       switch (result.command) {
         case "start-chat":
-          if (conv.chatbotTopic === null) {
-            await message.say(
-              this.bot.prettyQuery(
-                "AI聊天使用说明",
-                ["请先设置话题再继续哦！"].join("\n"),
-                [
-                  "/new-topic [名称]: 开启新话题",
-                  "/list-topics: 查询话题历史",
-                ].join("\n"),
-              ),
-            )
-          } else if (isSenderAdmin(message)) {
-            await table.update({
-              where: { id: convId },
-              data: {
-                // chatbotTopic: null,
-                chatbotEnabled: true,
-              },
-            })
-            await message.say(
-              this.bot.prettyQuery(
-                "AI聊天",
-                `已启动，当前话题：${conv.chatbotTopic}`,
-                [
-                  "/list-topics: 查询历史话题",
-                  "/new-topic [TITLE]: 开启新话题",
-                  "/stop-chat: 结束AI聊天",
-                ].join("\n"),
-              ),
-            )
-          } else {
-            await message.say(ERR_MSG_INADEQUATE_PERMISSION)
-          }
+          await table.update({
+            where: { id: convId },
+            data: {
+              // chatbotTopic: null,
+              chatbotEnabled: true,
+            },
+          })
+          await message.say(
+            this.bot.prettyQuery(
+              "AI聊天",
+              `已启动，当前话题：${conv.chatbotTopic}`,
+              [
+                "/list-topics: 查询历史话题",
+                "/new-topic [TITLE]: 开启新话题",
+                "/stop-chat: 结束AI聊天",
+              ].join("\n"),
+            ),
+          )
+
           break
 
         case "new-topic":
@@ -129,7 +89,7 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
           break
 
         case "set-topic":
-          const topicDict = await listTopics(convId)
+          const topicDict = await uniChatterListTopics(convId)
 
           const schema = z.union(
             // @ts-ignore
@@ -179,7 +139,7 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
           break
 
         case "list-topics":
-          const topicDictListed = await listTopics(convId)
+          const topicDictListed = await uniChatterListTopics(convId)
           await message.say(
             this.bot.prettyQuery(
               "历史话题列表",
@@ -221,7 +181,8 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
     if (
       message.text().startsWith("/") ||
       !conv?.chatbotEnabled ||
-      message.self()
+      message.self() ||
+      !(await message.mentionSelf())
     )
       return
 
@@ -236,12 +197,24 @@ export class UniChatterMessageHandler extends BaseMessageHandler {
       return
     }
 
+    const wxid = this.bot.currentUser.payload?.id
+    console.log({
+      bot: this.bot.id,
+      wxid,
+      talker: message.talker().id,
+      listener: message.listener()?.id,
+      room: message.room()?.id,
+    })
+    const latestMessage = await listMessagesForTopic(convId, wxid)
+
     const res = await callLLM({
       messages: [
-        {
-          role: "user",
-          content: message.text(),
-        },
+        ...latestMessage.map((m) => ({
+          role:
+            m.talkerId === wxid ? ("assistant" as const) : ("user" as const),
+          // todo: merge chats
+          content: m.text ?? "",
+        })),
       ],
       model,
     })

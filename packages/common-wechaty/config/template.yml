@@ -38,4 +38,5 @@ status: |-
     handlers: {{{prettyHandlers}}}
   ------------------------------
   Conv:
-    enabled: {{{conv.enabled}}}
+    uni-chatter-enabled: {{{conv.uniChatterEnabled}}}
+    uni-parser-enabled: {{{conv.uniParserEnabled}}}

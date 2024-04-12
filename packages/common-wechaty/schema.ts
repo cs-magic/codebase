@@ -13,7 +13,8 @@ export type IBotContext = {
   startTime: number
   preference: IBotPreference
   conv?: {
-    enabled: boolean
+    uniChatterEnabled: boolean
+    uniParserEnabled: boolean
   }
 }
 

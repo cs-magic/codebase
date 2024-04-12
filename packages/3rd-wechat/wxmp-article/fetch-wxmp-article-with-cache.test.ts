@@ -1,12 +1,23 @@
 "use server"
 
+import { promises } from "fs"
+import path from "path"
+import { generatedPath } from "../../common-common/path"
 import { LlmModelType } from "../../common-llm/schema/providers"
 import { fetchWxmpArticleWithCache } from "./fetch-wxmp-article-with-cache"
 
 const url = process.argv[2]!
-const summaryModel = process.argv[3]! as LlmModelType
-console.log({ url, summaryModel })
+const model = process.argv[3]! as LlmModelType
+console.log({ url, summaryModel: model })
 
-void fetchWxmpArticleWithCache(url, {
-  summaryModel,
-})
+const f = async () => {
+  const result = await fetchWxmpArticleWithCache(url, {
+    summaryModel: model,
+  })
+
+  const fp = path.join(generatedPath, `wxmp-article-${Date.now()}.json`)
+  await promises.writeFile(fp, JSON.stringify(result, null, 2))
+  console.log(`-- dumped into file://${fp}`)
+}
+
+void f()

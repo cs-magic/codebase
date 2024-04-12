@@ -6,22 +6,23 @@ import { type MessageInterface } from "wechaty/impls"
 import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
-
-import { isTestMessage } from "../utils/is-test-message"
+import { getConv } from "../utils/get-conv"
 import { BaseMessageHandler } from "./_base"
 
 export class UniParserMessageHandler extends BaseMessageHandler {
   private uniParser: CardSimulator | null = null
 
   async onMessage(message: MessageInterface): Promise<void> {
-    if (!(await isTestMessage(message)) || message.type() !== types.Message.Url)
-      return
+    if (!(message.type() !== types.Message.Url)) return
 
     const url = parseUrlFromWechatUrlMessage(message.text())
     console.log("-- url in message: ", url)
     if (!url) return
 
     if (!isWxmpArticleUrl(url)) return
+
+    const conv = await getConv(message)
+    if (!conv?.uniParserEnabled) return
 
     initLog()
 

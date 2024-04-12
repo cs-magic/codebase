@@ -45,7 +45,8 @@ export class BasicCommandsMessageHandler extends BaseMessageHandler {
             "实时状态",
             this.bot.template({
               conv: {
-                enabled: !!conv!.chatbotEnabled,
+                uniChatterEnabled: !!conv!.chatbotEnabled,
+                uniParserEnabled: !!conv!.uniParserEnabled,
               },
             }).status,
           ),
