@@ -18,10 +18,9 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
     const result = parseCommand(message.text(), [
       "start",
       "topic",
-      "set-topic",
       "list-topics",
-      "select-topic",
       "new-topic",
+      "select-topic",
       "stop",
     ])
 
@@ -61,7 +60,6 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
       case "list-topics":
         const messages = await prisma.wechatMessage.findMany({
           where: {
-            chatbotIsNotification: { not: true },
             // 三者任一即可
             OR: [
               { roomId: convId },
@@ -92,7 +90,7 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
             `# 历史话题`,
             "---",
             ...Object.keys(topicDict).map(
-              (k, indexk) => `${indexk + 1}. ${k} (${topicDict[k]})`,
+              (k, index) => `${index + 1}. ${k} (${topicDict[k]})`,
             ),
             "---",
             "您可以 「/select-topic [序号]」 继续某个话题，或者 「/new-topic [名称]」 开启新话题",
@@ -100,14 +98,14 @@ export class ChatbotMessageHandler extends BaseMessageHandler<IBotContext> {
         )
         return
 
-      case "set-topic":
+      case "new-topic":
         await table.update({
           where: { id: convId },
           data: {
             chatbotTopic: result.args,
           },
         })
-        await message.say(`[TOPIC_STARTED]`)
+        await message.say(`[NEW-TOPIC-SET] ${result.args}`)
         return
 
       case "stop":
