@@ -35,7 +35,5 @@ status: |-
   Preference:
     model: {{preference.model}}
     backend: {{preference.backend}}
-  ------------------------------
-  Conv:
     uni-chatter-enabled: {{{conv.uniChatterEnabled}}}
     uni-parser-enabled: {{{conv.uniParserEnabled}}}

@@ -9,7 +9,17 @@ export const getTalker = async (message: Message) => {
   })
 }
 
-export const getTalkerPreference = async (message: Message) => {
+export const getTalkerPreference = async (
+  message: Message,
+): Promise<IWechatUserPreference> => {
   const talker = await getTalker(message)
-  return talker.preference as IWechatUserPreference | null
+  return (
+    talker.preference ?? {
+      lang: "en",
+      model: "gpt-3.5-turbo",
+      backend: "nodejs",
+      chatEnabled: false,
+      parserEnabled: false,
+    }
+  )
 }
