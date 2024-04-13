@@ -10,7 +10,7 @@ import { botStaticContext } from "../create-wechaty-bot"
 import { IBotTemplate } from "../schema"
 
 import { loadBotDynamicContext } from "./bot-context"
-import { getTalkerPreference } from "./get-talker-preference"
+import { getConvPreference } from "./get-conv-preference"
 
 export const loadBotTemplate = async (lang: LangType) => {
   return promises.readFile(
@@ -23,7 +23,7 @@ export const loadBotTemplate = async (lang: LangType) => {
 }
 
 export async function renderBotTemplate(message: Message) {
-  const preference = await getTalkerPreference(message)
+  const preference = await getConvPreference(message)
   console.log({ preference })
 
   const lang = preference.lang

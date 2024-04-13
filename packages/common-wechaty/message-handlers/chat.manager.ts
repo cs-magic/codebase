@@ -2,10 +2,10 @@ import { IWechatUserPreference } from "@/schema/wechat-user"
 import { types } from "wechaty"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
-import { getConv } from "../utils/get-conv"
+import { getConvRow } from "../utils/get-conv-row"
 import { getConvTable } from "../utils/get-conv-table"
 import { getRobustPreference } from "../utils/get-robust-preference"
-import { getConvPreference } from "../utils/get-talker-preference"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { listMessagesOfLatestTopic } from "../utils/list-messages-of-latest-topic"
 import { listMessagesOfSpecificTopic } from "../utils/list-messages-of-specific-topic"
 import { listTopics } from "../utils/list-topics"
@@ -126,7 +126,7 @@ export class ChatManager extends BaseManager {
     )
       return
 
-    const convInDB = await getConv(this.message)
+    const convInDB = await getConvRow(this.message)
     const preference = getRobustPreference(convInDB)
     if (!preference.chatEnabled) {
       return this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])

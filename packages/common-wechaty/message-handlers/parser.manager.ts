@@ -6,10 +6,7 @@ import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-w
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
 import { getConvTable } from "../utils/get-conv-table"
-import {
-  getConvPreference,
-  getTalkerPreference,
-} from "../utils/get-talker-preference"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { BaseManager } from "./base.manager"
 
 export class ParserManager extends BaseManager {
@@ -60,11 +57,9 @@ export class ParserManager extends BaseManager {
 
     await message.say("正在解析……")
 
-    const talkerPreference = await getTalkerPreference(message)
-
     const card = await fetchWxmpArticleWithCache(url, {
-      backendEngineType: talkerPreference?.backend,
-      summaryModel: talkerPreference?.model,
+      backendEngineType: preference.backend,
+      summaryModel: preference.model,
     })
     // todo: dynamic sender with fixed card url
     // let cardUrl = card.ossUrl

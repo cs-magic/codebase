@@ -1,7 +1,7 @@
 import { Message } from "wechaty"
 import { getConvTable } from "./get-conv-table"
 
-export const getConv = async (message: Message) => {
+export const getConvRow = async (message: Message) => {
   const table = getConvTable(message)
 
   const convId = message.conversation().id

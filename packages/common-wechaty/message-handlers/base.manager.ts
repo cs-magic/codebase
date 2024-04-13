@@ -1,5 +1,5 @@
 import { Message } from "wechaty"
-import { getConvPreference } from "../utils/get-talker-preference"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { prettyBotQuery } from "../utils/pretty-bot-query"
 import { CommandType } from "./_all"
 
