@@ -7,6 +7,7 @@ import { listMessagesOfSpecificTopic } from "../utils/list-messages-of-specific-
 import { listTopics } from "../utils/list-topics"
 import { robustSelect } from "../utils/validate-input"
 import { BaseManager } from "./base.manager"
+import { types } from "wechaty"
 
 export class ChatManager extends BaseManager {
   async _listTopics() {
@@ -100,12 +101,22 @@ export class ChatManager extends BaseManager {
   async safeReplyWithAI() {
     const m = this.message
     if (
-      // 过滤命令风格回复
-      m.text().startsWith("/") ||
       // 过滤自己的消息
       m.self() ||
+      // 过滤微信官方
+      m.talker().id === "weixin" ||
       // 过滤群聊中没有at自己的消息 （私信要回）
-      (m.room() && !(await m.mentionSelf()))
+      (m.room() &&
+        !(
+          // including @all
+          // await m.mentionSelf()
+          // excluding @all
+          (await m.mentionList()).some((m) => m.id === this._botWxid)
+        )) ||
+      // 只回复文本 todo: image/xxxx
+      m.type() !== types.Message.Text ||
+      // 过滤命令风格回复
+      m.text().startsWith("/")
     )
       return
 

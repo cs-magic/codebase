@@ -32,9 +32,9 @@ export class TodoHandler extends BaseHandler {
         if (!m) throw new Error("输入不合法")
         const status = await validateInput<TaskStatusType>(
           taskStatusSchema,
-          m?.[1],
+          m?.[2],
         )
-        return todoManager.updateTodo(Number(m[0]), status)
+        return todoManager.updateTodo(Number(m[1]), status)
     }
   }
 }

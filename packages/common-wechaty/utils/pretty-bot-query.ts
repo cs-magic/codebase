@@ -13,6 +13,6 @@ export const prettyBotQuery = async (
   const context = await loadBotDynamicContext(type ?? "en")
   return prettyQuery(title, content, {
     footer: `${context.name} ${botStaticContext.version}`,
-    tips: tips ? tips.join("\n") : undefined,
+    tips: tips ? tips.map((t) => `/${t}`).join("\n") : undefined,
   })
 }

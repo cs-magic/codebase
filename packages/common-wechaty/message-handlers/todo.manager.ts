@@ -6,6 +6,7 @@ export class TodoManager extends BaseManager {
   async listTodo() {
     return prisma.task.findMany({
       where: { ownerId: this.message.talker().id },
+      orderBy: { createdAt: "asc" },
     })
   }
 
