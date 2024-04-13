@@ -1,7 +1,5 @@
-import { IWechatUserPreference } from "@/schema/wechat-user"
 import { Message } from "wechaty"
-import { getConvTable } from "../utils/get-conv-table"
-import { getRobustPreference } from "../utils/get-robust-preference"
+import { getConvPreference } from "../utils/get-talker-preference"
 import { prettyBotQuery } from "../utils/pretty-bot-query"
 import { CommandType } from "./_all"
 
@@ -16,40 +14,23 @@ export class BaseManager {
     this._botWxid = botWxid
   }
 
-  get _conv() {
+  get conv() {
     return this.message.conversation()
   }
 
-  get _convId() {
-    return this._conv.id
-  }
-
-  get _convTable() {
-    return getConvTable(this.message)
-  }
-
-  async _getConvInDB() {
-    return this._convTable.findUniqueOrThrow({
-      where: {
-        id: this._convId,
-      },
-    })
-  }
-
-  async _getConvPreference(): Promise<IWechatUserPreference> {
-    return getRobustPreference(await this._getConvInDB())
-  }
-
-  async _getlang() {
-    return (await this._getConvPreference())?.lang ?? "en"
-  }
-
-  async _getPretty(title: string, content: string, tips?: CommandType[]) {
-    return await prettyBotQuery(title, content, tips, await this._getlang())
+  get convId() {
+    return this.conv.id
   }
 
   async standardReply(content: string, tips?: CommandType[]) {
-    const pretty = await this._getPretty(this.title, content, tips)
+    const preference = await getConvPreference(this.message)
+
+    const pretty = await prettyBotQuery(
+      this.title,
+      content,
+      tips,
+      preference.lang,
+    )
     await this.message.say(pretty)
   }
 }

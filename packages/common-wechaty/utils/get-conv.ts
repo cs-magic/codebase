@@ -6,7 +6,7 @@ export const getConv = async (message: Message) => {
 
   const convId = message.conversation().id
 
-  const conv = await table.findUnique({
+  const conv = await table.findUniqueOrThrow({
     where: { id: convId },
   })
 

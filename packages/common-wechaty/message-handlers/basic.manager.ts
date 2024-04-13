@@ -1,14 +1,16 @@
 import { LangType } from "@/schema/wechat-user"
 import { BackendType } from "../../common-llm/schema/llm"
 import { LlmModelType } from "../../common-llm/schema/providers"
+import { getConvTable } from "../utils/get-conv-table"
+import { getConvPreference } from "../utils/get-talker-preference"
 import { BaseManager } from "./base.manager"
 
 export class BasicManager extends BaseManager {
   async setModel(value: LlmModelType) {
-    const preference = await this._getConvPreference()
-    await this._convTable.update({
+    const preference = await getConvPreference(this.message)
+    await getConvTable(this.message).update({
       where: {
-        id: this._convId,
+        id: this.convId,
       },
       data: {
         preference: {
@@ -21,10 +23,10 @@ export class BasicManager extends BaseManager {
   }
 
   async setBackend(value: BackendType) {
-    const preference = await this._getConvPreference()
-    await this._convTable.update({
+    const preference = await getConvPreference(this.message)
+    await getConvTable(this.message).update({
       where: {
-        id: this._convId,
+        id: this.convId,
       },
       data: {
         preference: {
@@ -37,10 +39,10 @@ export class BasicManager extends BaseManager {
   }
 
   async setLang(value: LangType) {
-    const preference = await this._getConvPreference()
-    await this._convTable.update({
+    const preference = await getConvPreference(this.message)
+    await getConvTable(this.message).update({
       where: {
-        id: this._convId,
+        id: this.convId,
       },
       data: {
         preference: {

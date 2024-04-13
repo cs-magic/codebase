@@ -5,16 +5,19 @@ import { types } from "wechaty"
 import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
-import { getConv } from "../utils/get-conv"
-import { getTalkerPreference } from "../utils/get-talker-preference"
+import { getConvTable } from "../utils/get-conv-table"
+import {
+  getConvPreference,
+  getTalkerPreference,
+} from "../utils/get-talker-preference"
 import { BaseManager } from "./base.manager"
 
 export class ParserManager extends BaseManager {
   private uniParser: CardSimulator | null = null
 
   async enableParser() {
-    await this._convTable.update({
-      where: { id: this._convId },
+    await getConvTable(this.message).update({
+      where: { id: this.convId },
       data: {
         preference: {
           parserEnabled: true,
@@ -22,24 +25,21 @@ export class ParserManager extends BaseManager {
       },
     })
     await this.standardReply(
-      "万能解析器",
       `万能解析器已启动，请发送一篇公众号文章让我解析吧！`,
       ["disable-parser"],
     )
   }
 
   async disableParser() {
-    await this._convTable.update({
-      where: { id: this._convId },
+    await getConvTable(this.message).update({
+      where: { id: this.convId },
       data: {
         preference: {
           parserEnabled: false,
         },
       },
     })
-    await this.standardReply("万能解析器", `已关闭，期待您下次再打开`, [
-      "enable-parser",
-    ])
+    await this.standardReply(`已关闭，期待您下次再打开`, ["enable-parser"])
   }
 
   async safeParseCard() {
@@ -53,8 +53,8 @@ export class ParserManager extends BaseManager {
 
     if (!isWxmpArticleUrl(url)) return
 
-    const conv = await getConv(message)
-    if (!conv?.uniParserEnabled) return
+    const preference = await getConvPreference(message)
+    if (!preference.parserEnabled) return
 
     initLog()
 

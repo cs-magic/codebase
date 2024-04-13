@@ -1,17 +1,20 @@
 import { IWechatUserPreference } from "@/schema/wechat-user"
+import { types } from "wechaty"
 import { prisma } from "../../common-db/providers/prisma"
 import { callLLM } from "../../common-llm"
+import { getConv } from "../utils/get-conv"
+import { getConvTable } from "../utils/get-conv-table"
 import { getRobustPreference } from "../utils/get-robust-preference"
+import { getConvPreference } from "../utils/get-talker-preference"
 import { listMessagesOfLatestTopic } from "../utils/list-messages-of-latest-topic"
 import { listMessagesOfSpecificTopic } from "../utils/list-messages-of-specific-topic"
 import { listTopics } from "../utils/list-topics"
 import { robustSelect } from "../utils/validate-input"
 import { BaseManager } from "./base.manager"
-import { types } from "wechaty"
 
 export class ChatManager extends BaseManager {
   async _listTopics() {
-    return listTopics(this._convId)
+    return listTopics(this.convId)
   }
 
   async listTopicsAction() {
@@ -25,11 +28,11 @@ export class ChatManager extends BaseManager {
   }
 
   async enableChat() {
-    const row = await this._convTable.update({
-      where: { id: this._convId },
+    const row = await getConvTable(this.message).update({
+      where: { id: this.convId },
       data: {
         preference: {
-          ...(await this._getConvPreference()),
+          ...(await getConvPreference(this.message)),
           chatEnabled: true,
         },
       },
@@ -43,11 +46,11 @@ export class ChatManager extends BaseManager {
   }
 
   async disableChat() {
-    await this._convTable.update({
-      where: { id: this._convId },
+    await getConvTable(this.message).update({
+      where: { id: this.convId },
       data: {
         preference: {
-          ...(await this._getConvPreference()),
+          ...(await getConvPreference(this.message)),
           chatEnabled: false,
         },
       },
@@ -56,10 +59,10 @@ export class ChatManager extends BaseManager {
   }
 
   async newTopic(chatTopic?: string) {
-    const preference = await this._getConvPreference()
+    const preference = await getConvPreference(this.message)
 
     const row = await prisma.wechatUser.update({
-      where: { id: this._convId },
+      where: { id: this.convId },
       data: {
         preference: {
           ...preference,
@@ -88,7 +91,7 @@ export class ChatManager extends BaseManager {
 
     const messages = await listMessagesOfSpecificTopic(
       this._botWxid,
-      this._convId,
+      this.convId,
       topicTarget,
     )
 
@@ -123,7 +126,7 @@ export class ChatManager extends BaseManager {
     )
       return
 
-    const convInDB = await this._getConvInDB()
+    const convInDB = await getConv(this.message)
     const preference = getRobustPreference(convInDB)
     if (!preference.chatEnabled) {
       return this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
@@ -131,7 +134,7 @@ export class ChatManager extends BaseManager {
 
     const filteredMessages = await listMessagesOfLatestTopic(
       this._botWxid,
-      this._convId,
+      this.convId,
     )
 
     const context = filteredMessages.map((m) => ({
