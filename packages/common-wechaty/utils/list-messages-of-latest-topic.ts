@@ -22,7 +22,7 @@ export const listMessagesOfLatestTopic = async (
       createdAt: "desc",
     },
   })
-  if (!lastUserSetCommand) throw new Error("no lastUserSetCommand")
+  // if (!lastUserSetCommand) throw new Error("no lastUserSetCommand")
 
   const lastUserStartChat = await prisma.wechatMessage.findFirst({
     where: {
@@ -40,7 +40,7 @@ export const listMessagesOfLatestTopic = async (
       createdAt: "asc",
     },
   })
-  if (!lastUserStartChat) throw new Error("no lastUserStartChat")
+  // if (!lastUserStartChat) throw new Error("no lastUserStartChat")
 
   const messages = await prisma.wechatMessage.findMany({
     where: {
@@ -62,13 +62,18 @@ export const listMessagesOfLatestTopic = async (
               },
             },
           ],
-          createdAt: {
-            gte: lastUserStartChat.createdAt!,
-          },
+          createdAt: lastUserStartChat
+            ? {
+                gte: lastUserStartChat.createdAt!,
+              }
+            : undefined,
         },
       ],
     },
     orderBy: { createdAt: "asc" },
+    // 微信内一般一条文本200字左右，取20条就是4k，比较合适
+    // todo: 根据模型同进行控制
+    take: -20,
   })
 
   // console.log({

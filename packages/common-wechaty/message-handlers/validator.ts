@@ -1,9 +1,9 @@
 import { type MessageInterface } from "wechaty/impls"
 import { parseCommand } from "../utils/parse-command"
 import { messageHandlerSchema, messageHandlerSchemas } from "./_all"
-import { BaseMessageHandler } from "./_base"
+import { BaseHandler } from "./base.handler"
 
-export class ValidatorMessageHandler extends BaseMessageHandler {
+export class ValidatorMessageHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
     const text = message.text()
 

@@ -54,14 +54,25 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
     })
     .on("login", async (user) => {
       console.log(`User logged in: `, user.payload)
+
+      // update bot wxid
+      const botWxid = user.payload?.id
+      if (!botWxid)
+        throw new Error(
+          `no wxid from user payload: ${JSON.stringify(user.payload)}`,
+        )
+
+      bot.wxid = botWxid
     })
     .on("message", async (message) => {
-      console.log("<< message: ", {
-        message: message.payload,
-        // talker: message.talker().payload,
-        // listener: message.listener()?.payload,
-        // room: message.room()?.payload,
-      })
+      // const data = {
+      //   ...message.payload,
+      //   // talker: message.talker().payload,
+      //   // listener: message.listener()?.payload,
+      //   // room: message.room()?.payload,
+      // }
+      const data = { ...message.payload, text: message.payload?.text }
+      console.log(`<< message: ${JSON.stringify(data)}`)
 
       try {
         for (const handler of handlers) {

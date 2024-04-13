@@ -1,77 +1,49 @@
 import { isWxmpArticleUrl } from "@/core/card-platform/wechat-article/utils"
 import { CardSimulator } from "@/core/card-simulator"
-import { Prisma } from "@prisma/client"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
-import { type MessageInterface } from "wechaty/impls"
-import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { initLog } from "../../common-common/init-log"
 import { parseUrlFromWechatUrlMessage } from "../../common-common/parse-url-from-wechat-url-message"
-import { prisma } from "../../common-db/providers/prisma"
 import { getConv } from "../utils/get-conv"
 import { getTalkerPreference } from "../utils/get-talker-preference"
-import { parseCommand } from "../utils/parse-command"
-import { prettyBotQuery } from "../utils/pretty-bot-query"
-import { BaseMessageHandler } from "./_base"
+import { BaseManager } from "./base.manager"
 
-export const uniParserSchema = z.union([
-  z.literal("enable-uni-parser"),
-  z.literal("disable-uni-parser"),
-])
-
-export class UniParserMessageHandler extends BaseMessageHandler {
+export class ParserManager extends BaseManager {
   private uniParser: CardSimulator | null = null
 
-  async onMessage(message: MessageInterface): Promise<void> {
-    const result = parseCommand<z.infer<typeof uniParserSchema>>(
-      message.text(),
-      uniParserSchema,
+  async enableParser() {
+    await this._convTable.update({
+      where: { id: this._convId },
+      data: {
+        preference: {
+          parserEnabled: true,
+        },
+      },
+    })
+    await this.standardReply(
+      "万能解析器",
+      `万能解析器已启动，请发送一篇公众号文章让我解析吧！`,
+      ["disable-parser"],
     )
+  }
 
-    if (result) {
-      const table = prisma[
-        message.room() ? "wechatRoom" : "wechatUser"
-      ] as Prisma.WechatUserDelegate & Prisma.WechatRoomDelegate
+  async disableParser() {
+    await this._convTable.update({
+      where: { id: this._convId },
+      data: {
+        preference: {
+          parserEnabled: false,
+        },
+      },
+    })
+    await this.standardReply("万能解析器", `已关闭，期待您下次再打开`, [
+      "enable-parser",
+    ])
+  }
 
-      const convId = message.conversation().id
-      const lang = (await getTalkerPreference(message))?.lang
-
-      switch (result.command) {
-        case "enable-uni-parser":
-          await table.update({
-            where: { id: convId },
-            data: {
-              uniParserEnabled: true,
-            },
-          })
-          await message.say(
-            await prettyBotQuery(
-              "万能解析器",
-              `万能解析器已启动，请发送一篇公众号文章让我解析吧！`,
-              lang,
-              ["disable-uni-parser"],
-            ),
-          )
-          break
-
-        case "disable-uni-parser":
-          await table.update({
-            where: { id: convId },
-            data: {
-              uniParserEnabled: false,
-            },
-          })
-          await message.say(
-            await prettyBotQuery("万能解析器", `万能解析器已关闭`, lang, [
-              "enable-uni-chatter",
-            ]),
-          )
-          break
-      }
-
-      return
-    }
+  async safeParseCard() {
+    const message = this.message
 
     if (message.type() !== types.Message.Url) return
 

@@ -1,6 +1,6 @@
 import { type Message, type Wechaty } from "wechaty"
 
-export class BaseMessageHandler {
+export class BaseHandler {
   public bot: Wechaty
   public name: string
 

@@ -7,8 +7,8 @@ import { loadBotDynamicContext } from "./bot-context"
 export const prettyBotQuery = async (
   title: string,
   content: string,
-  type?: LangType,
   tips?: CommandType[],
+  type?: LangType,
 ) => {
   const context = await loadBotDynamicContext(type ?? "en")
   return prettyQuery(title, content, {

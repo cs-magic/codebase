@@ -1,9 +1,9 @@
 import { type MessageInterface } from "wechaty/impls"
 import { prisma } from "../../common-db/providers/prisma"
-import { BaseMessageHandler } from "./_base"
+import { BaseHandler } from "./base.handler"
 import omit from "lodash/omit"
 
-export class StorageMessageHandler extends BaseMessageHandler {
+export class StorageHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
     const talker = message.talker()
     const room = message.room()

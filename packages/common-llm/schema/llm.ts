@@ -36,12 +36,14 @@ export type ICallLLMOptions = {
 
 export type ICallLLMResponse = {
   options: ICallLLMOptions
-  response: OpenAI.Chat.Completions.ChatCompletion | null
   query: {
+    id: string
     start: number
     end?: number
     success: boolean
   }
+  response?: OpenAI.Chat.Completions.ChatCompletion
+  error?: string
 }
 
 export const backendEngineTypeSchema = z.union([

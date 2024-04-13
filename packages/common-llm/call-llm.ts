@@ -7,6 +7,7 @@ import { api, backendApi } from "../common-api"
 import { prettyError } from "../common-common/pretty-error"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
+import { v4 } from "uuid"
 
 dotenv.config()
 
@@ -56,9 +57,11 @@ export const callLLM = async (
     queryConfig: JSON.stringify(queryConfig),
   })
 
-  let response: OpenAI.Chat.Completions.ChatCompletion | null = null
+  let response: OpenAI.Chat.Completions.ChatCompletion | undefined = undefined
   const start = Date.now()
   let success = false
+  let error: string | undefined = undefined
+  const queryId = v4()
 
   try {
     if (providerType === "zhipu") {
@@ -103,20 +106,22 @@ export const callLLM = async (
     success = true
   } catch (e) {
     //   todo: return error
-    prettyError(e)
+    error = prettyError(e)
   }
-
   const end = Date.now()
   const res = {
     options,
     response,
     query: {
+      id: queryId,
       start,
       end,
       duration: (end - start) / 1e3,
       success,
     },
+    error,
   }
-  console.log("-- called: ", res)
+
+  console.log(`-- called: ${JSON.stringify(res)}`)
   return res
 }

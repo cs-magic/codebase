@@ -1,10 +1,31 @@
+import { ZodBoolean, ZodEnum, ZodLiteral, ZodString } from "zod"
 import { LiteralUnionSchema } from "./schema"
 
-export const prettyInvalidChoice = (
+export type InputValidatorSchema =
+  | LiteralUnionSchema
+  | ZodBoolean
+  | ZodString
+  | ZodEnum<[string, ...string[]]>
+export type InputValidatorType = string[] | InputValidatorSchema
+
+export const prettyInvalidInput = (
   input: string,
-  choices: string[] | LiteralUnionSchema,
+  validator: InputValidatorType,
 ) => {
-  const cs =
-    choices instanceof Array ? choices : choices.options.map((o) => o.value)
-  return `\`操作失败，原因：${input} ∉ {${cs.join(",")}}\`,`
+  return `操作失败，原因：${input} ∉ {${dumpInputValidator(validator)}`
+}
+
+export const dumpInputValidator = (v: InputValidatorType): string => {
+  if ("options" in v)
+    return dumpInputValidator(
+      v.options.map((o) => (o instanceof ZodLiteral ? o.value : o)),
+    )
+
+  if (v instanceof Array) return v.join(",")
+
+  if (v instanceof ZodString) return "有效字符串" // todo: more-friendly ?
+
+  if (v instanceof ZodBoolean) return "true/false"
+
+  return v
 }

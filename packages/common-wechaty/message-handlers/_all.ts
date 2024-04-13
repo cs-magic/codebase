@@ -1,25 +1,29 @@
 import { z } from "zod"
 import { LiteralUnionSchema } from "../../common-common/schema"
-import { BasicCommandsMessageHandler, basicSchema } from "./basic-commands"
-import { StorageMessageHandler } from "./storage"
-import { TaskManagerMessageHandler, taskManagerSchema } from "./task-manager"
-import { UniChatterMessageHandler, uniChatterSchema } from "./uni-chatter"
-import { UniParserMessageHandler, uniParserSchema } from "./uni-parser"
+import { basicCommands } from "./basic.commands"
+import { BasicHandler } from "./basic.handler"
+import { chatCommands } from "./chat.commands"
+import { parserCommands } from "./parser.commands"
+import { ParserHandler } from "./parser.handler"
+import { StorageHandler } from "./storage.handler"
+import { TodoHandler } from "./todo.handlder"
+import { ChatHandler } from "./chat.handler"
+import { todoCommands } from "./todo.commands"
 import { ValidatorMessageHandler } from "./validator"
 
 export const MessageHandlerMap = {
-  commands: BasicCommandsMessageHandler,
-  "uni-chatter": UniChatterMessageHandler,
-  "uni-parser": UniParserMessageHandler,
-  storage: StorageMessageHandler,
+  commands: BasicHandler,
+  "uni-chatter": ChatHandler,
+  "uni-parser": ParserHandler,
+  storage: StorageHandler,
   validator: ValidatorMessageHandler,
-  "task-manager": TaskManagerMessageHandler,
+  "task-manager": TodoHandler,
 }
 export const messageHandlerSchemas = [
-  basicSchema,
-  uniChatterSchema,
-  uniParserSchema,
-  taskManagerSchema,
+  basicCommands,
+  chatCommands,
+  parserCommands,
+  todoCommands,
 ]
 export const messageHandlerSchema = z.union(
   // @ts-ignore
@@ -28,7 +32,7 @@ export const messageHandlerSchema = z.union(
 
 export type CommandType =
   // z.infer<typeof messageHandlerSchema>
-  | z.infer<typeof basicSchema>
-  | z.infer<typeof uniChatterSchema>
-  | z.infer<typeof uniParserSchema>
-  | z.infer<typeof taskManagerSchema>
+  | z.infer<typeof basicCommands>
+  | z.infer<typeof chatCommands>
+  | z.infer<typeof parserCommands>
+  | z.infer<typeof todoCommands>

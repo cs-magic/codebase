@@ -22,26 +22,23 @@ export const loadBotTemplate = async (lang: LangType) => {
   )
 }
 
-export async function renderBotTemplate(
-  opts: { message: Message } | { lang: LangType },
-) {
-  const lang =
-    "lang" in opts
-      ? opts.lang
-      : (await getTalkerPreference(opts.message))?.lang ?? "en"
+export async function renderBotTemplate(message: Message) {
+  const preference = await getTalkerPreference(message)
+  console.log({ preference })
+
+  const lang = preference.lang
 
   const botConfig = await loadBotDynamicContext(lang)
 
   const template = await loadBotTemplate(lang)
 
   const templateString = Mustache.render(template, {
+    preference,
     title: `${botConfig.name} ${botStaticContext.version}`,
     aliveTime: prettyDuration((Date.now() - botStaticContext.startTime) / 1e3),
   })
 
   const templateData = jsYaml.load(templateString, {}) as IBotTemplate
-
-  console.log({ botStaticContext, botConfig, templateString, templateData })
 
   return templateData
 }

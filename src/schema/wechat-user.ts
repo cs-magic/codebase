@@ -9,6 +9,7 @@ export type LangType = "zh" | "en"
 export type IWechatUserPreference = {
   lang: LangType
   chatEnabled: boolean
+  chatTopic?: string
   model: LlmModelType
   backend: BackendType
   parserEnabled: boolean
