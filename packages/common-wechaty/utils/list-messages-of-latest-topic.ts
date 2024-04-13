@@ -55,23 +55,38 @@ export const listMessagesOfLatestTopic = async (
             { talkerId: convId },
           ],
         },
+
         // 2. filter ai context
         {
           OR: [
-            // contact ask bot
+            // valid bot is cued
             {
-              listenerId: botWxid,
-            },
+              // bot is cued
+              OR: [
+                // in contact
+                {
+                  listenerId: botWxid,
+                },
 
-            // room at bot
-            {
-              mentionIdList: {
-                has: botWxid,
+                // in room
+                {
+                  mentionIdList: {
+                    has: botWxid,
+                  },
+                },
+              ],
+              // but not command
+              text: {
+                not: {
+                  startsWith: "/",
+                },
               },
             },
-            // bot valid reply
+            //  valid bot replies
             {
+              // bot replies
               talkerId: botWxid,
+              // but not command
               text: {
                 not: {
                   startsWith: SEPARATOR_2,

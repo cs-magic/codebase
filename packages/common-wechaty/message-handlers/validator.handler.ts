@@ -3,7 +3,7 @@ import { parseCommand } from "../utils/parse-command"
 import { messageHandlerSchema, messageHandlerSchemas } from "./_all"
 import { BaseHandler } from "./base.handler"
 
-export class ValidatorMessageHandler extends BaseHandler {
+export class ValidatorHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
     const text = message.text()
 

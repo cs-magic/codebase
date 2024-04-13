@@ -10,12 +10,12 @@ import { StorageHandler } from "./storage.handler"
 import { TodoHandler } from "./todo.handler"
 import { ChatHandler } from "./chat.handler"
 import { todoCommands } from "./todo.commands"
-import { ValidatorMessageHandler } from "./validator"
+import { ValidatorHandler } from "./validator.handler"
 
 export const MessageHandlerMap = {
   log: LogHandler,
   storage: StorageHandler,
-  validator: ValidatorMessageHandler,
+  validator: ValidatorHandler,
   commands: BasicHandler,
   "uni-chatter": ChatHandler,
   "uni-parser": ParserHandler,
