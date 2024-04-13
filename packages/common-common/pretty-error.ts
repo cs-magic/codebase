@@ -1,4 +1,5 @@
 import { AxiosError } from "axios"
+import { prettyString } from "./pretty-string"
 
 export const prettyError = (e: unknown) => {
   const s =
@@ -7,6 +8,6 @@ export const prettyError = (e: unknown) => {
       : e instanceof Error
         ? e.message
         : (e as string)
-  console.error(s)
+  console.error("[ERR]: " + prettyString(JSON.stringify(s), 120))
   return s
 }
