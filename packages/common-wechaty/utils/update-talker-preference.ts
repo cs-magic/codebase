@@ -3,19 +3,16 @@ import { Message } from "wechaty"
 import { z } from "zod"
 import { InputValidatorSchema } from "../../common-common/pretty-invalid-choice"
 import { prisma } from "../../common-db/providers/prisma"
-import {
-  backendEngineTypeSchema,
-  langSchema,
-} from "../../common-llm/schema/llm"
+import { backendTypeSchema, langTypeSchema } from "../../common-llm/schema/llm"
 import { llmModelTypeSchema } from "../../common-llm/schema/providers"
 import { getTalkerPreference } from "./get-talker-preference"
 import { IParseCommandRes } from "./parse-command"
 import { validateInput } from "./validate-input"
 
 const schemaMap: Record<keyof IWechatUserPreference, InputValidatorSchema> = {
-  lang: langSchema,
+  lang: langTypeSchema,
   model: llmModelTypeSchema,
-  backend: backendEngineTypeSchema,
+  backend: backendTypeSchema,
   chatEnabled: z.boolean(),
   parserEnabled: z.boolean(),
   chatTopic: z.string(),
@@ -44,6 +41,7 @@ export const updateTalkerPreference = async <
     },
     data: {
       preference: {
+        // ...(await this._getConvPreference()),
         [key]: data,
       },
     },

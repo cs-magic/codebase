@@ -1,6 +1,6 @@
 import { useAtom } from "jotai"
 import React from "react"
-import { backendEngineTypeSchema } from "../../packages/common-llm/schema/llm"
+import { backendTypeSchema } from "../../packages/common-llm/schema/llm"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import {
@@ -61,7 +61,7 @@ export const CardInputFrontend = () => {
       <AtomSelector
         atom={cardFetchEngineAtom}
         name={"fetch engine"}
-        vs={backendEngineTypeSchema.options.map((o) => o.value)}
+        vs={backendTypeSchema.options.map((o) => o.value)}
       />
 
       <AtomSwitcher atom={cardMdWithImgAtom} name={"md-with-img"} />

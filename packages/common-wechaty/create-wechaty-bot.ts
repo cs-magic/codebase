@@ -2,6 +2,7 @@ import { config } from "@/config/system"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
+import { prettyString } from "../common-common/pretty-string"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
 import { IBotStaticContext } from "./schema"
@@ -65,15 +66,6 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
       bot.wxid = botWxid
     })
     .on("message", async (message) => {
-      // const data = {
-      //   ...message.payload,
-      //   // talker: message.talker().payload,
-      //   // listener: message.listener()?.payload,
-      //   // room: message.room()?.payload,
-      // }
-      const data = { ...message.payload, text: message.payload?.text }
-      console.log(`<< message: ${JSON.stringify(data)}`)
-
       try {
         for (const handler of handlers) {
           await handler.onMessage(message)

@@ -1,6 +1,7 @@
 import { IWechatUserPreference } from "@/schema/wechat-user"
 import { Message } from "wechaty"
 import { getConvTable } from "../utils/get-conv-table"
+import { getRobustPreference } from "../utils/get-robust-preference"
 import { prettyBotQuery } from "../utils/pretty-bot-query"
 import { CommandType } from "./_all"
 
@@ -35,8 +36,8 @@ export class BaseManager {
     })
   }
 
-  async _getConvPreference(): Promise<IWechatUserPreference | null> {
-    return (await this._getConvInDB()).preference
+  async _getConvPreference(): Promise<IWechatUserPreference> {
+    return getRobustPreference(await this._getConvInDB())
   }
 
   async _getlang() {

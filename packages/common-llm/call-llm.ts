@@ -5,6 +5,8 @@ import OpenAI from "openai/index"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api, backendApi } from "../common-api"
 import { prettyError } from "../common-common/pretty-error"
+import { SEPARATOR_2 } from "../common-common/pretty-query"
+import { prettyString } from "../common-common/pretty-string"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
 import { v4 } from "uuid"
@@ -52,10 +54,16 @@ export const callLLM = async (
     messages,
   }
 
-  console.debug(`-- calling LLM: `, {
-    clientConfig: JSON.stringify(clientConfig),
-    queryConfig: JSON.stringify(queryConfig),
-  })
+  console.debug(
+    [
+      "",
+      SEPARATOR_2,
+      `-- calling LLM(model=${queryConfig.model}): `,
+      ...queryConfig.messages.map(
+        (m) => `  [${m.role.padEnd(9)}]: ${prettyString(m.content, 60)}`,
+      ),
+    ].join("\n"),
+  )
 
   let response: OpenAI.Chat.Completions.ChatCompletion | undefined = undefined
   const start = Date.now()
@@ -65,13 +73,13 @@ export const callLLM = async (
 
   try {
     if (providerType === "zhipu") {
-      console.debug("-- calling ZhiPu")
+      // console.debug("-- calling ZhiPu")
       const client = new ZhipuAi(clientConfig)
       response = (await client.createCompletions(
         queryConfig,
       )) as unknown as OpenAI.Chat.Completions.ChatCompletion
     } else if (providerType === "baichuan") {
-      console.debug("-- calling BaiChuan")
+      // console.debug("-- calling BaiChuan")
       const res = await api.post<OpenAI.Chat.Completions.ChatCompletion>(
         "https://api.baichuan-ai.com/v1/chat/completions",
         queryConfig,
@@ -84,7 +92,7 @@ export const callLLM = async (
       )
       response = res.data
     } else if (providerType === "ali") {
-      console.debug("-- calling Ali")
+      // console.debug("-- calling Ali")
       const res = await backendApi.post<OpenAI.Chat.Completions.ChatCompletion>(
         "/llm/base",
         queryConfig,
@@ -96,7 +104,7 @@ export const callLLM = async (
       )
       response = res.data
     } else {
-      console.debug("-- calling OpenAI")
+      // console.debug("-- calling OpenAI")
       const client = new OpenAI({
         ...clientConfig,
       })
@@ -122,6 +130,12 @@ export const callLLM = async (
     error,
   }
 
-  console.log(`-- called: ${JSON.stringify(res)}`)
+  console.log(
+    [
+      `-- result: ${prettyString(JSON.stringify(res), 60)}`,
+      SEPARATOR_2,
+      "",
+    ].join("\n"),
+  )
   return res
 }

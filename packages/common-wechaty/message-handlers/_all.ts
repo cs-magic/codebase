@@ -3,6 +3,7 @@ import { LiteralUnionSchema } from "../../common-common/schema"
 import { basicCommands } from "./basic.commands"
 import { BasicHandler } from "./basic.handler"
 import { chatCommands } from "./chat.commands"
+import { LogHandler } from "./log.handler"
 import { parserCommands } from "./parser.commands"
 import { ParserHandler } from "./parser.handler"
 import { StorageHandler } from "./storage.handler"
@@ -12,11 +13,12 @@ import { todoCommands } from "./todo.commands"
 import { ValidatorMessageHandler } from "./validator"
 
 export const MessageHandlerMap = {
+  log: LogHandler,
+  storage: StorageHandler,
+  validator: ValidatorMessageHandler,
   commands: BasicHandler,
   "uni-chatter": ChatHandler,
   "uni-parser": ParserHandler,
-  storage: StorageHandler,
-  validator: ValidatorMessageHandler,
   "task-manager": TodoHandler,
 }
 export const messageHandlerSchemas = [

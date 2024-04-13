@@ -29,6 +29,7 @@ export class ChatManager extends BaseManager {
       where: { id: this._convId },
       data: {
         preference: {
+          ...(await this._getConvPreference()),
           chatEnabled: true,
         },
       },
@@ -37,7 +38,7 @@ export class ChatManager extends BaseManager {
     await this.standardReply(`已启动，当前话题：${p?.chatTopic ?? "默认"}`, [
       "list-topics",
       "new-topic",
-      "disable-ai-chat",
+      "disable-chat",
     ])
   }
 
@@ -46,29 +47,31 @@ export class ChatManager extends BaseManager {
       where: { id: this._convId },
       data: {
         preference: {
+          ...(await this._getConvPreference()),
           chatEnabled: false,
         },
       },
     })
-    await this.standardReply(`已关闭`, ["enable-ai-chat"])
+    await this.standardReply(`已关闭`, ["enable-chat"])
   }
 
   async newTopic(chatTopic?: string) {
-    if (!chatTopic) throw new Error(`新增话题失败，原因：不能为空`)
+    const preference = await this._getConvPreference()
 
     const row = await prisma.wechatUser.update({
       where: { id: this._convId },
       data: {
         preference: {
+          ...preference,
           chatTopic,
         },
       },
     })
 
-    const preference = getRobustPreference(row)
+    const preferenceNew = getRobustPreference(row)
 
     await this.standardReply(
-      `新增话题成功，当前会话为：${preference.chatTopic}，模型为：${preference.model}`,
+      `新增话题成功，当前会话为：${preferenceNew.chatTopic}，模型为：${preferenceNew.model}`,
       ["list-topics"],
     )
   }
@@ -113,7 +116,7 @@ export class ChatManager extends BaseManager {
           // excluding @all
           (await m.mentionList()).some((m) => m.id === this._botWxid)
         )) ||
-      // 只回复文本 todo: image/xxxx
+      // 过滤非文本 todo: image/xxxx
       m.type() !== types.Message.Text ||
       // 过滤命令风格回复
       m.text().startsWith("/")
@@ -123,9 +126,7 @@ export class ChatManager extends BaseManager {
     const convInDB = await this._getConvInDB()
     const preference = getRobustPreference(convInDB)
     if (!preference.chatEnabled) {
-      return this.standardReply("此会话中暂没有开启AI聊天哦", [
-        "enable-ai-chat",
-      ])
+      return this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
     }
 
     const filteredMessages = await listMessagesOfLatestTopic(

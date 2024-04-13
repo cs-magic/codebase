@@ -17,10 +17,10 @@ export class ChatHandler extends BaseHandler {
     if (!result) return topicManager.safeReplyWithAI()
 
     switch (result.command) {
-      case "enable-ai-chat":
+      case "enable-chat":
         return topicManager.enableChat()
 
-      case "disable-ai-chat":
+      case "disable-chat":
         return topicManager.disableChat()
 
       case "new-topic":

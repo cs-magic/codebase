@@ -46,19 +46,19 @@ export type ICallLLMResponse = {
   error?: string
 }
 
-export const backendEngineTypeSchema = z.union([
+export const backendTypeSchema = z.union([
   z.literal("fastapi"),
   z.literal("nodejs"),
 ])
-export type BackendType = z.infer<typeof backendEngineTypeSchema>
+export type BackendType = z.infer<typeof backendTypeSchema>
 
-export const langSchema = z.union([
+export const langTypeSchema = z.union([
   z.literal("中文"),
   z.literal("zh"),
   z.literal("英文"),
   z.literal("en"),
 ])
-export type InputLangType = z.infer<typeof langSchema>
+export type InputLangType = z.infer<typeof langTypeSchema>
 export const langMap: Record<InputLangType, LangType> = {
   en: "en",
   英文: "en",

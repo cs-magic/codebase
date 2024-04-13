@@ -3,8 +3,8 @@ help: |-
   ------------------------------
   Features：
   - A1: Chat with AI
-    /enable-uni-chatter
-    /disable-uni-chatter
+    /enable-chat
+    /disable-chat
     /list-topics
     /set-topic [N]
     /new-topic [TITLE]
@@ -35,5 +35,5 @@ status: |-
   Preference:
     model: {{preference.model}}
     backend: {{preference.backend}}
-    uni-chatter-enabled: {{{preference.chatEnabled}}}
-    uni-parser-enabled: {{{preference.parserEnabled}}}
+    chat-enabled: {{{preference.chatEnabled}}}
+    parser-enabled: {{{preference.parserEnabled}}}

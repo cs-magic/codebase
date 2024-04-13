@@ -1,3 +1,4 @@
+import { SEPARATOR_2 } from "../../common-common/pretty-query"
 import { prisma } from "../../common-db/providers/prisma"
 
 /**
@@ -46,6 +47,7 @@ export const listMessagesOfLatestTopic = async (
     where: {
       // AND, ref: https://chat.openai.com/c/895c1452-c3bd-4d5b-ba9f-c23c7750f412
       AND: [
+        // 1. filter conv
         {
           OR: [
             { roomId: convId },
@@ -53,15 +55,34 @@ export const listMessagesOfLatestTopic = async (
             { talkerId: convId },
           ],
         },
+        // 2. filter ai context
         {
           OR: [
-            { talkerId: botWxid },
+            // contact ask bot
+            {
+              listenerId: botWxid,
+            },
+
+            // room at bot
             {
               mentionIdList: {
                 has: botWxid,
               },
             },
+            // bot valid reply
+            {
+              talkerId: botWxid,
+              text: {
+                not: {
+                  startsWith: SEPARATOR_2,
+                },
+              },
+            },
           ],
+        },
+
+        // 3. filter time
+        {
           createdAt: lastUserStartChat
             ? {
                 gte: lastUserStartChat.createdAt!,

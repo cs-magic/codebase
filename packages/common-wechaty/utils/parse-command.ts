@@ -22,6 +22,6 @@ export const parseCommand = <T extends string>(
 
   const command = m[1] as T
   const args = (m[2] ?? "").trim()
-  console.log({ text, command, args })
+  // console.log({ text, command, args })
   return { command, args }
 }
