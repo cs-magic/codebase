@@ -1,6 +1,7 @@
 import { useAtom } from "jotai"
 import React from "react"
 import { backendTypeSchema } from "../../packages/common-llm/schema/llm"
+import { llmModelTypeSchema } from "../../packages/common-llm/schema/providers"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import {
@@ -42,14 +43,7 @@ export const CardInputFrontend = () => {
       <AtomSelector
         atom={cardLLMTypeAtom}
         name={"llm-type"}
-        vs={[
-          "gpt-3.5-turbo",
-          "gpt-4",
-          "glm-4",
-          "moonshot-v1-8k",
-          "moonshot-v1-32k",
-          "moonshot-v1-128k",
-        ]}
+        vs={llmModelTypeSchema.options}
       />
 
       <AtomSwitcher atom={cardRefetchCardAtom} name={"refetch-stat"} />
@@ -61,7 +55,7 @@ export const CardInputFrontend = () => {
       <AtomSelector
         atom={cardFetchEngineAtom}
         name={"fetch engine"}
-        vs={backendTypeSchema.options.map((o) => o.value)}
+        vs={backendTypeSchema.options}
       />
 
       <AtomSwitcher atom={cardMdWithImgAtom} name={"md-with-img"} />

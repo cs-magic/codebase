@@ -35,12 +35,12 @@ export const SmsProvider = Credentials({
 
     if (accountInDB.access_token !== code) throw new Error("验证码不对")
 
-    const userInDB = await prisma.sender.findUnique({ where: { phone } })
+    const userInDB = await prisma.user.findUnique({ where: { phone } })
 
     if (userInDB && userInDB.id !== accountInDB.userId)
       throw new Error("账号已存在")
 
-    return prisma.sender.update({
+    return prisma.user.update({
       where: { id: accountInDB.userId },
       data: {
         phone,

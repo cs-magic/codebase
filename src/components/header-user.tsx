@@ -8,7 +8,7 @@ import { cn } from "../../packages/common-ui-shadcn/utils"
 
 export const UserButton = () => {
   const session = useSession()
-  const user = session.data?.sender
+  const user = session.data?.user
 
   return (
     <Link href={user ? "/dashboard" : "/auth"}>

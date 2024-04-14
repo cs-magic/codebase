@@ -2,6 +2,7 @@ import { IUserBasic } from "@/schema/user.summary"
 import { atom } from "jotai"
 import { withImmer } from "jotai-immer"
 import { atomWithStorage } from "jotai/utils"
+import { z } from "zod"
 import { parseJS } from "../../packages/common-common/safe-parse-json"
 
 import { BackendType } from "../../packages/common-llm/schema/llm"
@@ -65,11 +66,13 @@ export const cardLLMEnabledAtom = atomWithStorage(
 
 export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false)
 
-export type CardPreviewEngine =
-  | "html2image"
-  | "html2canvas"
-  | "modern-screenshot"
-export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngine>(
+export const cardPreviewEngineTypeSchema = z.enum([
+  "html2image",
+  "html2canvas",
+  "modern-screenshot",
+])
+export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>
+export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngineType>(
   "card.preview.engine",
   "modern-screenshot",
 )

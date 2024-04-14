@@ -60,8 +60,8 @@ export const authOptions: NextAuthOptions = {
       // console.log("[next-auth] session: ", { session, user })
       return {
         ...session,
-        sender: {
-          ...session.sender,
+        user: {
+          ...session.user,
           id: token.sub ?? user.id,
           name: token.name,
           image: token.image,

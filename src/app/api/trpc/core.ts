@@ -8,8 +8,8 @@ import { userDetailSchema } from "../../../schema/user.detail"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>
-    prisma.sender.findUniqueOrThrow({
-      where: { id: ctx.sender.id },
+    prisma.user.findUniqueOrThrow({
+      where: { id: ctx.user.id },
       ...userDetailSchema,
     }),
   ),
@@ -18,8 +18,8 @@ export const coreRouter = createTRPCRouter({
     .input(UserUpdateInputSchema)
     .mutation(({ ctx, input }) => {
       console.log("update self")
-      return prisma.sender.update({
-        where: { id: ctx.sender.id },
+      return prisma.user.update({
+        where: { id: ctx.user.id },
         data: input,
       })
     }),

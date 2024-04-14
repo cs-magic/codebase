@@ -10,7 +10,7 @@ import { useDraftSession } from "./use-user-draft-session"
  * 必要性：可能会在多个场景下更新，比如用户首次登录、用户面板
  */
 export const useUserUpdateProfile = () => {
-  const id = useSession().data?.sender?.id
+  const id = useSession().data?.user?.id
   const { draft: image } = useDraftSession("image")
   const { draft: name } = useDraftSession("name")
 

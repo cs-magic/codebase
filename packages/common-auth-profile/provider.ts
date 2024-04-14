@@ -16,9 +16,9 @@ export const ProfileUpdateProvider = Credentials({
     const { image, name, id } = credentials
     if (!image || !name) throw new Error("no name or image")
 
-    await prisma.sender.findUniqueOrThrow({ where: { id } })
+    await prisma.user.findUniqueOrThrow({ where: { id } })
 
-    return await prisma.sender.update({
+    return prisma.user.update({
       where: { id },
       data: { name, image },
       ...userDetailSchema,

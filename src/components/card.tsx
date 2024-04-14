@@ -8,7 +8,11 @@ import { Separator } from "../../packages/common-ui-shadcn/components/separator"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 import { AtomSelector } from "../../packages/common-ui/components/atom-switcher"
 import { GenCardRenderType } from "../schema/card"
-import { cardAtom, cardPreviewEngineAtom } from "../store/card.atom"
+import {
+  cardAtom,
+  cardPreviewEngineAtom,
+  cardPreviewEngineTypeSchema,
+} from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreview } from "./card-preview"
@@ -35,7 +39,7 @@ export const Card = () => {
         <AtomSelector
           atom={cardPreviewEngineAtom}
           name={"preview-engine"}
-          vs={["html2image", "html2canvas", "modern-screenshot"]}
+          vs={cardPreviewEngineTypeSchema.options}
         />
 
         <Separator orientation={"horizontal"} />

@@ -5,10 +5,10 @@ import { useRef } from "react"
 import { Action2Type, GenCardRenderType } from "../schema/card"
 import { ICardDetail } from "../schema/card.basic"
 import { cardRenderedAtom, cardUserAtom } from "../store/card.atom"
+import { CardAction2 } from "./card-action2"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"
 import { CardHeader } from "./card-header"
-import { CardAction2 } from "./card-action2"
 
 export const CardPreview = ({
   renderType,
@@ -44,7 +44,7 @@ export const CardPreview = ({
         id={"card-preview"}
         className={"w-full font-card corner-gradient"}
       >
-        <CardHeader user={card?.sender ?? user} />
+        <CardHeader user={card?.user ?? user} />
 
         <CardContent card={card} />
 

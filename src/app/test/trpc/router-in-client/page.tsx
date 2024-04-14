@@ -10,7 +10,7 @@ import { api } from "../../../../../packages/common-trpc/react"
 import { updateUserNameViaTrpc } from "./actions"
 
 export default function TestTrpcRouterInClientPage() {
-  const userId = useSession().data?.sender.id
+  const userId = useSession().data?.user.id
 
   const utils = api.useUtils()
   const { data: user } = api.core.getSelf.useQuery()

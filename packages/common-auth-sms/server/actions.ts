@@ -45,7 +45,7 @@ export const $sendSms = async (
         expires_at,
 
         // sms 首次登录只需要更新account的条目就行，甚至是别人的手机号
-        sender: userId
+        user: userId
           ? {
               // link account or fallback create
               connectOrCreate: {
