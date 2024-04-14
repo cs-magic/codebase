@@ -2,6 +2,9 @@
   "name": "p01",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
     "postinstall": "patch-package && prisma generate",
@@ -16,7 +19,7 @@
     "cicd": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && p=p01 && pm2 restart $p && pm2 log $p",
     "test": "jest",
     "test:watch": "jest --watch",
-    "start-wechat-bot": "tsx packages/common-wechaty"
+    "start-api": "yarn workspace common-api-service start-api"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",
@@ -73,7 +76,6 @@
     "eslint-config-next": "^14.1.0",
     "etcd3": "^1.1.2",
     "eventsource": "^2.0.2",
-    "fastify": "^4.26.2",
     "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "https": "^1.0.0",
@@ -136,8 +138,6 @@
     "uuid": "^9.0.1",
     "valtio": "^1.13.2",
     "video-react": "^0.16.0",
-    "wechaty": "^1.20.2",
-    "wechaty-puppet-padlocal": "^1.20.1",
     "ws": "^8.16.0",
     "yaml": "^2.4.1",
     "zhipuai-sdk-nodejs-v4": "^0.1.12",

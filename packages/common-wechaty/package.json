@@ -1,0 +1,12 @@
+{
+  "name": "common-wechaty",
+  "packageManager": "yarn@4.1.1",
+  "type": "module",
+  "scripts": {
+    "start-wechat-bot": "tsx index.ts"
+  },
+  "dependencies": {
+    "wechaty": "^1.20.2",
+    "wechaty-puppet-padlocal": "^1.20.1"
+  }
+}

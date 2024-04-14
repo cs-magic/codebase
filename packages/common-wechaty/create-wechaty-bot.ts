@@ -26,13 +26,12 @@ export const createWechatyBot = ({
       console.error(err)
     })
     .on("scan", (value, status) => {
+      console.log(
+        `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
+      )
+      qrcodeTerminal.generate(value, { small: true })
       if (onScan) {
         onScan(value, status)
-      } else {
-        console.log(
-          `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
-        )
-        qrcodeTerminal.generate(value, { small: true })
       }
     })
     .on("login", async (user) => {

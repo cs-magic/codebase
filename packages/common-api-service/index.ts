@@ -1,43 +1,85 @@
-// Import the framework and instantiate it
+import fw from "@fastify/websocket"
+import { createWechatyBot } from "common-wechaty/create-wechaty-bot"
+import { parseCommand } from "common-wechaty/utils/parse-command"
 import Fastify from "fastify"
-import { createWechatyBot } from "../common-wechaty/create-wechaty-bot"
+import { Wechaty } from "wechaty"
+import { z } from "zod"
+import { prettyError } from "../common-common/pretty-error"
 
 const fastify = Fastify({
   logger: true,
 })
 
-const bot = createWechatyBot({ name: "default" })
-
-// Declare a route
+// http
 fastify.get("/", async function handler(request, reply) {
   return { hello: "world" }
 })
 
-fastify.get("/bot/start", async () => {
-  try {
-    console.log("\n-- starting\n")
-    await bot.start()
-  } catch (e) {
-    console.log("\n-- err\n")
-    await bot.stop()
-  } finally {
-    console.log(`-- [finally] state: `, bot.state)
-  }
-  return "starting"
+let bot: Wechaty | null = null
+
+export const botCommands = z.enum(["start", "stop", "state", "logout"])
+
+// socket
+void fastify.register(fw)
+void fastify.register(async function (fastify) {
+  fastify.get(
+    "/bot",
+    { websocket: true },
+    (socket /* WebSocket */, req /* FastifyRequest */) => {
+      socket.on("message", async (messageBuffer: Buffer) => {
+        try {
+          const message = messageBuffer.toString()
+
+          const result = parseCommand(messageBuffer.toString(), botCommands)
+
+          console.log({ messageBuffer, message, result })
+
+          if (!result) return
+
+          switch (result.command) {
+            case "start":
+              socket.send("starting")
+              bot = createWechatyBot({
+                name: result.args,
+                onScan: (value, status) => {
+                  console.log({ value, status })
+                  socket.send(JSON.stringify({ value, status }))
+                },
+              })
+              await bot.start()
+              socket.send("started")
+              break
+
+            case "stop":
+              socket.send("stopping")
+              await bot?.stop()
+              // await bot?.logout()
+              socket.send("stopped")
+              break
+
+            case "state":
+              socket.send(JSON.stringify(bot?.state))
+              break
+
+            case "logout":
+              await bot?.logout()
+              break
+
+            default:
+              break
+          }
+
+          console.log(`✅ ${result.command} ${result.args}`)
+        } catch (e) {
+          prettyError(e)
+        }
+      })
+    },
+  )
 })
 
-fastify.get("/bot/stop", async () => {
-  void bot.stop()
-  return "stopping"
-})
-
-fastify.get("/bot/state", async () => {
-  return bot.state
-})
-
-// Run the server!
 try {
-  await fastify.listen({ port: 40414 })
+  void fastify.listen({ port: 40414 })
 } catch (err) {
   fastify.log.error(err)
   process.exit(1)

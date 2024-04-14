@@ -2,5 +2,17 @@
   "name": "common-api-service",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-  "private": true
+  "private": true,
+  "scripts": {
+    "start-api": "tsx index.ts"
+  },
+  "dependencies": {
+    "@fastify/websocket": "^10.0.1",
+    "common-wechaty": "workspace:^",
+    "fastify": "^4.26.2",
+    "fastify-websocket": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.10"
+  }
 }
