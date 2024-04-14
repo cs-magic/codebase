@@ -1,11 +1,8 @@
 import { config } from "@/config/system"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
-import { prettyError } from "../common-common/pretty-error"
-import { getBotContextFromMessage } from "./utils/bot-context"
+import { MessageQueue } from "./handle-messages/message-queue"
 import { getBotWxid } from "./utils/bot-wxid"
-import { getHandlers } from "./utils/get-handlers"
-import { prettyBotQuery } from "./utils/pretty-bot-query"
 
 export const createWechatyBot = ({ name }: { name?: string }) => {
   console.log("-- init bot: ", { name })
@@ -14,7 +11,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     name, // 加了名字后就可以自动存储了
   }) as Wechaty // 等会再更新其他扩展的信息
 
-  const handlers = getHandlers(bot)
+  const mq = new MessageQueue(bot, 10)
 
   bot
     .on("error", async (err) => {
@@ -38,24 +35,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       }
     })
     .on("message", async (message) => {
-      try {
-        // todo: Promise.all, fix the storage logic on chat/...
-        for (const handler of handlers) {
-          await handler.onMessage(message)
-        }
-      } catch (e) {
-        let s = prettyError(e)
-        const context = await getBotContextFromMessage(bot, message)
-
-        // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292
-        // from wang, 2024-04-13 01:36:14
-        if (s.includes("filterValue not found for filterKey: id")) {
-          s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
-          await message.say(await prettyBotQuery(context, "哎呀出错啦", s))
-        }
-        // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-        // await message.say(await prettyBotQuery(context, "哎呀出错啦", s))
-      }
+      await mq.enqueueMessage(message)
     })
   // .start()
 

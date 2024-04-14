@@ -1,5 +1,5 @@
 import { prettyQuery } from "../../common-common/pretty-query"
-import { CommandType } from "../message-handlers/_all"
+import { CommandType } from "../handle-messages/_all"
 import { IBotContext } from "../schema"
 
 export const prettyBotQuery = async (

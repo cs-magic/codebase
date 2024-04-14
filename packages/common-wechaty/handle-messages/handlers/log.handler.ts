@@ -1,20 +1,11 @@
-import { prettyString } from "packages/common-common/pretty-string"
-import { Message, types } from "wechaty"
+import { Message } from "wechaty"
+import { prettyMessage } from "../../utils/pretty-message"
 import { BaseHandler } from "./base.handler"
 
 export class LogHandler extends BaseHandler {
   public async onMessage(message: Message) {
-    const data = {
-      ...message.payload,
-      text: prettyString(message.payload?.text ?? "", 30),
-    }
-    console.log(
-      `-- onMessage: `,
-      JSON.stringify(data),
-      // data,
-      // message,
-      // message.payload,
-    )
+    const s = prettyMessage(message)
+    console.log(`-- onMessage: ${s}`)
 
     // console.log("-- mention text: ", await message.mentionText())
 

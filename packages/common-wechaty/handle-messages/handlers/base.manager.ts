@@ -1,7 +1,7 @@
 import { Message, Wechaty } from "wechaty"
-import { getBotContextFromMessage } from "../utils/bot-context"
-import { prettyBotQuery } from "../utils/pretty-bot-query"
-import { CommandType } from "./_all"
+import { getBotContextFromMessage } from "../../utils/bot-context"
+import { prettyBotQuery } from "../../utils/pretty-bot-query"
+import { CommandType } from "../_all"
 
 export class BaseManager {
   public message: Message
