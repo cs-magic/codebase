@@ -1,6 +1,6 @@
 {
   "name": "@cs-magic/p01-card",
-  "version": "0.1.0",
+  "version": "V0.6.143 (α)",
   "type": "module",
   "scripts": {
     "postinstall": "patch-package && prisma generate",

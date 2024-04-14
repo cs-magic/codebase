@@ -1,9 +1,13 @@
 "use client";
 
-import { BrandingTitle } from "./branding-title";
-import { UserButton } from "./header-user";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
+import React, { PropsWithChildren } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "../../../../packages/common-ui-shadcn/components/sheet";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,18 +16,18 @@ import {
   navigationMenuTriggerStyle,
 } from "../../../../packages/common-ui-shadcn/components/ui/navigation-menu";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import React, { PropsWithChildren } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "../../../../packages/common-ui-shadcn/components/sheet";
 import { IconContainer } from "../../../../packages/common-ui/components/icon-container";
+import { config } from "../config";
+import { BrandingTitle } from "./branding-title";
+import { UserButton } from "./header-user";
 
 const Menus = () => (
   <>
-    <LinkItem href={"/card/new"}>新建卡片</LinkItem>
-    <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
+    {config.website.menus.map((m, index) => (
+      <LinkItem href={m.href} key={index}>
+        {m.title}
+      </LinkItem>
+    ))}
   </>
 );
 
