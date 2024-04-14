@@ -1,5 +1,6 @@
 import { sleep } from "../../common-datetime/utils"
 import { Message, Wechaty } from "wechaty"
+import { prettyMessage } from "../utils/pretty-message"
 import { handleMessage } from "./handle-message"
 
 export class MessageQueue {
@@ -24,7 +25,9 @@ export class MessageQueue {
 
   async enqueueMessage(message: Message) {
     this.queue.push(message)
-    console.log(`-- onMessage: Q(n=${this.queue.length}), `)
+    // console.log(
+    //   `-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`,
+    // )
     if (!this.processing) {
       this.processing = true
       await this._processMessage()
@@ -34,6 +37,9 @@ export class MessageQueue {
   private async _processMessage() {
     while (this.queue.length > 0) {
       const message = this.queue.shift()!
+      console.log(
+        `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
+      )
       await handleMessage(this.bot, message)
       await sleep(1000 / this.qps) // 限时
     }
