@@ -1,5 +1,4 @@
 import { z, ZodEnum } from "zod"
-import { parseAsyncWithFriendlyErrorMessage } from "../utils/validate-input"
 import { basicCommands } from "./basic.commands"
 import { BasicHandler } from "./basic.handler"
 import { chatCommands } from "./chat.commands"
@@ -33,6 +32,3 @@ export const messageHandlerSchema = z.enum(
 ) as unknown as ZodEnum<[string, ...string[]]>
 
 export type CommandType = z.infer<typeof messageHandlerSchema>
-
-// void parseAsyncWithFriendlyErrorMessage(messageHandlerSchema, "ding")
-// void parseAsyncWithFriendlyErrorMessage(messageHandlerSchema, "ding2")

@@ -9,7 +9,7 @@ import { LangType } from "../../common-i18n/schema"
 import { botStaticContext } from "../create-wechaty-bot"
 import { IBotTemplate } from "../schema"
 
-import { loadBotDynamicContext } from "./bot-context"
+import { getBotDynamicContext } from "./bot-context"
 import { getConvPreference } from "./get-conv-preference"
 
 export const loadBotTemplate = async (lang: LangType) => {
@@ -28,7 +28,7 @@ export async function renderBotTemplate(message: Message) {
 
   const lang = preference.lang
 
-  const botConfig = await loadBotDynamicContext(lang)
+  const botConfig = await getBotDynamicContext(lang)
 
   const template = await loadBotTemplate(lang)
 

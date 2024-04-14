@@ -2,7 +2,6 @@ import { config } from "@/config/system"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
-import { prettyString } from "../common-common/pretty-string"
 import { sleep } from "../common-datetime/utils"
 import { MessageHandlerMap } from "./message-handlers/_all"
 import { IBotStaticContext } from "./schema"
@@ -77,7 +76,7 @@ export const createWechatyBot = async ({ name }: { name?: string }) => {
         if (s.includes("filterValue not found for filterKey: id")) {
           s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
         }
-        await message.say(await prettyBotQuery("哎呀出错啦", `原因： ${s}`))
+        await message.say(await prettyBotQuery("哎呀出错啦", s))
       }
 
       await sleep(3e3)

@@ -6,6 +6,7 @@ import {
   LlmModelType,
   llmModelTypeSchema,
 } from "../../common-llm/schema/providers"
+import { getBotDynamicContext } from "../utils/bot-context"
 import { renderBotTemplate } from "../utils/bot-template"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { parseCommand } from "../utils/parse-command"
@@ -17,7 +18,9 @@ import { BasicManager } from "./basic.manager"
 export class BasicHandler extends BaseHandler {
   public async onMessage(message: Message) {
     const preference = await getConvPreference(message)
-    const title = preference.lang === "zh" ? "基本信息" : "Basic"
+    const context = await getBotDynamicContext(preference.lang)
+    const title =
+      context.name + (preference.lang === "zh" ? `使用说明` : ` Cookbook`)
     const manager = new BasicManager(title, message, this.bot.wxid)
 
     const result = parseCommand<z.infer<typeof basicCommands>>(
