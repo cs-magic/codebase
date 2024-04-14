@@ -1,29 +1,14 @@
 help: |-
-  [*name] Is an AI Native software, for individual, group intelligent management, collaboration.
+  {{name}} Is an AI Native software, for individual, group intelligent management, collaboration.
   ------------------------------
-  Features：
-  - A1: Chat with AI
-    /enable-chat
-    /disable-chat
-    /list-topics
-    /set-topic [N]
-    /new-topic [TITLE]
-  
-  - A2: Info Summarization（supported now：WxmpArticle...）
-    /enable-uni-parser
-    /disable-uni-parser
-  
-  - A3: Task Management
-    /todo
-    /add-todo [TITLE]
-    /set-todo [N] [STATUS]
+  Feats：
+  - Chat: Chat with AI
+  - Parser: Info Summarization
+  - Todo: Task Management
   ------------------------------
   Basic Commands：
   /
-  /ding
   /status
-  /list-models
-  /set-model
   /help [FEAT]
   ------------------------------
   切换为中文，请发送：/设置语言 中文

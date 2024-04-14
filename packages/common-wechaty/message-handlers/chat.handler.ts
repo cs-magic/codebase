@@ -1,5 +1,6 @@
 import { type Message } from "wechaty"
 import { z } from "zod"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { parseCommand } from "../utils/parse-command"
 import { BaseHandler } from "./base.handler"
 import { chatCommands } from "./chat.commands"
@@ -7,30 +8,32 @@ import { ChatManager } from "./chat.manager"
 
 export class ChatHandler extends BaseHandler {
   public async onMessage(message: Message) {
-    const topicManager = new ChatManager("AI 聊天室", message, this.bot.wxid)
+    const preference = await getConvPreference(message)
+    const title = preference.lang === "zh" ? "AI 聊天室" : "AI Chat"
+    const manager = new ChatManager(title, message, this.bot.wxid)
 
     const result = parseCommand<z.infer<typeof chatCommands>>(
       message.text(),
       chatCommands,
     )
 
-    if (!result) return topicManager.safeReplyWithAI()
+    if (!result) return manager.safeReplyWithAI()
 
     switch (result.command) {
       case "enable-chat":
-        return topicManager.enableChat()
+        return manager.enableChat()
 
       case "disable-chat":
-        return topicManager.disableChat()
+        return manager.disableChat()
 
       case "new-topic":
-        return topicManager.newTopic(result.args)
+        return manager.newTopic(result.args)
 
       case "check-topic":
-        return topicManager.checkTopic(result.args)
+        return manager.checkTopic(result.args)
 
       case "list-topics":
-        return topicManager.listTopicsAction()
+        return manager.listTopicsAction()
     }
   }
 }

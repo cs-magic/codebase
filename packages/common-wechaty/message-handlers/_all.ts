@@ -17,9 +17,9 @@ export const MessageHandlerMap = {
   storage: StorageHandler,
   validator: ValidatorHandler,
   commands: BasicHandler,
-  "uni-chatter": ChatHandler,
-  "uni-parser": ParserHandler,
-  "task-manager": TodoHandler,
+  chat: ChatHandler,
+  parser: ParserHandler,
+  todo: TodoHandler,
 }
 export const messageHandlerSchemas = [
   basicCommands,

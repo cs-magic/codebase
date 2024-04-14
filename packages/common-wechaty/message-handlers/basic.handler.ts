@@ -11,6 +11,7 @@ import {
   llmModelTypeSchema,
 } from "../../common-llm/schema/providers"
 import { renderBotTemplate } from "../utils/bot-template"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { parseCommand } from "../utils/parse-command"
 import { validateInput } from "../utils/validate-input"
 import { BaseHandler } from "./base.handler"
@@ -19,7 +20,9 @@ import { BasicManager } from "./basic.manager"
 
 export class BasicHandler extends BaseHandler {
   public async onMessage(message: Message) {
-    const manager = new BasicManager("基本信息", message, this.bot.wxid)
+    const preference = await getConvPreference(message)
+    const title = preference.lang === "zh" ? "基本信息" : "Basic"
+    const manager = new BasicManager(title, message, this.bot.wxid)
 
     const result = parseCommand<z.infer<typeof basicCommands>>(
       message.text(),

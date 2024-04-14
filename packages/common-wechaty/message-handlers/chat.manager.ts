@@ -129,7 +129,8 @@ export class ChatManager extends BaseManager {
     const convInDB = await getConvRow(this.message)
     const preference = getRobustPreference(convInDB)
     if (!preference.chatEnabled) {
-      return this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
+      // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
+      return
     }
 
     const filteredMessages = await listMessagesOfLatestTopic(

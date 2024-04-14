@@ -34,6 +34,7 @@ export async function renderBotTemplate(message: Message) {
 
   const templateString = Mustache.render(template, {
     preference,
+    name: botConfig.name,
     title: `${botConfig.name} ${botStaticContext.version}`,
     aliveTime: prettyDuration((Date.now() - botStaticContext.startTime) / 1e3),
   })

@@ -60,7 +60,8 @@ export const callLLM = async (
       SEPARATOR_2,
       `-- calling LLM(model=${queryConfig.model}): `,
       ...queryConfig.messages.map(
-        (m) => `  [${m.role.padEnd(9)}]: ${prettyString(m.content, 60)}`,
+        (m) =>
+          `  [${m.role.padEnd(9)}]: ${prettyString(JSON.stringify(m.content), 60)}`,
       ),
     ].join("\n"),
   )
