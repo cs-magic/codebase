@@ -1,4 +1,4 @@
-import { api } from "../../../../common-api"
+import { api } from "../../../../common-api-client"
 import { IFetchWechatArticleStat } from "../schema"
 
 /**

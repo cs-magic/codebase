@@ -1,17 +1,22 @@
-import { Message } from "wechaty"
-import { getConvPreference } from "../utils/get-conv-preference"
+import { Message, Wechaty } from "wechaty"
+import { getBotContextFromMessage } from "../utils/bot-context"
 import { prettyBotQuery } from "../utils/pretty-bot-query"
 import { CommandType } from "./_all"
 
 export class BaseManager {
   public message: Message
-  public _botWxid: string
+  public bot: Wechaty
   public title: string
 
-  constructor(title: string, message: Message, botWxid: string) {
+  constructor(bot: Wechaty, title: string, message: Message) {
+    // todo: bot on message
+    this.bot = bot
     this.title = title
     this.message = message
-    this._botWxid = botWxid
+  }
+
+  get botWxid() {
+    return this.bot.wxid
   }
 
   get conv() {
@@ -23,14 +28,8 @@ export class BaseManager {
   }
 
   async standardReply(content: string, tips?: CommandType[]) {
-    const preference = await getConvPreference(this.message)
-
-    const pretty = await prettyBotQuery(
-      this.title,
-      content,
-      tips,
-      preference.lang,
-    )
+    const context = await getBotContextFromMessage(this.bot, this.message)
+    const pretty = await prettyBotQuery(context, this.title, content, tips)
     await this.message.say(pretty)
   }
 }

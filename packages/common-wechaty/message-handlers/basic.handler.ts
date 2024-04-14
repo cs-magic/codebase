@@ -29,7 +29,7 @@ export class BasicHandler extends BaseHandler {
     )
     if (!result) return
 
-    const template = await renderBotTemplate(message)
+    const template = await renderBotTemplate(message, this.bot.staticContext)
 
     switch (result.command) {
       case "ding":

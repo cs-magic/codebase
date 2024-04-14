@@ -6,8 +6,7 @@ import { fileURLToPath } from "url"
 import { Message } from "wechaty"
 import { prettyDuration } from "../../common-common/pretty-duration"
 import { LangType } from "../../common-i18n/schema"
-import { botStaticContext } from "../create-wechaty-bot"
-import { IBotTemplate } from "../schema"
+import { IBotStaticContext, IBotTemplate } from "../schema"
 
 import { getBotDynamicContext } from "./bot-context"
 import { getConvPreference } from "./get-conv-preference"
@@ -22,7 +21,10 @@ export const loadBotTemplate = async (lang: LangType) => {
   )
 }
 
-export async function renderBotTemplate(message: Message) {
+export async function renderBotTemplate(
+  message: Message,
+  botContext: IBotStaticContext,
+) {
   const preference = await getConvPreference(message)
   console.log({ preference })
 
@@ -35,8 +37,8 @@ export async function renderBotTemplate(message: Message) {
   const templateString = Mustache.render(template, {
     preference,
     name: botConfig.name,
-    title: `${botConfig.name} ${botStaticContext.version}`,
-    aliveTime: prettyDuration((Date.now() - botStaticContext.startTime) / 1e3),
+    title: `${botConfig.name} ${botContext.version}`,
+    aliveTime: prettyDuration((Date.now() - botContext.startTime) / 1e3),
   })
 
   const templateData = jsYaml.load(templateString, {}) as IBotTemplate

@@ -1,3 +1,3 @@
-import { IApi } from "../common-api/schema"
+import { IApi } from "../common-api-client/schema"
 
 export type IUploadFile = IApi<File, string>

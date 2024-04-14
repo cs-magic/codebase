@@ -2,7 +2,7 @@
 
 import { env } from "@/env"
 import { sha1 } from "js-sha1"
-import { api } from "../../common-api"
+import { api } from "../../common-api-client"
 import { fetchWechatApi } from "../functions"
 import { IWechatSDKToken } from "../schema"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"

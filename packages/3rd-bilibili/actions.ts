@@ -1,7 +1,7 @@
 "use server"
 
-import { api } from "../common-api"
-import { IApiResult } from "../common-api/schema"
+import { api } from "../common-api-client"
+import { IApiResult } from "../common-api-client/schema"
 import { IBilibiliVideoDetail } from "./schema"
 
 export const getBilibiliSummary = async (bvid: string) => {

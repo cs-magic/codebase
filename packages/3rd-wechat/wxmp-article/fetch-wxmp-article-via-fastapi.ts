@@ -1,6 +1,6 @@
 import { env } from "@/env"
 import { ICardGenOptions } from "@/schema/card"
-import { backendApi } from "../../common-api"
+import { backendApi } from "../../common-api-client"
 import { Prisma } from ".prisma/client"
 
 export const fetchWxmpArticleViaFastapi = async (

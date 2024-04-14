@@ -16,6 +16,8 @@ export type IBotDynamicContext = {
   name: string
 }
 
+export type IBotContext = IBotStaticContext & IBotDynamicContext
+
 export type IBotTemplate = {
   basic: string
   help: string

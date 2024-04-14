@@ -1,5 +1,5 @@
 import parse from "node-html-parser"
-import { api } from "../../common-api"
+import { api } from "../../common-api-client"
 import { parseMetaFromHtml } from "../../common-html/utils"
 
 export const getWechatArticleUrlFromShortId = (shortId: string) =>

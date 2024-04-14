@@ -87,10 +87,10 @@ export class ChatManager extends BaseManager {
     // 如果有多个匹配，使用最新的
     const topicTarget = await robustSelect(Object.keys(topics), selectChatTopic)
 
-    if (!this._botWxid) throw new Error("无法获取到小助手微信ID")
+    if (!this.botWxid) throw new Error("无法获取到小助手微信ID")
 
     const messages = await listMessagesOfSpecificTopic(
-      this._botWxid,
+      this.botWxid,
       this.convId,
       topicTarget,
     )
@@ -117,7 +117,7 @@ export class ChatManager extends BaseManager {
           // including @all
           // await m.mentionSelf()
           // excluding @all
-          (await m.mentionList()).some((m) => m.id === this._botWxid)
+          (await m.mentionList()).some((m) => m.id === this.botWxid)
         )) ||
       // 过滤非文本 todo: image/xxxx
       m.type() !== types.Message.Text ||
@@ -134,13 +134,13 @@ export class ChatManager extends BaseManager {
     }
 
     const filteredMessages = await listMessagesOfLatestTopic(
-      this._botWxid,
+      this.botWxid,
       this.convId,
     )
 
     const context = filteredMessages.map((m) => ({
       role:
-        m.talkerId === this._botWxid
+        m.talkerId === this.botWxid
           ? ("assistant" as const)
           : ("user" as const),
       // todo: merge chats
