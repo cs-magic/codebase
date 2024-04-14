@@ -1,23 +1,23 @@
-import remove from "lodash/remove"
+import remove from "lodash/remove";
 import {
   ITransClient,
   ITransEvent,
   ITransChannel,
-} from "../../../../common-sse/schema"
-import { ResponseFinalStatus } from "@/schema/sse"
-import { ILLMManagerTraditional } from "./schema"
+} from "../../../../common-sse/schema";
+import { ResponseFinalStatus } from "@cs-magic/p01-card/src/schema/sse";
+import { ILLMManagerTraditional } from "./schema";
 
 export class StaticLLMManager implements ILLMManagerTraditional {
-  static triggers: Record<string, ITransChannel> = {}
+  static triggers: Record<string, ITransChannel> = {};
 
-  private triggerId: string
+  private triggerId: string;
 
   constructor(triggerId: string) {
-    this.triggerId = triggerId
+    this.triggerId = triggerId;
   }
 
   get triggers() {
-    return Object.keys(StaticLLMManager.triggers)
+    return Object.keys(StaticLLMManager.triggers);
   }
 
   //////////////////////////////
@@ -25,21 +25,21 @@ export class StaticLLMManager implements ILLMManagerTraditional {
   //////////////////////////////
 
   get trigger() {
-    return StaticLLMManager.triggers[this.triggerId] ?? null
+    return StaticLLMManager.triggers[this.triggerId] ?? null;
   }
 
   async onTriggerStarts(): Promise<void> {
-    this.print("onTriggerStarts(before)")
-    StaticLLMManager.triggers[this.triggerId] = { events: [], clients: [] }
-    this.print("onTriggerStarts(end)")
+    this.print("onTriggerStarts(before)");
+    StaticLLMManager.triggers[this.triggerId] = { events: [], clients: [] };
+    this.print("onTriggerStarts(end)");
   }
 
   async onTriggerEnds(reason: ResponseFinalStatus) {
-    this.print("onTriggerEnds(before)")
+    this.print("onTriggerEnds(before)");
     // !important
-    this.onEvent({ event: "close", data: { reason } })
-    delete StaticLLMManager.triggers[this.triggerId]
-    this.print("onTriggerEnds(end)")
+    this.onEvent({ event: "close", data: { reason } });
+    delete StaticLLMManager.triggers[this.triggerId];
+    this.print("onTriggerEnds(end)");
   }
 
   //////////////////////////////
@@ -50,25 +50,25 @@ export class StaticLLMManager implements ILLMManagerTraditional {
     console.log("[LLM] >> ", {
       triggerId: this.triggerId,
       ...event,
-    })
+    });
     StaticLLMManager.triggers[this.triggerId]?.clients.forEach((client) => {
       // how?
-      client.onEvent(event)
-    })
+      client.onEvent(event);
+    });
   }
 
   async onClientConnected(client: ITransClient): Promise<void> {
-    this.print(`onClientConnected(id=${client.id})`)
+    this.print(`onClientConnected(id=${client.id})`);
     if (!this.trigger) {
       client.onEvent({
         event: "close",
         data: { reason: "not-found" },
-      })
-      return
+      });
+      return;
     }
 
-    await Promise.all(this.trigger.events.map(async (e) => client.onEvent(e)))
-    this.trigger.clients.push(client)
+    await Promise.all(this.trigger.events.map(async (e) => client.onEvent(e)));
+    this.trigger.clients.push(client);
   }
 
   //////////////////////////////
@@ -76,9 +76,9 @@ export class StaticLLMManager implements ILLMManagerTraditional {
   //////////////////////////////
 
   onClientDisconnected(clientId: string): Promise<void> {
-    this.print(`onClientDisconnected(id=${clientId})`)
-    remove(this.trigger?.clients ?? [], (c) => c.id === clientId)
-    return Promise.resolve(undefined)
+    this.print(`onClientDisconnected(id=${clientId})`);
+    remove(this.trigger?.clients ?? [], (c) => c.id === clientId);
+    return Promise.resolve(undefined);
   }
 
   async hasTrigger(): Promise<boolean> {
@@ -86,13 +86,13 @@ export class StaticLLMManager implements ILLMManagerTraditional {
     //     triggerId,
     //     triggers: this.triggers,
     //   })
-    return this.triggerId in StaticLLMManager.triggers
+    return this.triggerId in StaticLLMManager.triggers;
   }
 
   private print(name: string) {
     console.log(`[sse] ${name}: `, {
       triggerId: this.triggerId,
       triggers: this.triggers,
-    })
+    });
   }
 }

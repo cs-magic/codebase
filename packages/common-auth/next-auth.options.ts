@@ -1,14 +1,14 @@
-import { env } from "@/env"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { CallbacksOptions, type NextAuthOptions } from "next-auth"
-import { type Adapter } from "next-auth/adapters"
-import { ProfileUpdateProvider } from "../common-auth-profile/provider"
-import { SmsProvider } from "../common-auth-sms/provider"
-import WechatProvider from "../common-auth-wechat/provider"
-import { IWechatProfile } from "../common-auth-wechat/schema"
-import { prisma } from "../common-db/providers/prisma"
+import { env } from "@cs-magic/p01-card/src/env";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { CallbacksOptions, type NextAuthOptions } from "next-auth";
+import { type Adapter } from "next-auth/adapters";
+import { ProfileUpdateProvider } from "../common-auth-profile/provider";
+import { SmsProvider } from "../common-auth-sms/provider";
+import WechatProvider from "../common-auth-wechat/provider";
+import { IWechatProfile } from "../common-auth-wechat/schema";
+import { prisma } from "../common-db/providers/prisma";
 
-import { tokenExpireSeconds } from "./config"
+import { tokenExpireSeconds } from "./config";
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -37,23 +37,23 @@ export const authOptions: NextAuthOptions = {
 
       // 首次注册入表 （user中有userId）
       if (user) {
-        token.sub = user.id
-        token.name = user.name
-        token.image = user.image ?? null
-        token.wxid = user.wxid
-        token.phone = user.phone
+        token.sub = user.id;
+        token.name = user.name;
+        token.image = user.image ?? null;
+        token.wxid = user.wxid;
+        token.phone = user.phone;
       }
 
       // profile 中 只有 accountId，没有 id
       // todo: unify Profile
       // link 是自动的，link会在有session的时候登录其他平台拿到profile后更新
       if (profile) {
-        token.name = profile.nickname
-        token.image = profile.headimgurl
-        token.wxid = profile.openid
+        token.name = profile.nickname;
+        token.image = profile.headimgurl;
+        token.wxid = profile.openid;
       }
 
-      return token
+      return token;
     },
 
     session: ({ session, user, token }) => {
@@ -69,7 +69,7 @@ export const authOptions: NextAuthOptions = {
           phone: token.phone,
           email: token.email,
         },
-      }
+      };
     },
   } as Partial<
     CallbacksOptions<// custom profile
@@ -100,4 +100,4 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-}
+};

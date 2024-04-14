@@ -1,11 +1,13 @@
 {
   "name": "@cs-magic/wechaty",
+  "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
     "start-wechat-bot": "tsx index.ts"
   },
   "dependencies": {
+    "qrcode-terminal": "^0.12.0",
     "wechaty": "^1.20.2",
     "wechaty-puppet-padlocal": "^1.20.1"
   }

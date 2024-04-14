@@ -33,7 +33,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./projects/p01-card/src/*"
       ]
     }
   },
@@ -48,7 +48,7 @@
     ".next-tmp/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ],
   "ts-node": {
     "esm": true,
@@ -61,7 +61,7 @@
 
       "module": "CommonJS",
       "isolatedModules": false,
-      "esModuleInterop": true,
+      "esModuleInterop": true
 
     }
   }

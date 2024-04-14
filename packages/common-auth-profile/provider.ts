@@ -1,7 +1,7 @@
-import { userDetailSchema } from "@/schema/user.detail"
-import { PROFILE_UPDATE_PROVIDER_ID } from "../common-auth-sms/const"
-import { prisma } from "../common-db/providers/prisma"
-import Credentials from "next-auth/providers/credentials"
+import { userDetailSchema } from "@cs-magic/p01-card/src/schema/user.detail";
+import { PROFILE_UPDATE_PROVIDER_ID } from "../common-auth-sms/const";
+import { prisma } from "../common-db/providers/prisma";
+import Credentials from "next-auth/providers/credentials";
 
 export const ProfileUpdateProvider = Credentials({
   id: PROFILE_UPDATE_PROVIDER_ID,
@@ -11,17 +11,17 @@ export const ProfileUpdateProvider = Credentials({
     image: { type: "string" },
   },
   authorize: async (credentials, req) => {
-    console.log("updating profile with credentials: ", credentials)
-    if (!credentials) throw new Error("no credentials")
-    const { image, name, id } = credentials
-    if (!image || !name) throw new Error("no name or image")
+    console.log("updating profile with credentials: ", credentials);
+    if (!credentials) throw new Error("no credentials");
+    const { image, name, id } = credentials;
+    if (!image || !name) throw new Error("no name or image");
 
-    await prisma.user.findUniqueOrThrow({ where: { id } })
+    await prisma.user.findUniqueOrThrow({ where: { id } });
 
     return prisma.user.update({
       where: { id },
       data: { name, image },
       ...userDetailSchema,
-    })
+    });
   },
-})
+});

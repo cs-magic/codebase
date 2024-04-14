@@ -1,7 +1,7 @@
-import { env } from "@/env"
-import { ICardGenOptions } from "@/schema/card"
-import { backendApi } from "../../common-api-client"
-import { Prisma } from ".prisma/client"
+import { env } from "@cs-magic/p01-card/src/env";
+import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card";
+import { backendApi } from "../../common-api-client";
+import { Prisma } from ".prisma/client";
 
 export const fetchWxmpArticleViaFastapi = async (
   url: string,
@@ -16,7 +16,7 @@ export const fetchWxmpArticleViaFastapi = async (
         md_with_img: options?.mdWithImg,
       },
     },
-  )
-  data.time = new Date((data as { time: string }).time)
-  return data
-}
+  );
+  data.time = new Date((data as { time: string }).time);
+  return data;
+};

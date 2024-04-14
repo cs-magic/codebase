@@ -1,4 +1,4 @@
-import {ISummaryParsed} from "@/schema/card"
+import { ISummaryParsed } from "@cs-magic/p01-card/src/schema/card";
 
 /**
  *  regex of `/ms`: ref:  https://stackoverflow.com/a/66001191/9422455
@@ -7,7 +7,7 @@ import {ISummaryParsed} from "@/schema/card"
 export const parseSummary = (input?: string | null): ISummaryParsed => {
   // console.log("-- parsed summary input: \n", input)
   const parse = (key: string) =>
-    new RegExp(`<${key}>(.*?)</${key}>`, "ms").exec(input ?? "")?.[1]
+    new RegExp(`<${key}>(.*?)</${key}>`, "ms").exec(input ?? "")?.[1];
 
   return {
     title: parse("title"),
@@ -17,12 +17,12 @@ export const parseSummary = (input?: string | null): ISummaryParsed => {
     tags: parse("tags")
       ?.split(/[,，]/)
       .map((s) => s.replace(/\s+/g, "")),
-  }
-}
+  };
+};
 export type IArticleSummaryParsed = {
-  title?: string
-  description?: string
-  mindmap?: string
-  comment?: string
-  tags?: string[]
-}
+  title?: string;
+  description?: string;
+  mindmap?: string;
+  comment?: string;
+  tags?: string[];
+};

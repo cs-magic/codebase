@@ -1,5 +1,5 @@
-import { env } from "@/env"
-import { PrismaClient } from "@prisma/client"
+import { env } from "@cs-magic/p01-card/src/env";
+import { PrismaClient } from "@prisma/client";
 
 const createPrismaClient = () =>
   new PrismaClient({
@@ -11,13 +11,13 @@ const createPrismaClient = () =>
             "warn",
           ]
         : ["error"],
-  })
+  });
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof createPrismaClient> | undefined
-}
+  prisma: ReturnType<typeof createPrismaClient> | undefined;
+};
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 // 开发模式下，每次复用连接
-if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
+if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

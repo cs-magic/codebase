@@ -1,13 +1,13 @@
 {
   "name": "@cs-magic/api-service",
+  "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-  "private": true,
   "scripts": {
     "start-api": "tsx index.ts"
   },
   "dependencies": {
-    "@cs-magic/wechaty": "workspace:^",
+    "@cs-magic/wechaty": "0.1.0",
     "@fastify/websocket": "^10.0.1",
     "fastify": "^4.26.2",
     "fastify-websocket": "^4.3.0"
