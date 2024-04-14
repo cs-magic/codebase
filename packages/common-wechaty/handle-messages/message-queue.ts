@@ -25,9 +25,7 @@ export class MessageQueue {
 
   async enqueueMessage(message: Message) {
     this.queue.push(message)
-    // console.log(
-    //   `-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`,
-    // )
+    // console.log(`-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`)
     if (!this.processing) {
       this.processing = true
       await this._processMessage()

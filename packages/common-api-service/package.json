@@ -1,0 +1,6 @@
+{
+  "name": "common-api-service",
+  "packageManager": "yarn@4.1.1",
+  "type": "module",
+  "private": true
+}

@@ -14,10 +14,6 @@ fastify.get("/", async function handler(request, reply) {
 })
 
 fastify.get("/bot/start", async () => {
-  bot.on("error", (error) => {
-    console.error("-- [error]: ", error)
-  })
-
   try {
     console.log("\n-- starting\n")
     await bot.start()

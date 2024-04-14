@@ -11,6 +11,19 @@ const config = {
   distDir: process.env.DIST ?? ".next",
 
   webpack(config, { dev, isServer }) {
+    // 以下是gpt给的，为了解决wechaty的问题，但没用，无法启动
+    // if (!isServer) {
+    //   config.node = {
+    //     fs: false,
+    //     net: false,
+    //     tls: false,
+    //   }
+    // }
+    // config.module.rules.push({
+    //   test: /\.cjs$/,
+    //   type: "javascript/auto",
+    // })
+
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg"),
