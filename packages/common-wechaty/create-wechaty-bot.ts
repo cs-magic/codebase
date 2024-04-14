@@ -2,25 +2,22 @@ import { config } from "@/config/system"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { prettyError } from "../common-common/pretty-error"
-import { sleep } from "../common-datetime/utils"
-import { IBotStaticContext } from "./schema"
 import { getBotContextFromMessage } from "./utils/bot-context"
+import { getBotWxid } from "./utils/bot-wxid"
 import { getHandlers } from "./utils/get-handlers"
 import { prettyBotQuery } from "./utils/pretty-bot-query"
 
-export const botStaticContext: IBotStaticContext = {
-  version: config.version,
-  startTime: Date.now(),
-}
-
 export const createWechatyBot = ({ name }: { name?: string }) => {
-  console.log("-- create bot: ", { name })
+  console.log("-- init bot: ", { name })
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
-  }) as Wechaty // 等会加上各种其他函数
+  }) as Wechaty // 等会再更新其他扩展的信息
 
   bot
+    .on("error", async (err) => {
+      console.log("-- error: ", err)
+    })
     .on("scan", (value, status) => {
       console.log(
         `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
@@ -30,15 +27,12 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     .on("login", async (user) => {
       console.log(`User logged in: `, user.payload)
 
-      // update bot wxid
-      const botWxid = user.payload?.id
-      if (!botWxid)
-        throw new Error(
-          `no wxid from user payload: ${JSON.stringify(user.payload)}`,
-        )
+      bot.wxid = getBotWxid(user)
 
-      bot.staticContext = botStaticContext
-      bot.wxid = botWxid
+      bot.staticContext = {
+        version: config.version,
+        startTime: Date.now(),
+      }
     })
     .on("message", async (message) => {
       try {
@@ -55,8 +49,6 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
         const context = await getBotContextFromMessage(bot, message)
         await message.say(await prettyBotQuery(context, "哎呀出错啦", s))
       }
-
-      await sleep(3e3)
     })
   // .start()
 

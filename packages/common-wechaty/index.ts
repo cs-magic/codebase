@@ -1,3 +1,10 @@
+import { debugProcesses } from "../common-dev/debug-processes"
 import { createWechatyBot } from "./create-wechaty-bot"
 
-void createWechatyBot({ name: process.argv[2] ?? "default" }).start()
+const bot = createWechatyBot({ name: process.argv[2] ?? "default" })
+void bot.stop().then(() => {
+  debugProcesses()
+  // process.exit(0)
+})
+// .start()
+// .stop()
