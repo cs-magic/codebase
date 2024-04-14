@@ -10,7 +10,16 @@ import { getBotWxid } from "./utils/bot-wxid"
 
 import dotenv from "dotenv"
 
-dotenv.config({ path: path.join(projectPath, "projects/p01-card/.env") })
+dotenv.config({
+  path: path.join(projectPath, "projects/p01-card/.env"),
+  override: true,
+})
+console.log(
+  "keys in env: ",
+  Object.keys(process.env)
+    .filter((k) => k.toLowerCase().includes("wechaty"))
+    .map((k) => `${k}: ${process.env[k]}`),
+)
 
 export const createWechatyBot = ({
   name,

@@ -4,8 +4,8 @@ import Mustache from "mustache"
 import path from "path"
 import { fileURLToPath } from "url"
 import { Message } from "wechaty"
-import { prettyDuration } from "../../../packages/common-common/pretty-duration"
-import { LangType } from "../../../packages/common-i18n/schema"
+import { prettyDuration } from "../../common-common/pretty-duration"
+import { LangType } from "../../common-i18n/schema"
 import { IBotStaticContext, IBotTemplate } from "../schema"
 
 import { getBotDynamicContext } from "./bot-context"
@@ -26,7 +26,7 @@ export async function renderBotTemplate(
   botContext: IBotStaticContext,
 ) {
   const preference = await getConvPreference(message)
-  console.log({ preference })
+  // console.log({ preference })
 
   const lang = preference.lang
 

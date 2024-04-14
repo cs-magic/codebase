@@ -43,7 +43,9 @@ void fastify.register(async function (fastify) {
                 name: result.args,
                 onScan: (value, status) => {
                   console.log({ value, status })
-                  socket.send(JSON.stringify({ value, status }))
+                  socket.send(
+                    JSON.stringify({ type: "scan", data: { value, status } }),
+                  )
                 },
               })
               await bot.start()
