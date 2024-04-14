@@ -1,5 +1,5 @@
 {
-  "name": "common-api-service",
+  "name": "@cs-magic/api-service",
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "private": true,
@@ -7,8 +7,8 @@
     "start-api": "tsx index.ts"
   },
   "dependencies": {
+    "@cs-magic/wechaty": "workspace:^",
     "@fastify/websocket": "^10.0.1",
-    "common-wechaty": "workspace:^",
     "fastify": "^4.26.2",
     "fastify-websocket": "^4.3.0"
   },

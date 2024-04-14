@@ -1,6 +1,6 @@
 import fw from "@fastify/websocket"
-import { createWechatyBot } from "common-wechaty/create-wechaty-bot"
-import { parseCommand } from "common-wechaty/utils/parse-command"
+import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
+import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import Fastify from "fastify"
 import { Wechaty } from "wechaty"
 import { z } from "zod"
