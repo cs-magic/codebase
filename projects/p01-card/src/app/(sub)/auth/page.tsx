@@ -1,33 +1,31 @@
-"use client"
+"use client";
 
-import { useAtom } from "jotai"
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { toast } from "sonner"
-import { devEnabledAtom } from "../../../../../common-dev/store"
-import { UnexpectedError } from "../../../../../common-common/schema"
-import { useEnvironments } from "../../../../../common-hooks/use-environments"
-import { Loading } from "../../../../../common-ui/components/loading"
-import { Label } from "../../../../../common-ui-shadcn/components/label"
-import { Auth } from "../../../components/auth"
-import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
-import { AuthUpdateProfile } from "../../../components/auth-update-profile"
-import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in"
+import { useAtom } from "jotai";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { UnexpectedError } from "../../../../../../packages/common-common/schema";
+import { devEnabledAtom } from "../../../../../../packages/common-dev/store";
+import { useEnvironments } from "../../../../../../packages/common-hooks/use-environments";
+import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
+import { Loading } from "../../../../../../packages/common-ui/components/loading";
+import { Auth } from "../../../components/auth";
+import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in";
+import { AuthUpdateProfile } from "../../../components/auth-update-profile";
+import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in";
 
 export default function AuthPage() {
-  const session = useSession()
-  const router = useRouter()
-  const { isWechat } = useEnvironments()
-  const devEnabled = useAtom(devEnabledAtom)
+  const session = useSession();
+  const router = useRouter();
+  const { isWechat } = useEnvironments();
 
-  const profileOk = !!session.data?.user.name && !!session.data.user.image
-  const phoneOk = !!session.data?.user.phone
-  const wxidOk = !!session.data?.user.wxid
+  const profileOk = !!session.data?.user?.name && !!session.data.user.image;
+  const phoneOk = !!session.data?.user?.phone;
+  const wxidOk = !!session.data?.user?.wxid;
 
   useEffect(() => {
-    if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/")
-  }, [phoneOk, profileOk, wxidOk, isWechat])
+    if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/");
+  }, [phoneOk, profileOk, wxidOk, isWechat]);
 
   useEffect(() => {
     // if (devEnabled && process.env.NODE_ENV !== "production")
@@ -35,15 +33,15 @@ export default function AuthPage() {
     //   duration: Infinity,
     //   closeButton: true,
     // })
-  }, [session])
+  }, [session]);
 
   switch (session.status) {
     case "authenticated":
-      if (!phoneOk) return <AuthSmsSignIn />
+      if (!phoneOk) return <AuthSmsSignIn />;
 
       if (isWechat && !wxidOk)
         return (
-          <div className={"w-full flex flex-col gap-4"}>
+          <div className={"flex w-full flex-col gap-4"}>
             <Label className={"text-xs text-muted-foreground"}>
               为更好地为阁下提供服务：
             </Label>
@@ -54,19 +52,19 @@ export default function AuthPage() {
 
             <AuthWechatSignIn />
           </div>
-        )
+        );
 
-      if (!profileOk) return <AuthUpdateProfile />
+      if (!profileOk) return <AuthUpdateProfile />;
 
-      return <Loading />
+      return <Loading />;
 
     case "loading":
-      return <Loading />
+      return <Loading />;
 
     case "unauthenticated":
-      return <Auth />
+      return <Auth />;
 
     default:
-      throw new UnexpectedError()
+      throw new UnexpectedError();
   }
 }

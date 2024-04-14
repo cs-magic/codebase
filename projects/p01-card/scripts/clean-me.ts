@@ -1,10 +1,10 @@
-import { prisma } from "../../common-db/providers/prisma"
+import { prisma } from "../../../packages/common-db/providers/prisma";
 
 const cleanMe = async () => {
   const result = await prisma.user.deleteMany({
     where: { OR: [{ phone: "17766091857" }, { name: { contains: "南川" } }] },
-  })
-  console.log("result: ", result)
-}
+  });
+  console.log("result: ", result);
+};
 
-void cleanMe()
+void cleanMe();

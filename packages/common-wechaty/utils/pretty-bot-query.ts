@@ -1,4 +1,4 @@
-import { prettyQuery } from "../../common-common/pretty-query"
+import { prettyQuery } from "../../../packages/common-common/pretty-query"
 import { CommandType } from "../handle-messages/_all"
 import { IBotContext } from "../schema"
 

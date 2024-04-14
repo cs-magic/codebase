@@ -1,31 +1,31 @@
-import "../styles/globals.css"
-import { type Viewport } from "next"
-import { Inter } from "next/font/google"
+import "../styles/globals.css";
+import { type Viewport } from "next";
+import { Inter } from "next/font/google";
 
-import { TRPCReactProvider } from "../../../common-trpc/react"
-import { Toaster } from "../../../common-ui-shadcn/components/sonner"
-import { TooltipProvider } from "../../../common-ui-shadcn/components/tooltip"
-import { cn } from "../../../common-ui-shadcn/utils"
-import { LoadingAlertDialog } from "../../../common-ui/components/loading"
-import JotaiProvider from "../../../common-ui/providers/jotai.provider"
-import { ScreenProvider } from "../../../common-ui/providers/screen.provider"
-import { SessionProvider } from "../../../common-ui/providers/session.provider"
-import ThemeProvider from "../../../common-ui/providers/theme.provider"
-import { Dev } from "../components/dev"
+import { TRPCReactProvider } from "../../../../packages/common-trpc/react";
+import { Toaster } from "../../../../packages/common-ui-shadcn/components/sonner";
+import { TooltipProvider } from "../../../../packages/common-ui-shadcn/components/tooltip";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { LoadingAlertDialog } from "../../../../packages/common-ui/components/loading";
+import JotaiProvider from "../../../../packages/common-ui/providers/jotai.provider";
+import { ScreenProvider } from "../../../../packages/common-ui/providers/screen.provider";
+import { SessionProvider } from "../../../../packages/common-ui/providers/session.provider";
+import ThemeProvider from "../../../../packages/common-ui/providers/theme.provider";
+import { Dev } from "../components/dev";
 
-import { config } from "../config"
-import GlobalHooksProviders from "../providers/global.provider"
+import { config } from "../config";
+import GlobalHooksProviders from "../providers/global.provider";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-})
+});
 
 export const metadata = {
   title: config.website.title,
   description: config.website.title,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-}
+};
 
 // ref: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#use-viewport-export
 export const viewport: Viewport = {
@@ -33,12 +33,12 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   // console.log(ansiColors.red("== RootLayout =="))
 
@@ -80,5 +80,5 @@ export default function RootLayout({
         </JotaiProvider>
       </body>
     </html>
-  )
+  );
 }

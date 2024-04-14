@@ -1,7 +1,7 @@
 import { ComponentProps } from "react"
 import Link from "next/link"
-import { cn } from "../../common-ui-shadcn/utils"
-import { buttonVariants } from "../../common-ui-shadcn/components/button"
+import { cn } from "../../../packages/common-ui-shadcn/utils"
+import { buttonVariants } from "../../../packages/common-ui-shadcn/components/button"
 
 export const ButtonLink = ({
   href,

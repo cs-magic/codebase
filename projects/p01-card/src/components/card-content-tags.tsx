@@ -1,11 +1,11 @@
-import { Badge } from "../../../common-ui-shadcn/components/ui/badge"
-import { cn } from "../../../common-ui-shadcn/utils"
+import { Badge } from "../../../../packages/common-ui-shadcn/components/ui/badge";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
 
 export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
-  if (!tags?.length) return null
+  if (!tags?.length) return null;
 
   return (
-    <div className={"flex items-center flex-wrap gap-0"}>
+    <div className={"flex flex-wrap items-center gap-0"}>
       {tags.slice(0, 3).map((tag) => (
         <Badge
           className={cn(
@@ -20,5 +20,5 @@ export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
         </Badge>
       ))}
     </div>
-  )
-}
+  );
+};

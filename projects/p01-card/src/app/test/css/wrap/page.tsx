@@ -1,11 +1,11 @@
-import { FlexContainer } from "../../../../../../common-ui/components/flex-container"
+import { FlexContainer } from "../../../../../../../packages/common-ui/components/flex-container";
 
 export default function TestCSSWrap() {
   return (
     <FlexContainer orientation={"vertical"}>
-      <div className={"w-[240px] h-[180px] bg-cyan-800"}>
+      <div className={"h-[180px] w-[240px] bg-cyan-800"}>
         <div
-          className={"w-12 float-right h-full flex flex-col justify-end"}
+          className={"float-right flex h-full w-12 flex-col justify-end"}
           style={{
             shapeOutside: "inset(48px 0 calc(100% - 96px) 0)",
           }}
@@ -15,5 +15,5 @@ export default function TestCSSWrap() {
         cdc asc ssc sccdc cdaxsx sxscscs ccd cdc
       </div>
     </FlexContainer>
-  )
+  );
 }

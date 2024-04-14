@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useEnvironments } from "../../../common-hooks/use-environments"
-import JoinComponents from "../../../common-ui/components/join-components"
-import { SeparatorContainer } from "../../../common-ui/components/separator-container"
-import { Label } from "../../../common-ui-shadcn/components/label"
-import { AuthSmsSignIn } from "./auth-sms-sign-in"
-import { AuthWechatSignIn } from "./auth-wechat-sign-in"
-import { BrandingTitle } from "./branding-title"
+import { useEnvironments } from "../../../../packages/common-hooks/use-environments";
+import JoinComponents from "../../../../packages/common-ui/components/join-components";
+import { SeparatorContainer } from "../../../../packages/common-ui/components/separator-container";
+import { Label } from "../../../../packages/common-ui-shadcn/components/label";
+import { AuthSmsSignIn } from "./auth-sms-sign-in";
+import { AuthWechatSignIn } from "./auth-wechat-sign-in";
+import { BrandingTitle } from "./branding-title";
 
 export const Auth = () => {
-  const { isWechat } = useEnvironments()
+  const { isWechat } = useEnvironments();
 
   return (
-    <div className={"flex flex-col gap-4 w-full items-center"}>
-      <div className={"text-semibold text-lg flex items-center gap-1"}>
+    <div className={"flex w-full flex-col items-center gap-4"}>
+      <div className={"text-semibold flex items-center gap-1 text-lg"}>
         <span className={"shrink-0"}>登录</span>
 
-        <BrandingTitle className={"text-lg gap-2"} />
+        <BrandingTitle className={"gap-2 text-lg"} />
       </div>
-      <Label className={"text-muted-foreground text-xs"}>
+      <Label className={"text-xs text-muted-foreground"}>
         欢迎回来！请登录以开启 <span className={"primary-gradient"}>A I</span>{" "}
         世界！
       </Label>
@@ -31,5 +31,5 @@ export const Auth = () => {
         separator={<SeparatorContainer>或者</SeparatorContainer>}
       />
     </div>
-  )
-}
+  );
+};

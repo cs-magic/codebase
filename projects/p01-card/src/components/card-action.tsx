@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useAtom } from "jotai"
-import { capitalize } from "lodash"
-import { HTMLAttributes } from "react"
-import { Atom } from "../../../common-state-management/jotai/types"
-import { cn } from "../../../common-ui-shadcn/utils"
-import { ButtonWithLoading } from "../../../common-ui/components/button-with-loading"
-import { ActionType } from "../schema/card"
+import { useAtom } from "jotai";
+import { capitalize } from "lodash";
+import { HTMLAttributes } from "react";
+import { Atom } from "../../../../packages/common-state-management/jotai/types";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { ButtonWithLoading } from "../../../../packages/common-ui/components/button-with-loading";
+import { ActionType } from "../schema/card";
 import {
   cardCopyingAtom,
   cardDownloadingAtom,
   cardGeneratingAtom,
   cardResettingAtom,
   cardUploadingAtom,
-} from "../store/card.atom"
+} from "../store/card.atom";
 
 export const CardAction = ({
   disabled,
@@ -23,9 +23,9 @@ export const CardAction = ({
   onClick,
   ...props
 }: {
-  action: (type: ActionType) => Promise<void>
-  disabled?: boolean
-  type: ActionType
+  action: (type: ActionType) => Promise<void>;
+  disabled?: boolean;
+  type: ActionType;
 } & HTMLAttributes<HTMLButtonElement>) => {
   const atomMap: Record<ActionType, Atom<boolean>> = {
     generate: cardGeneratingAtom,
@@ -33,9 +33,9 @@ export const CardAction = ({
     download: cardDownloadingAtom,
     upload: cardUploadingAtom,
     reset: cardResettingAtom,
-  }
+  };
 
-  const [v, setV] = useAtom(atomMap[type])
+  const [v, setV] = useAtom(atomMap[type]);
 
   return (
     <ButtonWithLoading
@@ -45,15 +45,15 @@ export const CardAction = ({
       loading={v}
       disabled={disabled}
       onClick={async () => {
-        setV(true)
+        setV(true);
         // await sleep(3000)
         await action(type).finally(() => {
-          setV(false)
-        })
+          setV(false);
+        });
       }}
       {...props}
     >
       {capitalize(type)}
     </ButtonWithLoading>
-  )
-}
+  );
+};

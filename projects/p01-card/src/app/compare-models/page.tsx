@@ -1,20 +1,20 @@
-import { promises } from "fs"
-import sortBy from "lodash/sortBy"
-import path from "path"
-import React from "react"
-import { generatedPath } from "../../../../common-common/path"
-import moment from "../../../../common-datetime/moment"
-import { ICallLLMResponse } from "../../../../common-llm/schema/llm"
-import { FlexContainer } from "../../../../common-ui/components/flex-container"
-import { LabelLine } from "../../../../common-ui/components/label-line"
-import { CardPreview } from "../../components/card-preview"
-import { StandardCard } from "../../components/standard-card"
-import { ICardDetail } from "../../schema/card.basic"
+import { promises } from "fs";
+import sortBy from "lodash/sortBy";
+import path from "path";
+import React from "react";
+import { generatedPath } from "../../../../../packages/common-common/path";
+import moment from "../../../../../packages/common-datetime/moment";
+import { ICallLLMResponse } from "../../../../../packages/common-llm/schema/llm";
+import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
+import { LabelLine } from "../../../../../packages/common-ui/components/label-line";
+import { CardPreview } from "../../components/card-preview";
+import { StandardCard } from "../../components/standard-card";
+import { ICardDetail } from "../../schema/card.basic";
 
 export default async function CompareModelsPage() {
   const ts = (await promises.readdir(generatedPath)).filter((n) =>
     /^\d+$/.test(n),
-  )
+  );
 
   return (
     <FlexContainer orientation={"vertical"} className={"justify-start"}>
@@ -22,15 +22,15 @@ export default async function CompareModelsPage() {
         <RenderT t={Number(t)} key={t} />
       ))}
     </FlexContainer>
-  )
+  );
 }
 
 const RenderT = async ({ t }: { t: number }) => {
-  const dir = path.join(generatedPath, t.toString())
+  const dir = path.join(generatedPath, t.toString());
 
   const cardNames = (await promises.readdir(dir)).filter((s) =>
     s.startsWith("wxmp-article"),
-  )
+  );
 
   const cards: ICardDetail[] = await Promise.all(
     cardNames.map(async (cardName) => {
@@ -38,26 +38,26 @@ const RenderT = async ({ t }: { t: number }) => {
         await promises.readFile(path.join(dir, cardName), {
           encoding: "utf-8",
         }),
-      ) as ICardDetail
+      ) as ICardDetail;
     }),
-  )
+  );
 
   return (
     <StandardCard title={moment(t).format("MM/DD HH:mm")}>
       <div
         className={
-          "w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+          "grid w-fit grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         }
       >
         {sortBy(cards, (c: ICardDetail) => {
-          const contentSummary = c.contentSummary as ICallLLMResponse | null
-          const query = contentSummary?.query
-          if (!query?.end) return 99999 // 没有完成的，放最后
-          return query.end - query.start
+          const contentSummary = c.contentSummary as ICallLLMResponse | null;
+          const query = contentSummary?.query;
+          if (!query?.end) return 99999; // 没有完成的，放最后
+          return query.end - query.start;
         }).map((card, index) => {
-          const summary = card.contentSummary as ICallLLMResponse | null
-          const options = summary?.options
-          const query = summary?.query
+          const summary = card.contentSummary as ICallLLMResponse | null;
+          const options = summary?.options;
+          const query = summary?.query;
 
           return (
             <div className={"flex flex-col gap-2"} key={index}>
@@ -77,9 +77,9 @@ const RenderT = async ({ t }: { t: number }) => {
 
               <CardPreview key={index} card={card} />
             </div>
-          )
+          );
         })}
       </div>
     </StandardCard>
-  )
-}
+  );
+};

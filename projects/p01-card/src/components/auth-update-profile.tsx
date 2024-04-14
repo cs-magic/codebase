@@ -1,26 +1,29 @@
-"use client"
+"use client";
 
-import { useAtom } from "jotai"
-import { signOut } from "next-auth/react"
-import { toast } from "sonner"
-import { userImageAtom, userNameAtom } from "../../../common-auth/store"
-import { Button } from "../../../common-ui-shadcn/components/button"
-import { Label } from "../../../common-ui-shadcn/components/label"
-import { useUserUpdateProfile } from "../../../common-hooks/use-user-update-profile"
-import { UserInputAvatar } from "./user-input-avatar"
-import { UserInputName } from "./user-input-name"
+import { useAtom } from "jotai";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
+import {
+  userImageAtom,
+  userNameAtom,
+} from "../../../../packages/common-auth/store";
+import { Button } from "../../../../packages/common-ui-shadcn/components/button";
+import { Label } from "../../../../packages/common-ui-shadcn/components/label";
+import { useUserUpdateProfile } from "../../../../packages/common-hooks/use-user-update-profile";
+import { UserInputAvatar } from "./user-input-avatar";
+import { UserInputName } from "./user-input-name";
 
 export const AuthUpdateProfile = () => {
-  const [name] = useAtom(userNameAtom)
-  const [image] = useAtom(userImageAtom)
-  const updateProfile = useUserUpdateProfile()
+  const [name] = useAtom(userNameAtom);
+  const [image] = useAtom(userImageAtom);
+  const updateProfile = useUserUpdateProfile();
 
   return (
-    <div className={"flex flex-col gap-4 w-full items-center"}>
+    <div className={"flex w-full flex-col items-center gap-4"}>
       <Label className={"text-semibold text-lg"}>只差最后一步啦！</Label>
       <div
         className={
-          "text-muted-foreground text-xs flex flex-col items-center gap-4"
+          "flex flex-col items-center gap-4 text-xs text-muted-foreground"
         }
       >
         <div>请输入阁下的昵称：</div>
@@ -33,13 +36,13 @@ export const AuthUpdateProfile = () => {
           disabled={!name || !image}
           className={"w-full"}
           onClick={async () => {
-            const res = await updateProfile()
+            const res = await updateProfile();
             if (res?.ok) {
-              toast.success("登录成功")
+              toast.success("登录成功");
             } else {
               // e.g. 表里的记录被删了
-              toast.error("登录失败，请重试！")
-              void signOut()
+              toast.error("登录失败，请重试！");
+              void signOut();
             }
           }}
         >
@@ -47,5 +50,5 @@ export const AuthUpdateProfile = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};

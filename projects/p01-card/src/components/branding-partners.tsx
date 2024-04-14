@@ -1,22 +1,22 @@
 import {
   Avatar,
   AvatarImage,
-} from "../../../common-ui-shadcn/components/avatar"
-import { ImageEqualHeight } from "../../../common-ui/components/image-equal-height"
-import { SeparatorContainer } from "../../../common-ui/components/separator-container"
+} from "../../../../packages/common-ui-shadcn/components/avatar";
+import { ImageEqualHeight } from "../../../../packages/common-ui/components/image-equal-height";
+import { SeparatorContainer } from "../../../../packages/common-ui/components/separator-container";
 
-import { config } from "../config"
+import { config } from "../config";
 
 export const BrandingPartners = () => {
-  const avatars = [config.website.avatar.mark, config.website.avatar.idoubi]
-  const sponsors: string[] = []
+  const avatars = [config.website.avatar.mark, config.website.avatar.idoubi];
+  const sponsors: string[] = [];
 
   return (
     <>
       {!!sponsors.length && (
         <>
           <SeparatorContainer>合作伙伴</SeparatorContainer>
-          <div className={"flex justify-center gap-4 mt-auto h-8"}>
+          <div className={"mt-auto flex h-8 justify-center gap-4"}>
             {sponsors.map((item) => (
               <ImageEqualHeight src={item} key={item} />
             ))}
@@ -28,7 +28,7 @@ export const BrandingPartners = () => {
       {!!avatars.length && (
         <>
           <SeparatorContainer>独立开发者</SeparatorContainer>
-          <div className={"flex justify-center gap-4 mt-auto"}>
+          <div className={"mt-auto flex justify-center gap-4"}>
             {avatars.map((item) => (
               <Avatar key={item}>
                 <AvatarImage src={item} />
@@ -38,5 +38,5 @@ export const BrandingPartners = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};

@@ -4,7 +4,7 @@ import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import Fastify from "fastify"
 import { Wechaty } from "wechaty"
 import { z } from "zod"
-import { prettyError } from "../common-common/pretty-error"
+import { prettyError } from "../../packages/common-common/pretty-error"
 
 const fastify = Fastify({
   logger: true,

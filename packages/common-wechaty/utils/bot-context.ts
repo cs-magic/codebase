@@ -1,5 +1,5 @@
 import { Message, Wechaty } from "wechaty"
-import { LangType } from "../../common-i18n/schema"
+import { LangType } from "../../../packages/common-i18n/schema"
 import { IBotContext, IBotDynamicContext, IBotStaticContext } from "../schema"
 import { getConvPreference } from "./get-conv-preference"
 

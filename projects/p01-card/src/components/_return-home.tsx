@@ -1,19 +1,19 @@
-"use client"
-import Link from "next/link"
-import { uiAlertDialogContent } from "../../../common-ui/store"
-import { Button } from "../../../common-ui-shadcn/components/button"
-import React from "react"
-import { ContentAlertDialog } from "../../../common-ui/components/content-alert-dialog"
-import { useAtom } from "jotai"
+"use client";
+import Link from "next/link";
+import { uiAlertDialogContent } from "../../../../packages/common-ui/store";
+import { Button } from "../../../../packages/common-ui-shadcn/components/button";
+import React from "react";
+import { ContentAlertDialog } from "../../../../packages/common-ui/components/content-alert-dialog";
+import { useAtom } from "jotai";
 
 export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {
-  const [dynamicContent] = useAtom(uiAlertDialogContent)
+  const [dynamicContent] = useAtom(uiAlertDialogContent);
 
   return (
     <ContentAlertDialog>
       <div
         className={
-          "w-full h-full flex flex-col items-center justify-center gap-8"
+          "flex h-full w-full flex-col items-center justify-center gap-8"
         }
       >
         <h2>{content ?? dynamicContent}</h2>
@@ -22,5 +22,5 @@ export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {
         </Link>
       </div>
     </ContentAlertDialog>
-  )
-}
+  );
+};

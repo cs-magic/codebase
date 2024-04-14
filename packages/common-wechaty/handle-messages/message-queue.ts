@@ -1,4 +1,4 @@
-import { sleep } from "../../common-datetime/utils"
+import { sleep } from "../../../packages/common-datetime/utils"
 import { Message, Wechaty } from "wechaty"
 import { prettyMessage } from "../utils/pretty-message"
 import { handleMessage } from "./handle-message"

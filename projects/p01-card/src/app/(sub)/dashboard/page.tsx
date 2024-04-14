@@ -1,59 +1,59 @@
-"use client"
-import { EditIcon } from "lucide-react"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { FlexContainer } from "../../../../../common-ui/components/flex-container"
-import { Button } from "../../../../../common-ui-shadcn/components/button"
+"use client";
+import { EditIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
+import { Button } from "../../../../../../packages/common-ui-shadcn/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "../../../../../common-ui-shadcn/components/card"
-import { Label } from "../../../../../common-ui-shadcn/components/label"
-import { useDraftSession } from "../../../../../common-hooks/use-user-draft-session"
-import { useUserUpdateProfile } from "../../../../../common-hooks/use-user-update-profile"
-import { UserInputAvatar } from "../../../components/user-input-avatar"
-import { UserInputName } from "../../../components/user-input-name"
-import { UserSignOutButton } from "../../../components/user-sign-out-button"
+} from "../../../../../../packages/common-ui-shadcn/components/card";
+import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
+import { useDraftSession } from "../../../../../../packages/common-hooks/use-user-draft-session";
+import { useUserUpdateProfile } from "../../../../../../packages/common-hooks/use-user-update-profile";
+import { UserInputAvatar } from "../../../components/user-input-avatar";
+import { UserInputName } from "../../../components/user-input-name";
+import { UserSignOutButton } from "../../../components/user-sign-out-button";
 
 export default function DashboardPage() {
-  const session = useSession()
-  const user = session.data?.user
-  const { value: name, changed: nameChanged } = useDraftSession("name")
-  const { changed: imageChanged } = useDraftSession("image")
+  const session = useSession();
+  const user = session.data?.user;
+  const { value: name, changed: nameChanged } = useDraftSession("name");
+  const { changed: imageChanged } = useDraftSession("image");
 
-  const updateProfile = useUserUpdateProfile()
+  const updateProfile = useUserUpdateProfile();
 
-  const [nameEditable, setNameEditable] = useState(false)
+  const [nameEditable, setNameEditable] = useState(false);
 
   useEffect(() => {
-    if (!nameChanged) setNameEditable(false)
-  }, [nameChanged])
+    if (!nameChanged) setNameEditable(false);
+  }, [nameChanged]);
 
   return (
     <FlexContainer
       orientation={"vertical"}
-      className={"!gap-8 mx-auto w-full max-w-[480px]"}
+      className={"mx-auto w-full max-w-[480px] !gap-8"}
     >
-      <Card className={"text-foreground w-full"}>
+      <Card className={"w-full text-foreground"}>
         <CardHeader>基本信息</CardHeader>
 
         <CardContent>
-          <div className={"w-full flex gap-4"}>
+          <div className={"flex w-full gap-4"}>
             <UserInputAvatar />
 
-            <div className={"grow flex flex-col gap-2 justify-center"}>
+            <div className={"flex grow flex-col justify-center gap-2"}>
               <div className={"h-8"}>
                 {!nameEditable ? (
                   <div className={"flex items-center gap-2"}>
                     <Label className={"text-lg"}>{name}</Label>
                     <EditIcon
-                      className={"w-4 h-4 text-muted-foreground"}
+                      className={"h-4 w-4 text-muted-foreground"}
                       onClick={() => {
-                        setNameEditable(true)
+                        setNameEditable(true);
                       }}
                     />
                   </div>
@@ -76,9 +76,9 @@ export default function DashboardPage() {
             disabled={!imageChanged && !nameChanged}
             className={"w-full"}
             onClick={async () => {
-              const res = await updateProfile()
-              if (res?.ok) toast.success("更新成功")
-              else toast.error("更新失败")
+              const res = await updateProfile();
+              if (res?.ok) toast.success("更新成功");
+              else toast.error("更新失败");
             }}
           >
             更新
@@ -88,5 +88,5 @@ export default function DashboardPage() {
 
       <UserSignOutButton />
     </FlexContainer>
-  )
+  );
 }

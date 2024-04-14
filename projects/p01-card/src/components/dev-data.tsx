@@ -1,14 +1,14 @@
-import { useAtom } from "jotai"
-import { devEnabledAtom } from "../../../common-dev/store"
-import { FlexContainer } from "../../../common-ui/components/flex-container"
+import { useAtom } from "jotai";
+import { devEnabledAtom } from "../../../../packages/common-dev/store";
+import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
 
 export const DevData = () => {
-  const [devEnabled] = useAtom(devEnabledAtom)
-  if (!devEnabled) return null
+  const [devEnabled] = useAtom(devEnabledAtom);
+  if (!devEnabled) return null;
 
   return (
-    <div className={"fixed left-0 bottom-6 p-2 w-[240px]"}>
+    <div className={"fixed bottom-6 left-0 w-[240px] p-2"}>
       <FlexContainer orientation={"vertical"}></FlexContainer>
     </div>
-  )
-}
+  );
+};

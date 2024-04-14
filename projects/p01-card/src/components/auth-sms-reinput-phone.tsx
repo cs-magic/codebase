@@ -1,25 +1,25 @@
-"use client"
-import { useAtom, useSetAtom } from "jotai"
-import { EditIcon } from "lucide-react"
+"use client";
+import { useAtom, useSetAtom } from "jotai";
+import { EditIcon } from "lucide-react";
 import {
   smsStageAtom,
   userPhoneAtom,
-} from "../../../common-auth-sms/store"
+} from "../../../../packages/common-auth-sms/store";
 
 export const SmsReInputPhone = () => {
-  const [phone] = useAtom(userPhoneAtom)
+  const [phone] = useAtom(userPhoneAtom);
 
-  const setStage = useSetAtom(smsStageAtom)
+  const setStage = useSetAtom(smsStageAtom);
 
   return (
-    <div className={"font-semibold inline-flex items-center gap-1"}>
+    <div className={"inline-flex items-center gap-1 font-semibold"}>
       {phone}
       <EditIcon
-        className={"w-4 h-4 cursor-pointer"}
+        className={"h-4 w-4 cursor-pointer"}
         onClick={() => {
-          setStage("toSendSms")
+          setStage("toSendSms");
         }}
       />
     </div>
-  )
-}
+  );
+};

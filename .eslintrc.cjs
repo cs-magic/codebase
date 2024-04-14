@@ -43,7 +43,8 @@ const config = {
         // no-infer 没有意义
         "@typescript-eslint/no-inferrable-types": "off",
         "prefer-const": "warn",
-        "@typescript-eslint/prefer-nullish-coalescing": "warn"
+        "@typescript-eslint/prefer-nullish-coalescing": "warn",
+        "@typescript-eslint/no-empty-function": "warn"
     },
 };
 

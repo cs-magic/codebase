@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { FlexContainer } from "../../../../../common-ui/components/flex-container"
+import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
 
-const videoUrl = "/api/video-proxy"
+const videoUrl = "/api/video-proxy";
 // sampleXiaoHongShuVideoUrl
 // sampleLocalVideoUrl
 
@@ -14,5 +14,5 @@ export default function TestVideoPage() {
       <video width="640" height="480" controls preload="auto" src={videoUrl} />
       {/*<source src={videoUrl} type="video/mp4" />*/}
     </FlexContainer>
-  )
+  );
 }

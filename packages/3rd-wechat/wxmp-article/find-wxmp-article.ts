@@ -1,7 +1,7 @@
-import { IWxmpArticleUrlParsed } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils";
-import { cardDetailSchema } from "@cs-magic/p01-card/src/schema/card.basic";
-import { prisma } from "../../common-db/providers/prisma";
-import { LlmModelType } from "../../common-llm/schema/providers";
+import { IWxmpArticleUrlParsed } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
+import { cardDetailSchema } from "@cs-magic/p01-card/src/schema/card.basic"
+import { prisma } from "../../../packages/common-db/providers/prisma"
+import { LlmModelType } from "../../../packages/common-llm/schema/providers"
 
 export const findWxmpArticle = async (
   data: IWxmpArticleUrlParsed,
@@ -29,9 +29,9 @@ export const findWxmpArticle = async (
         : undefined,
     },
     ...cardDetailSchema,
-  });
+  })
 
-  console.log(JSON.stringify({ found, specificModel }, null, 2));
+  console.log(JSON.stringify({ found, specificModel }, null, 2))
 
-  return found;
-};
+  return found
+}

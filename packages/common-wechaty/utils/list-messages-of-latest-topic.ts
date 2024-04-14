@@ -1,5 +1,5 @@
-import { SEPARATOR_2 } from "../../common-common/pretty-query"
-import { prisma } from "../../common-db/providers/prisma"
+import { SEPARATOR_2 } from "../../../packages/common-common/pretty-query"
+import { prisma } from "../../../packages/common-db/providers/prisma"
 
 /**
  * 获取最后一次

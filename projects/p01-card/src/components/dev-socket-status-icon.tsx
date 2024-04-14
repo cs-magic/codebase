@@ -1,5 +1,5 @@
-import { cn } from "../../../common-ui-shadcn/utils"
-import { SVGProps } from "react"
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { SVGProps } from "react";
 
 /**
  * ref: https://lucide.dev/icons/bar-chart
@@ -47,5 +47,5 @@ export const DevSocketStatusIcon = ({
         className={cn(level >= 3 ? "text-green-500" : "text-destructive")}
       />
     </svg>
-  )
-}
+  );
+};

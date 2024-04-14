@@ -1,19 +1,19 @@
-import { BrandingPartners } from "./branding-partners"
-import Link from "next/link"
-import { ImageEqualHeight } from "../../../common-ui/components/image-equal-height"
+import { BrandingPartners } from "./branding-partners";
+import Link from "next/link";
+import { ImageEqualHeight } from "../../../../packages/common-ui/components/image-equal-height";
 
-import { config } from "../config"
-import { CsMagicBrand } from "./assets"
+import { config } from "../config";
+import { CsMagicBrand } from "./assets";
 
 export const Footer = () => {
-  const enterprises: string[] = []
+  const enterprises: string[] = [];
 
   return (
-    <div className={"shrink-0 flex flex-col items-center gap-2 mt-auto p-4"}>
+    <div className={"mt-auto flex shrink-0 flex-col items-center gap-2 p-4"}>
       {/*  founders */}
       <div
         className={
-          "w-full flex justify-center items-center gap-4 mt-auto h-4 sm:h-8"
+          "mt-auto flex h-4 w-full items-center justify-center gap-4 sm:h-8"
         }
       >
         <Link
@@ -39,5 +39,5 @@ export const Footer = () => {
 
       {config.website.partners.show && <BrandingPartners />}
     </div>
-  )
-}
+  );
+};

@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { HTMLAttributes } from "react"
-import { cn } from "../../../common-ui-shadcn/utils"
+import Link from "next/link";
+import { HTMLAttributes } from "react";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
 
-import { config } from "../config"
+import { config } from "../config";
 
 export const BrandingTitle = ({
   withDescription,
@@ -22,7 +22,7 @@ export const BrandingTitle = ({
     >
       <h1
         className={cn(
-          "text-lg sm:text-2xl gap-4 font-bold primary-gradient flex",
+          "primary-gradient flex gap-4 text-lg font-bold sm:text-2xl",
           className,
         )}
         {...props}
@@ -32,5 +32,5 @@ export const BrandingTitle = ({
 
       {/*{withDescription && <span className={"text-sm"}>全栈 AI 平台</span>}*/}
     </Link>
-  )
-}
+  );
+};

@@ -10,7 +10,7 @@
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { ZodError } from "zod"
-import { prisma } from "../common-db/providers/prisma/connection"
+import { prisma } from "../../packages/common-db/providers/prisma/connection"
 import { Context } from "./context"
 
 /**

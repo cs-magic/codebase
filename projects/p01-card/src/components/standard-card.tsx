@@ -1,11 +1,11 @@
-import { HTMLAttributes } from "react"
+import { HTMLAttributes } from "react";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../common-ui-shadcn/components/card"
-import { cn } from "../../../common-ui-shadcn/utils"
+} from "../../../../packages/common-ui-shadcn/components/card";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
 
 export const StandardCard = ({
   title,
@@ -14,8 +14,8 @@ export const StandardCard = ({
   className,
   ...props
 }: {
-  title: string
-  type?: "normal" | "beauty"
+  title: string;
+  type?: "normal" | "beauty";
 } & HTMLAttributes<HTMLDivElement>) => {
   return (
     <Card
@@ -36,5 +36,5 @@ export const StandardCard = ({
         {children}
       </CardContent>
     </Card>
-  )
-}
+  );
+};

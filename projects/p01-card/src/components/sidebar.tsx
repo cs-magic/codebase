@@ -1,6 +1,6 @@
-"use client"
-import { HTMLAttributes } from "react"
-import { cn } from "../../../common-ui-shadcn/utils"
+"use client";
+import { HTMLAttributes } from "react";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
 
 export const Sidebar = ({
   className,
@@ -8,10 +8,10 @@ export const Sidebar = ({
 }: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
-      className={cn("shrink-0 p-4 h-full sm:flex flex-col", className)}
+      className={cn("h-full shrink-0 flex-col p-4 sm:flex", className)}
       {...props}
     >
       <div className={"grow overflow-auto"}></div>
     </div>
-  )
-}
+  );
+};

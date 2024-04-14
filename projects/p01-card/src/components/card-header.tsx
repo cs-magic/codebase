@@ -1,40 +1,40 @@
-"use client"
+"use client";
 
-import { useSetAtom } from "jotai"
-import { useEffect } from "react"
-import { Label } from "../../../common-ui-shadcn/components/label"
+import { useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { Label } from "../../../../packages/common-ui-shadcn/components/label";
 
-import { config } from "../config"
-import { IUserBasic } from "../schema/user.summary"
-import { cardUserRenderedAtom } from "../store/card.atom"
-import { UserAvatar } from "./user-avatar"
+import { config } from "../config";
+import { IUserBasic } from "../schema/user.summary";
+import { cardUserRenderedAtom } from "../store/card.atom";
+import { UserAvatar } from "./user-avatar";
 
 export const CardHeader = ({ user }: { user?: IUserBasic | null }) => {
-  const setUserRendered = useSetAtom(cardUserRenderedAtom)
+  const setUserRendered = useSetAtom(cardUserRenderedAtom);
   useEffect(() => {
-    setUserRendered(false)
-  }, [user?.avatar])
+    setUserRendered(false);
+  }, [user?.avatar]);
 
   return (
-    <div className={"text-xs flex items-center justify-between px-4 pb-2 pt-6"}>
-      <div className={"flex gap-2 items-center justify-end h-8"}>
+    <div className={"flex items-center justify-between px-4 pb-2 pt-6 text-xs"}>
+      <div className={"flex h-8 items-center justify-end gap-2"}>
         {user ? (
           <>
             <UserAvatar
               user={user}
               imageProps={{
                 onLoad: () => {
-                  setUserRendered(true)
+                  setUserRendered(true);
                 },
               }}
             />
 
             <Label
               className={
-                "text-primary-foreground w-full flex items-center gap-2"
+                "flex w-full items-center gap-2 text-primary-foreground"
               }
             >
-              <span className={"font-bold text-lg mr-1 truncate"}>
+              <span className={"mr-1 truncate text-lg font-bold"}>
                 {user.name}
               </span>
               <span className={"text-nowrap"}>分享给你一张卡片</span>
@@ -49,10 +49,10 @@ export const CardHeader = ({ user }: { user?: IUserBasic | null }) => {
       <div className={"flex items-center gap-2"}>
         {/*<span>{moment(card.updatedAt).format("MMMDo h:mm")}</span>*/}
 
-        <div className={"text-primary-foreground text-lg font-medium shrink-0"}>
+        <div className={"shrink-0 text-lg font-medium text-primary-foreground"}>
           {config.name}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

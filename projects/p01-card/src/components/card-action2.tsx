@@ -1,40 +1,40 @@
-"use client"
+"use client";
 
-import download from "downloadjs"
+import download from "downloadjs";
 
-import * as html2image from "html-to-image"
-import html2canvas from "html2canvas"
-import { useAtom } from "jotai"
-import { domToBlob } from "modern-screenshot"
-import { RefObject } from "react"
-import { toast } from "sonner"
-import { uploadFile } from "../../../common-oss/upload"
-import { getOssUrl } from "../../../common-oss/utils"
-import { updateOssUrl } from "../core/update-oss-url.action"
-import { Action2Type, ActionType } from "../schema/card"
+import * as html2image from "html-to-image";
+import html2canvas from "html2canvas";
+import { useAtom } from "jotai";
+import { domToBlob } from "modern-screenshot";
+import { RefObject } from "react";
+import { toast } from "sonner";
+import { uploadFile } from "../../../../packages/common-oss/upload";
+import { getOssUrl } from "../../../../packages/common-oss/utils";
+import { updateOssUrl } from "../core/update-oss-url.action";
+import { Action2Type, ActionType } from "../schema/card";
 import {
   cardAtom,
   cardOssIdAtom,
   cardPreviewEngineAtom,
-} from "../store/card.atom"
-import { CardAction } from "./card-action"
+} from "../store/card.atom";
+import { CardAction } from "./card-action";
 
 export const CardAction2 = ({
   type,
   obj,
   rendered,
 }: {
-  type: Action2Type
-  obj: RefObject<HTMLDivElement>
-  rendered: boolean
+  type: Action2Type;
+  obj: RefObject<HTMLDivElement>;
+  rendered: boolean;
 }) => {
-  const [card] = useAtom(cardAtom)
-  const [cardOssId] = useAtom(cardOssIdAtom)
-  const [engine] = useAtom(cardPreviewEngineAtom)
+  const [card] = useAtom(cardAtom);
+  const [cardOssId] = useAtom(cardOssIdAtom);
+  const [engine] = useAtom(cardPreviewEngineAtom);
 
   const action = async (type: ActionType) => {
-    console.log({ type, engine })
-    if (!obj.current || !card) return
+    console.log({ type, engine });
+    if (!obj.current || !card) return;
 
     const blob =
       engine === "modern-screenshot"
@@ -47,18 +47,18 @@ export const CardAction2 = ({
               backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
             })
           : await new Promise<Blob | null>(async (resolve, reject) => {
-              if (!obj.current || !card) return
+              if (!obj.current || !card) return;
 
               const canvas = await html2canvas(obj.current, {
                 scale: 4,
-              })
+              });
 
               canvas.toBlob((data) => {
-                console.log("blobCallback: ", data)
-                resolve(data)
-              })
-            })
-    if (!blob) return
+                console.log("blobCallback: ", data);
+                resolve(data);
+              });
+            });
+    if (!blob) return;
 
     switch (type) {
       //   case "copy":
@@ -77,20 +77,20 @@ export const CardAction2 = ({
       //     break
       //
       case "upload":
-        if (!cardOssId) return
+        if (!cardOssId) return;
         const file = new File([blob], cardOssId, {
           type: blob.type,
-        })
-        await uploadFile(file)
-        const ossUrl = getOssUrl(cardOssId)
+        });
+        await uploadFile(file);
+        const ossUrl = getOssUrl(cardOssId);
 
-        await updateOssUrl(card.id, ossUrl)
+        await updateOssUrl(card.id, ossUrl);
 
         toast.success(`uploaded at ${ossUrl}`, {
           closeButton: true,
-        })
+        });
     }
-  }
+  };
 
-  return <CardAction action={action} type={type} disabled={!rendered} />
-}
+  return <CardAction action={action} type={type} disabled={!rendered} />;
+};

@@ -1,24 +1,24 @@
-import { InputWithEnter } from "../../../common-ui/components/input"
-import { useDraftSession } from "../../../common-hooks/use-user-draft-session"
+import { InputWithEnter } from "../../../../packages/common-ui/components/input";
+import { useDraftSession } from "../../../../packages/common-hooks/use-user-draft-session";
 
 export const UserInputName = ({
   onEnter,
 }: {
-  onEnter?: (s: string) => void
+  onEnter?: (s: string) => void;
 }) => {
-  const { draft, value, setDraft } = useDraftSession("name")
+  const { draft, value, setDraft } = useDraftSession("name");
 
   return (
     <InputWithEnter
-      className={"text-primary-foreground font-black text-2xl text-center"}
+      className={"text-center text-2xl font-black text-primary-foreground"}
       autoFocus
       value={draft ?? ""}
       onChange={(event) => {
-        setDraft(event.currentTarget.value)
+        setDraft(event.currentTarget.value);
       }}
       onEnter={(s) => {
-        if (onEnter) onEnter(s)
+        if (onEnter) onEnter(s);
       }}
     />
-  )
-}
+  );
+};

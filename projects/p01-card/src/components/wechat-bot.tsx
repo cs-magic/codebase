@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useAtom } from "jotai"
-import { Button } from "../../../common-ui-shadcn/components/button"
-import { LabelLine } from "../../../common-ui/components/label-line"
-import { checkBot, startBot, stopBot } from "../bot.func"
-import { botStateAtom } from "../store/bot.atom"
-import { StandardCard } from "./standard-card"
+import { useAtom } from "jotai";
+import { Button } from "../../../../packages/common-ui-shadcn/components/button";
+import { LabelLine } from "../../../../packages/common-ui/components/label-line";
+import { checkBot, startBot, stopBot } from "../bot.func";
+import { botStateAtom } from "../store/bot.atom";
+import { StandardCard } from "./standard-card";
 
 export const WechatBotComp = () => {
-  const [state, setState] = useAtom(botStateAtom)
+  const [state, setState] = useAtom(botStateAtom);
 
   return (
     <StandardCard title={"wechat bot"}>
@@ -16,7 +16,7 @@ export const WechatBotComp = () => {
 
       <Button
         onClick={async () => {
-          setState(JSON.stringify(await checkBot()))
+          setState(JSON.stringify(await checkBot()));
         }}
       >
         refresh
@@ -26,5 +26,5 @@ export const WechatBotComp = () => {
 
       <Button onClick={() => stopBot()}>stop</Button>
     </StandardCard>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
 import { ZodError } from "zod"
-import { isNumeric } from "../../common-common/is-numeric"
+import { isNumeric } from "../../../packages/common-common/is-numeric"
 import {
   InputValidatorSchema,
   prettyInvalidInput,
-} from "../../common-common/pretty-invalid-choice"
+} from "../../../packages/common-common/pretty-invalid-choice"
 
 export const parseAsyncWithFriendlyErrorMessage = async <T>(
   schema: InputValidatorSchema,

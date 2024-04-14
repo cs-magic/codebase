@@ -1,18 +1,18 @@
-"use server";
+"use server"
 
-import { env } from "@cs-magic/p01-card/src/env";
-import { sha1 } from "js-sha1";
-import { api } from "../../common-api-client";
-import { fetchWechatApi } from "../functions";
-import { IWechatSDKToken } from "../schema";
-import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config";
+import { env } from "@cs-magic/p01-card/src/env"
+import { sha1 } from "js-sha1"
+import { api } from "../../../packages/common-api-client"
+import { fetchWechatApi } from "../functions"
+import { IWechatSDKToken } from "../schema"
+import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
 
 /**
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
  */
 export const getWechatToken = async () => {
   if (!env.NEXT_PUBLIC_WECHAT_APP_ID || !env.WECHAT_APP_SECRET)
-    throw new Error("invalid wechat app id/secret in env");
+    throw new Error("invalid wechat app id/secret in env")
 
   return fetchWechatApi<IWechatSDKToken>(
     "get-wechat-sdk-token",
@@ -22,20 +22,20 @@ export const getWechatToken = async () => {
       appid: env.NEXT_PUBLIC_WECHAT_APP_ID,
       secret: env.WECHAT_APP_SECRET,
     },
-  );
-};
+  )
+}
 
 export const getWechatTicket = async (access_token: string) => {
   return fetchWechatApi<{
-    ticket: string;
-    expires_in: number;
-    errcode: number;
-    errmsg: string;
+    ticket: string
+    expires_in: number
+    errcode: number
+    errmsg: string
   }>("get-jsapi-ticket", "/cgi-bin/ticket/getticket", {
     access_token,
     type: "jsapi",
-  });
-};
+  })
+}
 
 export const getWechatSignature = async (ticket: string, url: string) => {
   const params: Record<string, string | number> = {
@@ -43,19 +43,19 @@ export const getWechatSignature = async (ticket: string, url: string) => {
     jsapi_ticket: ticket,
     timestamp: WECHAT_TIMESTAMP,
     url,
-  };
+  }
   const str = Object.keys(params)
     .sort()
     .map((k) => `${k}=${params[k]}`)
-    .join("&");
-  const signature = sha1(str);
-  console.log("[wx] getSignature: ", { str, signature });
-  return signature;
-};
+    .join("&")
+  const signature = sha1(str)
+  console.log("[wx] getSignature: ", { str, signature })
+  return signature
+}
 
 export interface ITemplate {
-  template_id: string;
-  data: Record<string, { value: string | number }>;
+  template_id: string
+  data: Record<string, { value: string | number }>
 }
 
 export async function sendWechatNotification(
@@ -64,24 +64,24 @@ export async function sendWechatNotification(
   template: ITemplate,
   url: string,
 ) {
-  const targetUrl = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${access_token}`;
+  const targetUrl = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${access_token}`
 
   const payload = {
     touser: openid,
     url,
     ...template,
-  };
-  const body = JSON.stringify(payload);
-  console.log("[wx-sdk] notification req: ", { targetUrl, body });
+  }
+  const body = JSON.stringify(payload)
+  console.log("[wx-sdk] notification req: ", { targetUrl, body })
 
   const { data: resData } = await api.post(targetUrl, {
     body,
-  });
-  console.log("[wx-sdk] notification res: ", resData);
-  return resData;
+  })
+  console.log("[wx-sdk] notification res: ", resData)
+  return resData
 }
 
-let number = 0;
+let number = 0
 export const getOrder = async () => {
-  return ++number;
-};
+  return ++number
+}

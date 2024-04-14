@@ -1,7 +1,7 @@
 import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
-import { prettyError } from "../../../common-common/pretty-error"
-import { prisma } from "../../../common-db/providers/prisma"
+import { prettyError } from "../../../../packages/common-common/pretty-error"
+import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { BaseHandler } from "./base.handler"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 

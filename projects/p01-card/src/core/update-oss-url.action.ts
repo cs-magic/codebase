@@ -1,7 +1,7 @@
-"use server"
+"use server";
 
-import { prisma } from "../../../common-db/providers/prisma"
-import { cardDetailSchema, ICardDetail } from "../schema/card.basic"
+import { prisma } from "../../../../packages/common-db/providers/prisma";
+import { cardDetailSchema, ICardDetail } from "../schema/card.basic";
 
 export const updateOssUrl = async (
   cardId: string,
@@ -15,5 +15,5 @@ export const updateOssUrl = async (
       ossUrl,
     },
     ...cardDetailSchema,
-  })
-}
+  });
+};

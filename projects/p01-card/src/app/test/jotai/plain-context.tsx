@@ -1,31 +1,31 @@
-import { PropsWithChildren, useEffect } from "react"
-import { useToggle } from "react-use"
-import { FlexContainer } from "../../../../../common-ui/components/flex-container"
-import { Button } from "../../../../../common-ui-shadcn/components/button"
-import { Label } from "../../../../../common-ui-shadcn/components/label"
-import { cn } from "../../../../../common-ui-shadcn/utils"
-import { base1Atom, base2Atom } from "./store"
-import { useAtom } from "jotai"
+import { PropsWithChildren, useEffect } from "react";
+import { useToggle } from "react-use";
+import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
+import { Button } from "../../../../../../packages/common-ui-shadcn/components/button";
+import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
+import { cn } from "../../../../../../packages/common-ui-shadcn/utils";
+import { base1Atom, base2Atom } from "./store";
+import { useAtom } from "jotai";
 
 export const PlainContext = ({ children }: PropsWithChildren) => {
-  const [p1, setP1] = useAtom(base1Atom)
-  const [p2, setP2] = useAtom(base2Atom)
+  const [p1, setP1] = useAtom(base1Atom);
+  const [p2, setP2] = useAtom(base2Atom);
 
-  const [on1, toggle1] = useToggle(false)
+  const [on1, toggle1] = useToggle(false);
   useEffect(() => {
-    toggle1()
+    toggle1();
     setTimeout(() => {
-      toggle1()
-    }, 1000)
-  }, [p1])
+      toggle1();
+    }, 1000);
+  }, [p1]);
 
-  const [on2, toggle2] = useToggle(false)
+  const [on2, toggle2] = useToggle(false);
   useEffect(() => {
-    toggle2()
+    toggle2();
     setTimeout(() => {
-      toggle2()
-    }, 1000)
-  }, [p2])
+      toggle2();
+    }, 1000);
+  }, [p2]);
 
   return (
     <FlexContainer orientation={"vertical"} className={"bg-cyan-900"}>
@@ -34,7 +34,7 @@ export const PlainContext = ({ children }: PropsWithChildren) => {
         <span>{p1}</span>
         <Button
           onClick={() => {
-            setP1((v) => v + 1)
+            setP1((v) => v + 1);
           }}
         >
           ADD
@@ -46,7 +46,7 @@ export const PlainContext = ({ children }: PropsWithChildren) => {
         <span>{p2}</span>
         <Button
           onClick={() => {
-            setP2((v) => v + 1)
+            setP2((v) => v + 1);
           }}
         >
           ADD
@@ -55,5 +55,5 @@ export const PlainContext = ({ children }: PropsWithChildren) => {
 
       {children}
     </FlexContainer>
-  )
-}
+  );
+};

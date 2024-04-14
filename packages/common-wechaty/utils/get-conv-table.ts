@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client"
 import { Message } from "wechaty"
-import { prisma } from "../../common-db/providers/prisma"
+import { prisma } from "../../../packages/common-db/providers/prisma"
 
 export const getConvTable = (
   message: Message,

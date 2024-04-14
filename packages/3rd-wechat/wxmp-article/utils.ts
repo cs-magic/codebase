@@ -1,6 +1,6 @@
 import parse from "node-html-parser"
-import { api } from "../../common-api-client"
-import { parseMetaFromHtml } from "../../common-html/utils"
+import { api } from "../../../packages/common-api-client"
+import { parseMetaFromHtml } from "../../../packages/common-html/utils"
 
 export const getWechatArticleUrlFromShortId = (shortId: string) =>
   `https://mp.weixin.qq.com/s/${shortId}`

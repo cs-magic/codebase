@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
 import {
   Text2ImageAppSVG,
   Text2TextAppSVG,
   V2AGIBrand,
-} from "../../../components/assets"
-import { Label } from "../../../../../common-ui-shadcn/components/label"
-import { FlexContainer } from "../../../../../common-ui/components/flex-container"
+} from "../../../components/assets";
+import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
+import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
 
 export default function TestSVGPage() {
   return (
@@ -26,5 +26,5 @@ export default function TestSVGPage() {
         viewBox={"40 40 220 220"}
       />
     </FlexContainer>
-  )
+  );
 }

@@ -1,11 +1,17 @@
 import { Message } from "wechaty"
 import { z } from "zod"
-import { inputLangTypeSchema, LangType } from "../../../common-i18n/schema"
-import { BackendType, backendTypeSchema } from "../../../common-llm/schema/llm"
+import {
+  inputLangTypeSchema,
+  LangType,
+} from "../../../../packages/common-i18n/schema"
+import {
+  BackendType,
+  backendTypeSchema,
+} from "../../../../packages/common-llm/schema/llm"
 import {
   LlmModelType,
   llmModelTypeSchema,
-} from "../../../common-llm/schema/providers"
+} from "../../../../packages/common-llm/schema/providers"
 import { getBotDynamicContext } from "../../utils/bot-context"
 import { renderBotTemplate } from "../../utils/bot-template"
 import { getConvPreference } from "../../utils/get-conv-preference"

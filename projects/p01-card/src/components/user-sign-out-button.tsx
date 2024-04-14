@@ -1,5 +1,5 @@
-import { signOut } from "next-auth/react"
-import { Button } from "../../../common-ui-shadcn/components/button"
+import { signOut } from "next-auth/react";
+import { Button } from "../../../../packages/common-ui-shadcn/components/button";
 
 export const UserSignOutButton = () => {
   return (
@@ -10,5 +10,5 @@ export const UserSignOutButton = () => {
     >
       退出登录
     </Button>
-  )
-}
+  );
+};

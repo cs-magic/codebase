@@ -1,7 +1,7 @@
-import { isWechatError } from "./schema"
+import { api } from "../common-api-client"
 
 import { WECHAT_API_URL } from "./config"
-import { api } from "packages/common-api-client"
+import { isWechatError } from "./schema"
 
 /**
  * wrapper 微信的各个 auth 接口

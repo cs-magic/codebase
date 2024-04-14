@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import { BrandingTitle } from "./branding-title"
-import { UserButton } from "./header-user"
-import { MenuIcon } from "lucide-react"
-import Link from "next/link"
+import { BrandingTitle } from "./branding-title";
+import { UserButton } from "./header-user";
+import { MenuIcon } from "lucide-react";
+import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "../../../common-ui-shadcn/components/ui/navigation-menu"
-import { cn } from "../../../common-ui-shadcn/utils"
-import React, { PropsWithChildren } from "react"
+} from "../../../../packages/common-ui-shadcn/components/ui/navigation-menu";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import React, { PropsWithChildren } from "react";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../common-ui-shadcn/components/sheet"
-import { IconContainer } from "../../../common-ui/components/icon-container"
+} from "../../../../packages/common-ui-shadcn/components/sheet";
+import { IconContainer } from "../../../../packages/common-ui/components/icon-container";
 
 const Menus = () => (
   <>
     <LinkItem href={"/card/new"}>新建卡片</LinkItem>
     <LinkItem href={"/card/gen"}>渲染卡片</LinkItem>
   </>
-)
+);
 
 export const Header = () => {
   return (
     <div
       className={
-        "shrink-0 w-full flex gap-2 px-6 py-4 items-center justify-between"
+        "flex w-full shrink-0 items-center justify-between gap-2 px-6 py-4"
       }
     >
       <div className={"flex items-center"}>
@@ -45,20 +45,20 @@ export const Header = () => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className={"ml-auto shrink-0 flex items-center gap-2"}>
+      <div className={"ml-auto flex shrink-0 items-center gap-2"}>
         {/*<Apps />*/}
 
         <UserButton />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const MobileConversations = () => (
   <Sheet>
     <SheetTrigger asChild>
       <IconContainer
-        className={"sm:hidden mr-2 text-primary-foreground w-8 h-8"}
+        className={"mr-2 h-8 w-8 text-primary-foreground sm:hidden"}
       >
         <MenuIcon />
       </IconContainer>
@@ -72,7 +72,7 @@ const MobileConversations = () => (
       </NavigationMenu>
     </SheetContent>
   </Sheet>
-)
+);
 
 const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
   return (
@@ -85,5 +85,5 @@ const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>
-  )
-}
+  );
+};

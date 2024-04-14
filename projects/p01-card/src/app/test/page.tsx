@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { FlexContainer } from "../../../../common-ui/components/flex-container"
-import { ButtonLink } from "../../../../common-ui/components/button-link"
+import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
+import { ButtonLink } from "../../../../../packages/common-ui/components/button-link";
 
 export default function TestPage() {
   return (
     <FlexContainer
       orientation={"vertical"}
-      className={"w-full sm:w-[320px] mx-auto"}
+      className={"mx-auto w-full sm:w-[320px]"}
     >
       <ButtonLink href={"/test/socket"}>Socket</ButtonLink>
 
@@ -23,5 +23,5 @@ export default function TestPage() {
 
       <ButtonLink href={"/test/video"}>video</ButtonLink>
     </FlexContainer>
-  )
+  );
 }

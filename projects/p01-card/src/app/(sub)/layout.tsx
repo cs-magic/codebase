@@ -1,7 +1,7 @@
-import { Header } from "../../components/header"
-import { PropsWithChildren } from "react"
-import { cn } from "../../../../common-ui-shadcn/utils"
-import { FlexContainer } from "../../../../common-ui/components/flex-container"
+import { Header } from "../../components/header";
+import { PropsWithChildren } from "react";
+import { cn } from "../../../../../packages/common-ui-shadcn/utils";
+import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
 
 export default function SubLayout({ children }: PropsWithChildren) {
   // console.log(ansiColors.red("== SubLayout =="))
@@ -10,17 +10,17 @@ export default function SubLayout({ children }: PropsWithChildren) {
     <FlexContainer
       orientation={"vertical"}
       className={cn(
-        "!p-0 !gap-0 h-full max-w-[1080px] mx-auto overflow-hidden ",
+        "mx-auto h-full max-w-[1080px] !gap-0 overflow-hidden !p-0 ",
         // "bg-cyan-800"
       )}
     >
       <Header />
 
-      <div className={"grow w-full flex flex-col overflow-hidden border-t"}>
+      <div className={"flex w-full grow flex-col overflow-hidden border-t"}>
         {children}
       </div>
 
       {/*<Footer />*/}
     </FlexContainer>
-  )
+  );
 }

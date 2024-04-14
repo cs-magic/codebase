@@ -1,13 +1,16 @@
 import { SetStateAction, useAtom } from "jotai"
-import { Atom, SetAtom } from "../../common-state-management/jotai/types"
+import {
+  Atom,
+  SetAtom,
+} from "../../../packages/common-state-management/jotai/types"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../common-ui-shadcn/components/select"
-import { Switch } from "../../common-ui-shadcn/components/switch"
+} from "../../../packages/common-ui-shadcn/components/select"
+import { Switch } from "../../../packages/common-ui-shadcn/components/switch"
 import { LabelLine } from "./label-line"
 
 /**

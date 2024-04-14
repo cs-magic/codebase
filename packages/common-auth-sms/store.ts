@@ -1,6 +1,6 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { Nullable } from "../common-common/schema"
+import { Nullable } from "../../packages/common-common/schema"
 import { ISendSms, ISmsSignIn, SmsProviderType, SmsStage } from "./schema"
 
 //////////////////////////////

@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { useAtom, useSetAtom } from "jotai"
-import { useEffect } from "react"
-import { usePusherClient } from "../../../../../common-pusher/hooks/use-pusher-client"
-import { PusherServerId } from "../../../../../common-pusher/schema"
+import { useAtom, useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { usePusherClient } from "../../../../../../packages/common-pusher/hooks/use-pusher-client";
+import { PusherServerId } from "../../../../../../packages/common-pusher/schema";
 import {
   cleanPusherAtom,
   pusherServerIdAtom,
-} from "../../../../../common-pusher/store"
-import { FlexContainer } from "../../../../../common-ui/components/flex-container"
-import { Button } from "../../../../../common-ui-shadcn/components/button"
+} from "../../../../../../packages/common-pusher/store";
+import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
+import { Button } from "../../../../../../packages/common-ui-shadcn/components/button";
 import {
   Select,
   SelectContent,
@@ -17,26 +17,26 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../common-ui-shadcn/components/select"
+} from "../../../../../../packages/common-ui-shadcn/components/select";
 
 export default function TestSocketPage() {
-  const [serverId, setServerId] = useAtom(pusherServerIdAtom)
-  const clean = useSetAtom(cleanPusherAtom)
+  const [serverId, setServerId] = useAtom(pusherServerIdAtom);
+  const clean = useSetAtom(cleanPusherAtom);
 
-  const client = usePusherClient()
+  const client = usePusherClient();
 
   const c = () => {
-    console.log("cleaning...")
-    clean()
-  }
+    console.log("cleaning...");
+    clean();
+  };
 
   useEffect(() => {
-    window.addEventListener("beforeunload", c)
+    window.addEventListener("beforeunload", c);
     return () => {
-      c()
-      window.removeEventListener("beforeunload", c)
-    }
-  }, [])
+      c();
+      window.removeEventListener("beforeunload", c);
+    };
+  }, []);
 
   return (
     <FlexContainer orientation={"vertical"}>
@@ -65,12 +65,12 @@ export default function TestSocketPage() {
 
       <Button
         onClick={() => {
-          client?.send_event("pusher:ping", {})
-          console.log("ping")
+          client?.send_event("pusher:ping", {});
+          console.log("ping");
         }}
       >
         发送数据
       </Button>
     </FlexContainer>
-  )
+  );
 }

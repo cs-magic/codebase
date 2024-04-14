@@ -1,17 +1,7 @@
-"use server"
+"use server";
 
-import { createWechatyBot } from "../../common-wechaty/create-wechaty-bot"
+export const startBot = async () => {};
 
-const bot = createWechatyBot({ name: "default" })
+export const stopBot = async () => {};
 
-export const startBot = async () => {
-  await bot.start()
-}
-
-export const stopBot = async () => {
-  await bot.stop()
-}
-
-export const checkBot = async () => {
-  return bot.state
-}
+export const checkBot = async () => {};

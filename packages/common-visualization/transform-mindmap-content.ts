@@ -1,4 +1,4 @@
-import { truncateString } from "../common-algo/string"
+import { truncateString } from "../../packages/common-algo/string"
 
 /**
  * @deprecated

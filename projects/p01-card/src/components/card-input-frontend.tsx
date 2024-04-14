@@ -1,15 +1,15 @@
-import { useAtom } from "jotai"
-import React from "react"
-import { backendTypeSchema } from "../../../common-llm/schema/llm"
-import { llmModelTypeSchema } from "../../../common-llm/schema/providers"
-import { Input } from "../../../common-ui-shadcn/components/input"
-import { Separator } from "../../../common-ui-shadcn/components/separator"
+import { useAtom } from "jotai";
+import React from "react";
+import { backendTypeSchema } from "../../../../packages/common-llm/schema/llm";
+import { llmModelTypeSchema } from "../../../../packages/common-llm/schema/providers";
+import { Input } from "../../../../packages/common-ui-shadcn/components/input";
+import { Separator } from "../../../../packages/common-ui-shadcn/components/separator";
 import {
   AtomSelector,
   AtomSwitcher,
-} from "../../../common-ui/components/atom-switcher"
-import { LabelLine } from "../../../common-ui/components/label-line"
-import { mapSpacingVerticalAtom } from "../../../common-visualization/store"
+} from "../../../../packages/common-ui/components/atom-switcher";
+import { LabelLine } from "../../../../packages/common-ui/components/label-line";
+import { mapSpacingVerticalAtom } from "../../../../packages/common-visualization/store";
 import {
   cardAuthorWithTitleAtom,
   cardFetchEngineAtom,
@@ -19,15 +19,15 @@ import {
   cardRefetchCardAtom,
   cardRefetchCommentsAtom,
   cardRefetchPageAtom,
-} from "../store/card.atom"
-import { CardAction1 } from "./card-action1"
-import { CardInputUrl } from "./card-input-url"
-import { CardInputUser } from "./card-input-user"
+} from "../store/card.atom";
+import { CardAction1 } from "./card-action1";
+import { CardInputUrl } from "./card-input-url";
+import { CardInputUser } from "./card-input-user";
 
 export const CardInputFrontend = () => {
   const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
     mapSpacingVerticalAtom,
-  )
+  );
   return (
     <>
       <CardInputUrl />
@@ -69,7 +69,7 @@ export const CardInputFrontend = () => {
           type={"number"}
           value={mapSpacingVertical ?? 0}
           onChange={(event) => {
-            setMapSpacingVertical(Number(event.currentTarget.value))
+            setMapSpacingVertical(Number(event.currentTarget.value));
           }}
         />
       </LabelLine>
@@ -81,5 +81,5 @@ export const CardInputFrontend = () => {
         <CardAction1 type={"reset"} />
       </div>
     </>
-  )
-}
+  );
+};

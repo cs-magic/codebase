@@ -29,7 +29,7 @@ export const useSmsSendCode = () => {
   const setSmsSentOk = useSetAtom(smsCodeSentOKAtom)
   const setSmsStage = useSetAtom(smsStageAtom)
 
-  const userId = useSession()?.data?.user.id // for link account
+  const userId = useSession()?.data?.user?.id // for link account
 
   const sendApproach =
     smsProviderType === "ali" ? $sendSmsViaAli : $sendSmsViaTencent

@@ -1,5 +1,6 @@
-import { isWechatBrowser } from "packages/common-env/utils"
+// import { isWechatBrowser } from "packages/common-env/utils"
 import { useEffect, useState } from "react"
+import { isWechatBrowser } from "../common-env/utils"
 
 /**
  * 充分性：检测当前的环境

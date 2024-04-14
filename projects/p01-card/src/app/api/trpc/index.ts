@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "../../../../../common-trpc/trpc"
-import { coreRouter } from "./core"
+import { createTRPCRouter } from "../../../../../../packages/common-trpc/trpc";
+import { coreRouter } from "./core";
 
 /**
  * This is the primary router for your server.
@@ -8,7 +8,7 @@ import { coreRouter } from "./core"
  */
 export const appRouter = createTRPCRouter({
   core: coreRouter,
-})
+});
 
 // export type definition of API
-export type AppRouter = typeof appRouter
+export type AppRouter = typeof appRouter;

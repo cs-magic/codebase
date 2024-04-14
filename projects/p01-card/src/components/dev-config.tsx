@@ -1,47 +1,47 @@
-import { useHotkeys } from "@mantine/hooks"
-import { useAtom } from "jotai"
-import { SettingsIcon } from "lucide-react"
-import * as process from "process"
-import { useState } from "react"
-import { devEnabledAtom } from "../../../common-dev/store"
+import { useHotkeys } from "@mantine/hooks";
+import { useAtom } from "jotai";
+import { SettingsIcon } from "lucide-react";
+import * as process from "process";
+import { useState } from "react";
+import { devEnabledAtom } from "../../../../packages/common-dev/store";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../common-ui-shadcn/components/sheet"
+} from "../../../../packages/common-ui-shadcn/components/sheet";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../../common-ui-shadcn/components/tabs"
-import { cn } from "../../../common-ui-shadcn/utils"
-import { IconContainer } from "../../../common-ui/components/icon-container"
-import { ConfigDevCard } from "./config-dev-card"
-import { ConfigLogCard } from "./config-log-card"
-import { ConfigSMSCard } from "./config-sms"
-import { ConfigTRPCCard } from "./config-trpc"
-import { UserSignOutButton } from "./user-sign-out-button"
+} from "../../../../packages/common-ui-shadcn/components/tabs";
+import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { IconContainer } from "../../../../packages/common-ui/components/icon-container";
+import { ConfigDevCard } from "./config-dev-card";
+import { ConfigLogCard } from "./config-log-card";
+import { ConfigSMSCard } from "./config-sms";
+import { ConfigTRPCCard } from "./config-trpc";
+import { UserSignOutButton } from "./user-sign-out-button";
 
 export const DevConfig = () => {
-  const [devEnabled] = useAtom(devEnabledAtom)
+  const [devEnabled] = useAtom(devEnabledAtom);
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   useHotkeys([
     [
       "shift+mod+P",
       () => {
-        setOpen(true)
+        setOpen(true);
       },
     ],
-  ])
+  ]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         className={cn(
-          "fixed left-2 bottom-2",
+          "fixed bottom-2 left-2",
           process.env.NODE_ENV === "production" && !devEnabled && "hidden",
         )}
         asChild
@@ -86,5 +86,5 @@ export const DevConfig = () => {
         </Tabs>
       </SheetContent>
     </Sheet>
-  )
-}
+  );
+};

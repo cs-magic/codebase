@@ -1,4 +1,4 @@
-import { isClient } from "../common-env/utils"
+import { isClient } from "../../packages/common-env/utils"
 
 export function extractFirstURL(text: string): string | null {
   // This regex is designed to find URLs within a string.

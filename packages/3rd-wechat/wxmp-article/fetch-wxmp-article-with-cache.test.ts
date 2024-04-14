@@ -2,8 +2,8 @@
 
 import { promises } from "fs"
 import path from "path"
-import { generatedPath } from "../../common-common/path"
-import { LlmModelType } from "../../common-llm/schema/providers"
+import { generatedPath } from "../../../packages/common-common/path"
+import { LlmModelType } from "../../../packages/common-llm/schema/providers"
 import { fetchWxmpArticleWithCache } from "./fetch-wxmp-article-with-cache"
 
 const url = process.argv[2]!

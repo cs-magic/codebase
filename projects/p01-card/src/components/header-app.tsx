@@ -1,31 +1,31 @@
-import Image from "next/image"
-import Link from "next/link"
-import { toast } from "sonner"
-import { MSG_TODO } from "../../../common-common/messages"
-import { AspectRatio } from "../../../common-ui-shadcn/components/aspect-ratio"
+import Image from "next/image";
+import Link from "next/link";
+import { toast } from "sonner";
+import { MSG_TODO } from "../../../../packages/common-common/messages";
+import { AspectRatio } from "../../../../packages/common-ui-shadcn/components/aspect-ratio";
 
-import { config } from "../config"
+import { config } from "../config";
 
 export interface ISubAppIcon {
-  id: string
+  id: string;
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-  Cover?: string | React.VFC<React.SVGProps<SVGSVGElement>>
-  title: string
-  enabled?: boolean
+  Cover?: string | React.VFC<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  enabled?: boolean;
 }
 
 export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
-  const { Cover, enabled } = subAppIcon
+  const { Cover, enabled } = subAppIcon;
   return (
     <Link
       href={`/${subAppIcon.id}`}
       className={
-        "w-24 flex flex-col gap-1 items-center rounded-lg p-2 interactive"
+        "interactive flex w-24 flex-col items-center gap-1 rounded-lg p-2"
       }
       onClick={(event) => {
         if (!enabled) {
-          event.preventDefault()
-          toast.info(MSG_TODO)
+          event.preventDefault();
+          toast.info(MSG_TODO);
         }
       }}
     >
@@ -36,7 +36,7 @@ export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
             src={Cover ?? config.website.avatar.default}
             alt={""}
             fill
-            className={"object-cover rounded-lg"}
+            className={"rounded-lg object-cover"}
           />
         ) : (
           <Cover className={"object-cover"} />
@@ -45,5 +45,5 @@ export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
 
       <div className={"text-sm"}>{subAppIcon.title}</div>
     </Link>
-  )
-}
+  );
+};
