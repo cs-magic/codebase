@@ -12,7 +12,8 @@ import { ScreenProvider } from "../../packages/common-ui/providers/screen.provid
 import { SessionProvider } from "../../packages/common-ui/providers/session.provider"
 import ThemeProvider from "../../packages/common-ui/providers/theme.provider"
 import { Dev } from "../components/dev"
-import { config } from "../config/system"
+
+import { config } from "../config"
 import GlobalHooksProviders from "../providers/global.provider"
 
 const inter = Inter({

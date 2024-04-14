@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { HTMLAttributes } from "react"
 import { cn } from "../../packages/common-ui-shadcn/utils"
-import { config } from "../config/system"
+
+import { config } from "../config"
 
 export const BrandingTitle = ({
   withDescription,

@@ -1,9 +1,10 @@
-import { DEFAULT_AVATAR } from "@/config/assets"
 import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
+import { MSG_TODO } from "../../packages/common-common/messages"
 import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
-import { MSG_TODO } from "../config/messages"
+
+import { config } from "../config"
 
 export interface ISubAppIcon {
   id: string
@@ -32,7 +33,7 @@ export const SubAppIcon = ({ subAppIcon }: { subAppIcon: ISubAppIcon }) => {
       <AspectRatio ratio={1}>
         {!Cover || typeof Cover === "string" ? (
           <Image
-            src={Cover ?? DEFAULT_AVATAR}
+            src={Cover ?? config.website.avatar.default}
             alt={""}
             fill
             className={"object-cover rounded-lg"}

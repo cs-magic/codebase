@@ -1,4 +1,4 @@
-import { config } from "@/config/system"
+import { config } from "@/config"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { MessageQueue } from "./handle-messages/message-queue"

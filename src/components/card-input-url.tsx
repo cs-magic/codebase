@@ -4,7 +4,8 @@ import { useAtom } from "jotai"
 import React from "react"
 import { Input } from "../../packages/common-ui-shadcn/components/input"
 import { LabelLine } from "../../packages/common-ui/components/label-line"
-import { config } from "../config/system"
+
+import { config } from "../config"
 import { cardInputUrlAtom } from "../store/card.atom"
 
 export const CardInputUrl = () => {

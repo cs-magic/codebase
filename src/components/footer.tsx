@@ -1,8 +1,9 @@
-import { CsMagicBrand, V2AGIBrand } from "@/config/assets"
-import { ImageEqualHeight } from "../../packages/common-ui/components/image-equal-height"
-import { SHOW_PARTNERS } from "@/config/branding"
 import { BrandingPartners } from "@/components/branding-partners"
 import Link from "next/link"
+import { ImageEqualHeight } from "../../packages/common-ui/components/image-equal-height"
+
+import { config } from "../config"
+import { CsMagicBrand } from "./assets"
 
 export const Footer = () => {
   const enterprises: string[] = []
@@ -36,7 +37,7 @@ export const Footer = () => {
         ))}
       </div>
 
-      {SHOW_PARTNERS && <BrandingPartners />}
+      {config.website.partners.show && <BrandingPartners />}
     </div>
   )
 }

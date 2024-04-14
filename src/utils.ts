@@ -1,4 +1,4 @@
-import { config } from "./config/system"
+import { config } from "./config"
 
 export const getCardUrl = (id?: string) => `p01/${id}.png`
 

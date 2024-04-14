@@ -4,7 +4,7 @@ import { CalendarHeartIcon, FingerprintIcon, MilestoneIcon } from "lucide-react"
 import moment from "../../packages/common-datetime/moment"
 import { cn } from "../../packages/common-ui-shadcn/utils"
 
-import { config } from "../config/system"
+import { config } from "../config"
 import { ICardDetail } from "../schema/card.basic"
 import { CardFooterItem } from "./card-footer-item"
 

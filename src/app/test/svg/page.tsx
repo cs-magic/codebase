@@ -1,6 +1,10 @@
 "use client"
 
-import { Text2ImageAppSVG, Text2TextAppSVG, V2AGIBrand } from "@/config/assets"
+import {
+  Text2ImageAppSVG,
+  Text2TextAppSVG,
+  V2AGIBrand,
+} from "../../../components/assets"
 import { Label } from "../../../../packages/common-ui-shadcn/components/label"
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container"
 

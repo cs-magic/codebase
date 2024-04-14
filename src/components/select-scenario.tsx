@@ -4,7 +4,7 @@ import {
   SelectValue,
 } from "../../packages/common-ui-shadcn/components/select"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
-import { Text2ImageAppSVG, Text2TextAppSVG } from "@/config/assets"
+import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
 import { scenarioTypeAtom } from "../store/system.atom"
 
 import { SelectModel } from "./_select-model"

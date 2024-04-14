@@ -4,7 +4,7 @@ import { useSetAtom } from "jotai"
 import { useEffect } from "react"
 import { Label } from "../../packages/common-ui-shadcn/components/label"
 
-import { config } from "../config/system"
+import { config } from "../config"
 import { IUserBasic } from "../schema/user.summary"
 import { cardUserRenderedAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
