@@ -1,5 +1,5 @@
-import { LangType } from "@/schema/wechat-user"
 import { prettyQuery } from "../../common-common/pretty-query"
+import { LangType } from "../../common-i18n/schema"
 import { botStaticContext } from "../create-wechaty-bot"
 import { CommandType } from "../message-handlers/_all"
 import { loadBotDynamicContext } from "./bot-context"

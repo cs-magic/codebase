@@ -1,8 +1,6 @@
-import { ZodBoolean, ZodEnum, ZodLiteral, ZodString } from "zod"
-import { LiteralUnionSchema } from "./schema"
+import { ZodBoolean, ZodEnum, ZodString } from "zod"
 
 export type InputValidatorSchema =
-  | LiteralUnionSchema
   | ZodBoolean
   | ZodString
   | ZodEnum<[string, ...string[]]>
@@ -18,7 +16,11 @@ export const prettyInvalidInput = (
 export const dumpInputValidator = (v: InputValidatorType): string => {
   if ("options" in v)
     return dumpInputValidator(
-      v.options.map((o) => (o instanceof ZodLiteral ? o.value : o)),
+      v.options.map(
+        (o) =>
+          // o instanceof ZodLiteral ? o.value :
+          o,
+      ),
     )
 
   if (v instanceof Array) return v.join(",")

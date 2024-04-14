@@ -1,6 +1,3 @@
 import { z } from "zod"
 
-export const parserCommands = z.union([
-  z.literal("enable-parser"),
-  z.literal("disable-parser"),
-])
+export const parserCommands = z.enum(["enable-parser", "disable-parser"])

@@ -14,14 +14,19 @@ export class BaseHandler {
    * @param message
    *
    * @return
+   * ## V2: 非异常无阻塞串行
+   * ## V1: 有阻塞串行
    *  - true: finished
    *  - false: continue to the next handler
    */
-  public async onMessage(message: Message): Promise<boolean | void> {
-    // 回复自己需要
-    // web端会直接抛error，pad端会ignore
-    // const listener = message.listener()
+  public async onMessage(message: Message): Promise<any> {
+    throw new Error("not implemented.")
+  }
 
-    throw new Error("onMessage not implemented.")
+  /**
+   * triggered by `/help [name]`
+   */
+  public help(): Promise<any> {
+    throw new Error(" not implemented.")
   }
 }

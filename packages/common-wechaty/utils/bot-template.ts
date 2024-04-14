@@ -1,4 +1,3 @@
-import { LangType } from "@/schema/wechat-user"
 import { promises } from "fs"
 import jsYaml from "js-yaml"
 import Mustache from "mustache"
@@ -6,6 +5,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import { Message } from "wechaty"
 import { prettyDuration } from "../../common-common/pretty-duration"
+import { LangType } from "../../common-i18n/schema"
 import { botStaticContext } from "../create-wechaty-bot"
 import { IBotTemplate } from "../schema"
 

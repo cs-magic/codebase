@@ -1,15 +1,15 @@
-import { z } from "zod"
-import { LiteralUnionSchema } from "../../common-common/schema"
+import { z, ZodEnum } from "zod"
+import { parseAsyncWithFriendlyErrorMessage } from "../utils/validate-input"
 import { basicCommands } from "./basic.commands"
 import { BasicHandler } from "./basic.handler"
 import { chatCommands } from "./chat.commands"
+import { ChatHandler } from "./chat.handler"
 import { LogHandler } from "./log.handler"
 import { parserCommands } from "./parser.commands"
 import { ParserHandler } from "./parser.handler"
 import { StorageHandler } from "./storage.handler"
-import { TodoHandler } from "./todo.handler"
-import { ChatHandler } from "./chat.handler"
 import { todoCommands } from "./todo.commands"
+import { TodoHandler } from "./todo.handler"
 import { ValidatorHandler } from "./validator.handler"
 
 export const MessageHandlerMap = {
@@ -27,14 +27,12 @@ export const messageHandlerSchemas = [
   parserCommands,
   todoCommands,
 ]
-export const messageHandlerSchema = z.union(
+export const messageHandlerSchema = z.enum(
   // @ts-ignore
   messageHandlerSchemas.map((s) => s.options).flat(),
-) as unknown as LiteralUnionSchema
+) as unknown as ZodEnum<[string, ...string[]]>
 
-export type CommandType =
-  // z.infer<typeof messageHandlerSchema>
-  | z.infer<typeof basicCommands>
-  | z.infer<typeof chatCommands>
-  | z.infer<typeof parserCommands>
-  | z.infer<typeof todoCommands>
+export type CommandType = z.infer<typeof messageHandlerSchema>
+
+// void parseAsyncWithFriendlyErrorMessage(messageHandlerSchema, "ding")
+// void parseAsyncWithFriendlyErrorMessage(messageHandlerSchema, "ding2")

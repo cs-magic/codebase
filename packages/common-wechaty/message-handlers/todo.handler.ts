@@ -5,7 +5,7 @@ import taskStatusSchema, {
 } from "../../../prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { parseCommand } from "../utils/parse-command"
-import { validateInput } from "../utils/validate-input"
+import { parseAsyncWithFriendlyErrorMessage } from "../utils/validate-input"
 import { BaseHandler } from "./base.handler"
 import { todoCommands } from "./todo.commands"
 import { TodoManager } from "./todo.manager"
@@ -33,7 +33,7 @@ export class TodoHandler extends BaseHandler {
       case "update-todo":
         const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(result.args)
         if (!m) throw new Error("输入不合法")
-        const status = await validateInput<TaskStatusType>(
+        const status = await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
           taskStatusSchema,
           m?.[2],
         )

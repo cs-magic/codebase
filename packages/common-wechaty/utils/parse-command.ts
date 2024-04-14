@@ -1,4 +1,4 @@
-import { LiteralUnionSchema } from "../../common-common/schema"
+import { ZodEnum } from "zod"
 
 export type IParseCommandRes<T extends string> = null | {
   command: T
@@ -7,10 +7,10 @@ export type IParseCommandRes<T extends string> = null | {
 
 export const parseCommand = <T extends string>(
   text: string,
-  commands: T[] | LiteralUnionSchema,
+  commands: T[] | ZodEnum<[T, ...T[]]>,
 ): IParseCommandRes<T> => {
   const ms =
-    commands instanceof Array ? commands : commands.options.map((o) => o.value)
+    commands instanceof Array ? commands : commands.options.map((o) => o)
 
   // 正则使用 `` 而非 // 的时候要 \s --> \\s
   // - /A, ok

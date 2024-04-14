@@ -1,4 +1,4 @@
-import { LangType } from "@/schema/wechat-user"
+import { LangType } from "../../common-i18n/schema"
 import { IBotDynamicContext } from "../schema"
 
 export const loadBotDynamicContext = async (

@@ -1,4 +1,4 @@
-import { LangType } from "@/schema/wechat-user"
+import { LangType } from "../../common-i18n/schema"
 import { BackendType } from "../../common-llm/schema/llm"
 import { LlmModelType } from "../../common-llm/schema/providers"
 import { getConvTable } from "../utils/get-conv-table"
