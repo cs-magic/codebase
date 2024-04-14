@@ -14,12 +14,18 @@ fastify.get("/", async function handler(request, reply) {
 })
 
 fastify.get("/bot/start", async () => {
+  bot.on("error", (error) => {
+    console.error("-- [error]: ", error)
+  })
+
   try {
-    console.log("-- starting")
+    console.log("\n-- starting\n")
     await bot.start()
   } catch (e) {
-    console.log("-- err")
+    console.log("\n-- err\n")
     await bot.stop()
+  } finally {
+    console.log(`-- [finally] state: `, bot.state)
   }
   return "starting"
 })

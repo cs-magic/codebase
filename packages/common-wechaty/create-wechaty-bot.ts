@@ -16,7 +16,8 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
 
   bot
     .on("error", async (err) => {
-      console.log("-- error: ", err)
+      console.error("-- error")
+      console.error(err)
     })
     .on("scan", (value, status) => {
       console.log(
