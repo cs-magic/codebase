@@ -1841,6 +1841,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechaty@workspace:packages/common-wechaty"
   dependencies:
+    dotenv: "npm:^16.4.5"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
     wechaty-puppet-padlocal: "npm:^1.20.1"

@@ -23,7 +23,7 @@ export const botCommands = z.enum(["start", "stop", "state", "logout"])
 void fastify.register(fw)
 void fastify.register(async function (fastify) {
   fastify.get(
-    "/bot",
+    "/ws",
     { websocket: true },
     (socket /* WebSocket */, req /* FastifyRequest */) => {
       socket.on("message", async (messageBuffer: Buffer) => {

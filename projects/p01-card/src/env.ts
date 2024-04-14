@@ -1,12 +1,13 @@
-import dotenv from "dotenv"
-import * as process from "process"
+import dotenv from "dotenv";
+import * as process from "process";
 
-dotenv.config()
+dotenv.config();
 
 export const env = {
   // env
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  NEXT_PUBLIC_SOCKET_URL: process.env.NEXT_PUBLIC_SOCKET_URL,
   NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
 
   // db
@@ -53,4 +54,4 @@ export const env = {
     process.env.HTTP_PROXY ??
     process.env.https_proxy ??
     process.env.HTTPS_PROXY,
-}
+};

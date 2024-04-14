@@ -1,10 +1,10 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { WebSocket } from "ws";
 import { useInit } from "../../../../packages/common-hooks/use-init";
 import { Button } from "../../../../packages/common-ui-shadcn/components/button";
 import { LabelLine } from "../../../../packages/common-ui/components/label-line";
+import { env } from "../env";
 import { botStateAtom } from "../store/bot.atom";
 import { StandardCard } from "./standard-card";
 
@@ -12,19 +12,19 @@ export const WechatBotComp = () => {
   const [state, setState] = useAtom(botStateAtom);
 
   const ws = useInit<WebSocket>(() => {
-    const client = new WebSocket("ws://localhost:40414/bot");
+    const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!);
 
-    client.on("error", console.error);
+    socket.addEventListener("error", console.error);
 
-    client.on("open", function open() {
-      client.send("something");
+    socket.addEventListener("open", function open() {
+      socket.send("something");
     });
 
-    client.on("message", function message(message: string) {
-      console.log({ message });
+    socket.addEventListener("message", (event) => {
+      console.log({ event });
     });
 
-    return client;
+    return socket;
   });
 
   return (
