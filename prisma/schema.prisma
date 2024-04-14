@@ -190,6 +190,7 @@ model WechatMessage {
   type          Int //: 7,
   text          String? // '现在我们要支持 card - model 的一对多关系了',
   mentionIdList String[] // : [],
+  filename      String?
 }
 
 model WechatUser {
