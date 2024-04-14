@@ -1,16 +1,15 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useRef } from "react";
-import { toast } from "sonner";
-import { FlexContainer } from "../../../../../../../packages/common-ui/components/flex-container";
+import { api } from "../../../../../../../packages/common-trpc/react";
 import { Button } from "../../../../../../../packages/common-ui-shadcn/components/button";
 import { Input } from "../../../../../../../packages/common-ui-shadcn/components/input";
 import { Label } from "../../../../../../../packages/common-ui-shadcn/components/label";
-import { api } from "../../../../../../../packages/common-trpc/react";
+import { FlexContainer } from "../../../../../../../packages/common-ui/components/flex-container";
 import { updateUserNameViaTrpc } from "./actions";
 
 export default function TestTrpcRouterInClientPage() {
-  const userId = useSession().data?.user?.id as string | undefined;
+  const userId = useSession().data?.user?.id;
 
   const utils = api.useUtils();
   const { data: user } = api.core.getSelf.useQuery();
