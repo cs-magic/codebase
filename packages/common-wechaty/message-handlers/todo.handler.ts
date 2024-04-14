@@ -14,7 +14,7 @@ export class TodoHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
     const preference = await getConvPreference(message)
     const title = preference.lang === "zh" ? "任务管理" : "Task Management"
-    const manager = new TodoManager(title, message, this.bot.wxid)
+    const manager = new TodoManager(this.bot, title, message)
 
     const result = parseCommand<z.infer<typeof todoCommands>>(
       message.text(),

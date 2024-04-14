@@ -21,7 +21,7 @@ export class BasicHandler extends BaseHandler {
     const context = await getBotDynamicContext(preference.lang)
     const title =
       context.name + (preference.lang === "zh" ? `使用说明` : ` Cookbook`)
-    const manager = new BasicManager(title, message, this.bot.wxid)
+    const manager = new BasicManager(this.bot, title, message)
 
     const result = parseCommand<z.infer<typeof basicCommands>>(
       message.text(),

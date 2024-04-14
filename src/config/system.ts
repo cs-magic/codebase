@@ -1,5 +1,5 @@
 export const config = {
-  version: "V0.5.133 (α)",
+  version: "V0.5.134 (α)",
 
   // 取个什么产品名好🤔
   name: "",

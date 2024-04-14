@@ -1,7 +1,9 @@
+import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
+import { prettyError } from "../../common-common/pretty-error"
 import { prisma } from "../../common-db/providers/prisma"
 import { BaseHandler } from "./base.handler"
-import omit from "lodash/omit"
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
 export class StorageHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
@@ -9,43 +11,45 @@ export class StorageHandler extends BaseHandler {
     const room = message.room()
     const listener = message.listener()
 
-    await prisma.wechatMessage.create({
-      data: {
-        ...omit(message.payload, ["talkerId", "roomId", "listenerId"]),
+    try {
+      await prisma.wechatMessage.create({
+        data: {
+          ...omit(message.payload, ["talkerId", "roomId", "listenerId"]),
 
-        talker: {
-          connectOrCreate: {
-            where: {
-              id: talker.id,
+          talker: {
+            connectOrCreate: {
+              where: {
+                id: talker.id,
+              },
+              create: talker.payload!,
             },
-            create: talker.payload!,
           },
+
+          listener: listener
+            ? {
+                connectOrCreate: {
+                  where: {
+                    id: listener.id,
+                  },
+                  create: listener.payload!,
+                },
+              }
+            : {},
+
+          room: room
+            ? {
+                connectOrCreate: {
+                  where: {
+                    id: room.id,
+                  },
+                  create: room.payload!,
+                },
+              }
+            : {},
         },
-
-        listener: listener
-          ? {
-              connectOrCreate: {
-                where: {
-                  id: listener.id,
-                },
-                create: listener.payload!,
-              },
-            }
-          : {},
-
-        room: room
-          ? {
-              connectOrCreate: {
-                where: {
-                  id: room.id,
-                },
-                create: room.payload!,
-              },
-            }
-          : {},
-      },
-    })
-
-    return false // continue
+      })
+    } catch (e) {
+      prettyError(e)
+    }
   }
 }
