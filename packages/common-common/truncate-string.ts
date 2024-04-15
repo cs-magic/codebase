@@ -1,4 +1,4 @@
-import { ELLIPSE, isAscii } from "./char"
+import { ELLIPSE, isAscii } from "../common-algo/char"
 
 export const truncateString = (
   s: string,
