@@ -1,5 +1,5 @@
-import { sleep } from "../../../packages/common-datetime/utils"
-import { Message, Wechaty } from "wechaty"
+import { type Message, type Wechaty } from "wechaty"
+import { sleep } from "../../common-datetime/utils"
 import { prettyMessage } from "../utils/pretty-message"
 import { handleMessage } from "./handle-message"
 
@@ -34,7 +34,7 @@ export class MessageQueue {
 
   private async _processMessage() {
     while (this.queue.length > 0) {
-      const message = this.queue.shift()!
+      const message = this.queue.shift()
       console.log(
         `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
       )

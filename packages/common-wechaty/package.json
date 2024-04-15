@@ -7,6 +7,7 @@
     "start-wechat-bot": "tsx index.ts"
   },
   "dependencies": {
+    "@cs-magic/common": "workspace:^",
     "dotenv": "^16.4.5",
     "qrcode-terminal": "^0.12.0",
     "wechaty": "^1.20.2",

@@ -1,4 +1,4 @@
-import { ContactSelf } from "wechaty"
+import { type ContactSelf } from "wechaty"
 
 export const getBotWxid = (user: ContactSelf): string => {
   // update bot wxid

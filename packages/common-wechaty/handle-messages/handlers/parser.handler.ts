@@ -1,5 +1,5 @@
-import { Message } from "wechaty"
-import { z } from "zod"
+import { type Message } from "wechaty"
+import { type z } from "zod"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseCommand } from "../../utils/parse-command"
 import { BaseHandler } from "./base.handler"

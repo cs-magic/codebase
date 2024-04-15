@@ -1,4 +1,4 @@
-import { ZodEnum } from "zod"
+import { type ZodEnum } from "zod"
 
 export type IParseCommandRes<T extends string> = null | {
   command: T

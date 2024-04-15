@@ -1,4 +1,4 @@
-import { Message } from "wechaty"
+import { type Message } from "wechaty"
 
 export const isTestMessage = async (message: Message) => {
   const room = message.room()

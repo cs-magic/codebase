@@ -1,4 +1,4 @@
-import { WechatyBuilder } from "wechaty"
+import { type WechatyBuilder } from "wechaty"
 import { type IBotStaticContext } from "./schema"
 
 declare module "wechaty" {

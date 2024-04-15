@@ -1,5 +1,5 @@
-import { Message } from "wechaty"
-import { prettyString } from "../../../packages/common-common/pretty-string"
+import { prettyString } from "@cs-magic/common/pretty-string"
+import { type Message } from "wechaty"
 
 export const prettyMessage = (message: Message) => {
   const data = {

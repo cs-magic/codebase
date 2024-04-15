@@ -1,9 +1,8 @@
+import { prettyError } from "@cs-magic/common/pretty-error"
 import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
-import { prettyError } from "../../../../packages/common-common/pretty-error"
-import { prisma } from "../../../../packages/common-db/providers/prisma"
+import { prisma } from "../../../common-db/providers/prisma"
 import { BaseHandler } from "./base.handler"
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
 export class StorageHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
@@ -21,7 +20,7 @@ export class StorageHandler extends BaseHandler {
               where: {
                 id: talker.id,
               },
-              create: talker.payload!,
+              create: talker.payload,
             },
           },
 
@@ -31,7 +30,7 @@ export class StorageHandler extends BaseHandler {
                   where: {
                     id: listener.id,
                   },
-                  create: listener.payload!,
+                  create: listener.payload,
                 },
               }
             : {},
@@ -42,7 +41,7 @@ export class StorageHandler extends BaseHandler {
                   where: {
                     id: room.id,
                   },
-                  create: room.payload!,
+                  create: room.payload,
                 },
               }
             : {},

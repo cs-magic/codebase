@@ -2,7 +2,7 @@ import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
 import { fileURLToPath } from "url"
-import { IBotPreference } from "../schema"
+import { type IBotPreference } from "../schema"
 
 const preferenceFilePath = path.join(
   fileURLToPath(import.meta.url),

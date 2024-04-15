@@ -1,4 +1,4 @@
-import { Message } from "wechaty"
+import { type Message } from "wechaty"
 import { prettyMessage } from "../../utils/pretty-message"
 import { BaseHandler } from "./base.handler"
 

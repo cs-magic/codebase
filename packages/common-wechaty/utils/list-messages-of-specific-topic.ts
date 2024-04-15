@@ -1,5 +1,5 @@
-import { SEPARATOR_2 } from "../../../packages/common-common/pretty-query"
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import { SEPARATOR_2 } from "@cs-magic/common/pretty-query"
+import { prisma } from "../../common-db/providers/prisma"
 
 export const listMessagesOfSpecificTopic = async (
   botWxid: string,
@@ -29,7 +29,7 @@ export const listMessagesOfSpecificTopic = async (
         startsWith: "/new-topic ",
       },
       createdAt: {
-        gt: firstUserSetCommand.createdAt!,
+        gt: firstUserSetCommand.createdAt,
       },
     },
     orderBy: {
@@ -59,8 +59,8 @@ export const listMessagesOfSpecificTopic = async (
             },
           ],
           createdAt: {
-            gt: firstUserSetCommand.createdAt!,
-            lt: nextUserSetCommand.createdAt!,
+            gt: firstUserSetCommand.createdAt,
+            lt: nextUserSetCommand.createdAt,
           },
         },
         {

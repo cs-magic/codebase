@@ -1,8 +1,8 @@
-import { LangType } from "../../../../packages/common-i18n/schema"
-import { BackendType } from "../../../../packages/common-llm/schema/llm"
-import { LlmModelType } from "../../../../packages/common-llm/schema/providers"
-import { getConvTable } from "../../utils/get-conv-table"
+import { type LangType } from "../../../common-i18n/schema"
+import { type BackendType } from "../../../common-llm/schema/llm"
+import { type LlmModelType } from "../../../common-llm/schema/providers"
 import { getConvPreference } from "../../utils/get-conv-preference"
+import { getConvTable } from "../../utils/get-conv-table"
 import { BaseManager } from "./base.manager"
 
 export class BasicManager extends BaseManager {

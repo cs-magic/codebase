@@ -1,6 +1,10 @@
-import { Message, Wechaty } from "wechaty"
-import { LangType } from "../../../packages/common-i18n/schema"
-import { IBotContext, IBotDynamicContext, IBotStaticContext } from "../schema"
+import { type Message, type Wechaty } from "wechaty"
+import { type LangType } from "../../common-i18n/schema"
+import {
+  type IBotContext,
+  type IBotDynamicContext,
+  type IBotStaticContext,
+} from "../schema"
 import { getConvPreference } from "./get-conv-preference"
 
 export const getBotStaticContext = async (

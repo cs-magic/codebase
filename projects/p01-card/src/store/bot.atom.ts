@@ -1,6 +1,8 @@
 import { WechatUser } from "@prisma/client";
 import { atom } from "jotai";
 
+export const botSocketOpenedAtom = atom(false);
+
 export const botScanValueAtom = atom("");
 export const botUserAtom = atom<WechatUser | null>(null);
 export const botStatusAtom = atom<

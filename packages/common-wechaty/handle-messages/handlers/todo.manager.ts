@@ -1,7 +1,7 @@
-import { prisma } from "../../../../packages/common-db/providers/prisma"
+import { prisma } from "../../../common-db/providers/prisma"
 import { listTodo } from "../../utils/list-todo"
 import { BaseManager } from "./base.manager"
-import { TaskStatus } from ".prisma/client"
+import { type TaskStatus } from ".prisma/client"
 
 export class TodoManager extends BaseManager {
   async listTodoAction() {

@@ -1,6 +1,6 @@
-import { prettyQuery } from "../../../packages/common-common/pretty-query"
-import { CommandType } from "../handle-messages/_all"
-import { IBotContext } from "../schema"
+import { prettyQuery } from "@cs-magic/common/pretty-query"
+import { type CommandType } from "../handle-messages/_all"
+import { type IBotContext } from "../schema"
 
 export const prettyBotQuery = async (
   context: IBotContext,

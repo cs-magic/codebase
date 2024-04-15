@@ -1,4 +1,4 @@
-import { Wechaty } from "wechaty"
+import { type Wechaty } from "wechaty"
 import { MessageHandlerMap } from "../handle-messages/_all"
 
 export const getHandlers = (bot: Wechaty) => {

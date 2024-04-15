@@ -1,41 +1,41 @@
 {
   "compilerOptions": {
     /* Base Options: */
-//    "skipLibCheck": true,
-//    "target": "es2022",
-//    "allowJs": true,
+    //    "skipLibCheck": true,
+    //    "target": "es2022",
+    //    "allowJs": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
-//    "moduleDetection": "force",
-//    "isolatedModules": true,
+    //    "moduleDetection": "force",
+    //    "isolatedModules": true,
     /* Strictness */
     //    "strict": true,
     //    "noUncheckedIndexedAccess": true,
-//    "checkJs": false,
+    //    "checkJs": false,
     /* Bundled projects */
-//    "lib": [
-//      "dom",
-//      "dom.iterable",
-//      "ES2022"
-//    ],
-//    "noEmit": true,
+    //    "lib": [
+    //      "dom",
+    //      "dom.iterable",
+    //      "ES2022"
+    //    ],
+    //    "noEmit": true,
     "module": "ESNext"
-//    "moduleResolution": "bundler",
-//    "jsx": "preserve",
-//    "plugins": [
-//      {
-//        "name": "next"
-//      }
-//    ],
-//    "incremental": true,
+    //    "moduleResolution": "bundler",
+    //    "jsx": "preserve",
+    //    "plugins": [
+    //      {
+    //        "name": "next"
+    //      }
+    //    ],
+    //    "incremental": true,
     /* Path Aliases */
-//    "baseUrl": ".",
-//    "paths": {
-//      "@/*": [
-//        "./projects/p01-card/src/*"
-//      ]
-//    }
+    //    "baseUrl": ".",
+    //    "paths": {
+    //      "@/*": [
+    //        "./projects/p01-card/src/*"
+    //      ]
+    //    }
   },
   "include": [
     ".eslintrc.cjs",

@@ -1,7 +1,7 @@
 import { customAlphabet } from "nanoid"
-import { ID_LEN } from "./config"
+import { ID_LEN } from "./const"
 
-export const getNewId = (n = ID_LEN) =>
+export const genId = (n = ID_LEN) =>
   customAlphabet(
     "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
     ID_LEN,

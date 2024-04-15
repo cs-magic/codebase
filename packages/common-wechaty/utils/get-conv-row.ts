@@ -1,4 +1,4 @@
-import { Message } from "wechaty"
+import { type Message } from "wechaty"
 import { getConvTable } from "./get-conv-table"
 
 export const getConvRow = async (message: Message) => {

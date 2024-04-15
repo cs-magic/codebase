@@ -1,9 +1,4 @@
 /**
- * @param char one char
- */
-export const isAscii = (char: string) => char.charCodeAt(0) <= 255
-
-/**
  * ref: https://chat.openai.com/c/dde9c61c-5bb9-4c6b-8c6a-0cf8041f8b7a
  * @param char
  */
@@ -20,5 +15,3 @@ export function isChinese(char: string) {
     (charCode >= 0x30000 && charCode <= 0x3134f) // 扩展G
   )
 }
-
-export const ELLIPSE = "…" // opt + ;

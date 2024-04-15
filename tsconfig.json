@@ -6,36 +6,29 @@
     "target": "es2022",
     "allowJs": true,
     "resolveJsonModule": true,
-    "moduleDetection": "force",
     "isolatedModules": true,
+
+
     /* Strictness */
     "strict": true,
-
     "noUncheckedIndexedAccess": true,
     "checkJs": false,
+
+
     /* Bundled projects */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
-    "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "noEmit": true,
     "incremental": true,
+
+//    "moduleDetection": "force",
+//    "lib": [
+//      "dom",
+//      "dom.iterable",
+//      "ES2022"
+//    ],
     /* Path Aliases */
-    "baseUrl": "../..",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+    "baseUrl": ".",
   },
   "include": [
     ".eslintrc.cjs",
@@ -45,24 +38,9 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    ".next-tmp/types/**/*.ts"
+    ".next-tmp/types/**/*.ts",
   ],
   "exclude": [
-    "../../node_modules"
+    "node_modules"
   ],
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-
-    "compilerOptions": {
-      // compilerOptions specified here will override those declared below,
-      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
-      // different options with a single tsconfig.json.
-
-      "module": "CommonJS",
-      "isolatedModules": false,
-      "esModuleInterop": true
-
-    }
-  }
 }

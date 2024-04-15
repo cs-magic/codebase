@@ -1,9 +1,9 @@
-import { ZodError } from "zod"
-import { isNumeric } from "../../../packages/common-common/is-numeric"
+import { isNumeric } from "@cs-magic/common/is-numeric"
 import {
-  InputValidatorSchema,
+  type InputValidatorSchema,
   prettyInvalidInput,
-} from "../../../packages/common-common/pretty-invalid-choice"
+} from "@cs-magic/common/pretty-invalid-choice"
+import { ZodError } from "zod"
 
 export const parseAsyncWithFriendlyErrorMessage = async <T>(
   schema: InputValidatorSchema,

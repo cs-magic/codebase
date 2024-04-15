@@ -1,4 +1,4 @@
-export const staticCreate = <T = any>(f: () => T) => {
+export const singletonCreate = <T = any>(f: () => T) => {
   const g = {
     data: undefined,
   } as unknown as {

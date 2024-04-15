@@ -1,12 +1,12 @@
+import { initLog } from "@cs-magic/common/init-log"
+import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/parse-url-from-wechat-url-message"
 import { isWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { CardSimulator } from "@cs-magic/p01-card/src/core/card-simulator"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
-import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
-import { initLog } from "../../../common-common/init-log"
-import { parseUrlFromWechatUrlMessage } from "../../../common-common/parse-url-from-wechat-url-message"
-import { getConvTable } from "../../utils/get-conv-table"
+import { fetchWxmpArticleWithCache } from "../../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { getConvPreference } from "../../utils/get-conv-preference"
+import { getConvTable } from "../../utils/get-conv-table"
 import { BaseManager } from "./base.manager"
 
 export class ParserManager extends BaseManager {

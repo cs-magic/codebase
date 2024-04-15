@@ -1,9 +1,9 @@
-import { IWechatUserPreference } from "@cs-magic/p01-card/src/schema/wechat-user";
+import { type IWechatUserPreference } from "@cs-magic/p01-card/src/schema/wechat-user"
 
 export const getRobustPreference = (row: {
-  preference: any;
+  preference: any
 }): IWechatUserPreference => {
-  const preference = row.preference as IWechatUserPreference | null;
+  const preference = row.preference as IWechatUserPreference | null
   return {
     ...{
       lang: "en",
@@ -13,5 +13,5 @@ export const getRobustPreference = (row: {
       parserEnabled: false,
     },
     ...preference,
-  };
-};
+  }
+}

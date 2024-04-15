@@ -1,5 +1,5 @@
-import { BackendType } from "../../packages/common-llm/schema/llm"
-import { LlmModelType } from "../../packages/common-llm/schema/providers"
+import { type BackendType } from "../common-llm/schema/llm"
+import { type LlmModelType } from "../common-llm/schema/providers"
 
 export type IBotPreference = {
   model: LlmModelType

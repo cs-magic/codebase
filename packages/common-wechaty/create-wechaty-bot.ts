@@ -1,14 +1,12 @@
-import path from "path"
-import qrcodeTerminal from "qrcode-terminal"
-import { type Wechaty, WechatyBuilder } from "wechaty"
-import { WechatyEventListeners } from "wechaty/src/schemas/wechaty-events"
-
+import { projectPath } from "@cs-magic/common/path"
 import config from "@cs-magic/p01-card/config.json"
-import { projectPath } from "../common-common/path"
-import { MessageQueue } from "./handle-messages/message-queue"
-import { getBotWxid } from "./utils/bot-wxid"
 
 import dotenv from "dotenv"
+import path from "path"
+import qrcodeTerminal from "qrcode-terminal"
+import { type ScanStatus, type Wechaty, WechatyBuilder } from "wechaty"
+import { MessageQueue } from "./handle-messages/message-queue"
+import { getBotWxid } from "./utils/bot-wxid"
 
 dotenv.config({
   path: path.join(projectPath, "projects/p01-card/.env"),
@@ -26,7 +24,10 @@ export const createWechatyBot = ({
   onScan,
 }: {
   name?: string
-  onScan?: WechatyEventListeners["scan"]
+  onScan?: (value: string, status: ScanStatus) => void
+
+  // todo: import with type hint
+  // WechatyEventListeners["scan"]
 }) => {
   console.log("-- init bot: ", { name })
 
@@ -38,8 +39,7 @@ export const createWechatyBot = ({
 
   bot
     .on("error", async (err) => {
-      console.error("-- error")
-      console.error(err)
+      // prettyError(err)
     })
     .on("scan", (value, status) => {
       console.log(

@@ -1,4 +1,4 @@
-import { z, ZodEnum } from "zod"
+import { z, type ZodEnum } from "zod"
 import { basicCommands } from "./handlers/basic.commands"
 import { BasicHandler } from "./handlers/basic.handler"
 import { chatCommands } from "./handlers/chat.commands"

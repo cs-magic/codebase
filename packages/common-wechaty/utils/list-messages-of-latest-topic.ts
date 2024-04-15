@@ -1,5 +1,5 @@
-import { SEPARATOR_2 } from "../../../packages/common-common/pretty-query"
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import { SEPARATOR_2 } from "@cs-magic/common/pretty-query"
+import { prisma } from "../../common-db/providers/prisma"
 
 /**
  * 获取最后一次
@@ -30,7 +30,7 @@ export const listMessagesOfLatestTopic = async (
       OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
       createdAt: lastUserSetCommand
         ? {
-            gt: lastUserSetCommand.createdAt!,
+            gt: lastUserSetCommand.createdAt,
           }
         : undefined,
       talkerId: {
@@ -100,7 +100,7 @@ export const listMessagesOfLatestTopic = async (
         {
           createdAt: lastUserStartChat
             ? {
-                gte: lastUserStartChat.createdAt!,
+                gte: lastUserStartChat.createdAt,
               }
             : undefined,
         },
