@@ -20,6 +20,7 @@
     "moduleResolution": "bundler",
     "noEmit": true,
     "incremental": true,
+    "jsx": "preserve",
 
 //    "moduleDetection": "force",
 //    "lib": [
