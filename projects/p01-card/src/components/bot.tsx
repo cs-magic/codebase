@@ -1,9 +1,8 @@
 "use client";
 
-import { WechatUser } from "@prisma/client";
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
-import { prettyError } from "../../../../packages/common-common/pretty-error";
 import { useInit } from "../../../../packages/common-hooks/use-init";
 import { socketStatusMap } from "../../../../packages/common-transport/schema";
 import { Button } from "../../../../packages/common-ui-shadcn/components/button";
@@ -16,17 +15,15 @@ import {
   botScanStatusAtom,
   botScanValueAtom,
   botSocketOpenedAtom,
-  botStatusAtom,
   botUserAtom,
   ScanStatus,
 } from "../store/bot.atom";
 import { StandardCard } from "./standard-card";
 
-export const WechatBotComp = () => {
+export const Bot = () => {
   const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom);
   const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom);
   const [botUser, setBotUser] = useAtom(botUserAtom);
-  const [botStatus, setBotStatus] = useAtom(botStatusAtom);
   const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom);
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom);
 
@@ -47,19 +44,7 @@ export const WechatBotComp = () => {
       // console.log({ event });
 
       try {
-        const data = JSON.parse(event.data) as
-          | {
-              type: "scan";
-              data: { value: string; status: number };
-            }
-          | {
-              type: "login";
-              data: WechatUser;
-            }
-          | {
-              type: "logged-in" | "logged-out";
-              data: "todo";
-            };
+        const data = JSON.parse(event.data) as IWechatBotTransfer;
 
         console.log("-- data: ", data);
         switch (data.type) {
@@ -73,9 +58,8 @@ export const WechatBotComp = () => {
             setBotLoggedIn(true);
             break;
 
-          case "logged-in":
-          case "logged-out":
-            console.log({ data });
+          case "loggedIn":
+            setBotLoggedIn(data.data);
             break;
         }
       } catch (e) {
@@ -85,6 +69,8 @@ export const WechatBotComp = () => {
 
     return socket;
   });
+
+  console.log({ botUser });
 
   return (
     <FlexContainer
@@ -120,7 +106,7 @@ export const WechatBotComp = () => {
               </Button>
 
               <Button
-                disabled={!botUser}
+                disabled={!botUser || !botLoggedIn}
                 onClick={() => {
                   socket?.send("/stop");
                 }}
@@ -129,16 +115,7 @@ export const WechatBotComp = () => {
               </Button>
 
               <Button
-                disabled={!botUser}
-                onClick={() => {
-                  socket?.send("/start");
-                }}
-              >
-                Continue
-              </Button>
-
-              <Button
-                disabled={!botUser}
+                disabled={!botUser || !botLoggedIn}
                 onClick={() => {
                   socket?.send("/logout");
                 }}

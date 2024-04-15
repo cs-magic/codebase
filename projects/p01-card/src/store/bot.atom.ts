@@ -1,14 +1,11 @@
-import { WechatUser } from "@prisma/client";
 import { atom } from "jotai";
+import type { IUser } from "packages/common-wechaty/schema";
 
 export const botSocketOpenedAtom = atom(false);
 
 export const botScanValueAtom = atom("");
-export const botUserAtom = atom<WechatUser | null>(null);
+export const botUserAtom = atom<IUser>(null);
 export const botLoggedInAtom = atom(false);
-export const botStatusAtom = atom<
-  "to-login" | "logining" | "logined" | "logoff"
->("to-login");
 
 export enum ScanStatus {
   Unknown = 0,

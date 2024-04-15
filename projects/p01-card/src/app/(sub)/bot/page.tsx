@@ -1,10 +1,10 @@
 import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
-import { WechatBotComp } from "../../../components/wechat-bot";
+import { Bot } from "../../../components/bot";
 
 export default function BotPage() {
   return (
     <FlexContainer>
-      <WechatBotComp />
+      <Bot />
     </FlexContainer>
   );
 }

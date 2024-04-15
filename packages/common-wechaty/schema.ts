@@ -1,8 +1,8 @@
-import { ContactSelfInterface } from "wechaty/dist/esm/src/user-modules/contact-self"
+import { Contact } from "wechaty-puppet/payloads"
 import { type BackendType } from "../common-llm/schema/llm"
 import { type LlmModelType } from "../common-llm/schema/providers"
 
-type User = ContactSelfInterface
+type IUser = Contact
 
 export type IBotPreference = {
   model: LlmModelType
@@ -34,11 +34,11 @@ export type IWechatBotTransfer =
     }
   | {
       type: "login"
-      data: User
+      data: IUser
     }
   | {
       type: "loggedIn"
       data: boolean
     }
 
-export { User }
+export type { IUser }
