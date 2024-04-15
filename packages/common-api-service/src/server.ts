@@ -4,7 +4,6 @@ import fw from "@fastify/websocket"
 import Fastify from "fastify"
 import remove from "lodash/remove"
 import * as process from "process"
-import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
 import { startBot } from "./utils/start-bot"
 import { syncClients } from "./utils/sync-clients"
@@ -18,11 +17,12 @@ const fastify = Fastify({
 void fastify.register(fw)
 void fastify.register(async function (fastify) {
   // init context
-  let context: IContext = {
+
+  let context = await startBot({
     bot: null,
     scan: null,
     sockets: [],
-  }
+  })
 
   fastify.get(
     "/ws",
@@ -39,12 +39,10 @@ void fastify.register(async function (fastify) {
       })
 
       socket.on("message", async (m: Buffer) => {
-        await handleMessage(context, m)
+        context = await handleMessage(context, m)
       })
 
       context.sockets.push(socket)
-
-      context = await startBot(context)
 
       syncClients({
         ...context,

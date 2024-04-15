@@ -1,17 +1,17 @@
 help: |-
-  {{name}} Is an AI Native software, for individual, group intelligent management, collaboration.
+  {{name}} Is an AI Native software, for individual/group intelligent management.
   ------------------------------
   Feats：
-  - Chat: Chat with AI
-  - Parser: Info Summarization
-  - Todo: Task Management
+    Chat: Chat with AI
+    Parser: Info Summarization
+    Todo: Task Management
   ------------------------------
   Basic Commands：
-  /
-  /status
-  /help [FEAT]
+    /: (show menu)
+    /status: (show preference)
+    /help [FEAT]: (show usage of specific feature)
+    /set-lang zh: (切换为中文)
   ------------------------------
-  切换为中文，请发送：/设置语言 中文
 
 status: |-
   Basic:

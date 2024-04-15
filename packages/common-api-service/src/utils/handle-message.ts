@@ -9,7 +9,7 @@ import { syncClients } from "./sync-clients"
 export const handleMessage = async (
   context: IContext,
   messageBuffer: Buffer,
-) => {
+): Promise<IContext> => {
   try {
     const message = messageBuffer.toString()
 
@@ -17,7 +17,7 @@ export const handleMessage = async (
 
     logger.debug({ message, result })
 
-    if (!result) return
+    if (!result) return context
 
     switch (result.command) {
       case "start":
@@ -42,4 +42,6 @@ export const handleMessage = async (
   } catch (e) {
     prettyError(e)
   }
+
+  return context
 }
