@@ -31,7 +31,7 @@ void fastify.register(async function (fastify) {
         const loggedIn = bot?.isLoggedIn ?? false
         transfer({ type: "loggedIn", data: loggedIn })
 
-        const user = bot?.currentUser
+        const user = bot?.currentUser.payload
         if (user) transfer({ type: "login", data: user })
       }
 
@@ -72,18 +72,17 @@ void fastify.register(async function (fastify) {
 
             case "stop":
               await bot?.stop()
+              syncUser()
               break
 
             case "logout":
               await bot?.logout()
+              syncUser()
               break
 
             default:
               break
           }
-
-          // 命令操作完成后同步一下状态
-          syncUser()
 
           console.log(`✅ ${result.command} ${result.args}`)
         } catch (e) {

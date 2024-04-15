@@ -7,11 +7,14 @@ import { useInit } from "../../../../packages/common-hooks/use-init";
 import { socketStatusMap } from "../../../../packages/common-transport/schema";
 import { Button } from "../../../../packages/common-ui-shadcn/components/button";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { ButtonWithLoading } from "../../../../packages/common-ui/components/button-with-loading";
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
 import { LabelLine } from "../../../../packages/common-ui/components/label-line";
 import { env } from "../env";
 import {
   botLoggedInAtom,
+  botLoggingAtom,
+  botScanningAtom,
   botScanStatusAtom,
   botScanValueAtom,
   botSocketOpenedAtom,
@@ -21,11 +24,13 @@ import {
 import { StandardCard } from "./standard-card";
 
 export const Bot = () => {
+  const [botScanning, setBotScanning] = useAtom(botScanningAtom);
   const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom);
   const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom);
   const [botUser, setBotUser] = useAtom(botUserAtom);
   const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom);
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom);
+  const [botLogging, setBotLogging] = useAtom(botLoggingAtom);
 
   const socket = useInit<WebSocket>(() => {
     const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!);
@@ -49,17 +54,19 @@ export const Bot = () => {
         console.log("-- data: ", data);
         switch (data.type) {
           case "scan":
+            setBotScanning(true);
             setBotScanValue(data.data.value);
             setBotScanStatus(data.data.status);
             break;
 
           case "login":
+            setBotScanning(false);
             setBotUser(data.data);
-            setBotLoggedIn(true);
             break;
 
           case "loggedIn":
             setBotLoggedIn(data.data);
+            setBotLogging(false);
             break;
         }
       } catch (e) {
@@ -80,7 +87,7 @@ export const Bot = () => {
         // "bg-cyan-950"
       }
     >
-      <StandardCard title={"socket"}>
+      <StandardCard title={"Socket"}>
         {!socket ? (
           "Socket初始化中……"
         ) : (
@@ -94,16 +101,18 @@ export const Bot = () => {
 
       {botSocketOpened && (
         <>
-          <StandardCard title={"bot-actions"}>
+          <StandardCard title={"Bot Actions"}>
             <div className={"flex items-center gap-2"}>
-              <Button
-                disabled={botLoggedIn}
+              <ButtonWithLoading
+                loading={botLogging}
+                disabled={botScanning || botLoggedIn}
                 onClick={() => {
+                  setBotLogging(true);
                   socket?.send("/start 1");
                 }}
               >
                 Log In
-              </Button>
+              </ButtonWithLoading>
 
               <Button
                 disabled={!botUser || !botLoggedIn}
@@ -125,7 +134,7 @@ export const Bot = () => {
             </div>
           </StandardCard>
 
-          {botScanStatus !== ScanStatus.Unknown && (
+          {botScanning && (
             <>
               <LabelLine title={"scan status"}>
                 {ScanStatus[botScanStatus]}
@@ -136,7 +145,7 @@ export const Bot = () => {
           )}
 
           {botUser && (
-            <StandardCard title={"bot-info"}>
+            <StandardCard title={"Bot Payload"}>
               <div>id: {botUser?.id}</div>
               <div>name: {botUser?.name}</div>
             </StandardCard>

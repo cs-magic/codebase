@@ -4,8 +4,9 @@ import type { IUser } from "packages/common-wechaty/schema";
 export const botSocketOpenedAtom = atom(false);
 
 export const botScanValueAtom = atom("");
-export const botUserAtom = atom<IUser>(null);
+export const botUserAtom = atom<IUser | null>(null);
 export const botLoggedInAtom = atom(false);
+export const botLoggingAtom = atom(false);
 
 export enum ScanStatus {
   Unknown = 0,
@@ -17,3 +18,4 @@ export enum ScanStatus {
 }
 
 export const botScanStatusAtom = atom<ScanStatus>(ScanStatus.Unknown);
+export const botScanningAtom = atom(false);
