@@ -4,20 +4,13 @@ import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import fw from "@fastify/websocket"
 import Fastify from "fastify"
 import { Wechaty } from "wechaty"
-import { z } from "zod"
+import { botCommands } from "./config"
 
 const fastify = Fastify({
   logger: true,
 })
 
-// http
-fastify.get("/", async function handler(request, reply) {
-  return { hello: "world" }
-})
-
 let bot: Wechaty | null = null
-
-export const botCommands = z.enum(["start", "stop", "state", "logout"])
 
 // socket
 void fastify.register(fw)
@@ -26,15 +19,22 @@ void fastify.register(async function (fastify) {
     "/ws",
     { websocket: true },
     (socket /* WebSocket */, req /* FastifyRequest */) => {
+      // The WebSocket connection is established at this point.
+      // ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
+
       const syncUser = () => {
-        console.log("-- syncing user")
-        socket.send(JSON.stringify({ type: "login", data: bot?.currentUser }))
+        const user = bot?.currentUser
+        console.log(`-- syncing user: ${JSON.stringify(user)}`)
+        if (user) socket.send(JSON.stringify({ type: "login", data: user }))
       }
 
-      socket.onopen = () => {
-        console.log("-- onOpen")
-        if (bot?.isLoggedIn) syncUser()
+      const init = () => {
+        // Perform initial actions here
+        console.log("WebSocket connection established with client")
+        syncUser()
       }
+
+      init()
 
       socket.on("message", async (messageBuffer: Buffer) => {
         try {
@@ -94,6 +94,11 @@ void fastify.register(async function (fastify) {
       })
     },
   )
+})
+
+// http
+fastify.get("/", async function handler(request, reply) {
+  return { hello: "world" }
 })
 
 try {
