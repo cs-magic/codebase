@@ -1,5 +1,6 @@
 import { genId } from "@cs-magic/common/gen-id"
 import { prettyError } from "@cs-magic/common/pretty-error"
+import logger from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import { IWechatBotScan, IWechatBotTransfer } from "@cs-magic/wechaty/schema"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
@@ -38,7 +39,7 @@ void fastify.register(async function (fastify) {
 
           const result = parseCommand(messageBuffer.toString(), botCommands)
 
-          console.log({ messageBuffer, message, result })
+          logger.debug({ message, result })
 
           if (!result) return
 
@@ -78,7 +79,7 @@ void fastify.register(async function (fastify) {
               break
           }
 
-          console.log(`✅ ${result.command} ${result.args}`)
+          logger.debug(`✅ ${result.command} ${result.args}`)
         } catch (e) {
           prettyError(e)
         }
@@ -106,7 +107,7 @@ void fastify.register(async function (fastify) {
       }
 
       // Perform initial actions here
-      // console.log("WebSocket connection established with client")
+      // logger.log("WebSocket connection established with client")
       syncClients(false)
       sockets[id] = socket
     },

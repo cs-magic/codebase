@@ -1679,6 +1679,7 @@ __metadata:
   resolution: "@cs-magic/api-service@workspace:packages/common-api-service"
   dependencies:
     "@cs-magic/common": "workspace:^"
+    "@cs-magic/log": "workspace:^"
     "@cs-magic/wechaty": "npm:0.1.0"
     "@fastify/websocket": "npm:^10.0.1"
     "@types/ws": "npm:^8.5.10"
@@ -1695,7 +1696,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/log@workspace:packages/common-log":
+"@cs-magic/log@workspace:^, @cs-magic/log@workspace:packages/common-log":
   version: 0.0.0-use.local
   resolution: "@cs-magic/log@workspace:packages/common-log"
   dependencies:

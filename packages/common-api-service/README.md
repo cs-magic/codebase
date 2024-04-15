@@ -1,1 +1,1 @@
-# common-api-service
+# @cs-magic/api-service
