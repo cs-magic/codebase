@@ -1682,10 +1682,12 @@ __metadata:
     "@cs-magic/log": "workspace:^"
     "@cs-magic/wechaty": "npm:0.1.0"
     "@fastify/websocket": "npm:^10.0.1"
+    "@types/lodash": "npm:^4.14.202"
     "@types/node": "npm:^20.12.7"
     "@types/ws": "npm:^8.5.10"
     fastify: "npm:^4.26.2"
     fastify-websocket: "npm:^4.3.0"
+    lodash: "npm:^4.17.21"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft

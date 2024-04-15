@@ -13,8 +13,10 @@
     "@cs-magic/log": "workspace:^",
     "@cs-magic/wechaty": "0.1.0",
     "@fastify/websocket": "^10.0.1",
+    "@types/lodash": "^4.14.202",
     "fastify": "^4.26.2",
-    "fastify-websocket": "^4.3.0"
+    "fastify-websocket": "^4.3.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
