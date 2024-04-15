@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "../packages/common-ui-shadcn/components",
-    "utils": "../packages/common-ui-shadcn/utils"
+    "components": "../../packages/common-ui-shadcn/components",
+    "utils": "../../packages/common-ui-shadcn/utils"
   }
 }
