@@ -10,6 +10,8 @@ import { Wechaty } from "wechaty"
 import WebSocket from "ws"
 import { botCommands } from "./config"
 
+logger.info("fastify initializing...")
+
 const fastify = Fastify({
   logger: true,
 })
@@ -120,6 +122,7 @@ fastify.get("/", async function handler(request, reply) {
 })
 
 try {
+  logger.info("fastify listening...")
   void fastify.listen({ port: 40414 })
 } catch (err) {
   fastify.log.error(err)

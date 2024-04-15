@@ -6,15 +6,16 @@ import winston from "winston"
 const logPath = path.join(projectPath, ".logs")
 if (!fs.existsSync(logPath)) fs.mkdirSync(logPath)
 
+const { combine, timestamp, printf, colorize } = winston.format
+
 export const logger = winston.createLogger({
   level: "info",
-  format: winston.format.combine(
-    winston.format.timestamp({
+  format: combine(
+    colorize(),
+    timestamp({
       format: "YYYY-MM-DD HH:mm:ss",
     }),
-    winston.format.printf(
-      (info) => `${info.timestamp} ${info.level}: ${info.message}`,
-    ),
+    printf((info) => `${info.timestamp} [${info.level}] ${info.message}`),
   ),
   transports: [
     new winston.transports.Console(),
