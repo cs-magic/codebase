@@ -4,7 +4,9 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
-    "start-api": "tsx index.ts"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx src/server.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
@@ -15,6 +17,8 @@
     "fastify-websocket": "^4.3.0"
   },
   "devDependencies": {
-    "@types/ws": "^8.5.10"
+    "@types/node": "^20.12.7",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.4.5"
   }
 }

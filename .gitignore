@@ -1,27 +1,20 @@
-**/.next
-
-**/.data
-
-**/.generated
-
-**/__generated
-
 # wechaty
 **/*.memory-card.json
 
-.env.cs-magic.cn
 # zod
 prisma/generated
 
-deprecated
-.next-tmp
-
-.idea
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+**/.logs
+**/.next
+**/.data
+**/.generated
+**/.next-tmp
+**/.idea
+**/deprecated
+**/dist
+**/node_modules
 
 # dependencies
-/node_modules
 /.pnp
 .pnp.js
 
