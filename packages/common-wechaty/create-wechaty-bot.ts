@@ -1,23 +1,15 @@
-import { projectPath } from "@cs-magic/common/path"
+import { logEnv } from "@cs-magic/common/log-env"
+import { envPath } from "@cs-magic/common/path"
 import config from "@cs-magic/p01-card/config.json"
 
 import dotenv from "dotenv"
-import path from "path"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { MessageQueue } from "./handle-messages/message-queue"
 import { getBotWxid } from "./utils/bot-wxid"
 
-dotenv.config({
-  path: path.join(projectPath, "projects/p01-card/.env"),
-  override: true,
-})
-console.log(
-  "keys in env: ",
-  Object.keys(process.env)
-    .filter((k) => k.toLowerCase().includes("wechaty"))
-    .map((k) => `${k}: ${process.env[k]}`),
-)
+dotenv.config({ path: envPath, override: true })
+logEnv("wechaty")
 
 export const createWechatyBot = ({ name }: { name?: string }) => {
   console.log("-- init bot: ", { name })

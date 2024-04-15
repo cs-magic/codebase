@@ -1,4 +1,3 @@
-import dotenv from "dotenv"
 import { wechatArticleUrlSample } from "../../sample"
 import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
 
@@ -11,10 +10,6 @@ describe("wxapi without token", () => {
 })
 
 describe("wxapi with token", () => {
-  beforeAll(() => {
-    dotenv.config()
-  })
-
   test("stat ok", async () => {
     const resStat = await fetchWechatArticleStat(wechatArticleUrlSample)
     expect(resStat.code).toBe(0)

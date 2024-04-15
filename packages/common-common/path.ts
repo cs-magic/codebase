@@ -11,3 +11,5 @@ export const projectPath = path.dirname(packagesPath)
 
 export const generatedPath = path.join(projectPath, ".generated")
 if (!fs.existsSync(generatedPath)) fs.mkdirSync(generatedPath)
+
+export const envPath = path.join(projectPath, "projects/p01-card/.env")

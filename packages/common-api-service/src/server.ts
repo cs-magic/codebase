@@ -6,10 +6,15 @@ import { IWechatBotScan, IWechatBotTransfer } from "@cs-magic/wechaty/schema"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import fw from "@fastify/websocket"
 import Fastify from "fastify"
+import * as process from "process"
 import { Wechaty } from "wechaty"
 import WebSocket from "ws"
 import { botCommands } from "./config"
 
+// if (process.env.NODE_APP_INSTANCE !== "0") {
+//   logger.info("fastify exiting...")
+//   process.exit(0)
+// }
 logger.info("fastify initializing...")
 
 const fastify = Fastify({
@@ -30,6 +35,26 @@ void fastify.register(async function (fastify) {
       // The WebSocket connection is established at this point.
       // ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
 
+      const startBot = async () => {
+        // 避免重复登录，会导致 padLocal 报错
+        if (!bot) {
+          bot = createWechatyBot({
+            name: "1", // todo
+          })
+            .on("scan", (value, status) => {
+              scan = { value, status }
+              transfer({ type: "scan", data: scan }, true)
+            })
+            .on("login", (user) => {
+              scan = null
+              syncClients(true)
+            })
+        }
+        if (!bot.isLoggedIn) {
+          await bot.start()
+        }
+      }
+
       const id = genId()
       socket.on("close", () => {
         if (id in sockets) delete sockets[id]
@@ -47,24 +72,7 @@ void fastify.register(async function (fastify) {
 
           switch (result.command) {
             case "start":
-              // 避免重复登录，会导致 padLocal 报错
-              if (!bot) {
-                bot = createWechatyBot({
-                  name: result.args,
-                })
-                  .on("scan", (value, status) => {
-                    scan = { value, status }
-                    transfer({ type: "scan", data: scan }, true)
-                  })
-                  .on("login", (user) => {
-                    scan = null
-                    syncClients(true)
-                  })
-              }
-              if (!bot.isLoggedIn) {
-                await bot.start()
-              }
-
+              await startBot()
               break
 
             case "stop":
@@ -111,6 +119,7 @@ void fastify.register(async function (fastify) {
       // Perform initial actions here
       // logger.log("WebSocket connection established with client")
       syncClients(false)
+      void startBot()
       sockets[id] = socket
     },
   )

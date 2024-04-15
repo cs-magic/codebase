@@ -1,7 +1,10 @@
+import { logEnv } from "@cs-magic/common/log-env";
+import { envPath } from "@cs-magic/common/path";
 import dotenv from "dotenv";
 import * as process from "process";
 
-dotenv.config();
+dotenv.config({ path: envPath, override: true });
+logEnv("api_key");
 
 export const env = {
   // env

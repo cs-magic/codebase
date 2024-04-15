@@ -1,17 +1,14 @@
+import { prettyError } from "@cs-magic/common/pretty-error"
+import { SEPARATOR_2 } from "@cs-magic/common/pretty-query"
+import { prettyString } from "@cs-magic/common/pretty-string"
 import { env } from "@cs-magic/p01-card/src/env"
-import dotenv from "dotenv"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
+import { v4 } from "uuid"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
-import { api, backendApi } from "../../packages/common-api-client"
-import { prettyError } from "../../packages/common-common/pretty-error"
-import { SEPARATOR_2 } from "../../packages/common-common/pretty-query"
-import { prettyString } from "../../packages/common-common/pretty-string"
+import { api, backendApi } from "../common-api-client"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
-import { v4 } from "uuid"
-
-dotenv.config()
 
 export const callLLM = async (
   options: ICallLLMOptions,
@@ -58,10 +55,10 @@ export const callLLM = async (
     [
       "",
       SEPARATOR_2,
-      `-- calling LLM(model=${queryConfig.model}): `,
+      `-- calling LLM(provider=${providerType}, model=${queryConfig.model}, api_key=${apiKey}): `,
       ...queryConfig.messages.map(
         (m) =>
-          `  [${m.role.padEnd(9)}]: ${prettyString(JSON.stringify(m.content), 60)}`,
+          `  [${m.role[0]!.toUpperCase()}]: ${prettyString(JSON.stringify(m.content), 60)}`,
       ),
     ].join("\n"),
   )
