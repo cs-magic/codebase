@@ -135,13 +135,13 @@ export const Bot = () => {
           </StandardCard>
 
           {botScanning && (
-            <>
-              <LabelLine title={"scan status"}>
+            <StandardCard title={"Scan"}>
+              <LabelLine title={"Status"}>
                 {ScanStatus[botScanStatus]}
               </LabelLine>
 
               <QRCodeSVG value={botScanValue} />
-            </>
+            </StandardCard>
           )}
 
           {botUser && (

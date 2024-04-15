@@ -27,10 +27,12 @@ export type IBotTemplate = {
   status: string
 }
 
+export type IWechatBotScan = { value: string; status: number }
+
 export type IWechatBotTransfer =
   | {
       type: "scan"
-      data: { value: string; status: number }
+      data: IWechatBotScan
     }
   | {
       type: "login"
