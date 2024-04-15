@@ -1,6 +1,7 @@
 {
   "name": "@cs-magic/common",
   "packageManager": "yarn@4.1.1",
+  "type": "module",
   "dependencies": {
     "nanoid": "^5.0.7"
   }

@@ -1,5 +1,6 @@
 "use client";
 
+import { WechatUser } from "@prisma/client";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
 import { prettyError } from "../../../../packages/common-common/pretty-error";
@@ -11,6 +12,7 @@ import { FlexContainer } from "../../../../packages/common-ui/components/flex-co
 import { LabelLine } from "../../../../packages/common-ui/components/label-line";
 import { env } from "../env";
 import {
+  botLoggedInAtom,
   botScanStatusAtom,
   botScanValueAtom,
   botSocketOpenedAtom,
@@ -26,6 +28,7 @@ export const WechatBotComp = () => {
   const [botUser, setBotUser] = useAtom(botUserAtom);
   const [botStatus, setBotStatus] = useAtom(botStatusAtom);
   const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom);
+  const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom);
 
   const socket = useInit<WebSocket>(() => {
     const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!);
@@ -50,6 +53,10 @@ export const WechatBotComp = () => {
               data: { value: string; status: number };
             }
           | {
+              type: "login";
+              data: WechatUser;
+            }
+          | {
               type: "logged-in" | "logged-out";
               data: "todo";
             };
@@ -59,6 +66,13 @@ export const WechatBotComp = () => {
           case "scan":
             setBotScanValue(data.data.value);
             setBotScanStatus(data.data.status);
+            break;
+
+          case "login":
+            setBotUser(data.data);
+            setBotLoggedIn(true);
+            break;
+
           case "logged-in":
           case "logged-out":
             console.log({ data });
@@ -97,6 +111,7 @@ export const WechatBotComp = () => {
           <StandardCard title={"bot-actions"}>
             <div className={"flex items-center gap-2"}>
               <Button
+                disabled={botLoggedIn}
                 onClick={() => {
                   socket?.send("/start 1");
                 }}

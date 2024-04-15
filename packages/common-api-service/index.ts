@@ -1,10 +1,10 @@
-import fw from "@fastify/websocket"
+import { prettyError } from "@cs-magic/common/pretty-error"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
+import fw from "@fastify/websocket"
 import Fastify from "fastify"
 import { Wechaty } from "wechaty"
 import { z } from "zod"
-import { prettyError } from "@cs-magic/common/pretty-error"
 
 const fastify = Fastify({
   logger: true,
@@ -26,6 +26,16 @@ void fastify.register(async function (fastify) {
     "/ws",
     { websocket: true },
     (socket /* WebSocket */, req /* FastifyRequest */) => {
+      const syncUser = () => {
+        console.log("-- syncing user")
+        socket.send(JSON.stringify({ type: "login", data: bot?.currentUser }))
+      }
+
+      socket.onopen = () => {
+        console.log("-- onOpen")
+        if (bot?.isLoggedIn) syncUser()
+      }
+
       socket.on("message", async (messageBuffer: Buffer) => {
         try {
           const message = messageBuffer.toString()
@@ -38,18 +48,24 @@ void fastify.register(async function (fastify) {
 
           switch (result.command) {
             case "start":
-              socket.send("starting")
+              if (bot?.isLoggedIn) {
+                socket.send("had logged in")
+                break
+              }
+              socket.send("logging in")
               bot = createWechatyBot({
                 name: result.args,
-                onScan: (value, status) => {
+              })
+                .on("scan", (value, status) => {
                   console.log({ value, status })
                   socket.send(
                     JSON.stringify({ type: "scan", data: { value, status } }),
                   )
-                },
-              })
+                })
+                .on("login", (user) => {
+                  syncUser()
+                })
               await bot.start()
-              socket.send("started")
               break
 
             case "stop":

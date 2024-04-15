@@ -5,6 +5,7 @@ export const botSocketOpenedAtom = atom(false);
 
 export const botScanValueAtom = atom("");
 export const botUserAtom = atom<WechatUser | null>(null);
+export const botLoggedInAtom = atom(false);
 export const botStatusAtom = atom<
   "to-login" | "logining" | "logined" | "logoff"
 >("to-login");

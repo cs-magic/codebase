@@ -4,7 +4,7 @@ import config from "@cs-magic/p01-card/config.json"
 import dotenv from "dotenv"
 import path from "path"
 import qrcodeTerminal from "qrcode-terminal"
-import { type ScanStatus, type Wechaty, WechatyBuilder } from "wechaty"
+import { type Wechaty, WechatyBuilder } from "wechaty"
 import { MessageQueue } from "./handle-messages/message-queue"
 import { getBotWxid } from "./utils/bot-wxid"
 
@@ -19,16 +19,7 @@ console.log(
     .map((k) => `${k}: ${process.env[k]}`),
 )
 
-export const createWechatyBot = ({
-  name,
-  onScan,
-}: {
-  name?: string
-  onScan?: (value: string, status: ScanStatus) => void
-
-  // todo: import with type hint
-  // WechatyEventListeners["scan"]
-}) => {
+export const createWechatyBot = ({ name }: { name?: string }) => {
   console.log("-- init bot: ", { name })
 
   const bot = WechatyBuilder.build({
@@ -46,9 +37,6 @@ export const createWechatyBot = ({
         `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
       )
       qrcodeTerminal.generate(value, { small: true })
-      if (onScan) {
-        onScan(value, status)
-      }
     })
     .on("login", async (user) => {
       console.log(`User logged in: `, user.payload)
