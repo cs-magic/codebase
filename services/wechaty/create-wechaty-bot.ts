@@ -1,15 +1,13 @@
 import { logger } from "@cs-magic/log/logger"
-import { logEnv } from "../../packages/common-env/utils/log-env"
-import packageJson from "./package.json"
-
-import dotenv from "dotenv"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
-import { Path } from "../../packages/common-path"
+import { loadEnv } from "../../packages/common-env/utils/load-env"
+import { logEnv } from "../../packages/common-env/utils/log-env"
 import { MessageQueue } from "./handle-messages/message-queue"
+import packageJson from "./package.json"
 import { getBotWxid } from "./utils/bot-wxid"
 
-dotenv.config({ path: Path.envFile, override: true })
+loadEnv()
 logEnv("wechaty")
 
 export const createWechatyBot = ({ name }: { name?: string }) => {

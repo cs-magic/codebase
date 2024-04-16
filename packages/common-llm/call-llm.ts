@@ -7,8 +7,13 @@ import { v4 } from "uuid"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api, backendApi } from "../common-api-client"
 import { env } from "../common-env"
+import { loadEnv } from "../common-env/utils/load-env"
+import { logEnv } from "../common-env/utils/log-env"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
+
+loadEnv()
+logEnv("api_key")
 
 export const callLLM = async (
   options: ICallLLMOptions,
