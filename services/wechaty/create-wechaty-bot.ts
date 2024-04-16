@@ -30,7 +30,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       qrcodeTerminal.generate(value, { small: true })
     })
     .on("login", async (user) => {
-      logger.info(`-- User logged in: `, user.payload)
+      logger.info(`-- User logged in: %o`, user.payload)
 
       bot.wxid = getBotWxid(user)
 

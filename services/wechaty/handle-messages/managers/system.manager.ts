@@ -18,6 +18,7 @@ const commandTypeSchema = z.enum([
   "list-models",
   "set-model",
   // "set-backend",
+  "list-langs",
   "set-lang",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
@@ -33,6 +34,10 @@ const i18n: FeatureMap<CommandType> = {
       设置模型: {
         type: "set-model",
         description: "设置选用另一款大语言模型",
+      },
+      查询语言: {
+        type: "list-langs",
+        description: "查询支持的语言列表",
       },
       设置语言: {
         type: "set-lang",
@@ -52,6 +57,10 @@ const i18n: FeatureMap<CommandType> = {
         type: "set-model",
         description: "switch to another LLM model",
       },
+      "list-langs": {
+        type: "list-langs",
+        description: "list supported languages",
+      },
       "set-lang": {
         type: "set-lang",
         description: "switch to another language",
@@ -64,14 +73,16 @@ export class SystemManager extends BaseManager {
   public i18n = i18n
 
   async parse(input?: string) {
+    if (!input) return this.help()
+
     const commands = this.i18n[await this.getLang()].commands
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
     )
-    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
+    const parsed = parseLimitedCommand(input, commandTypeSchema)
     if (parsed) {
       const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "list-model":
@@ -96,7 +107,7 @@ export class SystemManager extends BaseManager {
       [...llmModelTypeSchema.options.map((o, i) => `${i + 1}. ${o}`)].join(
         "\n",
       ),
-      ["set-model"],
+      ["system set-model"],
     )
   }
 
@@ -113,7 +124,9 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`模型更新成功：${preference.model} --> ${value}`)
+    await this.standardReply(`模型更新成功：${preference.model} --> ${value}`, [
+      "system list-models",
+    ])
   }
 
   async setBackend(value: BackendType) {
@@ -129,7 +142,10 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`后端更新成功：${preference.backend} --> ${value}`)
+    await this.standardReply(
+      `后端更新成功：${preference.backend} --> ${value}`,
+      ["system list-backends"],
+    )
   }
 
   async setLang(value: LangType) {
@@ -145,6 +161,8 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`语言更新成功：${preference.lang} --> ${value}`)
+    await this.standardReply(`语言更新成功：${preference.lang} --> ${value}`, [
+      "system list-langs",
+    ])
   }
 }

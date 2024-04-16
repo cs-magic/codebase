@@ -4,13 +4,14 @@ help: |-
   Feats：
     1. Parser: LLM powered AI Parser
     2. Chatter: LLM powered AI Chatter
-    3. Todo: Task Management
+    3. Todo: Your Personal TODO
+    4. Reminder: Your Personal Reminder (todo)
+    5. Love: An Emotional Hive (todo)
     0. System: Preference Relative
   ------------------------------
   Basic Commands：
-    /help [FEAT]: (show usage of specific feature)
-    /status: (show preference)
-  ------------------------------
+    status: (show preference)
+    help [FEAT]: (show usage of specific feature)
 
 status: |-
   Basic:

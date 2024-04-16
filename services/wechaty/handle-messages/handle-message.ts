@@ -1,11 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
-import { selectFromList } from "packages/common-common/utils/select-from-list"
 import { type Message, type Wechaty } from "wechaty"
-import {
-  commandsSchema,
-  type CommandType,
-  featureTypeSchema,
-} from "../schema/commands"
+import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseLimitedCommand } from "../utils/parse-command"
@@ -24,33 +19,23 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     await storageMessage(message)
 
     const result = parseLimitedCommand<CommandType>(text, commandsSchema)
+    // logger.debug(result)
+
     if (result) {
       switch (result.command) {
         case "ding":
           return message.say("dong")
 
-        case "status":
-          return new BaseManager(bot, message).getStatus(true)
-
-        case "":
         case "help":
-          if (!result.args) return new BaseManager(bot, message).getHelp(true)
+          return new BaseManager(bot, message).getHelp(true)
 
-          const index = await selectFromList(
-            featureTypeSchema.options,
-            result.args,
+        case "love":
+          return message.say(
+            "你有什么想和我说的吗？（我是你最乖的树洞，我们之间的对话不会告诉任何人哦）",
           )
 
-          switch (featureTypeSchema.options[index]) {
-            case "system":
-              return new SystemManager(bot, message).help()
-            case "todo":
-              return new TodoManager(bot, message).help()
-            case "chatter":
-              return new ChatManager(bot, message).help()
-            case "parser":
-              return new ParserManager(bot, message).help()
-          }
+        case "status":
+          return new BaseManager(bot, message).getStatus(true)
 
         case "system":
           return new SystemManager(bot, message).parse(result.args)

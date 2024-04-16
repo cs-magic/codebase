@@ -30,7 +30,7 @@ export const listMessagesOfLatestTopic = async (
       OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
       createdAt: lastUserSetCommand
         ? {
-            gt: lastUserSetCommand.createdAt,
+            gt: lastUserSetCommand.createdAt!,
           }
         : undefined,
       talkerId: {
@@ -100,7 +100,7 @@ export const listMessagesOfLatestTopic = async (
         {
           createdAt: lastUserStartChat
             ? {
-                gte: lastUserStartChat.createdAt,
+                gte: lastUserStartChat.createdAt!,
               }
             : undefined,
         },

@@ -5,11 +5,11 @@ export const featureTypeSchema = z.enum(["system", "todo", "chatter", "parser"])
 export type FeatureType = z.infer<typeof featureTypeSchema>
 
 export const commandsSchema = z.enum([
-  ...featureTypeSchema.options,
+  "love",
   "ding",
   "status",
   "help",
-  "",
+  ...featureTypeSchema.options,
 ])
 export type CommandType = z.infer<typeof commandsSchema>
 

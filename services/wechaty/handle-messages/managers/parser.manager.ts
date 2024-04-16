@@ -1,3 +1,4 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
@@ -7,7 +8,7 @@ import { types } from "wechaty"
 import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
-import { FeatureMap } from "../../schema/commands"
+import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -32,7 +33,10 @@ const i18n: FeatureMap<CommandType> = {
   },
   en: {
     title: "Super Parser",
-    description: "I can parse anything you sent to me, except your heart.",
+    description:
+      "Hello, I am the Super Parser!" +
+      "\nI can parse almost anything!" +
+      "\nSend me one wxmp article, now! 😠",
     commands: {
       enable: {
         type: "enable",
@@ -48,9 +52,27 @@ const i18n: FeatureMap<CommandType> = {
 
 export class ParserManager extends BaseManager {
   public i18n = i18n
+  public name: FeatureType = "parser"
   private uniParser: CardSimulator | null = null
 
+  async help() {
+    const commands = await this.getCommands()
+    const desc = await this.getDescription()
+    const preference = await this.getPreference()
+    await this.standardReply(
+      [
+        desc,
+        SEPARATOR_LINE,
+        "Status:",
+        `  - enabled: ${preference.parserEnabled}`,
+      ].join("\n"),
+      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+    )
+  }
+
   async parse(input?: string) {
+    if (!input) return this.help()
+
     const commands = this.i18n[await this.getLang()].commands
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
@@ -58,7 +80,7 @@ export class ParserManager extends BaseManager {
     const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
     if (parsed) {
       const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "enable":
@@ -82,8 +104,11 @@ export class ParserManager extends BaseManager {
       },
     })
     await this.standardReply(
-      `万能解析器已启动，请发送一篇公众号文章让我解析吧！`,
-      ["disable-parser"],
+      `Congratulation, Super Parser has been activated!\nI can help you parse shared links, give me a try! 😄`,
+      [
+        "- I currently supports wxmp article, other media types (e.g. videos) are on the roadmap, hold on!",
+        "- You can deactivate me via sending: `parser disable`.",
+      ],
     )
   }
 
@@ -96,7 +121,10 @@ export class ParserManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`已关闭，期待您下次再打开`, ["enable-parser"])
+    await this.standardReply(
+      `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
+      ["- You can activate me via sending: `parser enable`."],
+    )
   }
 
   async safeParseCard() {

@@ -1,6 +1,6 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { type Message, type Wechaty } from "wechaty"
-import { FeatureMap } from "../../schema/commands"
+import { FeatureMap, FeatureType } from "../../schema/commands"
 import {
   getBotContextFromMessage,
   getBotDynamicContext,
@@ -12,6 +12,8 @@ import { getConvPreference } from "../../utils/get-conv-preference"
 export class BaseManager {
   public message: Message
   public bot: Wechaty
+  public name: FeatureType | null = null
+
   public i18n: FeatureMap<string> = {
     zh: {
       title: "小川助手",
@@ -115,7 +117,7 @@ export class BaseManager {
 
     await this.standardReply(
       (await this.getDescription()) ?? "No Description",
-      commands ? Object.keys(commands) : commands,
+      Object.keys(commands).length ? Object.keys(commands) : undefined,
     )
   }
 }

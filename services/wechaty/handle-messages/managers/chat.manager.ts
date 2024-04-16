@@ -1,9 +1,10 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { selectFromList } from "packages/common-common/utils/select-from-list"
 import { types } from "wechaty"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { callLLM } from "../../../../packages/common-llm"
-import { FeatureMap } from "../../schema/commands"
+import { FeatureMap, FeatureType } from "../../schema/commands"
 import { type IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
@@ -15,7 +16,11 @@ import { listTopics } from "../../utils/list-topics"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
-const commandTypeSchema = z.enum(["enable", "disable", "new", "list"])
+const commandTypeSchema = z.enum([
+  "enable",
+  "disable",
+  // "new", "list"
+])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
   zh: {
@@ -30,19 +35,22 @@ const i18n: FeatureMap<CommandType> = {
         type: "disable",
         description: "停止 AI 聊天",
       },
-      新话题: {
-        type: "new",
-        description: "开启新话题",
-      },
-      历史: {
-        type: "list",
-        description: "查询话题历史",
-      },
+      // 新话题: {
+      //   type: "new",
+      //   description: "开启新话题",
+      // },
+      // 历史: {
+      //   type: "list",
+      //   description: "查询话题历史",
+      // },
     },
   },
   en: {
-    title: "AI Chatter",
-    description: "You can chat with AI powered by LLM models.",
+    title: "Super Chatter",
+    description:
+      "Hello, I am the Super Chatter!" +
+      "\nThe Only One AI Bot You Need in the WeChat ecosystem." +
+      "\nWhat I can help you today? 🍺",
     commands: {
       enable: {
         type: "enable",
@@ -52,36 +60,53 @@ const i18n: FeatureMap<CommandType> = {
         type: "disable",
         description: "disable AI chat",
       },
-      new: {
-        type: "new",
-        description: "create a new topic",
-      },
-      list: {
-        type: "list",
-        description: "list all the topics",
-      },
+      // new: {
+      //   type: "new",
+      //   description: "create a new topic",
+      // },
+      // list: {
+      //   type: "list",
+      //   description: "list all the topics",
+      // },
     },
   },
 }
 
 export class ChatManager extends BaseManager {
   public i18n = i18n
+  public name: FeatureType = "chatter"
+
+  async help() {
+    const commands = await this.getCommands()
+    const desc = await this.getDescription()
+    const preference = await this.getPreference()
+    await this.standardReply(
+      [
+        desc,
+        SEPARATOR_LINE,
+        "Status:",
+        `  - enabled: ${preference.chatEnabled}`,
+      ].join("\n"),
+      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+    )
+  }
 
   async parse(input?: string) {
+    if (!input) return this.help()
+
     const commands = this.i18n[await this.getLang()].commands
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
     )
-    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
+
+    const parsed = parseLimitedCommand(input, commandTypeSchema)
+
     if (parsed) {
       const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
-      switch (commandType) {
-        case "list":
-          await this.listTopicsAction()
-          break
 
+      switch (commandType) {
         case "enable":
           await this.enableChat()
           break
@@ -90,9 +115,13 @@ export class ChatManager extends BaseManager {
           await this.disableChat()
           break
 
-        case "new":
-          await this.newTopic(parsed.args)
-          break
+        // case "list":
+        //   await this.listTopicsAction()
+        //   break
+        //
+        // case "new":
+        //   await this.newTopic(parsed.args)
+        //   break
       }
     }
   }
@@ -107,7 +136,7 @@ export class ChatManager extends BaseManager {
       Object.keys(topics)
         .map((k, index) => `${index + 1}. ${k} (${topics[k]}条消息)`)
         .join("\n"),
-      ["new-topic"],
+      ["chatter new"],
     )
   }
 
@@ -122,11 +151,15 @@ export class ChatManager extends BaseManager {
       },
     })
     const p: IWechatUserPreference = row.preference
-    await this.standardReply(`已启动，当前话题：${p?.chatTopic ?? "默认"}`, [
-      "list-topics",
-      "new-topic",
-      "disable-chat",
-    ])
+    await this.standardReply(
+      `Congratulation, Super Chatter has been activated!\nI almost know anything, hope you would like! 😄`,
+      [
+        // "chatter list",
+        // "chatter new",
+        "- You should @me if you are in a group chat.",
+        "- You can deactivate me via sending: `chatter disable`",
+      ],
+    )
   }
 
   async disableChat() {
@@ -139,7 +172,10 @@ export class ChatManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`已关闭`, ["enable-chat"])
+    await this.standardReply(
+      `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
+      ["- You can activate me via sending: `parser enable`."],
+    )
   }
 
   async newTopic(chatTopic?: string) {
@@ -158,8 +194,8 @@ export class ChatManager extends BaseManager {
     const preferenceNew = getRobustPreference(row)
 
     await this.standardReply(
-      `新增话题成功，当前会话为：${preferenceNew.chatTopic}，模型为：${preferenceNew.model}`,
-      ["list-topics"],
+      `new topic: ${preferenceNew.chatTopic}\nmodel: ${preferenceNew.model}`,
+      // ["chatter list"],
     )
   }
 
@@ -187,7 +223,7 @@ export class ChatManager extends BaseManager {
         messages
           .map((m, i) => `${i + 1}) ${m.talker.name}: ${m.text}\n`)
           .join("\n"),
-      ["list-topics"],
+      // ["chatter list"],
     )
   }
 

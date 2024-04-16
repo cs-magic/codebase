@@ -37,8 +37,11 @@ const i18n: FeatureMap<CommandType> = {
     },
   },
   en: {
-    title: "Task Management",
-    description: "",
+    title: "Task Manager",
+    description:
+      "Hello, I am your PERSONAL Task Manager!" +
+      "\nYou can record and manage any todo tasks here." +
+      "\nHope I can help you~  😊",
     commands: {
       list: {
         type: "list",
@@ -71,6 +74,8 @@ export class TodoManager extends BaseManager {
    * @param input
    */
   async parse(input?: string) {
+    if (!input) return this.help()
+
     const commands = this.i18n[await this.getLang()].commands
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
@@ -78,7 +83,7 @@ export class TodoManager extends BaseManager {
     const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
     if (parsed) {
       const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "list":
