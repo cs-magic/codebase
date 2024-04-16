@@ -1,4 +1,5 @@
 import { type Message, type Wechaty } from "wechaty"
+import packageJson from "../../../package.json"
 import { type LangType } from "../../../packages/common-i18n/schema"
 import {
   type IBotContext,
@@ -40,3 +41,8 @@ export const getBotContextFromMessage = async (
   const context = await getBotContext(bot, preference.lang)
   return context
 }
+
+export const initBotStaticContext = (): IBotStaticContext => ({
+  version: packageJson.version,
+  startTime: Date.now(),
+})

@@ -40,6 +40,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
             featureTypeSchema.options,
             result.args,
           )
+
           switch (featureTypeSchema.options[index]) {
             case "system":
               return new SystemManager(bot, message).help()

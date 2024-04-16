@@ -1,6 +1,6 @@
 {
   "name": "cs-magic",
-  "version": "V0.7.145 (α)",
+  "version": "V0.7.146 (α)",
   "repository": "git@github.com:MarkShawn2020/p01.git",
   "author": "markshawn2020 <shawninjuly@gmail.com>",
   "license": "MIT",
@@ -11,6 +11,7 @@
     "services/*",
     "projects/*"
   ],
+  "test": "jest",
   "packageManager": "yarn@4.1.1",
   "dependencies": {
     "zod": "3.21.1"

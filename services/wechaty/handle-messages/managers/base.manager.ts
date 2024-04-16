@@ -9,25 +9,17 @@ import { renderBotTemplate } from "../../utils/bot-template"
 import { formatBotQuery } from "../../utils/format-bot-query"
 import { getConvPreference } from "../../utils/get-conv-preference"
 
-export type ICommandData = Record<string, string>
-
-export type IManagerI18n = {
-  title: string
-  commands?: ICommandData
-  description?: string
-}
-
 export class BaseManager {
   public message: Message
   public bot: Wechaty
   public i18n: FeatureMap<string> = {
     zh: {
-      title: "",
+      title: "小川助手",
       description: "",
       commands: {},
     },
     en: {
-      title: "",
+      title: "Okawa Plus",
       description: "",
       commands: {},
     },

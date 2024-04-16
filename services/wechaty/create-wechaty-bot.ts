@@ -4,7 +4,7 @@ import { type Wechaty, WechatyBuilder } from "wechaty"
 import { loadEnv } from "../../packages/common-env/utils/load-env"
 import { logEnv } from "../../packages/common-env/utils/log-env"
 import { MessageQueue } from "./handle-messages/message-queue"
-import packageJson from "../../package.json"
+import { initBotStaticContext } from "./utils/bot-context"
 import { getBotWxid } from "./utils/bot-wxid"
 
 loadEnv()
@@ -34,10 +34,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
 
       bot.wxid = getBotWxid(user)
 
-      bot.staticContext = {
-        version: packageJson.version,
-        startTime: Date.now(),
-      }
+      bot.staticContext = initBotStaticContext()
     })
     .on("message", async (message) => {
       await mq.enqueueMessage(message)
