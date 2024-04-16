@@ -1,4 +1,4 @@
-import { prettyDuration } from "packages/common-common/utils/pretty-duration"
+import { formatDuration } from "@cs-magic/common/utils/format-duration"
 import { promises } from "fs"
 import jsYaml from "js-yaml"
 import Mustache from "mustache"
@@ -38,7 +38,7 @@ export async function renderBotTemplate(
     preference,
     name: botConfig.name,
     title: `${botConfig.name} ${botContext.version}`,
-    aliveTime: prettyDuration((Date.now() - botContext.startTime) / 1e3),
+    aliveTime: formatDuration((Date.now() - botContext.startTime) / 1e3),
   })
 
   const templateData = jsYaml.load(templateString, {}) as IBotTemplate

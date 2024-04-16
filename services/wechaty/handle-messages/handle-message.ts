@@ -1,4 +1,4 @@
-import { prettyError } from "packages/common-common/utils/pretty-error"
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { type Message, type Wechaty } from "wechaty"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { getHandlers } from "../utils/get-handlers"
@@ -13,7 +13,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       await handler.onMessage(message)
     }
   } catch (e) {
-    let s = prettyError(e)
+    let s = formatError(e)
     const context = await getBotContextFromMessage(bot, message)
 
     // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292

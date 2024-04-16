@@ -1,4 +1,4 @@
-import { prettyError } from "packages/common-common/utils/pretty-error"
+import { formatError } from "@cs-magic/common/utils/format-error"
 import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
@@ -48,7 +48,7 @@ export class StorageHandler extends BaseHandler {
         },
       })
     } catch (e) {
-      prettyError(e)
+      formatError(e)
     }
   }
 }
