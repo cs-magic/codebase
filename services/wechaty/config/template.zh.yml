@@ -24,8 +24,6 @@ help: |-
   /设置模型 [类型]
   /帮助
   /帮助 [子功能名称]
-  ------------------------------
-  /set-lang en: switch to english
 
 status: |-
   Basic:

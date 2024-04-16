@@ -1,6 +1,5 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { type Message, type Wechaty } from "wechaty"
-import { type LangType } from "../../../../packages/common-i18n/schema"
 import { FeatureMap } from "../../schema/commands"
 import {
   getBotContextFromMessage,
@@ -96,12 +95,16 @@ export class BaseManager {
     return renderBotTemplate(this.message, this.bot.staticContext)
   }
 
-  async getStatus() {
-    return (await this.getTemplate()).status
+  async getStatus(reply = false) {
+    const content = (await this.getTemplate()).status
+    if (reply) await this.standardReply(content)
+    return content
   }
 
-  async getHelp() {
-    return (await this.getTemplate()).help
+  async getHelp(reply = false) {
+    const content = (await this.getTemplate()).help
+    if (reply) await this.standardReply(content)
+    return content
   }
 
   async standardReply(content: string, tips?: string[]) {

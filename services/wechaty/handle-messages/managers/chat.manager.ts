@@ -1,4 +1,4 @@
-import { selectInputWithNumberOrContent } from "packages/common-common/utils/select-input-with-number-or-content"
+import { selectFromList } from "packages/common-common/utils/select-from-list"
 import { types } from "wechaty"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
@@ -169,7 +169,7 @@ export class ChatManager extends BaseManager {
 
     // 2. 匹配用户的输入，确定话题的名称（不要用序号，因为数据库里记录都是名称）
     // 如果有多个匹配，使用最新的
-    const topicTarget = await selectInputWithNumberOrContent(
+    const topicIndex = await selectFromList(
       Object.keys(topics),
       selectChatTopic,
     )
@@ -179,7 +179,7 @@ export class ChatManager extends BaseManager {
     const messages = await listMessagesOfSpecificTopic(
       this.botWxid,
       this.convId,
-      topicTarget,
+      Object.keys(topics)[topicIndex]!,
     )
 
     await this.standardReply(

@@ -1,6 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
+import { selectFromList } from "packages/common-common/utils/select-from-list"
 import { type Message, type Wechaty } from "wechaty"
-import { z } from "zod"
 import {
   commandsSchema,
   type CommandType,
@@ -18,35 +18,29 @@ import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
-    let manager
     const text = message.text().trim().toLowerCase()
 
+    // serialize first
     await storageMessage(message)
 
     const result = parseLimitedCommand<CommandType>(text, commandsSchema)
     if (result) {
-      const input = result.args
-
       switch (result.command) {
         case "ding":
           return message.say("dong")
 
         case "status":
-          manager = new BaseManager(bot, message)
-          return await manager.standardReply(
-            (await manager.getTemplate()).status,
-          )
+          return new BaseManager(bot, message).getStatus(true)
 
+        case "":
         case "help":
-          const featureType = await z
-            .enum([...featureTypeSchema.options, ""])
-            .parseAsync(input.trim().toLowerCase())
-          switch (featureType) {
-            case "":
-              manager = new BaseManager(bot, message)
-              return await manager.standardReply(
-                (await manager.getTemplate()).help,
-              )
+          if (!result.args) return new BaseManager(bot, message).getHelp(true)
+
+          const index = await selectFromList(
+            featureTypeSchema.options,
+            result.args,
+          )
+          switch (featureTypeSchema.options[index]) {
             case "system":
               return new SystemManager(bot, message).help()
             case "todo":
