@@ -1,3 +1,4 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
 import {
   TaskStatusSchema,
@@ -5,7 +6,7 @@ import {
 } from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
-import { FeatureMap } from "../../schema/commands"
+import { FeatureMap, FeatureType } from "../../schema/commands"
 import { listTodo } from "../../utils/list-todo"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
@@ -37,28 +38,28 @@ const i18n: FeatureMap<CommandType> = {
     },
   },
   en: {
-    title: "Task Manager",
+    title: "Todo Manager",
     description:
-      "Hello, I am your PERSONAL Task Manager!" +
-      "\nYou can record and manage any todo tasks here." +
+      "Hello, I am your PERSONAL Todo Manager!" +
+      "\nYou can record and manage any todo here." +
       "\nHope I can help you~  😊",
     commands: {
       list: {
         type: "list",
-        description: "list tasks",
+        description: "list todo",
       },
       add: {
         type: "add",
-        description: "add a task with title",
+        description: "add a todo with title",
       },
       rename: {
         type: "rename",
-        description: "rename the title a task",
+        description: "rename the title a todo",
       },
       update: {
         type: "update",
         description:
-          "update the status of a task (pending,running,done,discarded)",
+          "update the status of a todo (pending,running,done,discarded)",
       },
     },
   },
@@ -66,6 +67,16 @@ const i18n: FeatureMap<CommandType> = {
 
 export class TodoManager extends BaseManager {
   public i18n = i18n
+  public name: FeatureType = "todo"
+
+  async help() {
+    const commands = await this.getCommands()
+    const desc = await this.getDescription()
+    await this.standardReply(
+      [desc, SEPARATOR_LINE].join("\n"),
+      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+    )
+  }
 
   /**
    * 1. input prefix ==> command type (zh/en --> enum)
@@ -140,7 +151,12 @@ export class TodoManager extends BaseManager {
         `Done (${done.length})`,
         `Discarded (${discarded.length})`,
       ].join("\n"),
-      ["add-todo", "update-todo"],
+      [
+        "todo list",
+        "todo add [TITLE]",
+        "todo update [N] [STATUS]",
+        "todo rename [N] [NEW-TITLE]",
+      ],
     )
   }
 

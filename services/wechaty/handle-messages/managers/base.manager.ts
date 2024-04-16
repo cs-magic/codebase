@@ -1,4 +1,5 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
+import { compressContent } from "@cs-magic/common/utils/compress-content"
 import { type Message, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import {
@@ -8,6 +9,7 @@ import {
 import { renderBotTemplate } from "../../utils/bot-template"
 import { formatBotQuery } from "../../utils/format-bot-query"
 import { getConvPreference } from "../../utils/get-conv-preference"
+import remove from "lodash/remove"
 
 export class BaseManager {
   public message: Message
@@ -101,7 +103,16 @@ export class BaseManager {
     return content
   }
 
-  async standardReply(content: string, tips?: string[]) {
+  async standardReply(content: string, tips?: string[], compress = true) {
+    // truncate middle lines
+    if (compress) {
+      let lines = content.split("\n")
+      if (lines.length > 10) {
+        lines = [...lines.slice(0, 5), "...", ...lines.slice(lines.length - 5)]
+      }
+      content = lines.join("\n")
+    }
+
     const context = await getBotContextFromMessage(this.bot, this.message)
     const pretty = await formatBotQuery(
       context,

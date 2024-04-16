@@ -1683,7 +1683,6 @@ __metadata:
     "@cs-magic/wechaty": "npm:0.1.0"
     "@fastify/websocket": "npm:^10.0.1"
     "@types/lodash": "npm:^4.14.202"
-    "@types/node": "npm:^20.12.7"
     "@types/ws": "npm:^8.5.10"
     fastify: "npm:^4.26.2"
     fastify-websocket: "npm:^4.3.0"
@@ -1888,7 +1887,9 @@ __metadata:
   resolution: "@cs-magic/wechaty@workspace:services/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
+    "@types/lodash": "npm:^4.14.202"
     dotenv: "npm:^16.4.5"
+    lodash: "npm:^4.17.21"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
     wechaty-puppet-padlocal: "npm:^1.20.1"
@@ -5966,7 +5967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^20, @types/node@npm:^20.11.20, @types/node@npm:^20.12.7":
+"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^20, @types/node@npm:^20.11.20":
   version: 20.12.7
   resolution: "@types/node@npm:20.12.7"
   dependencies:
