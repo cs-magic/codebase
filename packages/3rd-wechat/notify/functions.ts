@@ -1,8 +1,8 @@
 "use server"
 
-import { env } from "@cs-magic/p01-card/src/env"
 import { sha1 } from "js-sha1"
 import { api } from "../../common-api-client"
+import { env } from "../../common-env"
 import { fetchWechatApi } from "../functions"
 import { IWechatSDKToken } from "../schema"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"

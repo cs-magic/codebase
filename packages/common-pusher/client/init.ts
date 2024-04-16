@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { IPusherServerConfig } from "../schema";
-import PusherJS from "pusher-js";
-import { env } from "@cs-magic/p01-card/src/env";
+import { env } from "../../common-env"
+import { IPusherServerConfig } from "../schema"
+import PusherJS from "pusher-js"
 
 export const initPusherClient = (
   config: IPusherServerConfig,
   options?: {
-    onPing?: () => void;
-    onPong?: () => void;
-    onInit?: (client: PusherJS) => void;
+    onPing?: () => void
+    onPong?: () => void
+    onInit?: (client: PusherJS) => void
   },
 ) => {
-  const { host: wsHost, port: wsPort, useTLS: forceTLS, cluster } = config;
+  const { host: wsHost, port: wsPort, useTLS: forceTLS, cluster } = config
 
   /**
    * 由于 pusher 的 ping 没有暴露给客户端
@@ -22,19 +22,18 @@ export const initPusherClient = (
    */
   PusherJS.log = (message: string) => {
     // console.log({ message })
-    const exists = (events: string[]) =>
-      events.some((s) => message.includes(s));
+    const exists = (events: string[]) => events.some((s) => message.includes(s))
 
     if (exists(["pusher:ping", "initialized -> connecting"]) && options?.onPing)
-      options.onPing();
+      options.onPing()
 
     if (exists(["pusher:pong", "connecting -> connected"]) && options?.onPong)
-      options.onPong();
-  };
+      options.onPong()
+  }
 
-  console.log("initializing pusher client");
+  console.log("initializing pusher client")
   if (!env.NEXT_PUBLIC_PUSHER_APP_KEY)
-    throw new Error("no pusher app key in env");
+    throw new Error("no pusher app key in env")
   const pusherClient = new PusherJS(env.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,
@@ -52,14 +51,14 @@ export const initPusherClient = (
     activityTimeout: 10000,
 
     pongTimeout: 10000,
-  });
+  })
 
-  console.log("binding error...");
+  console.log("binding error...")
   pusherClient.connection.bind("error", function (error: any) {
-    console.error({ error });
-  });
+    console.error({ error })
+  })
 
-  if (options?.onInit) options.onInit(pusherClient);
-  return pusherClient;
-};
+  if (options?.onInit) options.onInit(pusherClient)
+  return pusherClient
+}
 // export const pusherClient = staticCreate(() => initPusherClient(pusherConfig))

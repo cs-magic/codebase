@@ -1,9 +1,10 @@
-"use server";
+"use server"
 /**
  * `yarn add net tls`
  */
-import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111";
-import { env } from "@cs-magic/p01-card/src/env";
+import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
+
+import { env } from "../../../common-env"
 
 const tencentSmsConfig = {
   signName: "邢健的个人博客",
@@ -11,7 +12,7 @@ const tencentSmsConfig = {
   templateId: "2064119",
   endpoint: "sms.tencentcloudapi.com",
   region: "ap-beijing",
-};
+}
 
 const smsTencentClient = new v20210111.Client({
   // 为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中，请参考本文凭证管理章节。
@@ -32,7 +33,7 @@ const smsTencentClient = new v20210111.Client({
       // proxy: "http://127.0.0.1:8899" // http请求代理
     },
   },
-});
+})
 
 export const $sendSmsViaTencent = async (
   phone: string,
@@ -45,11 +46,11 @@ export const $sendSmsViaTencent = async (
     SignName: tencentSmsConfig.signName,
     TemplateId: tencentSmsConfig.templateId,
     TemplateParamSet: [code, expire.toString()],
-  };
-  console.log("[sms-tencent] request: ", params);
-  const res = await smsTencentClient.SendSms(params);
-  console.log("[sms-tencent] response: ", res);
+  }
+  console.log("[sms-tencent] request: ", params)
+  const res = await smsTencentClient.SendSms(params)
+  console.log("[sms-tencent] response: ", res)
 
-  const message = res?.SendStatusSet![0]!.Code;
-  return message === "Ok";
-};
+  const message = res?.SendStatusSet![0]!.Code
+  return message === "Ok"
+}

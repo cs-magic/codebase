@@ -1,4 +1,3 @@
-import { env } from "@cs-magic/p01-card/src/env"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
@@ -7,6 +6,7 @@ import { SmsProvider } from "../common-auth-sms/provider"
 import WechatProvider from "../common-auth-wechat/provider"
 import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db/providers/prisma"
+import { env } from "../common-env"
 
 import { tokenExpireSeconds } from "./config"
 

@@ -1,8 +1,10 @@
 "use client";
 
+import { logger } from "@cs-magic/log/logger";
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
+import { env } from "../../../../packages/common-env";
 import { useInit } from "../../../../packages/common-hooks/use-init";
 import { socketStatusMap } from "../../../../packages/common-transport/schema";
 import { Button } from "../../../../packages/common-ui-shadcn/components/button";
@@ -10,7 +12,6 @@ import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { ButtonWithLoading } from "../../../../packages/common-ui/components/button-with-loading";
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
 import { LabelLine } from "../../../../packages/common-ui/components/label-line";
-import { env } from "../env";
 import {
   botLoggedInAtom,
   botLoggingAtom,
@@ -77,7 +78,7 @@ export const Bot = () => {
     return socket;
   });
 
-  console.log({ botUser });
+  logger.info({ botUser });
 
   return (
     <FlexContainer

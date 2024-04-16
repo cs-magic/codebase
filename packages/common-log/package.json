@@ -3,6 +3,11 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "dependencies": {
+    "anylogger": "^1.0.11",
+    "pino": "^8.20.0",
+    "pino-logflare": "^0.4.2",
+    "ulog": "2.0.0-beta.19",
+    "universal-logger": "^1.0.1",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0"
   },

@@ -1,10 +1,10 @@
-import { env } from "@cs-magic/p01-card/src/env";
-import Redis from "ioredis";
+import Redis from "ioredis"
+import { env } from "../../../common-env"
 
 const createRedisClient = () =>
-  new Redis().on("error", (err) => console.log("Redis Client Error", err));
+  new Redis().on("error", (err) => console.log("Redis Client Error", err))
 export const globalForRedis = globalThis as unknown as {
-  redis: ReturnType<typeof createRedisClient> | undefined;
-};
-export const redis = globalForRedis.redis ?? createRedisClient();
-if (env.NODE_ENV !== "production") globalForRedis.redis = redis;
+  redis: ReturnType<typeof createRedisClient> | undefined
+}
+export const redis = globalForRedis.redis ?? createRedisClient()
+if (env.NODE_ENV !== "production") globalForRedis.redis = redis

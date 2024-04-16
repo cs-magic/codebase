@@ -1,11 +1,3 @@
-import { logEnv } from "@cs-magic/common/utils/log-env";
-import dotenv from "dotenv";
-import * as process from "process";
-import { Path } from "../../../packages/common-path";
-
-dotenv.config({ path: Path.envFile, override: true });
-logEnv("api_key");
-
 export const env = {
   // env
   NODE_ENV: process.env.NODE_ENV,
@@ -50,6 +42,14 @@ export const env = {
   BAICHUAN_API_KEY: process.env.BAICHUAN_API_KEY,
   DASHSCOPE_API_KEY: process.env.DASHSCOPE_API_KEY,
 
+  // log
+  NEXT_PUBLIC_PINO_LOGFLARE_API_KEY:
+    process.env.NEXT_PUBLIC_PINO_LOGFLARE_API_KEY,
+  NEXT_PUBLIC_PINO_LOGFLARE_SOURCE_TOKEN:
+    process.env.NEXT_PUBLIC_PINO_LOGFLARE_SOURCE_TOKEN,
+  // todo: what's it
+  VERCEL_GITHUB_COMMIT_SHA: process.env.VERCEL_GITHUB_COMMIT_SHA,
+
   PROXY:
     process.env.proxy ??
     process.env.PROXY ??
@@ -57,4 +57,4 @@ export const env = {
     process.env.HTTP_PROXY ??
     process.env.https_proxy ??
     process.env.HTTPS_PROXY,
-};
+}

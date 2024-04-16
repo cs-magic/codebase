@@ -1,5 +1,5 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
-import logger from "@cs-magic/log/logger"
+import { logger } from "@cs-magic/log/logger"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import { botCommands } from "../config"
 import { IContext } from "../schema/context"

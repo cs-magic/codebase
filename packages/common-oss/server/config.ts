@@ -1,6 +1,7 @@
-import OSS from "ali-oss";
-import { env } from "@cs-magic/p01-card/src/env";
-import { OSS_BUCKET_NAME, OSS_REGION } from "../const";
+import OSS from "ali-oss"
+
+import { env } from "../../common-env"
+import { OSS_BUCKET_NAME, OSS_REGION } from "../const"
 
 // ref: https://help.aliyun.com/zh/oss/developer-reference/initialization-10#783f1f604f969
 export const oss = new OSS({
@@ -11,4 +12,4 @@ export const oss = new OSS({
   region: OSS_REGION,
   // yourBucketName填写Bucket名称。
   bucket: OSS_BUCKET_NAME,
-});
+})

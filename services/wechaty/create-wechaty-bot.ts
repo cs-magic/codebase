@@ -1,4 +1,4 @@
-import { logEnv } from "@cs-magic/common/utils/log-env"
+import {logEnv} from "../../packages/common-env/utils/log-env";
 import packageJson from "./package.json"
 
 import dotenv from "dotenv"

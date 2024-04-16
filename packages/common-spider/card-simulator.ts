@@ -1,8 +1,8 @@
 import { UnexpectedError } from "@cs-magic/common/schema/error"
-import { env } from "@cs-magic/p01-card/src/env"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Page as PlaywrightPage } from "playwright-core"
 import { Page as PuppetPage } from "puppeteer"
+import { env } from "../common-env"
 import { BaseSimulator } from "./base-simulator"
 
 /**

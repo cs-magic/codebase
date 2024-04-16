@@ -1,12 +1,12 @@
 import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { formatError } from "packages/common-common/utils/format-error"
 import { formatString } from "packages/common-common/utils/format-string"
-import { env } from "@cs-magic/p01-card/src/env"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api, backendApi } from "../common-api-client"
+import { env } from "../common-env"
 import { model2provider } from "./model2provider"
 import { ICallLLMOptions, ICallLLMResponse } from "./schema/llm"
 

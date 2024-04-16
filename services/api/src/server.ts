@@ -1,5 +1,5 @@
 import { genId } from "@cs-magic/common/utils/gen-id"
-import logger from "@cs-magic/log/logger"
+import { logger } from "@cs-magic/log/logger"
 import fw from "@fastify/websocket"
 import Fastify from "fastify"
 import remove from "lodash/remove"

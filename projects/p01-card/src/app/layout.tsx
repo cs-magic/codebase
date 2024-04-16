@@ -1,6 +1,5 @@
 import { type Viewport } from "next";
 import { Inter } from "next/font/google";
-import { loadEnv } from "../../../../packages/common-env/load-env";
 
 import { TRPCReactProvider } from "../../../../packages/common-trpc/react";
 import { Toaster } from "../../../../packages/common-ui-shadcn/components/sonner";
@@ -15,9 +14,7 @@ import { Dev } from "../components/dev";
 
 import { config } from "../config";
 import GlobalHooksProviders from "../providers/global.provider";
-import "../styles/globals.css";
-
-loadEnv();
+import "../styles/globals.css"; // loadEnv();
 
 const inter = Inter({
   subsets: ["latin"],
