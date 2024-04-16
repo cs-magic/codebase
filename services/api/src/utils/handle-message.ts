@@ -1,6 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
-import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
+import { parseLimitedCommand } from "@cs-magic/wechaty/utils/parse-command"
 import { botCommands } from "../config"
 import { IContext } from "../schema/context"
 import { startBot } from "./start-bot"
@@ -13,7 +13,7 @@ export const handleMessage = async (
   try {
     const message = messageBuffer.toString()
 
-    const result = parseCommand(messageBuffer.toString(), botCommands)
+    const result = parseLimitedCommand(messageBuffer.toString(), botCommands)
 
     logger.debug({ message, result })
 

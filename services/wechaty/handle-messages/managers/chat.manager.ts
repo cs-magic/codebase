@@ -1,6 +1,9 @@
+import { selectInputWithNumberOrContent } from "packages/common-common/utils/select-input-with-number-or-content"
 import { types } from "wechaty"
+import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { callLLM } from "../../../../packages/common-llm"
+import { FeatureMap } from "../../schema/commands"
 import { type IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
@@ -9,31 +12,89 @@ import { getRobustPreference } from "../../utils/get-robust-preference"
 import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-topic"
 import { listMessagesOfSpecificTopic } from "../../utils/list-messages-of-specific-topic"
 import { listTopics } from "../../utils/list-topics"
+import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
-import { selectInputWithNumberOrContent } from "packages/common-common/utils/select-input-with-number-or-content"
+
+const commandTypeSchema = z.enum(["enable", "disable", "new", "list"])
+type CommandType = z.infer<typeof commandTypeSchema>
+const i18n: FeatureMap<CommandType> = {
+  zh: {
+    title: "AI 聊天室",
+    description: "你可以与搭载了主流大模型能力的 AI 进行聊天",
+    commands: {
+      启动: {
+        type: "enable",
+        description: "启用 AI 聊天（直接 @我 即可回复您）",
+      },
+      停止: {
+        type: "disable",
+        description: "停止 AI 聊天",
+      },
+      新话题: {
+        type: "new",
+        description: "开启新话题",
+      },
+      历史: {
+        type: "list",
+        description: "查询话题历史",
+      },
+    },
+  },
+  en: {
+    title: "AI Chatter",
+    description: "You can chat with AI powered by LLM models.",
+    commands: {
+      enable: {
+        type: "enable",
+        description: "enable AI chat",
+      },
+      disable: {
+        type: "disable",
+        description: "disable AI chat",
+      },
+      new: {
+        type: "new",
+        description: "create a new topic",
+      },
+      list: {
+        type: "list",
+        description: "list all the topics",
+      },
+    },
+  },
+}
 
 export class ChatManager extends BaseManager {
-  public i18n = {
-    zh: {
-      title: "AI 聊天室",
-      description: "你可以与搭载了主流大模型能力的 AI 进行聊天",
-      commands: {
-        启动: "",
-        停止: "",
-        新建: "",
-        历史: "",
-      },
-    },
-    en: {
-      title: "AI Chat",
-      description: "You can chat with AI powered by LLM models.",
-      commands: {
-        enable: "",
-        disable: "",
-        new: "",
-        list: "",
-      },
-    },
+  public i18n = i18n
+
+  async parse(input?: string) {
+    const commands = this.i18n[await this.getLang()].commands
+    const commandTypeSchema = z.enum(
+      Object.keys(commands) as [string, ...string[]],
+    )
+    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
+    if (parsed) {
+      const commandKeyInInput = parsed.command
+      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
+      switch (commandType) {
+        case "list":
+          await this.listTopicsAction()
+          break
+
+        case "enable":
+          await this.enableChat()
+          break
+
+        case "disable":
+          await this.disableChat()
+          break
+
+        case "new":
+          await this.newTopic(parsed.args)
+          break
+      }
+    }
   }
 
   async _listTopics() {

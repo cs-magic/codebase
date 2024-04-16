@@ -4,22 +4,72 @@ import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-f
 import { logger } from "@cs-magic/log/logger"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
+import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
+import { FeatureMap } from "../../schema/commands"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
+import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
+const commandTypeSchema = z.enum(["enable", "disable"])
+type CommandType = z.infer<typeof commandTypeSchema>
+const i18n: FeatureMap<CommandType> = {
+  zh: {
+    title: "万能解析器",
+    description: "您可以发送一篇公众号文章给我，我将为您解析，生成精美的卡片",
+    commands: {
+      启动: {
+        type: "enable",
+        description: "启用万能解析器",
+      },
+      停止: {
+        type: "disable",
+        description: "停止万能解析器",
+      },
+    },
+  },
+  en: {
+    title: "Super Parser",
+    description: "I can parse anything you sent to me, except your heart.",
+    commands: {
+      enable: {
+        type: "enable",
+        description: "enable super parser",
+      },
+      disable: {
+        type: "disable",
+        description: "disable super parser",
+      },
+    },
+  },
+}
+
 export class ParserManager extends BaseManager {
+  public i18n = i18n
   private uniParser: CardSimulator | null = null
 
-  public i18n = {
-    zh: {
-      title: "万能解析器",
-    },
-    en: {
-      title: "Super Parser",
-    },
+  async parse(input?: string) {
+    const commands = this.i18n[await this.getLang()].commands
+    const commandTypeSchema = z.enum(
+      Object.keys(commands) as [string, ...string[]],
+    )
+    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
+    if (parsed) {
+      const commandKeyInInput = parsed.command
+      const commandKeyInEnum = commands[commandKeyInInput]
+      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
+      switch (commandType) {
+        case "enable":
+          await this.enableParser()
+          break
+
+        case "disable":
+          await this.disableParser()
+          break
+      }
+    }
   }
 
   async enableParser() {

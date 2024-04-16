@@ -4,7 +4,7 @@ import { type Wechaty, WechatyBuilder } from "wechaty"
 import { loadEnv } from "../../packages/common-env/utils/load-env"
 import { logEnv } from "../../packages/common-env/utils/log-env"
 import { MessageQueue } from "./handle-messages/message-queue"
-import packageJson from "./package.json"
+import packageJson from "../../package.json"
 import { getBotWxid } from "./utils/bot-wxid"
 
 loadEnv()

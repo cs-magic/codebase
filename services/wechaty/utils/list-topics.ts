@@ -1,5 +1,5 @@
 import { prisma } from "../../../packages/common-db/providers/prisma"
-import { parseCommand } from "./parse-command"
+import { parseLimitedCommand } from "./parse-command"
 
 export const listTopics = async (convId: string) => {
   const listMessages = async (convId: string, take?: number) => {
@@ -20,7 +20,7 @@ export const listTopics = async (convId: string) => {
   let lastTopic: string | null = null
   const started = true // todo: switch
   messages.forEach((row) => {
-    const parsed = parseCommand(row.text ?? "", ["new-topic"])
+    const parsed = parseLimitedCommand(row.text ?? "", ["new-topic"])
     if (parsed) {
       switch (parsed?.command) {
         case "new-topic":

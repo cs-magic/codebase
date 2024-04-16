@@ -8,7 +8,8 @@ export const MSG_TODO_SAUCY = "研发小哥正在加🍗中！"
 
 export const ERR_MSG_INADEQUATE_PERMISSION = "对不起，您不具备该命令权限"
 
-export const ERR_MSG_UNEXPECTED = "Unexpected Error !"
+export const ERR_MSG_Unexpected = "Unexpected !"
+export const ERR_MSG_NotImplemented = "Not Implemented Yet!"
 
 export const SEPARATOR_LINE = `------------------------------`
 export const SEPARATOR_BOX =

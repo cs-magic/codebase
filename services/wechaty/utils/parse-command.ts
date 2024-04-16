@@ -5,7 +5,7 @@ export type IParseCommandRes<T extends string> = null | {
   args: string
 }
 
-export const parseCommand = <T extends string>(
+export const parseLimitedCommand = <T extends string>(
   text: string,
   commands: T[] | ZodEnum<[T, ...T[]]>,
 ): IParseCommandRes<T> => {
@@ -22,6 +22,21 @@ export const parseCommand = <T extends string>(
 
   const command = m[1] as T
   const args = (m[2] ?? "").trim()
+  // logger.info({ text, command, args })
+  return { command, args }
+}
+
+export const parseCommand = (text: string): IParseCommandRes<string> => {
+  // 正则使用 `` 而非 // 的时候要 \s --> \\s
+  // - /A, ok
+  // - /A b, ok
+  // - /Ab, not ok
+  const m = new RegExp(`^\\s*(.*?)(?:\\s+(.*?))?\\s*$`).exec(text)
+
+  if (!m) return null
+
+  const command = m[1]!
+  const args = m[2] ?? ""
   // logger.info({ text, command, args })
   return { command, args }
 }

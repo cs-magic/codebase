@@ -1,5 +1,7 @@
+import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { type Message, type Wechaty } from "wechaty"
 import { type LangType } from "../../../../packages/common-i18n/schema"
+import { FeatureMap } from "../../schema/commands"
 import {
   getBotContextFromMessage,
   getBotDynamicContext,
@@ -19,7 +21,18 @@ export type IManagerI18n = {
 export class BaseManager {
   public message: Message
   public bot: Wechaty
-  public i18n: Partial<Record<LangType, IManagerI18n>> = {}
+  public i18n: FeatureMap<string> = {
+    zh: {
+      title: "",
+      description: "",
+      commands: {},
+    },
+    en: {
+      title: "",
+      description: "",
+      commands: {},
+    },
+  }
 
   constructor(bot: Wechaty, message: Message) {
     // todo: bot on message
@@ -37,6 +50,10 @@ export class BaseManager {
 
   get convId() {
     return this.conv.id
+  }
+
+  async parse(input?: string) {
+    throw new NotImplementedError()
   }
 
   /**

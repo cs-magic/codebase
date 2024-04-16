@@ -1,6 +1,6 @@
 {
   "name": "@cs-magic/wechaty",
-  "version": "0.1.0",
+  "version": "V0.1.0 (α)",
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {

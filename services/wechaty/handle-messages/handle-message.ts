@@ -1,22 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
-import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
-import {
-  TaskStatusSchema,
-  type TaskStatusType,
-} from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { type Message, type Wechaty } from "wechaty"
-import {
-  inputLangTypeSchema,
-  type LangType,
-} from "../../../packages/common-i18n/schema"
-import {
-  type BackendType,
-  backendTypeSchema,
-} from "../../../packages/common-llm/schema/llm"
-import {
-  type LlmModelType,
-  llmModelTypeSchema,
-} from "../../../packages/common-llm/schema/providers"
+import { z } from "zod"
 import {
   commandsSchema,
   type CommandType,
@@ -24,23 +8,22 @@ import {
 } from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
-import { parseCommand } from "../utils/parse-command"
+import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
-import { BasicManager } from "./managers/basic.manager"
 import { ChatManager } from "./managers/chat.manager"
 import { ParserManager } from "./managers/parser.manager"
+import { SystemManager } from "./managers/system.manager"
 import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     let manager
-    const type = message.type()
     const text = message.text().trim().toLowerCase()
 
     await storageMessage(message)
 
-    const result = parseCommand<CommandType>(text, commandsSchema)
+    const result = parseLimitedCommand<CommandType>(text, commandsSchema)
     if (result) {
       const input = result.args
 
@@ -55,17 +38,17 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           )
 
         case "help":
-          const featureType = await featureTypeSchema.parseAsync(
-            input.trim().toLowerCase(),
-          )
+          const featureType = await z
+            .enum([...featureTypeSchema.options, ""])
+            .parseAsync(input.trim().toLowerCase())
           switch (featureType) {
             case "":
               manager = new BaseManager(bot, message)
               return await manager.standardReply(
                 (await manager.getTemplate()).help,
               )
-            case "basic":
-              return new BasicManager(bot, message).help()
+            case "system":
+              return new SystemManager(bot, message).help()
             case "todo":
               return new TodoManager(bot, message).help()
             case "chatter":
@@ -74,89 +57,17 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
               return new ParserManager(bot, message).help()
           }
 
-        case "list-models":
-          manager = new BasicManager(bot, message)
-          return manager.standardReply(
-            [
-              ...llmModelTypeSchema.options.map((o, i) => `${i + 1}. ${o}`),
-            ].join("\n"),
-            ["set-model"],
-          )
+        case "system":
+          return new SystemManager(bot, message).parse(result.args)
 
-        case "set-model":
-          manager = new BasicManager(bot, message)
-          const model = await parseAsyncWithFriendlyErrorMessage<LlmModelType>(
-            llmModelTypeSchema,
-            result.args,
-          )
-          return manager.setModel(model)
-
-        case "set-backend":
-          manager = new BasicManager(bot, message)
-          const backend = await parseAsyncWithFriendlyErrorMessage<BackendType>(
-            backendTypeSchema,
-            result.args,
-          )
-          return manager.setBackend(backend)
-
-        case "set-lang":
-          manager = new BasicManager(bot, message)
-          const lang = await parseAsyncWithFriendlyErrorMessage<LangType>(
-            inputLangTypeSchema,
-            result.args,
-          )
-          return manager.setLang(lang)
-
-        case "enable-parser":
-          manager = new ParserManager(bot, message)
-          await manager.enableParser()
-          return
-
-        case "disable-parser":
-          manager = new ParserManager(bot, message)
-          await manager.disableParser()
-          return
+        case "parser":
+          return new ParserManager(bot, message).parse(result.args)
 
         case "todo":
-        case "list-todo":
-          manager = new TodoManager(bot, message)
-          return manager.listTodoAction()
+          return new TodoManager(bot, message).parse(result.args)
 
-        case "add-todo":
-          manager = new TodoManager(bot, message)
-          return manager.addTodo(input)
-
-        case "update-todo":
-          manager = new TodoManager(bot, message)
-          const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(input)
-          if (!m) throw new Error("输入不合法")
-
-          const status =
-            await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-              TaskStatusSchema,
-              m?.[2],
-            )
-          return manager.updateTodo(Number(m[1]), status)
-
-        case "enable-chat":
-          manager = new ChatManager(bot, message)
-          return await manager.enableChat()
-
-        case "disable-chat":
-          manager = new ChatManager(bot, message)
-          return await manager.disableChat()
-
-        case "new-topic":
-          manager = new ChatManager(bot, message)
-          return manager.newTopic(result.args)
-
-        case "check-topic":
-          manager = new ChatManager(bot, message)
-          return manager.checkTopic(result.args)
-
-        case "list-topics":
-          manager = new ChatManager(bot, message)
-          return manager.listTopicsAction()
+        case "chatter":
+          return new ChatManager(bot, message).parse(result.args)
       }
     }
 
