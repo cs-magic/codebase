@@ -1,6 +1,6 @@
 import { type Message, type Wechaty } from "wechaty"
-import { LangType } from "../../../../packages/common-i18n/schema"
-import { CommandType } from "../../schema/commands"
+import { type LangType } from "../../../../packages/common-i18n/schema"
+import { type CommandType } from "../../schema/commands"
 import {
   getBotContextFromMessage,
   getBotDynamicContext,

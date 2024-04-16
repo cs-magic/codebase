@@ -1,6 +1,6 @@
-import { LangType } from "../../../packages/common-i18n/schema";
-import { BackendType } from "../../../packages/common-llm/schema/llm";
-import { LlmModelType } from "../../../packages/common-llm/schema/providers";
+import { type LangType } from "../../../packages/common-i18n/schema";
+import { type BackendType } from "../../../packages/common-llm/schema/llm";
+import { type LlmModelType } from "../../../packages/common-llm/schema/providers";
 
 /**
  * 用户偏好（可用户手动修改）

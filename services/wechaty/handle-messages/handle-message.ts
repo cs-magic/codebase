@@ -2,23 +2,23 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
 import {
   TaskStatusSchema,
-  TaskStatusType,
+  type TaskStatusType,
 } from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { type Message, type Wechaty } from "wechaty"
 import { z } from "zod"
 import {
   inputLangTypeSchema,
-  LangType,
+  type LangType,
 } from "../../../packages/common-i18n/schema"
 import {
-  BackendType,
+  type BackendType,
   backendTypeSchema,
 } from "../../../packages/common-llm/schema/llm"
 import {
-  LlmModelType,
+  type LlmModelType,
   llmModelTypeSchema,
 } from "../../../packages/common-llm/schema/providers"
-import { commandsSchema, CommandType } from "../schema/commands"
+import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseCommand } from "../utils/parse-command"
@@ -53,14 +53,14 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
         case "help":
           const featureType = await featureTypeSchema.parseAsync(input)
           switch (featureType) {
+            case "basic":
+              return new BasicManager(bot, message).help()
             case "todo":
               return new TodoManager(bot, message).help()
             case "chat":
               return new ChatManager(bot, message).help()
             case "parser":
               return new ParserManager(bot, message).help()
-            case "basic":
-              return new BasicManager(bot, message).help()
           }
 
         case "status":

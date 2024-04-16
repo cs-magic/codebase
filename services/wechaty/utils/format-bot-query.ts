@@ -1,6 +1,6 @@
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { type IBotContext } from "../schema/bot"
-import { CommandType } from "../schema/commands"
+import { type CommandType } from "../schema/commands"
 
 export const formatBotQuery = async (
   context: IBotContext,

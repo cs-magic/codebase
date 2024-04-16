@@ -1,5 +1,5 @@
-import { type IWechatUserPreference } from "schema/wechat-user"
 import { type Message } from "wechaty"
+import { IWechatUserPreference } from "../schema/wechat-user"
 import { getConvRow } from "./get-conv-row"
 import { getRobustPreference } from "./get-robust-preference"
 

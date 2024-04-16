@@ -1,7 +1,7 @@
 import { types } from "wechaty"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { callLLM } from "../../../../packages/common-llm"
-import { IWechatUserPreference } from "../../schema/wechat-user"
+import { type IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
 import { getConvTable } from "../../utils/get-conv-table"
