@@ -6,8 +6,9 @@ import { LlmModelType } from "../../common-llm/schema/providers"
 import { Path } from "../../common-path"
 import { fetchWxmpArticleWithCache } from "./fetch-wxmp-article-with-cache"
 
-const url = process.argv[2]!
-const model = process.argv[3]! as LlmModelType
+const url =
+  process.argv[2]! ?? "https://mp.weixin.qq.com/s/RNTQX1yPoTXCRO198cwQcA"
+const model = (process.argv[3] ?? "gpt-3.5-turbo") as LlmModelType
 console.log({ url, summaryModel: model })
 
 const f = async () => {

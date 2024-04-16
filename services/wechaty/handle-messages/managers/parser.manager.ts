@@ -143,7 +143,7 @@ export class ParserManager extends BaseManager {
 
     initLogWithTimer()
 
-    await message.say("正在解析……")
+    await message.say("wait, I am trying ……")
 
     const card = await fetchWxmpArticleWithCache(url, {
       backendEngineType: preference.backend,
