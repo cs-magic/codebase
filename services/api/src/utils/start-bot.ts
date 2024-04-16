@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import { IContext } from "../schema/context"
 import { syncClients } from "./sync-clients"
@@ -7,7 +8,7 @@ export const startBot = async (context: IContext): Promise<IContext> => {
   let { bot, scan, sockets } = context
   // 避免重复登录，会导致 padLocal 报错
   if (!bot) {
-    console.log("-- creating bot")
+    logger.info("-- creating bot")
     bot = createWechatyBot({
       name: "1", // todo
     })
@@ -22,7 +23,7 @@ export const startBot = async (context: IContext): Promise<IContext> => {
       })
   }
   if (!bot.isLoggedIn) {
-    console.log("-- starting bot")
+    logger.info("-- starting bot")
     await bot.start()
   }
   return { bot, scan, sockets }

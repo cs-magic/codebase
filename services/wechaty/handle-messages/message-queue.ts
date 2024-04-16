@@ -14,7 +14,7 @@ export class MessageQueue {
     const QPS_MAX = 100
     if (qps > QPS_MAX) {
       qps = QPS_MAX
-      console.warn(`qps limited to be the max = ${QPS_MAX}`)
+      logger.warn(`qps limited to be the max = ${QPS_MAX}`)
     }
 
     this.bot = bot
