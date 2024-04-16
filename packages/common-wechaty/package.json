@@ -9,7 +9,6 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/p01-card": "workspace:^",
-    "@cs-magic/p02-card": "workspace:^",
     "dotenv": "^16.4.5",
     "qrcode-terminal": "^0.12.0",
     "wechaty": "^1.20.2",

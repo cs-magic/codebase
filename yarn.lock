@@ -1870,21 +1870,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/p02-card@workspace:^, @cs-magic/p02-card@workspace:projects/p02":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/p02-card@workspace:projects/p02"
-  dependencies:
-    zod: "npm:3.21.1"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:packages/common-wechaty":
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechaty@workspace:packages/common-wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/p01-card": "workspace:^"
-    "@cs-magic/p02-card": "workspace:^"
     dotenv: "npm:^16.4.5"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
