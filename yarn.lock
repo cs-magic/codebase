@@ -1674,9 +1674,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cs-magic/api-service@workspace:packages/common-api-service":
+"@cs-magic/api@workspace:services/api":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/api-service@workspace:packages/common-api-service"
+  resolution: "@cs-magic/api@workspace:services/api"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/log": "workspace:^"
@@ -1870,9 +1870,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:packages/common-wechaty":
+"@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:services/wechaty":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/wechaty@workspace:packages/common-wechaty"
+  resolution: "@cs-magic/wechaty@workspace:services/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/p01-card": "workspace:^"

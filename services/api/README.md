@@ -1,4 +1,4 @@
-# @cs-magic/api-service
+# @cs-magic/api
 
 ## todo
 

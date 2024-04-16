@@ -1,5 +1,5 @@
 import { type Message, type Wechaty } from "wechaty"
-import { sleep } from "../../common-datetime/utils"
+import { sleep } from "../../../packages/common-datetime/utils"
 import { prettyMessage } from "../utils/pretty-message"
 import { handleMessage } from "./handle-message"
 

@@ -4,7 +4,7 @@ import config from "@cs-magic/p01-card/config.json"
 import dotenv from "dotenv"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
-import { Path } from "../common-path"
+import { Path } from "../../packages/common-path"
 import { MessageQueue } from "./handle-messages/message-queue"
 import { getBotWxid } from "./utils/bot-wxid"
 

@@ -8,6 +8,7 @@
   "type": "module",
   "workspaces": [
     "packages/*",
+    "services/*",
     "projects/*"
   ],
   "packageManager": "yarn@4.1.1",

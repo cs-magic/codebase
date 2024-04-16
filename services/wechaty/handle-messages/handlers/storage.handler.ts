@@ -1,7 +1,7 @@
 import { prettyError } from "packages/common-common/utils/pretty-error"
 import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
-import { prisma } from "../../../common-db/providers/prisma"
+import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { BaseHandler } from "./base.handler"
 
 export class StorageHandler extends BaseHandler {

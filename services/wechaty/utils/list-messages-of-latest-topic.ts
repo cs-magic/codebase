@@ -1,5 +1,5 @@
 import { SEPARATOR_BOX } from "@cs-magic/common/const"
-import { prisma } from "../../common-db/providers/prisma"
+import { prisma } from "../../../packages/common-db/providers/prisma"
 
 /**
  * 获取最后一次

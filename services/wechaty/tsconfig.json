@@ -20,7 +20,7 @@
     "module": "ESNext",
     "incremental": true,
     /* Path Aliases */
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
 //      "*": [
 //        "node_modules/*"

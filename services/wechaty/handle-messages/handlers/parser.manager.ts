@@ -3,7 +3,7 @@ import { isWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wech
 import { CardSimulator } from "@cs-magic/p01-card/src/core/card-simulator"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
-import { fetchWxmpArticleWithCache } from "../../../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
+import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { BaseManager } from "./base.manager"

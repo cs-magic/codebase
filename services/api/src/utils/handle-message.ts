@@ -1,4 +1,4 @@
-import { formatError } from "packages/common-common/utils/format-error"
+import { formatError } from "@cs-magic/common/utils/format-error"
 import logger from "@cs-magic/log/logger"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import { botCommands } from "../config"

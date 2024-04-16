@@ -15,7 +15,7 @@
     "cicd": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "start-api-service": "yarn workspace @cs-magic/api-service start-api"
+    "start-api-service": "yarn workspace @cs-magic/api start-api"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",

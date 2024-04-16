@@ -1,5 +1,5 @@
 import { type Message, type Wechaty } from "wechaty"
-import { type LangType } from "../../common-i18n/schema"
+import { type LangType } from "../../../packages/common-i18n/schema"
 import {
   type IBotContext,
   type IBotDynamicContext,
