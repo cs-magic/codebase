@@ -1870,14 +1870,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/p02-card@workspace:^, @cs-magic/p02-card@workspace:projects/p02":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/p02-card@workspace:projects/p02"
+  dependencies:
+    zod: "npm:3.21.1"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:packages/common-wechaty":
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechaty@workspace:packages/common-wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/p01-card": "workspace:^"
+    "@cs-magic/p02-card": "workspace:^"
     dotenv: "npm:^16.4.5"
-    p02: "workspace:^"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
     wechaty-puppet-padlocal: "npm:^1.20.1"
@@ -8329,6 +8337,8 @@ __metadata:
 "cs-magic@workspace:.":
   version: 0.0.0-use.local
   resolution: "cs-magic@workspace:."
+  dependencies:
+    zod: "npm:3.21.1"
   languageName: unknown
   linkType: soft
 
@@ -16176,12 +16186,6 @@ __metadata:
   checksum: 10c0/c36c19907734c904b16994e6535b02c36c2224d433e01a2f1ab777237f4d86e6289fd5fd464850491e940379d4606ed850c03e0f9ab600b0ebddb511312e177f
   languageName: node
   linkType: hard
-
-"p02@workspace:^, p02@workspace:projects/p02":
-  version: 0.0.0-use.local
-  resolution: "p02@workspace:projects/p02"
-  languageName: unknown
-  linkType: soft
 
 "pac-proxy-agent@npm:^7.0.1":
   version: 7.0.1

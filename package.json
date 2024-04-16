@@ -10,5 +10,8 @@
     "packages/*",
     "projects/*"
   ],
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.1.1",
+  "dependencies": {
+    "zod": "3.21.1"
+  }
 }

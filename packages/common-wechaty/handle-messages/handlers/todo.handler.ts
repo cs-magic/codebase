@@ -1,14 +1,10 @@
 import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
-import { type TaskStatusType } from "@cs-magic/p01-card/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
-import { TaskStatusSchemaRootProjectsP01Card } from "@cs-magic/p01-card/test"
-import { TaskStatusSchemaRootProjectsP01CardTests } from "@cs-magic/p01-card/tests/test"
+import {
+  TaskStatusSchema,
+  type TaskStatusType,
+} from "@cs-magic/p01-card/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { type MessageInterface } from "wechaty/impls"
 import { type z } from "zod"
-import { TaskStatusSchemaRootProjectsP02 } from "p02/test"
-import { TaskStatusSchemaRootProjects } from "../../../../projects/test"
-import { TaskStatusSchemaRoot } from "../../../../test"
-
-import { BackendType, backendTypeSchema } from "../../../common-llm/schema/llm"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseCommand } from "../../utils/parse-command"
 import { BaseHandler } from "./base.handler"
@@ -39,39 +35,11 @@ export class TodoHandler extends BaseHandler {
         const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(result.args)
         if (!m) throw new Error("输入不合法")
 
-        await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          TaskStatusSchemaRoot,
-          m?.[2],
-        )
-        await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          TaskStatusSchemaRootProjects,
-          m?.[2],
-        )
-
-        await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          TaskStatusSchemaRootProjectsP01Card,
-          m?.[2],
-        )
-
-        await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          TaskStatusSchemaRootProjectsP01CardTests,
-          m?.[2],
-        )
-
-        await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          TaskStatusSchemaRootProjectsP02,
-          m?.[2],
-        )
-
         const status = await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          // todo: not warn in p01-card
-          TaskStatusSchemaRootProjectsP01Card,
+          TaskStatusSchema,
           m?.[2],
         )
-        const status2 = await parseAsyncWithFriendlyErrorMessage<BackendType>(
-          backendTypeSchema,
-          m?.[2],
-        )
+
         return manager.updateTodo(Number(m[1]), status)
     }
   }
