@@ -10,7 +10,7 @@ export class ParserHandler extends BaseHandler {
   async onMessage(message: Message): Promise<void> {
     const preference = await getConvPreference(message)
     const title = preference.lang === "zh" ? "万能解析器" : "Super Parser"
-    const manager = new ParserManager(this.bot, title, message)
+    const manager = (this.manager = new ParserManager(this.bot, title, message))
 
     const result = parseCommand<z.infer<typeof parserCommands>>(
       message.text(),

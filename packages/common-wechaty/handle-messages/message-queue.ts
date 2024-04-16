@@ -34,7 +34,7 @@ export class MessageQueue {
 
   private async _processMessage() {
     while (this.queue.length > 0) {
-      const message = this.queue.shift()
+      const message = this.queue.shift()!
       console.log(
         `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
       )

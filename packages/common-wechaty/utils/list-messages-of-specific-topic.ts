@@ -29,7 +29,7 @@ export const listMessagesOfSpecificTopic = async (
         startsWith: "/new-topic ",
       },
       createdAt: {
-        gt: firstUserSetCommand.createdAt,
+        gt: firstUserSetCommand.createdAt!,
       },
     },
     orderBy: {
@@ -59,8 +59,8 @@ export const listMessagesOfSpecificTopic = async (
             },
           ],
           createdAt: {
-            gt: firstUserSetCommand.createdAt,
-            lt: nextUserSetCommand.createdAt,
+            gt: firstUserSetCommand.createdAt!,
+            lt: nextUserSetCommand.createdAt!,
           },
         },
         {

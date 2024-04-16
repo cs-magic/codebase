@@ -7,9 +7,9 @@ help: |-
     Todo: Task Management
   ------------------------------
   Basic Commands：
-    /: (show menu)
-    /status: (show preference)
+    /: (show the main menu)
     /help [FEAT]: (show usage of specific feature)
+    /status: (show preference)
     /set-lang zh: (切换为中文)
   ------------------------------
 

@@ -3,6 +3,8 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "dependencies": {
+    "@types/lodash": "^4.14.202",
+    "lodash": "^4.17.21",
     "nanoid": "^5.0.7"
   }
 }

@@ -16,9 +16,9 @@ export const startBot = async (context: IContext): Promise<IContext> => {
         transferMessage({ type: "scan", data: scan }, sockets)
       })
       .on("login", (user) => {
-        console.log("-- login: ", user)
+        // console.log("-- login: ", user)
         scan = null
-        syncClients(bot, scan, sockets)
+        syncClients({ bot, scan, sockets })
       })
   }
   if (!bot.isLoggedIn) {

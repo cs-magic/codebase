@@ -24,7 +24,7 @@ export class BasicHandler extends BaseHandler {
     const context = await getBotDynamicContext(preference.lang)
     const title =
       context.name + (preference.lang === "zh" ? `使用说明` : ` Cookbook`)
-    const manager = new BasicManager(this.bot, title, message)
+    const manager = (this.manager = new BasicManager(this.bot, title, message))
 
     const result = parseCommand<z.infer<typeof basicCommands>>(
       message.text(),
@@ -42,7 +42,7 @@ export class BasicHandler extends BaseHandler {
       case "":
       case "help":
         // case "帮助":
-        return manager.standardReply(template.help)
+        return this.manager?.help()
 
       case "status":
         // case "状态":

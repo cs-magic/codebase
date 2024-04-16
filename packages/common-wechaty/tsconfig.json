@@ -22,12 +22,13 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "node_modules/*"
-      ]
+//      "*": [
+//        "node_modules/*"
+//      ]
     }
-  }
-  //  "include": [
+  },
+//    "include": [
+//      "../../**/*.ts"
   //    ".eslintrc.cjs",
   //    "next-env.d.ts",
   //    "**/*.ts",
@@ -36,8 +37,8 @@
   //    "**/*.js",
   //    ".next/types/**/*.ts",
   //    ".next-tmp/types/**/*.ts"
-  //  ],
-  //  "exclude": [
-  //    "node_modules"
-  //  ]
+//    ],
+//    "exclude": [
+//      "node_modules"
+//    ]
 }

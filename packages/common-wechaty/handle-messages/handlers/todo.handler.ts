@@ -1,8 +1,9 @@
-import taskStatusSchema, {
-  type TaskStatusType,
-} from "@cs-magic/p01-card/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import { type TaskStatusType } from "@cs-magic/p01-card/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import { TaskStatusSchema2 } from "@cs-magic/p01-card/test"
 import { type MessageInterface } from "wechaty/impls"
 import { type z } from "zod"
+
+import { BackendType, backendTypeSchema } from "../../../common-llm/schema/llm"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseCommand } from "../../utils/parse-command"
 import { parseAsyncWithFriendlyErrorMessage } from "../../utils/validate-input"
@@ -14,7 +15,7 @@ export class TodoHandler extends BaseHandler {
   public async onMessage(message: MessageInterface) {
     const preference = await getConvPreference(message)
     const title = preference.lang === "zh" ? "任务管理" : "Task Management"
-    const manager = new TodoManager(this.bot, title, message)
+    const manager = (this.manager = new TodoManager(this.bot, title, message))
 
     const result = parseCommand<z.infer<typeof todoCommands>>(
       message.text(),
@@ -34,7 +35,12 @@ export class TodoHandler extends BaseHandler {
         const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(result.args)
         if (!m) throw new Error("输入不合法")
         const status = await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-          taskStatusSchema,
+          // todo: not warn in p01-card
+          TaskStatusSchema2,
+          m?.[2],
+        )
+        const status2 = await parseAsyncWithFriendlyErrorMessage<BackendType>(
+          backendTypeSchema,
           m?.[2],
         )
         return manager.updateTodo(Number(m[1]), status)

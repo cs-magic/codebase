@@ -1,10 +1,12 @@
 import { type Message, type Wechaty } from "wechaty"
+import { BaseManager } from "./base.manager"
 
 export class BaseHandler {
   public bot: Wechaty
   public name: string
+  protected manager?: BaseManager
 
-  constructor(name: string, bot: Wechaty) {
+  constructor(bot: Wechaty, name: string) {
     this.name = name
     this.bot = bot
   }
@@ -21,12 +23,5 @@ export class BaseHandler {
    */
   public async onMessage(message: Message): Promise<any> {
     throw new Error("not implemented.")
-  }
-
-  /**
-   * triggered by `/help [name]`
-   */
-  public help(): Promise<any> {
-    throw new Error(" not implemented.")
   }
 }

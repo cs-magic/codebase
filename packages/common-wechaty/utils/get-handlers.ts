@@ -7,7 +7,7 @@ export const getHandlers = (bot: Wechaty) => {
     // console.log(`-- registering handler(name=${handlerName})`)
     const h = new MessageHandlerMap[
       handlerName as keyof typeof MessageHandlerMap
-    ](handlerName, bot)
+    ](bot, handlerName)
     return h
   })
   return handlers

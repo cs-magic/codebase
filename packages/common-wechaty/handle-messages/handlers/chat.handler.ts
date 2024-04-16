@@ -10,7 +10,7 @@ export class ChatHandler extends BaseHandler {
   public async onMessage(message: Message) {
     const preference = await getConvPreference(message)
     const title = preference.lang === "zh" ? "AI 聊天室" : "AI Chat"
-    const manager = new ChatManager(this.bot, title, message)
+    const manager = (this.manager = new ChatManager(this.bot, title, message))
 
     const result = parseCommand<z.infer<typeof chatCommands>>(
       message.text(),
