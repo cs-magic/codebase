@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "postinstall": "patch-package",
-    "dev": "next dev -p 40326 | pino-pretty",
+    "prerun": "cp ../../.env .",
+    "dev": "yarn prerun && next dev -p 40326 | pino-pretty",
     "lint": "next lint",
-    "build": "next build",
+    "build": "yarn prerun && next build",
     "start": "next start -p 40326",
     "build-start": "yarn build && yarn start",
     "cicd": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",

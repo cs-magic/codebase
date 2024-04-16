@@ -14,6 +14,7 @@ export const startBot = async (context: IContext): Promise<IContext> => {
     })
       .on("scan", (value, status) => {
         scan = { value, status }
+        logger.info(`updated scan: ${JSON.stringify(scan)}`)
         transferMessage({ type: "scan", data: scan }, sockets)
       })
       .on("login", (user) => {
@@ -22,6 +23,8 @@ export const startBot = async (context: IContext): Promise<IContext> => {
         syncClients({ bot, scan, sockets })
       })
   }
+
+  // todo: if has cache,  start auto, o.w. wait for triggering in the frontend ?
   if (!bot.isLoggedIn) {
     logger.info("-- starting bot")
     await bot.start()
