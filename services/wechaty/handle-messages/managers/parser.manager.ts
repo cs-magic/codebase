@@ -1,4 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
@@ -145,34 +146,39 @@ export class ParserManager extends BaseManager {
 
     await message.say("wait, I am trying ……")
 
-    const card = await fetchWxmpArticleWithCache(url, {
-      backendEngineType: preference.backend,
-      summaryModel: preference.model,
-    })
-    // todo: dynamic sender with fixed card url
-    // let cardUrl = card.ossUrl
-    const sender = message.talker()
+    try {
+      const card = await fetchWxmpArticleWithCache(url, {
+        backendEngineType: preference.backend,
+        summaryModel: preference.model,
+      })
+      // todo: dynamic sender with fixed card url
+      // let cardUrl = card.ossUrl
+      const sender = message.talker()
 
-    // avatar 在 padLocal 下是带domain的；web下不稳定
-    const image = sender.payload?.avatar
-    const user = image
-      ? {
-          id: sender.id,
-          name: sender.name(),
-          image,
-        }
-      : undefined
+      // avatar 在 padLocal 下是带domain的；web下不稳定
+      const image = sender.payload?.avatar
+      const user = image
+        ? {
+            id: sender.id,
+            name: sender.name(),
+            image,
+          }
+        : undefined
 
-    logger.info(`-- parsing content`)
-    if (!this.uniParser) this.uniParser = new CardSimulator()
+      logger.info(`-- parsing content`)
+      if (!this.uniParser) this.uniParser = new CardSimulator()
 
-    const cardContent = JSON.stringify(card)
-    logger.info(cardContent)
-    const { cardUrl } = await this.uniParser.genCard(cardContent, user)
+      const cardContent = JSON.stringify(card)
+      logger.info(cardContent)
+      const { cardUrl } = await this.uniParser.genCard(cardContent, user)
 
-    logger.info(`-- sending file: ${cardUrl}`)
+      logger.info(`-- sending file: ${cardUrl}`)
 
-    await message.say(FileBox.fromUrl(cardUrl))
-    logger.info("-- ✅ sent file")
+      await message.say(FileBox.fromUrl(cardUrl))
+      logger.info("-- ✅ sent file")
+    } catch (e) {
+      const s = formatError(e)
+      await message.say(s)
+    }
   }
 }

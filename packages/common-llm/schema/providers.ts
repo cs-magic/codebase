@@ -5,7 +5,7 @@ export type LLMProviderType =
   | "zhipu"
   | "moonshot"
   | "baichuan"
-  | "ali"
+  | "dashscope"
 
 export const llmModelTypeSchema = z.enum([
   "gpt-3.5-turbo",

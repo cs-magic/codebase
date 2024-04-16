@@ -6,8 +6,10 @@ import { fetchWxmpArticleWithCache } from "../3rd-wechat/wxmp-article/fetch-wxmp
 import { Path } from "../common-path"
 import { CardSimulator } from "./card-simulator"
 
+const headless: boolean = true
+
 export const simulatorWxmpArticleViaContent = async (content: string) => {
-  const simulator = new CardSimulator("playwright", { headless: false })
+  const simulator = new CardSimulator("playwright", { headless })
 
   const { cardUrl } = await simulator.genCard(content, {
     id: "",

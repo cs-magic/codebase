@@ -85,7 +85,7 @@ export class SystemManager extends BaseManager {
       const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
-        case "list-model":
+        case "list-models":
           await this.listModels()
           break
 

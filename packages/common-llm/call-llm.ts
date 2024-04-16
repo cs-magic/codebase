@@ -26,6 +26,8 @@ export const callLLM = async (
   const apiKey =
     env[`${providerType}_api_key`.toUpperCase() as keyof typeof env]
 
+  if (!apiKey) throw new Error("API_KEY Missing!")
+
   const httpAgent = env.PROXY ? new HttpsProxyAgent(env.PROXY) : undefined
 
   const clientConfig = {
@@ -93,7 +95,7 @@ export const callLLM = async (
         },
       )
       response = res.data
-    } else if (providerType === "ali") {
+    } else if (providerType === "dashscope") {
       // console.debug("-- calling Ali")
       const res = await backendApi.post<OpenAI.Chat.Completions.ChatCompletion>(
         "/llm/base",
