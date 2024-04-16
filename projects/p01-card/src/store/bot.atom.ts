@@ -1,5 +1,5 @@
+import { IUser } from "@cs-magic/wechaty/schema/bot";
 import { atom } from "jotai";
-import type { IUser } from "packages/common-wechaty/schema";
 
 export const botSocketOpenedAtom = atom(false);
 

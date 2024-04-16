@@ -7,3 +7,9 @@ export const useUserSummary = () => {
   if (!!user && user.name && user.image) return user as IUserSummary;
   return null;
 };
+
+export const useUserIsAdmin = () => {
+  const user = useSession().data?.user;
+
+  return !!(user?.id === "mark");
+};

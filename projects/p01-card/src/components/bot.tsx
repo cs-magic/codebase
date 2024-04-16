@@ -3,6 +3,7 @@
 import { logger } from "@cs-magic/log/logger";
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
 import { useAtom } from "jotai";
+import { useSession } from "next-auth/react";
 import { QRCodeSVG } from "qrcode.react";
 import { env } from "../../../../packages/common-env";
 import { useInit } from "../../../../packages/common-hooks/use-init";
@@ -12,6 +13,7 @@ import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { ButtonWithLoading } from "../../../../packages/common-ui/components/button-with-loading";
 import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
 import { LabelLine } from "../../../../packages/common-ui/components/label-line";
+import { useUserIsAdmin } from "../hooks/use-user";
 import {
   botLoggedInAtom,
   botLoggingAtom,
@@ -32,6 +34,8 @@ export const Bot = () => {
   const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom);
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom);
   const [botLogging, setBotLogging] = useAtom(botLoggingAtom);
+
+  const isAdmin = useUserIsAdmin();
 
   const socket = useInit<WebSocket>(() => {
     const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!);
@@ -124,14 +128,16 @@ export const Bot = () => {
                 Pause
               </Button>
 
-              <Button
-                disabled={!botUser || !botLoggedIn}
-                onClick={() => {
-                  socket?.send("/logout");
-                }}
-              >
-                Log Out
-              </Button>
+              {isAdmin && (
+                <Button
+                  disabled={!botUser || !botLoggedIn}
+                  onClick={() => {
+                    socket?.send("/logout");
+                  }}
+                >
+                  Log Out
+                </Button>
+              )}
             </div>
           </StandardCard>
 
