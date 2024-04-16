@@ -13,6 +13,8 @@ prisma/generated
 **/deprecated
 **/dist
 **/node_modules
+**/.env
+**/.env*.local
 
 # dependencies
 /.pnp

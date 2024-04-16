@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "postinstall": "patch-package",
-    "prerun": "cp ../../.env .",
+    "prerun": "cp ../../.env* .",
     "dev": "yarn prerun && next dev -p 40326 | pino-pretty",
     "lint": "next lint",
     "build": "yarn prerun && next build",
