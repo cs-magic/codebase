@@ -1,4 +1,4 @@
-import { prettyError } from "@cs-magic/common/pretty-error"
+import { prettyError } from "packages/common-common/utils/pretty-error"
 import omit from "lodash/omit"
 import { type MessageInterface } from "wechaty/impls"
 import { prisma } from "../../../common-db/providers/prisma"

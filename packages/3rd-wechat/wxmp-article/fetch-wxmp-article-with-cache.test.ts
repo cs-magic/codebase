@@ -2,8 +2,8 @@
 
 import { promises } from "fs"
 import path from "path"
-import { generatedPath } from "../../../packages/common-common/path"
-import { LlmModelType } from "../../../packages/common-llm/schema/providers"
+import { LlmModelType } from "../../common-llm/schema/providers"
+import { Path } from "../../common-path"
 import { fetchWxmpArticleWithCache } from "./fetch-wxmp-article-with-cache"
 
 const url = process.argv[2]!
@@ -15,7 +15,7 @@ const f = async () => {
     summaryModel: model,
   })
 
-  const fp = path.join(generatedPath, `wxmp-article-${Date.now()}.json`)
+  const fp = path.join(Path.generatedDir, `wxmp-article-${Date.now()}.json`)
   await promises.writeFile(fp, JSON.stringify(result, null, 2))
   console.log(`-- dumped into file://${fp}`)
 }

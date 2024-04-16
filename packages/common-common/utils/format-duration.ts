@@ -1,4 +1,4 @@
-export const prettyDuration = (seconds: number, precision = 2) => {
+export const formatDuration = (seconds: number, precision = 2) => {
   if (seconds < 60) return seconds.toFixed(precision) + "s"
   const minutes = seconds / 60
   if (minutes < 60) return minutes.toFixed(precision) + "m"

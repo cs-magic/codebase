@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const TaskStatusSchema2 = z.enum([
+export const TaskStatusSchemaRootProjectsP01Card = z.enum([
   "pending",
   "running",
   "paused",

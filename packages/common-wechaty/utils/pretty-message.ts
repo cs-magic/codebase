@@ -1,4 +1,4 @@
-import { prettyString } from "@cs-magic/common/pretty-string"
+import { prettyString } from "packages/common-common/utils/pretty-string"
 import { type Message } from "wechaty"
 
 export const prettyMessage = (message: Message) => {

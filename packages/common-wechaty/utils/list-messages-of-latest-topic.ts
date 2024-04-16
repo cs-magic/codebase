@@ -1,4 +1,4 @@
-import { SEPARATOR_2 } from "@cs-magic/common/pretty-query"
+import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { prisma } from "../../common-db/providers/prisma"
 
 /**
@@ -89,7 +89,7 @@ export const listMessagesOfLatestTopic = async (
               // but not command
               text: {
                 not: {
-                  startsWith: SEPARATOR_2,
+                  startsWith: SEPARATOR_BOX,
                 },
               },
             },

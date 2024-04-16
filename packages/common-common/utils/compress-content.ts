@@ -1,5 +1,4 @@
-type CompressLineFunction = (line: string, ratio?: number) => string
-type CompressLinesFunction = (lines: string[]) => string[]
+import { CompressLineFunction, CompressLinesFunction } from "../schema/utils"
 
 export function compressContent(
   content: string,

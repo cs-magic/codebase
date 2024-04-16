@@ -1,7 +1,7 @@
 /**
  * todo: re-calculate life
  */
-export const initLog = (() => {
+export const initLogWithTimer = (() => {
   // 用闭包内的变量来跟踪是否已经重写console.log
   let isInitialized = false
 

@@ -1,4 +1,4 @@
-import { prettyError } from "@cs-magic/common/pretty-error"
+import { formatError } from "packages/common-common/utils/format-error"
 import logger from "@cs-magic/log/logger"
 import { parseCommand } from "@cs-magic/wechaty/utils/parse-command"
 import { botCommands } from "../config"
@@ -40,7 +40,7 @@ export const handleMessage = async (
 
     logger.debug(`✅ ${result.command} ${result.args}`)
   } catch (e) {
-    prettyError(e)
+    formatError(e)
   }
 
   return context

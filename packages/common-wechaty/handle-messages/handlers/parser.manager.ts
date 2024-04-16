@@ -1,5 +1,4 @@
-import { initLog } from "@cs-magic/common/init-log"
-import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/parse-url-from-wechat-url-message"
+import { initLogWithTimer } from "packages/common-common/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { CardSimulator } from "@cs-magic/p01-card/src/core/card-simulator"
 import { FileBox } from "file-box"
@@ -53,7 +52,7 @@ export class ParserManager extends BaseManager {
     const preference = await getConvPreference(message)
     if (!preference.parserEnabled) return
 
-    initLog()
+    initLogWithTimer()
 
     await message.say("正在解析……")
 

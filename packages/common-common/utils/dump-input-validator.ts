@@ -1,17 +1,6 @@
-import { ZodBoolean, ZodEnum, ZodString } from "zod"
+import { ZodBoolean, ZodString } from "zod"
 
-export type InputValidatorSchema =
-  | ZodBoolean
-  | ZodString
-  | ZodEnum<[string, ...string[]]>
-export type InputValidatorType = string[] | InputValidatorSchema
-
-export const prettyInvalidInput = (
-  input: string,
-  validator: InputValidatorType,
-) => {
-  return `操作失败，原因：${input} ∉ {${dumpInputValidator(validator)}`
-}
+import { InputValidatorType } from "../schema/utils"
 
 export const dumpInputValidator = (v: InputValidatorType): string => {
   if ("options" in v)

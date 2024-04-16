@@ -2,7 +2,6 @@ import { Card } from "@prisma/client";
 import { useAtom, useSetAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect } from "react";
-import { safeParseJson } from "../../../../packages/common-common/safe-parse-json";
 import moment from "../../../../packages/common-datetime/moment";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";

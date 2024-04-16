@@ -1,6 +1,6 @@
-import { prettyError } from "@cs-magic/common/pretty-error"
-import { SEPARATOR_2 } from "@cs-magic/common/pretty-query"
-import { prettyString } from "@cs-magic/common/pretty-string"
+import { SEPARATOR_BOX } from "@cs-magic/common/const"
+import { formatError } from "packages/common-common/utils/format-error"
+import { formatString } from "packages/common-common/utils/format-string"
 import { env } from "@cs-magic/p01-card/src/env"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
@@ -54,11 +54,11 @@ export const callLLM = async (
   console.debug(
     [
       "",
-      SEPARATOR_2,
+      SEPARATOR_BOX,
       `-- calling LLM(provider=${providerType}, model=${queryConfig.model}, api_key=${apiKey}): `,
       ...queryConfig.messages.map(
         (m) =>
-          `  [${m.role[0]!.toUpperCase()}]: ${prettyString(JSON.stringify(m.content), 60)}`,
+          `  [${m.role[0]!.toUpperCase()}]: ${formatString(JSON.stringify(m.content), 60)}`,
       ),
     ].join("\n"),
   )
@@ -112,7 +112,7 @@ export const callLLM = async (
     success = true
   } catch (e) {
     //   todo: return error
-    error = prettyError(e)
+    error = formatError(e)
   }
   const end = Date.now()
   const res = {
@@ -130,8 +130,8 @@ export const callLLM = async (
 
   console.log(
     [
-      `-- result: ${prettyString(JSON.stringify(res), 60)}`,
-      SEPARATOR_2,
+      `-- result: ${formatString(JSON.stringify(res), 60)}`,
+      SEPARATOR_BOX,
       "",
     ].join("\n"),
   )

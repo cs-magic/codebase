@@ -1,4 +1,4 @@
-import { prettyDuration } from "@cs-magic/common/pretty-duration"
+import { prettyDuration } from "packages/common-common/utils/pretty-duration"
 import { promises } from "fs"
 import jsYaml from "js-yaml"
 import Mustache from "mustache"

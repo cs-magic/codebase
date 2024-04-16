@@ -1,4 +1,4 @@
-import { genId } from "@cs-magic/common/gen-id"
+import { genId } from "packages/common-common/utils/gen-id"
 import logger from "@cs-magic/log/logger"
 import fw from "@fastify/websocket"
 import Fastify from "fastify"

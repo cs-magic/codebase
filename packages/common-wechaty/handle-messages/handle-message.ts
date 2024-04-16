@@ -1,4 +1,4 @@
-import { prettyError } from "@cs-magic/common/pretty-error"
+import { prettyError } from "packages/common-common/utils/pretty-error"
 import { type Message, type Wechaty } from "wechaty"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { getHandlers } from "../utils/get-handlers"

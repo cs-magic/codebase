@@ -1,6 +1,4 @@
-import { isClient } from "../../packages/common-env/utils"
-
-export function extractFirstURL(text: string): string | null {
+export function extractFirstUrl(text: string): string | null {
   // This regex is designed to find URLs within a string.
   // It looks for strings that start with http://, https://, or www., and captures
   // everything until it encounters a space or the end of the string.
@@ -14,8 +12,3 @@ export function extractFirstURL(text: string): string | null {
   // match is an array where the first element is the matched string, or null if no match was found.
   return match ? match[0] : null // This will be the first URL found in the text or null if no URL is found.
 }
-
-export const upgradeUrl = (url: string) =>
-  isClient && location.href.includes("https")
-    ? url.replace(/http:/g, "https:")
-    : url

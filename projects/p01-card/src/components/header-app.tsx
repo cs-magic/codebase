@@ -1,7 +1,7 @@
+import { MSG_TODO } from "@cs-magic/common/const";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
-import { MSG_TODO } from "../../../../packages/common-common/messages";
 import { AspectRatio } from "../../../../packages/common-ui-shadcn/components/aspect-ratio";
 
 import { config } from "../config";

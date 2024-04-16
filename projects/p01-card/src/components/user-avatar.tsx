@@ -8,7 +8,6 @@ import {
 } from "../../../../packages/common-ui-shadcn/components/avatar";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";
-import { upgradeUrl } from "../../../../packages/common-common/parse-url";
 import { IUserBasic } from "../schema/user.summary";
 import { omit } from "lodash";
 

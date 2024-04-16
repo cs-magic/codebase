@@ -1,6 +1,6 @@
 import { sum } from "lodash";
 
-import { FixedArray } from "../../../packages/common-common/fixed-array";
+import { FixedArray } from "../../../packages/common-common/schema/fixed-array";
 
 export const testFixedArray = () => {
   const arr = new FixedArray(10);

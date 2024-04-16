@@ -1,4 +1,4 @@
-export const prettyString = (s: string, maxLength?: number) => {
+export const formatString = (s: string, maxLength?: number) => {
   maxLength = maxLength === undefined ? s.length : Math.min(s.length, maxLength)
   if (s.length <= maxLength) return s
   const n = maxLength / 2

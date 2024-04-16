@@ -3,7 +3,6 @@ import { atom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 import { z } from "zod";
-import { parseJS } from "../../../../packages/common-common/safe-parse-json";
 
 import { BackendType } from "../../../../packages/common-llm/schema/llm";
 import { LlmModelType } from "../../../../packages/common-llm/schema/providers";
@@ -82,7 +81,7 @@ export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngineType>(
 //////////////////////////////
 
 export const cardAtom = atom<ICardDetail | null>((get) => {
-  return parseJS<ICardDetail>(get(cardInputAtom));
+  return parseJs<ICardDetail>(get(cardInputAtom));
 });
 
 export const cardRenderedAtom = atom((get) => {

@@ -1,0 +1,42 @@
+{
+  "version": "V0.6.143 (α)",
+  "name": "",
+  "slogan": "",
+  "website": {
+    "title": "CS魔法社 P01",
+    "menus": [
+      { "href": "/card/new", "title": "新建卡片" },
+      { "href": "/card/gen", "title": "渲染卡片" },
+      { "href": "/bot", "title": "微信机器人" }
+    ],
+    "partners": {
+      "show": false
+    },
+    "icon": {
+      "app": {
+        "eval": "/apps/eval.png"
+      }
+    },
+    "avatar": {
+      "default": "/cover_growth.jpg",
+      "mark": "/branding/individual/mark_avatar.jpg",
+      "idoubi": "/branding/individual/idoubi_avatar.jpg"
+    },
+    "branding": {
+      "v2agi": {
+        "dark-sm": "/branding/enterprise/v2agi-dark-sm.png",
+        "cs-magic": {
+          "dark": "/branding/enterprise/cs-magic_branding_white.jpg",
+          "light": "/branding/enterprise/cs-magic_branding_black.jpg",
+          "blue": "/branding/enterprise/cs-magic-blue.png"
+        },
+        "idoubi": {
+          "light": "/branding/enterprise/idoubi.png"
+        }
+      }
+    }
+  },
+  "card": {
+    "genInputPlaceHolder": "支持小红书、Bilibili……"
+  }
+}

@@ -5,7 +5,6 @@ import {
 import { getBvidFromUrl } from "../../../../packages/3rd-bilibili/utils";
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache";
 import { fetchXiaoHongShuDetail } from "../../../../packages/3rd-xhs/actions";
-import { extractFirstURL } from "../../../../packages/common-common/parse-url";
 import { ICardGenOptions } from "../schema/card";
 import { ICardDetail } from "../schema/card.basic";
 import { bilibili2card } from "./card-platform/bilibili/to-card";
@@ -21,7 +20,7 @@ export const genCardFromUrl = async (
   inputUrlLike: string,
   options?: ICardGenOptions,
 ): Promise<ICardDetail> => {
-  const urlParsed = extractFirstURL(inputUrlLike);
+  const urlParsed = extractFirstUrl(inputUrlLike);
   console.log("-- genCardFromUrl: ", { inputUrlLike, urlParsed });
   if (!urlParsed)
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`);

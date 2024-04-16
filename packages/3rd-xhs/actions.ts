@@ -1,7 +1,8 @@
 "use server"
 
 import { api } from "../../packages/common-api-client"
-import { parseJS } from "../../packages/common-common/safe-parse-json"
+
+import { parseJs } from "../common-common/utils/parse-json"
 import { IXiaoHongShuNotePageData } from "./schema"
 
 /**
@@ -46,7 +47,7 @@ export const fetchXiaoHongShuDetail = async (
 
   if (!jsonData?.[1]) return null
 
-  const data = parseJS<IXiaoHongShuNotePageData>(jsonData[1])
+  const data = parseJs<IXiaoHongShuNotePageData>(jsonData[1])
 
   // console.log({ data })
 

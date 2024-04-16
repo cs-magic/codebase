@@ -1,4 +1,3 @@
-import { prettyQuery } from "@cs-magic/common/pretty-query"
 import { type CommandType } from "../handle-messages/_all"
 import { type IBotContext } from "../schema"
 

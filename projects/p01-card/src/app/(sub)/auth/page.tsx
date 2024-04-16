@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { UnexpectedError } from "../../../../../../packages/common-common/schema";
 import { devEnabledAtom } from "../../../../../../packages/common-dev/store";
 import { useEnvironments } from "../../../../../../packages/common-hooks/use-environments";
 import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";

@@ -9,7 +9,6 @@ import { getRobustPreference } from "../../utils/get-robust-preference"
 import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-topic"
 import { listMessagesOfSpecificTopic } from "../../utils/list-messages-of-specific-topic"
 import { listTopics } from "../../utils/list-topics"
-import { robustSelect } from "../../utils/validate-input"
 import { BaseManager } from "./base.manager"
 
 export class ChatManager extends BaseManager {
@@ -85,7 +84,10 @@ export class ChatManager extends BaseManager {
 
     // 2. 匹配用户的输入，确定话题的名称（不要用序号，因为数据库里记录都是名称）
     // 如果有多个匹配，使用最新的
-    const topicTarget = await robustSelect(Object.keys(topics), selectChatTopic)
+    const topicTarget = await selectInputWithNumberOrContent(
+      Object.keys(topics),
+      selectChatTopic,
+    )
 
     if (!this.botWxid) throw new Error("无法获取到小助手微信ID")
 

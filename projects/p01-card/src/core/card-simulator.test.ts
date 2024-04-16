@@ -1,8 +1,9 @@
+import { dumpJson } from "@cs-magic/common/utils/dump-json";
 import { promises } from "fs";
 import path from "path";
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache";
-import { dumpJSON } from "../../../../packages/common-common/dump-json";
-import { generatedPath } from "../../../../packages/common-common/path";
+
+import { Path } from "../../../../packages/common-path";
 import { CardSimulator } from "./card-simulator";
 
 const simulatorWxmpArticleViaContent = async (content: string) => {
@@ -19,7 +20,7 @@ const simulatorWxmpArticleViaContent = async (content: string) => {
 };
 
 const simulatorWxmpArticleViaTestFile = async (fn: string) => {
-  const content = await promises.readFile(path.join(generatedPath, fn), {
+  const content = await promises.readFile(path.join(Path.generatedDir, fn), {
     encoding: "utf-8",
   });
 
@@ -36,7 +37,7 @@ describe("", () => {
     const res = await fetchWxmpArticleWithCache(sampleUrl, {
       // summaryModel: "gpt-3.5-turbo",
     });
-    await dumpJSON(res, `wxmp-article.sample.${Date.now()}.json`);
+    await dumpJson(res, `wxmp-article.sample.${Date.now()}.json`);
   }, 2e4);
 
   it(
@@ -51,7 +52,7 @@ describe("", () => {
       summaryModel: "gpt-3.5-turbo",
       // summaryModel: "gpt-4",
     });
-    await dumpJSON(res, `wxmp-article.sample.${Date.now()}.json`);
+    await dumpJson(res, `wxmp-article.sample.${Date.now()}.json`);
 
     await simulatorWxmpArticleViaContent(JSON.stringify(res));
   }, 3e5);

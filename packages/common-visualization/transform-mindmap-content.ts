@@ -1,4 +1,4 @@
-import { truncateString } from "../common-common/truncate-string"
+import { truncateString } from "../common-common/utils/truncate-string"
 
 /**
  * @deprecated

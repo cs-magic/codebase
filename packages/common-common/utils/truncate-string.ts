@@ -1,4 +1,4 @@
-import { ELLIPSE } from "./const"
+import { ELLIPSE } from "../const"
 import { isAscii } from "./is-ascii"
 
 export const truncateString = (
