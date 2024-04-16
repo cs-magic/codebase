@@ -1,4 +1,4 @@
-import { type IWechatUserPreference } from "@cs-magic/p01-card/src/schema/wechat-user"
+import { type IWechatUserPreference } from "schema/wechat-user"
 
 export const getRobustPreference = (row: {
   preference: any

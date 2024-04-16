@@ -1,3 +1,4 @@
+import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
@@ -6,9 +7,7 @@ import { getBvidFromUrl } from "../../../../packages/3rd-bilibili/utils";
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache";
 import { fetchXiaoHongShuDetail } from "../../../../packages/3rd-xhs/actions";
 import { ICardGenOptions } from "../schema/card";
-import { ICardDetail } from "../schema/card.basic";
 import { bilibili2card } from "./card-platform/bilibili/to-card";
-import { isWxmpArticleUrl } from "./card-platform/wechat-article/utils";
 import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card";
 
 /**

@@ -4,7 +4,7 @@ import {
   type IBotContext,
   type IBotDynamicContext,
   type IBotStaticContext,
-} from "../schema"
+} from "../schema/bot"
 import { getConvPreference } from "./get-conv-preference"
 
 export const getBotStaticContext = async (

@@ -1712,7 +1712,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/p01-card@workspace:^, @cs-magic/p01-card@workspace:projects/p01-card":
+"@cs-magic/p01-card@workspace:projects/p01-card":
   version: 0.0.0-use.local
   resolution: "@cs-magic/p01-card@workspace:projects/p01-card"
   dependencies:
@@ -1825,8 +1825,6 @@ __metadata:
     postinstall-postinstall: "npm:^2.1.0"
     prettier: "npm:^3.2.5"
     prettier-plugin-tailwindcss: "npm:^0.5.11"
-    prisma: "npm:^5.10.2"
-    prisma-json-types-generator: "npm:^3.0.4"
     puppeteer: "npm:^22.6.1"
     pusher: "npm:^5.2.0"
     pusher-js: "npm:^8.4.0-rc2"
@@ -1870,12 +1868,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/prisma@workspace:packages/common-db-prisma":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/prisma@workspace:packages/common-db-prisma"
+  dependencies:
+    prisma: "npm:^5.12.1"
+    prisma-json-types-generator: "npm:^3.0.4"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:services/wechaty":
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechaty@workspace:services/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/p01-card": "workspace:^"
     dotenv: "npm:^16.4.5"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
@@ -16861,7 +16867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^5.10.2":
+"prisma@npm:^5.12.1":
   version: 5.12.1
   resolution: "prisma@npm:5.12.1"
   dependencies:

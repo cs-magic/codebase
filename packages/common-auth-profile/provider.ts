@@ -1,4 +1,4 @@
-import { userDetailSchema } from "@cs-magic/p01-card/src/schema/user.detail"
+import { userDetailSchema } from "@cs-magic/prisma/schema/user.detail"
 import { PROFILE_UPDATE_PROVIDER_ID } from "../../packages/common-auth-sms/const"
 import { prisma } from "../../packages/common-db/providers/prisma"
 import Credentials from "next-auth/providers/credentials"

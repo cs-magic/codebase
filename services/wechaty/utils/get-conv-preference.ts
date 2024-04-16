@@ -1,4 +1,4 @@
-import { type IWechatUserPreference } from "@cs-magic/p01-card/src/schema/wechat-user"
+import { type IWechatUserPreference } from "schema/wechat-user"
 import { type Message } from "wechaty"
 import { getConvRow } from "./get-conv-row"
 import { getRobustPreference } from "./get-robust-preference"

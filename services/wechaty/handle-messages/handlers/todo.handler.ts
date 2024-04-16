@@ -1,8 +1,7 @@
 import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
-import {
-  TaskStatusSchema,
-  type TaskStatusType,
-} from "@cs-magic/p01-card/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import { TaskStatusSchema } from "@cs-magic/prisma/prisma/generated/zod"
+import { TaskStatusType } from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+
 import { type MessageInterface } from "wechaty/impls"
 import { type z } from "zod"
 import { getConvPreference } from "../../utils/get-conv-preference"

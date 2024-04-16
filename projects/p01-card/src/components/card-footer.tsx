@@ -1,5 +1,6 @@
 "use client";
 
+import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import {
   CalendarHeartIcon,
   FingerprintIcon,
@@ -9,7 +10,6 @@ import moment from "../../../../packages/common-datetime/moment";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 
 import { config } from "../config";
-import { ICardDetail } from "../schema/card.basic";
 import { CardFooterItem } from "./card-footer-item";
 
 export const CardFooter = ({ card }: { card?: ICardDetail | null }) => {

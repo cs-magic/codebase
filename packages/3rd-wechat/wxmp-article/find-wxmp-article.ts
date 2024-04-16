@@ -1,5 +1,6 @@
 import { IWxmpArticleUrlParsed } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
-import { cardDetailSchema } from "@cs-magic/p01-card/src/schema/card.basic"
+
+import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { prisma } from "../../../packages/common-db/providers/prisma"
 import { LlmModelType } from "../../../packages/common-llm/schema/providers"
 

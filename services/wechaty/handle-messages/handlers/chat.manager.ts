@@ -1,4 +1,4 @@
-import { type IWechatUserPreference } from "@cs-magic/p01-card/src/schema/wechat-user"
+import { type IWechatUserPreference } from "schema/wechat-user"
 import { types } from "wechaty"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { callLLM } from "../../../../packages/common-llm"

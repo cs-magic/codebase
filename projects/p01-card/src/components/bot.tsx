@@ -1,6 +1,6 @@
 "use client";
 
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema";
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
 import { useInit } from "../../../../packages/common-hooks/use-init";

@@ -1,6 +1,6 @@
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
-import { IUserBasic } from "@cs-magic/p01-card/src/schema/user.summary"
+import { IUserBasic } from "projects/p01-card/src/schema/user"
 import { parse } from "node-html-parser"
 import { api } from "../../../packages/common-api-client"
 import { parseMetaFromHtml } from "../../../packages/common-html/utils"

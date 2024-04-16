@@ -1,4 +1,5 @@
-import { IUserBasic } from "../schema/user.summary";
+import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
+import { IUserBasic } from "../schema/user";
 import { atom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
@@ -7,7 +8,6 @@ import { z } from "zod";
 import { BackendType } from "../../../../packages/common-llm/schema/llm";
 import { LlmModelType } from "../../../../packages/common-llm/schema/providers";
 import { ICardGenOptions } from "../schema/card";
-import { ICardDetail } from "../schema/card.basic";
 import { getCardUrl } from "../utils";
 
 export const cardInputAtom = atomWithStorage("card.input", "");

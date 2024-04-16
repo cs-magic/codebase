@@ -1,5 +1,5 @@
 import { logEnv } from "@cs-magic/common/utils/log-env"
-import config from "@cs-magic/p01-card/config.json"
+import packageJson from "./package.json"
 
 import dotenv from "dotenv"
 import qrcodeTerminal from "qrcode-terminal"
@@ -36,7 +36,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       bot.wxid = getBotWxid(user)
 
       bot.staticContext = {
-        version: config.version,
+        version: packageJson.version,
         startTime: Date.now(),
       }
     })

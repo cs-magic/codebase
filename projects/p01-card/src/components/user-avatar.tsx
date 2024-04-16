@@ -8,7 +8,7 @@ import {
 } from "../../../../packages/common-ui-shadcn/components/avatar";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";
-import { IUserBasic } from "../schema/user.summary";
+import { IUserBasic } from "../schema/user";
 import { omit } from "lodash";
 
 export const UserAvatar = ({

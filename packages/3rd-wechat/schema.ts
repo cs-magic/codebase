@@ -1,4 +1,4 @@
-import { IUserBasic } from "@cs-magic/p01-card/src/schema/user.summary"
+import { IUserBasic } from "projects/p01-card/src/schema/user"
 
 import { ICallLLMResponse } from "../../packages/common-llm/schema/llm"
 import { $Enums } from ".prisma/client"

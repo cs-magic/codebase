@@ -1,7 +1,10 @@
 "use server";
 
+import {
+  cardDetailSchema,
+  ICardDetail,
+} from "@cs-magic/prisma/schema/card.detail";
 import { prisma } from "../../../../packages/common-db/providers/prisma";
-import { cardDetailSchema, ICardDetail } from "../schema/card.basic";
 
 export const updateOssUrl = async (
   cardId: string,

@@ -2,10 +2,11 @@
 
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
+
 import {
   cardDetailSchema,
   ICardDetail,
-} from "@cs-magic/p01-card/src/schema/card.basic"
+} from "@cs-magic/prisma/schema/card.detail"
 import { prisma } from "../../../packages/common-db/providers/prisma"
 import { fetchWxmpArticleViaFastapi } from "./fetch-wxmp-article-via-fastapi"
 import { fetchWxmpArticleViaNodejs } from "./fetch-wxmp-article-via-nodejs"

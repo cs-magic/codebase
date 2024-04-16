@@ -1,3 +1,4 @@
+import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { promises } from "fs";
 import sortBy from "lodash/sortBy";
 import path from "path";
@@ -9,7 +10,6 @@ import { FlexContainer } from "../../../../../packages/common-ui/components/flex
 import { LabelLine } from "../../../../../packages/common-ui/components/label-line";
 import { CardPreview } from "../../components/card-preview";
 import { StandardCard } from "../../components/standard-card";
-import { ICardDetail } from "../../schema/card.basic";
 
 export default async function CompareModelsPage() {
   const ts = (await promises.readdir(Path.generatedDir)).filter((n) =>

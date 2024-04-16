@@ -6,7 +6,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import { type Message } from "wechaty"
 import { type LangType } from "../../../packages/common-i18n/schema"
-import { type IBotStaticContext, type IBotTemplate } from "../schema"
+import { type IBotStaticContext, type IBotTemplate } from "../schema/bot"
 
 import { getBotDynamicContext } from "./bot-context"
 import { getConvPreference } from "./get-conv-preference"

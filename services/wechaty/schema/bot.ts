@@ -1,6 +1,6 @@
 import { Contact } from "wechaty-puppet/payloads"
-import { type BackendType } from "../../packages/common-llm/schema/llm"
-import { type LlmModelType } from "../../packages/common-llm/schema/providers"
+import { type BackendType } from "../../../packages/common-llm/schema/llm"
+import { type LlmModelType } from "../../../packages/common-llm/schema/providers"
 
 type IUser = Contact
 

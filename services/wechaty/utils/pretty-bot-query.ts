@@ -1,5 +1,5 @@
 import { type CommandType } from "../handle-messages/_all"
-import { type IBotContext } from "../schema"
+import { type IBotContext } from "../schema/bot"
 
 export const prettyBotQuery = async (
   context: IBotContext,
