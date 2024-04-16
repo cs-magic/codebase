@@ -1,7 +1,7 @@
-import { type IWechatUserPreference } from "schema/wechat-user"
 import { types } from "wechaty"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { callLLM } from "../../../../packages/common-llm"
+import { IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
 import { getConvTable } from "../../utils/get-conv-table"
@@ -10,8 +10,20 @@ import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-t
 import { listMessagesOfSpecificTopic } from "../../utils/list-messages-of-specific-topic"
 import { listTopics } from "../../utils/list-topics"
 import { BaseManager } from "./base.manager"
+import { selectInputWithNumberOrContent } from "packages/common-common/utils/select-input-with-number-or-content"
 
 export class ChatManager extends BaseManager {
+  public i18n = {
+    zh: {
+      title: "AI 聊天室",
+      commands: {},
+    },
+    en: {
+      title: "AI Chat",
+      commands: {},
+    },
+  }
+
   async _listTopics() {
     return listTopics(this.convId)
   }
@@ -36,7 +48,7 @@ export class ChatManager extends BaseManager {
         },
       },
     })
-    const p: IWechatUserPreference | null = row.preference
+    const p: IWechatUserPreference = row.preference
     await this.standardReply(`已启动，当前话题：${p?.chatTopic ?? "默认"}`, [
       "list-topics",
       "new-topic",

@@ -13,6 +13,17 @@ import { BaseManager } from "./base.manager"
 export class ParserManager extends BaseManager {
   private uniParser: CardSimulator | null = null
 
+  public i18n = {
+    zh: {
+      title: "万能解析器",
+      commands: {},
+    },
+    en: {
+      title: "Super Parser",
+      commands: {},
+    },
+  }
+
   async enableParser() {
     await getConvTable(this.message).update({
       where: { id: this.convId },

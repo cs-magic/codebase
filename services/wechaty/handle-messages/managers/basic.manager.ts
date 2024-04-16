@@ -6,6 +6,17 @@ import { getConvTable } from "../../utils/get-conv-table"
 import { BaseManager } from "./base.manager"
 
 export class BasicManager extends BaseManager {
+  public i18n = {
+    zh: {
+      title: "基本信息",
+      commands: {},
+    },
+    en: {
+      title: "Basic Info",
+      commands: {},
+    },
+  }
+
   async setModel(value: LlmModelType) {
     const preference = await getConvPreference(this.message)
     await getConvTable(this.message).update({

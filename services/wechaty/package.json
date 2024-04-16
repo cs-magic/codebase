@@ -4,7 +4,7 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
-    "start-wechat-bot": "tsx index.ts"
+    "dev": "tsx index.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

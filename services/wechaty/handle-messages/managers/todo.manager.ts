@@ -4,6 +4,17 @@ import { BaseManager } from "./base.manager"
 import { type TaskStatus } from ".prisma/client"
 
 export class TodoManager extends BaseManager {
+  public i18n = {
+    zh: {
+      title: "任务管理",
+      commands: {},
+    },
+    en: {
+      title: "Task Management",
+      commands: {},
+    },
+  }
+
   async listTodoAction() {
     const tasks = (await listTodo(this.message.talker().id)).map((k, i) => ({
       ...k,
