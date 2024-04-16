@@ -3,11 +3,11 @@ import {
   ResponseStatus,
 } from "@cs-magic/p01-card/src/schema/sse"
 import Pusher from "pusher"
-import { redis } from "../../../../../packages/common-db/providers/redis"
-import { pusherServerConfigs } from "../../../../../packages/common-pusher/config"
-import { PusherServerId } from "../../../../../packages/common-pusher/schema"
-import { initPusherServer } from "../../../../../packages/common-pusher/server/init"
-import { ITransEvent } from "../../../../../packages/common-sse/schema"
+import { redis } from "../../../../common-db/providers/redis"
+import { pusherServerConfigs } from "../../../../common-pusher/config"
+import { PusherServerId } from "../../../../common-pusher/schema"
+import { initPusherServer } from "../../../../common-pusher/server/init"
+import { ITransEvent } from "../../../../common-sse/schema"
 
 import { ILLMManagerPusher } from "./schema"
 

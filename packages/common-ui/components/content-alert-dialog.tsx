@@ -4,7 +4,7 @@ import { uiAlertDialogOpen } from "../store"
 import {
   AlertDialog,
   AlertDialogContent,
-} from "../../../packages/common-ui-shadcn/components/alert-dialog"
+} from "../../common-ui-shadcn/components/alert-dialog"
 import React, { PropsWithChildren } from "react"
 
 export const ContentAlertDialog = ({ children }: PropsWithChildren) => {

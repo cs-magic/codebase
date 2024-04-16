@@ -1,6 +1,6 @@
 import { env } from "@cs-magic/p01-card/src/env"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
-import { backendApi } from "../../../packages/common-api-client"
+import { backendApi } from "../../common-api-client"
 import { Prisma } from ".prisma/client"
 
 export const fetchWxmpArticleViaFastapi = async (

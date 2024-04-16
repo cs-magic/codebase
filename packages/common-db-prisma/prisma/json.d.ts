@@ -4,7 +4,6 @@ declare global {
   namespace PrismaJson {
     export { ICallLLMResponse } from "../../common-llm/schema/llm"
 
-    export { IUserBasic } from "projects/p01-card/src/schema/user"
     export {
       IMedia,
       ICardStat,

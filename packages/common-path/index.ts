@@ -13,5 +13,5 @@ export class Path {
 
   // for specific projects
   static generatedDir = ensurePathSync(path.join(Path.projectDir, ".generated"))
-  static envFile = path.join(Path.projectDir, "projects/p01-card/.env")
+  static envFile = path.join(Path.projectDir, ".env")
 }

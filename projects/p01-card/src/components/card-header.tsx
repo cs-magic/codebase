@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { Label } from "../../../../packages/common-ui-shadcn/components/label";
 
 import { config } from "../config";
-import { IUserBasic } from "../schema/user";
 import { cardUserRenderedAtom } from "../store/card.atom";
 import { UserAvatar } from "./user-avatar";
 

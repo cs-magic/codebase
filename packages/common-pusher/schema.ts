@@ -1,6 +1,6 @@
 import { IBaseResponse } from "@cs-magic/p01-card/src/schema/query"
 import { z } from "zod"
-import { ITransEvent } from "../../packages/common-sse/schema"
+import { ITransEvent } from "../common-sse/schema"
 
 export interface IPusherServerConfig {
   host: string

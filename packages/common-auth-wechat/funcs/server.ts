@@ -1,5 +1,5 @@
 import { env } from "@cs-magic/p01-card/src/env"
-import { fetchWechatApi } from "../../../packages/3rd-wechat/functions"
+import { fetchWechatApi } from "../../3rd-wechat/functions"
 import {
   IWechatAdaptedToken,
   IWechatProfile,

@@ -2,7 +2,7 @@
 
 import { env } from "@cs-magic/p01-card/src/env"
 import { sha1 } from "js-sha1"
-import { api } from "../../../packages/common-api-client"
+import { api } from "../../common-api-client"
 import { fetchWechatApi } from "../functions"
 import { IWechatSDKToken } from "../schema"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"

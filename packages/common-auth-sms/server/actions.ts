@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "../../../packages/common-db/providers/prisma/connection"
+import { prisma } from "../../common-db/providers/prisma/connection"
 import { SMS_PROVIDER_ID } from "../const"
 import { IProviderSendSms } from "../schema"
 

@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Label } from "../../../packages/common-ui-shadcn/components/label"
+import { Label } from "../../common-ui-shadcn/components/label"
 
 export const LabelLine = ({
   title,

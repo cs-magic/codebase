@@ -7,7 +7,7 @@ import {
   cardDetailSchema,
   ICardDetail,
 } from "@cs-magic/prisma/schema/card.detail"
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import { prisma } from "../../common-db/providers/prisma"
 import { fetchWxmpArticleViaFastapi } from "./fetch-wxmp-article-via-fastapi"
 import { fetchWxmpArticleViaNodejs } from "./fetch-wxmp-article-via-nodejs"
 import { findWxmpArticle } from "./find-wxmp-article"

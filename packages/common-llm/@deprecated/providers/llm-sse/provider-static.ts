@@ -3,7 +3,7 @@ import {
   ITransClient,
   ITransEvent,
   ITransChannel,
-} from "../../../../../packages/common-sse/schema"
+} from "../../../../common-sse/schema"
 import { ResponseFinalStatus } from "@cs-magic/p01-card/src/schema/sse"
 import { ILLMManagerTraditional } from "./schema"
 

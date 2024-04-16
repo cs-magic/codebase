@@ -1,9 +1,9 @@
-import { redis } from "../../../../../packages/common-db/providers/redis"
+import { redis } from "../../../../common-db/providers/redis"
 import {
   ITransClient,
   ITransEvent,
   ITransChannel,
-} from "../../../../../packages/common-sse/schema"
+} from "../../../../common-sse/schema"
 import { llmWrite } from "./utils"
 import { ILLMManagerTraditional } from "./schema"
 

@@ -1,6 +1,6 @@
 import { atom } from "jotai"
-import { IDimension } from "../../packages/common-ui/schema"
-import { uiScreenAtom } from "../../packages/common-ui/store"
+import { IDimension } from "../common-ui/schema"
+import { uiScreenAtom } from "../common-ui/store"
 
 //////////////////////////////
 // base

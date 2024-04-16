@@ -1,5 +1,4 @@
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
-import { IUserBasic } from "../schema/user";
 import { atom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";

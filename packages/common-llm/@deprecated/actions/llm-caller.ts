@@ -1,6 +1,6 @@
 "use server"
 
-import { sleep } from "../../../../packages/common-datetime/utils"
+import { sleep } from "../../../common-datetime/utils"
 import { callChatGPT, callLLMApiMock } from "../models/openai"
 import {
   getChannelIdFomRequest,

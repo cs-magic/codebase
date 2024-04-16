@@ -6,7 +6,7 @@ import { IPureNode } from "markmap-common"
 import { Transformer } from "markmap-lib"
 import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
-import { AspectRatio } from "../../packages/common-ui-shadcn/components/aspect-ratio"
+import { AspectRatio } from "../common-ui-shadcn/components/aspect-ratio"
 import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "./store"
 
 const transformer = new Transformer()

@@ -7,7 +7,7 @@ import remarkMath from "remark-math"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
 import { dark, darcula } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { cn } from "../../packages/common-ui-shadcn/utils"
+import { cn } from "../common-ui-shadcn/utils"
 
 export const MarkdownComp = ({
   children,

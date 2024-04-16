@@ -2,8 +2,8 @@
 
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
-import { isServer } from "../../packages/common-env/utils"
-import { uiInnerHeight, uiViewportHeight } from "../../packages/common-ui/store"
+import { isServer } from "../common-env/utils"
+import { uiInnerHeight, uiViewportHeight } from "../common-ui/store"
 import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top"
 
 /**

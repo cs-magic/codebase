@@ -1,6 +1,5 @@
-import { IUserBasic } from "projects/p01-card/src/schema/user"
-
-import { ICallLLMResponse } from "../../packages/common-llm/schema/llm"
+import { ICallLLMResponse } from "../common-llm/schema/llm"
+import { IUserBasic } from "../common-common/schema/user"
 import { $Enums } from ".prisma/client"
 
 export type IWechatError = {

@@ -1,5 +1,5 @@
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
-import { LlmModelType } from "../../../packages/common-llm/schema/providers"
+import { LlmModelType } from "../../common-llm/schema/providers"
 import { findWxmpArticle } from "./find-wxmp-article"
 
 const f = async (url: string, model: LlmModelType) => {

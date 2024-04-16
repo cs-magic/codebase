@@ -1,12 +1,12 @@
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
-import { IUserBasic } from "projects/p01-card/src/schema/user"
 import { parse } from "node-html-parser"
-import { api } from "../../../packages/common-api-client"
-import { parseMetaFromHtml } from "../../../packages/common-html/utils"
-import { callAgent } from "../../../packages/common-llm/call-agent"
-import { ICallLLMResponse } from "../../../packages/common-llm/schema/llm"
-import { html2md } from "../../../packages/common-markdown/html2md"
+import { api } from "../../common-api-client"
+import { parseMetaFromHtml } from "../../common-html/utils"
+import { callAgent } from "../../common-llm/call-agent"
+import { ICallLLMResponse } from "../../common-llm/schema/llm"
+import { html2md } from "../../common-markdown/html2md"
+import { IUserBasic } from "@cs-magic/common/schema/user"
 import { Prisma } from ".prisma/client"
 
 /**

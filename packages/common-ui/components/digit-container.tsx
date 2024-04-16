@@ -1,6 +1,6 @@
 import { ComponentProps, useEffect, useRef } from "react"
-import { Input } from "../../../packages/common-ui-shadcn/components/input"
-import { cn } from "../../../packages/common-ui-shadcn/utils"
+import { Input } from "../../common-ui-shadcn/components/input"
+import { cn } from "../../common-ui-shadcn/utils"
 
 import { SMS_DIGIT_SIZE } from "../config"
 

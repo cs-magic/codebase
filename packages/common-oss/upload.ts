@@ -1,7 +1,7 @@
 "use client"
 
-import { api } from "../../packages/common-api-client"
-import { IApiResult } from "../../packages/common-api-client/schema"
+import { api } from "../common-api-client"
+import { IApiResult } from "../common-api-client/schema"
 import { getOssSignatureUrl } from "./server/actions"
 
 export const uploadFile = async (file: File): Promise<IApiResult<string>> => {

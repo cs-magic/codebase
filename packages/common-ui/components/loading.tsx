@@ -5,7 +5,7 @@ import { LoaderIcon } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
-} from "../../../packages/common-ui-shadcn/components/alert-dialog"
+} from "../../common-ui-shadcn/components/alert-dialog"
 import { uiLoadingAlertDialogAtom } from "../store"
 import { FlexContainer } from "./flex-container"
 

@@ -1,4 +1,4 @@
-import { IDimension } from "../../packages/common-ui/schema"
+import { IDimension } from "../common-ui/schema"
 
 export interface IBilibiliVideoDetail {
   View: {
