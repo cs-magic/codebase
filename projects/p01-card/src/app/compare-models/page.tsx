@@ -16,32 +16,38 @@ export default async function CompareModelsPage() {
     /^\d+$/.test(n),
   );
 
+  const data = await Promise.all(
+    ts.map(async (t) => {
+      const dir = path.join(Path.generatedDir, t.toString());
+
+      const cardNames = (await promises.readdir(dir)).filter((s) =>
+        s.startsWith("wxmp-article"),
+      );
+
+      const cards: ICardDetail[] = await Promise.all(
+        cardNames.map(async (cardName) => {
+          return JSON.parse(
+            await promises.readFile(path.join(dir, cardName), {
+              encoding: "utf-8",
+            }),
+          ) as ICardDetail;
+        }),
+      );
+
+      return { t: Number(t), cards };
+    }),
+  );
+
   return (
     <FlexContainer orientation={"vertical"} className={"justify-start"}>
-      {ts.map((t) => (
-        <RenderT t={Number(t)} key={t} />
+      {data.map(({ t, cards }) => (
+        <RenderT t={t} cards={cards} key={t} />
       ))}
     </FlexContainer>
   );
 }
 
-const RenderT = async ({ t }: { t: number }) => {
-  const dir = path.join(Path.generatedDir, t.toString());
-
-  const cardNames = (await promises.readdir(dir)).filter((s) =>
-    s.startsWith("wxmp-article"),
-  );
-
-  const cards: ICardDetail[] = await Promise.all(
-    cardNames.map(async (cardName) => {
-      return JSON.parse(
-        await promises.readFile(path.join(dir, cardName), {
-          encoding: "utf-8",
-        }),
-      ) as ICardDetail;
-    }),
-  );
-
+const RenderT = ({ cards, t }: { t: number; cards: ICardDetail[] }) => {
   return (
     <StandardCard title={moment(t).format("MM/DD HH:mm")}>
       <div

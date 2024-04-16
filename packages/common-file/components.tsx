@@ -24,7 +24,7 @@ export const FileComp = ({
 const FileCompInner = ({ file }: { file: IUploadFile }) => {
   switch (file.status) {
     case "idle":
-      return "idle"
+      return <span>idle</span>
 
     case "running":
       return <Loading />

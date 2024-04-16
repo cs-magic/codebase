@@ -1,3 +1,4 @@
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe";
 import { Card } from "@prisma/client";
 import { useAtom, useSetAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
@@ -25,7 +26,7 @@ export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
 
   const Line21 = () => (
     <span className={"mr-1 text-nowrap"}>
-      {safeParseJson(card?.author)?.name}
+      {parseJsonSafe(card?.author)?.name}
     </span>
   );
 

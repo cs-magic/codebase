@@ -1,6 +1,6 @@
 import { SEPARATOR_BOX } from "@cs-magic/common/const"
-import { formatError } from "packages/common-common/utils/format-error"
-import { formatString } from "packages/common-common/utils/format-string"
+import { formatError } from "@cs-magic/common/utils/format-error"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"

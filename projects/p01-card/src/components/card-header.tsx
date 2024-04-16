@@ -7,6 +7,7 @@ import { Label } from "../../../../packages/common-ui-shadcn/components/label";
 import { config } from "../config";
 import { cardUserRenderedAtom } from "../store/card.atom";
 import { UserAvatar } from "./user-avatar";
+import { IUserBasic } from "@cs-magic/common/schema/user";
 
 export const CardHeader = ({ user }: { user?: IUserBasic | null }) => {
   const setUserRendered = useSetAtom(cardUserRenderedAtom);

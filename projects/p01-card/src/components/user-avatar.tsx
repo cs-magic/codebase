@@ -1,3 +1,4 @@
+import { upgradeUrl } from "@cs-magic/common/utils/upgrade-url";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { UserIcon } from "lucide-react";
 import { ComponentPropsWithoutRef, HTMLAttributes } from "react";
@@ -9,6 +10,7 @@ import {
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";
 import { omit } from "lodash";
+import { IUserBasic } from "@cs-magic/common/schema/user";
 
 export const UserAvatar = ({
   user,

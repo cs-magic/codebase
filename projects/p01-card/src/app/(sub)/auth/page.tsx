@@ -1,10 +1,9 @@
 "use client";
 
-import { useAtom } from "jotai";
+import { UnexpectedError } from "@cs-magic/common/schema/error";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { devEnabledAtom } from "../../../../../../packages/common-dev/store";
 import { useEnvironments } from "../../../../../../packages/common-hooks/use-environments";
 import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
 import { Loading } from "../../../../../../packages/common-ui/components/loading";

@@ -1,3 +1,5 @@
+import { IUserBasic } from "@cs-magic/common/schema/user";
+import { parseJs } from "@cs-magic/common/utils/parse-json";
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { atom } from "jotai";
 import { withImmer } from "jotai-immer";
