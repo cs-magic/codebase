@@ -1,4 +1,5 @@
-import {logEnv} from "../../packages/common-env/utils/log-env";
+import { logger } from "@cs-magic/log/logger"
+import { logEnv } from "../../packages/common-env/utils/log-env"
 import packageJson from "./package.json"
 
 import dotenv from "dotenv"
@@ -12,7 +13,7 @@ dotenv.config({ path: Path.envFile, override: true })
 logEnv("wechaty")
 
 export const createWechatyBot = ({ name }: { name?: string }) => {
-  console.log("-- init bot: ", { name })
+  logger.info(`-- init bot(name=${name})`)
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
@@ -25,13 +26,13 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       // prettyError(err)
     })
     .on("scan", (value, status) => {
-      console.log(
+      logger.info(
         `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
       )
       qrcodeTerminal.generate(value, { small: true })
     })
     .on("login", async (user) => {
-      console.log(`-- User logged in: `, user.payload)
+      logger.info(`-- User logged in: `, user.payload)
 
       bot.wxid = getBotWxid(user)
 

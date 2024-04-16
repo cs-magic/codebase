@@ -78,7 +78,7 @@ export const listMessagesOfSpecificTopic = async (
     },
   })
 
-  // console.log({
+  // logger.info({
   //   lastUserSetCommand,
   //   lastUserStartChat,
   //   messagesLen: messages.length,

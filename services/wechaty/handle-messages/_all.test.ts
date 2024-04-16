@@ -1,6 +1,7 @@
+import { logger } from "@cs-magic/log/logger"
 import { messageHandlerSchema } from "./_all"
 
 it("should ", () => {
-  // console.log(messageHandlerSchema)
-  console.log(messageHandlerSchema.options)
+  // logger.info(messageHandlerSchema)
+  logger.info(messageHandlerSchema.options)
 })

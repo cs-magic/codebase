@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { type Message, type Wechaty } from "wechaty"
 import { sleep } from "../../../packages/common-datetime/utils"
 import { prettyMessage } from "../utils/pretty-message"
@@ -25,7 +26,7 @@ export class MessageQueue {
 
   async enqueueMessage(message: Message) {
     this.queue.push(message)
-    // console.log(`-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`)
+    // logger.info(`-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`)
     if (!this.processing) {
       this.processing = true
       await this._processMessage()
@@ -35,7 +36,7 @@ export class MessageQueue {
   private async _processMessage() {
     while (this.queue.length > 0) {
       const message = this.queue.shift()!
-      console.log(
+      logger.info(
         `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
       )
       await handleMessage(this.bot, message)

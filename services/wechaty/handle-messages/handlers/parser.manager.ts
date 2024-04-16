@@ -1,6 +1,7 @@
 import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
+import { logger } from "@cs-magic/log/logger"
 import { FileBox } from "file-box"
 import { types } from "wechaty"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
@@ -45,7 +46,7 @@ export class ParserManager extends BaseManager {
     if (message.type() !== types.Message.Url) return
 
     const url = parseUrlFromWechatUrlMessage(message.text())
-    console.log("-- url in message: ", url)
+    logger.info(`-- url in message: ${url}`)
     if (!url) return
 
     if (!isWxmpArticleUrl(url)) return
@@ -75,16 +76,16 @@ export class ParserManager extends BaseManager {
         }
       : undefined
 
-    console.log(`-- parsing content`)
+    logger.info(`-- parsing content`)
     if (!this.uniParser) this.uniParser = new CardSimulator()
 
     const cardContent = JSON.stringify(card)
-    console.log(cardContent)
+    logger.info(cardContent)
     const { cardUrl } = await this.uniParser.genCard(cardContent, user)
 
-    console.log(`-- sending file: ${cardUrl}`)
+    logger.info(`-- sending file: ${cardUrl}`)
 
     await message.say(FileBox.fromUrl(cardUrl))
-    console.log("-- ✅ sent file")
+    logger.info("-- ✅ sent file")
   }
 }

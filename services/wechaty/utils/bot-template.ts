@@ -26,7 +26,7 @@ export async function renderBotTemplate(
   botContext: IBotStaticContext,
 ) {
   const preference = await getConvPreference(message)
-  // console.log({ preference })
+  // logger.info({ preference })
 
   const lang = preference.lang
 

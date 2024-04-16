@@ -148,7 +148,7 @@ export class ChatManager extends BaseManager {
       // todo: merge chats
       content: m.text ?? "",
     }))
-    // console.log(`--  context(len=${context.length})`)
+    // logger.info(`--  context(len=${context.length})`)
 
     const res = await callLLM({
       messages: context,

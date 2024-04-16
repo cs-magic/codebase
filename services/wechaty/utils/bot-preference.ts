@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
@@ -18,6 +19,6 @@ export const loadBotPreference = async () => {
 }
 
 export const dumpBotPreference = async (botPreference: IBotPreference) => {
-  console.log("-- dumping bot context")
+  logger.info("-- dumping bot context")
   await promises.writeFile(preferenceFilePath, yaml.dump(botPreference))
 }

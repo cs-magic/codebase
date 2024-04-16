@@ -112,7 +112,7 @@ export const listMessagesOfLatestTopic = async (
     take: -20,
   })
 
-  // console.log({
+  // logger.info({
   //   lastUserSetCommand,
   //   lastUserStartChat,
   //   messagesLen: messages.length,
