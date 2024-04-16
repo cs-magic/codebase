@@ -7,11 +7,19 @@ export class TodoManager extends BaseManager {
   public i18n = {
     zh: {
       title: "任务管理",
-      commands: {},
+      commands: {
+        新增: "",
+        更新: "",
+        重命名: "",
+      },
     },
     en: {
       title: "Task Management",
-      commands: {},
+      commands: {
+        add: "",
+        update: "",
+        rename: "",
+      },
     },
   }
 

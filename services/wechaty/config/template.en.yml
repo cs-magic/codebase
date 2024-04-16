@@ -2,12 +2,11 @@ help: |-
   {{name}} Is an AI Native software, for individual/group intelligent management.
   ------------------------------
   Feats：
-    Chat: Chat with AI
-    Parser: Info Summarization
-    Todo: Task Management
+    1. Chatter: LLM powered AI Chatter
+    2. Parser: LLM powered AI Parser
+    3. Todo: Task Management
   ------------------------------
   Basic Commands：
-    /: (show the main menu)
     /help [FEAT]: (show usage of specific feature)
     /status: (show preference)
     /set-lang zh: (切换为中文)

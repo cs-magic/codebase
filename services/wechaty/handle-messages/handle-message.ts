@@ -5,7 +5,6 @@ import {
   type TaskStatusType,
 } from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import { type Message, type Wechaty } from "wechaty"
-import { z } from "zod"
 import {
   inputLangTypeSchema,
   type LangType,
@@ -18,24 +17,26 @@ import {
   type LlmModelType,
   llmModelTypeSchema,
 } from "../../../packages/common-llm/schema/providers"
-import { commandsSchema, type CommandType } from "../schema/commands"
+import {
+  commandsSchema,
+  type CommandType,
+  featureTypeSchema,
+} from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
+import { BaseManager } from "./managers/base.manager"
 import { BasicManager } from "./managers/basic.manager"
 import { ChatManager } from "./managers/chat.manager"
 import { ParserManager } from "./managers/parser.manager"
 import { TodoManager } from "./managers/todo.manager"
 
-export const featureTypeSchema = z.enum(["basic", "todo", "chat", "parser"])
-export type FeatureType = z.infer<typeof featureTypeSchema>
-
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     let manager
     const type = message.type()
-    const text = message.text()
+    const text = message.text().trim().toLowerCase()
 
     await storageMessage(message)
 
@@ -47,25 +48,31 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
         case "ding":
           return message.say("dong")
 
-        case "":
-          return new BasicManager(bot, message).help()
+        case "status":
+          manager = new BaseManager(bot, message)
+          return await manager.standardReply(
+            (await manager.getTemplate()).status,
+          )
 
         case "help":
-          const featureType = await featureTypeSchema.parseAsync(input)
+          const featureType = await featureTypeSchema.parseAsync(
+            input.trim().toLowerCase(),
+          )
           switch (featureType) {
+            case "":
+              manager = new BaseManager(bot, message)
+              return await manager.standardReply(
+                (await manager.getTemplate()).help,
+              )
             case "basic":
               return new BasicManager(bot, message).help()
             case "todo":
               return new TodoManager(bot, message).help()
-            case "chat":
+            case "chatter":
               return new ChatManager(bot, message).help()
             case "parser":
               return new ParserManager(bot, message).help()
           }
-
-        case "status":
-          manager = new BasicManager(bot, message)
-          return manager.standardReply(await manager.getStatus())
 
         case "list-models":
           manager = new BasicManager(bot, message)

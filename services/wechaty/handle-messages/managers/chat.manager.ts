@@ -16,11 +16,23 @@ export class ChatManager extends BaseManager {
   public i18n = {
     zh: {
       title: "AI 聊天室",
-      commands: {},
+      description: "你可以与搭载了主流大模型能力的 AI 进行聊天",
+      commands: {
+        启动: "",
+        停止: "",
+        新建: "",
+        历史: "",
+      },
     },
     en: {
       title: "AI Chat",
-      commands: {},
+      description: "You can chat with AI powered by LLM models.",
+      commands: {
+        enable: "",
+        disable: "",
+        new: "",
+        list: "",
+      },
     },
   }
 

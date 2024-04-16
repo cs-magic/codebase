@@ -1,6 +1,5 @@
 import { type Message, type Wechaty } from "wechaty"
 import { type LangType } from "../../../../packages/common-i18n/schema"
-import { type CommandType } from "../../schema/commands"
 import {
   getBotContextFromMessage,
   getBotDynamicContext,
@@ -11,7 +10,11 @@ import { getConvPreference } from "../../utils/get-conv-preference"
 
 export type ICommandData = Record<string, string>
 
-export type IManagerI18n = { title: string; commands: ICommandData }
+export type IManagerI18n = {
+  title: string
+  commands?: ICommandData
+  description?: string
+}
 
 export class BaseManager {
   public message: Message
@@ -22,6 +25,18 @@ export class BaseManager {
     // todo: bot on message
     this.bot = bot
     this.message = message
+  }
+
+  get botWxid() {
+    return this.bot.wxid
+  }
+
+  get conv() {
+    return this.message.conversation()
+  }
+
+  get convId() {
+    return this.conv.id
   }
 
   /**
@@ -52,6 +67,10 @@ export class BaseManager {
     return (await this.getData()).title
   }
 
+  async getDescription() {
+    return (await this.getData()).description
+  }
+
   async getCommands() {
     return (await this.getData()).commands
   }
@@ -64,19 +83,11 @@ export class BaseManager {
     return (await this.getTemplate()).status
   }
 
-  get botWxid() {
-    return this.bot.wxid
+  async getHelp() {
+    return (await this.getTemplate()).help
   }
 
-  get conv() {
-    return this.message.conversation()
-  }
-
-  get convId() {
-    return this.conv.id
-  }
-
-  async standardReply(content: string, tips?: CommandType[]) {
+  async standardReply(content: string, tips?: string[]) {
     const context = await getBotContextFromMessage(this.bot, this.message)
     const pretty = await formatBotQuery(
       context,
@@ -91,7 +102,8 @@ export class BaseManager {
     const commands = await this.getCommands()
 
     await this.standardReply(
-      [...Object.keys(commands).map((k) => `${k}: ${commands[k]}`)].join("\n"),
+      (await this.getDescription()) ?? "No Description",
+      commands ? Object.keys(commands) : commands,
     )
   }
 }

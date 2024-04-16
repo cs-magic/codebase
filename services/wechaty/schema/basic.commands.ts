@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 export const basicCommands = z.enum([
-  "",
   "ding",
   "help",
   "status",

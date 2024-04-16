@@ -16,11 +16,9 @@ export class ParserManager extends BaseManager {
   public i18n = {
     zh: {
       title: "万能解析器",
-      commands: {},
     },
     en: {
       title: "Super Parser",
-      commands: {},
     },
   }
 
