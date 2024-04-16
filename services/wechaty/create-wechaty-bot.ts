@@ -1,13 +1,14 @@
 import { logger } from "@cs-magic/log/logger"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
+import { PuppetPadlocal } from "wechaty-puppet-padlocal"
 import { loadEnv } from "../../packages/common-env/utils/load-env"
 import { logEnv } from "../../packages/common-env/utils/log-env"
 import { MessageQueue } from "./handle-messages/message-queue"
 import { initBotStaticContext } from "./utils/bot-context"
 import { getBotWxid } from "./utils/bot-wxid"
 
-loadEnv()
+const env = loadEnv()
 logEnv("wechaty")
 
 export const createWechatyBot = ({ name }: { name?: string }) => {
@@ -15,6 +16,9 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
+    puppet: new PuppetPadlocal({
+      token: env.WECHATY_PUPPET_PADLOCAL_TOKEN,
+    }),
   }) as Wechaty // 等会再更新其他扩展的信息
 
   const mq = new MessageQueue(bot, 10)

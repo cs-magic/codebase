@@ -1,4 +1,4 @@
-export const env = {
+export const getEnv = () => ({
   // env
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
@@ -50,6 +50,11 @@ export const env = {
   // todo: what's it
   VERCEL_GITHUB_COMMIT_SHA: process.env.VERCEL_GITHUB_COMMIT_SHA,
 
+  // wechaty
+  WECHATY_LOG: process.env.WECHATY_LOG,
+  WECHATY_PUPPET: process.env.WECHATY_PUPPET,
+  WECHATY_PUPPET_PADLOCAL_TOKEN: process.env.WECHATY_PUPPET_PADLOCAL_TOKEN,
+
   PROXY:
     process.env.proxy ??
     process.env.PROXY ??
@@ -57,4 +62,6 @@ export const env = {
     process.env.HTTP_PROXY ??
     process.env.https_proxy ??
     process.env.HTTPS_PROXY,
-}
+})
+
+export const env = getEnv()
