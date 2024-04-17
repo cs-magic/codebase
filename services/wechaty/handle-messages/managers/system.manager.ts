@@ -22,6 +22,7 @@ const commandTypeSchema = z.enum([
   "list-langs",
   "set-lang",
   "set-avatar",
+  "set-max-output-lines",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
@@ -49,6 +50,10 @@ const i18n: FeatureMap<CommandType> = {
         type: "set-avatar",
         description: "",
       },
+      设置最大输出行数: {
+        type: "set-max-output-lines",
+        description: "",
+      },
     },
   },
   en: {
@@ -73,6 +78,10 @@ const i18n: FeatureMap<CommandType> = {
       },
       "set-avatar": {
         type: "set-avatar",
+        description: "",
+      },
+      "set-max-output-lines": {
+        type: "set-max-output-lines",
         description: "",
       },
     },
@@ -119,8 +128,30 @@ export class SystemManager extends BaseManager {
           await this.bot.currentUser.avatar(FileBox.fromUrl(avatarUrl))
           console.log("-- done set avatar")
           break
+
+        case "set-max-output-lines":
+          await this.setMaxOutputLines(
+            await z.number().int().min(1).parseAsync(Number(parsed.args)),
+          )
+          break
       }
     }
+  }
+
+  async setMaxOutputLines(maxOutputLines?: number) {
+    const preference = await getConvPreference(this.message)
+    await getConvTable(this.message).update({
+      where: {
+        id: this.convId,
+      },
+      data: {
+        preference: {
+          ...preference,
+          maxOutputLines,
+        },
+      },
+    })
+    await this.getStatus(true)
   }
 
   async listModels() {
@@ -145,9 +176,10 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`模型更新成功：${preference.model} --> ${value}`, [
-      "system list-models",
-    ])
+    await this.getStatus(true)
+    // await this.standardReply(`模型更新成功：${preference.model} --> ${value}`, [
+    //   "system list-models",
+    // ])
   }
 
   async setBackend(value: BackendType) {
@@ -163,10 +195,11 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(
-      `后端更新成功：${preference.backend} --> ${value}`,
-      ["system list-backends"],
-    )
+    await this.getStatus(true)
+    // await this.standardReply(
+    //   `后端更新成功：${preference.backend} --> ${value}`,
+    //   ["system list-backends"],
+    // )
   }
 
   async setLang(value: LangType) {
@@ -182,8 +215,9 @@ export class SystemManager extends BaseManager {
         },
       },
     })
-    await this.standardReply(`语言更新成功：${preference.lang} --> ${value}`, [
-      "system list-langs",
-    ])
+    await this.getStatus(true)
+    // await this.standardReply(`语言更新成功：${preference.lang} --> ${value}`, [
+    //   "system list-langs",
+    // ])
   }
 }

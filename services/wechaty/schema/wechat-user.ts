@@ -13,6 +13,7 @@ export type IWechatUserPreference = {
   backend: BackendType
   parserEnabled: boolean
   todoFilter?: string
+  maxOutputLines?: number
 }
 
 /**

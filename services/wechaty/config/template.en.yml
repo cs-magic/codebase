@@ -22,3 +22,4 @@ status: |-
     backend: {{preference.backend}}
     chat-enabled: {{{preference.chatEnabled}}}
     parser-enabled: {{{preference.parserEnabled}}}
+    max-output-lines: {{{preference.maxOutputLines}}}

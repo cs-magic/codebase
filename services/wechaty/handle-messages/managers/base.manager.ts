@@ -106,20 +106,19 @@ export class BaseManager {
     return content
   }
 
-  async standardReply(content: string, tips?: string[], compress = true) {
+  async standardReply(content: string, tips?: string[]) {
+    const preference = await this.getConvPreference()
     // truncate middle lines
-    const N = 20
-    if (compress) {
-      let lines = content.split("\n")
-      if (lines.length > N) {
-        lines = [
-          ...lines.slice(0, N / 2),
-          "...",
-          ...lines.slice(lines.length - N / 2),
-        ]
-      }
-      content = lines.join("\n")
+    const N = preference.maxOutputLines ?? 20
+    let lines = content.split("\n")
+    if (lines.length > N) {
+      lines = [
+        ...lines.slice(0, N / 2),
+        "...",
+        ...lines.slice(lines.length - N / 2),
+      ]
     }
+    content = lines.join("\n")
 
     const context = await getBotContextFromMessage(this.bot, this.message)
     const pretty = await formatBotQuery(
