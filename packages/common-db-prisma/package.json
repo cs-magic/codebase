@@ -3,11 +3,11 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
-    "postinstall": "prisma generate",
-    "db:push": "prisma db push",
-    "db:studio": "prisma studio",
-    "migrate-dev": "prisma migrate dev",
-    "migrate-deploy": "prisma migrate deploy"
+    "migrate-dev": "DATABASE_URL=$(sh load-env.sh) prisma migrate dev",
+    "migrate-deploy": "DATABASE_URL=$(sh load-env.sh) prisma migrate deploy",
+    "postinstall": "DATABASE_URL=$(sh load-env.sh) prisma generate",
+    "db:push": "DATABASE_URL=$(sh load-env.sh) prisma db push",
+    "db:studio": "DATABASE_URL=$(sh load-env.sh) prisma studio"
   },
   "dependencies": {
     "prisma": "^5.12.1",

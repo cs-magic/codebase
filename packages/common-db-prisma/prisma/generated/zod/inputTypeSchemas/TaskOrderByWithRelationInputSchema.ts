@@ -13,6 +13,7 @@ export const TaskOrderByWithRelationInputSchema: z.ZodType<Prisma.TaskOrderByWit
   description: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  notes: z.lazy(() => SortOrderSchema).optional(),
   owner: z.lazy(() => WechatUserOrderByWithRelationInputSchema).optional()
 }).strict();
 

@@ -148,13 +148,13 @@ export { CardMinOrderByAggregateInputSchema } from './CardMinOrderByAggregateInp
 export { JsonNullableWithAggregatesFilterSchema } from './JsonNullableWithAggregatesFilterSchema';
 export { EnumPlatformTypeWithAggregatesFilterSchema } from './EnumPlatformTypeWithAggregatesFilterSchema';
 export { EnumTaskStatusFilterSchema } from './EnumTaskStatusFilterSchema';
+export { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 export { WechatUserNullableRelationFilterSchema } from './WechatUserNullableRelationFilterSchema';
 export { TaskCountOrderByAggregateInputSchema } from './TaskCountOrderByAggregateInputSchema';
 export { TaskMaxOrderByAggregateInputSchema } from './TaskMaxOrderByAggregateInputSchema';
 export { TaskMinOrderByAggregateInputSchema } from './TaskMinOrderByAggregateInputSchema';
 export { EnumTaskStatusWithAggregatesFilterSchema } from './EnumTaskStatusWithAggregatesFilterSchema';
 export { IntFilterSchema } from './IntFilterSchema';
-export { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 export { WechatUserRelationFilterSchema } from './WechatUserRelationFilterSchema';
 export { WechatRoomNullableRelationFilterSchema } from './WechatRoomNullableRelationFilterSchema';
 export { WechatMessageCountOrderByAggregateInputSchema } from './WechatMessageCountOrderByAggregateInputSchema';
@@ -201,8 +201,10 @@ export { EnumPlatformTypeFieldUpdateOperationsInputSchema } from './EnumPlatform
 export { CardUpdateimagesInputSchema } from './CardUpdateimagesInputSchema';
 export { CardUpdateiFramesInputSchema } from './CardUpdateiFramesInputSchema';
 export { CardUpdatevideosInputSchema } from './CardUpdatevideosInputSchema';
+export { TaskCreatenotesInputSchema } from './TaskCreatenotesInputSchema';
 export { WechatUserCreateNestedOneWithoutTasksInputSchema } from './WechatUserCreateNestedOneWithoutTasksInputSchema';
 export { EnumTaskStatusFieldUpdateOperationsInputSchema } from './EnumTaskStatusFieldUpdateOperationsInputSchema';
+export { TaskUpdatenotesInputSchema } from './TaskUpdatenotesInputSchema';
 export { WechatUserUpdateOneWithoutTasksNestedInputSchema } from './WechatUserUpdateOneWithoutTasksNestedInputSchema';
 export { WechatMessageCreatementionIdListInputSchema } from './WechatMessageCreatementionIdListInputSchema';
 export { WechatUserCreateNestedOneWithoutSentMessagesInputSchema } from './WechatUserCreateNestedOneWithoutSentMessagesInputSchema';

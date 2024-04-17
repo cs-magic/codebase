@@ -6,6 +6,7 @@ import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDate
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
 import { TaskStatusSchema } from './TaskStatusSchema';
 import { EnumTaskStatusFieldUpdateOperationsInputSchema } from './EnumTaskStatusFieldUpdateOperationsInputSchema';
+import { TaskUpdatenotesInputSchema } from './TaskUpdatenotesInputSchema';
 
 export const TaskUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TaskUncheckedUpdateManyInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -15,6 +16,7 @@ export const TaskUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TaskUncheckedU
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   status: z.union([ z.lazy(() => TaskStatusSchema),z.lazy(() => EnumTaskStatusFieldUpdateOperationsInputSchema) ]).optional(),
   ownerId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  notes: z.union([ z.lazy(() => TaskUpdatenotesInputSchema),z.string().array() ]).optional(),
 }).strict();
 
 export default TaskUncheckedUpdateManyInputSchema;

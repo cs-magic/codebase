@@ -1,5 +1,4 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
-import { compressContent } from "@cs-magic/common/utils/compress-content"
 import { type Message, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import {
@@ -9,7 +8,7 @@ import {
 import { renderBotTemplate } from "../../utils/bot-template"
 import { formatBotQuery } from "../../utils/format-bot-query"
 import { getConvPreference } from "../../utils/get-conv-preference"
-import remove from "lodash/remove"
+import { getUserPreference } from "../../utils/get-user-preference"
 
 export class BaseManager {
   public message: Message
@@ -54,12 +53,16 @@ export class BaseManager {
   /**
    * todo: cache preference
    */
-  async getPreference() {
+  async getConvPreference() {
     return getConvPreference(this.message)
   }
 
+  async getUserPreference() {
+    return getUserPreference(this.message)
+  }
+
   async getLang() {
-    return (await this.getPreference()).lang
+    return (await this.getConvPreference()).lang
   }
 
   async getContext() {

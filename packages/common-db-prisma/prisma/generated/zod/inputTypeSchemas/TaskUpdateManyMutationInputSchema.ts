@@ -6,6 +6,7 @@ import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDate
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
 import { TaskStatusSchema } from './TaskStatusSchema';
 import { EnumTaskStatusFieldUpdateOperationsInputSchema } from './EnumTaskStatusFieldUpdateOperationsInputSchema';
+import { TaskUpdatenotesInputSchema } from './TaskUpdatenotesInputSchema';
 
 export const TaskUpdateManyMutationInputSchema: z.ZodType<Prisma.TaskUpdateManyMutationInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -14,6 +15,7 @@ export const TaskUpdateManyMutationInputSchema: z.ZodType<Prisma.TaskUpdateManyM
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   status: z.union([ z.lazy(() => TaskStatusSchema),z.lazy(() => EnumTaskStatusFieldUpdateOperationsInputSchema) ]).optional(),
+  notes: z.union([ z.lazy(() => TaskUpdatenotesInputSchema),z.string().array() ]).optional(),
 }).strict();
 
 export default TaskUpdateManyMutationInputSchema;

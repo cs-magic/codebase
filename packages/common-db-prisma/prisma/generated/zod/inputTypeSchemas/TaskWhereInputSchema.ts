@@ -6,6 +6,7 @@ import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { EnumTaskStatusFilterSchema } from './EnumTaskStatusFilterSchema';
 import { TaskStatusSchema } from './TaskStatusSchema';
+import { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 import { WechatUserNullableRelationFilterSchema } from './WechatUserNullableRelationFilterSchema';
 import { WechatUserWhereInputSchema } from './WechatUserWhereInputSchema';
 
@@ -20,6 +21,7 @@ export const TaskWhereInputSchema: z.ZodType<Prisma.TaskWhereInput> = z.object({
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   status: z.union([ z.lazy(() => EnumTaskStatusFilterSchema),z.lazy(() => TaskStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  notes: z.lazy(() => StringNullableListFilterSchema).optional(),
   owner: z.union([ z.lazy(() => WechatUserNullableRelationFilterSchema),z.lazy(() => WechatUserWhereInputSchema) ]).optional().nullable(),
 }).strict();
 

@@ -1,11 +1,11 @@
-import { type Message } from "wechaty"
+import { Message } from "wechaty"
 import { IWechatUserPreference } from "../schema/wechat-user"
-import { getConvRow } from "./get-conv-row"
 import { getRobustPreference } from "./get-robust-preference"
+import { getUserRow } from "./get-user-row"
 
-export const getConvPreference = async (
+export const getUserPreference = async (
   message: Message,
 ): Promise<IWechatUserPreference> => {
-  const row = await getConvRow(message)
+  const row = await getUserRow(message)
   return getRobustPreference(row)
 }

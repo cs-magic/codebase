@@ -162,6 +162,8 @@ model Task {
 
   owner   WechatUser? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
+
+  notes String[]
 }
 
 enum TaskStatus {

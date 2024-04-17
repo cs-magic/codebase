@@ -1,9 +1,10 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
-import {
+import taskStatusSchema, {
   TaskStatusSchema,
   TaskStatusType,
 } from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import omit from "lodash/omit"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../schema/commands"
@@ -12,7 +13,7 @@ import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 import { type TaskStatus } from ".prisma/client"
 
-const commandTypeSchema = z.enum(["list", "add", "update", "rename"])
+const commandTypeSchema = z.enum(["list", "add", "update", "rename", "filter"])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
   zh: {
@@ -34,6 +35,10 @@ const i18n: FeatureMap<CommandType> = {
       更新: {
         type: "update",
         description: "更新一个任务的状态（待开始，进行中，已完成，已取消）",
+      },
+      筛选: {
+        type: "filter",
+        description: "筛选任务（否则结果可能太长啦）",
       },
     },
   },
@@ -60,6 +65,10 @@ const i18n: FeatureMap<CommandType> = {
         type: "update",
         description:
           "update the status of a todo (pending,running,done,discarded)",
+      },
+      filter: {
+        type: "filter",
+        description: "filter todo in case of it's too long",
       },
     },
   },
@@ -98,11 +107,15 @@ export class TodoManager extends BaseManager {
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "list":
-          await this.listTodoAction()
+          await this.listTodo()
+          break
+
+        case "filter":
+          await this.listTodo({ filter: z.string().min(1).parse(parsed.args) })
           break
 
         case "add":
-          await this.addTodo(parsed.args)
+          await this.addTodo(z.string().min(1).parse(parsed.args))
           break
 
         case "rename": {
@@ -114,25 +127,37 @@ export class TodoManager extends BaseManager {
         }
 
         case "update": {
-          const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(parsed.args)
+          const m = /^\s*(\d+)\s*(.*?)\s*(.*?)$/.exec(parsed.args)
           if (!m) throw new Error("输入不合法")
-          const newStatus =
-            await parseAsyncWithFriendlyErrorMessage<TaskStatusType>(
-              TaskStatusSchema,
-              m?.[2],
-            )
-          await this.updateTodo(Number(m[1]), newStatus)
+          const index = Number(m[1])
+          const newStatus = taskStatusSchema.parse(m?.[2])
+          const note = m?.[3]
+          await this.updateTodo(index, newStatus, note)
           break
         }
       }
     }
   }
 
-  async listTodoAction() {
-    const tasks = (await listTodo(this.message.talker().id)).map((k, i) => ({
-      ...k,
-      i: i + 1,
-    }))
+  /**
+   * 在用户 list 或者 filter 之后会改变用户的查询偏好
+   * 基于这个偏好，我们确定输出的形式
+   */
+  async listOrFilterTodo() {
+    const preference = await this.getUserPreference()
+    return this.listTodo({ filter: preference.todoFilter })
+  }
+
+  async listTodo(options?: { filter?: string }) {
+    const tasks = (await listTodo(this.message.talker().id))
+      .map((k, i) => ({
+        ...k,
+        i: i + 1,
+      }))
+      .filter(
+        (item) =>
+          !options?.filter || item.title.toLowerCase().includes(options.filter),
+      )
 
     const running = tasks.filter((t) => t.status === "running")
     const pending = tasks.filter((t) => t.status === "pending")
@@ -153,26 +178,33 @@ export class TodoManager extends BaseManager {
       ].join("\n"),
       [
         "todo list",
+        "todo filter [TITLE]",
         "todo add [TITLE]",
         "todo update [N] [STATUS]",
         "todo rename [N] [NEW-TITLE]",
       ],
     )
+
+    const preference = await this.getUserPreference()
+    await prisma.wechatUser.update({
+      where: { id: this.message.talker().id },
+      data: {
+        preference: {
+          ...omit(preference, ["todoFilter"]),
+          todoFilter: options?.filter,
+        },
+      },
+    })
   }
 
-  async addTodo(title?: string) {
-    if (title) {
-      await prisma.task.create({
-        data: {
-          ownerId: this.message.talker().id,
-          title,
-        },
-      })
-      // return this.standardReply(`添加任务成功：${title}`, ["todo"])
-      return this.listTodoAction()
-    } else {
-      throw new Error("新任务不能为空")
-    }
+  async addTodo(title: string) {
+    await prisma.task.create({
+      data: {
+        ownerId: this.message.talker().id,
+        title,
+      },
+    })
+    return this.listOrFilterTodo()
   }
 
   async renameTodo(index: number, newTitle: string) {
@@ -186,16 +218,10 @@ export class TodoManager extends BaseManager {
         title: newTitle,
       },
     })
-
-    // const oldStatus = task.status
-    // return this.standardReply(
-    //   `任务(title=${task.title})更新成功！\n状态：${oldStatus} --> ${status}`,
-    //   ["todo"],
-    // )
-    return this.listTodoAction()
+    return this.listOrFilterTodo()
   }
 
-  async updateTodo(index: number, status: TaskStatus) {
+  async updateTodo(index: number, status: TaskStatus, note?: string) {
     const tasks = await listTodo(this.message.talker().id)
     const task = tasks[index - 1]
     if (!task) throw new Error(`序号不合法！取值范围为[1-${tasks.length}]`)
@@ -204,14 +230,13 @@ export class TodoManager extends BaseManager {
       where: { id: task.id },
       data: {
         status: status,
+        notes: note
+          ? {
+              push: note,
+            }
+          : undefined,
       },
     })
-
-    // const oldStatus = task.status
-    // return this.standardReply(
-    //   `任务(title=${task.title})更新成功！\n状态：${oldStatus} --> ${status}`,
-    //   ["todo"],
-    // )
-    return this.listTodoAction()
+    return this.listOrFilterTodo()
   }
 }

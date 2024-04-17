@@ -15,6 +15,7 @@ export const TaskOrderByWithAggregationInputSchema: z.ZodType<Prisma.TaskOrderBy
   description: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  notes: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => TaskCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => TaskMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => TaskMinOrderByAggregateInputSchema).optional()

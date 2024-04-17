@@ -59,7 +59,7 @@ export class ParserManager extends BaseManager {
   async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
-    const preference = await this.getPreference()
+    const preference = await this.getConvPreference()
     await this.standardReply(
       [
         desc,

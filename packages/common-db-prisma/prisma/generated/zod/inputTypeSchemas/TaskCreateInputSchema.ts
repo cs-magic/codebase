@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { TaskStatusSchema } from './TaskStatusSchema';
+import { TaskCreatenotesInputSchema } from './TaskCreatenotesInputSchema';
 import { WechatUserCreateNestedOneWithoutTasksInputSchema } from './WechatUserCreateNestedOneWithoutTasksInputSchema';
 
 export const TaskCreateInputSchema: z.ZodType<Prisma.TaskCreateInput> = z.object({
@@ -11,6 +12,7 @@ export const TaskCreateInputSchema: z.ZodType<Prisma.TaskCreateInput> = z.object
   title: z.string(),
   description: z.string().optional().nullable(),
   status: z.lazy(() => TaskStatusSchema).optional(),
+  notes: z.union([ z.lazy(() => TaskCreatenotesInputSchema),z.string().array() ]).optional(),
   owner: z.lazy(() => WechatUserCreateNestedOneWithoutTasksInputSchema).optional()
 }).strict();
 

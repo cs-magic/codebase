@@ -19,6 +19,7 @@ export const TaskSchema = z.object({
   title: z.string(),
   description: z.string().nullish(),
   ownerId: z.string().nullish(),
+  notes: z.string().array(),
 })
 
 export type Task = z.infer<typeof TaskSchema>
