@@ -24,30 +24,30 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     if (result) {
       switch (result.command) {
         case "ding":
-          return message.say("dong")
+          return await message.say("dong")
 
         case "help":
-          return new BaseManager(bot, message).getHelp(true)
+          return await new BaseManager(bot, message).getHelp(true)
 
         case "love":
-          return message.say(
+          return await message.say(
             "你有什么想和我说的吗？（我是你最乖的树洞，我们之间的对话不会告诉任何人哦）",
           )
 
         case "status":
-          return new BaseManager(bot, message).getStatus(true)
+          return await new BaseManager(bot, message).getStatus(true)
 
         case "system":
-          return new SystemManager(bot, message).parse(result.args)
+          return await new SystemManager(bot, message).parse(result.args)
 
         case "parser":
-          return new ParserManager(bot, message).parse(result.args)
+          return await new ParserManager(bot, message).parse(result.args)
 
         case "todo":
-          return new TodoManager(bot, message).parse(result.args)
+          return await new TodoManager(bot, message).parse(result.args)
 
         case "chatter":
-          return new ChatManager(bot, message).parse(result.args)
+          return await new ChatManager(bot, message).parse(result.args)
       }
     }
 
@@ -62,8 +62,11 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     // handle ai chat or so
   } catch (e) {
+    // console.log("-- error happened")
     let s = formatError(e)
+    // console.log(`-- error: ${s}`)
     const context = await getBotContextFromMessage(bot, message)
+    // console.log(`-- context: ${JSON.stringify(context)}`)
 
     // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292
     // from wang, 2024-04-13 01:36:14
@@ -73,5 +76,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     }
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
     // await message.say(await prettyBotQuery(context, "哎呀出错啦", s))
+
+    // console.log(`-- finished handling messages`)
   }
 }

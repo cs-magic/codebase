@@ -1,9 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { parseAsyncWithFriendlyErrorMessage } from "@cs-magic/common/utils/parse-async-with-friendly-error-message"
-import taskStatusSchema, {
-  TaskStatusSchema,
-  TaskStatusType,
-} from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import omit from "lodash/omit"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
@@ -111,11 +107,13 @@ export class TodoManager extends BaseManager {
           break
 
         case "filter":
-          await this.listTodo({ filter: z.string().min(1).parse(parsed.args) })
+          await this.listTodo({
+            filter: await z.string().min(1).parseAsync(parsed.args),
+          })
           break
 
         case "add":
-          await this.addTodo(z.string().min(1).parse(parsed.args))
+          await this.addTodo(await z.string().min(1).parseAsync(parsed.args))
           break
 
         case "rename": {
@@ -127,10 +125,11 @@ export class TodoManager extends BaseManager {
         }
 
         case "update": {
-          const m = /^\s*(\d+)\s*(.*?)\s*(.*?)$/.exec(parsed.args)
+          const m = /^\s*(\d+)\s*(\S+)\s*(.*)?$/.exec(parsed.args)
+          // console.log({ m })
           if (!m) throw new Error("输入不合法")
           const index = Number(m[1])
-          const newStatus = taskStatusSchema.parse(m?.[2])
+          const newStatus = await taskStatusSchema.parseAsync(m?.[2])
           const note = m?.[3]
           await this.updateTodo(index, newStatus, note)
           break
