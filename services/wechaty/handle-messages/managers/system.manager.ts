@@ -1,3 +1,4 @@
+import { FileBox } from "file-box"
 import { z } from "zod"
 import {
   type LangType,
@@ -20,6 +21,7 @@ const commandTypeSchema = z.enum([
   // "set-backend",
   "list-langs",
   "set-lang",
+  "set-avatar",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
@@ -43,6 +45,10 @@ const i18n: FeatureMap<CommandType> = {
         type: "set-lang",
         description: "设置选用另一种系统语言",
       },
+      设置头像: {
+        type: "set-avatar",
+        description: "",
+      },
     },
   },
   en: {
@@ -64,6 +70,10 @@ const i18n: FeatureMap<CommandType> = {
       "set-lang": {
         type: "set-lang",
         description: "switch to another language",
+      },
+      "set-avatar": {
+        type: "set-avatar",
+        description: "",
       },
     },
   },
@@ -97,6 +107,17 @@ export class SystemManager extends BaseManager {
         case "set-lang":
           const lang = await langTypeSchema.parseAsync(parsed.args)
           await this.setLang(lang)
+          break
+
+        case "set-avatar":
+          const avatarUrl = await z
+            .string()
+            .min(1)
+            .startsWith("http")
+            .parseAsync(parsed.args)
+          console.log({ avatarUrl })
+          await this.bot.currentUser.avatar(FileBox.fromUrl(avatarUrl))
+          console.log("-- done set avatar")
           break
       }
     }

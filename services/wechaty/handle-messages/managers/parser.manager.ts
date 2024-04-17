@@ -5,7 +5,7 @@ import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 import { FileBox } from "file-box"
-import { types } from "wechaty"
+import { Message, types } from "wechaty"
 import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
@@ -55,6 +55,7 @@ export class ParserManager extends BaseManager {
   public i18n = i18n
   public name: FeatureType = "parser"
   private uniParser: CardSimulator | null = null
+  private toParse = 0
 
   async help() {
     const commands = await this.getCommands()
@@ -144,7 +145,23 @@ export class ParserManager extends BaseManager {
 
     initLogWithTimer()
 
-    await message.say("wait, I am trying ……")
+    const notificationGroups = await this.bot.Room.find({
+      topic: /bot notification/i,
+    })
+    if (notificationGroups) {
+      const formatTalker = async (message: Message) => {
+        let s = `${message.talker().name()}`
+        if (message.room()) {
+          s += `@${await message.room()?.topic()}`
+        }
+        return s
+      }
+      await notificationGroups.say(
+        `[parser(${this.toParse})] parsing link from ${await formatTalker(message)}`,
+      )
+      await message.forward(notificationGroups)
+    }
+    ++this.toParse
 
     try {
       const card = await fetchWxmpArticleWithCache(url, {
@@ -174,11 +191,15 @@ export class ParserManager extends BaseManager {
 
       logger.info(`-- sending file: ${cardUrl}`)
 
-      await message.say(FileBox.fromUrl(cardUrl))
+      const file = FileBox.fromUrl(cardUrl)
+      await message.say(file)
+      if (notificationGroups) await notificationGroups.say(file)
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)
       await message.say(s)
+    } finally {
+      --this.toParse
     }
   }
 }
