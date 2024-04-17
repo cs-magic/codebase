@@ -1,6 +1,8 @@
 import { AxiosInstance } from "axios"
-import { env } from "../common-env"
+import { loadEnv } from "../common-env/utils/load-env"
 import { createHttpInstance } from "./core"
+
+const env = loadEnv()
 
 export const api: AxiosInstance = createHttpInstance()
 

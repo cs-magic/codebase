@@ -1,4 +1,4 @@
-import { ICallLLMResponse } from "../common-llm/schema/llm"
+import { ICallLlmResponse } from "../common-llm/schema/llm"
 import { IUserBasic } from "../common-common/schema/user"
 import { $Enums } from ".prisma/client"
 
@@ -28,5 +28,5 @@ export type IFetchWxmpArticleRes = {
   }
   description: string
   contentMd?: string
-  contentSummary: ICallLLMResponse | null
+  contentSummary: ICallLlmResponse | null
 }

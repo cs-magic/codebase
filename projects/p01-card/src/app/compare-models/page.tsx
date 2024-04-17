@@ -4,7 +4,7 @@ import sortBy from "lodash/sortBy";
 import path from "path";
 import React from "react";
 import moment from "../../../../../packages/common-datetime/moment";
-import { ICallLLMResponse } from "../../../../../packages/common-llm/schema/llm";
+import { ICallLlmResponse } from "../../../../../packages/common-llm/schema/llm";
 import { Path } from "../../../../../packages/common-path";
 import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
 import { LabelLine } from "../../../../../packages/common-ui/components/label-line";
@@ -56,12 +56,12 @@ const RenderT = ({ cards, t }: { t: number; cards: ICardDetail[] }) => {
         }
       >
         {sortBy(cards, (c: ICardDetail) => {
-          const contentSummary = c.contentSummary as ICallLLMResponse | null;
+          const contentSummary = c.contentSummary as ICallLlmResponse | null;
           const query = contentSummary?.query;
           if (!query?.end) return 99999; // 没有完成的，放最后
           return query.end - query.start;
         }).map((card, index) => {
-          const summary = card.contentSummary as ICallLLMResponse | null;
+          const summary = card.contentSummary as ICallLlmResponse | null;
           const options = summary?.options;
           const query = summary?.query;
 

@@ -3,7 +3,7 @@ import { selectFromList } from "packages/common-common/utils/select-from-list"
 import { types } from "wechaty"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
-import { callLLM } from "../../../../packages/common-llm"
+import { safeCallLLM } from "../../../../packages/common-llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { type IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
@@ -271,7 +271,7 @@ export class ChatManager extends BaseManager {
     }))
     // logger.info(`--  context(len=${context.length})`)
 
-    const res = await callLLM({
+    const res = await safeCallLLM({
       messages: context,
       model: preference.model,
     })

@@ -1,7 +1,7 @@
-import { ICreateCallLLM } from "../../../../packages/common-llm/schema/llm";
+import { ICreateCallLlm } from "../../../../packages/common-llm/schema/llm";
 
 import { PusherServerId } from "../../../../packages/common-pusher/schema";
-import { ILLMMessage } from "./message";
+import { ILlmMessage } from "./message";
 
 export type ResponseFinalStatus = "interrupted" | "responded" | "not-found";
 
@@ -58,8 +58,8 @@ export const getChannelIdFomRequest = (request: ILLMPusherListener) => {
 
 export type LLMActionPayload = { request: ILLMRequest } & (
   | {
-      app: ICreateCallLLM;
-      context: ILLMMessage[];
+      app: ICreateCallLlm;
+      context: ILlmMessage[];
       llmDelay?: number;
       action: "trigger";
     }

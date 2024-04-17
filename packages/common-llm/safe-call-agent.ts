@@ -4,12 +4,12 @@ import path from "path"
 import { fileURLToPath } from "url"
 
 import { compressContent } from "../common-common/utils/compress-content"
-import { callLLM } from "./call-llm"
+import { safeCallLLM } from "./safe-call-llm"
 import { AgentConfig } from "./schema/agent"
-import { ICallLLMOptions, ILLMMessage } from "./schema/llm"
+import { ICallLlmOptions, ILlmMessage } from "./schema/llm"
 import { LlmModelType } from "./schema/providers"
 
-export const callAgent = async ({
+export const safeCallAgent = async ({
   input,
   agentType = "default",
   options,
@@ -18,7 +18,7 @@ export const callAgent = async ({
   input: string
   model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
-} & { options?: Omit<ICallLLMOptions, "messages" | "model"> }) => {
+} & { options?: Omit<ICallLlmOptions, "messages" | "model"> }) => {
   console.debug("-- agent calling: ", {
     agentType,
     model,
@@ -37,7 +37,7 @@ export const callAgent = async ({
   model = model ?? agent.model
   if (!model) throw new Error("no model found")
 
-  const messages: ILLMMessage[] = []
+  const messages: ILlmMessage[] = []
   if (agent.system_prompt)
     messages.push({
       role: "system",
@@ -56,7 +56,7 @@ export const callAgent = async ({
     content,
   })
 
-  return await callLLM({
+  return await safeCallLLM({
     model,
     messages,
     topP: agent.top_p,

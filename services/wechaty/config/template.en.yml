@@ -11,7 +11,7 @@ help: |-
   ------------------------------
   Basic Commands：
     status: (show preference)
-    help [FEAT]: (show usage of specific feature)
+    help: (show usage)
 
 status: |-
   Basic:

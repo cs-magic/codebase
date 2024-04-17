@@ -105,10 +105,15 @@ export class BaseManager {
 
   async standardReply(content: string, tips?: string[], compress = true) {
     // truncate middle lines
+    const N = 20
     if (compress) {
       let lines = content.split("\n")
-      if (lines.length > 10) {
-        lines = [...lines.slice(0, 5), "...", ...lines.slice(lines.length - 5)]
+      if (lines.length > N) {
+        lines = [
+          ...lines.slice(0, N / 2),
+          "...",
+          ...lines.slice(lines.length - N / 2),
+        ]
       }
       content = lines.join("\n")
     }

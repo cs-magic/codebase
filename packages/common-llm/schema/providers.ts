@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export type LLMProviderType =
+export type LlmProviderType =
   | "openai"
   | "zhipu"
   | "moonshot"

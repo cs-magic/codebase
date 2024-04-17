@@ -2,7 +2,7 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { LlmModelType } from "./providers"
 
-export const createCallLLMSchema = z.object({
+export const createCallLlmSchema = z.object({
   modelName: z.string(),
   user: z.string().optional(),
 
@@ -17,23 +17,23 @@ export const createCallLLMSchema = z.object({
   timeout: z.number().default(3000).optional(),
   openAIApiKey: z.string().optional(),
 })
-export type ICreateCallLLM = z.infer<typeof createCallLLMSchema>
+export type ICreateCallLlm = z.infer<typeof createCallLlmSchema>
 
-export type ILLMMessage = {
+export type ILlmMessage = {
   role: "system" | "user" | "assistant"
   content: string
 }
 
-export type ICallLLMOptions = {
+export type ICallLlmOptions = {
   model: LlmModelType
-  messages: ILLMMessage[]
+  messages: ILlmMessage[]
   temperature?: number
   topP?: number
   stream?: boolean
 }
 
-export type ICallLLMResponse = {
-  options: ICallLLMOptions
+export type ICallLlmResponse = {
+  options: ICallLlmOptions
   query: {
     id: string
     start: number

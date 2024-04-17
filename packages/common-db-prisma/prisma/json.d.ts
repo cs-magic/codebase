@@ -2,7 +2,7 @@ declare global {
   // 要放在里面
 
   namespace PrismaJson {
-    export { ICallLLMResponse } from "../../common-llm/schema/llm"
+    export { ICallLlmResponse } from "../../common-llm/schema/llm"
 
     export {
       IMedia,

@@ -1,12 +1,13 @@
+import { IUserBasic } from "@cs-magic/common/schema/user"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
 import { parse } from "node-html-parser"
+import { z } from "zod"
 import { api } from "../../common-api-client"
 import { parseMetaFromHtml } from "../../common-html/utils"
-import { callAgent } from "../../common-llm/call-agent"
-import { ICallLLMResponse } from "../../common-llm/schema/llm"
+import { safeCallAgent } from "../../common-llm/safe-call-agent"
+import { ICallLlmResponse } from "../../common-llm/schema/llm"
 import { html2md } from "../../common-markdown/html2md"
-import { IUserBasic } from "@cs-magic/common/schema/user"
 import { Prisma } from ".prisma/client"
 
 /**
@@ -33,8 +34,15 @@ export const fetchWxmpArticleViaNodejs = async (
     urlParsed.platformData = parseWxmpArticleUrl(ogUrl).platformData
   }
 
-  const title = parseMetaFromHtml(html, "og:title") ?? ""
-  const coverUrl = parseMetaFromHtml(html, "og:image")!
+  const time = new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) // 1711455495
+  const title = await z
+    .string()
+    .min(1)
+    .parseAsync(parseMetaFromHtml(html, "og:title"))
+  const coverUrl = await z
+    .string()
+    .min(1)
+    .parseAsync(parseMetaFromHtml(html, "og:image")!)
   const description = parseMetaFromHtml(html, "og:description", "property")!
   // const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
   // const authorPublisherName = parseMetaFromHtml(html, "author", "name")
@@ -45,19 +53,32 @@ export const fetchWxmpArticleViaNodejs = async (
   //   id: "",
   // }
   const authorAccount: IUserBasic = {
-    name: /var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1],
-    avatar: /var hd_head_img = "(.*?)"/.exec(pageText)?.[1],
-    id: /var user_name = "(.*?)"/.exec(pageText)?.[1],
+    name: await z
+      .string()
+      .min(1)
+      .parseAsync(/var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1]),
+    avatar: await z
+      .string()
+      .min(1)
+      .parseAsync(/var hd_head_img = "(.*?)"/.exec(pageText)?.[1]),
+    id: await z
+      .string()
+      .min(1)
+      .parseAsync(/var user_name = "(.*?)"/.exec(pageText)?.[1]),
   }
 
   // 去除作者信息，否则会有干扰, case-id: fq-Bb_v
   html.getElementById("meta_content")?.remove()
+  const contentHtml = await z
+    .string()
+    .min(1)
+    .parseAsync(html.getElementById("img-content")?.innerHTML)
 
-  const contentMd = html2md(html.getElementById("img-content")?.innerHTML ?? "")
-
-  let contentSummary: ICallLLMResponse | null = null
+  const contentMd = html2md(contentHtml)
+  let contentSummary: ICallLlmResponse | null = null
+  // !important: 要在 fetch 大模型之前确保所有的信息就已经正确解析，否则容易有模型泄露
   if (options?.summaryModel) {
-    contentSummary = await callAgent({
+    contentSummary = await safeCallAgent({
       input: contentMd,
       agentType: "summarize-content",
       model: options.summaryModel,
@@ -70,8 +91,7 @@ export const fetchWxmpArticleViaNodejs = async (
     ...urlParsed,
     // 微信公众号使用主体名，而非原创作者名
     author: authorAccount,
-    time:
-      new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) ?? null, // 1711455495
+    time,
     title,
     description,
     cover: { url: coverUrl, width: null, height: null },

@@ -1,9 +1,9 @@
 import OpenAI from "openai"
 import { ZhipuAI } from "zhipuai-sdk-nodejs-v4"
 
-import { ICallLLMOptions } from "../../schema/llm"
+import { ICallLlmOptions } from "../../schema/llm"
 
-export const callZhipu = async (options: ICallLLMOptions) => {
+export const callZhipu = async (options: ICallLlmOptions) => {
   // console.log(process.env)
 
   const client = new ZhipuAI({
