@@ -1,4 +1,6 @@
 import { SEPARATOR_BOX } from "@cs-magic/common/const"
+import { formatString } from "@cs-magic/common/utils/format-string"
+import { logger } from "@cs-magic/log/logger"
 import { prisma } from "../../../packages/common-db/providers/prisma"
 
 /**
@@ -56,7 +58,7 @@ export const listMessagesOfLatestTopic = async (
           ],
         },
 
-        // 因为基于任意command，所以这里的筛选没有意义了，之后换meta信息吧
+        // todo: 因为基于任意command，所以这里的筛选没有意义了，之后换meta信息吧
         // 2. filter ai context
         // {
         //   OR: [
@@ -133,6 +135,7 @@ export const listMessagesOfLatestTopic = async (
   //   lastUserStartChat,
   //   messagesLen: messages.length,
   // })
+  logger.info("context: " + formatString(JSON.stringify(messages)))
 
   return messages
 }
