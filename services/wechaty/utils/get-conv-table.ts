@@ -1,10 +1,8 @@
 import { type Prisma } from "@prisma/client"
-import { type Message } from "wechaty"
 import { prisma } from "../../../packages/common-db/providers/prisma"
 
 export const getConvTable = (
-  message: Message,
+  isRoom: boolean,
 ): Prisma.WechatUserDelegate & Prisma.WechatRoomDelegate =>
-  prisma[
-    message.room() ? "wechatRoom" : "wechatUser"
-  ] as Prisma.WechatUserDelegate & Prisma.WechatRoomDelegate
+  prisma[isRoom ? "wechatRoom" : "wechatUser"] as Prisma.WechatUserDelegate &
+    Prisma.WechatRoomDelegate

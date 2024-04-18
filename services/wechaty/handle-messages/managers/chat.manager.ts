@@ -141,16 +141,18 @@ export class ChatManager extends BaseManager {
   }
 
   async enableChat() {
-    const row = await getConvTable(this.message).update({
+    await getConvTable(!!this.message.room()).update({
       where: { id: this.convId },
       data: {
         preference: {
-          ...(await getConvPreference(this.message)),
+          ...(await getConvPreference({
+            isRoom: this.isRoom,
+            convId: this.convId,
+          })),
           chatEnabled: true,
         },
       },
     })
-    const p: IWechatUserPreference = row.preference
     await this.standardReply(
       `Congratulation, Super Chatter has been activated!\nI almost know anything, hope you would like! 😄`,
       [
@@ -163,11 +165,14 @@ export class ChatManager extends BaseManager {
   }
 
   async disableChat() {
-    await getConvTable(this.message).update({
+    await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
         preference: {
-          ...(await getConvPreference(this.message)),
+          ...(await getConvPreference({
+            isRoom: this.isRoom,
+            convId: this.convId,
+          })),
           chatEnabled: false,
         },
       },
@@ -178,58 +183,8 @@ export class ChatManager extends BaseManager {
     )
   }
 
-  async newTopic(chatTopic?: string) {
-    const preference = await getConvPreference(this.message)
-
-    const row = await prisma.wechatUser.update({
-      where: { id: this.convId },
-      data: {
-        preference: {
-          ...preference,
-          chatTopic,
-        },
-      },
-    })
-
-    const preferenceNew = getRobustPreference(row)
-
-    await this.standardReply(
-      `new topic: ${preferenceNew.chatTopic}\nmodel: ${preferenceNew.model}`,
-      // ["chatter list"],
-    )
-  }
-
-  async checkTopic(selectChatTopic?: string) {
-    // 1. 罗列话题
-    const topics = await this._listTopics()
-
-    // 2. 匹配用户的输入，确定话题的名称（不要用序号，因为数据库里记录都是名称）
-    // 如果有多个匹配，使用最新的
-    const topicIndex = await selectFromList(
-      Object.keys(topics),
-      selectChatTopic,
-    )
-
-    if (!this.botWxid) throw new Error("无法获取到小助手微信ID")
-
-    const messages = await listMessagesOfSpecificTopic(
-      this.botWxid,
-      this.convId,
-      Object.keys(topics)[topicIndex]!,
-    )
-
-    await this.standardReply(
-      "话题详情：\n" +
-        messages
-          .map((m, i) => `${i + 1}) ${m.talker.name}: ${m.text}\n`)
-          .join("\n"),
-      // ["chatter list"],
-    )
-  }
-
   async safeReplyWithAI() {
     const m = this.message
-    const text = this.message.text()
     if (
       // 过滤自己的消息
       m.self() ||
@@ -245,15 +200,16 @@ export class ChatManager extends BaseManager {
         ) &&
         // 支持 叹号快捷触发
         //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
-        !/^[!！]/.exec(text)) ||
+        !/^[!！]/.exec(this.text)) ||
       // 过滤非文本 todo: image/xxxx
-      m.type() !== types.Message.Text ||
-      // 过滤命令风格回复
-      text.startsWith("/")
+      m.type() !== types.Message.Text
     )
       return
 
-    const convInDB = await getConvRow(this.message)
+    const convInDB = await getConvRow({
+      convId: this.convId,
+      isRoom: this.isRoom,
+    })
     const preference = getRobustPreference(convInDB)
     if (!preference.chatEnabled) {
       // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])

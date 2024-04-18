@@ -1,9 +1,9 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import omit from "lodash/omit"
-import { type MessageInterface } from "wechaty/dist/esm/src/mods/impls"
 import { prisma } from "../../../packages/common-db/providers/prisma"
+import { Message } from "wechaty"
 
-export const storageMessage = async (message: MessageInterface) => {
+export const storageMessage = async (message: Message) => {
   const talker = message.talker()
   const room = message.room()
   const listener = message.listener()

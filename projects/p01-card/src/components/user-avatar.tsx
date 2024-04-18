@@ -1,5 +1,7 @@
 import { upgradeUrl } from "@cs-magic/common/utils/upgrade-url";
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import { omit } from "lodash";
 import { UserIcon } from "lucide-react";
 import { ComponentPropsWithoutRef, HTMLAttributes } from "react";
 import {
@@ -9,8 +11,6 @@ import {
 } from "../../../../packages/common-ui-shadcn/components/avatar";
 import { cn } from "../../../../packages/common-ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";
-import { omit } from "lodash";
-import { IUserBasic } from "@cs-magic/common/schema/user";
 
 export const UserAvatar = ({
   user,
@@ -19,7 +19,7 @@ export const UserAvatar = ({
   imageProps,
   ...props
 }: {
-  user: IUserBasic;
+  user: IUserSummary;
   withName?: boolean;
 } & HTMLAttributes<HTMLDivElement> & {
     imageProps?: ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>;
@@ -29,7 +29,7 @@ export const UserAvatar = ({
       <VerticalAspectRatio ratio={1}>
         <Avatar className={cn("h-full w-full border-none")}>
           <AvatarImage
-            src={imageProps?.src ?? upgradeUrl(user.avatar ?? "")}
+            src={imageProps?.src ?? upgradeUrl(user.image ?? "")}
             {...omit(imageProps, ["src"])}
           />
           <AvatarFallback>

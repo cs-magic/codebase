@@ -1,6 +1,6 @@
-import { IUserBasic } from "@cs-magic/common/schema/user"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { parse } from "node-html-parser"
 import { z } from "zod"
 import { api } from "../../common-api-client"
@@ -52,12 +52,12 @@ export const fetchWxmpArticleViaNodejs = async (
   //   image: null, // author 有可能没有头像，比如里帮助
   //   id: "",
   // }
-  const authorAccount: IUserBasic = {
+  const authorAccount: IUserSummary = {
     name: await z
       .string()
       .min(1)
       .parseAsync(/var nickname = htmlDecode\("(.*?)"\);/.exec(pageText)?.[1]),
-    avatar: await z
+    image: await z
       .string()
       .min(1)
       .parseAsync(/var hd_head_img = "(.*?)"/.exec(pageText)?.[1]),

@@ -1,6 +1,6 @@
-import { IUserBasic } from "@cs-magic/common/schema/user";
 import { parseJs } from "@cs-magic/common/utils/parse-json";
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { atom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
@@ -96,10 +96,10 @@ export const cardRenderedAtom = atom((get) => {
   return rendered;
 });
 
-export const cardUserAtom = atom<IUserBasic>((get) => ({
+export const cardUserAtom = atom<IUserSummary>((get) => ({
   id: get(cardUserIdAtom),
   name: get(cardUserNameAtom),
-  avatar: get(cardUserAvatarAtom),
+  image: get(cardUserAvatarAtom),
 }));
 
 export const cardOssIdAtom = atom<string | null>((get) => {

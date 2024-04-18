@@ -12,8 +12,8 @@ export const bilibili2card = (
   const ratio = width / height;
 
   const data: Prisma.CardUncheckedCreateInput = {
-    createdAt: null,
-    updatedAt: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     contentSummary: null,
     time: null,
     contentMd: null,

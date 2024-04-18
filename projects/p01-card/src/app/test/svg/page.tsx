@@ -12,7 +12,7 @@ export default function TestSVGPage() {
   return (
     <FlexContainer orientation={"vertical"}>
       <Label>V2AGI</Label>
-      <V2AGIBrand x className={"h-12"} />
+      <V2AGIBrand className={"h-12"} />
 
       <Label>Text - Text</Label>
       <Text2TextAppSVG

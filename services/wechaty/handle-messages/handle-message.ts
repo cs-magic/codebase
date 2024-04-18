@@ -1,15 +1,15 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import { type Message, type Wechaty } from "wechaty"
+import { type Message, types, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
-import { CommandStyle } from "../schema/wechat-user"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
-import { formatTalker } from "../utils/format-talker"
+import { formatTalker, formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { parseLimitedCommand } from "../utils/parse-command"
+import { parseText } from "../utils/parse-message"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatManager } from "./managers/chat.manager"
@@ -20,13 +20,13 @@ import { TodoManager } from "./managers/todo.manager"
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     logger.info(
-      `[onMessage] ${await formatTalker(message)}: ${JSON.stringify(message.payload)}`,
+      `[onMessage] ${await formatTalkerFromMessage(message)}: ${JSON.stringify(message.payload)}`,
     )
 
     await storageMessage(message)
 
     const result = parseLimitedCommand<CommandType>(
-      message.text().trim().toLowerCase(),
+      parseText(message.text()).toLowerCase(),
       commandsSchema,
     )
     // logger.debug(result)
@@ -50,14 +50,17 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
         case "system":
           return await new SystemManager(bot, message).parse(result.args)
 
-        case "parser":
-          return await new ParserManager(bot, message).parse(result.args)
-
         case "todo":
           return await new TodoManager(bot, message).parse(result.args)
 
         case "chatter":
           return await new ChatManager(bot, message).parse(result.args)
+
+        case "parser":
+          return await new ParserManager(bot, message).parse(result.args)
+
+        case "parse":
+          return await new ParserManager(bot, message).parseQuote()
       }
     }
 
@@ -65,9 +68,11 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // else if (text.startsWith("/")) await parseAsyncWithFriendlyErrorMessage(commandsSchema, text)
     else {
       // free handlers
-      await new ParserManager(bot, message).safeParseCard()
-
-      await new ChatManager(bot, message).safeReplyWithAI()
+      if (message.type() === types.Message.Url)
+        await new ParserManager(bot, message).parseSelf()
+      else {
+        await new ChatManager(bot, message).safeReplyWithAI()
+      }
     }
   } catch (e) {
     let s = formatError(e)
@@ -79,19 +84,18 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
     const context = await getBotContext(bot, message)
-    const preference = await getConvPreference(message)
+    const preference = await getConvPreference({
+      convId: message.conversation().id,
+      isRoom: !!message.room(),
+    })
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
     void botNotify(
       bot,
-      formatQuery(
-        `ERR: ${s}`,
-        preference.commandStyle === CommandStyle.standard
-          ? {
-              title: `System Notification`,
-              footer: formatFooter(context),
-            }
-          : undefined,
-      ),
+      formatQuery(`ERR: ${s}`, {
+        title: `System Notification`,
+        footer: formatFooter(context),
+        commandStyle: preference.commandStyle,
+      }),
     )
   }
 }

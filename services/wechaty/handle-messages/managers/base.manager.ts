@@ -1,8 +1,11 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
+import {
+  IUserSummary,
+  IUserSummaryFull,
+} from "@cs-magic/prisma/schema/user.summary"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { CommandStyle } from "../../schema/wechat-user"
 import { getBotContext } from "../../utils/bot-context"
 import { botNotify } from "../../utils/bot-notify"
 import { getBotTemplate } from "../../utils/bot-template"
@@ -10,25 +13,8 @@ import { formatFooter } from "../../utils/format-footer"
 import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
+import { parseQuote, parseText } from "../../utils/parse-message"
 import { QueueTask } from "../sender-queue"
-
-export const getQuote = async (message: Message) => {
-  console.log({ message })
-  const post = await message.toPost()
-  console.log({ post })
-  const parent = await post.parent()
-  console.log({ parent })
-
-  const m = /^「(.*?)：(.*?)」\n- - - - - - - - - - - - - - -\n(.*)$/.exec(
-    message.text(),
-  )
-
-  return {
-    userName: m?.[1],
-    quotedTitle: m?.[2],
-    content: m?.[3],
-  }
-}
 
 export class BaseManager {
   public message: Message
@@ -53,8 +39,20 @@ export class BaseManager {
     this.message = message
   }
 
-  get rawText() {
-    return this.message.text()
+  get room() {
+    return this.message.room()
+  }
+
+  get isRoom() {
+    return !!this.room
+  }
+
+  get text() {
+    return parseText(this.message.text())
+  }
+
+  get quote() {
+    return parseQuote(this.message.text())
   }
 
   get botWxid() {
@@ -69,8 +67,27 @@ export class BaseManager {
     return this.conv.id
   }
 
+  get talkingUser(): IUserSummaryFull {
+    const sender = this.message.talker()
+    const image = sender.payload?.avatar
+    if (!image) throw new Error("talking user has no avatar")
+
+    return {
+      id: sender.id,
+      name: sender.name(),
+      image,
+    }
+  }
+
+  async getRoomTopic() {
+    return await this.room?.topic()
+  }
+
   async formatTalker() {
-    return await formatTalker(this.message)
+    return await formatTalker({
+      talkerName: this.talkingUser.name,
+      roomTopic: await this.getRoomTopic(),
+    })
   }
 
   async parse(input?: string) {
@@ -81,7 +98,7 @@ export class BaseManager {
    * todo: cache preference
    */
   async getConvPreference() {
-    return getConvPreference(this.message)
+    return getConvPreference({ convId: this.convId, isRoom: this.isRoom })
   }
 
   async getUserPreference() {
@@ -148,16 +165,12 @@ export class BaseManager {
     content = lines.join("\n")
 
     const context = await getBotContext(this.bot, this.message)
-    const pretty = formatQuery(
-      content,
-      preference.commandStyle === CommandStyle.standard
-        ? {
-            title: await this.getTitle(),
-            tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
-            footer: formatFooter(context),
-          }
-        : undefined,
-    )
+    const pretty = formatQuery(content, {
+      title: await this.getTitle(),
+      tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
+      footer: formatFooter(context),
+      commandStyle: preference.commandStyle,
+    })
     void this.addTask(() => this.message.say(pretty))
   }
 

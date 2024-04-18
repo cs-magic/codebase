@@ -148,8 +148,11 @@ export class SystemManager extends BaseManager {
   }
 
   async setCommandStyle(commandStyle: CommandStyle) {
-    const preference = await getConvPreference(this.message)
-    await getConvTable(this.message).update({
+    const preference = await getConvPreference({
+      convId: this.convId,
+      isRoom: this.isRoom,
+    })
+    await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
@@ -164,8 +167,8 @@ export class SystemManager extends BaseManager {
   }
 
   async setMaxOutputLines(maxOutputLines?: number) {
-    const preference = await getConvPreference(this.message)
-    await getConvTable(this.message).update({
+    const preference = await this.getConvPreference()
+    await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
@@ -189,8 +192,8 @@ export class SystemManager extends BaseManager {
   }
 
   async setModel(value: LlmModelType) {
-    const preference = await getConvPreference(this.message)
-    await getConvTable(this.message).update({
+    const preference = await this.getConvPreference()
+    await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
@@ -208,8 +211,8 @@ export class SystemManager extends BaseManager {
   }
 
   async setBackend(value: BackendType) {
-    const preference = await getConvPreference(this.message)
-    await getConvTable(this.message).update({
+    const preference = await this.getConvPreference()
+    await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
@@ -228,8 +231,8 @@ export class SystemManager extends BaseManager {
   }
 
   async setLang(value: LangType) {
-    const preference = await getConvPreference(this.message)
-    await getConvTable(this.message).update({
+    const preference = await this.getConvPreference()
+    await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },

@@ -1,5 +1,6 @@
 "use client";
 
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { Label } from "../../../../packages/common-ui-shadcn/components/label";
@@ -7,13 +8,12 @@ import { Label } from "../../../../packages/common-ui-shadcn/components/label";
 import { config } from "../config";
 import { cardUserRenderedAtom } from "../store/card.atom";
 import { UserAvatar } from "./user-avatar";
-import { IUserBasic } from "@cs-magic/common/schema/user";
 
-export const CardHeader = ({ user }: { user?: IUserBasic | null }) => {
+export const CardHeader = ({ user }: { user?: IUserSummary | null }) => {
   const setUserRendered = useSetAtom(cardUserRenderedAtom);
   useEffect(() => {
     setUserRendered(false);
-  }, [user?.avatar]);
+  }, [user?.image]);
 
   return (
     <div className={"flex items-center justify-between px-4 pb-2 pt-6 text-xs"}>

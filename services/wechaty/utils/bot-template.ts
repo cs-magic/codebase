@@ -24,7 +24,10 @@ export async function getBotTemplate(
   message: Message,
   botContext: IBotStaticContext,
 ) {
-  const preference = await getConvPreference(message)
+  const preference = await getConvPreference({
+    isRoom: !!message.room(),
+    convId: message.conversation().id,
+  })
   return renderTemplate(preference, botContext)
 }
 

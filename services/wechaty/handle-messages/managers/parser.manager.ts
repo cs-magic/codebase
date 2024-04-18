@@ -5,8 +5,8 @@ import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
-import { types } from "wechaty"
 import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
@@ -14,7 +14,9 @@ import { FeatureMap, FeatureType } from "../../schema/commands"
 import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
+import { getQuotedMessage } from "../../utils/get-quoted-message"
 import { parseLimitedCommand } from "../../utils/parse-command"
+import { parseText } from "../../utils/parse-message"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum(["enable", "disable"])
@@ -74,6 +76,38 @@ export class ParserManager extends BaseManager {
     )
   }
 
+  async parseSelf() {
+    const message = this.message
+    const text = await z.string().parseAsync(message.text)
+    return this.safeParseCard({
+      user: this.talkingUser,
+      message: {
+        convId: this.convId,
+        roomTopic: await this.getRoomTopic(),
+        talkerName: this.talkingUser.name,
+        text,
+        id: message.id,
+      },
+    })
+  }
+
+  async parseQuote() {
+    if (!this.quote) return
+
+    const message = await getQuotedMessage(this.quote.quotedContent)
+    const text = await z.string().parseAsync(message.text)
+    return this.safeParseCard({
+      user: this.talkingUser,
+      message: {
+        convId: this.convId,
+        roomTopic: await this.getRoomTopic(),
+        talkerName: this.talkingUser.name,
+        text,
+        id: message.id,
+      },
+    })
+  }
+
   async parse(input?: string) {
     if (!input) return this.help()
 
@@ -99,7 +133,7 @@ export class ParserManager extends BaseManager {
   }
 
   async enableParser() {
-    await getConvTable(this.message).update({
+    await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
         preference: {
@@ -117,7 +151,7 @@ export class ParserManager extends BaseManager {
   }
 
   async disableParser() {
-    await getConvTable(this.message).update({
+    await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
         preference: {
@@ -131,45 +165,43 @@ export class ParserManager extends BaseManager {
     )
   }
 
-  async safeParseCard() {
-    const message = this.message
-
-    if (message.type() !== types.Message.Url) return
-
-    const url = parseUrlFromWechatUrlMessage(message.text())
-    logger.info(`-- url in message: ${url}`)
-    if (!url) return
-
-    if (!isWxmpArticleUrl(url)) return
-
-    const preference = await getConvPreference(message)
-    if (!preference.parserEnabled) return
-
-    initLogWithTimer()
-
-    void this.notify(
-      `[parser(${this.toParse})] parsing Link(messageId=${message.id}) from ${await formatTalker(message)}`,
-    )
-    ++this.toParse
-
+  async safeParseCard({
+    user,
+    message,
+  }: {
+    user: IUserSummary
+    message: {
+      convId: string
+      text: string
+      id: string
+      roomTopic?: string
+      talkerName: string
+    }
+  }) {
     try {
+      const url = parseUrlFromWechatUrlMessage(parseText(message.text))
+      logger.info(`-- url in message: ${url}`)
+      if (!url) return
+
+      if (!isWxmpArticleUrl(url)) return
+
+      const preference = await getConvPreference({
+        convId: message.convId,
+        isRoom: !!message.roomTopic,
+      })
+      if (!preference.parserEnabled) return
+
+      initLogWithTimer()
+
+      void this.notify(
+        `[parser(${this.toParse})] parsing Link(messageId=${message.id}) from ${await formatTalker(message)}`,
+      )
+      ++this.toParse
       const card = await fetchWxmpArticleWithCache(url, {
         backendEngineType: preference.backend,
         summaryModel: preference.model,
       })
       // todo: dynamic sender with fixed card url
-      // let cardUrl = card.ossUrl
-      const sender = message.talker()
-
-      // avatar 在 padLocal 下是带domain的；web下不稳定
-      const image = sender.payload?.avatar
-      const user = image
-        ? {
-            id: sender.id,
-            name: sender.name(),
-            image,
-          }
-        : undefined
 
       logger.info(`-- parsing content`)
       if (!this.uniParser) this.uniParser = new CardSimulator()
@@ -181,7 +213,9 @@ export class ParserManager extends BaseManager {
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      void this.addTask(() => message.say(file))
+      void this.addTask(async () =>
+        (await this.bot.Message.find({ id: message.id }))?.say(file),
+      )
       void this.notify(file)
       logger.info("-- ✅ sent file")
     } catch (e) {

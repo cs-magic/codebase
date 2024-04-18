@@ -1,3 +1,4 @@
 import { z } from "zod"
 
-export const botCommands = z.enum(["start", "stop", "state", "logout"])
+export const botCommandTypeSchema = z.enum(["start", "stop", "state", "logout"])
+export type BotCommandType = z.infer<typeof botCommandTypeSchema>
