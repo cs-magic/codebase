@@ -5,7 +5,7 @@ import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
-import { BaseManager, getQuote } from "./managers/base.manager"
+import { BaseManager } from "./managers/base.manager"
 import { ChatManager } from "./managers/chat.manager"
 import { ParserManager } from "./managers/parser.manager"
 import { SystemManager } from "./managers/system.manager"
@@ -27,7 +27,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     if (result) {
       switch (result.command) {
         case "ding":
-          return await message.say("dong")
+          return bot.sendQueue.addTask(() => message.say("dong"))
 
         case "help":
           return await new BaseManager(bot, message).getHelp(true)
@@ -75,7 +75,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // from wang, 2024-04-13 01:36:14
     if (s.includes("filterValue not found for filterKey: id")) {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
-      await message.say(await formatBotQuery(context, "哎呀出错啦", s))
+      await bot.sendQueue.addTask(async () =>
+        message.say(await formatBotQuery(context, "哎呀出错啦", s)),
+      )
     }
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
     // await message.say(await prettyBotQuery(context, "哎呀出错啦", s))

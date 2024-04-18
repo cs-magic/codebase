@@ -148,7 +148,7 @@ export class BaseManager {
       content,
       tips,
     )
-    await this.message.say(pretty)
+    void this.bot.sendQueue.addTask(() => this.message.say(pretty))
   }
 
   async help() {

@@ -21,8 +21,8 @@ export enum Priority {
 
 const commandTypeSchema = z.enum([
   "list",
-  "add",
   "filter",
+  "add",
   "set-priorities",
   "set-status",
   "set-title",
@@ -67,6 +67,10 @@ const i18n: FeatureMap<CommandType> = {
         type: "list",
         description: "list todo",
       },
+      filter: {
+        type: "filter",
+        description: "filter todo in case of it's too long",
+      },
       add: {
         type: "add",
         description: "add a todo with title",
@@ -80,15 +84,11 @@ const i18n: FeatureMap<CommandType> = {
         description:
           "update the status of a todo (pending,running,done,discarded)",
       },
-      "add-note": {
-        type: "add-note",
-      },
       "set-priorities": {
         type: "set-priorities",
       },
-      filter: {
-        type: "filter",
-        description: "filter todo in case of it's too long",
+      "add-note": {
+        type: "add-note",
       },
     },
   },
@@ -102,7 +102,7 @@ export class TodoManager extends BaseManager {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
     await this.standardReply(
-      [desc, SEPARATOR_LINE].join("\n"),
+      [desc].join("\n"),
       Object.keys(commands).map((command) => `  ${this.name} ${command}`),
     )
   }

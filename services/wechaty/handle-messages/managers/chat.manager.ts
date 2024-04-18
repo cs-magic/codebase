@@ -283,6 +283,6 @@ export class ChatManager extends BaseManager {
     const content = res.response?.choices[0]?.message.content
     if (!content)
       throw new Error(`回复结构不正确，请检查：queryId=${res.query.id}`)
-    await m.say(content)
+    void this.bot.sendQueue.addTask(() => m.say(content))
   }
 }

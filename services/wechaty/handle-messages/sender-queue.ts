@@ -1,45 +1,39 @@
 import { logger } from "@cs-magic/log/logger"
-import { type Message, type Wechaty } from "wechaty"
 import { sleep } from "../../../packages/common-datetime/utils"
-import { prettyMessage } from "../utils/pretty-message"
-import { handleMessage } from "./handle-message"
 
-export class MessageQueue {
-  private queue: Array<Message>
+export type QueueTask = () => Promise<any>
+
+export class SenderQueue {
+  private queue: QueueTask[]
   private processing: boolean
-  private bot: Wechaty
   private qps: number
 
-  constructor(bot: Wechaty, qps = 10) {
+  constructor(qps = 10) {
     const QPS_MAX = 100
     if (qps > QPS_MAX) {
       qps = QPS_MAX
       logger.warn(`qps limited to be the max = ${QPS_MAX}`)
     }
 
-    this.bot = bot
     this.qps = qps
-
     this.queue = []
     this.processing = false
   }
 
-  async enqueueMessage(message: Message) {
-    this.queue.push(message)
+  async addTask(task: QueueTask) {
+    this.queue.push(task)
     // logger.info(`-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`)
     if (!this.processing) {
       this.processing = true
-      await this._processMessage()
+      await this._runTask()
     }
   }
 
-  private async _processMessage() {
+  private async _runTask() {
     while (this.queue.length > 0) {
-      const message = this.queue.shift()!
-      logger.info(
-        `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
-      )
-      await handleMessage(this.bot, message)
+      const task = this.queue.shift()!
+      logger.info(`running task(${this.queue.length})`)
+      await task()
       await sleep(1000 / this.qps) // 限时
     }
     this.processing = false

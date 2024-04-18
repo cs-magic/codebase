@@ -156,10 +156,12 @@ export class ParserManager extends BaseManager {
         }
         return s
       }
-      await notificationGroups.say(
-        `[parser(${this.toParse})] parsing link from ${await formatTalker(message)}`,
+      void this.bot.sendQueue.addTask(async () =>
+        notificationGroups.say(
+          `[parser(${this.toParse})] parsing link from ${await formatTalker(message)}`,
+        ),
       )
-      await message.forward(notificationGroups)
+      void this.bot.sendQueue.addTask(() => message.forward(notificationGroups))
     }
     ++this.toParse
 
@@ -192,12 +194,13 @@ export class ParserManager extends BaseManager {
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      await message.say(file)
-      if (notificationGroups) await notificationGroups.say(file)
+      void this.bot.sendQueue.addTask(() => message.say(file))
+      if (notificationGroups)
+        void this.bot.sendQueue.addTask(() => notificationGroups.say(file))
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)
-      await message.say(s)
+      void this.bot.sendQueue.addTask(() => message.say(s))
     } finally {
       --this.toParse
     }

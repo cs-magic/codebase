@@ -1,13 +1,11 @@
 import { logger } from "@cs-magic/log/logger"
-import { FileBox } from "file-box"
-import path from "path"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import { PuppetPadlocal } from "wechaty-puppet-padlocal"
 import { loadEnv } from "../../packages/common-env/utils/load-env"
 import { logEnv } from "../../packages/common-env/utils/log-env"
-import { Path } from "../../packages/common-path"
-import { MessageQueue } from "./handle-messages/message-queue"
+import { handleMessage } from "./handle-messages/handle-message"
+import { SenderQueue } from "./handle-messages/sender-queue"
 import { initBotStaticContext } from "./utils/bot-context"
 import { getBotWxid } from "./utils/bot-wxid"
 
@@ -23,8 +21,6 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       token: env.WECHATY_PUPPET_PADLOCAL_TOKEN,
     }),
   }) as Wechaty // 等会再更新其他扩展的信息
-
-  const mq = new MessageQueue(bot, 10)
 
   bot
     .on("error", async (err) => {
@@ -42,9 +38,11 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       bot.wxid = getBotWxid(user)
 
       bot.staticContext = initBotStaticContext()
+
+      bot.sendQueue = new SenderQueue(10)
     })
     .on("message", async (message) => {
-      await mq.enqueueMessage(message)
+      await handleMessage(bot, message)
     })
   // .start()
 
