@@ -1,5 +1,3 @@
-"use server"
-
 import * as fs from "fs"
 
 export const ensureDirSync = (s: string) => {

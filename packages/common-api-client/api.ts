@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios/index"
+import { AxiosInstance } from "axios"
 import { createHttpInstance } from "./core"
 
 export const api: AxiosInstance = createHttpInstance()
