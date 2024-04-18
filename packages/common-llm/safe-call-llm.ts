@@ -15,7 +15,7 @@ export const safeCallLLM = async (
 ): Promise<ICallLlmResponse> => {
   const env = getEnv()
   logEnv("api_key")
-  console.log({ env })
+  // console.log({ env })
 
   const llmModelType = options.model
   const llmProviderType = model2provider(llmModelType)

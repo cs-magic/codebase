@@ -188,11 +188,11 @@ export class ParserManager extends BaseManager {
 
       if (!isWxmpArticleUrl(url)) return
 
-      const preference = await getConvPreference({
+      const convPreference = await getConvPreference({
         convId: message.convId,
         isRoom: !!message.roomTopic,
       })
-      if (!preference.parserEnabled) return
+      if (!convPreference.parserEnabled) return
 
       initLogWithTimer()
 
@@ -201,8 +201,8 @@ export class ParserManager extends BaseManager {
       )
       ++this.toParse
       const card = await fetchWxmpArticleWithCache(url, {
-        backendEngineType: preference.backend,
-        summaryModel: preference.model,
+        backendEngineType: convPreference.backend,
+        summaryModel: convPreference.model,
       })
       // todo: dynamic sender with fixed card url
 
@@ -216,9 +216,7 @@ export class ParserManager extends BaseManager {
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      void this.addTask(async () =>
-        (await this.bot.Message.find({ id: message.id }))?.say(file),
-      )
+      void this.addTask(async () => this.conv?.say(file))
       void this.notify(`DONE parsed Message(id=${message.id})`)
       logger.info("-- ✅ sent file")
     } catch (e) {

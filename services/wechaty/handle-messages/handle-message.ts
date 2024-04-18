@@ -2,12 +2,14 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { type Message, types, type Wechaty } from "wechaty"
+import { prisma } from "../../../packages/common-db/providers/prisma"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
 import { formatTalker, formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
+import { getQuotedMessage } from "../utils/get-quoted-message"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { parseText } from "../utils/parse-message"
 import { storageMessage } from "../utils/storage-message"
@@ -39,13 +41,13 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
         case "help":
           return await new BaseManager(bot, message).getHelp(true)
 
+        case "status":
+          return await new BaseManager(bot, message).getStatus(true)
+
         case "love":
           return await message.say(
             "你有什么想和我说的吗？（我是你最乖的树洞，我们之间的对话不会告诉任何人哦）",
           )
-
-        case "status":
-          return await new BaseManager(bot, message).getStatus(true)
 
         case "system":
           return await new SystemManager(bot, message).parse(result.args)

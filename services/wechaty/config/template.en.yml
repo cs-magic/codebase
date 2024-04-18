@@ -20,10 +20,18 @@ status: |-
     version: {{{version}}}
     alive-time: {{aliveTime}}
   ------------------------------
-  Preference:
-    model: {{preference.model}}
-    backend: {{preference.backend}}
-    chat-enabled: {{{preference.chatEnabled}}}
-    parser-enabled: {{{preference.parserEnabled}}}
-    max-output-lines: {{{preference.maxOutputLines}}}
-    command-style: {{{preference.commandStyle}}}
+  ConvPreference:
+    model: {{convPreference.model}}
+    backend: {{convPreference.backend}}
+    chat-enabled: {{{convPreference.chatEnabled}}}
+    parser-enabled: {{{convPreference.parserEnabled}}}
+    max-output-lines: {{{convPreference.maxOutputLines}}}
+    command-style: {{{convPreference.commandStyle}}}
+  ------------------------------
+  UserPreference:
+    model: {{userPreference.model}}
+    backend: {{userPreference.backend}}
+    chat-enabled: {{{userPreference.chatEnabled}}}
+    parser-enabled: {{{userPreference.parserEnabled}}}
+    max-output-lines: {{{userPreference.maxOutputLines}}}
+    command-style: {{{userPreference.commandStyle}}}
