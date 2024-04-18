@@ -6,10 +6,13 @@ import fw from "@fastify/websocket"
 import Fastify from "fastify"
 import remove from "lodash/remove"
 import * as process from "process"
+import { loadEnv } from "../../../packages/common-env/utils/load-env"
 import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
 import { syncClients } from "./utils/sync-clients"
 import { transferMessage } from "./utils/transfer-message"
+
+loadEnv()
 
 logger.info("fastify initializing...")
 const fastify = Fastify({

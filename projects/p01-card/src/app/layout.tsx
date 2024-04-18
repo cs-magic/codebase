@@ -14,7 +14,7 @@ import { Dev } from "../components/dev";
 
 import { config } from "../config";
 import GlobalHooksProviders from "../providers/global.provider";
-import "../styles/globals.css"; // loadEnv();
+import "../styles/globals.css";
 
 const inter = Inter({
   subsets: ["latin"],

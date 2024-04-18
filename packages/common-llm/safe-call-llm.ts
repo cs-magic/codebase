@@ -4,14 +4,10 @@ import { formatString } from "@cs-magic/common/utils/format-string"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
-import { loadEnv } from "../common-env/utils/load-env"
-import { logEnv } from "../common-env/utils/log-env"
+import { env } from "../common-env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
 import { ICallLlmOptions, ICallLlmResponse } from "./schema/llm"
-
-const env = loadEnv()
-logEnv("api_key")
 
 export const safeCallLLM = async (
   options: ICallLlmOptions,
