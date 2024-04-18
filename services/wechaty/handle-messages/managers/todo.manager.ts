@@ -1,6 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { Task } from "@cs-magic/prisma/prisma/generated/zod"
 import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import sortBy from "lodash/sortBy"
 import omit from "lodash/omit"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
@@ -149,7 +149,6 @@ export class TodoManager extends BaseManager {
 
         case "set-status": {
           const m = /^\s*(\d+)\s*(\S+)\s*(.*)?$/.exec(parsed.args)
-          // console.log({ m })
           if (!m) throw new Error("输入不合法")
           const index = Number(m[1])
           const newStatus = await taskStatusSchema.parseAsync(m?.[2])
@@ -160,7 +159,6 @@ export class TodoManager extends BaseManager {
 
         case "set-priority": {
           const m = /^\s*(\d+)\s*(\d+)\s*$/.exec(parsed.args)
-          // console.log({ m })
           if (!m) throw new Error("输入不合法")
           const index = Number(m[1])
           const priority = await z
@@ -197,14 +195,18 @@ export class TodoManager extends BaseManager {
       )
 
     const serializeTaskGroup = (status: TaskStatus, onlyCount = false) => {
-      const items = tasks.filter((t) => t.status === status)
+      const items = sortBy(
+        tasks
+          .filter((t) => t.status === status)
+          .map((t) => {
+            if (!t.priority) t.priority = Priority.normal // possible null
+            return t
+          }),
+        "priority",
+      )
       const ans = [`${status} (${items.length})`]
       if (!onlyCount)
-        ans.push(
-          ...items.map(
-            (t) => `  ${t.i}) ${t.title} [${t.priority ?? Priority.normal}]`,
-          ),
-        )
+        ans.push(...items.map((t) => `  ${t.i}) ${t.title} [${t.priority}]`))
       return ans
     }
 
