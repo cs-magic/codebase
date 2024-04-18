@@ -10,6 +10,7 @@ import {
   llmModelTypeSchema,
 } from "../../../../packages/common-llm/schema/providers"
 import { FeatureMap } from "../../schema/commands"
+import { CommandStyle } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -23,6 +24,7 @@ const commandTypeSchema = z.enum([
   "set-lang",
   "set-avatar",
   "set-max-output-lines",
+  "set-command-style",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
@@ -78,11 +80,12 @@ const i18n: FeatureMap<CommandType> = {
       },
       "set-avatar": {
         type: "set-avatar",
-        description: "",
       },
       "set-max-output-lines": {
         type: "set-max-output-lines",
-        description: "",
+      },
+      "set-command-style": {
+        type: "set-command-style",
       },
     },
   },
@@ -95,10 +98,10 @@ export class SystemManager extends BaseManager {
     if (!input) return this.help()
 
     const commands = this.i18n[await this.getLang()].commands
-    const commandTypeSchema = z.enum(
-      Object.keys(commands) as [string, ...string[]],
+    const parsed = parseLimitedCommand(
+      input,
+      z.enum(Object.keys(commands) as [string, ...string[]]),
     )
-    const parsed = parseLimitedCommand(input, commandTypeSchema)
     if (parsed) {
       const commandKeyInInput = parsed.command
       const commandKeyInEnum = commands[commandKeyInInput]?.type
@@ -134,8 +137,30 @@ export class SystemManager extends BaseManager {
             await z.number().int().min(1).parseAsync(Number(parsed.args)),
           )
           break
+
+        case "set-command-style":
+          await this.setCommandStyle(
+            await z.nativeEnum(CommandStyle).parseAsync(parsed.args),
+          )
+          break
       }
     }
+  }
+
+  async setCommandStyle(commandStyle: CommandStyle) {
+    const preference = await getConvPreference(this.message)
+    await getConvTable(this.message).update({
+      where: {
+        id: this.convId,
+      },
+      data: {
+        preference: {
+          ...preference,
+          commandStyle,
+        },
+      },
+    })
+    await this.getStatus(true)
   }
 
   async setMaxOutputLines(maxOutputLines?: number) {

@@ -56,59 +56,61 @@ export const listMessagesOfLatestTopic = async (
           ],
         },
 
+        // 因为基于任意command，所以这里的筛选没有意义了，之后换meta信息吧
         // 2. filter ai context
-        {
-          OR: [
-            // valid bot is cued
-            {
-              // bot is cued
-              OR: [
-                // in contact
-                {
-                  listenerId: botWxid,
-                },
-
-                // in room
-                {
-                  OR: [
-                    {
-                      mentionIdList: {
-                        has: botWxid,
-                      },
-                    },
-                    {
-                      text: {
-                        startsWith: "!",
-                      },
-                    },
-                    {
-                      text: {
-                        startsWith: "！",
-                      },
-                    },
-                  ],
-                },
-              ],
-              // but not command
-              text: {
-                not: {
-                  startsWith: "/",
-                },
-              },
-            },
-            //  valid bot replies
-            {
-              // bot replies
-              talkerId: botWxid,
-              // but not command
-              text: {
-                not: {
-                  startsWith: SEPARATOR_BOX,
-                },
-              },
-            },
-          ],
-        },
+        // {
+        //   OR: [
+        //     // valid bot is cued
+        //     {
+        //       // bot is cued
+        //       OR: [
+        //         // in contact
+        //         {
+        //           listenerId: botWxid,
+        //         },
+        //
+        //         // in room
+        //         {
+        //           OR: [
+        //             {
+        //               mentionIdList: {
+        //                 has: botWxid,
+        //               },
+        //             },
+        //             {
+        //               text: {
+        //                 startsWith: "!",
+        //               },
+        //             },
+        //             {
+        //               text: {
+        //                 startsWith: "！",
+        //               },
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //
+        //       // but not command
+        //       text: {
+        //         not: {
+        //           startsWith: "/",
+        //         },
+        //       },
+        //     },
+        //     //  valid bot replies
+        //     {
+        //       // bot replies
+        //       talkerId: botWxid,
+        //       // but not command
+        //       text: {
+        //         not: {
+        //           startsWith: SEPARATOR_BOX,
+        //         },
+        //       },
+        //     },
+        //   ],
+        // },
 
         // 3. filter time
         {

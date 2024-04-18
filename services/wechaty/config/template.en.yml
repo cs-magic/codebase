@@ -26,3 +26,4 @@ status: |-
     chat-enabled: {{{preference.chatEnabled}}}
     parser-enabled: {{{preference.parserEnabled}}}
     max-output-lines: {{{preference.maxOutputLines}}}
+    command-style: {{{preference.commandStyle}}}

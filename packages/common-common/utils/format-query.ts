@@ -8,7 +8,7 @@ export const formatQuery = (
   content: string,
   options?: { title?: string; footer?: string; tips?: string },
 ) => {
-  const lines = [SEPARATOR_BOX]
+  const lines = []
 
   if (options?.title) lines.push("  " + options.title)
 
@@ -22,9 +22,10 @@ export const formatQuery = (
     lines.push("  " + options.footer)
   }
 
-  lines.push(SEPARATOR_BOX)
+  let s = lines.join(`\n${SEPARATOR_LINE}\n`)
 
-  // console.log({ contents, lines })
-
-  return lines.join(`\n${SEPARATOR_LINE}\n`)
+  if (options) {
+    s = [SEPARATOR_BOX, s, SEPARATOR_BOX].join("\n")
+  }
+  return s
 }

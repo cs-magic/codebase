@@ -3,11 +3,11 @@ import { type BackendType } from "../../../packages/common-llm/schema/llm"
 import { type LlmModelType } from "../../../packages/common-llm/schema/providers"
 
 export enum CommandStyle {
-  standard,
+  standard = "standard",
   // omit title/footer
-  simple,
+  simple = "simple",
   // convert to image
-  image,
+  image = "image",
 }
 
 /**
