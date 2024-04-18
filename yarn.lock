@@ -1682,8 +1682,10 @@ __metadata:
     "@cs-magic/log": "workspace:^"
     "@cs-magic/wechaty": "npm:0.1.0"
     "@fastify/websocket": "npm:^10.0.1"
+    "@types/dotenv": "npm:^8.2.0"
     "@types/lodash": "npm:^4.14.202"
     "@types/ws": "npm:^8.5.10"
+    dotenv: "npm:^16.4.5"
     fastify: "npm:^4.26.2"
     fastify-websocket: "npm:^4.3.0"
     lodash: "npm:^4.17.21"
@@ -5757,6 +5759,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dotenv@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@types/dotenv@npm:8.2.0"
+  dependencies:
+    dotenv: "npm:*"
+  checksum: 10c0/cd010440ea750acf2359fb9ed0a1681b00ce29d9c40b602fe33e51642bd44ce30ced54b23fadc05385daa415fe9f671273911bcf95381a5aaf09690b3db96938
+  languageName: node
+  linkType: hard
+
 "@types/downloadjs@npm:^1.4.6":
   version: 1.4.6
   resolution: "@types/downloadjs@npm:1.4.6"
@@ -8372,6 +8383,7 @@ __metadata:
   resolution: "cs-magic@workspace:."
   dependencies:
     "@types/jest": "npm:^29.5.12"
+    dotenv: "npm:^16.4.5"
     jest: "npm:^29.7.0"
     pino-pretty: "npm:^11.0.0"
     ts-jest: "npm:^29.1.2"
@@ -9427,7 +9439,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0, dotenv@npm:^16.4.5":
+"dotenv@npm:*, dotenv@npm:^16.0.0, dotenv@npm:^16.4.5":
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 10c0/48d92870076832af0418b13acd6e5a5a3e83bb00df690d9812e94b24aff62b88ade955ac99a05501305b8dc8f1b0ee7638b18493deb6fe93d680e5220936292f

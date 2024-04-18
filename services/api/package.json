@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev-watch": "tsx watch src/server.ts",
+    "dev-watch": "tsx atch src/server.ts",
     "dev": "tsx src/server.ts"
   },
   "dependencies": {
@@ -15,11 +15,13 @@
     "@cs-magic/wechaty": "0.1.0",
     "@fastify/websocket": "^10.0.1",
     "@types/lodash": "^4.14.202",
+    "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "fastify-websocket": "^4.3.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/ws": "^8.5.10",
     "typescript": "^5.4.5"
   }

@@ -5,6 +5,7 @@ import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
 import { env } from "../common-env"
+import { logEnv } from "../common-env/utils/log-env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
 import { ICallLlmOptions, ICallLlmResponse } from "./schema/llm"
@@ -12,6 +13,9 @@ import { ICallLlmOptions, ICallLlmResponse } from "./schema/llm"
 export const safeCallLLM = async (
   options: ICallLlmOptions,
 ): Promise<ICallLlmResponse> => {
+  logEnv("api_key")
+  console.log({ env })
+
   const llmModelType = options.model
   const llmProviderType = model2provider(llmModelType)
 
