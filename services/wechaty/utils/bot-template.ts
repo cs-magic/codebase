@@ -8,8 +8,6 @@ import { type Message } from "wechaty"
 import { type LangType } from "../../../packages/common-i18n/schema"
 import { type IBotStaticContext, type IBotTemplate } from "../schema/bot"
 import { IWechatUserPreference } from "../schema/wechat-user"
-
-import { getBotDynamicContext } from "./bot-context"
 import { getConvPreference } from "./get-conv-preference"
 
 export const loadBotTemplate = async (lang: LangType) => {
@@ -22,7 +20,7 @@ export const loadBotTemplate = async (lang: LangType) => {
   )
 }
 
-export async function renderBotTemplate(
+export async function getBotTemplate(
   message: Message,
   botContext: IBotStaticContext,
 ) {
@@ -33,23 +31,26 @@ export async function renderBotTemplate(
 export async function renderTemplate(
   preference: IWechatUserPreference,
   botContext: IBotStaticContext,
-) {
+): Promise<IBotTemplate> {
   // logger.info({ preference })
 
   const lang = preference.lang
 
-  const botConfig = await getBotDynamicContext(lang)
+  const templateRaw = await loadBotTemplate(lang)
 
-  const template = await loadBotTemplate(lang)
+  // todo: avoid another load
+  const templateData1 = jsYaml.load(templateRaw, {}) as IBotTemplate
+  const name = templateData1.name
 
-  const templateString = Mustache.render(template, {
+  const templateSlugged = Mustache.render(templateRaw, {
     preference,
-    name: botConfig.name,
-    title: `${botConfig.name} ${botContext.version}`,
+    name,
+    version: botContext.version,
+    title: `${name} ${botContext.version}`,
     aliveTime: formatDuration((Date.now() - botContext.startTime) / 1e3),
   })
 
-  const templateData = jsYaml.load(templateString, {}) as IBotTemplate
+  const templateData = jsYaml.load(templateSlugged, {}) as IBotTemplate
 
   return templateData
 }

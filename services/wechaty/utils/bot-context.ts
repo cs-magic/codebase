@@ -1,45 +1,23 @@
 import { type Message, type Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
-import { type LangType } from "../../../packages/common-i18n/schema"
-import {
-  type IBotContext,
-  type IBotDynamicContext,
-  type IBotStaticContext,
-} from "../schema/bot"
-import { getConvPreference } from "./get-conv-preference"
+import { type IBotContext, type IBotStaticContext } from "../schema/bot"
+import { getBotTemplate } from "./bot-template"
 
 export const getBotStaticContext = async (
   bot: Wechaty,
 ): Promise<IBotStaticContext> => bot.staticContext
 
-export const getBotDynamicContext = async (
-  lang: LangType,
-): Promise<IBotDynamicContext> => {
-  const data = (await import(`../config/bot.${lang}.json`)) as {
-    name: string
-  }
-  return {
-    ...data,
-  }
-}
-
 export const getBotContext = async (
   bot: Wechaty,
-  lang: LangType,
-): Promise<IBotContext> => ({
-  ...(await getBotStaticContext(bot)),
-  ...(await getBotDynamicContext(lang)),
-})
-
-export const getBotContextFromMessage = async (
-  bot: Wechaty,
   message: Message,
-) => {
-  // todo: use WechatyInterface
-  const w = message.wechaty
-  const preference = await getConvPreference(message)
-  const context = await getBotContext(bot, preference.lang)
-  return context
+): Promise<IBotContext> => {
+  const staticContext = await getBotStaticContext(bot)
+  const dynamicContext = await getBotTemplate(message, staticContext)
+
+  return {
+    ...staticContext,
+    ...dynamicContext,
+  }
 }
 
 export const initBotStaticContext = (): IBotStaticContext => ({

@@ -1,3 +1,5 @@
+name: Okawa Plus
+
 help: |-
   {{name}} Is an AI Native software, for individual/group intelligent management.
   ------------------------------
@@ -14,6 +16,8 @@ help: |-
 
 status: |-
   Basic:
+    name: {{{name}}}
+    version: {{{version}}}
     alive-time: {{aliveTime}}
   ------------------------------
   Preference:

@@ -15,17 +15,14 @@ export type IBotStaticContext = {
   startTime: number
 }
 
-export type IBotDynamicContext = {
-  name: string
-}
-
-export type IBotContext = IBotStaticContext & IBotDynamicContext
-
 export type IBotTemplate = {
+  name: string
   basic: string
   help: string
   status: string
 }
+
+export type IBotContext = IBotStaticContext & IBotTemplate
 
 export type IWechatBotScan = { value: string; status: number }
 

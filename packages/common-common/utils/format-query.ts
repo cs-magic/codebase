@@ -1,29 +1,30 @@
-import { SEPARATOR_LINE, SEPARATOR_BOX } from "../const"
+import { SEPARATOR_BOX, SEPARATOR_LINE } from "../const"
 
 /**
  * 可用于微信的回复
  *
- * @param title
- * @param content
  */
 export const formatQuery = (
-  title: string,
   content: string,
-  options?: { footer?: string; tips?: string },
+  options?: { title?: string; footer?: string; tips?: string },
 ) => {
-  const lines = [SEPARATOR_BOX, "  " + title, SEPARATOR_LINE, content]
+  const lines = [SEPARATOR_BOX]
+
+  if (options?.title) lines.push("  " + options.title)
+
+  lines.push(content)
 
   if (options?.tips) {
-    lines.push(SEPARATOR_LINE, "TIPS: ", options.tips)
+    lines.push("TIPS: ", options.tips)
   }
 
   if (options?.footer) {
-    lines.push(SEPARATOR_LINE, "  " + options.footer)
+    lines.push("  " + options.footer)
   }
 
   lines.push(SEPARATOR_BOX)
 
   // console.log({ contents, lines })
 
-  return lines.join("\n")
+  return lines.join(`\n${SEPARATOR_LINE}\n`)
 }

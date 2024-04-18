@@ -1,13 +1,12 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
+import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import {
-  getBotContextFromMessage,
-  getBotDynamicContext,
-} from "../../utils/bot-context"
+import { CommandStyle } from "../../schema/wechat-user"
+import { getBotContext } from "../../utils/bot-context"
 import { botNotify } from "../../utils/bot-notify"
-import { renderBotTemplate } from "../../utils/bot-template"
-import { formatBotQuery } from "../../utils/format-bot-query"
+import { getBotTemplate } from "../../utils/bot-template"
+import { formatFooter } from "../../utils/format-footer"
 import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
@@ -94,7 +93,7 @@ export class BaseManager {
   }
 
   async getContext() {
-    return getBotDynamicContext(await this.getLang())
+    return getBotContext(this.bot, this.message)
   }
 
   async getData() {
@@ -119,7 +118,7 @@ export class BaseManager {
   }
 
   async getTemplate() {
-    return renderBotTemplate(this.message, this.bot.staticContext)
+    return getBotTemplate(this.message, this.bot.staticContext)
   }
 
   async getStatus(reply = false) {
@@ -148,12 +147,16 @@ export class BaseManager {
     }
     content = lines.join("\n")
 
-    const context = await getBotContextFromMessage(this.bot, this.message)
-    const pretty = await formatBotQuery(
-      context,
-      await this.getTitle(),
+    const context = await getBotContext(this.bot, this.message)
+    const pretty = formatQuery(
       content,
-      tips,
+      preference.commandStyle === CommandStyle.standard
+        ? {
+            title: await this.getTitle(),
+            tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
+            footer: formatFooter(context),
+          }
+        : undefined,
     )
     void this.addTask(() => this.message.say(pretty))
   }

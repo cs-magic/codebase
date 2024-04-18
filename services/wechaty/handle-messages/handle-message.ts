@@ -1,11 +1,14 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
+import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { type Message, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
-import { getBotContextFromMessage } from "../utils/bot-context"
+import { CommandStyle } from "../schema/wechat-user"
+import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
-import { formatBotQuery } from "../utils/format-bot-query"
+import { formatFooter } from "../utils/format-footer"
 import { formatTalker } from "../utils/format-talker"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
@@ -75,7 +78,20 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-    const context = await getBotContextFromMessage(bot, message)
-    void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
+    const context = await getBotContext(bot, message)
+    const preference = await getConvPreference(message)
+    // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
+    void botNotify(
+      bot,
+      formatQuery(
+        `ERR: ${s}`,
+        preference.commandStyle === CommandStyle.standard
+          ? {
+              title: `System Notification`,
+              footer: formatFooter(context),
+            }
+          : undefined,
+      ),
+    )
   }
 }
