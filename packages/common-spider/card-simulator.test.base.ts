@@ -1,4 +1,7 @@
+dotenv.config({ path: Path.envFile })
+
 import { dumpJson } from "@cs-magic/common/utils/dump-json"
+import dotenv from "dotenv"
 import { promises } from "fs"
 import path from "path"
 import { fetchWxmpArticleWithCache } from "../3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
@@ -6,7 +9,7 @@ import { fetchWxmpArticleWithCache } from "../3rd-wechat/wxmp-article/fetch-wxmp
 import { Path } from "../common-path"
 import { CardSimulator } from "./card-simulator"
 
-const headless: boolean = true
+const headless: boolean = false
 
 export const simulatorWxmpArticleViaContent = async (content: string) => {
   const simulator = new CardSimulator("playwright", { headless })

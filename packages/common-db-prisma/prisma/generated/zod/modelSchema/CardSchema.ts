@@ -12,7 +12,7 @@ export const CardSchema = z.object({
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   /**
-   * [IUserBasic]
+   * [IUserSummary]
    */
   user: JsonValueSchema,
   platformId: z.string().nullish(),
@@ -22,7 +22,7 @@ export const CardSchema = z.object({
   platformData: JsonValueSchema,
   sourceUrl: z.string().nullish(),
   /**
-   * [IUserBasic]
+   * [IUserSummary]
    */
   author: JsonValueSchema,
   time: z.coerce.date().nullish(),

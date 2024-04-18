@@ -91,8 +91,7 @@ export const cardRenderedAtom = atom((get) => {
   const user = get(cardUserRenderedAtom);
   const author = get(cardAuthorRenderedAtom);
   const rendered = cover && mindmap && user && author;
-
-  // console.log({ cover, mindmap, user, author, rendered })
+  console.log({ cover, mindmap, user, author, rendered });
   return rendered;
 });
 

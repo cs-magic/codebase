@@ -5,8 +5,6 @@ import { Page as PuppetPage } from "puppeteer"
 import { getEnv } from "../common-env"
 import { BaseSimulator } from "./base-simulator"
 
-const env = getEnv()
-
 /**
  * !IMPORTANT: 需要 p01-card 项目启动
  */
@@ -15,6 +13,8 @@ export class CardSimulator extends BaseSimulator {
     content: string,
     user?: IUserSummary,
   ): Promise<{ cardUrl: string }> {
+    const env = getEnv()
+
     await this.init()
     if (!this.browser) throw new UnexpectedError()
 

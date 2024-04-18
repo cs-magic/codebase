@@ -7,7 +7,10 @@ export const userSummarySchema = Prisma.validator<Prisma.UserDefaultArgs>()({
     name: true,
   },
 })
-export type IUserSummary = Prisma.UserGetPayload<typeof userSummarySchema>
+export type IUserSummary = Prisma.UserGetPayload<typeof userSummarySchema> & {
+  // compatible
+  avatar?: string
+}
 
 export type IUserSummaryFull = IUserSummary & {
   name: string

@@ -102,7 +102,7 @@ model Card {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  /// [IUserBasic]
+  /// [IUserSummary]
   user Json?
 
   platformType PlatformType
@@ -113,7 +113,7 @@ model Card {
   platformData Json?
 
   sourceUrl   String?
-  /// [IUserBasic]
+  /// [IUserSummary]
   author      Json?
   time        DateTime?
   title       String?

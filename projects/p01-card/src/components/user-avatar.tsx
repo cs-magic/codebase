@@ -29,7 +29,7 @@ export const UserAvatar = ({
       <VerticalAspectRatio ratio={1}>
         <Avatar className={cn("h-full w-full border-none")}>
           <AvatarImage
-            src={imageProps?.src ?? upgradeUrl(user.image ?? "")}
+            src={imageProps?.src ?? upgradeUrl(user.image ?? user.avatar ?? "")}
             {...omit(imageProps, ["src"])}
           />
           <AvatarFallback>

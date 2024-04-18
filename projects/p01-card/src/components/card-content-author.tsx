@@ -1,4 +1,5 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe";
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { Card } from "@prisma/client";
 import { useAtom, useSetAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
@@ -15,6 +16,8 @@ import { UserAvatar } from "./user-avatar";
 
 export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
   // console.log("-- author: ", card?.author)
+  const author = card?.author as IUserSummary | null;
+  console.log("author: ", author);
 
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom);
 
@@ -25,9 +28,7 @@ export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
   );
 
   const Line21 = () => (
-    <span className={"mr-1 text-nowrap"}>
-      {parseJsonSafe(card?.author)?.name}
-    </span>
+    <span className={"mr-1 text-nowrap"}>{parseJsonSafe(author)?.name}</span>
   );
 
   const Line22 = () => (
@@ -56,15 +57,15 @@ export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
   const setAuthorRendered = useSetAtom(cardAuthorRenderedAtom);
   useEffect(() => {
     setAuthorRendered(false);
-  }, [card?.author?.avatar]);
+  }, [author?.image]);
 
   return (
     <div className={"flex h-8 shrink-0 items-center"}>
       <VerticalAspectRatio ratio={1} className={"shrink-0"}>
-        {!!card?.author && (
+        {author && (
           <UserAvatar
             imageProps={{ onLoad: () => setAuthorRendered(true) }}
-            user={card.author}
+            user={author}
           />
         )}
       </VerticalAspectRatio>
