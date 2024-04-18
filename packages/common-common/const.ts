@@ -14,3 +14,4 @@ export const ERR_MSG_NotImplemented = "Not Implemented Yet!"
 export const SEPARATOR_LINE = `------------------------------`
 export const SEPARATOR_BOX =
   "+" + SEPARATOR_LINE.slice(0, SEPARATOR_LINE.length - 2) + "+"
+export const ERR_MSG_INVALID_INPUT = "输入不合法"

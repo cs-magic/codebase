@@ -1,12 +1,13 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
 import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
-import sortBy from "lodash/sortBy"
 import omit from "lodash/omit"
+import sortBy from "lodash/sortBy"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { listTodo } from "../../utils/list-todo"
 import { parseLimitedCommand } from "../../utils/parse-command"
+import { parseIndicesPriority } from "../../utils/parse-indices-number"
 import { BaseManager } from "./base.manager"
 import { type TaskStatus } from ".prisma/client"
 
@@ -22,7 +23,7 @@ const commandTypeSchema = z.enum([
   "list",
   "add",
   "filter",
-  "set-priority",
+  "set-priorities",
   "set-status",
   "set-title",
   "add-note",
@@ -82,8 +83,8 @@ const i18n: FeatureMap<CommandType> = {
       "add-note": {
         type: "add-note",
       },
-      "set-priority": {
-        type: "set-priority",
+      "set-priorities": {
+        type: "set-priorities",
       },
       filter: {
         type: "filter",
@@ -157,17 +158,9 @@ export class TodoManager extends BaseManager {
           break
         }
 
-        case "set-priority": {
-          const m = /^\s*(\d+)\s*(\d+)\s*$/.exec(parsed.args)
-          if (!m) throw new Error("输入不合法")
-          const index = Number(m[1])
-          const priority = await z
-            .number()
-            .int()
-            .min(1)
-            .max(9)
-            .parseAsync(Number(m?.[2]))
-          await this.setPriority(index, priority)
+        case "set-priorities": {
+          const { priority, indices } = await parseIndicesPriority(parsed.args)
+          await this.setPriorities(indices, priority)
           break
         }
       }
@@ -187,7 +180,7 @@ export class TodoManager extends BaseManager {
     const tasks = (await listTodo(this.message.talker().id))
       .map((k, i) => ({
         ...k,
-        i: i + 1,
+        i,
       }))
       .filter(
         (item) =>
@@ -251,8 +244,8 @@ export class TodoManager extends BaseManager {
 
   async renameTodo(index: number, newTitle: string) {
     const tasks = await listTodo(this.message.talker().id)
-    const task = tasks[index - 1]
-    if (!task) throw new Error(`序号不合法！取值范围为[1-${tasks.length}]`)
+    const task = tasks[index]
+    if (!task) throw new Error(ERR_MSG_INVALID_INPUT)
 
     await prisma.task.update({
       where: { id: task.id },
@@ -263,24 +256,28 @@ export class TodoManager extends BaseManager {
     return this.listOrFilterTodo()
   }
 
-  async setPriority(index: number, priority: Priority) {
+  async setPriorities(indices: number[], priority: Priority) {
+    // find tasks of talker
     const tasks = await listTodo(this.message.talker().id)
-    const task = tasks[index - 1]
-    if (!task) throw new Error(`序号不合法！取值范围为[1-${tasks.length}]`)
-
-    await prisma.task.update({
-      where: { id: task.id },
+    const ids = indices.map((i) => tasks[i]?.id).filter((v) => !!v) as string[]
+    const updated = await prisma.task.updateMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
       data: {
         priority,
       },
     })
+    console.log({ priority, indices, ids, updated })
     return this.listOrFilterTodo()
   }
 
   async updateTodo(index: number, status: TaskStatus, note?: string) {
     const tasks = await listTodo(this.message.talker().id)
-    const task = tasks[index - 1]
-    if (!task) throw new Error(`序号不合法！取值范围为[1-${tasks.length}]`)
+    const task = tasks[index]
+    if (!task) throw new Error(ERR_MSG_INVALID_INPUT)
 
     await prisma.task.update({
       where: { id: task.id },
