@@ -1,5 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { selectFromList } from "packages/common-common/utils/select-from-list"
+import { selectFromList } from "@cs-magic/common/utils/select-from-list"
 import { types } from "wechaty"
 import { z } from "zod"
 import { prisma } from "../../../../packages/common-db/providers/prisma"
@@ -174,7 +174,7 @@ export class ChatManager extends BaseManager {
     })
     await this.standardReply(
       `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
-      ["- You can activate me via sending: `parser enable`."],
+      ["- You can activate me via sending: `chatter enable`."],
     )
   }
 
@@ -229,6 +229,7 @@ export class ChatManager extends BaseManager {
 
   async safeReplyWithAI() {
     const m = this.message
+    const text = this.message.text()
     if (
       // 过滤自己的消息
       m.self() ||
@@ -241,11 +242,14 @@ export class ChatManager extends BaseManager {
           // await m.mentionSelf()
           // excluding @all
           (await m.mentionList()).some((m) => m.id === this.botWxid)
-        )) ||
+        ) &&
+        // 支持 叹号快捷触发
+        //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
+        !/^[!！]/.exec(text)) ||
       // 过滤非文本 todo: image/xxxx
       m.type() !== types.Message.Text ||
       // 过滤命令风格回复
-      m.text().startsWith("/")
+      text.startsWith("/")
     )
       return
 

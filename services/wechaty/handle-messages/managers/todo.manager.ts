@@ -196,13 +196,15 @@ export class TodoManager extends BaseManager {
           !options?.filter || item.title.toLowerCase().includes(options.filter),
       )
 
-    const serializeTask = (t: Task & { i: number }) =>
-      `  ${t.i}) [${t.priority}] ${t.title}`
-
     const serializeTaskGroup = (status: TaskStatus, onlyCount = false) => {
       const items = tasks.filter((t) => t.status === status)
       const ans = [`${status} (${items.length})`]
-      if (!onlyCount) ans.push(...items.map(serializeTask))
+      if (!onlyCount)
+        ans.push(
+          ...items.map(
+            (t) => `  ${t.i}) ${t.title} [${t.priority ?? Priority.normal}]`,
+          ),
+        )
       return ans
     }
 
