@@ -3,7 +3,7 @@
 import { sha1 } from "js-sha1"
 
 import { api } from "../../common-api-client/api"
-import { env } from "../../common-env"
+import { getEnv } from "../../common-env"
 import { fetchWechatApi } from "../functions"
 import { IWechatSDKToken } from "../schema"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
@@ -12,6 +12,8 @@ import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
  */
 export const getWechatToken = async () => {
+  const env = getEnv()
+
   if (!env.NEXT_PUBLIC_WECHAT_APP_ID || !env.WECHAT_APP_SECRET)
     throw new Error("invalid wechat app id/secret in env")
 

@@ -1,11 +1,13 @@
 import { fetchWechatApi } from "../../3rd-wechat/functions"
-import { env } from "../../common-env"
+import { getEnv } from "../../common-env"
 import {
   IWechatAdaptedToken,
   IWechatProfile,
   IWechatRefreshedToken,
   IWechatToken,
 } from "../schema"
+
+const env = getEnv()
 
 /**
  * 这个函数是 unsafe 的，一旦出错，说明要重新从前端拿 code 了

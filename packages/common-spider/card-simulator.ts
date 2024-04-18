@@ -2,8 +2,10 @@ import { UnexpectedError } from "@cs-magic/common/schema/error"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Page as PlaywrightPage } from "playwright-core"
 import { Page as PuppetPage } from "puppeteer"
-import { env } from "../common-env"
+import { getEnv } from "../common-env"
 import { BaseSimulator } from "./base-simulator"
+
+const env = getEnv()
 
 /**
  * !IMPORTANT: 需要 p01-card 项目启动

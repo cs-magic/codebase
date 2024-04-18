@@ -1,6 +1,8 @@
-import { env } from "../../common-env"
-import { IPusherServerConfig } from "../schema"
 import Pusher from "pusher"
+import { getEnv } from "../../common-env"
+import { IPusherServerConfig } from "../schema"
+
+const env = getEnv()
 
 export const initPusherServer = (config: IPusherServerConfig) => {
   const { port, useTLS, cluster, host } = config

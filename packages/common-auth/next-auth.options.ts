@@ -6,9 +6,11 @@ import { SmsProvider } from "../common-auth-sms/provider"
 import WechatProvider from "../common-auth-wechat/provider"
 import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db/providers/prisma"
-import { env } from "../common-env"
+import { getEnv } from "../common-env"
 
 import { tokenExpireSeconds } from "./config"
+
+const env = getEnv()
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.

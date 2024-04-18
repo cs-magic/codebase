@@ -7,7 +7,9 @@
 import Dysmsapi, * as Api from "@alicloud/dysmsapi20170525"
 import { Config } from "@alicloud/openapi-client"
 import { RuntimeOptions } from "@alicloud/tea-util"
-import { env } from "../../../common-env"
+import { getEnv } from "../../../common-env"
+
+const env = getEnv()
 
 const aliSmsConfig = {
   ak: env.ALI_AK,

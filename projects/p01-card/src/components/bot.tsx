@@ -3,9 +3,8 @@
 import { logger } from "@cs-magic/log/logger";
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
 import { useAtom } from "jotai";
-import { useSession } from "next-auth/react";
 import { QRCodeSVG } from "qrcode.react";
-import { env } from "../../../../packages/common-env";
+import { getEnv } from "../../../../packages/common-env";
 import { useInit } from "../../../../packages/common-hooks/use-init";
 import { socketStatusMap } from "../../../../packages/common-transport/schema";
 import { Button } from "../../../../packages/common-ui-shadcn/components/button";
@@ -25,6 +24,8 @@ import {
   ScanStatus,
 } from "../store/bot.atom";
 import { StandardCard } from "./standard-card";
+
+const env = getEnv();
 
 export const Bot = () => {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom);

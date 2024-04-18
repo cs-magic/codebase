@@ -1,4 +1,4 @@
-import "server-only"
+import { appRouter } from "@cs-magic/p01-card/src/app/api/trpc"
 
 import {
   createTRPCProxyClient,
@@ -10,10 +10,12 @@ import { observable } from "@trpc/server/observable"
 import { type TRPCErrorResponse } from "@trpc/server/rpc"
 import { headers } from "next/headers"
 import { cache } from "react"
-import { env } from "../common-env"
-import { transformer } from "./shared"
+import "server-only"
+import { getEnv } from "../common-env"
 import { createTRPCContext } from "./context"
-import { appRouter } from "@cs-magic/p01-card/src/app/api/trpc"
+import { transformer } from "./shared"
+
+const env = getEnv()
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

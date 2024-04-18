@@ -1,7 +1,10 @@
 import pino from "pino"
 import { logflarePinoVercel } from "pino-logflare"
 
-import { env } from "../../../common-env"
+import { getEnv } from "../../../common-env"
+
+const env = getEnv()
+
 // create pino-logflare console stream for serverless functions and send function for browser logs
 
 // create pino-logflare console stream for serverless functions and send function for browser logs

@@ -54,10 +54,12 @@ export const callLlm = async ({
     case "moonshot":
     case "openai":
     default:
-      return await new OpenAI({
-        ...clientConfig,
-      }).chat.completions
-        // todo: type hint
-        .create(queryConfig as ChatCompletionCreateParamsNonStreaming)
+      return (
+        new OpenAI({
+          ...clientConfig,
+        }).chat.completions
+          // todo: type hint
+          .create(queryConfig as ChatCompletionCreateParamsNonStreaming)
+      )
   }
 }

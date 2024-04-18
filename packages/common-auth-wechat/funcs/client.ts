@@ -1,6 +1,8 @@
-import { env } from "../../common-env"
-import { WechatScopeType } from "../schema"
+import { getEnv } from "../../common-env"
 import { WECHAT_AUTH_CALLBACK_URL } from "../config"
+import { WechatScopeType } from "../schema"
+
+const env = getEnv()
 
 /**
  * 只有该函数可以在客户端调用，用于拉起用户微信授权弹窗

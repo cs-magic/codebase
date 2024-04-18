@@ -1,8 +1,10 @@
 "use client"
 
-import { env } from "../../common-env"
-import { IPusherServerConfig } from "../schema"
 import PusherJS from "pusher-js"
+import { getEnv } from "../../common-env"
+import { IPusherServerConfig } from "../schema"
+
+const env = getEnv()
 
 export const initPusherClient = (
   config: IPusherServerConfig,
