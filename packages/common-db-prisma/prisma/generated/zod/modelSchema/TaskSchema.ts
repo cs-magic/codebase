@@ -20,6 +20,7 @@ export const TaskSchema = z.object({
   description: z.string().nullish(),
   ownerId: z.string().nullish(),
   notes: z.string().array(),
+  priority: z.number().int(),
 })
 
 export type Task = z.infer<typeof TaskSchema>
@@ -41,6 +42,7 @@ export const TaskOptionalDefaultsSchema = TaskSchema.merge(z.object({
   id: z.string().optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
+  priority: z.number().int().optional(),
 }))
 
 export type TaskOptionalDefaults = z.infer<typeof TaskOptionalDefaultsSchema>

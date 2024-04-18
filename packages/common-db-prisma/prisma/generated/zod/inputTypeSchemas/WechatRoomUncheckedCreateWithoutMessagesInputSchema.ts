@@ -8,8 +8,8 @@ import { InputJsonValueSchema } from './InputJsonValueSchema';
 
 export const WechatRoomUncheckedCreateWithoutMessagesInputSchema: z.ZodType<Prisma.WechatRoomUncheckedCreateWithoutMessagesInput> = z.object({
   id: z.string(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   adminIdList: z.union([ z.lazy(() => WechatRoomCreateadminIdListInputSchema),z.string().array() ]).optional(),
   memberIdList: z.union([ z.lazy(() => WechatRoomCreatememberIdListInputSchema),z.string().array() ]).optional(),
   avatar: z.string().optional().nullable(),

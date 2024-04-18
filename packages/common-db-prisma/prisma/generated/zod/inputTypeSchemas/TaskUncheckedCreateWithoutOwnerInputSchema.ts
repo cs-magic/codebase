@@ -6,12 +6,13 @@ import { TaskCreatenotesInputSchema } from './TaskCreatenotesInputSchema';
 
 export const TaskUncheckedCreateWithoutOwnerInputSchema: z.ZodType<Prisma.TaskUncheckedCreateWithoutOwnerInput> = z.object({
   id: z.string().optional(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   title: z.string(),
   description: z.string().optional().nullable(),
   status: z.lazy(() => TaskStatusSchema).optional(),
   notes: z.union([ z.lazy(() => TaskCreatenotesInputSchema),z.string().array() ]).optional(),
+  priority: z.number().int().optional()
 }).strict();
 
 export default TaskUncheckedCreateWithoutOwnerInputSchema;

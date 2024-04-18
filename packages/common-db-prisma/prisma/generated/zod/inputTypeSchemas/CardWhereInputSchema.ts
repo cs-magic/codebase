@@ -2,11 +2,12 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { StringFilterSchema } from './StringFilterSchema';
-import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
+import { DateTimeFilterSchema } from './DateTimeFilterSchema';
 import { JsonNullableFilterSchema } from './JsonNullableFilterSchema';
 import { EnumPlatformTypeFilterSchema } from './EnumPlatformTypeFilterSchema';
 import { PlatformTypeSchema } from './PlatformTypeSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
+import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { JsonNullableListFilterSchema } from './JsonNullableListFilterSchema';
 
 export const CardWhereInputSchema: z.ZodType<Prisma.CardWhereInput> = z.object({
@@ -14,8 +15,8 @@ export const CardWhereInputSchema: z.ZodType<Prisma.CardWhereInput> = z.object({
   OR: z.lazy(() => CardWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => CardWhereInputSchema),z.lazy(() => CardWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   user: z.lazy(() => JsonNullableFilterSchema).optional(),
   platformType: z.union([ z.lazy(() => EnumPlatformTypeFilterSchema),z.lazy(() => PlatformTypeSchema) ]).optional(),
   platformId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),

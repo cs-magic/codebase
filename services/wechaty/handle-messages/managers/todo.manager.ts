@@ -1,4 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { Task } from "@cs-magic/prisma/prisma/generated/zod"
 import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
 import omit from "lodash/omit"
 import { z } from "zod"
@@ -9,7 +10,23 @@ import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 import { type TaskStatus } from ".prisma/client"
 
-const commandTypeSchema = z.enum(["list", "add", "update", "rename", "filter"])
+export enum Priority {
+  highest = 1,
+  high = 3,
+  normal = 5,
+  low = 7,
+  lowest = 9,
+}
+
+const commandTypeSchema = z.enum([
+  "list",
+  "add",
+  "filter",
+  "set-priority",
+  "set-status",
+  "set-title",
+  "add-note",
+])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
   zh: {
@@ -25,11 +42,11 @@ const i18n: FeatureMap<CommandType> = {
         description: "添加一个新任务",
       },
       重命名: {
-        type: "rename",
+        type: "set-title",
         description: "修改一个任务的标题",
       },
       更新: {
-        type: "update",
+        type: "set-status",
         description: "更新一个任务的状态（待开始，进行中，已完成，已取消）",
       },
       筛选: {
@@ -53,14 +70,20 @@ const i18n: FeatureMap<CommandType> = {
         type: "add",
         description: "add a todo with title",
       },
-      rename: {
-        type: "rename",
+      "set-title": {
+        type: "set-title",
         description: "rename the title a todo",
       },
-      update: {
-        type: "update",
+      "set-status": {
+        type: "set-status",
         description:
           "update the status of a todo (pending,running,done,discarded)",
+      },
+      "add-note": {
+        type: "add-note",
+      },
+      "set-priority": {
+        type: "set-priority",
       },
       filter: {
         type: "filter",
@@ -93,10 +116,10 @@ export class TodoManager extends BaseManager {
     if (!input) return this.help()
 
     const commands = this.i18n[await this.getLang()].commands
-    const commandTypeSchema = z.enum(
-      Object.keys(commands) as [string, ...string[]],
+    const parsed = parseLimitedCommand(
+      input ?? "",
+      z.enum(Object.keys(commands) as [string, ...string[]]),
     )
-    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
     if (parsed) {
       const commandKeyInInput = parsed.command
       const commandKeyInEnum = commands[commandKeyInInput]?.type
@@ -116,7 +139,7 @@ export class TodoManager extends BaseManager {
           await this.addTodo(await z.string().min(1).parseAsync(parsed.args))
           break
 
-        case "rename": {
+        case "set-title": {
           const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(parsed.args)
           if (!m) throw new Error("输入不合法")
           const newTitle = await z.string().min(1).parseAsync(m?.[2])
@@ -124,7 +147,7 @@ export class TodoManager extends BaseManager {
           break
         }
 
-        case "update": {
+        case "set-status": {
           const m = /^\s*(\d+)\s*(\S+)\s*(.*)?$/.exec(parsed.args)
           // console.log({ m })
           if (!m) throw new Error("输入不合法")
@@ -132,6 +155,21 @@ export class TodoManager extends BaseManager {
           const newStatus = await taskStatusSchema.parseAsync(m?.[2])
           const note = m?.[3]
           await this.updateTodo(index, newStatus, note)
+          break
+        }
+
+        case "set-priority": {
+          const m = /^\s*(\d+)\s*(\d+)\s*$/.exec(parsed.args)
+          // console.log({ m })
+          if (!m) throw new Error("输入不合法")
+          const index = Number(m[1])
+          const priority = await z
+            .number()
+            .int()
+            .min(1)
+            .max(9)
+            .parseAsync(Number(m?.[2]))
+          await this.setPriority(index, priority)
           break
         }
       }
@@ -158,29 +196,30 @@ export class TodoManager extends BaseManager {
           !options?.filter || item.title.toLowerCase().includes(options.filter),
       )
 
-    const running = tasks.filter((t) => t.status === "running")
-    const pending = tasks.filter((t) => t.status === "pending")
-    const paused = tasks.filter((t) => t.status === "paused")
-    const done = tasks.filter((t) => t.status === "done")
-    const discarded = tasks.filter((t) => t.status === "discarded")
+    const serializeTask = (t: Task & { i: number }) =>
+      `  ${t.i}) [${t.priority}] ${t.title}`
+
+    const serializeTaskGroup = (status: TaskStatus, onlyCount = false) => {
+      const items = tasks.filter((t) => t.status === status)
+      const ans = [`${status} (${items.length})`]
+      if (!onlyCount) ans.push(...items.map(serializeTask))
+      return ans
+    }
 
     await this.standardReply(
       [
-        `Running (${running.length})`,
-        ...running.map((t, i) => `  ${t.i}) ${t.title}`),
-        `Pending (${pending.length})`,
-        ...pending.map((t, i) => `  ${t.i}) ${t.title}`),
-        `Paused (${paused.length})`,
-        ...paused.map((t, i) => `  ${t.i}) ${t.title}`),
-        `Done (${done.length})`,
-        `Discarded (${discarded.length})`,
+        ...serializeTaskGroup("running"),
+        ...serializeTaskGroup("pending"),
+        ...serializeTaskGroup("paused"),
+        ...serializeTaskGroup("done", true),
+        ...serializeTaskGroup("discarded", true),
       ].join("\n"),
       [
-        "todo list",
-        "todo filter [TITLE]",
-        "todo add [TITLE]",
-        "todo update [N] [STATUS]",
-        "todo rename [N] [NEW-TITLE]",
+        // "todo list",
+        // "todo filter [TITLE]",
+        // "todo add [TITLE]",
+        // "todo update [N] [STATUS]",
+        // "todo rename [N] [NEW-TITLE]",
       ],
     )
 
@@ -215,6 +254,20 @@ export class TodoManager extends BaseManager {
       where: { id: task.id },
       data: {
         title: newTitle,
+      },
+    })
+    return this.listOrFilterTodo()
+  }
+
+  async setPriority(index: number, priority: Priority) {
+    const tasks = await listTodo(this.message.talker().id)
+    const task = tasks[index - 1]
+    if (!task) throw new Error(`序号不合法！取值范围为[1-${tasks.length}]`)
+
+    await prisma.task.update({
+      where: { id: task.id },
+      data: {
+        priority,
       },
     })
     return this.listOrFilterTodo()

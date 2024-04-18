@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { LangType } from "../../../packages/common-i18n/schema"
+import { Priority } from "../handle-messages/managers/todo.manager"
 
 export const featureTypeSchema = z.enum(["system", "todo", "chatter", "parser"])
 export type FeatureType = z.infer<typeof featureTypeSchema>
@@ -18,6 +19,9 @@ export type FeatureMap<T extends string> = Record<
   {
     title: string
     description: string
-    commands: Record<string, { type: T; description: string }>
+    commands: Record<
+      string,
+      { type: T; description?: string; priority?: Priority }
+    >
   }
 >

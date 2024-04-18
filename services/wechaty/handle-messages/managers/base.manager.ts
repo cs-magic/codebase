@@ -10,11 +10,28 @@ import { formatBotQuery } from "../../utils/format-bot-query"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
 
+export const getQuote = async (message: Message) => {
+  console.log({ message })
+  const post = await message.toPost()
+  console.log({ post })
+  const parent = await post.parent()
+  console.log({ parent })
+
+  const m = /^「(.*?)：(.*?)」\n- - - - - - - - - - - - - - -\n(.*)$/.exec(
+    message.text(),
+  )
+
+  return {
+    userName: m?.[1],
+    quotedTitle: m?.[2],
+    content: m?.[3],
+  }
+}
+
 export class BaseManager {
   public message: Message
   public bot: Wechaty
   public name: FeatureType | null = null
-
   public i18n: FeatureMap<string> = {
     zh: {
       title: "小川助手",
@@ -32,6 +49,10 @@ export class BaseManager {
     // todo: bot on message
     this.bot = bot
     this.message = message
+  }
+
+  get rawText() {
+    return this.message.text()
   }
 
   get botWxid() {

@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
-import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDateTimeFieldUpdateOperationsInputSchema';
+import { DateTimeFieldUpdateOperationsInputSchema } from './DateTimeFieldUpdateOperationsInputSchema';
 import { WechatRoomUpdateadminIdListInputSchema } from './WechatRoomUpdateadminIdListInputSchema';
 import { WechatRoomUpdatememberIdListInputSchema } from './WechatRoomUpdatememberIdListInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
@@ -11,8 +11,8 @@ import { InputJsonValueSchema } from './InputJsonValueSchema';
 
 export const WechatRoomUpdateWithoutMessagesInputSchema: z.ZodType<Prisma.WechatRoomUpdateWithoutMessagesInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  createdAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   adminIdList: z.union([ z.lazy(() => WechatRoomUpdateadminIdListInputSchema),z.string().array() ]).optional(),
   memberIdList: z.union([ z.lazy(() => WechatRoomUpdatememberIdListInputSchema),z.string().array() ]).optional(),
   avatar: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),

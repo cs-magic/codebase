@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { WechatUserWhereInputSchema } from './WechatUserWhereInputSchema';
-import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
+import { DateTimeFilterSchema } from './DateTimeFilterSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { BoolNullableFilterSchema } from './BoolNullableFilterSchema';
 import { IntNullableFilterSchema } from './IntNullableFilterSchema';
@@ -20,8 +20,8 @@ export const WechatUserWhereUniqueInputSchema: z.ZodType<Prisma.WechatUserWhereU
   AND: z.union([ z.lazy(() => WechatUserWhereInputSchema),z.lazy(() => WechatUserWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => WechatUserWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => WechatUserWhereInputSchema),z.lazy(() => WechatUserWhereInputSchema).array() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   avatar: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   friend: z.union([ z.lazy(() => BoolNullableFilterSchema),z.boolean() ]).optional().nullable(),

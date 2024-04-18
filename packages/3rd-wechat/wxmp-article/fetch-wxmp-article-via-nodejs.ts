@@ -83,6 +83,8 @@ export const fetchWxmpArticleViaNodejs = async (
       agentType: "summarize-content",
       model: options.summaryModel,
     })
+    // 只在该微信场景报错
+    if (!contentSummary.response) throw new Error(contentSummary.error)
   }
 
   return {

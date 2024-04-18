@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { StringFilterSchema } from './StringFilterSchema';
-import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
+import { DateTimeFilterSchema } from './DateTimeFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { IntFilterSchema } from './IntFilterSchema';
 import { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
@@ -17,8 +17,8 @@ export const WechatMessageWhereInputSchema: z.ZodType<Prisma.WechatMessageWhereI
   OR: z.lazy(() => WechatMessageWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => WechatMessageWhereInputSchema),z.lazy(() => WechatMessageWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   talkerId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   listenerId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   roomId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),

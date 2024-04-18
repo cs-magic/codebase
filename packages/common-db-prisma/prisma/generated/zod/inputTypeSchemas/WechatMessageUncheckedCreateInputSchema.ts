@@ -5,8 +5,8 @@ import { WechatMessageCreatementionIdListInputSchema } from './WechatMessageCrea
 
 export const WechatMessageUncheckedCreateInputSchema: z.ZodType<Prisma.WechatMessageUncheckedCreateInput> = z.object({
   id: z.string(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   talkerId: z.string(),
   listenerId: z.string().optional().nullable(),
   roomId: z.string().optional().nullable(),

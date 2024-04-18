@@ -7,8 +7,8 @@ import { WechatMessageOrderByRelationAggregateInputSchema } from './WechatMessag
 
 export const WechatRoomOrderByWithRelationInputSchema: z.ZodType<Prisma.WechatRoomOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   adminIdList: z.lazy(() => SortOrderSchema).optional(),
   memberIdList: z.lazy(() => SortOrderSchema).optional(),
   avatar: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),

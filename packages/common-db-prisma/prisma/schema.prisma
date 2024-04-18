@@ -98,9 +98,9 @@ model VerificationToken {
 }
 
 model Card {
-  id        String    @id @default(nanoid(7))
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// [IUserBasic]
   user Json?
@@ -152,9 +152,9 @@ enum PlatformType {
 }
 
 model Task {
-  id        String    @id @default(nanoid(7))
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   title       String
   description String?
@@ -163,7 +163,8 @@ model Task {
   owner   WechatUser? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
 
-  notes String[]
+  notes    String[]
+  priority Int      @default(5)
 }
 
 enum TaskStatus {
@@ -175,9 +176,9 @@ enum TaskStatus {
 }
 
 model WechatMessage {
-  id        String    @id // '3430847513737913148',
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String   @id // '3430847513737913148',
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   talker   WechatUser @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
   talkerId String // 'wxid_ck85xup8b1bj21',
@@ -196,9 +197,9 @@ model WechatMessage {
 }
 
 model WechatUser {
-  id        String    @id //
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String   @id //
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   name             String //: '南川 Mark',
   avatar           String //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
@@ -225,9 +226,9 @@ model WechatUser {
 }
 
 model WechatRoom {
-  id        String    @id //
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String   @id //
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   messages WechatMessage[]
 

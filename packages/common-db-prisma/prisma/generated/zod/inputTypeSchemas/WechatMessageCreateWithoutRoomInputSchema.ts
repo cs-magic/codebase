@@ -7,8 +7,8 @@ import { WechatUserCreateNestedOneWithoutReceivedMessagesInputSchema } from './W
 
 export const WechatMessageCreateWithoutRoomInputSchema: z.ZodType<Prisma.WechatMessageCreateWithoutRoomInput> = z.object({
   id: z.string(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   timestamp: z.number().int(),
   type: z.number().int(),
   text: z.string().optional().nullable(),

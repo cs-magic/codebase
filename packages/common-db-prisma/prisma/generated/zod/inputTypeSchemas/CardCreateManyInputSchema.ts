@@ -10,8 +10,8 @@ import { CardCreatevideosInputSchema } from './CardCreatevideosInputSchema';
 
 export const CardCreateManyInputSchema: z.ZodType<Prisma.CardCreateManyInput> = z.object({
   id: z.string().optional(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   user: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   platformType: z.lazy(() => PlatformTypeSchema),
   platformId: z.string().optional().nullable(),

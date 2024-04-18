@@ -11,8 +11,8 @@ import { WechatUserSumOrderByAggregateInputSchema } from './WechatUserSumOrderBy
 
 export const WechatUserOrderByWithAggregationInputSchema: z.ZodType<Prisma.WechatUserOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   avatar: z.lazy(() => SortOrderSchema).optional(),
   friend: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),

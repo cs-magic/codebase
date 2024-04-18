@@ -5,7 +5,7 @@ import { getBotContextFromMessage } from "../utils/bot-context"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
-import { BaseManager } from "./managers/base.manager"
+import { BaseManager, getQuote } from "./managers/base.manager"
 import { ChatManager } from "./managers/chat.manager"
 import { ParserManager } from "./managers/parser.manager"
 import { SystemManager } from "./managers/system.manager"
@@ -13,12 +13,15 @@ import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
-    const text = message.text().trim().toLowerCase()
+    // console.log(await getQuote(message))
 
     // serialize first
     await storageMessage(message)
 
-    const result = parseLimitedCommand<CommandType>(text, commandsSchema)
+    const result = parseLimitedCommand<CommandType>(
+      message.text().trim().toLowerCase(),
+      commandsSchema,
+    )
     // logger.debug(result)
 
     if (result) {

@@ -15,6 +15,7 @@ export const TaskSelectSchema: z.ZodType<Prisma.TaskSelect> = z.object({
   status: z.boolean().optional(),
   ownerId: z.boolean().optional(),
   notes: z.boolean().optional(),
+  priority: z.boolean().optional(),
   owner: z.union([z.boolean(),z.lazy(() => WechatUserArgsSchema)]).optional(),
 }).strict()
 

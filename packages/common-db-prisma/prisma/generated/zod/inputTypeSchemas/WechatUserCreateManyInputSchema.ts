@@ -7,8 +7,8 @@ import { InputJsonValueSchema } from './InputJsonValueSchema';
 
 export const WechatUserCreateManyInputSchema: z.ZodType<Prisma.WechatUserCreateManyInput> = z.object({
   id: z.string(),
-  createdAt: z.coerce.date().optional().nullable(),
-  updatedAt: z.coerce.date().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   name: z.string(),
   avatar: z.string(),
   friend: z.boolean().optional().nullable(),
