@@ -4,8 +4,7 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
-    "dev": "tsx index.ts",
-    "test": "jest"
+    "dev": "tsx index.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
@@ -16,11 +15,5 @@
     "wechaty": "^1.20.2",
     "wechaty-puppet-padlocal": "^1.20.1",
     "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.4.5"
   }
 }

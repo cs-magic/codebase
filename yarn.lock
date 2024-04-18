@@ -1887,14 +1887,10 @@ __metadata:
   resolution: "@cs-magic/wechaty@workspace:services/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@types/jest": "npm:^29.5.12"
     "@types/lodash": "npm:^4.14.202"
     dotenv: "npm:^16.4.5"
-    jest: "npm:^29.7.0"
     lodash: "npm:^4.17.21"
     qrcode-terminal: "npm:^0.12.0"
-    ts-jest: "npm:^29.1.2"
-    typescript: "npm:^5.4.5"
     wechaty: "npm:^1.20.2"
     wechaty-puppet-padlocal: "npm:^1.20.1"
     zod: "npm:^3.22.4"
@@ -8376,7 +8372,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cs-magic@workspace:."
   dependencies:
+    "@types/jest": "npm:^29.5.12"
+    jest: "npm:^29.7.0"
     pino-pretty: "npm:^11.0.0"
+    ts-jest: "npm:^29.1.2"
+    typescript: "npm:^5.4.5"
     zod: "npm:3.21.1"
   languageName: unknown
   linkType: soft
