@@ -10,7 +10,7 @@
     "build": "yarn prerun && next build",
     "start": "next start -p 40326",
     "build-start": "yarn build && yarn start",
-    "cicd": "git add . && git stash && git pull -f && yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
+    "cicd": "yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
     "test": "jest",
     "test:watch": "jest --watch",
     "start-api-service": "yarn workspace @cs-magic/api start-api"
