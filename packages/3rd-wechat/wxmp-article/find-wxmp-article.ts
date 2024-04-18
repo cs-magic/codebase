@@ -32,7 +32,7 @@ export const findWxmpArticle = async (
     ...cardDetailSchema,
   })
 
-  console.log(JSON.stringify({ found, specificModel }, null, 2))
+  // console.log(JSON.stringify({ found, specificModel }, null, 2))
 
   return found
 }

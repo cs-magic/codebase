@@ -20,7 +20,7 @@ export const fetchWxmpArticleWithCache = async (
 
   let found = await findWxmpArticle(data, options?.summaryModel)
 
-  console.log({ found })
+  // console.log({ found })
 
   if (!found) {
     const newItem =
@@ -32,7 +32,7 @@ export const fetchWxmpArticleWithCache = async (
       data: newItem,
       ...cardDetailSchema,
     })
-    console.log({ found })
+    // console.log({ found })
   }
 
   return found

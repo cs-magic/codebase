@@ -22,7 +22,6 @@ export class SenderQueue {
 
   async addTask(task: QueueTask) {
     this.queue.push(task)
-    // logger.info(`-- onMessage: Q(n=${this.queue.length}), ${prettyMessage(message)}`)
     if (!this.processing) {
       this.processing = true
       await this._runTask()

@@ -1,5 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
@@ -146,17 +147,9 @@ export class ParserManager extends BaseManager {
 
     initLogWithTimer()
 
-    const notificationGroups = await this.bot.Room.find({
-      topic: /bot notification/i,
-    })
-    if (notificationGroups) {
-      void this.bot.sendQueue.addTask(async () =>
-        notificationGroups.say(
-          `[parser(${this.toParse})] parsing link from ${await formatTalker(message)}`,
-        ),
-      )
-      void this.bot.sendQueue.addTask(() => message.forward(notificationGroups))
-    }
+    void this.notify(
+      `[parser(${this.toParse})] parsing Link(messageId=${message.id}) from ${await formatTalker(message)}`,
+    )
     ++this.toParse
 
     try {
@@ -182,19 +175,18 @@ export class ParserManager extends BaseManager {
       if (!this.uniParser) this.uniParser = new CardSimulator()
 
       const cardContent = JSON.stringify(card)
-      logger.info(cardContent)
+      logger.info(`-- inputting: ${formatString(cardContent)}`)
       const { cardUrl } = await this.uniParser.genCard(cardContent, user)
 
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      void this.bot.sendQueue.addTask(() => message.say(file))
-      if (notificationGroups)
-        void this.bot.sendQueue.addTask(() => notificationGroups.say(file))
+      void this.addTask(() => message.say(file))
+      void this.notify(file)
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)
-      void this.bot.sendQueue.addTask(() => message.say(s))
+      void this.notify(s)
     } finally {
       --this.toParse
     }

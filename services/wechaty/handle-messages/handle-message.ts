@@ -1,9 +1,11 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
+import { logger } from "@cs-magic/log/logger"
 import { type Message, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatBotQuery } from "../utils/format-bot-query"
+import { formatTalker } from "../utils/format-talker"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
@@ -14,10 +16,8 @@ import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
-    const talkerName = message.talker().name()
-    const groupTopic = await message.room()?.topic()
-    console.log(
-      `onMessage: ${JSON.stringify({ ...message.payload, talkerName, groupTopic })}`,
+    logger.info(
+      `[onMessage] ${await formatTalker(message)}: ${JSON.stringify(message.payload)}`,
     )
 
     await storageMessage(message)

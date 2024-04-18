@@ -6,7 +6,6 @@ import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { safeCallLLM } from "../../../../packages/common-llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { type IWechatUserPreference } from "../../schema/wechat-user"
-import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
 import { getConvTable } from "../../utils/get-conv-table"
@@ -277,15 +276,21 @@ export class ChatManager extends BaseManager {
     // logger.info(`--  context(len=${context.length})`)
 
     void this.notify(`calling LLM from ${await this.formatTalker()}`)
+
     const res = await safeCallLLM({
       messages: context,
       model: preference.model,
     })
+
     if (res.error) throw new Error(res.error)
+
     const content = res.response?.choices[0]?.message.content
     if (!content)
-      throw new Error(`回复结构不正确，请检查：queryId=${res.query.id}`)
-    void this.notify(`  called LLM from ${await this.formatTalker()}`)
-    void this.bot.sendQueue.addTask(() => m.say(content))
+      throw new Error(
+        `invalid response content, please check Query(id=${res.query.id})`,
+      )
+
+    void this.addTask(() => m.say(content))
+    void this.notify(`DONE calling LLM from ${await this.formatTalker()}`)
   }
 }

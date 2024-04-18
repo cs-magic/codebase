@@ -11,6 +11,7 @@ import { formatBotQuery } from "../../utils/format-bot-query"
 import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
+import { QueueTask } from "../sender-queue"
 
 export const getQuote = async (message: Message) => {
   console.log({ message })
@@ -154,7 +155,7 @@ export class BaseManager {
       content,
       tips,
     )
-    void this.bot.sendQueue.addTask(() => this.message.say(pretty))
+    void this.addTask(() => this.message.say(pretty))
   }
 
   async help() {
@@ -164,6 +165,10 @@ export class BaseManager {
       (await this.getDescription()) ?? "No Description",
       Object.keys(commands).length ? Object.keys(commands) : undefined,
     )
+  }
+
+  async addTask(task: QueueTask) {
+    void this.bot.sendQueue.addTask(task)
   }
 
   async notify(content: Sayable) {
