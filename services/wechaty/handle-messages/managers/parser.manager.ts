@@ -78,7 +78,7 @@ export class ParserManager extends BaseManager {
 
   async parseSelf() {
     const message = this.message
-    const text = await z.string().parseAsync(message.text)
+    const text = await z.string().parseAsync(message.text())
     return this.safeParseCard({
       user: this.talkingUser,
       message: {
@@ -207,7 +207,7 @@ export class ParserManager extends BaseManager {
       if (!this.uniParser) this.uniParser = new CardSimulator()
 
       const cardContent = JSON.stringify(card)
-      logger.info(`-- inputting: ${formatString(cardContent)}`)
+      logger.info(`-- inputting: ${formatString(cardContent, 120)}`)
       const { cardUrl } = await this.uniParser.genCard(cardContent, user)
 
       logger.info(`-- sending file: ${cardUrl}`)
