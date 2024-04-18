@@ -1,11 +1,15 @@
 import { ILlmMessage } from "@cs-magic/p01-card/src/schema/message"
 import OpenAI, { ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
-import { api, backendApi } from "../common-api-client"
+import { api } from "../common-api-client/api"
+import { backendApi } from "../common-api-client/backend-api"
+import { loadEnv } from "../common-env/utils/load-env"
 import { LlmModelType, LlmProviderType } from "./schema/providers"
 import ChatCompletionCreateParamsNonStreaming = OpenAI.ChatCompletionCreateParamsNonStreaming
 
 export type ICompletion = OpenAI.Chat.Completions.ChatCompletion
+
+loadEnv()
 
 export const callLlm = async ({
   apiKey,

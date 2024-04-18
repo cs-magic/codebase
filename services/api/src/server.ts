@@ -1,3 +1,4 @@
+// load for api and so on
 import { genId } from "@cs-magic/common/utils/gen-id"
 import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"

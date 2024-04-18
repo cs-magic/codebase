@@ -1,4 +1,4 @@
-import { api } from "../common-api-client"
+import { api } from "../common-api-client/api"
 
 import { WECHAT_API_URL } from "./config"
 import { isWechatError } from "./schema"

@@ -1,4 +1,4 @@
-import { ensurePathSync } from "@cs-magic/common/utils/ensure-path-sync"
+import { ensureDirSync } from "packages/common-common/utils/ensure-dir-sync"
 import path from "path"
 import { fileURLToPath } from "url"
 
@@ -12,7 +12,7 @@ export class Path {
   static projectDir = path.dirname(Path.packagesDir)
 
   // for specific projects
-  static generatedDir = ensurePathSync(path.join(Path.projectDir, ".generated"))
+  static generatedDir = ensureDirSync(path.join(Path.projectDir, ".generated"))
   static envFile = path.join(Path.projectDir, ".env")
   static envLocalFile = path.join(Path.projectDir, ".env.local")
 }

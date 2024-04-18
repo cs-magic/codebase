@@ -78,7 +78,10 @@ export class ParserManager extends BaseManager {
 
   async parseSelf() {
     const message = this.message
-    const text = await z.string().parseAsync(message.text())
+    const rawText = message.text()
+    console.log({ message, rawText })
+    const text = await z.string().parseAsync(rawText)
+    console.log({ text })
     return this.safeParseCard({
       user: this.talkingUser,
       message: {
@@ -194,7 +197,7 @@ export class ParserManager extends BaseManager {
       initLogWithTimer()
 
       void this.notify(
-        `[parser(${this.toParse})] parsing Link(messageId=${message.id}) from ${await formatTalker(message)}`,
+        `[parser(${this.toParse})] ${await formatTalker(message)} parsing Message(id=${message.id})`,
       )
       ++this.toParse
       const card = await fetchWxmpArticleWithCache(url, {
@@ -216,7 +219,7 @@ export class ParserManager extends BaseManager {
       void this.addTask(async () =>
         (await this.bot.Message.find({ id: message.id }))?.say(file),
       )
-      void this.notify(file)
+      void this.notify(`DONE parsed Message(id=${message.id})`)
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)

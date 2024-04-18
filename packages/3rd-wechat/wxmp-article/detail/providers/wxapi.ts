@@ -1,5 +1,6 @@
 import axios from "axios"
-import { api } from "../../../../common-api-client"
+
+import { api } from "../../../../common-api-client/api"
 import { getWechatArticleUrlFromShortId } from "../../utils"
 import { IWechatArticleComment, IWechatArticleStat } from "../schema"
 

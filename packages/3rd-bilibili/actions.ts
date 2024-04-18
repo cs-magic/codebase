@@ -1,6 +1,6 @@
 "use server"
 
-import { api } from "../common-api-client"
+import { api } from "../common-api-client/api"
 import { IApiResult } from "../common-api-client/schema"
 import { IBilibiliVideoDetail } from "./schema"
 

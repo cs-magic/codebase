@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { AxiosError } from "axios"
 import { formatString } from "./format-string"
 
@@ -8,6 +9,6 @@ export const formatError = (e: unknown) => {
       : e instanceof Error
         ? e.message
         : (e as string)
-  console.error("[ERR]: " + formatString(JSON.stringify(s), 120))
+  logger.error(s)
   return s
 }

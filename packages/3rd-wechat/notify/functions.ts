@@ -1,7 +1,8 @@
 "use server"
 
 import { sha1 } from "js-sha1"
-import { api } from "../../common-api-client"
+
+import { api } from "../../common-api-client/api"
 import { env } from "../../common-env"
 import { fetchWechatApi } from "../functions"
 import { IWechatSDKToken } from "../schema"
