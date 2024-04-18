@@ -13,9 +13,12 @@ import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
-    // console.log(await getQuote(message))
+    const talkerName = message.talker().name()
+    const groupTopic = await message.room()?.topic()
+    console.log(
+      `onMessage: ${JSON.stringify({ ...message.payload, talkerName, groupTopic })}`,
+    )
 
-    // serialize first
     await storageMessage(message)
 
     const result = parseLimitedCommand<CommandType>(
@@ -27,7 +30,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     if (result) {
       switch (result.command) {
         case "ding":
-          return bot.sendQueue.addTask(() => message.say("dong"))
+          return void bot.sendQueue.addTask(() => message.say("dong"))
 
         case "help":
           return await new BaseManager(bot, message).getHelp(true)
@@ -75,7 +78,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // from wang, 2024-04-13 01:36:14
     if (s.includes("filterValue not found for filterKey: id")) {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
-      await bot.sendQueue.addTask(async () =>
+      void bot.sendQueue.addTask(async () =>
         message.say(await formatBotQuery(context, "哎呀出错啦", s)),
       )
     }
