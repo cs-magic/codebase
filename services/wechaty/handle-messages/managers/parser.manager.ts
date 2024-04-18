@@ -5,11 +5,12 @@ import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 import { FileBox } from "file-box"
-import { Message, types } from "wechaty"
+import { types } from "wechaty"
 import { z } from "zod"
 import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../schema/commands"
+import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -149,13 +150,6 @@ export class ParserManager extends BaseManager {
       topic: /bot notification/i,
     })
     if (notificationGroups) {
-      const formatTalker = async (message: Message) => {
-        let s = `${message.talker().name()}`
-        if (message.room()) {
-          s += `@${await message.room()?.topic()}`
-        }
-        return s
-      }
       void this.bot.sendQueue.addTask(async () =>
         notificationGroups.say(
           `[parser(${this.toParse})] parsing link from ${await formatTalker(message)}`,

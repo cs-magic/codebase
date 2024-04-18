@@ -2,6 +2,7 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { type Message, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContextFromMessage } from "../utils/bot-context"
+import { botNotify } from "../utils/bot-notify"
 import { formatBotQuery } from "../utils/format-bot-query"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { storageMessage } from "../utils/storage-message"
@@ -65,26 +66,16 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
       await new ChatManager(bot, message).safeReplyWithAI()
     }
-
-    // handle ai chat or so
   } catch (e) {
-    // console.log("-- error happened")
     let s = formatError(e)
-    // console.log(`-- error: ${s}`)
-    const context = await getBotContextFromMessage(bot, message)
-    // console.log(`-- context: ${JSON.stringify(context)}`)
 
     // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292
     // from wang, 2024-04-13 01:36:14
-    if (s.includes("filterValue not found for filterKey: id")) {
+    if (s.includes("filterValue not found for filterKey: id"))
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
-      void bot.sendQueue.addTask(async () =>
-        message.say(await formatBotQuery(context, "哎呀出错啦", s)),
-      )
-    }
-    // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-    // await message.say(await prettyBotQuery(context, "哎呀出错啦", s))
 
-    // console.log(`-- finished handling messages`)
+    // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
+    const context = await getBotContextFromMessage(bot, message)
+    void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
   }
 }

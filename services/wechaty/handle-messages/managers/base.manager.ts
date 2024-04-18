@@ -1,12 +1,14 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
-import { type Message, type Wechaty } from "wechaty"
+import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import {
   getBotContextFromMessage,
   getBotDynamicContext,
 } from "../../utils/bot-context"
+import { botNotify } from "../../utils/bot-notify"
 import { renderBotTemplate } from "../../utils/bot-template"
 import { formatBotQuery } from "../../utils/format-bot-query"
+import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
 
@@ -65,6 +67,10 @@ export class BaseManager {
 
   get convId() {
     return this.conv.id
+  }
+
+  async formatTalker() {
+    return await formatTalker(this.message)
   }
 
   async parse(input?: string) {
@@ -158,5 +164,9 @@ export class BaseManager {
       (await this.getDescription()) ?? "No Description",
       Object.keys(commands).length ? Object.keys(commands) : undefined,
     )
+  }
+
+  async notify(content: Sayable) {
+    void botNotify(this.bot, content)
   }
 }
