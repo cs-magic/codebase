@@ -1,4 +1,4 @@
-import { deserializeRefMsgPayload } from "wechaty-puppet-padlocal/dist/esm/src/padlocal/messages/message-appmsg"
+import { deserializeRefMsgPayload } from "wechaty-puppet-padlocal"
 
 export type PadlocalVersion = "raw@1.20" | "mark@2024-04-19"
 
