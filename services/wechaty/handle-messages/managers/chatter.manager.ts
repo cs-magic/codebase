@@ -1,5 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { types } from "wechaty"
+import { UrlLinkImpl } from "wechaty/dist/esm/src/user-modules/url-link"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../packages/common-llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
@@ -68,7 +69,7 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class ChatManager extends BaseManager {
+export class ChatterManager extends BaseManager {
   public i18n = i18n
   public name: FeatureType = "chatter"
 
@@ -81,7 +82,7 @@ export class ChatManager extends BaseManager {
         desc,
         SEPARATOR_LINE,
         "Status:",
-        `  - enabled: ${preference.chatEnabled}`,
+        `  - enabled: ${preference.chatterEnabled}`,
       ].join("\n"),
       Object.keys(commands).map((command) => `  ${this.name} ${command}`),
     )
@@ -145,7 +146,7 @@ export class ChatManager extends BaseManager {
             isRoom: this.isRoom,
             convId: this.convId,
           })),
-          chatEnabled: true,
+          chatterEnabled: true,
         },
       },
     })
@@ -169,7 +170,7 @@ export class ChatManager extends BaseManager {
             isRoom: this.isRoom,
             convId: this.convId,
           })),
-          chatEnabled: false,
+          chatterEnabled: false,
         },
       },
     })
@@ -207,7 +208,7 @@ export class ChatManager extends BaseManager {
       isRoom: this.isRoom,
     })
     const preference = getRobustPreference(convInDB)
-    if (!preference.chatEnabled) {
+    if (!preference.chatterEnabled) {
       // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
       return
     }
@@ -243,6 +244,6 @@ export class ChatManager extends BaseManager {
       )
 
     void this.addTask(() => m.say(content))
-    void this.notify(`DONE calling LLM`)
+    void this.notify(`✅ calling LLM`)
   }
 }

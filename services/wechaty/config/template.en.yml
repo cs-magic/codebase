@@ -23,7 +23,7 @@ status: |-
   ConvPreference:
     model: {{convPreference.model}}
     backend: {{convPreference.backend}}
-    chat-enabled: {{{convPreference.chatEnabled}}}
+    chatter-enabled: {{{convPreference.chatEnabled}}}
     parser-enabled: {{{convPreference.parserEnabled}}}
     max-output-lines: {{{convPreference.maxOutputLines}}}
     command-style: {{{convPreference.commandStyle}}}
@@ -31,7 +31,7 @@ status: |-
   UserPreference:
     model: {{userPreference.model}}
     backend: {{userPreference.backend}}
-    chat-enabled: {{{userPreference.chatEnabled}}}
+    chatter-enabled: {{{userPreference.chatEnabled}}}
     parser-enabled: {{{userPreference.parserEnabled}}}
     max-output-lines: {{{userPreference.maxOutputLines}}}
     command-style: {{{userPreference.commandStyle}}}

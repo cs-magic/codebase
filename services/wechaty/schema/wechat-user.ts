@@ -15,10 +15,10 @@ export enum CommandStyle {
  */
 export type IWechatUserPreference = {
   lang: LangType
-  chatEnabled: boolean
-  chatTopic?: string
   model: LlmModelType
   backend: BackendType
+  chatterEnabled: boolean
+  chatTopic?: string
   parserEnabled: boolean
   todoFilter?: string
   maxOutputLines?: number

@@ -1,7 +1,7 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import { type Message, types, type Wechaty } from "wechaty"
+import { type Message, types, type Wechaty, UrlLink } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
@@ -12,7 +12,7 @@ import { parseLimitedCommand } from "../utils/parse-command"
 import { parseQuote, parseText } from "../utils/parse-message"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
-import { ChatManager } from "./managers/chat.manager"
+import { ChatterManager } from "./managers/chatter.manager"
 import { ParserManager } from "./managers/parser.manager"
 import { SystemManager } from "./managers/system.manager"
 import { TodoManager } from "./managers/todo.manager"
@@ -22,6 +22,18 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     logger.info(
       `[onMessage] ${await formatTalkerFromMessage(message)}: ${JSON.stringify(message.payload)}`,
     )
+
+    if (message.text().includes("test")) {
+      void message.say(
+        new bot.UrlLink({
+          title: "title",
+          description: "description",
+          url: "https://p01.cs-magic.cn",
+          thumbnailUrl:
+            "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
+        }),
+      )
+    }
 
     if (parseQuote(message.text())) {
       try {
@@ -73,7 +85,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           return await new TodoManager(bot, message).parse(result.args)
 
         case "chatter":
-          return await new ChatManager(bot, message).parse(result.args)
+          return await new ChatterManager(bot, message).parse(result.args)
 
         case "parser":
           return await new ParserManager(bot, message).parse(result.args)
@@ -90,7 +102,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       if (message.type() === types.Message.Url)
         await new ParserManager(bot, message).parseSelf()
       else {
-        await new ChatManager(bot, message).safeReplyWithAI()
+        await new ChatterManager(bot, message).safeReplyWithAI()
       }
     }
   } catch (e) {

@@ -99,7 +99,7 @@ export class ParserManager extends BaseManager {
   async parseQuote() {
     if (!this.quote) return
 
-    const message = await getQuotedMessage(this.quote.quoted)
+    const message = await getQuotedMessage(this.quote.quoted.content ?? "")
 
     const text = await z.string().parseAsync(message.text)
 
@@ -226,7 +226,7 @@ export class ParserManager extends BaseManager {
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)
-      void this.notify(s)
+      void this.notify(`❌ ` + s)
     } finally {
       --this.toParse
     }
