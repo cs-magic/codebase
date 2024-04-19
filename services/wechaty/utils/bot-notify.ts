@@ -12,7 +12,7 @@ export const botNotify = async (
   const group = await botGetNotificationGroup(bot)
   if (!group) return logger.error(`no notification group found`)
   if (typeof content === "string") {
-    content = `${content}\nby ${await formatTalkerFromMessage(message)} ${moment().format("MM/DD hh:mm")}`
+    content = `${content}\n--------\nby ${await formatTalkerFromMessage(message)}\n${moment().format("MM/DD hh:mm:ss")}`
   }
   void bot.sendQueue.addTask(() => group.say(content))
 }

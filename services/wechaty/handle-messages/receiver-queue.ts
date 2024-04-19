@@ -1,7 +1,7 @@
 import { logger } from "@cs-magic/log/logger"
 import { type Message, type Wechaty } from "wechaty"
 import { sleep } from "../../../packages/common-datetime/utils"
-import { prettyMessage } from "../utils/pretty-message"
+import { formatMessage } from "../utils/format-message"
 import { handleMessage } from "./handle-message"
 
 /**
@@ -39,7 +39,7 @@ export class ReceiverQueue {
     while (this.queue.length > 0) {
       const message = this.queue.shift()!
       logger.info(
-        `-- processMessage(${this.queue.length}): ${prettyMessage(message)}`,
+        `-- processMessage(${this.queue.length}): ${formatMessage(message)}`,
       )
       await handleMessage(this.bot, message)
       await sleep(1000 / this.qps) // 限时

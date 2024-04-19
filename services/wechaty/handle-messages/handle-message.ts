@@ -1,18 +1,15 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import wechaty, { type Message, types, type Wechaty } from "wechaty"
-import { PostBuilder } from "wechaty/dist/esm/src/user-modules/post"
+import { type Message, types, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
 import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
-import { getQuotedMessage } from "../utils/get-quoted-message"
 import { parseLimitedCommand } from "../utils/parse-command"
 import { parseQuote, parseText } from "../utils/parse-message"
-import { prettyMessage } from "../utils/pretty-message"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatManager } from "./managers/chat.manager"
@@ -28,7 +25,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     if (parseQuote(message.text())) {
       try {
-        await message.toPost()
+        // await message.toPost()
         // message.payload.
         // const post = new PostBuilder(message.id)
         // await post.ready()

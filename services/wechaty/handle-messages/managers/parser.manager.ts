@@ -99,7 +99,7 @@ export class ParserManager extends BaseManager {
   async parseQuote() {
     if (!this.quote) return
 
-    const message = await getQuotedMessage(this.quote.quotedContent)
+    const message = await getQuotedMessage(this.quote.quoted)
 
     const text = await z.string().parseAsync(message.text)
 

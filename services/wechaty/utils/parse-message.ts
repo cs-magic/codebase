@@ -1,12 +1,13 @@
+import { deserializeRefMsgPayload } from "wechaty-puppet-padlocal/dist/esm/src/padlocal/messages/message-appmsg"
+
+export type PadlocalVersion = "raw@1.20" | "mark@2024-04-19"
+
+export const padlocalVersion: PadlocalVersion = "mark@2024-04-19"
+
 export const parseQuote = (
   messageText: string,
-): {
-  userName: string
-  quotedContent: string
-  content: string
-} | null => {
-  // console.log({ message })
-
+  version: PadlocalVersion = "mark@2024-04-19",
+) => {
   const m = /^「(.*?)：(.*?)」\n- - - - - - - - - - - - - - -\n(.*)$/.exec(
     messageText,
   )
@@ -15,9 +16,18 @@ export const parseQuote = (
     ? null
     : {
         userName: m[1]!,
-        quotedContent: m[2]!,
         content: m[3]!,
+        quoted:
+          version === "raw@1.20"
+            ? {
+                version,
+                content: m[2]!,
+              }
+            : {
+                version,
+                ...deserializeRefMsgPayload(m[2]!),
+              },
       }
 }
 export const parseText = (messageText: string) =>
-  (parseQuote(messageText)?.content ?? messageText).trim()
+  (parseQuote(messageText, padlocalVersion)?.content ?? messageText).trim()
