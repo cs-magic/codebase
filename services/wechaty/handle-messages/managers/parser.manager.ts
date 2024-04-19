@@ -79,9 +79,11 @@ export class ParserManager extends BaseManager {
   async parseSelf() {
     const message = this.message
     const rawText = message.text()
-    console.log({ message, rawText })
+    // console.log({ message, rawText })
+
     const text = await z.string().parseAsync(rawText)
-    console.log({ text })
+    // console.log({ text })
+
     return this.safeParseCard({
       user: this.talkingUser,
       message: {
@@ -98,7 +100,9 @@ export class ParserManager extends BaseManager {
     if (!this.quote) return
 
     const message = await getQuotedMessage(this.quote.quotedContent)
+
     const text = await z.string().parseAsync(message.text)
+
     return this.safeParseCard({
       user: this.talkingUser,
       message: {
@@ -115,10 +119,13 @@ export class ParserManager extends BaseManager {
     if (!input) return this.help()
 
     const commands = this.i18n[await this.getLang()].commands
+
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
     )
+
     const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
+
     if (parsed) {
       const commandKeyInInput = parsed.command
       const commandKeyInEnum = commands[commandKeyInInput]?.type
@@ -196,9 +203,7 @@ export class ParserManager extends BaseManager {
 
       initLogWithTimer()
 
-      void this.notify(
-        `[parser(${this.toParse})] ${await formatTalker(message)} parsing Message(id=${message.id})`,
-      )
+      void this.notify(`parsing[${this.toParse}] mid=${message.id}`)
       ++this.toParse
       const card = await fetchWxmpArticleWithCache(url, {
         backendEngineType: convPreference.backend,
@@ -217,7 +222,7 @@ export class ParserManager extends BaseManager {
 
       const file = FileBox.fromUrl(cardUrl)
       void this.addTask(async () => this.conv?.say(file))
-      void this.notify(`DONE parsed Message(id=${message.id})`)
+      void this.notify(`parsed mid=${message.id}`)
       logger.info("-- ✅ sent file")
     } catch (e) {
       const s = formatError(e)

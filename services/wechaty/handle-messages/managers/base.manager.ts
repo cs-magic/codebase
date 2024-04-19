@@ -1,9 +1,6 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
-import {
-  IUserSummary,
-  IUserSummaryFull,
-} from "@cs-magic/prisma/schema/user.summary"
+import { IUserSummaryFull } from "@cs-magic/prisma/schema/user.summary"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getBotContext } from "../../utils/bot-context"
@@ -188,6 +185,6 @@ export class BaseManager {
   }
 
   async notify(content: Sayable) {
-    void botNotify(this.bot, content)
+    void botNotify(this.bot, this.message, content)
   }
 }

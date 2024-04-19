@@ -1,17 +1,13 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { selectFromList } from "@cs-magic/common/utils/select-from-list"
 import { types } from "wechaty"
 import { z } from "zod"
-import { prisma } from "../../../../packages/common-db/providers/prisma"
 import { safeCallLLM } from "../../../../packages/common-llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { type IWechatUserPreference } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"
 import { getConvTable } from "../../utils/get-conv-table"
 import { getRobustPreference } from "../../utils/get-robust-preference"
 import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-topic"
-import { listMessagesOfSpecificTopic } from "../../utils/list-messages-of-specific-topic"
 import { listTopics } from "../../utils/list-topics"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
@@ -231,7 +227,7 @@ export class ChatManager extends BaseManager {
     }))
     // logger.info(`--  context(len=${context.length})`)
 
-    void this.notify(`calling LLM from ${await this.formatTalker()}`)
+    void this.notify(`calling LLM`)
 
     const res = await safeCallLLM({
       messages: context,
@@ -247,6 +243,6 @@ export class ChatManager extends BaseManager {
       )
 
     void this.addTask(() => m.say(content))
-    void this.notify(`DONE calling LLM from ${await this.formatTalker()}`)
+    void this.notify(`DONE calling LLM`)
   }
 }

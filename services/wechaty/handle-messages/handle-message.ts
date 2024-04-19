@@ -1,17 +1,18 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import { type Message, types, type Wechaty } from "wechaty"
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import wechaty, { type Message, types, type Wechaty } from "wechaty"
+import { PostBuilder } from "wechaty/dist/esm/src/user-modules/post"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
-import { formatTalker, formatTalkerFromMessage } from "../utils/format-talker"
+import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { getQuotedMessage } from "../utils/get-quoted-message"
 import { parseLimitedCommand } from "../utils/parse-command"
-import { parseText } from "../utils/parse-message"
+import { parseQuote, parseText } from "../utils/parse-message"
+import { prettyMessage } from "../utils/pretty-message"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatManager } from "./managers/chat.manager"
@@ -24,6 +25,25 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     logger.info(
       `[onMessage] ${await formatTalkerFromMessage(message)}: ${JSON.stringify(message.payload)}`,
     )
+
+    if (parseQuote(message.text())) {
+      try {
+        await message.toPost()
+        // message.payload.
+        // const post = new PostBuilder(message.id)
+        // await post.ready()
+        // console.log({ post })
+        // const post = await message.toPost()
+      } catch (e) {
+        formatError(e)
+      }
+    }
+
+    const quoted = parseQuote(message.text())
+    if (quoted) {
+      console.log({ quoted })
+      console.log(" ")
+    }
 
     await storageMessage(message)
 
@@ -93,6 +113,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
     void botNotify(
       bot,
+      message,
       formatQuery(`ERR: ${s}`, {
         title: `System Notification`,
         footer: formatFooter(context),
