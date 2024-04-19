@@ -9668,6 +9668,7 @@ __metadata:
     jest: "npm:^29.7.0"
     pino-pretty: "npm:^11.0.0"
     ts-jest: "npm:^29.1.2"
+    tsc: "npm:^2.0.4"
     typescript: "npm:^5.4.5"
     zod: "npm:3.21.1"
   languageName: unknown
@@ -24093,6 +24094,15 @@ __metadata:
   bin:
     tsc-watch: index.js
   checksum: 10c0/969a24b2dee27a4a7bd12fa17f94c3d152f73cf3ec08664b2341eb498445d70f16b92053f735d4dea33f533935ac5853f58ac23f74ef4937bbd3342d142fb927
+  languageName: node
+  linkType: hard
+
+"tsc@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "tsc@npm:2.0.4"
+  bin:
+    tsc: bin/tsc
+  checksum: 10c0/4651d344891d995e62ab7ca64ce0a8597bbdc2d392886c9956d15caab4dc9bfe86e759d3385b3f97c49fb5294194a161d6812673e3f51e46357c82482f32c3ab
   languageName: node
   linkType: hard
 
