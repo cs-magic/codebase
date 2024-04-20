@@ -1,6 +1,6 @@
 import fs, { promises } from "fs"
 import path from "path"
-import { Path } from "../../path"
+import { Path } from "../../../packages/path"
 import { formatAction } from "./format-action"
 
 export const dumpFile = async (

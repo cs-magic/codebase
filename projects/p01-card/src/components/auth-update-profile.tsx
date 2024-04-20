@@ -4,9 +4,9 @@ import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 import { userImageAtom, userNameAtom } from "@cs-magic/auth/store";
-import { Button } from "../../../../common/ui-shadcn/components/button";
-import { Label } from "../../../../common/ui-shadcn/components/label";
-import { useUserUpdateProfile } from "../../../../common/hooks/use-user-update-profile";
+import { Button } from "../../../../packages/ui-shadcn/components/button";
+import { Label } from "../../../../packages/ui-shadcn/components/label";
+import { useUserUpdateProfile } from "../../../../packages/hooks/use-user-update-profile";
 import { UserInputAvatar } from "./user-input-avatar";
 import { UserInputName } from "./user-input-name";
 

@@ -3,9 +3,9 @@
 import { useAtom } from "jotai";
 import { capitalize } from "lodash";
 import { HTMLAttributes } from "react";
-import { Atom } from "../../../../common/state-management/jotai/types";
-import { cn } from "../../../../common/ui-shadcn/utils";
-import { ButtonWithLoading } from "../../../../common/ui/components/button-with-loading";
+import { Atom } from "../../../../packages/state-management/jotai/types";
+import { cn } from "../../../../packages/ui-shadcn/utils";
+import { ButtonWithLoading } from "../../../../packages/ui/components/button-with-loading";
 import { ActionType } from "../schema/card";
 import {
   cardCopyingAtom,

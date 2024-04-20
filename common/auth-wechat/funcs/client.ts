@@ -1,4 +1,4 @@
-import { getEnv } from "../../env"
+import { getEnv } from "../../../packages/env"
 import { WECHAT_AUTH_CALLBACK_URL } from "../config"
 import { WechatScopeType } from "../schema"
 

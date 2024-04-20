@@ -2,9 +2,9 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { IconContainer } from "../../../../common/ui/components/icon-container";
+import { IconContainer } from "../../../../packages/ui/components/icon-container";
 import { CircleUser } from "lucide-react";
-import { cn } from "../../../../common/ui-shadcn/utils";
+import { cn } from "../../../../packages/ui-shadcn/utils";
 
 export const UserButton = () => {
   const session = useSession();

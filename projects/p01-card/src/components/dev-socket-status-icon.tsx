@@ -1,4 +1,4 @@
-import { cn } from "../../../../common/ui-shadcn/utils";
+import { cn } from "../../../../packages/ui-shadcn/utils";
 import { SVGProps } from "react";
 
 /**

@@ -4,8 +4,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../../common/ui-shadcn/components/card";
-import { cn } from "../../../../common/ui-shadcn/utils";
+} from "../../../../packages/ui-shadcn/components/card";
+import { cn } from "../../../../packages/ui-shadcn/utils";
 
 export const StandardCard = ({
   title,

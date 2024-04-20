@@ -3,12 +3,12 @@ import { z } from "zod"
 import {
   type LangType,
   langTypeSchema,
-} from "../../../../common/i18n/schema"
-import { type BackendType } from "../../../../common/llm/schema/llm"
+} from "../../../../packages/i18n/schema"
+import { type BackendType } from "../../../../packages/llm/schema/llm"
 import {
   type LlmModelType,
   llmModelTypeSchema,
-} from "../../../../common/llm/schema/providers"
+} from "../../../../packages/llm/schema/providers"
 import { FeatureMap } from "../../schema/commands"
 import { CommandStyle } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"

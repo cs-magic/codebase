@@ -3,14 +3,14 @@ import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { SummaryOptions } from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
+import { SummaryOptions } from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
 import {
   RequestApproachType,
   RequestOptions,
-} from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
+} from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
 
-import { BackendType } from "../../../../common/llm/schema/llm";
-import { LlmModelType } from "../../../../common/llm/schema/providers";
+import { BackendType } from "../../../../packages/llm/schema/llm";
+import { LlmModelType } from "../../../../packages/llm/schema/providers";
 import {
   CardPreviewEngineType,
   GenWxmpArticleCardFetchOptions,

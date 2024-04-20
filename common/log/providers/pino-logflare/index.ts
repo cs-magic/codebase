@@ -1,7 +1,7 @@
 import pino from "pino"
 import { logflarePinoVercel } from "pino-logflare"
 
-import { getEnv } from "../../../env"
+import { getEnv } from "../../../../packages/env"
 
 const env = getEnv()
 

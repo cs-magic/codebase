@@ -1,6 +1,6 @@
-import { type LangType } from "../../../common/i18n/schema"
-import { type BackendType } from "../../../common/llm/schema/llm"
-import { type LlmModelType } from "../../../common/llm/schema/providers"
+import { type LangType } from "../../../packages/i18n/schema"
+import { type BackendType } from "../../../packages/llm/schema/llm"
+import { type LlmModelType } from "../../../packages/llm/schema/providers"
 
 export enum CommandStyle {
   standard = "standard",

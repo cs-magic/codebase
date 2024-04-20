@@ -3,7 +3,7 @@ import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
 
-import { compressContent } from "../common/utils/compress-content"
+import { compressContent } from "@cs-magic/common/utils/compress-content"
 import { Path } from "../path"
 import { safeCallLLM } from "./safe-call-llm"
 import { AgentConfig } from "./schema/agent"

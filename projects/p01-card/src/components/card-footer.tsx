@@ -6,8 +6,8 @@ import {
   FingerprintIcon,
   MilestoneIcon,
 } from "lucide-react";
-import moment from "../../../../common/datetime/moment";
-import { cn } from "../../../../common/ui-shadcn/utils";
+import moment from "../../../../packages/datetime/moment";
+import { cn } from "../../../../packages/ui-shadcn/utils";
 
 import { config } from "../config";
 import { CardFooterItem } from "./card-footer-item";

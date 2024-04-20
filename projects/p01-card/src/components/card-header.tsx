@@ -3,7 +3,7 @@
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { Label } from "../../../../common/ui-shadcn/components/label";
+import { Label } from "../../../../packages/ui-shadcn/components/label";
 
 import { config } from "../config";
 import { cardUserRenderedAtom } from "../store/card.atom";

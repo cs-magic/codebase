@@ -1,15 +1,15 @@
 import { type Viewport } from "next";
 import { Inter } from "next/font/google";
 
-import { TRPCReactProvider } from "../../../../common/trpc/react";
-import { Toaster } from "../../../../common/ui-shadcn/components/sonner";
-import { TooltipProvider } from "../../../../common/ui-shadcn/components/tooltip";
-import { cn } from "../../../../common/ui-shadcn/utils";
-import { LoadingAlertDialog } from "../../../../common/ui/components/loading";
-import JotaiProvider from "../../../../common/ui/providers/jotai.provider";
-import { ScreenProvider } from "../../../../common/ui/providers/screen.provider";
-import { SessionProvider } from "../../../../common/ui/providers/session.provider";
-import ThemeProvider from "../../../../common/ui/providers/theme.provider";
+import { TRPCReactProvider } from "../../../../packages/trpc/react";
+import { Toaster } from "../../../../packages/ui-shadcn/components/sonner";
+import { TooltipProvider } from "../../../../packages/ui-shadcn/components/tooltip";
+import { cn } from "../../../../packages/ui-shadcn/utils";
+import { LoadingAlertDialog } from "../../../../packages/ui/components/loading";
+import JotaiProvider from "../../../../packages/ui/providers/jotai.provider";
+import { ScreenProvider } from "../../../../packages/ui/providers/screen.provider";
+import { SessionProvider } from "../../../../packages/ui/providers/session.provider";
+import ThemeProvider from "../../../../packages/ui/providers/theme.provider";
 import { Dev } from "../components/dev";
 
 import { config } from "../config";

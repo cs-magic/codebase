@@ -5,11 +5,11 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { useEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
-import { ApiMethod } from "../../../../../../common/api-client/schema";
-import { sleep } from "../../../../../../common/datetime/utils";
-import { Button } from "../../../../../../common/ui-shadcn/components/button";
-import { Input } from "../../../../../../common/ui-shadcn/components/input";
-import { Label } from "../../../../../../common/ui-shadcn/components/label";
+import { ApiMethod } from "../../../../../../packages/api-client/schema";
+import { sleep } from "../../../../../../packages/datetime/utils";
+import { Button } from "../../../../../../packages/ui-shadcn/components/button";
+import { Input } from "../../../../../../packages/ui-shadcn/components/input";
+import { Label } from "../../../../../../packages/ui-shadcn/components/label";
 import {
   Select,
   SelectContent,
@@ -17,11 +17,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../../common/ui-shadcn/components/select";
-import { Badge } from "../../../../../../common/ui-shadcn/components/ui/badge";
-import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
-import { LabelLine } from "../../../../../../common/ui/components/label-line";
-import { Textarea } from "../../../../../../common/ui/components/textarea-auto";
+} from "../../../../../../packages/ui-shadcn/components/select";
+import { Badge } from "../../../../../../packages/ui-shadcn/components/ui/badge";
+import { FlexContainer } from "../../../../../../packages/ui/components/flex-container";
+import { LabelLine } from "../../../../../../packages/ui/components/label-line";
+import { Textarea } from "../../../../../../packages/ui/components/textarea-auto";
 import { StandardCard } from "../../../components/standard-card";
 import { serverFetch } from "./actions";
 import { cookie2headers } from "./utils";

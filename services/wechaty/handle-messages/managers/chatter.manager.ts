@@ -1,7 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { types } from "wechaty"
 import { z } from "zod"
-import { safeCallLLM } from "../../../../common/llm"
+import { safeCallLLM } from "../../../../packages/llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvRow } from "../../utils/get-conv-row"

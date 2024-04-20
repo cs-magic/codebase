@@ -2,7 +2,7 @@
 
 import { api } from "../api-client/api"
 
-import { parseJs } from "../common/utils/parse-json"
+import { parseJs } from "@cs-magic/common/utils/parse-json"
 import { IXiaoHongShuNotePageData } from "./schema"
 
 /**

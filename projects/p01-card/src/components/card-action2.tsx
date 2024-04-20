@@ -6,8 +6,8 @@ import { useAtom } from "jotai";
 import { domToBlob } from "modern-screenshot";
 import { RefObject } from "react";
 import { toast } from "sonner";
-import { uploadFile } from "../../../../common/oss/upload";
-import { getOssUrl } from "../../../../common/oss/utils";
+import { uploadFile } from "../../../../packages/oss/upload";
+import { getOssUrl } from "../../../../packages/oss/utils";
 import { updateOssUrl } from "../core/update-oss-url.action";
 import { Action2Type, ActionType } from "../schema/card";
 import {

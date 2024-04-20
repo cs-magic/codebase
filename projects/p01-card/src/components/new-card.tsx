@@ -6,18 +6,18 @@ import { useAtom } from "jotai";
 import { useState } from "react";
 import { useDrop } from "react-use";
 import { toast } from "sonner";
-import { FileComp } from "../../../../common/file/components";
-import { useUploadFiles } from "../../../../common/oss/hooks/use-upload-files";
-import { IUploadFile } from "../../../../common/oss/schema";
+import { FileComp } from "../../../../packages/file/components";
+import { useUploadFiles } from "../../../../packages/oss/hooks/use-upload-files";
+import { IUploadFile } from "../../../../packages/oss/schema";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "../../../../common/ui-shadcn/components/tooltip";
-import { cn } from "../../../../common/ui-shadcn/utils";
-import { VerticalAspectRatio } from "../../../../common/ui/components/aspect-ratio";
-import { ButtonWithLoading } from "../../../../common/ui/components/button-with-loading";
-import { FlexContainer } from "../../../../common/ui/components/flex-container";
+} from "../../../../packages/ui-shadcn/components/tooltip";
+import { cn } from "../../../../packages/ui-shadcn/utils";
+import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio";
+import { ButtonWithLoading } from "../../../../packages/ui/components/button-with-loading";
+import { FlexContainer } from "../../../../packages/ui/components/flex-container";
 import { cardNewContentAtom } from "../store/card.atom";
 
 export function NewCard() {

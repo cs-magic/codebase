@@ -2,7 +2,7 @@ import { logger } from "@cs-magic/log/logger"
 import { userDetailSchema } from "@cs-magic/prisma/schema/user.detail"
 import Credentials from "next-auth/providers/credentials"
 import { PROFILE_UPDATE_PROVIDER_ID } from "../auth-sms/const"
-import { prisma } from "../db/providers/prisma"
+import { prisma } from "../../packages/db/providers/prisma"
 
 export const ProfileUpdateProvider = Credentials({
   id: PROFILE_UPDATE_PROVIDER_ID,

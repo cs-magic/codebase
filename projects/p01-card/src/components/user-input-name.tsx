@@ -1,5 +1,5 @@
-import { InputWithEnter } from "../../../../common/ui/components/input";
-import { useDraftSession } from "../../../../common/hooks/use-user-draft-session";
+import { InputWithEnter } from "../../../../packages/ui/components/input";
+import { useDraftSession } from "../../../../packages/hooks/use-user-draft-session";
 
 export const UserInputName = ({
   onEnter,

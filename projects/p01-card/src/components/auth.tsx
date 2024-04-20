@@ -1,9 +1,9 @@
 "use client";
 
-import { useEnvironments } from "../../../../common/hooks/use-environments";
-import JoinComponents from "../../../../common/ui/components/join-components";
-import { SeparatorContainer } from "../../../../common/ui/components/separator-container";
-import { Label } from "../../../../common/ui-shadcn/components/label";
+import { useEnvironments } from "../../../../packages/hooks/use-environments";
+import JoinComponents from "../../../../packages/ui/components/join-components";
+import { SeparatorContainer } from "../../../../packages/ui/components/separator-container";
+import { Label } from "../../../../packages/ui-shadcn/components/label";
 import { AuthSmsSignIn } from "./auth-sms-sign-in";
 import { AuthWechatSignIn } from "./auth-wechat-sign-in";
 import { BrandingTitle } from "./branding-title";

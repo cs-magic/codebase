@@ -1,6 +1,6 @@
 import { logger } from "@cs-magic/log/logger"
 import { type Message, type Wechaty } from "wechaty"
-import { sleep } from "../../../common/datetime/utils"
+import { sleep } from "../../../packages/datetime/utils"
 import { formatMessage } from "../utils/format-message"
 import { handleMessage } from "./handle-message"
 

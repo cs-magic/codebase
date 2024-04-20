@@ -1,7 +1,7 @@
 import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
-import { prisma } from "../../../common/db/providers/prisma"
+import { prisma } from "../../../packages/db/providers/prisma"
 
 /**
  * 获取最后一次

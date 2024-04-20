@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { PROFILE_UPDATE_PROVIDER_ID } from "../auth-sms/const"
+import { PROFILE_UPDATE_PROVIDER_ID } from "../../common/auth-sms/const"
 import { useDraftSession } from "./use-user-draft-session"
 
 /**

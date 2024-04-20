@@ -1,4 +1,4 @@
-import { env } from "../env"
+import { env } from "../../packages/env"
 import WechatProvider from "./provider"
 
 const provider = WechatProvider({

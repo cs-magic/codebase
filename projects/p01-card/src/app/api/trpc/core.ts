@@ -1,9 +1,9 @@
 import { userDetailSchema } from "@cs-magic/prisma/schema/user.detail";
-import { prisma } from "../../../../../../common/db/providers/prisma";
+import { prisma } from "../../../../../../packages/db/providers/prisma";
 import {
   createTRPCRouter,
   protectedProcedure,
-} from "../../../../../../common/trpc/trpc";
+} from "../../../../../../packages/trpc/trpc";
 import { UserUpdateInputSchema } from "../../../../../../common/common-db-prisma/prisma/generated/zod";
 
 export const coreRouter = createTRPCRouter({

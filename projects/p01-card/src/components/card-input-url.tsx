@@ -2,8 +2,8 @@
 
 import { useAtom } from "jotai";
 import React from "react";
-import { Input } from "../../../../common/ui-shadcn/components/input";
-import { LabelLine } from "../../../../common/ui/components/label-line";
+import { Input } from "../../../../packages/ui-shadcn/components/input";
+import { LabelLine } from "../../../../packages/ui/components/label-line";
 
 import { config } from "../config";
 import { cardInputUrlAtom } from "../store/card.atom";

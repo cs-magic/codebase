@@ -1,5 +1,5 @@
 import { types } from "wechaty"
-import { prisma } from "../../../common/db/providers/prisma"
+import { prisma } from "../../../packages/db/providers/prisma"
 import { PadlocalVersion } from "./parse-message"
 
 /**

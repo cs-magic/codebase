@@ -1,5 +1,5 @@
-import { fetchWechatApi } from "../../wechat/functions"
-import { getEnv } from "../../env"
+import { fetchWechatApi } from "../../../packages/wechat/functions"
+import { getEnv } from "../../../packages/env"
 import {
   IWechatAdaptedToken,
   IWechatProfile,

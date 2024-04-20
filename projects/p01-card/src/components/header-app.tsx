@@ -2,7 +2,7 @@ import { MSG_TODO } from "@cs-magic/common/const";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
-import { AspectRatio } from "../../../../common/ui-shadcn/components/aspect-ratio";
+import { AspectRatio } from "../../../../packages/ui-shadcn/components/aspect-ratio";
 
 import { config } from "../config";
 

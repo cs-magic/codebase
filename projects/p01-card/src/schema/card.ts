@@ -3,9 +3,9 @@ import { z } from "zod";
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../../../common/wechat/wxmp-article/detail/schema";
-import { FetchWxmpArticleDetailOptions } from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs";
-import { IArticleSummaryParsed } from "../../../../common/llm/parse-summary";
+} from "../../../../packages/wechat/wxmp-article/detail/schema";
+import { FetchWxmpArticleDetailOptions } from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs";
+import { IArticleSummaryParsed } from "../../../../packages/llm/parse-summary";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends typeof $Enums.PlatformType.wxmpArticle

@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { SelectLogLevel } from "../../../../common/common-log/components/select-log-level";
-import { pusherLogLevelAtom } from "../../../../common/pusher/store";
-import { LabelLine } from "../../../../common/ui/components/label-line";
+import { pusherLogLevelAtom } from "../../../../packages/pusher/store";
+import { LabelLine } from "../../../../packages/ui/components/label-line";
 import { TrpcLogEnabled } from "./config-trpc-log-enabled";
 import { StandardCard } from "./standard-card";
 

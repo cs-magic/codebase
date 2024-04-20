@@ -4,14 +4,14 @@ import { logger } from "@cs-magic/log/logger";
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
 import { useAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
-import { getEnv } from "../../../../common/env";
-import { useInit } from "../../../../common/hooks/use-init";
-import { socketStatusMap } from "../../../../common/transport/schema";
-import { Button } from "../../../../common/ui-shadcn/components/button";
-import { cn } from "../../../../common/ui-shadcn/utils";
-import { ButtonWithLoading } from "../../../../common/ui/components/button-with-loading";
-import { FlexContainer } from "../../../../common/ui/components/flex-container";
-import { LabelLine } from "../../../../common/ui/components/label-line";
+import { getEnv } from "../../../../packages/env";
+import { useInit } from "../../../../packages/hooks/use-init";
+import { socketStatusMap } from "../../../../packages/transport/schema";
+import { Button } from "../../../../packages/ui-shadcn/components/button";
+import { cn } from "../../../../packages/ui-shadcn/utils";
+import { ButtonWithLoading } from "../../../../packages/ui/components/button-with-loading";
+import { FlexContainer } from "../../../../packages/ui/components/flex-container";
+import { LabelLine } from "../../../../packages/ui/components/label-line";
 import { useUserIsAdmin } from "../hooks/use-user";
 import {
   botLoggedInAtom,

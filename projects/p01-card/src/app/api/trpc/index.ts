@@ -1,4 +1,4 @@
-import { createTRPCRouter } from "../../../../../../common/trpc/trpc";
+import { createTRPCRouter } from "../../../../../../packages/trpc/trpc";
 import { coreRouter } from "./core";
 
 /**

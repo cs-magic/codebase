@@ -1,4 +1,4 @@
-import { prisma } from "../../../common/db/providers/prisma"
+import { prisma } from "../../../packages/db/providers/prisma"
 
 export const listTodo = async (talkerId: string) =>
   prisma.task.findMany({

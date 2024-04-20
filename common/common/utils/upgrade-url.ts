@@ -1,4 +1,4 @@
-import { isClient } from "../../env/utils/is-client"
+import { isClient } from "../../../packages/env/utils/is-client"
 
 export const upgradeUrl = (url: string) =>
   isClient && location.href.includes("https")

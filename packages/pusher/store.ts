@@ -3,8 +3,8 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import Pusher from "pusher"
 import PusherJS from "pusher-js"
-import { LogLevel } from "../log/schema"
-import { FixedArray } from "../common/schema/fixed-array"
+import { LogLevel } from "@cs-magic/log/schema"
+import { FixedArray } from "@cs-magic/common/schema/fixed-array"
 import { PusherConnectionState, PusherServerId } from "./schema" //////////////////////////////
 
 //////////////////////////////

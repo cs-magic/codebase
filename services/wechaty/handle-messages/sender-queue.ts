@@ -1,6 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
-import { sleep } from "../../../common/datetime/utils"
+import { sleep } from "../../../packages/datetime/utils"
 
 export type QueueTask = () => Promise<any>
 

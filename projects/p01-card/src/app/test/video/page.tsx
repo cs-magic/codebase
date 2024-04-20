@@ -1,6 +1,6 @@
 "use client";
 
-import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
+import { FlexContainer } from "../../../../../../packages/ui/components/flex-container";
 
 const videoUrl = "/api/video-proxy";
 // sampleXiaoHongShuVideoUrl

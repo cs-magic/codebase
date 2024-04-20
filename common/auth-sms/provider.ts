@@ -1,5 +1,5 @@
 import Credentials from "next-auth/providers/credentials"
-import { prisma } from "../db/providers/prisma/connection"
+import { prisma } from "../../packages/db/providers/prisma/connection"
 import { SMS_PROVIDER_ID } from "./const" // // sb tsx 需要用 default
 
 // // sb tsx 需要用 default

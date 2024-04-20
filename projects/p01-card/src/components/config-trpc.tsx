@@ -1,6 +1,6 @@
-import { api } from "../../../../common/trpc/react";
-import { LabelLine } from "../../../../common/ui/components/label-line";
-import { Button } from "../../../../common/ui-shadcn/components/button";
+import { api } from "../../../../packages/trpc/react";
+import { LabelLine } from "../../../../packages/ui/components/label-line";
+import { Button } from "../../../../packages/ui-shadcn/components/button";
 
 import { StandardCard } from "./standard-card";
 import { TrpcLogEnabled } from "./config-trpc-log-enabled";

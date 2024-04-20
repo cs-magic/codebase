@@ -1,6 +1,6 @@
-import { useDraftSession } from "../../../../common/hooks/use-user-draft-session";
-import { uploadFile } from "../../../../common/oss/upload";
-import { Label } from "../../../../common/ui-shadcn/components/label";
+import { useDraftSession } from "../../../../packages/hooks/use-user-draft-session";
+import { uploadFile } from "../../../../packages/oss/upload";
+import { Label } from "../../../../packages/ui-shadcn/components/label";
 import { UserAvatar } from "./user-avatar";
 
 export const UserInputAvatar = () => {

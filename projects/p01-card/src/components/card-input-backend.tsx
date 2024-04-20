@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { Textarea } from "../../../../common/ui/components/textarea-auto";
+import { Textarea } from "../../../../packages/ui/components/textarea-auto";
 import { cardInputAtom } from "../store/card.atom";
 import { CardInputUser } from "./card-input-user";
 

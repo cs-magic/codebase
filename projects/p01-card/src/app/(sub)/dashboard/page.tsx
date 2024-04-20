@@ -3,18 +3,18 @@ import { EditIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
-import { Button } from "../../../../../../common/ui-shadcn/components/button";
+import { FlexContainer } from "../../../../../../packages/ui/components/flex-container";
+import { Button } from "../../../../../../packages/ui-shadcn/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "../../../../../../common/ui-shadcn/components/card";
-import { Label } from "../../../../../../common/ui-shadcn/components/label";
-import { useDraftSession } from "../../../../../../common/hooks/use-user-draft-session";
-import { useUserUpdateProfile } from "../../../../../../common/hooks/use-user-update-profile";
+} from "../../../../../../packages/ui-shadcn/components/card";
+import { Label } from "../../../../../../packages/ui-shadcn/components/label";
+import { useDraftSession } from "../../../../../../packages/hooks/use-user-draft-session";
+import { useUserUpdateProfile } from "../../../../../../packages/hooks/use-user-update-profile";
 import { UserInputAvatar } from "../../../components/user-input-avatar";
 import { UserInputName } from "../../../components/user-input-name";
 import { UserSignOutButton } from "../../../components/user-sign-out-button";

@@ -1,4 +1,4 @@
-import { getEnv } from "../env"
+import { getEnv } from "../../packages/env"
 
 const env = getEnv()
 

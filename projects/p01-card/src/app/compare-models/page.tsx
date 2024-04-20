@@ -3,11 +3,11 @@ import { promises } from "fs";
 import sortBy from "lodash/sortBy";
 import path from "path";
 import React from "react";
-import moment from "../../../../../common/datetime/moment";
-import { ICallLlmResponse } from "../../../../../common/llm/schema/llm";
-import { Path } from "../../../../../common/path";
-import { FlexContainer } from "../../../../../common/ui/components/flex-container";
-import { LabelLine } from "../../../../../common/ui/components/label-line";
+import moment from "../../../../../packages/datetime/moment";
+import { ICallLlmResponse } from "../../../../../packages/llm/schema/llm";
+import { Path } from "../../../../../packages/path";
+import { FlexContainer } from "../../../../../packages/ui/components/flex-container";
+import { LabelLine } from "../../../../../packages/ui/components/label-line";
 import { CardPreview } from "../../components/card-preview";
 import { StandardCard } from "../../components/standard-card";
 

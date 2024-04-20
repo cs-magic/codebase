@@ -1,7 +1,7 @@
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import React, { PropsWithChildren } from "react";
-import { FlexContainer } from "../../../../../common/ui/components/flex-container";
+import { FlexContainer } from "../../../../../packages/ui/components/flex-container";
 
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (

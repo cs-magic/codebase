@@ -2,7 +2,7 @@ declare global {
   // 要放在里面
 
   namespace PrismaJson {
-    export { ICallLlmResponse } from "../../../common/llm/schema/llm"
+    export { ICallLlmResponse } from "../../../packages/llm/schema/llm"
 
     export {
       IMedia,
@@ -12,7 +12,7 @@ declare global {
     export {
       IWechatArticleStat,
       IWechatArticleComment,
-    } from "../../../common/wechat/wxmp-article/detail/schema"
+    } from "../../../packages/wechat/wxmp-article/detail/schema"
 
     export {
       IWechatUserData,

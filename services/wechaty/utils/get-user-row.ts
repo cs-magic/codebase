@@ -1,5 +1,5 @@
 import { Message } from "wechaty"
-import { prisma } from "../../../common/db/providers/prisma"
+import { prisma } from "../../../packages/db/providers/prisma"
 
 export const getUserRow = async (message: Message) => {
   const row = await prisma.wechatUser.findFirstOrThrow({

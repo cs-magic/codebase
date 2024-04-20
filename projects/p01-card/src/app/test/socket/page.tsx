@@ -2,14 +2,14 @@
 
 import { useAtom, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { usePusherClient } from "../../../../../../common/pusher/hooks/use-pusher-client";
-import { PusherServerId } from "../../../../../../common/pusher/schema";
+import { usePusherClient } from "../../../../../../packages/pusher/hooks/use-pusher-client";
+import { PusherServerId } from "../../../../../../packages/pusher/schema";
 import {
   cleanPusherAtom,
   pusherServerIdAtom,
-} from "../../../../../../common/pusher/store";
-import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
-import { Button } from "../../../../../../common/ui-shadcn/components/button";
+} from "../../../../../../packages/pusher/store";
+import { FlexContainer } from "../../../../../../packages/ui/components/flex-container";
+import { Button } from "../../../../../../packages/ui-shadcn/components/button";
 import {
   Select,
   SelectContent,
@@ -17,7 +17,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../../common/ui-shadcn/components/select";
+} from "../../../../../../packages/ui-shadcn/components/select";
 
 export default function TestSocketPage() {
   const [serverId, setServerId] = useAtom(pusherServerIdAtom);

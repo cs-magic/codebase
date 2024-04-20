@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/log/logger"
-import { truncateString } from "../common/utils/truncate-string"
+import { truncateString } from "@cs-magic/common/utils/truncate-string"
 
 /**
  * @deprecated

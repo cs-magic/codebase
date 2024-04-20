@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { LangType } from "../../../common/i18n/schema"
+import { LangType } from "../../../packages/i18n/schema"
 import { Priority } from "../handle-messages/managers/todo.manager"
 
 export const featureTypeSchema = z.enum(["system", "todo", "chatter", "parser"])
