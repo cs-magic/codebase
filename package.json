@@ -17,6 +17,8 @@
   },
   "packageManager": "yarn@4.1.1",
   "dependencies": {
+    "@types/lodash": "^4.14.202",
+    "lodash": "^4.17.21",
     "zod": "3.21.1"
   },
   "devDependencies": {

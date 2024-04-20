@@ -3,10 +3,11 @@ import path from "path"
 import { Path } from "../../common-path"
 import { formatAction } from "./format-action"
 
-export const dumpJson = async (
-  content: any,
-  fn: string = `${Date.now()}.json`,
+export const dumpFile = async (
+  content: string | object,
+  fn: string,
   dir: string = Path.generatedDir,
+  // type: "json" | "text" = "json",
 ) => {
   if (!fs.existsSync(dir)) fs.mkdir(dir, () => null)
 
@@ -15,7 +16,7 @@ export const dumpJson = async (
   await formatAction(async () => {
     await promises.writeFile(
       fp,
-      content instanceof String ? content : JSON.stringify(content, null, 2),
+      typeof content === "string" ? content : JSON.stringify(content, null, 2),
     )
   }, `dumping JSON file into file://${fp}`)
 }

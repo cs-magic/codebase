@@ -13,6 +13,7 @@ export const CardMaxOrderByAggregateInputSchema: z.ZodType<Prisma.CardMaxOrderBy
   time: z.lazy(() => SortOrderSchema).optional(),
   title: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  html: z.lazy(() => SortOrderSchema).optional(),
   contentMd: z.lazy(() => SortOrderSchema).optional(),
   ossUrl: z.lazy(() => SortOrderSchema).optional()
 }).strict();

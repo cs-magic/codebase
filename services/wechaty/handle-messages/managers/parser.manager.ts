@@ -1,17 +1,16 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatString } from "@cs-magic/common/utils/format-string"
-import { initLogWithTimer } from "@cs-magic/common/utils/init-log-with-timer"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache"
+import { fetchWxmpArticle } from "../../../../packages/3rd-wechat/wxmp-article/fetch/fetch-wxmp-article"
 import { CardSimulator } from "../../../../packages/common-spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { getQuotedMessage } from "../../utils/get-quoted-message"
@@ -80,7 +79,6 @@ export class ParserManager extends BaseManager {
     const message = this.message
     const rawText = message.text()
     // console.log({ message, rawText })
-
     const text = await z.string().parseAsync(rawText)
     // console.log({ text })
 
@@ -99,7 +97,11 @@ export class ParserManager extends BaseManager {
   async parseQuote() {
     if (!this.quote) return
 
-    const message = await getQuotedMessage(this.quote.quoted.content ?? "")
+    const v = this.quote.quoted.version
+    const message = await getQuotedMessage(
+      v === "mark@2024-04-19" ? this.quote.quoted.id : undefined,
+      this.quote.quoted.content ?? "",
+    )
 
     const text = await z.string().parseAsync(message.text)
 
@@ -190,6 +192,7 @@ export class ParserManager extends BaseManager {
   }) {
     try {
       const url = parseUrlFromWechatUrlMessage(parseText(message.text))
+      await dumpFile({ text: message.text, url }, `${Date.now()}.json`)
       logger.info(`-- url in message: ${url}`)
       if (!url) return
 
@@ -201,13 +204,22 @@ export class ParserManager extends BaseManager {
       })
       if (!convPreference.parserEnabled) return
 
-      initLogWithTimer()
+      // initLogWithTimer()
 
       void this.notify(`parsing[${this.toParse}] mid=${message.id}`)
       ++this.toParse
-      const card = await fetchWxmpArticleWithCache(url, {
-        backendEngineType: convPreference.backend,
-        summaryModel: convPreference.model,
+      const card = await fetchWxmpArticle(url, {
+        detail: {
+          request: {
+            backendType: convPreference.backend,
+            approachType: "simulate",
+          },
+          summary: {
+            model: convPreference.model,
+            enabled: true,
+            withImage: false,
+          },
+        },
       })
       // todo: dynamic sender with fixed card url
 

@@ -24,6 +24,7 @@ export const CardOrderByWithAggregationInputSchema: z.ZodType<Prisma.CardOrderBy
   images: z.lazy(() => SortOrderSchema).optional(),
   iFrames: z.lazy(() => SortOrderSchema).optional(),
   videos: z.lazy(() => SortOrderSchema).optional(),
+  html: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   contentMd: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   contentSummary: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   stat: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),

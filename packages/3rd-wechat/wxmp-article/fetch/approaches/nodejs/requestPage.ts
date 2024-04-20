@@ -1,27 +1,38 @@
+import { withError } from "@cs-magic/common/utils/with-error"
+import { logger } from "@cs-magic/log/logger"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
-import { ICardGenOptions } from "@cs-magic/p01-card/src/schema/card"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"
 import { z } from "zod"
+import { api } from "../../../../../common-api-client/api"
+import { parseMetaFromHtml } from "../../../../../common-html/utils"
+import { BackendType } from "../../../../../common-llm/schema/llm"
+import { html2md } from "../../../../../common-markdown/html2md"
+import { WxmpArticleSimulator } from "../../../../../common-spider/wxmp-article-simulator"
 
-import { api } from "../../common-api-client/api"
-import { parseMetaFromHtml } from "../../common-html/utils"
-import { safeCallAgent } from "../../common-llm/safe-call-agent"
-import { ICallLlmResponse } from "../../common-llm/schema/llm"
-import { html2md } from "../../common-markdown/html2md"
-import { Prisma } from ".prisma/client"
+const wxmpArticleSimulator = new WxmpArticleSimulator()
 
-/**
- * todo: 有概率没拿到文章数据
- * @param url
- * @param options
- */
-export const fetchWxmpArticleViaNodejs = async (
+export type RequestApproachType = "api" | "simulate"
+export type RequestOptions = {
+  approachType?: RequestApproachType
+  backendType?: BackendType
+}
+
+export const requestPage = async (
   url: string,
-  options?: ICardGenOptions,
+  options?: RequestOptions,
 ): Promise<Prisma.CardUncheckedCreateInput> => {
   // 1. fetch page
-  const { data: pageText } = await api.get<string>(url)
+  // error response:
+  // <h2 class=\"weui-msg__title\">环境异常</h2>\n        <p class=\"weui-msg__desc\">当前环境异常，完成验证后即可继续访问。</p>
+  let pageText: string
+  if (options?.approachType === "api") {
+    pageText = (await api.get<string>(url)).data
+  } else {
+    pageText = await wxmpArticleSimulator.crawl(url)
+  }
+  // console.debug(pageText)
 
   // 2. parse page
   const html = parse(pageText)
@@ -35,16 +46,21 @@ export const fetchWxmpArticleViaNodejs = async (
     urlParsed.platformData = parseWxmpArticleUrl(ogUrl).platformData
   }
 
-  const time = new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) // 1711455495
-  const title = await z
-    .string()
-    .min(1)
-    .parseAsync(parseMetaFromHtml(html, "og:title"))
-  const coverUrl = await z
-    .string()
-    .min(1)
-    .parseAsync(parseMetaFromHtml(html, "og:image")!)
-  const description = parseMetaFromHtml(html, "og:description", "property")!
+  const d = new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) // 1711455495
+  const time = await withError("should time is a Date")(z.date().parseAsync(d))
+  logger.info(JSON.stringify({ time }))
+  const title = await withError("should title is valid")(
+    z.string().min(1).parseAsync(parseMetaFromHtml(html, "og:title")),
+  )
+  const coverUrl = await withError("should cover is valid")(
+    z.string().min(1).parseAsync(parseMetaFromHtml(html, "og:image")!),
+  )
+  const description = await withError("should desc is valid")(
+    z
+      .string()
+      .parseAsync(parseMetaFromHtml(html, "og:description", "property")),
+  )
+  logger.info(JSON.stringify({ title }))
   // const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
   // const authorPublisherName = parseMetaFromHtml(html, "author", "name")
 
@@ -67,6 +83,7 @@ export const fetchWxmpArticleViaNodejs = async (
       .min(1)
       .parseAsync(/var user_name = "(.*?)"/.exec(pageText)?.[1]),
   }
+  logger.info({ authorAccount })
 
   // 去除作者信息，否则会有干扰, case-id: fq-Bb_v
   html.getElementById("meta_content")?.remove()
@@ -76,17 +93,6 @@ export const fetchWxmpArticleViaNodejs = async (
     .parseAsync(html.getElementById("img-content")?.innerHTML)
 
   const contentMd = html2md(contentHtml)
-  let contentSummary: ICallLlmResponse | null = null
-  // !important: 要在 fetch 大模型之前确保所有的信息就已经正确解析，否则容易有模型泄露
-  if (options?.summaryModel) {
-    contentSummary = await safeCallAgent({
-      input: contentMd,
-      agentType: "summarize-content",
-      model: options.summaryModel,
-    })
-    // 只在该微信场景报错
-    if (!contentSummary.response) throw new Error(contentSummary.error)
-  }
 
   return {
     sourceUrl: url,
@@ -98,7 +104,7 @@ export const fetchWxmpArticleViaNodejs = async (
     title,
     description,
     cover: { url: coverUrl, width: null, height: null },
+    html: contentHtml,
     contentMd,
-    contentSummary,
   }
 }

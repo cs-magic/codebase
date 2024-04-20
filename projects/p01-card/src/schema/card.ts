@@ -1,12 +1,11 @@
 import { $Enums } from "@prisma/client";
-import { IArticleSummaryParsed } from "../../../../packages/common-llm/parse-summary";
-
-import { BackendType } from "../../../../packages/common-llm/schema/llm";
-import { LlmModelType } from "../../../../packages/common-llm/schema/providers";
+import { z } from "zod";
 import {
   IWechatArticleComment,
   IWechatArticleStat,
 } from "../../../../packages/3rd-wechat/wxmp-article/detail/schema";
+import { FetchWxmpArticleDetailOptions } from "../../../../packages/3rd-wechat/wxmp-article/fetch/approaches/nodejs";
+import { IArticleSummaryParsed } from "../../../../packages/common-llm/parse-summary";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends typeof $Enums.PlatformType.wxmpArticle
@@ -50,14 +49,28 @@ export type Action1Type = "generate" | "reset";
 export type Action2Type = "copy" | "download" | "upload";
 export type ActionType = Action1Type | Action2Type;
 
-export type ICardGenOptions = {
-  backendEngineType?: BackendType;
-  mdWithImg?: boolean;
-  summaryModel?: LlmModelType;
-  refetchSummary?: boolean;
-  refetchPage?: boolean;
-  refetchStat?: boolean;
-  refetchComments?: boolean;
+export type GenWxmpArticleCardFetchOptions = {
+  // 1. cache
+  withCache?: boolean;
+
+  // 2. detail
+  detail?: FetchWxmpArticleDetailOptions;
+
+  // 3. extra
+  stat?: {
+    enabled?: boolean;
+  };
+
+  comments?: {
+    enabled?: boolean;
+  };
 };
 
 export type GenCardRenderType = "frontend" | "backend";
+
+export const cardPreviewEngineTypeSchema = z.enum([
+  "html2image",
+  "html2canvas",
+  "modern-screenshot",
+]);
+export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>;

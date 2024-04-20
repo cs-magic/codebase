@@ -6,9 +6,9 @@ import {
   fetchBvidFromb23tv,
 } from "../../../../packages/3rd-bilibili/actions";
 import { getBvidFromUrl } from "../../../../packages/3rd-bilibili/utils";
-import { fetchWxmpArticleWithCache } from "../../../../packages/3rd-wechat/wxmp-article/fetch-wxmp-article-with-cache";
+import { fetchWxmpArticle } from "../../../../packages/3rd-wechat/wxmp-article/fetch";
 import { fetchXiaoHongShuDetail } from "../../../../packages/3rd-xhs/actions";
-import { ICardGenOptions } from "../schema/card";
+import { GenWxmpArticleCardFetchOptions } from "../schema/card";
 import { bilibili2card } from "./card-platform/bilibili/to-card";
 import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card";
 
@@ -19,7 +19,7 @@ import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card";
  */
 export const genCardFromUrl = async (
   inputUrlLike: string,
-  options?: ICardGenOptions,
+  options?: GenWxmpArticleCardFetchOptions,
 ): Promise<ICardDetail> => {
   const urlParsed = extractFirstUrl(inputUrlLike);
   console.log("-- genCardFromUrl: ", { inputUrlLike, urlParsed });
@@ -27,7 +27,7 @@ export const genCardFromUrl = async (
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`);
 
   if (isWxmpArticleUrl(urlParsed))
-    return await fetchWxmpArticleWithCache(urlParsed, options);
+    return await fetchWxmpArticle(urlParsed, options);
 
   if (/xhslink|xiaohongshu/.test(urlParsed)) {
     const data = await fetchXiaoHongShuDetail(urlParsed);

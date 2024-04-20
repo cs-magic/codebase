@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev-watch": "tsx atch src/server.ts | pino-pretty",
-    "dev": "tsx src/server.ts | pino-pretty"
+    "dev-watch": "tsx atch src/server.ts",
+    "dev": "tsx src/server.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

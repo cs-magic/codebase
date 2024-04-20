@@ -2,21 +2,24 @@ import { parseJs } from "@cs-magic/common/utils/parse-json";
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { atom } from "jotai";
-import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
-import { z } from "zod";
+import { SummaryOptions } from "../../../../packages/3rd-wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
+import {
+  RequestApproachType,
+  RequestOptions,
+} from "../../../../packages/3rd-wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
 
 import { BackendType } from "../../../../packages/common-llm/schema/llm";
 import { LlmModelType } from "../../../../packages/common-llm/schema/providers";
-import { ICardGenOptions } from "../schema/card";
+import {
+  CardPreviewEngineType,
+  GenWxmpArticleCardFetchOptions,
+} from "../schema/card";
 import { getCardUrl } from "../utils";
 
 export const cardInputAtom = atomWithStorage("card.input", "");
 
 export const cardInputUrlAtom = atomWithStorage("url.toParse", "");
-export const cardInputUrlsAtom = withImmer(
-  atomWithStorage<{ url: string; disabled?: boolean }[]>("urls.toParse", []),
-);
 
 export const cardUserIdAtom = atomWithStorage("card.user.id", "");
 export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "");
@@ -40,6 +43,17 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 export const cardNewContentAtom = atomWithStorage("card.new.content", "");
 
 export const cardRefetchPageAtom = atomWithStorage("card.page.refetch", false);
+
+export const summaryEnabledAtom = atomWithStorage<boolean>(
+  "card.summary.enabled",
+  true,
+);
+
+export const summaryWithImageAtom = atomWithStorage<boolean>(
+  "card.summary.with-image",
+  false,
+);
+
 export const summaryModelAtom = atomWithStorage<LlmModelType>(
   "card.summary.model",
   "gpt-3.5-turbo", // gpt-3.5-turbo
@@ -54,6 +68,11 @@ export const cardFetchEngineAtom = atomWithStorage<BackendType>(
   "nodejs",
 );
 
+export const cardFetchWithCacheAtom = atomWithStorage<boolean>(
+  "card.fetch.with-cache",
+  true,
+);
+
 export const cardLLMTypeAtom = atomWithStorage<LlmModelType>(
   "card.llm.type",
   "gpt-3.5-turbo",
@@ -66,15 +85,19 @@ export const cardLLMEnabledAtom = atomWithStorage(
 
 export const cardMdWithImgAtom = atomWithStorage("card.md-with-img", false);
 
-export const cardPreviewEngineTypeSchema = z.enum([
-  "html2image",
-  "html2canvas",
-  "modern-screenshot",
-]);
-export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>;
 export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngineType>(
   "card.preview.engine",
   "modern-screenshot",
+);
+
+export const backendTypeAtom = atomWithStorage<BackendType>(
+  "backend.type",
+  "nodejs",
+);
+
+export const requestApproachTypeAtom = atomWithStorage<RequestApproachType>(
+  "request.approach.type",
+  "simulate",
 );
 
 ///////////////////////////////
@@ -106,11 +129,29 @@ export const cardOssIdAtom = atom<string | null>((get) => {
   return getCardUrl(card?.id);
 });
 
-export const cardGenOptionsAtom = atom<ICardGenOptions>((get) => ({
-  backendEngineType: get(cardFetchEngineAtom),
-  mdWithImg: get(cardMdWithImgAtom),
-  refetchPage: get(cardRefetchPageAtom),
-  summaryModel: get(summaryModelAtom),
-  refetchStat: get(cardRefetchCardAtom),
-  refetchComments: get(cardRefetchCommentsAtom),
+export const requestOptionsAtom = atom<RequestOptions>((get) => ({
+  approachType: get(requestApproachTypeAtom),
+  backendType: get(backendTypeAtom),
 }));
+
+export const summaryOptionsAtom = atom<SummaryOptions>((get) => ({
+  model: get(summaryModelAtom),
+  enabled: get(summaryEnabledAtom),
+  withImage: get(summaryWithImageAtom),
+}));
+
+export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
+  (get) => ({
+    stat: {
+      enabled: false,
+    },
+    comments: {
+      enabled: get(cardRefetchCommentsAtom),
+    },
+    withCache: get(cardFetchWithCacheAtom),
+    detail: {
+      request: get(requestOptionsAtom),
+      summary: get(summaryOptionsAtom),
+    },
+  }),
+);

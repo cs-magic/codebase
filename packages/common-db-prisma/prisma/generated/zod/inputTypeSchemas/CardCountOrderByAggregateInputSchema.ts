@@ -20,6 +20,7 @@ export const CardCountOrderByAggregateInputSchema: z.ZodType<Prisma.CardCountOrd
   images: z.lazy(() => SortOrderSchema).optional(),
   iFrames: z.lazy(() => SortOrderSchema).optional(),
   videos: z.lazy(() => SortOrderSchema).optional(),
+  html: z.lazy(() => SortOrderSchema).optional(),
   contentMd: z.lazy(() => SortOrderSchema).optional(),
   contentSummary: z.lazy(() => SortOrderSchema).optional(),
   stat: z.lazy(() => SortOrderSchema).optional(),

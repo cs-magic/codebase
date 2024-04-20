@@ -25,6 +25,7 @@ export const CardCreateManyInputSchema: z.ZodType<Prisma.CardCreateManyInput> = 
   images: z.union([ z.lazy(() => CardCreateimagesInputSchema),InputJsonValueSchema.array() ]).optional(),
   iFrames: z.union([ z.lazy(() => CardCreateiFramesInputSchema),InputJsonValueSchema.array() ]).optional(),
   videos: z.union([ z.lazy(() => CardCreatevideosInputSchema),InputJsonValueSchema.array() ]).optional(),
+  html: z.string().optional().nullable(),
   contentMd: z.string().optional().nullable(),
   contentSummary: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   stat: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),

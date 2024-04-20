@@ -23,15 +23,15 @@ status: |-
   ConvPreference:
     model: {{convPreference.model}}
     backend: {{convPreference.backend}}
-    chatter-enabled: {{{convPreference.chatEnabled}}}
-    parser-enabled: {{{convPreference.parserEnabled}}}
-    max-output-lines: {{{convPreference.maxOutputLines}}}
-    command-style: {{{convPreference.commandStyle}}}
+    chatter enabled: {{{convPreference.chatEnabled}}}
+    parser enabled: {{{convPreference.parserEnabled}}}
+    max output lines: {{{convPreference.maxOutputLines}}}
+    command style: {{{convPreference.commandStyle}}}
   ------------------------------
   UserPreference:
     model: {{userPreference.model}}
     backend: {{userPreference.backend}}
-    chatter-enabled: {{{userPreference.chatEnabled}}}
-    parser-enabled: {{{userPreference.parserEnabled}}}
-    max-output-lines: {{{userPreference.maxOutputLines}}}
-    command-style: {{{userPreference.commandStyle}}}
+    chatter enabled: {{{userPreference.chatEnabled}}}
+    parser enabled: {{{userPreference.parserEnabled}}}
+    max output lines: {{{userPreference.maxOutputLines}}}
+    command style: {{{userPreference.commandStyle}}}

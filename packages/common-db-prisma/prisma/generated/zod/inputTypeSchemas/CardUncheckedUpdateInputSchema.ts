@@ -30,6 +30,7 @@ export const CardUncheckedUpdateInputSchema: z.ZodType<Prisma.CardUncheckedUpdat
   images: z.union([ z.lazy(() => CardUpdateimagesInputSchema),InputJsonValueSchema.array() ]).optional(),
   iFrames: z.union([ z.lazy(() => CardUpdateiFramesInputSchema),InputJsonValueSchema.array() ]).optional(),
   videos: z.union([ z.lazy(() => CardUpdatevideosInputSchema),InputJsonValueSchema.array() ]).optional(),
+  html: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   contentMd: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   contentSummary: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   stat: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),

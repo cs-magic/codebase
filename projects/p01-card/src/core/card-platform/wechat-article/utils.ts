@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger";
 import { ICardPlatform } from "../../../schema/card";
 
 export type IWxmpArticleUrlParsed = {
@@ -19,7 +20,7 @@ export const parseWxmpArticleUrl = (url: string): IWxmpArticleUrlParsed => {
     comments: undefined,
   };
 
-  console.log({ url, platformId, platformData });
+  logger.info({ url, platformId, platformData });
 
   return {
     platformId,

@@ -1,13 +1,14 @@
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
-import { fileURLToPath } from "url"
 
 import { compressContent } from "../common-common/utils/compress-content"
 import { safeCallLLM } from "./safe-call-llm"
 import { AgentConfig } from "./schema/agent"
 import { ICallLlmOptions, ILlmMessage } from "./schema/llm"
 import { LlmModelType } from "./schema/providers"
+
+// const __filename = fileURLToPath(import.meta.url)
 
 export const safeCallAgent = async ({
   input,
@@ -26,7 +27,6 @@ export const safeCallAgent = async ({
     inputLength: input.length,
   })
 
-  const __filename = fileURLToPath(import.meta.url)
   const yamlConfig = await promises.readFile(
     path.join(__filename, `../config/${agentType}.agent.yml`),
     { encoding: "utf-8" },

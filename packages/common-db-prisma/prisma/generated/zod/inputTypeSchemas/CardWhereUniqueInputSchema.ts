@@ -44,6 +44,7 @@ export const CardWhereUniqueInputSchema: z.ZodType<Prisma.CardWhereUniqueInput> 
   images: z.lazy(() => JsonNullableListFilterSchema).optional(),
   iFrames: z.lazy(() => JsonNullableListFilterSchema).optional(),
   videos: z.lazy(() => JsonNullableListFilterSchema).optional(),
+  html: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   contentMd: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   contentSummary: z.lazy(() => JsonNullableFilterSchema).optional(),
   stat: z.lazy(() => JsonNullableFilterSchema).optional(),

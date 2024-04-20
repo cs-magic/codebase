@@ -1,13 +1,30 @@
 import { types } from "wechaty"
 import { prisma } from "../../../packages/common-db/providers/prisma"
+import { PadlocalVersion } from "./parse-message"
 
-export const getQuotedMessage = async (title: string) => {
+/**
+ * todo: limited input
+ * @param title
+ * @param version
+ */
+export const getQuotedMessage = async (
+  id?: string,
+  title?: string,
+  version: PadlocalVersion = "mark@2024-04-19",
+) => {
   const row = await prisma.wechatMessage.findFirstOrThrow({
     where: {
       type: types.Message.Url,
-      text: {
-        contains: title,
-      },
+      OR: [
+        {
+          text: {
+            contains: title,
+          },
+        },
+        {
+          id,
+        },
+      ],
     },
     orderBy: { createdAt: "desc" },
   })

@@ -30,6 +30,7 @@ export const CardScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.CardScal
   images: z.lazy(() => JsonNullableListFilterSchema).optional(),
   iFrames: z.lazy(() => JsonNullableListFilterSchema).optional(),
   videos: z.lazy(() => JsonNullableListFilterSchema).optional(),
+  html: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   contentMd: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   contentSummary: z.lazy(() => JsonNullableWithAggregatesFilterSchema).optional(),
   stat: z.lazy(() => JsonNullableWithAggregatesFilterSchema).optional(),

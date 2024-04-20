@@ -20,19 +20,20 @@ import { TodoManager } from "./managers/todo.manager"
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     logger.info(
-      `[onMessage] ${await formatTalkerFromMessage(message)}: ${JSON.stringify(message.payload)}`,
+      `[onMessage] ${await formatTalkerFromMessage(message)}: %o`,
+      message.payload,
     )
 
     if (message.text().includes("test")) {
-      void message.say(
-        new bot.UrlLink({
-          title: "title",
-          description: "description",
-          url: "https://p01.cs-magic.cn",
-          thumbnailUrl:
-            "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
-        }),
-      )
+      // void message.say(
+      //   new bot.UrlLink({
+      //     title: "title",
+      //     description: "description",
+      //     url: "https://p01.cs-magic.cn",
+      //     thumbnailUrl:
+      //       "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
+      //   }),
+      // )
     }
 
     if (parseQuote(message.text())) {

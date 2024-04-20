@@ -44,6 +44,7 @@ export const CardSchema = z.object({
    * [IMedia]
    */
   videos: JsonValueSchema.array().nullable(),
+  html: z.string().nullish(),
   contentMd: z.string().nullish(),
   /**
    * [ICallLLMResponse]

@@ -49,6 +49,7 @@ void fastify.register(async function (fastify) {
         .on("login", (user) => {
           // console.log("-- login: ", user)
           context.scan = null
+          context.bot = bot
           syncClients(context)
         })
     }

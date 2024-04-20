@@ -4,12 +4,17 @@ import {
   chromium,
   LaunchOptions,
 } from "playwright"
+import { Page as PlaywrightPage } from "playwright-core"
+import { Page as PuppetPage } from "puppeteer"
 import { DriverType } from "./schema"
+
+export type Page = PuppetPage & PlaywrightPage
 
 export class BaseSimulator {
   protected driver: BrowserType
   protected browser: PlaywrightBrowser | null = null
   protected launchOptions?: LaunchOptions
+  protected page?: Page
 
   constructor(
     driverType: DriverType = "playwright",
@@ -31,16 +36,21 @@ export class BaseSimulator {
     process.exit()
   }
 
-  async init() {
-    if (this.browser) {
-      console.log("cached browser")
-      return
-    }
+  async initPage(): Promise<Page> {
+    if (!this.page) {
+      console.log("-- opening browser")
+      this.browser = await this.driver.launch({
+        downloadsPath: "/tmp",
+        ...this.launchOptions,
+      })
 
-    console.log("-- opening browser")
-    this.browser = await this.driver.launch({
-      downloadsPath: "/tmp",
-      ...this.launchOptions,
-    })
+      this.page = (await this.browser.newPage({
+        screen: {
+          width: 1080,
+          height: 720,
+        },
+      })) as Page
+    }
+    return this.page
   }
 }
