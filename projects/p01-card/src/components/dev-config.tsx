@@ -3,20 +3,20 @@ import { useAtom } from "jotai";
 import { SettingsIcon } from "lucide-react";
 import * as process from "process";
 import { useState } from "react";
-import { devEnabledAtom } from "../../../../packages/common-dev/store";
+import { devEnabledAtom } from "../../../../common/dev/store";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../../packages/common-ui-shadcn/components/sheet";
+} from "../../../../common/ui-shadcn/components/sheet";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../../../packages/common-ui-shadcn/components/tabs";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import { IconContainer } from "../../../../packages/common-ui/components/icon-container";
+} from "../../../../common/ui-shadcn/components/tabs";
+import { cn } from "../../../../common/ui-shadcn/utils";
+import { IconContainer } from "../../../../common/ui/components/icon-container";
 import { ConfigDevCard } from "./config-dev-card";
 import { ConfigLogCard } from "./config-log-card";
 import { ConfigSMSCard } from "./config-sms";

@@ -1,7 +1,7 @@
 "use client";
 
-import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
-import { ButtonLink } from "../../../../../packages/common-ui/components/button-link";
+import { FlexContainer } from "../../../../../common/ui/components/flex-container";
+import { ButtonLink } from "../../../../../common/ui/components/button-link";
 
 export default function TestPage() {
   return (

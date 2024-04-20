@@ -4,15 +4,15 @@ import {
   getTvScale,
   tvFullScreenAtom,
   tvScreenOnAtom,
-} from "../../../../packages/extend-tv/store";
+} from "../../../../common/extend-tv/store";
 
 import "../styles/tv.css";
 import { useAtom } from "jotai";
 import { range } from "lodash";
 import { PropsWithChildren, useRef } from "react";
 import { useFullscreen, useMeasure } from "react-use";
-import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { FlexContainer } from "../../../../common/ui/components/flex-container";
+import { cn } from "../../../../common/ui-shadcn/utils";
 
 /**
  * tv, ref: https://codepen.io/manz/pen/MWoRMja

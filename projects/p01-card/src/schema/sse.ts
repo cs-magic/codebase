@@ -1,6 +1,6 @@
-import { ICreateCallLlm } from "../../../../packages/common-llm/schema/llm";
+import { ICreateCallLlm } from "../../../../common/llm/schema/llm";
 
-import { PusherServerId } from "../../../../packages/common-pusher/schema";
+import { PusherServerId } from "../../../../common/pusher/schema";
 import { ILlmMessage } from "./message";
 
 export type ResponseFinalStatus = "interrupted" | "responded" | "not-found";

@@ -1,5 +1,5 @@
-import { Badge } from "../../../../packages/common-ui-shadcn/components/ui/badge";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { Badge } from "../../../../common/ui-shadcn/components/ui/badge";
+import { cn } from "../../../../common/ui-shadcn/utils";
 
 export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
   if (!tags?.length) return null;

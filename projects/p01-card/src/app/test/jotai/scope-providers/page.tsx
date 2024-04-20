@@ -1,8 +1,8 @@
 "use client";
 import { Provider } from "jotai";
 import { ScopeProvider } from "jotai-scope";
-import { FlexContainer } from "../../../../../../../packages/common-ui/components/flex-container";
-import { Label } from "../../../../../../../packages/common-ui-shadcn/components/label";
+import { FlexContainer } from "../../../../../../../common/ui/components/flex-container";
+import { Label } from "../../../../../../../common/ui-shadcn/components/label";
 import { PlainContext } from "../plain-context";
 import { base1Atom, base2Atom } from "../store";
 

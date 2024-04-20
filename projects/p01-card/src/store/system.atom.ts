@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { BEST_VIEWPOINT } from "../../../../packages/common-ui/config";
-import { uiScreenAtom } from "../../../../packages/common-ui/store";
+import { BEST_VIEWPOINT } from "../../../../common/ui/config";
+import { uiScreenAtom } from "../../../../common/ui/store";
 import { ScenarioType } from "../schema/scenario";
 
 //////////////////////////////

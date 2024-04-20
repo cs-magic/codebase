@@ -1,13 +1,13 @@
 "use client";
 
 import { useAtom } from "jotai";
-import { SmsProviderType } from "../../../../packages/common-auth-sms/schema";
+import { SmsProviderType } from "../../../../common/auth-sms/schema";
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../../../packages/common-auth-sms/store";
-import { Input } from "../../../../packages/common-ui-shadcn/components/input";
-import { Label } from "../../../../packages/common-ui-shadcn/components/label";
+} from "../../../../common/auth-sms/store";
+import { Input } from "../../../../common/ui-shadcn/components/input";
+import { Label } from "../../../../common/ui-shadcn/components/label";
 import {
   Select,
   SelectContent,
@@ -15,7 +15,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../packages/common-ui-shadcn/components/select";
+} from "../../../../common/ui-shadcn/components/select";
 
 import { StandardCard } from "./standard-card";
 

@@ -6,10 +6,10 @@ import { toast } from "sonner";
 import {
   userImageAtom,
   userNameAtom,
-} from "../../../../packages/common-auth/store";
-import { Button } from "../../../../packages/common-ui-shadcn/components/button";
-import { Label } from "../../../../packages/common-ui-shadcn/components/label";
-import { useUserUpdateProfile } from "../../../../packages/common-hooks/use-user-update-profile";
+} from "../../../../common/auth/store";
+import { Button } from "../../../../common/ui-shadcn/components/button";
+import { Label } from "../../../../common/ui-shadcn/components/label";
+import { useUserUpdateProfile } from "../../../../common/hooks/use-user-update-profile";
 import { UserInputAvatar } from "./user-input-avatar";
 import { UserInputName } from "./user-input-name";
 

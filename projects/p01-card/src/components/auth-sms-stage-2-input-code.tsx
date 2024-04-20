@@ -4,15 +4,15 @@ import { useAtom, useSetAtom } from "jotai";
 import { signIn } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { SMS_PROVIDER_ID } from "../../../../packages/common-auth-sms/const";
+import { SMS_PROVIDER_ID } from "../../../../common/auth-sms/const";
 import {
   smsCodeAtom,
   smsSignInPayloadAtom,
-} from "../../../../packages/common-auth-sms/store";
-import { Label } from "../../../../packages/common-ui-shadcn/components/label";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import { SMS_DIGIT_SIZE } from "../../../../packages/common-ui/config";
-import { uiLoadingAlertDialogAtom } from "../../../../packages/common-ui/store";
+} from "../../../../common/auth-sms/store";
+import { Label } from "../../../../common/ui-shadcn/components/label";
+import { cn } from "../../../../common/ui-shadcn/utils";
+import { SMS_DIGIT_SIZE } from "../../../../common/ui/config";
+import { uiLoadingAlertDialogAtom } from "../../../../common/ui/store";
 import { SmsReInputPhone } from "./auth-sms-reinput-phone";
 import { SmsResendCode } from "./auth-sms-resend-code";
 import { useHotkeys } from "@mantine/hooks";

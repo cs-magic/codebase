@@ -4,9 +4,9 @@ import { Card } from "@prisma/client";
 import { useAtom, useSetAtom } from "jotai";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect } from "react";
-import moment from "../../../../packages/common-datetime/moment";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import { VerticalAspectRatio } from "../../../../packages/common-ui/components/aspect-ratio";
+import moment from "../../../../common/datetime/moment";
+import { cn } from "../../../../common/ui-shadcn/utils";
+import { VerticalAspectRatio } from "../../../../common/ui/components/aspect-ratio";
 import { getPlatformName } from "../core/utils";
 import {
   cardAuthorRenderedAtom,

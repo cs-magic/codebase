@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
-import { devEnabledAtom } from "../../../../packages/common-dev/store";
-import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
+import { devEnabledAtom } from "../../../../common/dev/store";
+import { FlexContainer } from "../../../../common/ui/components/flex-container";
 
 export const DevData = () => {
   const [devEnabled] = useAtom(devEnabledAtom);

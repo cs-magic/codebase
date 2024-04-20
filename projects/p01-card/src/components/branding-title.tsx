@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HTMLAttributes } from "react";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { cn } from "../../../../common/ui-shadcn/utils";
 
 import { config } from "../config";
 

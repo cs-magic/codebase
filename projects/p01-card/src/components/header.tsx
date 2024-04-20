@@ -7,16 +7,16 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../../packages/common-ui-shadcn/components/sheet";
+} from "../../../../common/ui-shadcn/components/sheet";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "../../../../packages/common-ui-shadcn/components/ui/navigation-menu";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import { IconContainer } from "../../../../packages/common-ui/components/icon-container";
+} from "../../../../common/ui-shadcn/components/ui/navigation-menu";
+import { cn } from "../../../../common/ui-shadcn/utils";
+import { IconContainer } from "../../../../common/ui/components/icon-container";
 import { config } from "../config";
 import { BrandingTitle } from "./branding-title";
 import { UserButton } from "./header-user";

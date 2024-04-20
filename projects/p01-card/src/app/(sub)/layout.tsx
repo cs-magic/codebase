@@ -1,7 +1,7 @@
 import { Header } from "../../components/header";
 import { PropsWithChildren } from "react";
-import { cn } from "../../../../../packages/common-ui-shadcn/utils";
-import { FlexContainer } from "../../../../../packages/common-ui/components/flex-container";
+import { cn } from "../../../../../common/ui-shadcn/utils";
+import { FlexContainer } from "../../../../../common/ui/components/flex-container";
 
 export default function SubLayout({ children }: PropsWithChildren) {
   // console.log(ansiColors.red("== SubLayout =="))

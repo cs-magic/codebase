@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
-import { devEnabledAtom } from "../../../../packages/common-dev/store";
-import { LabelLine } from "../../../../packages/common-ui/components/label-line";
-import { Switch } from "../../../../packages/common-ui-shadcn/components/switch";
+import { devEnabledAtom } from "../../../../common/dev/store";
+import { LabelLine } from "../../../../common/ui/components/label-line";
+import { Switch } from "../../../../common/ui-shadcn/components/switch";
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom";
 import { StandardCard } from "./standard-card";
 

@@ -5,8 +5,8 @@ import {
   Text2TextAppSVG,
   V2AGIBrand,
 } from "../../../components/assets";
-import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
-import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
+import { Label } from "../../../../../../common/ui-shadcn/components/label";
+import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
 
 export default function TestSVGPage() {
   return (

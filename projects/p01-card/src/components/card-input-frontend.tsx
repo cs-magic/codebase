@@ -1,15 +1,15 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { backendTypeSchema } from "../../../../packages/common-llm/schema/llm";
-import { llmModelTypeSchema } from "../../../../packages/common-llm/schema/providers";
-import { Input } from "../../../../packages/common-ui-shadcn/components/input";
-import { Separator } from "../../../../packages/common-ui-shadcn/components/separator";
+import { backendTypeSchema } from "../../../../common/llm/schema/llm";
+import { llmModelTypeSchema } from "../../../../common/llm/schema/providers";
+import { Input } from "../../../../common/ui-shadcn/components/input";
+import { Separator } from "../../../../common/ui-shadcn/components/separator";
 import {
   AtomSelector,
   AtomSwitcher,
-} from "../../../../packages/common-ui/components/atom-switcher";
-import { LabelLine } from "../../../../packages/common-ui/components/label-line";
-import { mapSpacingVerticalAtom } from "../../../../packages/common-visualization/store";
+} from "../../../../common/ui/components/atom-switcher";
+import { LabelLine } from "../../../../common/ui/components/label-line";
+import { mapSpacingVerticalAtom } from "../../../../common/common-visualization/store";
 import {
   cardAuthorWithTitleAtom,
   cardFetchEngineAtom,

@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { FlexContainer } from "../../../../packages/common-ui/components/flex-container";
+import { FlexContainer } from "../../../../common/ui/components/flex-container";
 
 export const CardFooterItem = ({
   Icon,

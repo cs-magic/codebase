@@ -1,8 +1,8 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { type NextRequest } from "next/server";
-import { getEnv } from "../../../../../../../packages/common-env";
+import { getEnv } from "../../../../../../../common/env";
 
-import { createTRPCContext } from "../../../../../../../packages/common-trpc/context";
+import { createTRPCContext } from "../../../../../../../common/trpc/context";
 import { appRouter } from "../index";
 
 const env = getEnv();

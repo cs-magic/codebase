@@ -1,4 +1,4 @@
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import { prisma } from "../../../common/db/providers/prisma"
 import { parseLimitedCommand } from "./parse-command"
 
 export const listTopics = async (convId: string) => {

@@ -1,9 +1,9 @@
 import {
   Avatar,
   AvatarImage,
-} from "../../../../packages/common-ui-shadcn/components/avatar";
-import { ImageEqualHeight } from "../../../../packages/common-ui/components/image-equal-height";
-import { SeparatorContainer } from "../../../../packages/common-ui/components/separator-container";
+} from "../../../../common/ui-shadcn/components/avatar";
+import { ImageEqualHeight } from "../../../../common/ui/components/image-equal-height";
+import { SeparatorContainer } from "../../../../common/ui/components/separator-container";
 
 import { config } from "../config";
 

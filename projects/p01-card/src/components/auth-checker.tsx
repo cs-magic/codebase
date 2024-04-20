@@ -9,7 +9,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "../../../../packages/common-ui-shadcn/components/alert-dialog";
+} from "../../../../common/ui-shadcn/components/alert-dialog";
 import { signIn } from "next-auth/react";
 
 import { checkAuthAlertDialogOpenAtom } from "../store/ui.atom";

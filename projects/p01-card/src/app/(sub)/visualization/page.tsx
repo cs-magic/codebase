@@ -1,4 +1,4 @@
-import MarkMap from "../../../../../../packages/common-visualization/markmap";
+import MarkMap from "../../../../../../common/common-visualization/markmap";
 
 export default function VisualizationPage() {
   const content =

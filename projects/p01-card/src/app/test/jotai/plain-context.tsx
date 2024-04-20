@@ -1,9 +1,9 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useToggle } from "react-use";
-import { FlexContainer } from "../../../../../../packages/common-ui/components/flex-container";
-import { Button } from "../../../../../../packages/common-ui-shadcn/components/button";
-import { Label } from "../../../../../../packages/common-ui-shadcn/components/label";
-import { cn } from "../../../../../../packages/common-ui-shadcn/utils";
+import { FlexContainer } from "../../../../../../common/ui/components/flex-container";
+import { Button } from "../../../../../../common/ui-shadcn/components/button";
+import { Label } from "../../../../../../common/ui-shadcn/components/label";
+import { cn } from "../../../../../../common/ui-shadcn/utils";
 import { base1Atom, base2Atom } from "./store";
 import { useAtom } from "jotai";
 

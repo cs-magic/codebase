@@ -2,8 +2,8 @@
 
 import { useAtom } from "jotai";
 import React from "react";
-import { Input } from "../../../../packages/common-ui-shadcn/components/input";
-import { LabelLine } from "../../../../packages/common-ui/components/label-line";
+import { Input } from "../../../../common/ui-shadcn/components/input";
+import { LabelLine } from "../../../../common/ui/components/label-line";
 import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.atom";
 
 export const CardInputUser = () => {

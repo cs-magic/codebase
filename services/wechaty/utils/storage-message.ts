@@ -1,6 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import omit from "lodash/omit"
-import { prisma } from "../../../packages/common-db/providers/prisma"
+import { prisma } from "../../../common/db/providers/prisma"
 import { Message } from "wechaty"
 
 export const storageMessage = async (message: Message) => {

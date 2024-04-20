@@ -3,7 +3,7 @@ import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSch
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
 import { z } from "zod"
-import { prisma } from "../../../../packages/common-db/providers/prisma"
+import { prisma } from "../../../../common/db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { listTodo } from "../../utils/list-todo"
 import { parseLimitedCommand } from "../../utils/parse-command"

@@ -1,9 +1,9 @@
 "use client";
 
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
-import { parseSummary } from "../../../../packages/common-llm/parse-summary";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
-import MarkMap from "../../../../packages/common-visualization/markmap";
+import { parseSummary } from "../../../../common/llm/parse-summary";
+import { cn } from "../../../../common/ui-shadcn/utils";
+import MarkMap from "../../../../common/common-visualization/markmap";
 import { CardContentAuthor } from "./card-content-author";
 import { Cover } from "./card-content-cover";
 import { Stat } from "./card-content-stat";

@@ -1,11 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useRef } from "react";
-import { api } from "../../../../../../../packages/common-trpc/react";
-import { Button } from "../../../../../../../packages/common-ui-shadcn/components/button";
-import { Input } from "../../../../../../../packages/common-ui-shadcn/components/input";
-import { Label } from "../../../../../../../packages/common-ui-shadcn/components/label";
-import { FlexContainer } from "../../../../../../../packages/common-ui/components/flex-container";
+import { api } from "../../../../../../../common/trpc/react";
+import { Button } from "../../../../../../../common/ui-shadcn/components/button";
+import { Input } from "../../../../../../../common/ui-shadcn/components/input";
+import { Label } from "../../../../../../../common/ui-shadcn/components/label";
+import { FlexContainer } from "../../../../../../../common/ui/components/flex-container";
 import { updateUserNameViaTrpc } from "./actions";
 
 export default function TestTrpcRouterInClientPage() {

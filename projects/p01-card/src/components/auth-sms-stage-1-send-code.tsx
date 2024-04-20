@@ -2,16 +2,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom, useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
-import { useSmsSendCode } from "../../../../packages/common-auth-sms/hooks/use-sms-send-code";
+import { useSmsSendCode } from "../../../../common/auth-sms/hooks/use-sms-send-code";
 import {
   ISendSms,
   sendSmsSchema,
-} from "../../../../packages/common-auth-sms/schema";
+} from "../../../../common/auth-sms/schema";
 import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
-} from "../../../../packages/common-auth-sms/store";
-import { ButtonWithLoading } from "../../../../packages/common-ui/components/button-with-loading";
+} from "../../../../common/auth-sms/store";
+import { ButtonWithLoading } from "../../../../common/ui/components/button-with-loading";
 import {
   Form,
   FormControl,
@@ -19,8 +19,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../../packages/common-ui-shadcn/components/form";
-import { Input } from "../../../../packages/common-ui-shadcn/components/input";
+} from "../../../../common/ui-shadcn/components/form";
+import { Input } from "../../../../common/ui-shadcn/components/input";
 
 export const AuthSmsStage1SendCode = () => {
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom);

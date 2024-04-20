@@ -1,7 +1,7 @@
 "use client";
 import { useAtom } from "jotai";
-import { smsCodeCurCountdownSecondsAtom } from "../../../../packages/common-auth-sms/store";
-import { useSmsSendCode } from "../../../../packages/common-auth-sms/hooks/use-sms-send-code";
+import { smsCodeCurCountdownSecondsAtom } from "../../../../common/auth-sms/store";
+import { useSmsSendCode } from "../../../../common/auth-sms/hooks/use-sms-send-code";
 
 export const SmsResendCode = () => {
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom);

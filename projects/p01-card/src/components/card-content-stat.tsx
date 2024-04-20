@@ -1,5 +1,5 @@
 import { EyeIcon, HeartIcon, MessageSquareTextIcon } from "lucide-react";
-import { StatItem } from "../../../../packages/common-ui/components/stat-item";
+import { StatItem } from "../../../../common/ui/components/stat-item";
 import { ICardStat } from "../schema/card";
 
 export const Stat = ({ stat }: { stat: ICardStat | null | undefined }) => {

@@ -6,10 +6,10 @@ import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import {
   fetchBilibiliDetail,
   fetchBvidFromb23tv,
-} from "../../../../packages/3rd-bilibili/actions";
-import { getBvidFromUrl } from "../../../../packages/3rd-bilibili/utils";
-import { fetchWxmpArticle } from "../../../../packages/3rd-wechat/wxmp-article/fetch";
-import { fetchXiaoHongShuDetail } from "../../../../packages/3rd-xhs/actions";
+} from "../../../../common/3rd-bilibili/actions";
+import { getBvidFromUrl } from "../../../../common/3rd-bilibili/utils";
+import { fetchWxmpArticle } from "../../../../common/3rd-wechat/wxmp-article/fetch";
+import { fetchXiaoHongShuDetail } from "../../../../common/3rd-xhs/actions";
 import { GenWxmpArticleCardFetchOptions } from "../schema/card";
 import { bilibili2card } from "./card-platform/bilibili/to-card";
 import { xiaohongshu2card } from "./card-platform/xiaohongshu/to-card";

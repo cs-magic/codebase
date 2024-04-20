@@ -2,7 +2,7 @@ import { useSetAtom } from "jotai";
 import {
   tvFullScreenAtom,
   tvScreenOnAtom,
-} from "../../../../packages/extend-tv/store";
+} from "../../../../common/extend-tv/store";
 
 export const Controls = () => {
   const toggleFullscreen = useSetAtom(tvFullScreenAtom);

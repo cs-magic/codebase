@@ -2,9 +2,9 @@
 
 import { useAtom } from "jotai";
 import { BarChart } from "lucide-react";
-import { devEnabledAtom } from "../../../../packages/common-dev/store";
-import { pusherLatencyAtom } from "../../../../packages/common-pusher/store";
-import { cn } from "../../../../packages/common-ui-shadcn/utils";
+import { devEnabledAtom } from "../../../../common/dev/store";
+import { pusherLatencyAtom } from "../../../../common/pusher/store";
+import { cn } from "../../../../common/ui-shadcn/utils";
 import { DevSocketStatusIcon } from "./dev-socket-status-icon";
 
 export const DevSocketStatus = () => {

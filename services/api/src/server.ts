@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 
 import Fastify from "fastify"
 import remove from "lodash/remove"
-import { Path } from "../../../packages/common-path"
+import { Path } from "../../../common/path"
 import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
 import { syncClients } from "./utils/sync-clients"

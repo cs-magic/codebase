@@ -1,5 +1,5 @@
 import { signOut } from "next-auth/react";
-import { Button } from "../../../../packages/common-ui-shadcn/components/button";
+import { Button } from "../../../../common/ui-shadcn/components/button";
 
 export const UserSignOutButton = () => {
   return (

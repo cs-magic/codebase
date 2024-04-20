@@ -1,6 +1,6 @@
 import { logger } from "@cs-magic/log/logger"
 import { Message, Sayable, Wechaty } from "wechaty"
-import moment from "../../../packages/common-datetime/moment"
+import moment from "../../../common/datetime/moment"
 import { botGetNotificationGroup } from "./bot-get-notification-group"
 import { formatTalkerFromMessage } from "./format-talker"
 
