@@ -1961,9 +1961,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/prisma@workspace:packages/common-db-prisma":
+"@cs-magic/prisma@workspace:core/common-db-prisma":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/prisma@workspace:packages/common-db-prisma"
+  resolution: "@cs-magic/prisma@workspace:core/common-db-prisma"
   dependencies:
     prisma: "npm:^5.12.1"
     prisma-json-types-generator: "npm:^3.0.4"

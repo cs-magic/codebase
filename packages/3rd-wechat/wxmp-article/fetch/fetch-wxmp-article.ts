@@ -50,8 +50,18 @@ export const fetchWxmpArticle = async (
         ? await fetchWxmpArticleViaFastapi(url, options?.detail.summary)
         : await fetchWxmpArticleViaNodejs(url, options?.detail)
 
-    found = await prisma.card.create({
-      data: newItem,
+    if (!newItem.platformId)
+      throw new Error("platformId shouldn't be undefined")
+
+    found = await prisma.card.upsert({
+      where: {
+        platformType_platformId: {
+          platformId: newItem.platformId,
+          platformType: "wxmpArticle",
+        },
+      },
+      create: newItem,
+      update: newItem,
       ...cardDetailSchema,
     })
     // console.log({ found })

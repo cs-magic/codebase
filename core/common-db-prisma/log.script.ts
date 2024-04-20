@@ -1,5 +1,5 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
-import { prisma } from "../common-db/providers/prisma"
+import { prisma } from "../../packages/common-db/providers/prisma"
 
 const g = async () => {
   try {
