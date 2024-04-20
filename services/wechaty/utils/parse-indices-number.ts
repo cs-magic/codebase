@@ -2,7 +2,19 @@ import { ERR_MSG_INVALID_INPUT } from "@cs-magic/common/const"
 import { z } from "zod"
 import { Priority } from "../handle-messages/managers/todo.manager"
 
-export const parseIndicesPriority = async (input: string) => {
+export const parseTimer = async (input: string) => {
+  const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(input)
+
+  if (!m) throw new Error(ERR_MSG_INVALID_INPUT)
+
+  const index = await z.number().parseAsync(Number(m[1]))
+
+  const timer = await z.string().parseAsync(m[2])
+
+  return { index, timer }
+}
+
+export const parsePriorities = async (input: string) => {
   const m = /^\s*((?:\d+\s*)+)(\d+)\s*$/.exec(input)
 
   if (!m) throw new Error(ERR_MSG_INVALID_INPUT)

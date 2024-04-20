@@ -11,6 +11,7 @@ export const TaskMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TaskMaxOrderBy
   description: z.lazy(() => SortOrderSchema).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.lazy(() => SortOrderSchema).optional(),
+  roomId: z.lazy(() => SortOrderSchema).optional(),
   priority: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 

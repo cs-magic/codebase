@@ -4,6 +4,7 @@ import { TaskIncludeSchema } from '../inputTypeSchemas/TaskIncludeSchema'
 import { TaskCreateInputSchema } from '../inputTypeSchemas/TaskCreateInputSchema'
 import { TaskUncheckedCreateInputSchema } from '../inputTypeSchemas/TaskUncheckedCreateInputSchema'
 import { WechatUserArgsSchema } from "../outputTypeSchemas/WechatUserArgsSchema"
+import { WechatRoomArgsSchema } from "../outputTypeSchemas/WechatRoomArgsSchema"
 // Select schema needs to be in file to prevent circular imports
 //------------------------------------------------------
 
@@ -15,9 +16,12 @@ export const TaskSelectSchema: z.ZodType<Prisma.TaskSelect> = z.object({
   description: z.boolean().optional(),
   status: z.boolean().optional(),
   ownerId: z.boolean().optional(),
+  roomId: z.boolean().optional(),
   notes: z.boolean().optional(),
   priority: z.boolean().optional(),
+  timer: z.boolean().optional(),
   owner: z.union([z.boolean(),z.lazy(() => WechatUserArgsSchema)]).optional(),
+  room: z.union([z.boolean(),z.lazy(() => WechatRoomArgsSchema)]).optional(),
 }).strict()
 
 export const TaskCreateArgsSchema: z.ZodType<Prisma.TaskCreateArgs> = z.object({

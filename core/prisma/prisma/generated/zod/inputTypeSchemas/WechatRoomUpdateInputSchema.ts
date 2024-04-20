@@ -9,6 +9,7 @@ import { NullableStringFieldUpdateOperationsInputSchema } from './NullableString
 import { NullableJsonNullValueInputSchema } from './NullableJsonNullValueInputSchema';
 import { InputJsonValueSchema } from './InputJsonValueSchema';
 import { WechatMessageUpdateManyWithoutRoomNestedInputSchema } from './WechatMessageUpdateManyWithoutRoomNestedInputSchema';
+import { TaskUpdateManyWithoutRoomNestedInputSchema } from './TaskUpdateManyWithoutRoomNestedInputSchema';
 
 export const WechatRoomUpdateInputSchema: z.ZodType<Prisma.WechatRoomUpdateInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -21,7 +22,8 @@ export const WechatRoomUpdateInputSchema: z.ZodType<Prisma.WechatRoomUpdateInput
   ownerId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   preference: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   data: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
-  messages: z.lazy(() => WechatMessageUpdateManyWithoutRoomNestedInputSchema).optional()
+  messages: z.lazy(() => WechatMessageUpdateManyWithoutRoomNestedInputSchema).optional(),
+  Task: z.lazy(() => TaskUpdateManyWithoutRoomNestedInputSchema).optional()
 }).strict();
 
 export default WechatRoomUpdateInputSchema;

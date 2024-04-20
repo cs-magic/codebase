@@ -8,6 +8,7 @@ import { EnumTaskStatusWithAggregatesFilterSchema } from './EnumTaskStatusWithAg
 import { TaskStatusSchema } from './TaskStatusSchema';
 import { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 import { IntWithAggregatesFilterSchema } from './IntWithAggregatesFilterSchema';
+import { JsonNullableWithAggregatesFilterSchema } from './JsonNullableWithAggregatesFilterSchema';
 
 export const TaskScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TaskScalarWhereWithAggregatesInput> = z.object({
   AND: z.union([ z.lazy(() => TaskScalarWhereWithAggregatesInputSchema),z.lazy(() => TaskScalarWhereWithAggregatesInputSchema).array() ]).optional(),
@@ -20,8 +21,10 @@ export const TaskScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TaskScal
   description: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   status: z.union([ z.lazy(() => EnumTaskStatusWithAggregatesFilterSchema),z.lazy(() => TaskStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  roomId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   notes: z.lazy(() => StringNullableListFilterSchema).optional(),
   priority: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  timer: z.lazy(() => JsonNullableWithAggregatesFilterSchema).optional()
 }).strict();
 
 export default TaskScalarWhereWithAggregatesInputSchema;

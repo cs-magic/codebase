@@ -18,6 +18,8 @@ declare global {
       IWechatUserData,
       IWechatUserPreference,
     } from "@cs-magic/wechaty/schema/wechat-user"
+
+    export { TaskTimer } from "../schema/task"
   }
 }
 export { IUserSummary } from "../schema/user.summary"

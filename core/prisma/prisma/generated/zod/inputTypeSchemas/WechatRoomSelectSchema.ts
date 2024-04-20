@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
 import { WechatMessageFindManyArgsSchema } from "../outputTypeSchemas/WechatMessageFindManyArgsSchema"
+import { TaskFindManyArgsSchema } from "../outputTypeSchemas/TaskFindManyArgsSchema"
 import { WechatRoomCountOutputTypeArgsSchema } from "../outputTypeSchemas/WechatRoomCountOutputTypeArgsSchema"
 
 export const WechatRoomSelectSchema: z.ZodType<Prisma.WechatRoomSelect> = z.object({
@@ -15,6 +16,7 @@ export const WechatRoomSelectSchema: z.ZodType<Prisma.WechatRoomSelect> = z.obje
   preference: z.boolean().optional(),
   data: z.boolean().optional(),
   messages: z.union([z.boolean(),z.lazy(() => WechatMessageFindManyArgsSchema)]).optional(),
+  Task: z.union([z.boolean(),z.lazy(() => TaskFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => WechatRoomCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 

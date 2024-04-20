@@ -8,7 +8,10 @@ import { TaskStatusSchema } from './TaskStatusSchema';
 import { EnumTaskStatusFieldUpdateOperationsInputSchema } from './EnumTaskStatusFieldUpdateOperationsInputSchema';
 import { TaskUpdatenotesInputSchema } from './TaskUpdatenotesInputSchema';
 import { IntFieldUpdateOperationsInputSchema } from './IntFieldUpdateOperationsInputSchema';
+import { NullableJsonNullValueInputSchema } from './NullableJsonNullValueInputSchema';
+import { InputJsonValueSchema } from './InputJsonValueSchema';
 import { WechatUserUpdateOneWithoutTasksNestedInputSchema } from './WechatUserUpdateOneWithoutTasksNestedInputSchema';
+import { WechatRoomUpdateOneWithoutTaskNestedInputSchema } from './WechatRoomUpdateOneWithoutTaskNestedInputSchema';
 
 export const TaskUpdateInputSchema: z.ZodType<Prisma.TaskUpdateInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -19,7 +22,9 @@ export const TaskUpdateInputSchema: z.ZodType<Prisma.TaskUpdateInput> = z.object
   status: z.union([ z.lazy(() => TaskStatusSchema),z.lazy(() => EnumTaskStatusFieldUpdateOperationsInputSchema) ]).optional(),
   notes: z.union([ z.lazy(() => TaskUpdatenotesInputSchema),z.string().array() ]).optional(),
   priority: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  owner: z.lazy(() => WechatUserUpdateOneWithoutTasksNestedInputSchema).optional()
+  timer: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
+  owner: z.lazy(() => WechatUserUpdateOneWithoutTasksNestedInputSchema).optional(),
+  room: z.lazy(() => WechatRoomUpdateOneWithoutTaskNestedInputSchema).optional()
 }).strict();
 
 export default TaskUpdateInputSchema;

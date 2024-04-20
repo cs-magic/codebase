@@ -7,6 +7,7 @@ import { StringNullableListFilterSchema } from './StringNullableListFilterSchema
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
 import { JsonNullableFilterSchema } from './JsonNullableFilterSchema';
 import { WechatMessageListRelationFilterSchema } from './WechatMessageListRelationFilterSchema';
+import { TaskListRelationFilterSchema } from './TaskListRelationFilterSchema';
 
 export const WechatRoomWhereUniqueInputSchema: z.ZodType<Prisma.WechatRoomWhereUniqueInput> = z.object({
   id: z.string()
@@ -25,7 +26,8 @@ export const WechatRoomWhereUniqueInputSchema: z.ZodType<Prisma.WechatRoomWhereU
   ownerId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   preference: z.lazy(() => JsonNullableFilterSchema).optional(),
   data: z.lazy(() => JsonNullableFilterSchema).optional(),
-  messages: z.lazy(() => WechatMessageListRelationFilterSchema).optional()
+  messages: z.lazy(() => WechatMessageListRelationFilterSchema).optional(),
+  Task: z.lazy(() => TaskListRelationFilterSchema).optional()
 }).strict());
 
 export default WechatRoomWhereUniqueInputSchema;

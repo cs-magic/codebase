@@ -3,6 +3,8 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { TaskStatusSchema } from './TaskStatusSchema';
 import { TaskCreatenotesInputSchema } from './TaskCreatenotesInputSchema';
+import { NullableJsonNullValueInputSchema } from './NullableJsonNullValueInputSchema';
+import { InputJsonValueSchema } from './InputJsonValueSchema';
 
 export const TaskCreateManyInputSchema: z.ZodType<Prisma.TaskCreateManyInput> = z.object({
   id: z.string().optional(),
@@ -12,8 +14,10 @@ export const TaskCreateManyInputSchema: z.ZodType<Prisma.TaskCreateManyInput> = 
   description: z.string().optional().nullable(),
   status: z.lazy(() => TaskStatusSchema).optional(),
   ownerId: z.string().optional().nullable(),
+  roomId: z.string().optional().nullable(),
   notes: z.union([ z.lazy(() => TaskCreatenotesInputSchema),z.string().array() ]).optional(),
-  priority: z.number().int().optional()
+  priority: z.number().int().optional(),
+  timer: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
 }).strict();
 
 export default TaskCreateManyInputSchema;

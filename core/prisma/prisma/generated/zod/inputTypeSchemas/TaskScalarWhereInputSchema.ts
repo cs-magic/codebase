@@ -8,6 +8,7 @@ import { EnumTaskStatusFilterSchema } from './EnumTaskStatusFilterSchema';
 import { TaskStatusSchema } from './TaskStatusSchema';
 import { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 import { IntFilterSchema } from './IntFilterSchema';
+import { JsonNullableFilterSchema } from './JsonNullableFilterSchema';
 
 export const TaskScalarWhereInputSchema: z.ZodType<Prisma.TaskScalarWhereInput> = z.object({
   AND: z.union([ z.lazy(() => TaskScalarWhereInputSchema),z.lazy(() => TaskScalarWhereInputSchema).array() ]).optional(),
@@ -20,8 +21,10 @@ export const TaskScalarWhereInputSchema: z.ZodType<Prisma.TaskScalarWhereInput> 
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   status: z.union([ z.lazy(() => EnumTaskStatusFilterSchema),z.lazy(() => TaskStatusSchema) ]).optional(),
   ownerId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  roomId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   notes: z.lazy(() => StringNullableListFilterSchema).optional(),
   priority: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  timer: z.lazy(() => JsonNullableFilterSchema).optional()
 }).strict();
 
 export default TaskScalarWhereInputSchema;

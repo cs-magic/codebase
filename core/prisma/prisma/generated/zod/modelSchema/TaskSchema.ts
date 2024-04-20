@@ -1,11 +1,19 @@
 import { z } from 'zod';
+import { JsonValueSchema } from '../inputTypeSchemas/JsonValueSchema'
 import { TaskStatusSchema } from '../inputTypeSchemas/TaskStatusSchema'
+import type { JsonValueType } from '../inputTypeSchemas/JsonValueSchema';
 import type { WechatUserWithRelations } from './WechatUserSchema'
 import type { WechatUserPartialWithRelations } from './WechatUserSchema'
 import type { WechatUserOptionalDefaultsWithRelations } from './WechatUserSchema'
+import type { WechatRoomWithRelations } from './WechatRoomSchema'
+import type { WechatRoomPartialWithRelations } from './WechatRoomSchema'
+import type { WechatRoomOptionalDefaultsWithRelations } from './WechatRoomSchema'
 import { WechatUserWithRelationsSchema } from './WechatUserSchema'
 import { WechatUserPartialWithRelationsSchema } from './WechatUserSchema'
 import { WechatUserOptionalDefaultsWithRelationsSchema } from './WechatUserSchema'
+import { WechatRoomWithRelationsSchema } from './WechatRoomSchema'
+import { WechatRoomPartialWithRelationsSchema } from './WechatRoomSchema'
+import { WechatRoomOptionalDefaultsWithRelationsSchema } from './WechatRoomSchema'
 
 /////////////////////////////////////////
 // TASK SCHEMA
@@ -19,8 +27,13 @@ export const TaskSchema = z.object({
   title: z.string(),
   description: z.string().nullish(),
   ownerId: z.string().nullish(),
+  roomId: z.string().nullish(),
   notes: z.string().array(),
   priority: z.number().int(),
+  /**
+   * [TaskTimer]
+   */
+  timer: JsonValueSchema,
 })
 
 export type Task = z.infer<typeof TaskSchema>
@@ -53,12 +66,16 @@ export type TaskOptionalDefaults = z.infer<typeof TaskOptionalDefaultsSchema>
 
 export type TaskRelations = {
   owner?: WechatUserWithRelations | null;
+  room?: WechatRoomWithRelations | null;
 };
 
-export type TaskWithRelations = z.infer<typeof TaskSchema> & TaskRelations
+export type TaskWithRelations = Omit<z.infer<typeof TaskSchema>, "timer"> & {
+  timer?: JsonValueType | null;
+} & TaskRelations
 
 export const TaskWithRelationsSchema: z.ZodType<TaskWithRelations> = TaskSchema.merge(z.object({
   owner: z.lazy(() => WechatUserWithRelationsSchema).nullish(),
+  room: z.lazy(() => WechatRoomWithRelationsSchema).nullish(),
 }))
 
 /////////////////////////////////////////
@@ -67,12 +84,16 @@ export const TaskWithRelationsSchema: z.ZodType<TaskWithRelations> = TaskSchema.
 
 export type TaskOptionalDefaultsRelations = {
   owner?: WechatUserOptionalDefaultsWithRelations | null;
+  room?: WechatRoomOptionalDefaultsWithRelations | null;
 };
 
-export type TaskOptionalDefaultsWithRelations = z.infer<typeof TaskOptionalDefaultsSchema> & TaskOptionalDefaultsRelations
+export type TaskOptionalDefaultsWithRelations = Omit<z.infer<typeof TaskOptionalDefaultsSchema>, "timer"> & {
+  timer?: JsonValueType | null;
+} & TaskOptionalDefaultsRelations
 
 export const TaskOptionalDefaultsWithRelationsSchema: z.ZodType<TaskOptionalDefaultsWithRelations> = TaskOptionalDefaultsSchema.merge(z.object({
   owner: z.lazy(() => WechatUserOptionalDefaultsWithRelationsSchema).nullish(),
+  room: z.lazy(() => WechatRoomOptionalDefaultsWithRelationsSchema).nullish(),
 }))
 
 /////////////////////////////////////////
@@ -81,24 +102,34 @@ export const TaskOptionalDefaultsWithRelationsSchema: z.ZodType<TaskOptionalDefa
 
 export type TaskPartialRelations = {
   owner?: WechatUserPartialWithRelations | null;
+  room?: WechatRoomPartialWithRelations | null;
 };
 
-export type TaskPartialWithRelations = z.infer<typeof TaskPartialSchema> & TaskPartialRelations
+export type TaskPartialWithRelations = Omit<z.infer<typeof TaskPartialSchema>, "timer"> & {
+  timer?: JsonValueType | null;
+} & TaskPartialRelations
 
 export const TaskPartialWithRelationsSchema: z.ZodType<TaskPartialWithRelations> = TaskPartialSchema.merge(z.object({
   owner: z.lazy(() => WechatUserPartialWithRelationsSchema).nullish(),
+  room: z.lazy(() => WechatRoomPartialWithRelationsSchema).nullish(),
 })).partial()
 
-export type TaskOptionalDefaultsWithPartialRelations = z.infer<typeof TaskOptionalDefaultsSchema> & TaskPartialRelations
+export type TaskOptionalDefaultsWithPartialRelations = Omit<z.infer<typeof TaskOptionalDefaultsSchema>, "timer"> & {
+  timer?: JsonValueType | null;
+} & TaskPartialRelations
 
 export const TaskOptionalDefaultsWithPartialRelationsSchema: z.ZodType<TaskOptionalDefaultsWithPartialRelations> = TaskOptionalDefaultsSchema.merge(z.object({
   owner: z.lazy(() => WechatUserPartialWithRelationsSchema).nullish(),
+  room: z.lazy(() => WechatRoomPartialWithRelationsSchema).nullish(),
 }).partial())
 
-export type TaskWithPartialRelations = z.infer<typeof TaskSchema> & TaskPartialRelations
+export type TaskWithPartialRelations = Omit<z.infer<typeof TaskSchema>, "timer"> & {
+  timer?: JsonValueType | null;
+} & TaskPartialRelations
 
 export const TaskWithPartialRelationsSchema: z.ZodType<TaskWithPartialRelations> = TaskSchema.merge(z.object({
   owner: z.lazy(() => WechatUserPartialWithRelationsSchema).nullish(),
+  room: z.lazy(() => WechatRoomPartialWithRelationsSchema).nullish(),
 }).partial())
 
 export default TaskSchema;

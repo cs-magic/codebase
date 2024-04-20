@@ -6,6 +6,7 @@ import { WechatRoomCreatememberIdListInputSchema } from './WechatRoomCreatemembe
 import { NullableJsonNullValueInputSchema } from './NullableJsonNullValueInputSchema';
 import { InputJsonValueSchema } from './InputJsonValueSchema';
 import { WechatMessageCreateNestedManyWithoutRoomInputSchema } from './WechatMessageCreateNestedManyWithoutRoomInputSchema';
+import { TaskCreateNestedManyWithoutRoomInputSchema } from './TaskCreateNestedManyWithoutRoomInputSchema';
 
 export const WechatRoomCreateInputSchema: z.ZodType<Prisma.WechatRoomCreateInput> = z.object({
   id: z.string(),
@@ -18,7 +19,8 @@ export const WechatRoomCreateInputSchema: z.ZodType<Prisma.WechatRoomCreateInput
   ownerId: z.string().optional().nullable(),
   preference: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
   data: z.union([ z.lazy(() => NullableJsonNullValueInputSchema),InputJsonValueSchema ]).optional(),
-  messages: z.lazy(() => WechatMessageCreateNestedManyWithoutRoomInputSchema).optional()
+  messages: z.lazy(() => WechatMessageCreateNestedManyWithoutRoomInputSchema).optional(),
+  Task: z.lazy(() => TaskCreateNestedManyWithoutRoomInputSchema).optional()
 }).strict();
 
 export default WechatRoomCreateInputSchema;

@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from './SortOrderSchema';
 import { SortOrderInputSchema } from './SortOrderInputSchema';
 import { WechatUserOrderByWithRelationInputSchema } from './WechatUserOrderByWithRelationInputSchema';
+import { WechatRoomOrderByWithRelationInputSchema } from './WechatRoomOrderByWithRelationInputSchema';
 
 export const TaskOrderByWithRelationInputSchema: z.ZodType<Prisma.TaskOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
@@ -13,9 +14,12 @@ export const TaskOrderByWithRelationInputSchema: z.ZodType<Prisma.TaskOrderByWit
   description: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   status: z.lazy(() => SortOrderSchema).optional(),
   ownerId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  roomId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   notes: z.lazy(() => SortOrderSchema).optional(),
   priority: z.lazy(() => SortOrderSchema).optional(),
-  owner: z.lazy(() => WechatUserOrderByWithRelationInputSchema).optional()
+  timer: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  owner: z.lazy(() => WechatUserOrderByWithRelationInputSchema).optional(),
+  room: z.lazy(() => WechatRoomOrderByWithRelationInputSchema).optional()
 }).strict();
 
 export default TaskOrderByWithRelationInputSchema;

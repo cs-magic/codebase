@@ -5,8 +5,8 @@
   "scripts": {
     "generate": "DATABASE_URL=$(sh load-env.sh) prisma generate",
     "postinstall": "yarn generate",
-    "migrate-dev": "DATABASE_URL=$(sh load-env.sh) prisma migrate dev && yarn generate",
-    "migrate-deploy": "DATABASE_URL=$(sh load-env.sh) prisma migrate deploy && yarn generate",
+    "migrate:dev": "DATABASE_URL=$(sh load-env.sh) prisma migrate dev && yarn generate",
+    "migrate:deploy": "DATABASE_URL=$(sh load-env.sh) prisma migrate deploy && yarn generate",
     "db:push": "DATABASE_URL=$(sh load-env.sh) prisma db push",
     "db:studio": "DATABASE_URL=$(sh load-env.sh) prisma studio"
   },

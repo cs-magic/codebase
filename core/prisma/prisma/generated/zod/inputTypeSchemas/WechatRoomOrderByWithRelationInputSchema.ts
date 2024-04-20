@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { SortOrderSchema } from './SortOrderSchema';
 import { SortOrderInputSchema } from './SortOrderInputSchema';
 import { WechatMessageOrderByRelationAggregateInputSchema } from './WechatMessageOrderByRelationAggregateInputSchema';
+import { TaskOrderByRelationAggregateInputSchema } from './TaskOrderByRelationAggregateInputSchema';
 
 export const WechatRoomOrderByWithRelationInputSchema: z.ZodType<Prisma.WechatRoomOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
@@ -16,7 +17,8 @@ export const WechatRoomOrderByWithRelationInputSchema: z.ZodType<Prisma.WechatRo
   ownerId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   preference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   data: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  messages: z.lazy(() => WechatMessageOrderByRelationAggregateInputSchema).optional()
+  messages: z.lazy(() => WechatMessageOrderByRelationAggregateInputSchema).optional(),
+  Task: z.lazy(() => TaskOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
 export default WechatRoomOrderByWithRelationInputSchema;

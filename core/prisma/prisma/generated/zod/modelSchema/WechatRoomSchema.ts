@@ -4,9 +4,15 @@ import type { JsonValueType } from '../inputTypeSchemas/JsonValueSchema';
 import type { WechatMessageWithRelations } from './WechatMessageSchema'
 import type { WechatMessagePartialWithRelations } from './WechatMessageSchema'
 import type { WechatMessageOptionalDefaultsWithRelations } from './WechatMessageSchema'
+import type { TaskWithRelations } from './TaskSchema'
+import type { TaskPartialWithRelations } from './TaskSchema'
+import type { TaskOptionalDefaultsWithRelations } from './TaskSchema'
 import { WechatMessageWithRelationsSchema } from './WechatMessageSchema'
 import { WechatMessagePartialWithRelationsSchema } from './WechatMessageSchema'
 import { WechatMessageOptionalDefaultsWithRelationsSchema } from './WechatMessageSchema'
+import { TaskWithRelationsSchema } from './TaskSchema'
+import { TaskPartialWithRelationsSchema } from './TaskSchema'
+import { TaskOptionalDefaultsWithRelationsSchema } from './TaskSchema'
 
 /////////////////////////////////////////
 // WECHAT ROOM SCHEMA
@@ -58,6 +64,7 @@ export type WechatRoomOptionalDefaults = z.infer<typeof WechatRoomOptionalDefaul
 
 export type WechatRoomRelations = {
   messages: WechatMessageWithRelations[];
+  Task: TaskWithRelations[];
 };
 
 export type WechatRoomWithRelations = Omit<z.infer<typeof WechatRoomSchema>, "preference" | "data"> & {
@@ -67,6 +74,7 @@ export type WechatRoomWithRelations = Omit<z.infer<typeof WechatRoomSchema>, "pr
 
 export const WechatRoomWithRelationsSchema: z.ZodType<WechatRoomWithRelations> = WechatRoomSchema.merge(z.object({
   messages: z.lazy(() => WechatMessageWithRelationsSchema).array(),
+  Task: z.lazy(() => TaskWithRelationsSchema).array(),
 }))
 
 /////////////////////////////////////////
@@ -75,6 +83,7 @@ export const WechatRoomWithRelationsSchema: z.ZodType<WechatRoomWithRelations> =
 
 export type WechatRoomOptionalDefaultsRelations = {
   messages: WechatMessageOptionalDefaultsWithRelations[];
+  Task: TaskOptionalDefaultsWithRelations[];
 };
 
 export type WechatRoomOptionalDefaultsWithRelations = Omit<z.infer<typeof WechatRoomOptionalDefaultsSchema>, "preference" | "data"> & {
@@ -84,6 +93,7 @@ export type WechatRoomOptionalDefaultsWithRelations = Omit<z.infer<typeof Wechat
 
 export const WechatRoomOptionalDefaultsWithRelationsSchema: z.ZodType<WechatRoomOptionalDefaultsWithRelations> = WechatRoomOptionalDefaultsSchema.merge(z.object({
   messages: z.lazy(() => WechatMessageOptionalDefaultsWithRelationsSchema).array(),
+  Task: z.lazy(() => TaskOptionalDefaultsWithRelationsSchema).array(),
 }))
 
 /////////////////////////////////////////
@@ -92,6 +102,7 @@ export const WechatRoomOptionalDefaultsWithRelationsSchema: z.ZodType<WechatRoom
 
 export type WechatRoomPartialRelations = {
   messages?: WechatMessagePartialWithRelations[];
+  Task?: TaskPartialWithRelations[];
 };
 
 export type WechatRoomPartialWithRelations = Omit<z.infer<typeof WechatRoomPartialSchema>, "preference" | "data"> & {
@@ -101,6 +112,7 @@ export type WechatRoomPartialWithRelations = Omit<z.infer<typeof WechatRoomParti
 
 export const WechatRoomPartialWithRelationsSchema: z.ZodType<WechatRoomPartialWithRelations> = WechatRoomPartialSchema.merge(z.object({
   messages: z.lazy(() => WechatMessagePartialWithRelationsSchema).array(),
+  Task: z.lazy(() => TaskPartialWithRelationsSchema).array(),
 })).partial()
 
 export type WechatRoomOptionalDefaultsWithPartialRelations = Omit<z.infer<typeof WechatRoomOptionalDefaultsSchema>, "preference" | "data"> & {
@@ -110,6 +122,7 @@ export type WechatRoomOptionalDefaultsWithPartialRelations = Omit<z.infer<typeof
 
 export const WechatRoomOptionalDefaultsWithPartialRelationsSchema: z.ZodType<WechatRoomOptionalDefaultsWithPartialRelations> = WechatRoomOptionalDefaultsSchema.merge(z.object({
   messages: z.lazy(() => WechatMessagePartialWithRelationsSchema).array(),
+  Task: z.lazy(() => TaskPartialWithRelationsSchema).array(),
 }).partial())
 
 export type WechatRoomWithPartialRelations = Omit<z.infer<typeof WechatRoomSchema>, "preference" | "data"> & {
@@ -119,6 +132,7 @@ export type WechatRoomWithPartialRelations = Omit<z.infer<typeof WechatRoomSchem
 
 export const WechatRoomWithPartialRelationsSchema: z.ZodType<WechatRoomWithPartialRelations> = WechatRoomSchema.merge(z.object({
   messages: z.lazy(() => WechatMessagePartialWithRelationsSchema).array(),
+  Task: z.lazy(() => TaskPartialWithRelationsSchema).array(),
 }).partial())
 
 export default WechatRoomSchema;

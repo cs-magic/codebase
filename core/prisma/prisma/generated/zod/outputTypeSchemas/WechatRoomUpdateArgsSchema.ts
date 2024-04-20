@@ -5,6 +5,7 @@ import { WechatRoomUpdateInputSchema } from '../inputTypeSchemas/WechatRoomUpdat
 import { WechatRoomUncheckedUpdateInputSchema } from '../inputTypeSchemas/WechatRoomUncheckedUpdateInputSchema'
 import { WechatRoomWhereUniqueInputSchema } from '../inputTypeSchemas/WechatRoomWhereUniqueInputSchema'
 import { WechatMessageFindManyArgsSchema } from "../outputTypeSchemas/WechatMessageFindManyArgsSchema"
+import { TaskFindManyArgsSchema } from "../outputTypeSchemas/TaskFindManyArgsSchema"
 import { WechatRoomCountOutputTypeArgsSchema } from "../outputTypeSchemas/WechatRoomCountOutputTypeArgsSchema"
 // Select schema needs to be in file to prevent circular imports
 //------------------------------------------------------
@@ -21,6 +22,7 @@ export const WechatRoomSelectSchema: z.ZodType<Prisma.WechatRoomSelect> = z.obje
   preference: z.boolean().optional(),
   data: z.boolean().optional(),
   messages: z.union([z.boolean(),z.lazy(() => WechatMessageFindManyArgsSchema)]).optional(),
+  Task: z.union([z.boolean(),z.lazy(() => TaskFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => WechatRoomCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 

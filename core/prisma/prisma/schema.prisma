@@ -166,8 +166,14 @@ model Task {
   owner   WechatUser? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId String?
 
+  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId String?
+
   notes    String[]
   priority Int      @default(5)
+
+  ///[TaskTimer]
+  timer Json?
 }
 
 enum TaskStatus {
@@ -247,4 +253,5 @@ model WechatRoom {
   preference Json?
   /// [IWechatUserData]
   data       Json?
+  Task       Task[]
 }

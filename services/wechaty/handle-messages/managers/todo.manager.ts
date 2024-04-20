@@ -1,13 +1,16 @@
 import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
 import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import { take } from "lodash"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
+import { scheduleJob } from "node-schedule"
 import { z } from "zod"
+import moment from "../../../../packages/datetime/moment"
 import { prisma } from "../../../../packages/db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { listTodo } from "../../utils/list-todo"
 import { parseLimitedCommand } from "../../utils/parse-command"
-import { parseIndicesPriority } from "../../utils/parse-indices-number"
+import { parsePriorities, parseTimer } from "../../utils/parse-indices-number"
 import { BaseManager } from "./base.manager"
 import { type TaskStatus } from ".prisma/client"
 
@@ -27,6 +30,7 @@ const commandTypeSchema = z.enum([
   "set-status",
   "set-title",
   "add-note",
+  "set-timer",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
@@ -89,6 +93,9 @@ const i18n: FeatureMap<CommandType> = {
       },
       "add-note": {
         type: "add-note",
+      },
+      "set-timer": {
+        type: "set-timer",
       },
     },
   },
@@ -159,8 +166,14 @@ export class TodoManager extends BaseManager {
         }
 
         case "set-priorities": {
-          const { priority, indices } = await parseIndicesPriority(parsed.args)
+          const { priority, indices } = await parsePriorities(parsed.args)
           await this.setPriorities(indices, priority)
+          break
+        }
+
+        case "set-timer": {
+          const { index, timer } = await parseTimer(parsed.args)
+          await this.setTimer(index, timer)
           break
         }
       }
@@ -254,6 +267,33 @@ export class TodoManager extends BaseManager {
       },
     })
     return this.listOrFilterTodo()
+  }
+
+  async setTimer(index: number, timer: string) {
+    const tasks = await listTodo(this.message.talker().id)
+    const task = tasks[index]
+    if (!task) throw new Error("task not exists")
+
+    const job = scheduleJob(timer, async () => {
+      console.log("The answer to life, the universe, and everything!")
+      const conv = task.roomId
+        ? await this.bot.Room.find({ id: task.roomId })
+        : await this.bot.Contact.find({ id: task.ownerId! })
+      if (!conv) throw new Error("not found cov")
+      await conv.say(
+        [
+          "⏰ " + task.title + " 开始啦~",
+          SEPARATOR_LINE,
+          moment().format("MM-DD hh:mm") + ` (${timer})`,
+        ].join("\n"),
+      )
+    })
+
+    if (job.nextInvocation()) {
+      console.log("Next invocation: ", job.nextInvocation())
+    } else {
+      console.log("No more invocations planned.")
+    }
   }
 
   async setPriorities(indices: number[], priority: Priority) {
