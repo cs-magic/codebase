@@ -15,9 +15,10 @@
 
 
     /* Bundled projects */
-    "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+
     "noEmit": true,
     "incremental": true,
     "jsx": "preserve",

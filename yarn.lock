@@ -9669,6 +9669,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     pino-pretty: "npm:^11.0.0"
     ts-jest: "npm:^29.1.2"
+    ts-jest-mock-import-meta: "npm:^1.2.0"
     tsc: "npm:^2.0.4"
     typescript: "npm:^5.4.5"
     zod: "npm:3.21.1"
@@ -23964,6 +23965,15 @@ __metadata:
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
   checksum: 10c0/232509f1b84192d07b81d1e9b9677088e590ac1303436da1e92b296e9be8e31ea042e3e1fd3d29b1742ad2c959e95afe30f63117b8f1bc3a3850070a5142fea7
+  languageName: node
+  linkType: hard
+
+"ts-jest-mock-import-meta@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "ts-jest-mock-import-meta@npm:1.2.0"
+  peerDependencies:
+    ts-jest: ">=20.0.0"
+  checksum: 10c0/6ce98277336f2caca57994cfc35ca471483a9e0ab5d634f4b17beacfce4c92877d4a0bd34d550d9bd9fcb4a1f0ce510afd22e482ea4b10e517db7970d049719b
   languageName: node
   linkType: hard
 

@@ -3,6 +3,7 @@ import yaml from "js-yaml"
 import path from "path"
 
 import { compressContent } from "../common-common/utils/compress-content"
+import { Path } from "../common-path"
 import { safeCallLLM } from "./safe-call-llm"
 import { AgentConfig } from "./schema/agent"
 import { ICallLlmOptions, ILlmMessage } from "./schema/llm"
@@ -28,7 +29,7 @@ export const safeCallAgent = async ({
   })
 
   const yamlConfig = await promises.readFile(
-    path.join(__filename, `../config/${agentType}.agent.yml`),
+    path.join(Path.projectDir, `common-llm/config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface
