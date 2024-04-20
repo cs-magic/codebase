@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import { logger } from "@cs-magic/log/logger";
 import { z } from "zod";
 import { xmlToJson } from "../utils/xml-to-json.js";
 
@@ -98,7 +99,8 @@ export type DeserializedRefMsgPayload = {
 } | null;
 
 export const deserializeRefMsgPayload = (v: string): DeserializedRefMsgPayload => {
-  const m = /RefMsg\(id=(.*?), type=(.*?), content=(.*?)\)/.exec(v);
+  const m = /^RefMsg\(id=(.*?), type=(.*?), content=(.*?)\)$/ms.exec(v);
+  logger.debug(`deserialized ref message payload: %o`, m);
   if (!m) return null;
   return {
     id: z.string().parse(m[1]),

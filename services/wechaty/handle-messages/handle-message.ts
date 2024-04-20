@@ -2,7 +2,11 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { type Message, types, type Wechaty } from "wechaty"
-import { commandsSchema, type CommandType } from "../schema/commands"
+import {
+  commandsSchema,
+  type CommandType,
+  ManagerType,
+} from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
@@ -10,7 +14,7 @@ import { formatMessage } from "../utils/format-message"
 import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { parseLimitedCommand } from "../utils/parse-command"
-import { parseQuote, parseText } from "../utils/parse-message"
+import { parseText } from "../utils/parse-message"
 import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatterManager } from "./managers/chatter.manager"
@@ -19,13 +23,22 @@ import { SystemManager } from "./managers/system.manager"
 import { TodoManager } from "./managers/todo.manager"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
+  const tmm = {
+    todo: new TodoManager(bot, message),
+    chatter: new ChatterManager(bot, message),
+    parser: new ParserManager(bot, message),
+    system: new SystemManager(bot, message),
+    base: new BaseManager(bot, message),
+  } satisfies Record<ManagerType, BaseManager>
+
   try {
     logger.info(
       `[onMessage] ${await formatTalkerFromMessage(message)}: %o`,
-      formatMessage(message),
+      formatMessage(message, 600),
     )
 
-    if (message.text().includes("test")) {
+    if (!message.self() && message.text() === "test") {
+      await message.say("test")
       // void message.say(
       //   new bot.UrlLink({
       //     title: "title",
@@ -37,31 +50,14 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       // )
     }
 
-    if (parseQuote(message.text())) {
-      try {
-        // await message.toPost()
-        // message.payload.
-        // const post = new PostBuilder(message.id)
-        // await post.ready()
-        // console.log({ post })
-        // const post = await message.toPost()
-      } catch (e) {
-        formatError(e)
-      }
-    }
-
-    const quoted = parseQuote(message.text())
-    if (quoted) {
-      // console.log({ quoted })
-    }
-
     await storageMessage(message)
 
+    const text = parseText(message.text())
     const result = parseLimitedCommand<CommandType>(
-      parseText(message.text()).toLowerCase(),
+      text.toLowerCase(),
       commandsSchema,
     )
-    // logger.debug(result)
+    logger.debug("parsed command: %o", { text, result })
 
     if (result) {
       switch (result.command) {
@@ -69,10 +65,13 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           return void bot.sendQueue.addTask(() => message.say("dong"))
 
         case "help":
-          return await new BaseManager(bot, message).getHelp(true)
+          return await tmm.base.getHelp(true)
 
         case "status":
-          return await new BaseManager(bot, message).getStatus(true)
+          return await tmm.base.getStatus(true)
+
+        case "recall":
+          return await tmm.base.recallQuotedMessage()
 
         case "love":
           return await message.say(
@@ -80,19 +79,19 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           )
 
         case "system":
-          return await new SystemManager(bot, message).parse(result.args)
+          return await tmm.system.parse(result.args)
 
         case "todo":
-          return await new TodoManager(bot, message).parse(result.args)
+          return await tmm.todo.parse(result.args)
 
         case "chatter":
-          return await new ChatterManager(bot, message).parse(result.args)
+          return await tmm.chatter.parse(result.args)
 
         case "parser":
-          return await new ParserManager(bot, message).parse(result.args)
+          return await tmm.parser.parse(result.args)
 
         case "parse":
-          return await new ParserManager(bot, message).parseQuote()
+          return await tmm.parser.parseQuote()
       }
     }
 

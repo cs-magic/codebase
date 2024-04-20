@@ -1,10 +1,10 @@
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { type Message } from "wechaty"
 
-export const formatMessage = (message: Message) => {
+export const formatMessage = (message: Message, n = 120) => {
   const data = {
     ...message.payload,
-    text: formatString(message.payload?.text ?? "", 120),
+    text: formatString(message.payload?.text ?? "", n),
   }
   return data
 }

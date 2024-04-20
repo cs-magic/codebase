@@ -1,14 +1,6 @@
 import { type Contact } from "wechaty-puppet/payloads"
-import { type BackendType } from "../../../packages/llm/schema/llm"
-import { type LlmModelType } from "../../../packages/llm/schema/providers"
 
 type IUser = Contact
-
-export type IBotPreference = {
-  model: LlmModelType
-  backend: BackendType
-  handlers: string[]
-}
 
 export type IBotStaticContext = {
   version: string

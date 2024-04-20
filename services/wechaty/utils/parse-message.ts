@@ -8,7 +8,7 @@ export const parseQuote = (
   messageText: string,
   version: PadlocalVersion = "mark@2024-04-19",
 ) => {
-  const m = /^「(.*?)：(.*?)」\n- - - - - - - - - - - - - - -\n(.*)$/.exec(
+  const m = /^「(.*?)：(.*?)」\n- - - - - - - - - - - - - - -\n(.*)$/ms.exec(
     messageText,
   )
 

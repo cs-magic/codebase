@@ -1,5 +1,6 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
+import { logger } from "@cs-magic/log/logger"
 import { IUserSummaryFull } from "@cs-magic/prisma/schema/user.summary"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
@@ -10,7 +11,11 @@ import { formatFooter } from "../../utils/format-footer"
 import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { getUserPreference } from "../../utils/get-user-preference"
-import { parseQuote, parseText } from "../../utils/parse-message"
+import {
+  padlocalVersion,
+  parseQuote,
+  parseText,
+} from "../../utils/parse-message"
 import { QueueTask } from "../sender-queue"
 
 export class BaseManager {
@@ -49,7 +54,7 @@ export class BaseManager {
   }
 
   get quote() {
-    return parseQuote(this.message.text())
+    return parseQuote(this.message.text(), padlocalVersion)
   }
 
   get botWxid() {
@@ -74,6 +79,23 @@ export class BaseManager {
       name: sender.name(),
       image,
     }
+  }
+
+  async getQuotedMessage() {
+    if (this.quote?.quoted.version === "mark@2024-04-19") {
+      const id = this.quote?.quoted.id
+      if (id) {
+        logger.debug(`quoted message id=${id}`)
+        return await this.bot.Message.find({ id })
+      }
+    }
+    return null
+  }
+
+  async recallQuotedMessage() {
+    const quotedMessage = await this.getQuotedMessage()
+    logger.info(`quoted message: %o`, quotedMessage)
+    return quotedMessage?.recall()
   }
 
   async getRoomTopic() {

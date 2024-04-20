@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger";
 import * as PUPPET from "wechaty-puppet";
 import { log } from "wechaty-puppet";
 import { FileBox, FileBoxInterface } from "file-box";
@@ -970,6 +971,8 @@ class PuppetPadlocal extends PUPPET.Puppet {
       text,
       mentionIdList
     );
+    const messageRevokeInfo = response.getMessagerevokeinfo()!;
+    logger.info(`messageSendText: %o`, { toUserName, text, response, messageRevokeInfo });
 
     const pushContent = isRoomId(toUserName) ? `${this._client!.selfContact!.getNickname()}: ${text}` : text;
 
@@ -981,7 +984,7 @@ class PuppetPadlocal extends PUPPET.Puppet {
         .setContent(text)
         .setPushcontent(pushContent),
       response.getMsgid(),
-      response.getMessagerevokeinfo()!
+      messageRevokeInfo
     );
 
     return response.getMsgid();
@@ -1016,9 +1019,13 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 
   override async messageRecall(messageId: string): Promise<boolean> {
+    logger.info(`recalling message(id=${messageId})`);
     const message = (await this._cacheMgr!.getMessage(messageId))!;
+    logger.info(`recalling message: %o`, message);
 
     const messageRevokeInfo = (await this._cacheMgr!.getMessageRevokeInfo(messageId))!;
+    logger.info(`recalling message revoke info: %o`, messageRevokeInfo);
+
     await this._client!.api.revokeMessage(
       messageId,
       message.fromusername,
@@ -1028,6 +1035,8 @@ class PuppetPadlocal extends PUPPET.Puppet {
         .setNewclientmsgid(messageRevokeInfo.newclientmsgid)
         .setCreatetime(messageRevokeInfo.createtime)
     );
+
+    logger.info(`recalled`);
 
     return true;
   }

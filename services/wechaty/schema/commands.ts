@@ -5,7 +5,10 @@ import { Priority } from "../handle-messages/managers/todo.manager"
 export const featureTypeSchema = z.enum(["system", "todo", "chatter", "parser"])
 export type FeatureType = z.infer<typeof featureTypeSchema>
 
-export const quoteTypeSchema = z.enum(["parse"])
+export const managerTypeSchema = z.enum(["base", ...featureTypeSchema.options])
+export type ManagerType = z.infer<typeof managerTypeSchema>
+
+export const quoteTypeSchema = z.enum(["parse", "recall"])
 export type QuoteType = z.infer<typeof quoteTypeSchema>
 
 export const commandsSchema = z.enum([

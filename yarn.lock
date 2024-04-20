@@ -1773,6 +1773,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/auth-profile@workspace:common/auth-profile":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/auth-profile@workspace:common/auth-profile"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/auth-sms@workspace:common/auth-sms":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/auth-sms@workspace:common/auth-sms"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/auth-wechat@workspace:common/auth-wechat":
   version: 0.0.0-use.local
   resolution: "@cs-magic/auth-wechat@workspace:common/auth-wechat"
