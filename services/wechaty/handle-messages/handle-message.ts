@@ -37,8 +37,23 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       formatMessage(message, 600),
     )
 
-    if (!message.self() && message.text() === "test") {
-      await message.say("test")
+    if (message.text() === "test") {
+      /**
+       * quote to reply
+       */
+      // await message.say(
+      //   await bot.Post.builder()
+      //     .add("hello")
+      //     .reply(await message.toPost())
+      //     .build(),
+      // )
+      // await message.conversation().say("test", talker)
+      // const post = await bot.Post.builder().add("quote reply").build()
+      // await message.say(post)
+      // await bot.publish(post)
+      /**
+       * reply with a message
+       */
       // void message.say(
       //   new bot.UrlLink({
       //     title: "title",
@@ -57,7 +72,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       text.toLowerCase(),
       commandsSchema,
     )
-    logger.debug("parsed command: %o", { text, result })
+    // logger.debug("parsed command: %o", { text, result })
 
     if (result) {
       switch (result.command) {
