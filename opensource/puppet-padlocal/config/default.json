@@ -1,0 +1,117 @@
+{
+  "padLocal": {
+    "token": "PADLOCAL_TOKEN"
+  },
+
+  "test": {
+    "push": {
+      "forwardFrom": "USER_NAME",
+      "forwardTo": "CHATROOM_ID",
+      "recallUserId": "USER_NAME"
+    },
+
+    "contact": {
+      "changeNickName": "",
+      "changeSignature": "",
+      "getAvatarUserName": "USER_NAME",
+      "alias": {
+        "userName": "USER_NAME",
+        "aliasName": ""
+      },
+      "deleteUserName": ""
+    },
+
+    "tag": {
+      "targetUserName": "USER_NAME",
+      "addDeleteTagName": ""
+    },
+
+    "friendship": {
+      "acceptId": "",
+      "add": {
+        "userName": "wxid_3k...",
+        "hello": "Hello, this is PadLocal"
+      },
+      "search": {
+        "phone": "132xxxxxxxx",
+        "weixin": "oxddoxdd"
+      }
+    },
+
+    "message": {
+      "send": {
+        "chatroomId": "",
+        "chatroomAtUserList": [""],
+        "toUserName": "",
+        "contactCardId": "",
+        "imageFilePath": "",
+        "voiceFilePath": "",
+        "voiceLength": 0,
+        "videoFilePath": "",
+        "fileFilePath": "",
+        "miniProgram": {
+          "appid"       : "",
+          "description" : "",
+          "pagePath"    : "",
+          "iconUrl"     : "",
+          "shareId"     : "",
+          "title"       : "",
+          "username"    : "",
+          "thumbUrl"    : "3051020100044a304802010002046296fxxx4010800030201000400",
+          "thumbKey"    : "84db921169xxxb8795ca685c6"
+        },
+        "miniProgramThumbURLHttp": "http://xxx.jpg",
+        "emoji": {
+          "cdnurl": "",
+          "md5": "",
+          "len": 0,
+          "type": 0,
+          "gameext": ""
+        },
+        "link": {
+          "title": "",
+          "description": "",
+          "url": "",
+          "thumbImageUrl": ""
+        }
+      }
+    },
+
+    "room": {
+      "chatroomId": "CHATROOM_ID",
+
+      "add": {
+        "memberUserName": "USER_NAME"
+      },
+
+      "create": {
+        "memberUserNameList": ["USER_NAME", "USER_NAME"],
+        "roomName": ""
+      },
+
+      "topic": {
+        "changeName": ""
+      },
+
+      "delete": {
+        "memberUserName": "USER_NAME"
+      },
+
+      "announce": {
+        "newAnnouncement": ""
+      },
+
+      "quit": {
+        "id": "CHATROOM_ID"
+      },
+
+      "qr": {
+        "saveFilePath":""
+      },
+
+      "invitation": {
+        "id": ""
+      }
+    }
+  }
+}

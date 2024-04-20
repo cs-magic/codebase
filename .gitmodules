@@ -1,5 +1,1 @@
-[submodule "wechaty-puppet-padlocal"]
-    path = opensource/puppet-padlocal
-	url = git@github.com:MarkShawn2020/wechaty-puppet-padlocal.git
-
 
