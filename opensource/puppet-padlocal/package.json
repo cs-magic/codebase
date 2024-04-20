@@ -20,6 +20,7 @@
     "src/"
   ],
   "scripts": {
+    "postinstall": "yarn build",
     "clean": "shx rm -fr dist/*",
     "dist": "npm-run-all clean build dist:commonjs",
     "build": "tsc && tsc -p tsconfig.cjs.json",
