@@ -2,7 +2,7 @@
 
 import { Card, Prisma } from "@prisma/client";
 import { prisma } from "../../../../../../common/db/providers/prisma";
-import { IXiaoHongShuNotePageData } from "../../../../../../common/3rd-xhs/schema";
+import { IXiaoHongShuNotePageData } from "../../../../../../common/xhs/schema";
 
 export const xiaohongshu2card = (
   inputData: IXiaoHongShuNotePageData,

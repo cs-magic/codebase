@@ -3,8 +3,8 @@ import { z } from "zod";
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../../../common/3rd-wechat/wxmp-article/detail/schema";
-import { FetchWxmpArticleDetailOptions } from "../../../../common/3rd-wechat/wxmp-article/fetch/approaches/nodejs";
+} from "../../../../common/wechat/wxmp-article/detail/schema";
+import { FetchWxmpArticleDetailOptions } from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs";
 import { IArticleSummaryParsed } from "../../../../common/llm/parse-summary";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =

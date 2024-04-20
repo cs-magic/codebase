@@ -3,11 +3,11 @@ import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { SummaryOptions } from "../../../../common/3rd-wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
+import { SummaryOptions } from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
 import {
   RequestApproachType,
   RequestOptions,
-} from "../../../../common/3rd-wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
+} from "../../../../common/wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
 
 import { BackendType } from "../../../../common/llm/schema/llm";
 import { LlmModelType } from "../../../../common/llm/schema/providers";

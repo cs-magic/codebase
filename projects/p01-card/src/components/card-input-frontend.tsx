@@ -9,7 +9,7 @@ import {
   AtomSwitcher,
 } from "../../../../common/ui/components/atom-switcher";
 import { LabelLine } from "../../../../common/ui/components/label-line";
-import { mapSpacingVerticalAtom } from "../../../../common/common-visualization/store";
+import { mapSpacingVerticalAtom } from "../../../../common/visualization/store";
 import {
   cardAuthorWithTitleAtom,
   cardFetchEngineAtom,

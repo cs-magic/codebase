@@ -12,7 +12,7 @@ declare global {
     export {
       IWechatArticleStat,
       IWechatArticleComment,
-    } from "../../../common/3rd-wechat/wxmp-article/detail/schema"
+    } from "../../../common/wechat/wxmp-article/detail/schema"
 
     export {
       IWechatUserData,

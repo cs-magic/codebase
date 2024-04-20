@@ -1773,15 +1773,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/auth-wechat@workspace:packages/auth-wechat":
+"@cs-magic/auth-wechat@workspace:common/auth-wechat":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/auth-wechat@workspace:packages/auth-wechat"
+  resolution: "@cs-magic/auth-wechat@workspace:common/auth-wechat"
   languageName: unknown
   linkType: soft
 
-"@cs-magic/common@workspace:^, @cs-magic/common@workspace:packages/common-common":
+"@cs-magic/auth@workspace:^, @cs-magic/auth@workspace:common/auth":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/common@workspace:packages/common-common"
+  resolution: "@cs-magic/auth@workspace:common/auth"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/common@workspace:^, @cs-magic/common@workspace:common/common":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/common@workspace:common/common"
   dependencies:
     "@types/lodash": "npm:^4.14.202"
     lodash: "npm:^4.17.21"
@@ -1789,9 +1795,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/log@workspace:^, @cs-magic/log@workspace:packages/common-log":
+"@cs-magic/log@workspace:^, @cs-magic/log@workspace:common/log":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/log@workspace:packages/common-log"
+  resolution: "@cs-magic/log@workspace:common/log"
   dependencies:
     "@types/winston": "npm:^2.4.4"
     anylogger: "npm:^1.0.11"
@@ -1811,6 +1817,7 @@ __metadata:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
     "@auth/prisma-adapter": "npm:^1.4.0"
+    "@cs-magic/auth": "workspace:^"
     "@emotion/react": "npm:^11.11.4"
     "@hookform/resolvers": "npm:^3.3.4"
     "@langchain/core": "npm:^0.1.32"
@@ -1961,9 +1968,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/prisma@workspace:core/common-db-prisma":
+"@cs-magic/prisma@workspace:core/prisma":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/prisma@workspace:core/common-db-prisma"
+  resolution: "@cs-magic/prisma@workspace:core/prisma"
   dependencies:
     prisma: "npm:^5.12.1"
     prisma-json-types-generator: "npm:^3.0.4"

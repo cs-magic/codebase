@@ -1,4 +1,4 @@
-import { fetchWechatApi } from "../../3rd-wechat/functions"
+import { fetchWechatApi } from "../../wechat/functions"
 import { getEnv } from "../../env"
 import {
   IWechatAdaptedToken,

@@ -3,10 +3,7 @@
 import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";
-import {
-  userImageAtom,
-  userNameAtom,
-} from "../../../../common/auth/store";
+import { userImageAtom, userNameAtom } from "@cs-magic/auth/store";
 import { Button } from "../../../../common/ui-shadcn/components/button";
 import { Label } from "../../../../common/ui-shadcn/components/label";
 import { useUserUpdateProfile } from "../../../../common/hooks/use-user-update-profile";
