@@ -6,5 +6,5 @@ export const formatMessage = (message: Message) => {
     ...message.payload,
     text: formatString(message.payload?.text ?? "", 120),
   }
-  return JSON.stringify(data)
+  return data
 }

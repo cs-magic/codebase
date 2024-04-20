@@ -5,14 +5,16 @@ const env = getEnv()
 
 const createPrismaClient = () =>
   new PrismaClient({
+    // 可以不 log error，留给 project 的 log 捕获
     log:
       env.NODE_ENV !== "production"
         ? [
-            // "schema",
-            "error",
+            // "error",
             "warn",
           ]
-        : ["error"],
+        : [
+            // "error"
+          ],
   })
 
 const globalForPrisma = globalThis as unknown as {

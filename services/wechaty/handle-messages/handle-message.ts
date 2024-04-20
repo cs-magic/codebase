@@ -6,6 +6,7 @@ import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
 import { formatFooter } from "../utils/format-footer"
+import { formatMessage } from "../utils/format-message"
 import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { parseLimitedCommand } from "../utils/parse-command"
@@ -21,7 +22,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     logger.info(
       `[onMessage] ${await formatTalkerFromMessage(message)}: %o`,
-      message.payload,
+      formatMessage(message),
     )
 
     if (message.text().includes("test")) {
