@@ -1,10 +1,10 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
-import { type Adapter } from "next-auth/adapters"
+import { Adapter } from "next-auth/adapters"
+import WechatProvider from "../auth-wechat/provider"
+import { IWechatProfile } from "../auth-wechat/schema"
 import { ProfileUpdateProvider } from "../common-auth-profile/provider"
 import { SmsProvider } from "../common-auth-sms/provider"
-import WechatProvider from "../common-auth-wechat/provider"
-import { IWechatProfile } from "../common-auth-wechat/schema"
 import { prisma } from "../common-db/providers/prisma"
 import { getEnv } from "../common-env"
 
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
   // @ts-ignore // todo: ts profile for signin
   callbacks: {
     // compatible with credential providers
-    jwt: ({ session, user, profile, token }) => {
+    jwt: ({ user, profile, token }) => {
       // console.log("[next-auth] jwt: ", { token, user, profile })
 
       // 首次注册入表 （user中有userId）
@@ -73,15 +73,13 @@ export const authOptions: NextAuthOptions = {
         },
       }
     },
-  } as Partial<
-    CallbacksOptions<// custom profile
-    IWechatProfile>
-  >,
-  adapter: PrismaAdapter(prisma) as Adapter,
+    // custom profile
+  } as Partial<CallbacksOptions<IWechatProfile>>,
+  adapter: PrismaAdapter(prisma) as unknown as Adapter,
   providers: [
     WechatProvider({
-      clientId: env.NEXT_PUBLIC_WECHAT_APP_ID,
-      clientSecret: env.WECHAT_APP_SECRET,
+      clientId: env.NEXT_PUBLIC_WECHAT_APP_ID!,
+      clientSecret: env.WECHAT_APP_SECRET!,
     }),
 
     SmsProvider,

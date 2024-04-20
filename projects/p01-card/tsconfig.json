@@ -45,24 +45,12 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    ".next-tmp/types/**/*.ts"
+    ".next-tmp/types/**/*.ts",
+    "../../**/*.ts",
+    "../../**/*.tsx",
   ],
   "exclude": [
-    "../../node_modules"
+    "../../node_modules",
+    "../../opensource/puppet-padlocal"
   ],
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-
-    "compilerOptions": {
-      // compilerOptions specified here will override those declared below,
-      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
-      // different options with a single tsconfig.json.
-
-      "module": "CommonJS",
-      "isolatedModules": false,
-      "esModuleInterop": true
-
-    }
-  }
 }

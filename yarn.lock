@@ -1773,6 +1773,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/auth-wechat@workspace:packages/auth-wechat":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/auth-wechat@workspace:packages/auth-wechat"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/common@workspace:^, @cs-magic/common@workspace:packages/common-common":
   version: 0.0.0-use.local
   resolution: "@cs-magic/common@workspace:packages/common-common"
@@ -1964,17 +1970,61 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/wechaty-puppet-padlocal@workspace:^, @cs-magic/wechaty-puppet-padlocal@workspace:opensource/puppet-padlocal":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/wechaty-puppet-padlocal@workspace:opensource/puppet-padlocal"
+  dependencies:
+    "@chatie/eslint-config": "npm:^1.0.4"
+    "@chatie/git-scripts": "npm:^0.6.2"
+    "@chatie/semver": "npm:^0.4.7"
+    "@chatie/tsconfig": "npm:^4.6.2"
+    "@types/config": "npm:0.0.41"
+    "@types/fs-extra": "npm:^9.0.13"
+    "@types/jest": "npm:^27.4.0"
+    "@types/lru-cache": "npm:^5.1.1"
+    "@types/node-cleanup": "npm:^2.1.2"
+    "@types/normalize-package-data": "npm:^2.4.1"
+    "@types/qrcode-terminal": "npm:^0.12.0"
+    "@types/quick-lru": "npm:^3.0.0"
+    "@types/xml2js": "npm:^0.4.9"
+    config: "npm:^3.3.7"
+    fast-xml-parser: "npm:^3.17.6"
+    file-box: "npm:^1.4.14"
+    flash-store: "npm:^1.0.6"
+    fs-extra: "npm:^10.0.0"
+    jest: "npm:^28.0.2"
+    jest-ts-webcompat-resolver: "npm:^1.0.0"
+    lru-cache: "npm:^6.0.0"
+    node-cleanup: "npm:^2.1.2"
+    normalize-package-data: "npm:^3.0.3"
+    padlocal-client-ts: "npm:^0.5.3"
+    pkg-jq: "npm:^0.2.11"
+    prettier: "npm:^2.5.1"
+    qrcode-terminal: "npm:^0.12.0"
+    quick-lru: "npm:^6.0.2"
+    shx: "npm:^0.3.4"
+    state-switch: "npm:^1.6.3"
+    ts-jest: "npm:^28.0.0-next.1"
+    tsc-watch: "npm:^4.6.0"
+    tstest: "npm:^1.0.1"
+    wechaty: "npm:^1.19.10"
+    xml2js: "npm:^0.4.23"
+  peerDependencies:
+    wechaty-puppet: ^1.19.6
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/wechaty@npm:0.1.0, @cs-magic/wechaty@workspace:services/wechaty":
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechaty@workspace:services/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
+    "@cs-magic/wechaty-puppet-padlocal": "workspace:^"
     "@types/lodash": "npm:^4.14.202"
     dotenv: "npm:^16.4.5"
     lodash: "npm:^4.17.21"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "npm:^1.20.2"
-    wechaty-puppet-padlocal: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -9667,6 +9717,7 @@ __metadata:
     dotenv: "npm:^16.4.5"
     jest: "npm:^29.7.0"
     lodash: "npm:^4.17.21"
+    next-auth: "npm:^4.24.7"
     pino-pretty: "npm:^11.0.0"
     ts-jest: "npm:^29.1.2"
     ts-jest-mock-import-meta: "npm:^1.2.0"
@@ -18633,7 +18684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.22.1":
+"next-auth@npm:^4.22.1, next-auth@npm:^4.24.7":
   version: 4.24.7
   resolution: "next-auth@npm:4.24.7"
   dependencies:
@@ -25159,50 +25210,6 @@ __metadata:
   checksum: 10c0/dc9915bc966d154fc8de724c9ef8f9f67641eb68b65f87566747a5f59e446c1c19d47baf6ccab18745c19002a824d3c58700e454ad9aedcaaf6c61ddcd74827b
   languageName: node
   linkType: hard
-
-"wechaty-puppet-padlocal@workspace:^, wechaty-puppet-padlocal@workspace:opensource/puppet-padlocal":
-  version: 0.0.0-use.local
-  resolution: "wechaty-puppet-padlocal@workspace:opensource/puppet-padlocal"
-  dependencies:
-    "@chatie/eslint-config": "npm:^1.0.4"
-    "@chatie/git-scripts": "npm:^0.6.2"
-    "@chatie/semver": "npm:^0.4.7"
-    "@chatie/tsconfig": "npm:^4.6.2"
-    "@types/config": "npm:0.0.41"
-    "@types/fs-extra": "npm:^9.0.13"
-    "@types/jest": "npm:^27.4.0"
-    "@types/lru-cache": "npm:^5.1.1"
-    "@types/node-cleanup": "npm:^2.1.2"
-    "@types/normalize-package-data": "npm:^2.4.1"
-    "@types/qrcode-terminal": "npm:^0.12.0"
-    "@types/quick-lru": "npm:^3.0.0"
-    "@types/xml2js": "npm:^0.4.9"
-    config: "npm:^3.3.7"
-    fast-xml-parser: "npm:^3.17.6"
-    file-box: "npm:^1.4.14"
-    flash-store: "npm:^1.0.6"
-    fs-extra: "npm:^10.0.0"
-    jest: "npm:^28.0.2"
-    jest-ts-webcompat-resolver: "npm:^1.0.0"
-    lru-cache: "npm:^6.0.0"
-    node-cleanup: "npm:^2.1.2"
-    normalize-package-data: "npm:^3.0.3"
-    padlocal-client-ts: "npm:^0.5.3"
-    pkg-jq: "npm:^0.2.11"
-    prettier: "npm:^2.5.1"
-    qrcode-terminal: "npm:^0.12.0"
-    quick-lru: "npm:^6.0.2"
-    shx: "npm:^0.3.4"
-    state-switch: "npm:^1.6.3"
-    ts-jest: "npm:^28.0.0-next.1"
-    tsc-watch: "npm:^4.6.0"
-    tstest: "npm:^1.0.1"
-    wechaty: "npm:^1.19.10"
-    xml2js: "npm:^0.4.23"
-  peerDependencies:
-    wechaty-puppet: ^1.19.6
-  languageName: unknown
-  linkType: soft
 
 "wechaty-puppet-service@npm:^1.19.8":
   version: 1.19.9

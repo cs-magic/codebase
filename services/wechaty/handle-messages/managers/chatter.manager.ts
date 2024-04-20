@@ -1,6 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { types } from "wechaty"
-import { UrlLinkImpl } from "wechaty/dist/esm/src/user-modules/url-link"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../packages/common-llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"

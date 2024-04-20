@@ -29,7 +29,7 @@ export type IWechatAdaptedToken = Omit<IWechatToken, "openid"> & {
   id: string
 }
 
-export interface IWechatProfile {
+export interface IWechatProfile extends Record<string, any> {
   // 用户的唯一标识
   openid: string
   // 只有在用户将公众号绑定到微信开放平台账号后，才会出现该字段。
