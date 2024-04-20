@@ -48,7 +48,8 @@ export const requestPage = async (
 
   const d = new Date(Number(/var ct = "(.*?)"/.exec(pageText)?.[1]) * 1e3) // 1711455495
   const time = await withError("should time is a Date")(z.date().parseAsync(d))
-  logger.info(JSON.stringify({ time }))
+  // logger.info(JSON.stringify({ time }))
+
   const title = await withError("should title is valid")(
     z.string().min(1).parseAsync(parseMetaFromHtml(html, "og:title")),
   )
@@ -60,7 +61,7 @@ export const requestPage = async (
       .string()
       .parseAsync(parseMetaFromHtml(html, "og:description", "property")),
   )
-  logger.info(JSON.stringify({ title }))
+  // logger.info(JSON.stringify({ title }))
   // const source = parseMetaFromHtml(html, "og:site_name") // 微信公众平台
   // const authorPublisherName = parseMetaFromHtml(html, "author", "name")
 
@@ -83,7 +84,7 @@ export const requestPage = async (
       .min(1)
       .parseAsync(/var user_name = "(.*?)"/.exec(pageText)?.[1]),
   }
-  logger.info({ authorAccount })
+  // logger.info({ authorAccount })
 
   // 去除作者信息，否则会有干扰, case-id: fq-Bb_v
   html.getElementById("meta_content")?.remove()

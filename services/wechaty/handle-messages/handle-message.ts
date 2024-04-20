@@ -1,7 +1,7 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import { type Message, types, type Wechaty, UrlLink } from "wechaty"
+import { type Message, types, type Wechaty } from "wechaty"
 import { commandsSchema, type CommandType } from "../schema/commands"
 import { getBotContext } from "../utils/bot-context"
 import { botNotify } from "../utils/bot-notify"
@@ -52,8 +52,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     const quoted = parseQuote(message.text())
     if (quoted) {
-      console.log({ quoted })
-      console.log(" ")
+      // console.log({ quoted })
     }
 
     await storageMessage(message)

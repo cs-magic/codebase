@@ -20,7 +20,7 @@ export const parseWxmpArticleUrl = (url: string): IWxmpArticleUrlParsed => {
     comments: undefined,
   };
 
-  logger.info({ url, platformId, platformData });
+  // logger.info({ url, platformId, platformData });
 
   return {
     platformId,

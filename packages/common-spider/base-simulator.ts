@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import {
   Browser as PlaywrightBrowser,
   BrowserType,
@@ -20,7 +21,7 @@ export class BaseSimulator {
     driverType: DriverType = "playwright",
     launchOptions?: LaunchOptions,
   ) {
-    console.log("-- init UniParserBot: ", { driverType })
+    logger.info("-- init UniParserBot: ", { driverType })
     // Or 'firefox' or 'webkit'.
     this.driver = chromium
     this.launchOptions = launchOptions
@@ -38,7 +39,7 @@ export class BaseSimulator {
 
   async initPage(): Promise<Page> {
     if (!this.page) {
-      console.log("-- opening browser")
+      logger.info("-- opening browser")
       this.browser = await this.driver.launch({
         downloadsPath: "/tmp",
         ...this.launchOptions,

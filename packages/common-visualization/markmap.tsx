@@ -37,7 +37,6 @@ export default function MarkMap({ content }: { content?: string }) {
     refMm.current = mm
 
     const { root } = transformer.transform(content, {})
-    // console.log({ root })
 
     // 去掉首结点的内容
     root.content = ""
@@ -81,8 +80,6 @@ export default function MarkMap({ content }: { content?: string }) {
     }
   }, [ratio, content])
 
-  // console.log("-- markmap: ", { content, ratio, state: refMm.current?.state })
-
   return (
     <div className={"w-full"}>
       <AspectRatio ratio={ratio}>
@@ -90,4 +87,6 @@ export default function MarkMap({ content }: { content?: string }) {
       </AspectRatio>
     </div>
   )
+
+  // logger.info("-- markmap: %o", { content, ratio, state: refMm.current?.state })
 }

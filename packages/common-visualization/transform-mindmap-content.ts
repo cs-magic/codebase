@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { truncateString } from "../common-common/utils/truncate-string"
 
 /**
@@ -13,7 +14,7 @@ export const transformMindmapContent = (input?: string): string => {
     })
     .join("\n")
 
-  console.log(
+  logger.info(
     `-- transformed mindmap content: input=${input}, output=${output}`,
   )
   return output

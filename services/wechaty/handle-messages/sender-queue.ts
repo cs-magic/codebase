@@ -1,3 +1,4 @@
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import { sleep } from "../../../packages/common-datetime/utils"
 
@@ -20,8 +21,13 @@ export class SenderQueue {
     this.processing = false
   }
 
+  get cnt() {
+    return this.queue.length
+  }
+
   async addTask(task: QueueTask) {
     this.queue.push(task)
+    logger.info(`🆕 task(cnt=${this.cnt})`)
     if (!this.processing) {
       this.processing = true
       await this._runTask()
@@ -30,10 +36,15 @@ export class SenderQueue {
 
   private async _runTask() {
     while (this.queue.length > 0) {
-      const task = this.queue.shift()!
-      logger.info(`running task(${this.queue.length})`)
-      await task()
-      await sleep(1000 / this.qps) // 限时
+      try {
+        const task = this.queue.shift()!
+        await task()
+      } catch (e) {
+        formatError(e)
+      } finally {
+        logger.info(`✅ task (cnt=${this.cnt})`)
+        await sleep(1000 / this.qps) // 限时
+      }
     }
     this.processing = false
   }

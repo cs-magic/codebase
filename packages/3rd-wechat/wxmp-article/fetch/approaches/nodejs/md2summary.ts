@@ -1,4 +1,3 @@
-import { logger } from "@cs-magic/log/logger"
 import { safeCallAgent } from "../../../../../common-llm/safe-call-agent"
 import { ICallLlmResponse } from "../../../../../common-llm/schema/llm"
 import { LlmModelType } from "../../../../../common-llm/schema/providers"
@@ -28,7 +27,7 @@ export const md2summary = async (
     // 只在该微信场景报错
     if (!contentSummary.response) throw new Error(contentSummary.error)
   }
-  logger.info({ contentSummary })
+  // logger.info({ contentSummary })
 
   return {
     ...input,

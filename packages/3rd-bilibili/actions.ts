@@ -1,5 +1,6 @@
 "use server"
 
+import { logger } from "@cs-magic/log/logger"
 import { api } from "../common-api-client/api"
 import { IApiResult } from "../common-api-client/schema"
 import { IBilibiliVideoDetail } from "./schema"
@@ -8,7 +9,7 @@ export const getBilibiliSummary = async (bvid: string) => {
   const { data } = await api.get(
     `https://api.bilibili.com/x/player/pagelist?bvid=${bvid}&jsonp=jsonp`,
   )
-  console.log("getBilibiliDetail: ", data)
+  logger.debug("getBilibiliDetail: %o", data)
 
   if (data.code !== 0) throw new Error(JSON.stringify(data))
 
@@ -30,7 +31,6 @@ export const fetchBvidFromb23tv = async (
     const location = res.headers.get("location")
     if (location) {
       const m = /^.*?video\/(.*?)\?.*?$/.exec(location)
-      // console.log({ m })
       const newUrl = m?.[0]
       const bvid = m?.[1]
       if (bvid) {

@@ -1,3 +1,5 @@
+import { formatError } from "@cs-magic/common/utils/format-error"
+import { logger } from "@cs-magic/log/logger"
 import { TransEventType } from "./schema"
 
 export const fetchSSE = (
@@ -10,8 +12,6 @@ export const fetchSSE = (
     onFinal?: (sse: EventSource) => void
   },
 ) => {
-  // console.log(ansiColors.bgRed.white(`fetching SSE: ${requestUrl}`))
-
   /**
    * sse 要自己控制关闭，https://stackoverflow.com/a/54385424/9422455
    */
@@ -24,11 +24,11 @@ export const fetchSSE = (
 
   sse.onopen = () => {
     if (options?.onOpen) options.onOpen()
-    console.log("[sse] opened")
+    logger.info("[sse] opened")
   }
 
   sse.addEventListener("data" as TransEventType, (ev: MessageEvent<string>) => {
-    console.log("[sse] onData: ", ev)
+    logger.info("[sse] onData: %o", ev)
     if (options?.onData) options.onData(JSON.parse(ev.data) as string)
   })
 
@@ -38,7 +38,8 @@ export const fetchSSE = (
   sse.addEventListener(
     "error" as TransEventType,
     (ev: MessageEvent<string>) => {
-      console.log("[sse] onError: ", ev)
+      formatError(ev)
+
       if (options?.onError)
         options.onError(
           typeof ev.data === "string"
@@ -53,7 +54,7 @@ export const fetchSSE = (
   sse.onerror = (err) => {
     // 2 是结束
     if (err.eventPhase !== 2) console.warn(`event source error: `, err)
-    else console.log("[sse] closed")
+    else logger.info("[sse] closed")
 
     doEnd()
   }

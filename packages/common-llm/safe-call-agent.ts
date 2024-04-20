@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
@@ -21,7 +22,7 @@ export const safeCallAgent = async ({
   model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
 } & { options?: Omit<ICallLlmOptions, "messages" | "model"> }) => {
-  console.debug("-- agent calling: ", {
+  logger.info("-- agent calling: %o", {
     agentType,
     model,
     options,
@@ -29,7 +30,7 @@ export const safeCallAgent = async ({
   })
 
   const yamlConfig = await promises.readFile(
-    path.join(Path.projectDir, `common-llm/config/${agentType}.agent.yml`),
+    path.join(Path.packagesDir, `common-llm/config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface

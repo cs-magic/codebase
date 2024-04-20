@@ -1,4 +1,3 @@
-import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { BaseSimulator } from "./base-simulator"
 
 /**
@@ -21,7 +20,8 @@ export class WxmpArticleSimulator extends BaseSimulator {
     // Extract content or perform other actions on the page
     const content = await page.content()
 
-    await dumpFile(content, `${Date.now()}.html`)
+    // 仅供测试环境
+    // await dumpFile(content, `${Date.now()}.html`)
 
     return content
   }

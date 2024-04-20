@@ -1,10 +1,6 @@
+import { logger } from "@cs-magic/log/logger"
 import { redis } from "../../../../common-db/providers/redis"
-import {
-  ITransClient,
-  ITransEvent,
-  ITransChannel,
-} from "../../../../common-sse/schema"
-import { llmWrite } from "./utils"
+import { ITransClient, ITransEvent } from "../../../../common-sse/schema"
 import { ILLMManagerTraditional } from "./schema"
 
 export class RedisLLMManager implements ILLMManagerTraditional {
@@ -14,22 +10,16 @@ export class RedisLLMManager implements ILLMManagerTraditional {
     this.triggerId = triggerId
   }
 
-  private async listTriggers() {
-    const triggerIds = await redis.keys("*-events")
-    // console.log("[redis] listed triggers: ", triggerIds)
-    return triggerIds
+  public async onTriggerStarts() {
+    this.onEvent({ event: "init", data: {} })
   }
 
   //////////////////////////////
   // public
   //////////////////////////////
 
-  public async onTriggerStarts() {
-    this.onEvent({ event: "init", data: {} })
-  }
-
   public async hasTrigger() {
-    // console.log("[redis] checking trigger: ", { triggerId })
+    // logger.info("[redis] checking trigger: ", { triggerId })
     return !!(await redis.exists(`${this.triggerId}-events`))
   }
 
@@ -45,11 +35,11 @@ export class RedisLLMManager implements ILLMManagerTraditional {
       await redis.lrange(`${this.triggerId}-clients`, 0, -1)
     ).map((e) => {
       const client = JSON.parse(e) as ITransClient
-      console.log({ client })
+      logger.info({ client })
       return client
     })
 
-    console.log("[redis] getting trigger: ", {
+    logger.info("[redis] getting trigger: %o", {
       triggerId: this.triggerId,
       events,
       clients,
@@ -62,7 +52,7 @@ export class RedisLLMManager implements ILLMManagerTraditional {
   }
 
   public async onTriggerEnds() {
-    console.log("[redis] clean trigger: ", { triggerId: this.triggerId })
+    logger.info("[redis] clean trigger: %o", { triggerId: this.triggerId })
     await redis.del(`${this.triggerId}-events`)
     await redis.del(`${this.triggerId}-clients`)
   }
@@ -72,7 +62,7 @@ export class RedisLLMManager implements ILLMManagerTraditional {
    * @param client 可能不行！
    */
   public async onClientConnected(client: ITransClient) {
-    console.log("[redis] adding client: ", {
+    logger.info("[redis] adding client: %o", {
       triggerId: this.triggerId,
       client,
     })
@@ -81,7 +71,7 @@ export class RedisLLMManager implements ILLMManagerTraditional {
   }
 
   public async onClientDisconnected(clientId: string) {
-    console.log("[redis] deleting client: ", {
+    logger.info("[redis] deleting client: %o", {
       triggerId: this.triggerId,
       clientId,
     })
@@ -90,7 +80,7 @@ export class RedisLLMManager implements ILLMManagerTraditional {
   }
 
   public async onEvent(event: ITransEvent) {
-    console.log("[redis] pushing event to all clients: ", {
+    logger.info("[redis] pushing event to all clients: %o", {
       triggerId: this.triggerId,
       event,
     })
@@ -103,5 +93,11 @@ export class RedisLLMManager implements ILLMManagerTraditional {
         client.onEvent(event)
       }),
     )
+  }
+
+  private async listTriggers() {
+    const triggerIds = await redis.keys("*-events")
+    // logger.info("[redis] listed triggers: ", triggerIds)
+    return triggerIds
   }
 }

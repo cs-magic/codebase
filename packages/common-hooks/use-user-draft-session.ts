@@ -17,8 +17,6 @@ export const useDraftSession = (key: "name" | "image") => {
 
   const changed = draft !== sessionValue
 
-  // console.log({ key, value, draft, changed })
-
   useEffect(() => {
     setDraft(sessionValue)
   }, [sessionValue])

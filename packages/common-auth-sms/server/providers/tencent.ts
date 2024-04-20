@@ -1,5 +1,5 @@
 "use server"
-/**
+import { logger } from "@cs-magic/log/logger" /**
  * `yarn add net tls`
  */
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
@@ -49,9 +49,9 @@ export const $sendSmsViaTencent = async (
     TemplateId: tencentSmsConfig.templateId,
     TemplateParamSet: [code, expire.toString()],
   }
-  console.log("[sms-tencent] request: ", params)
+  logger.info("[sms-tencent] request: %o", params)
   const res = await smsTencentClient.SendSms(params)
-  console.log("[sms-tencent] response: ", res)
+  logger.info("[sms-tencent] response: %o", res)
 
   const message = res?.SendStatusSet![0]!.Code
   return message === "Ok"

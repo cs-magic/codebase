@@ -1,11 +1,10 @@
-import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatString } from "@cs-magic/common/utils/format-string"
+import { logger } from "@cs-magic/log/logger"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
 import { getEnv } from "../common-env"
-import { logEnv } from "../common-env/utils/log-env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
 import { ICallLlmOptions, ICallLlmResponse } from "./schema/llm"
@@ -14,7 +13,7 @@ export const safeCallLLM = async (
   options: ICallLlmOptions,
 ): Promise<ICallLlmResponse> => {
   const env = getEnv()
-  logEnv("api_key")
+  // logEnv("api_key")
   // console.log({ env })
 
   const llmModelType = options.model
@@ -57,11 +56,9 @@ export const safeCallLLM = async (
     messages,
   }
 
-  console.debug(
+  logger.debug(
     [
-      "",
-      SEPARATOR_BOX,
-      `-- calling LLM(provider=${llmProviderType}, model=${queryConfig.model}, api_key=${apiKey}): `,
+      `>> calling LLM(provider=${llmProviderType}, model=${queryConfig.model}, api_key=${apiKey}): `,
       ...queryConfig.messages.map(
         (m) =>
           `  [${m.role[0]!.toUpperCase()}]: ${formatString(JSON.stringify(m.content), 60)}`,
@@ -101,12 +98,6 @@ export const safeCallLLM = async (
     error,
   }
 
-  console.log(
-    [
-      `-- result: ${formatString(JSON.stringify(res), 60)}`,
-      SEPARATOR_BOX,
-      "",
-    ].join("\n"),
-  )
+  console.log(`✅ ${formatString(JSON.stringify(res), 60)}`)
   return res
 }

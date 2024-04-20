@@ -7,6 +7,8 @@
 import Dysmsapi, * as Api from "@alicloud/dysmsapi20170525"
 import { Config } from "@alicloud/openapi-client"
 import { RuntimeOptions } from "@alicloud/tea-util"
+import { formatError } from "@cs-magic/common/utils/format-error"
+import { logger } from "@cs-magic/log/logger"
 import { getEnv } from "../../../common-env"
 
 const env = getEnv()
@@ -41,7 +43,7 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
     templateParam: JSON.stringify({ code }),
   })
   try {
-    console.log("[sms] sending: ", { phone, code })
+    logger.info("[sms] sending: ", { phone, code })
     // 复制代码运行请自行打印 API 的返回值
     // const res = true
     // await sleep(1000)
@@ -61,10 +63,10 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
       sendSmsRequest,
       new RuntimeOptions({}),
     )
-    console.log("[sms] sent result: ", res)
+    logger.info("[sms] sent result: %o", res)
     return res.statusCode === 200 && res.body.code === "OK"
   } catch (err) {
-    console.log("[sms] sent error: ", err)
+    formatError(err)
     return false
   }
 }

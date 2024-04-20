@@ -1,7 +1,8 @@
+import { logger } from "@cs-magic/log/logger"
 import { userDetailSchema } from "@cs-magic/prisma/schema/user.detail"
+import Credentials from "next-auth/providers/credentials"
 import { PROFILE_UPDATE_PROVIDER_ID } from "../common-auth-sms/const"
 import { prisma } from "../common-db/providers/prisma"
-import Credentials from "next-auth/providers/credentials"
 
 export const ProfileUpdateProvider = Credentials({
   id: PROFILE_UPDATE_PROVIDER_ID,
@@ -11,7 +12,7 @@ export const ProfileUpdateProvider = Credentials({
     image: { type: "string" },
   },
   authorize: async (credentials, req) => {
-    console.log("updating profile with credentials: ", credentials)
+    logger.info("updating profile with credentials: %o", credentials)
     if (!credentials) throw new Error("no credentials")
     const { image, name, id } = credentials
     if (!image || !name) throw new Error("no name or image")

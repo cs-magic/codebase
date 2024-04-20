@@ -1,6 +1,7 @@
 /**
  * error handler: Axios & Error handling like a boss 😎 - DEV Community, https://dev.to/mperon/axios-error-handling-like-a-boss-333d
  */
+import { logger } from "@cs-magic/log/logger"
 import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults } from "axios"
 import { toast } from "sonner"
 
@@ -175,7 +176,7 @@ globalHandlers.registerMany({
   login_required: {
     message: "Login required!",
     //the after function will be called when the message hides.
-    after: () => console.log("redirect user to /login"),
+    after: () => logger.info("redirect user to /login"),
   },
   no_input_data: "You must fill form values here!",
   //this key is sent by api on login error.

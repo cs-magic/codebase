@@ -38,8 +38,6 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const [trpcReactLogEnabled] = useAtom(trpcReactLogEnabledAtom)
 
   const create = () => {
-    // console.log({ trpcReactLogEnabled })
-
     return api.createClient({
       transformer,
       links: [

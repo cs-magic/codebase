@@ -1,3 +1,5 @@
+"use server";
+
 import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url";
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url";
 import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";

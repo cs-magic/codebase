@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+import { logger } from "@cs-magic/log/logger"
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers"
 import { WECHAT_PROVIDER_ID } from "./config"
 import { getWechatAuthorizationUrl } from "./funcs/client"
@@ -15,6 +14,7 @@ import {
 } from "./schema"
 
 /**
+ * todo: type hint on callbacks
  * ref:
  * 1. https://github.com/nextauthjs/next-auth/issues/5937
  * 2. node_modules/next-auth/src/providers/facebook.ts
@@ -44,7 +44,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
       request: async ({ tokens }: { tokens: IWechatAdaptedToken }) => {
         const { id, access_token } = tokens
         const userInfo = await getWechatUserProfile(access_token, id)
-        console.log("[common-auth-wechat] userinfo callback: ", {
+        logger.info("[common-auth-wechat] userinfo callback: %o", {
           tokens,
           userInfo,
         })
@@ -69,7 +69,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
         wxid: profile.openid,
         wxidVerified: new Date(),
       }
-      console.log("[common-auth-wechat] profile callback: ", {
+      logger.info("[common-auth-wechat] profile callback: %o", {
         profile,
         profileOut,
       })

@@ -1,5 +1,6 @@
 "use server"
 
+import { logger } from "@cs-magic/log/logger"
 import { prisma } from "../../common-db/providers/prisma/connection"
 import { SMS_PROVIDER_ID } from "../const"
 import { IProviderSendSms } from "../schema"
@@ -65,7 +66,7 @@ export const $sendSms = async (
         // sms 再次登录时无需更新user相关的信息
       },
     })
-    console.log("[sms] account: ", account)
+    logger.info("[sms] account: %o", account)
   }
   return ok
 }
