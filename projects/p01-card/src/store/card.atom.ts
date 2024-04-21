@@ -1,6 +1,7 @@
-import { parseJs } from "@cs-magic/common/utils/parse-json";
+import { parseSummary } from "@/utils/parse-summary";
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe";
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
-import { LlmResponse } from "@prisma/client";
+import { Card, LlmResponse } from "@prisma/client";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { SummaryOptions } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
@@ -19,7 +20,12 @@ import {
 import { getCardUrl } from "../utils";
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "");
-export const llmResponseInputAtom = atomWithStorage("card.input", "");
+
+export const articleInputAtom = atomWithStorage("card.article.input", "");
+export const llmResponseInputAtom = atomWithStorage(
+  "card.llm.response.input",
+  "",
+);
 
 export const cardUserIdAtom = atomWithStorage("card.user.id", "");
 export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "");
@@ -110,7 +116,35 @@ export const requestIsHeadlessAtom = atomWithStorage("request.headless", true);
  * todo: parseJS ??
  */
 export const cardPreviewAtom = atom<ICardPreview>((get) => {
-  return parseJs<LlmResponse>(get(llmResponseInputAtom))?.response;
+  const llmResponseInput = get(llmResponseInputAtom);
+  const llmResponse = parseJsonSafe<LlmResponse>(llmResponseInput);
+  const article = parseJsonSafe<Card>(get(articleInputAtom));
+  const user = get(cardUserAtom);
+  const summaryContent =
+    llmResponse?.response?.response?.choices[0].message.content;
+  const summaryParsed = parseSummary(summaryContent);
+
+  console.log({ llmResponseInput, llmResponse, summaryContent, summaryParsed });
+
+  return {
+    outer: llmResponse
+      ? {
+          id: llmResponse.id,
+          user,
+        }
+      : null,
+    inner: article
+      ? {
+          author: article.author,
+          cover: article.cover,
+          platformType: article.platformType,
+          sourceUrl: article.sourceUrl!,
+          time: article.time!,
+          title: article.title!,
+          summary: summaryParsed,
+        }
+      : null,
+  };
 });
 
 export const cardRenderedAtom = atom((get) => {
@@ -119,7 +153,7 @@ export const cardRenderedAtom = atom((get) => {
   const user = get(cardUserRenderedAtom);
   const author = get(cardAuthorRenderedAtom);
   const rendered = cover && mindmap && user && author;
-  console.log({ cover, mindmap, user, author, rendered });
+  // console.log({ cover, mindmap, user, author, rendered });
   return rendered;
 });
 
@@ -131,7 +165,7 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
 
 export const cardOssIdAtom = atom<string | null>((get) => {
   const preview = get(cardPreviewAtom);
-  return getCardUrl(preview?.outer.id);
+  return getCardUrl(preview?.outer?.id);
 });
 
 export const requestOptionsAtom = atom<RequestOptions>((get) => ({

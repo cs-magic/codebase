@@ -16,7 +16,7 @@ export const CardFooterItem = ({
     if (!ref.current) return;
 
     const { scrollWidth, offsetWidth, clientWidth } = ref.current;
-    console.log({ scrollWidth, offsetWidth, clientWidth });
+    // console.log({ scrollWidth, offsetWidth, clientWidth });
 
     if (scrollWidth > clientWidth) {
       setFontSize((f) => f - 1);

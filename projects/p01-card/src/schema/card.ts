@@ -5,9 +5,9 @@ import {
   IWechatArticleComment,
   IWechatArticleStat,
 } from "../../../../core/wechat/wxmp-article/detail/schema";
-import { IArticleSummaryParsed } from "../../../../packages/llm/parse-summary";
 import { LlmModelType } from "../../../../packages/llm/schema/providers";
 import { FetchWxmpArticleDetailOptions } from "../../../../core/wechat/wxmp-article/fetch/schema";
+import { IArticleSummaryParsed } from "../utils/parse-summary";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends typeof $Enums.PlatformType.wxmpArticle
@@ -80,16 +80,11 @@ export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>;
 export type CardInnerPreview = {
   title: string;
   cover: IMedia;
-  tags: string[];
-  description: string;
-  mindmap: string;
-  model: {
-    type: LlmModelType;
-  };
   sourceUrl: string;
   platformType: PlatformType;
   author: IUserSummary;
   time: Date;
+  summary?: ISummaryParsed;
 };
 
 export type CardOuterPreview = {
@@ -98,6 +93,6 @@ export type CardOuterPreview = {
 };
 
 export type ICardPreview = {
-  inner: CardInnerPreview;
-  outer: CardOuterPreview;
+  inner: CardInnerPreview | null;
+  outer: CardOuterPreview | null;
 };

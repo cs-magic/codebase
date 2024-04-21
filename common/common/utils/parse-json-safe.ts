@@ -1,7 +1,7 @@
-export const parseJsonSafe = (s?: any) => {
+export const parseJsonSafe = <T>(s?: any) => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return JSON.parse(s)
+    return JSON.parse(s) as T
   } catch (e) {
     return s
   }

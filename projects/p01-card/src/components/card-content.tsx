@@ -10,7 +10,7 @@ import { Tags } from "./card-content-tags";
 export const CardContent = ({
   innerPreview,
 }: {
-  innerPreview?: CardInnerPreview;
+  innerPreview?: CardInnerPreview | null;
 }) => {
   // console.log("-- summary: ", summary)
 
@@ -26,15 +26,15 @@ export const CardContent = ({
             {innerPreview?.title}
           </h1>
 
-          <Tags tags={innerPreview?.tags} />
+          <Tags tags={innerPreview?.summary?.tags} />
 
           {/*<Stat stat={content?.stat} />*/}
 
           <div className={"rounded-lg bg-slate-100 p-2 text-sm"}>
-            {innerPreview?.description}
+            {innerPreview?.summary?.description}
           </div>
 
-          <MarkMap content={innerPreview?.mindmap} />
+          <MarkMap content={innerPreview?.summary?.mindmap} />
 
           <CardContentAuthor render={innerPreview} />
 
@@ -46,7 +46,7 @@ export const CardContent = ({
                 " mx-1",
               )}
             >
-              {innerPreview?.model.type.toUpperCase()} 大模型
+              {innerPreview?.summary?.model?.name?.toUpperCase()} 大模型
               {/*大模型*/}
             </span>
             生成

@@ -1,5 +1,5 @@
-import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/core/card-platform/wechat-article/utils"
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
+import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utls/card-platform/wechat-article/utils"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { prisma } from "../../../../packages/db/providers/prisma"
 import { md2summary } from "./approaches/nodejs/md2summary"

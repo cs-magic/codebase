@@ -7,22 +7,22 @@ import { useEffect } from "react";
 import moment from "../../../../packages/datetime/moment";
 import { cn } from "../../../../packages/ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio";
-import { getPlatformName } from "../core/utils";
 import { CardInnerPreview } from "../schema/card";
 import {
   cardAuthorRenderedAtom,
   cardAuthorWithTitleAtom,
 } from "../store/card.atom";
 import { UserAvatar } from "./user-avatar";
+import { getPlatformName } from "@/utls/utils";
 
 export const CardContentAuthor = ({
   render,
 }: {
-  render?: CardInnerPreview;
+  render?: CardInnerPreview | null;
 }) => {
   // console.log("-- author: ", card?.author)
   const author = render?.author;
-  console.log("author: ", author);
+  // console.log("author: ", author);
 
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom);
 

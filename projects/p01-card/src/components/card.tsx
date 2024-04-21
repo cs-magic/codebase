@@ -15,11 +15,13 @@ import { CardPreview } from "./card-preview";
 import { StandardCard } from "./standard-card";
 
 export const Card = () => {
-  const summary = useAtomValue(cardPreviewAtom);
+  const preview = useAtomValue(cardPreviewAtom);
   const renderType =
     useSearchParam<GenCardApproach>("renderType") ?? "frontend";
 
   const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend;
+
+  // console.log({ preview });
 
   return (
     <div
@@ -42,7 +44,7 @@ export const Card = () => {
 
         <CardPreview
           genCardApproach={renderType}
-          preview={summary}
+          preview={preview ?? undefined}
           withActions
         />
       </StandardCard>

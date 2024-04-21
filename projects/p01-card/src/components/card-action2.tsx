@@ -8,7 +8,6 @@ import { RefObject } from "react";
 import { toast } from "sonner";
 import { uploadFile } from "../../../../packages/oss/upload";
 import { getOssUrl } from "../../../../packages/oss/utils";
-import { updateOssUrl } from "../core/update-oss-url.action";
 import { Action2Type, ActionType } from "../schema/card";
 import {
   cardPreviewAtom,
@@ -16,6 +15,7 @@ import {
   cardPreviewEngineAtom,
 } from "../store/card.atom";
 import { CardAction } from "./card-action";
+import { updateOssUrl } from "@/utls/update-oss-url.action";
 
 export const CardAction2 = ({
   type,
@@ -26,13 +26,13 @@ export const CardAction2 = ({
   obj: RefObject<HTMLDivElement>;
   rendered: boolean;
 }) => {
-  const [card] = useAtom(cardPreviewAtom);
+  const [preview] = useAtom(cardPreviewAtom);
   const [cardOssId] = useAtom(cardOssIdAtom);
   const [engine] = useAtom(cardPreviewEngineAtom);
 
   const action = async (type: ActionType) => {
     console.log({ type, engine });
-    if (!obj.current || !card) return;
+    if (!obj.current || !preview) return;
 
     const blob =
       engine === "modern-screenshot"
@@ -45,7 +45,7 @@ export const CardAction2 = ({
               backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
             })
           : await new Promise<Blob | null>(async (resolve, reject) => {
-              if (!obj.current || !card) return;
+              if (!obj.current || !preview) return;
 
               const canvas = await html2canvas(obj.current, {
                 scale: 4,
@@ -82,7 +82,7 @@ export const CardAction2 = ({
         await uploadFile(file);
         const ossUrl = getOssUrl(cardOssId);
 
-        await updateOssUrl(card.outer.id, ossUrl);
+        await updateOssUrl(preview.outer.id, ossUrl);
 
         toast.success(`uploaded at ${ossUrl}`, {
           closeButton: true,

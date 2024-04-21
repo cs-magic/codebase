@@ -8,14 +8,14 @@ import {
 import moment from "../../../../packages/datetime/moment";
 import { cn } from "../../../../packages/ui-shadcn/utils";
 
-import { config, packageJson } from "../config";
+import { packageJson } from "../config";
 import { CardOuterPreview } from "../schema/card";
 import { CardFooterItem } from "./card-footer-item";
 
 export const CardFooter = ({
   outPreview,
 }: {
-  outPreview?: CardOuterPreview;
+  outPreview?: CardOuterPreview | null;
 }) => {
   return (
     <div

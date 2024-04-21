@@ -1,31 +1,37 @@
+import { logger } from "@cs-magic/log/logger";
 import { useAtom, useSetAtom } from "jotai";
-import { genCardFromUrl } from "../core/gen-card";
+import { ICallLlmResponse } from "../../../../packages/llm/schema/llm";
 import { Action1Type } from "../schema/card";
 import {
-  cardGenOptionsAtom,
-  llmResponseInputAtom,
+  articleInputAtom,
   cardArticleUrlAtom,
+  cardGenOptionsAtom,
   cardUserAvatarAtom,
   cardUserNameAtom,
+  llmResponseInputAtom,
 } from "../store/card.atom";
 import { CardAction } from "./card-action";
+import { genCardFromUrl } from "@/utls/gen-card";
 
 export const CardAction1 = ({ type }: { type: Action1Type }) => {
   const [inputUrl] = useAtom(cardArticleUrlAtom);
   const [options] = useAtom(cardGenOptionsAtom);
-  const setCardInput = useSetAtom(llmResponseInputAtom);
+  const setLlmResponseInput = useSetAtom(llmResponseInputAtom);
   const setCardUserName = useSetAtom(cardUserNameAtom);
   const setCardUserAvatar = useSetAtom(cardUserAvatarAtom);
+  const setArticleInput = useSetAtom(articleInputAtom);
 
   const action = async () => {
     switch (type) {
       case "generate":
-        const d = await genCardFromUrl(inputUrl, options);
-        setCardInput(JSON.stringify(d.llmResponse));
+        const generated = await genCardFromUrl(inputUrl, options);
+        logger.info("generated: %o", generated);
+        setLlmResponseInput(JSON.stringify(generated.llmResponse));
+        setArticleInput(JSON.stringify(generated.article));
         break;
 
       case "reset":
-        setCardInput("");
+        setLlmResponseInput("");
         setCardUserName("");
         setCardUserAvatar("");
         break;
