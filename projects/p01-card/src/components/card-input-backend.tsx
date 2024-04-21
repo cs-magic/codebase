@@ -1,11 +1,11 @@
 import { useAtom } from "jotai";
 import React from "react";
 import { Textarea } from "../../../../packages/ui/components/textarea-auto";
-import { cardInputAtom } from "../store/card.atom";
+import { llmResponseInputAtom } from "../store/card.atom";
 import { CardInputUser } from "./card-input-user";
 
 export const CardInputBackend = () => {
-  const [cardInput, setCardInput] = useAtom(cardInputAtom);
+  const [cardInput, setCardInput] = useAtom(llmResponseInputAtom);
 
   return (
     <>

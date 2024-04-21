@@ -1,5 +1,5 @@
+import { SelectLogLevel } from "@cs-magic/log/components/select-log-level";
 import { useAtom } from "jotai";
-import { SelectLogLevel } from "../../../../common/common-log/components/select-log-level";
 import { pusherLogLevelAtom } from "../../../../packages/pusher/store";
 import { LabelLine } from "../../../../packages/ui/components/label-line";
 import { TrpcLogEnabled } from "./config-trpc-log-enabled";

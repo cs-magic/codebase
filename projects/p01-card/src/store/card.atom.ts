@@ -1,25 +1,25 @@
 import { parseJs } from "@cs-magic/common/utils/parse-json";
-import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
+import { LlmResponse } from "@prisma/client";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { SummaryOptions } from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
+import { SummaryOptions } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/md2summary";
 import {
   RequestApproachType,
   RequestOptions,
-} from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
+} from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/requestPage";
 
 import { BackendType } from "../../../../packages/llm/schema/llm";
 import { LlmModelType } from "../../../../packages/llm/schema/providers";
 import {
   CardPreviewEngineType,
   GenWxmpArticleCardFetchOptions,
+  ICardPreview,
 } from "../schema/card";
 import { getCardUrl } from "../utils";
 
-export const cardInputAtom = atomWithStorage("card.input", "");
-
-export const cardInputUrlAtom = atomWithStorage("url.toParse", "");
+export const cardArticleUrlAtom = atomWithStorage("url.toParse", "");
+export const llmResponseInputAtom = atomWithStorage("card.input", "");
 
 export const cardUserIdAtom = atomWithStorage("card.user.id", "");
 export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "");
@@ -100,12 +100,17 @@ export const requestApproachTypeAtom = atomWithStorage<RequestApproachType>(
   "simulate",
 );
 
+export const requestIsHeadlessAtom = atomWithStorage("request.headless", true);
+
 ///////////////////////////////
 // derived
 //////////////////////////////
 
-export const cardAtom = atom<ICardDetail | null>((get) => {
-  return parseJs<ICardDetail>(get(cardInputAtom));
+/**
+ * todo: parseJS ??
+ */
+export const cardPreviewAtom = atom<ICardPreview>((get) => {
+  return parseJs<LlmResponse>(get(llmResponseInputAtom))?.response;
 });
 
 export const cardRenderedAtom = atom((get) => {
@@ -125,13 +130,16 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
 }));
 
 export const cardOssIdAtom = atom<string | null>((get) => {
-  const card = get(cardAtom);
-  return getCardUrl(card?.id);
+  const preview = get(cardPreviewAtom);
+  return getCardUrl(preview?.outer.id);
 });
 
 export const requestOptionsAtom = atom<RequestOptions>((get) => ({
-  approachType: get(requestApproachTypeAtom),
   backendType: get(backendTypeAtom),
+  approach: {
+    type: get(requestApproachTypeAtom),
+    headless: get(requestIsHeadlessAtom),
+  },
 }));
 
 export const summaryOptionsAtom = atom<SummaryOptions>((get) => ({
@@ -151,7 +159,7 @@ export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
     withCache: get(cardFetchWithCacheAtom),
     detail: {
       request: get(requestOptionsAtom),
-      summary: get(summaryOptionsAtom),
+      llmResponse: get(summaryOptionsAtom),
     },
   }),
 );

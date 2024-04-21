@@ -8,22 +8,27 @@ import moment from "../../../../packages/datetime/moment";
 import { cn } from "../../../../packages/ui-shadcn/utils";
 import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio";
 import { getPlatformName } from "../core/utils";
+import { CardInnerPreview } from "../schema/card";
 import {
   cardAuthorRenderedAtom,
   cardAuthorWithTitleAtom,
 } from "../store/card.atom";
 import { UserAvatar } from "./user-avatar";
 
-export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
+export const CardContentAuthor = ({
+  render,
+}: {
+  render?: CardInnerPreview;
+}) => {
   // console.log("-- author: ", card?.author)
-  const author = card?.author as IUserSummary | null;
+  const author = render?.author;
   console.log("author: ", author);
 
   const [withRawTitle] = useAtom(cardAuthorWithTitleAtom);
 
   const Line1 = () => (
     <div className={"truncate text-xs text-muted-foreground"}>
-      原标题：{card?.title}
+      原标题：{render?.title}
     </div>
   );
 
@@ -33,12 +38,12 @@ export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
 
   const Line22 = () => (
     <div>
-      {!!card?.time && (
-        <span>{moment(card.time).fromNow().replace(/\s+/g, "")}</span>
+      {!!render?.time && (
+        <span>{moment(render.time).fromNow().replace(/\s+/g, "")}</span>
       )}
 
       <span>发表于</span>
-      <span>{getPlatformName(card?.platformType)}</span>
+      <span>{getPlatformName(render?.platformType)}</span>
     </div>
   );
 
@@ -82,11 +87,11 @@ export const CardContentAuthor = ({ card }: { card?: Card | null }) => {
       </div>
 
       <div className={"ml-auto flex h-full shrink-0 items-center"}>
-        {card?.sourceUrl && (
+        {render?.sourceUrl && (
           <>
             {/*<div className={"w-8 text-xs text-muted-foreground"}>查看原文</div>*/}
             <VerticalAspectRatio ratio={1}>
-              <QRCodeSVG value={card.sourceUrl} className={"h-full w-full"} />
+              <QRCodeSVG value={render.sourceUrl} className={"h-full w-full"} />
             </VerticalAspectRatio>
           </>
         )}

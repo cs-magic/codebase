@@ -11,6 +11,26 @@ export const getRobustPreference = (row: {
       backend: "nodejs",
       chatEnabled: false,
       parserEnabled: false,
+      fetch: {
+        detail: {
+          request: {
+            backendType: "nodejs",
+            approachType: "simulate",
+          },
+          llmResponse: {
+            model: "gpt-3.5-turbo",
+            enabled: true,
+            withImage: false,
+          },
+        },
+        stat: {
+          enabled: false,
+        },
+        comments: {
+          enabled: false,
+        },
+        withCache: true,
+      },
     },
     ...preference,
   }

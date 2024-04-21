@@ -8,7 +8,7 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { fetchWxmpArticle } from "../../../../packages/wechat/wxmp-article/fetch/fetch-wxmp-article"
+import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch/fetch-wxmp-article"
 import { CardSimulator } from "../../../../packages/spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvPreference } from "../../utils/get-conv-preference"
@@ -209,26 +209,14 @@ export class ParserManager extends BaseManager {
 
       void this.notify(`parsing[${ParserManager.toParse}] mid=${message.id}`)
       ++ParserManager.toParse
-      const card = await fetchWxmpArticle(url, {
-        detail: {
-          request: {
-            backendType: convPreference.backend,
-            approachType: "simulate",
-          },
-          summary: {
-            model: convPreference.model,
-            enabled: true,
-            withImage: false,
-          },
-        },
-      })
+      const reuslt = await fetchWxmpArticle(url, convPreference.fetch)
       // todo: dynamic sender with fixed card url
 
       logger.info(`-- parsing content`)
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
 
-      const cardContent = JSON.stringify(card)
+      const cardContent = JSON.stringify(reuslt.llmResponse)
       logger.info(`-- inputting: ${formatString(cardContent, 120)}`)
       const { cardUrl } = await ParserManager.uniParser.genCard(
         cardContent,

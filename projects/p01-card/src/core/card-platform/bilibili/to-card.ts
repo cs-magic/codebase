@@ -1,9 +1,9 @@
 "use server";
 
 import { Card, Prisma } from "@prisma/client";
-import { prisma } from "../../../../../../packages/db/providers/prisma";
 import { IBilibiliVideoDetail } from "../../../../../../packages/bilibili/schema";
 import { getBilibiliIFrameUrl } from "../../../../../../packages/bilibili/utils";
+import { prisma } from "../../../../../../packages/db/providers/prisma";
 
 export const bilibili2card = (
   inputData: IBilibiliVideoDetail,
@@ -14,7 +14,6 @@ export const bilibili2card = (
   const data: Prisma.CardUncheckedCreateInput = {
     createdAt: new Date(),
     updatedAt: new Date(),
-    contentSummary: null,
     time: null,
     contentMd: null,
     author: null,

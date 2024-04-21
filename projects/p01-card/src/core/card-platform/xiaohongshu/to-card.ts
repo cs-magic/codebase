@@ -17,7 +17,6 @@ export const xiaohongshu2card = (
     stat: null,
     sourceUrl: null,
     contentMd: null,
-    contentSummary: null,
     platformData: null,
     updatedAt: new Date(),
     createdAt: new Date(),

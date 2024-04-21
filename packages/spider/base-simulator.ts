@@ -14,8 +14,8 @@ export type Page = PuppetPage & PlaywrightPage
 export class BaseSimulator {
   protected driver: BrowserType
   protected browser: PlaywrightBrowser | null = null
-  protected launchOptions?: LaunchOptions
   protected page?: Page
+  public launchOptions: LaunchOptions
 
   constructor(
     driverType: DriverType = "playwright",
@@ -24,7 +24,7 @@ export class BaseSimulator {
     logger.info("-- init UniParserBot: ", { driverType })
     // Or 'firefox' or 'webkit'.
     this.driver = chromium
-    this.launchOptions = launchOptions
+    this.launchOptions = launchOptions ?? {}
 
     process.on("exit", () => this.cleanup())
     process.on("SIGINT", () => this.cleanup())

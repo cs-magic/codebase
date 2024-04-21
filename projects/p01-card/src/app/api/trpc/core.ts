@@ -4,7 +4,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
 } from "../../../../../../packages/trpc/trpc";
-import { UserUpdateInputSchema } from "../../../../../../common/common-db-prisma/prisma/generated/zod";
+import { UserUpdateInputSchema } from "@cs-magic/prisma/prisma/generated/zod";
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>

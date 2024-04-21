@@ -1,3 +1,4 @@
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
 import { type LangType } from "../../../packages/i18n/schema"
 import { type BackendType } from "../../../packages/llm/schema/llm"
 import { type LlmModelType } from "../../../packages/llm/schema/providers"
@@ -23,6 +24,7 @@ export type IWechatUserPreference = {
   todoFilter?: string
   maxOutputLines?: number
   commandStyle?: CommandStyle
+  fetch?: GenWxmpArticleCardFetchOptions
 }
 
 /**

@@ -6,10 +6,10 @@ import { Input } from "../../../../packages/ui-shadcn/components/input";
 import { LabelLine } from "../../../../packages/ui/components/label-line";
 
 import { config } from "../config";
-import { cardInputUrlAtom } from "../store/card.atom";
+import { cardArticleUrlAtom } from "../store/card.atom";
 
 export const CardInputUrl = () => {
-  const [inputUrl, setInputUrl] = useAtom(cardInputUrlAtom);
+  const [inputUrl, setInputUrl] = useAtom(cardArticleUrlAtom);
 
   return (
     <LabelLine title={"url"}>

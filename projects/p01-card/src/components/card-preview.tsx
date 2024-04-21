@@ -1,9 +1,8 @@
 "use client";
 
-import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
 import { useAtom, useAtomValue } from "jotai";
 import { useRef } from "react";
-import { Action2Type, GenCardRenderType } from "../schema/card";
+import { Action2Type, GenCardApproach, ICardPreview } from "../schema/card";
 import { cardRenderedAtom, cardUserAtom } from "../store/card.atom";
 import { CardAction2 } from "./card-action2";
 import { CardContent } from "./card-content";
@@ -11,12 +10,12 @@ import { CardFooter } from "./card-footer";
 import { CardHeader } from "./card-header";
 
 export const CardPreview = ({
-  renderType,
-  card,
+  preview,
+  genCardApproach,
   withActions,
 }: {
-  renderType?: GenCardRenderType;
-  card?: ICardDetail | null;
+  preview?: ICardPreview;
+  genCardApproach?: GenCardApproach;
   withActions?: boolean;
 }) => {
   const obj = useRef<HTMLDivElement>(null);
@@ -35,7 +34,7 @@ export const CardPreview = ({
         <div className={"flex gap-2"}>
           <Action type={"copy"} />
           <Action type={"download"} />
-          {renderType === "backend" && <Action type={"upload"} />}
+          {genCardApproach === "backend" && <Action type={"upload"} />}
         </div>
       )}
 
@@ -44,11 +43,11 @@ export const CardPreview = ({
         id={"card-preview"}
         className={"corner-gradient w-full font-card"}
       >
-        <CardHeader user={card?.user ?? user} />
+        <CardHeader user={user} />
 
-        <CardContent card={card} />
+        <CardContent innerPreview={preview?.inner} />
 
-        <CardFooter card={card} />
+        <CardFooter outPreview={preview?.outer} />
       </div>
     </div>
   );

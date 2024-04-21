@@ -1,13 +1,21 @@
 {
-  "version": "V0.6.143 (α)",
   "name": "",
   "slogan": "",
   "website": {
     "title": "CS魔法社 P01",
     "menus": [
-      { "href": "/card/new", "title": "新建卡片" },
-      { "href": "/card/gen", "title": "渲染卡片" },
-      { "href": "/bot", "title": "微信机器人" }
+      {
+        "href": "/card/new",
+        "title": "新建卡片"
+      },
+      {
+        "href": "/card/gen",
+        "title": "渲染卡片"
+      },
+      {
+        "href": "/bot",
+        "title": "微信机器人"
+      }
     ],
     "partners": {
       "show": false

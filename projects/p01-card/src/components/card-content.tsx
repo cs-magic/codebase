@@ -1,22 +1,17 @@
 "use client";
 
-import { ICardDetail } from "@cs-magic/prisma/schema/card.detail";
-import { parseSummary } from "../../../../packages/llm/parse-summary";
 import { cn } from "../../../../packages/ui-shadcn/utils";
 import MarkMap from "../../../../packages/visualization/markmap";
+import { CardInnerPreview } from "../schema/card";
 import { CardContentAuthor } from "./card-content-author";
 import { Cover } from "./card-content-cover";
-import { Stat } from "./card-content-stat";
 import { Tags } from "./card-content-tags";
 
-export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
-  const summary = parseSummary(
-    card?.contentSummary?.response?.choices[0].message.content as
-      | string
-      | null
-      | undefined,
-  );
-
+export const CardContent = ({
+  innerPreview,
+}: {
+  innerPreview?: CardInnerPreview;
+}) => {
   // console.log("-- summary: ", summary)
 
   return (
@@ -24,22 +19,24 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
       className={"relative m-2 overflow-hidden rounded-lg bg-white text-black"}
     >
       <div className={"flex grow flex-col overflow-hidden"}>
-        <Cover cover={card?.cover} />
+        <Cover cover={innerPreview?.cover} />
 
         <div className={"flex flex-col gap-2 p-2"}>
-          <h1 className={"shrink-0 text-lg font-bold"}>{card?.title}</h1>
+          <h1 className={"shrink-0 text-lg font-bold"}>
+            {innerPreview?.title}
+          </h1>
 
-          <Tags tags={summary?.tags} />
+          <Tags tags={innerPreview?.tags} />
 
-          <Stat stat={card?.stat} />
+          {/*<Stat stat={content?.stat} />*/}
 
           <div className={"rounded-lg bg-slate-100 p-2 text-sm"}>
-            {summary?.description}
+            {innerPreview?.description}
           </div>
 
-          <MarkMap content={summary?.mindmap} />
+          <MarkMap content={innerPreview?.mindmap} />
 
-          <CardContentAuthor card={card} />
+          <CardContentAuthor render={innerPreview} />
 
           <div className={"mt-2 text-center text-xs text-muted-foreground/25"}>
             该内容由
@@ -49,7 +46,7 @@ export const CardContent = ({ card }: { card?: ICardDetail | null }) => {
                 " mx-1",
               )}
             >
-              {card?.contentSummary?.options.model?.toUpperCase()} 大模型
+              {innerPreview?.model.type.toUpperCase()} 大模型
               {/*大模型*/}
             </span>
             生成

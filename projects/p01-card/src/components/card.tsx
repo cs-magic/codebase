@@ -7,17 +7,17 @@ import { Input } from "../../../../packages/ui-shadcn/components/input";
 import { Separator } from "../../../../packages/ui-shadcn/components/separator";
 import { cn } from "../../../../packages/ui-shadcn/utils";
 import { AtomSelector } from "../../../../packages/ui/components/atom-switcher";
-import { cardPreviewEngineTypeSchema, GenCardRenderType } from "../schema/card";
-import { cardAtom, cardPreviewEngineAtom } from "../store/card.atom";
+import { cardPreviewEngineTypeSchema, GenCardApproach } from "../schema/card";
+import { cardPreviewAtom, cardPreviewEngineAtom } from "../store/card.atom";
 import { CardInputBackend } from "./card-input-backend";
 import { CardInputFrontend } from "./card-input-frontend";
 import { CardPreview } from "./card-preview";
 import { StandardCard } from "./standard-card";
 
 export const Card = () => {
-  const card = useAtomValue(cardAtom);
+  const summary = useAtomValue(cardPreviewAtom);
   const renderType =
-    useSearchParam<GenCardRenderType>("renderType") ?? "frontend";
+    useSearchParam<GenCardApproach>("renderType") ?? "frontend";
 
   const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend;
 
@@ -40,7 +40,11 @@ export const Card = () => {
 
         <Separator orientation={"horizontal"} />
 
-        <CardPreview renderType={renderType} card={card} withActions />
+        <CardPreview
+          genCardApproach={renderType}
+          preview={summary}
+          withActions
+        />
       </StandardCard>
     </div>
   );

@@ -1,11 +1,13 @@
-import { $Enums } from "@prisma/client";
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
+import { $Enums, PlatformType } from "@prisma/client";
 import { z } from "zod";
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../../../packages/wechat/wxmp-article/detail/schema";
-import { FetchWxmpArticleDetailOptions } from "../../../../packages/wechat/wxmp-article/fetch/approaches/nodejs";
+} from "../../../../core/wechat/wxmp-article/detail/schema";
 import { IArticleSummaryParsed } from "../../../../packages/llm/parse-summary";
+import { LlmModelType } from "../../../../packages/llm/schema/providers";
+import { FetchWxmpArticleDetailOptions } from "../../../../core/wechat/wxmp-article/fetch/schema";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
   T extends typeof $Enums.PlatformType.wxmpArticle
@@ -66,7 +68,7 @@ export type GenWxmpArticleCardFetchOptions = {
   };
 };
 
-export type GenCardRenderType = "frontend" | "backend";
+export type GenCardApproach = "frontend" | "backend";
 
 export const cardPreviewEngineTypeSchema = z.enum([
   "html2image",
@@ -74,3 +76,28 @@ export const cardPreviewEngineTypeSchema = z.enum([
   "modern-screenshot",
 ]);
 export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>;
+
+export type CardInnerPreview = {
+  title: string;
+  cover: IMedia;
+  tags: string[];
+  description: string;
+  mindmap: string;
+  model: {
+    type: LlmModelType;
+  };
+  sourceUrl: string;
+  platformType: PlatformType;
+  author: IUserSummary;
+  time: Date;
+};
+
+export type CardOuterPreview = {
+  id: string;
+  user: IUserSummary;
+};
+
+export type ICardPreview = {
+  inner: CardInnerPreview;
+  outer: CardOuterPreview;
+};

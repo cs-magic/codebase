@@ -11,7 +11,7 @@ import { getOssUrl } from "../../../../packages/oss/utils";
 import { updateOssUrl } from "../core/update-oss-url.action";
 import { Action2Type, ActionType } from "../schema/card";
 import {
-  cardAtom,
+  cardPreviewAtom,
   cardOssIdAtom,
   cardPreviewEngineAtom,
 } from "../store/card.atom";
@@ -26,7 +26,7 @@ export const CardAction2 = ({
   obj: RefObject<HTMLDivElement>;
   rendered: boolean;
 }) => {
-  const [card] = useAtom(cardAtom);
+  const [card] = useAtom(cardPreviewAtom);
   const [cardOssId] = useAtom(cardOssIdAtom);
   const [engine] = useAtom(cardPreviewEngineAtom);
 
@@ -82,7 +82,7 @@ export const CardAction2 = ({
         await uploadFile(file);
         const ossUrl = getOssUrl(cardOssId);
 
-        await updateOssUrl(card.id, ossUrl);
+        await updateOssUrl(card.outer.id, ossUrl);
 
         toast.success(`uploaded at ${ossUrl}`, {
           closeButton: true,

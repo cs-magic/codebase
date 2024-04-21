@@ -9,10 +9,11 @@ declare global {
       ICardStat,
       ICardPlatform,
     } from "@cs-magic/p01-card/src/schema/card"
+
     export {
       IWechatArticleStat,
       IWechatArticleComment,
-    } from "../../../packages/wechat/wxmp-article/detail/schema"
+    } from "../../wechat/wxmp-article/detail/schema"
 
     export {
       IWechatUserData,
@@ -20,6 +21,7 @@ declare global {
     } from "@cs-magic/wechaty/schema/wechat-user"
 
     export { TaskTimer } from "../schema/task"
+
+    export { IUserSummary } from "../schema/user.summary"
   }
 }
-export { IUserSummary } from "../schema/user.summary"
