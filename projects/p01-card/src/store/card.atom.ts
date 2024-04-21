@@ -112,24 +112,37 @@ export const requestIsHeadlessAtom = atomWithStorage("request.headless", true);
 // derived
 //////////////////////////////
 
-/**
- * todo: parseJS ??
- */
-export const cardPreviewAtom = atom<ICardPreview>((get) => {
-  const llmResponseInput = get(llmResponseInputAtom);
+export const parseLlmResponseInput = (llmResponseInput: string) => {
   const llmResponse = parseJsonSafe<LlmResponse>(llmResponseInput);
-  const article = parseJsonSafe<Card>(get(articleInputAtom));
-  const user = get(cardUserAtom);
   const summaryContent =
     llmResponse?.response?.response?.choices[0].message.content;
   const summaryParsed = parseSummary(summaryContent);
 
-  console.log({ llmResponseInput, llmResponse, summaryContent, summaryParsed });
-
   return {
-    outer: llmResponse
+    summary: {
+      parsed: summaryParsed,
+      model: llmResponse?.response?.options.model,
+    },
+    id: llmResponse?.id,
+  };
+};
+
+/**
+ * todo: parseJS ??
+ */
+export const cardPreviewAtom = atom<ICardPreview>((get) => {
+  const article = parseJsonSafe<Card>(get(articleInputAtom));
+  const user = get(cardUserAtom);
+  const llmResponseInput = get(llmResponseInputAtom);
+  const llmResponse = parseLlmResponseInput(llmResponseInput);
+
+  console.log({ llmResponseInput });
+
+  const id = llmResponse.id;
+  return {
+    outer: id
       ? {
-          id: llmResponse.id,
+          id,
           user,
         }
       : null,
@@ -141,7 +154,7 @@ export const cardPreviewAtom = atom<ICardPreview>((get) => {
           sourceUrl: article.sourceUrl!,
           time: article.time!,
           title: article.title!,
-          summary: summaryParsed,
+          summary: llmResponse.summary,
         }
       : null,
   };

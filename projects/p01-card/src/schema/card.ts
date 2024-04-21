@@ -5,8 +5,8 @@ import {
   IWechatArticleComment,
   IWechatArticleStat,
 } from "../../../../core/wechat/wxmp-article/detail/schema";
-import { LlmModelType } from "../../../../packages/llm/schema/providers";
 import { FetchWxmpArticleDetailOptions } from "../../../../core/wechat/wxmp-article/fetch/schema";
+import { LlmModelType } from "../../../../packages/llm/schema/providers";
 import { IArticleSummaryParsed } from "../utils/parse-summary";
 
 export type ICardPlatform<T extends $Enums.PlatformType> =
@@ -34,11 +34,6 @@ export type IMedia = {
 };
 
 export type ISummaryParsed = {
-  model?: {
-    name?: string;
-    temperature?: number;
-    topP?: number;
-  };
   result?: IArticleSummaryParsed;
   title?: string;
   description?: string;
@@ -84,7 +79,10 @@ export type CardInnerPreview = {
   platformType: PlatformType;
   author: IUserSummary;
   time: Date;
-  summary?: ISummaryParsed;
+  summary?: {
+    parsed: ISummaryParsed;
+    model: LlmModelType;
+  };
 };
 
 export type CardOuterPreview = {

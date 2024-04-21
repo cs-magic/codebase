@@ -26,15 +26,15 @@ export const CardContent = ({
             {innerPreview?.title}
           </h1>
 
-          <Tags tags={innerPreview?.summary?.tags} />
+          <Tags tags={innerPreview?.summary?.parsed.tags} />
 
           {/*<Stat stat={content?.stat} />*/}
 
           <div className={"rounded-lg bg-slate-100 p-2 text-sm"}>
-            {innerPreview?.summary?.description}
+            {innerPreview?.summary?.parsed.description}
           </div>
 
-          <MarkMap content={innerPreview?.summary?.mindmap} />
+          <MarkMap content={innerPreview?.summary?.parsed.mindmap} />
 
           <CardContentAuthor render={innerPreview} />
 
@@ -46,7 +46,7 @@ export const CardContent = ({
                 " mx-1",
               )}
             >
-              {innerPreview?.summary?.model?.name?.toUpperCase()} 大模型
+              {innerPreview?.summary?.model?.toUpperCase()} 大模型
               {/*大模型*/}
             </span>
             生成

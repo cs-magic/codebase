@@ -33,7 +33,7 @@ export const CardContentAuthor = ({
   );
 
   const Line21 = () => (
-    <span className={"mr-1 text-nowrap"}>{parseJsonSafe(author)?.name}</span>
+    <span className={"mr-1 text-nowrap"}>{author?.name}</span>
   );
 
   const Line22 = () => (
