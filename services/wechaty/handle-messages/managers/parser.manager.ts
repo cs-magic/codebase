@@ -55,6 +55,7 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ParserManager extends BaseManager {
+  public i18n = i18n
   static name: FeatureType = "parser"
   static uniParser: CardSimulator | null = null
   static toParse = 0

@@ -109,8 +109,9 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class TodoManager extends BaseManager {
-  static jobs: Record<string, Job> = {}
   static name: FeatureType = "todo"
+  public i18n = i18n
+  static jobs: Record<string, Job> = {}
 
   async help() {
     const commands = await this.getCommands()
