@@ -69,8 +69,7 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ChatterManager extends BaseManager {
-  public i18n = i18n
-  public name: FeatureType = "chatter"
+  static name: FeatureType = "chatter"
 
   async help() {
     const commands = await this.getCommands()

@@ -55,10 +55,9 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ParserManager extends BaseManager {
-  public i18n = i18n
-  public name: FeatureType = "parser"
-  private uniParser: CardSimulator | null = null
-  private toParse = 0
+  static name: FeatureType = "parser"
+  static uniParser: CardSimulator | null = null
+  static toParse = 0
 
   async help() {
     const commands = await this.getCommands()
@@ -207,8 +206,8 @@ export class ParserManager extends BaseManager {
 
       // initLogWithTimer()
 
-      void this.notify(`parsing[${this.toParse}] mid=${message.id}`)
-      ++this.toParse
+      void this.notify(`parsing[${ParserManager.toParse}] mid=${message.id}`)
+      ++ParserManager.toParse
       const card = await fetchWxmpArticle(url, {
         detail: {
           request: {
@@ -225,11 +224,15 @@ export class ParserManager extends BaseManager {
       // todo: dynamic sender with fixed card url
 
       logger.info(`-- parsing content`)
-      if (!this.uniParser) this.uniParser = new CardSimulator()
+      if (!ParserManager.uniParser)
+        ParserManager.uniParser = new CardSimulator()
 
       const cardContent = JSON.stringify(card)
       logger.info(`-- inputting: ${formatString(cardContent, 120)}`)
-      const { cardUrl } = await this.uniParser.genCard(cardContent, user)
+      const { cardUrl } = await ParserManager.uniParser.genCard(
+        cardContent,
+        user,
+      )
 
       logger.info(`-- sending file: ${cardUrl}`)
 
@@ -241,7 +244,7 @@ export class ParserManager extends BaseManager {
       const s = formatError(e)
       void this.notify(`❌ ` + s)
     } finally {
-      --this.toParse
+      --ParserManager.toParse
     }
   }
 }
