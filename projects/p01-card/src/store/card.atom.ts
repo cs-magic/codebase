@@ -16,8 +16,8 @@ import {
   CardPreviewEngineType,
   GenWxmpArticleCardFetchOptions,
   ICardPreview,
-} from "../schema/card"
-import { getCardUrl } from "../utils"
+} from "@/schema/card"
+import { getCardUrl } from "@/utils"
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
 
