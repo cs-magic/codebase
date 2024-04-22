@@ -237,9 +237,9 @@ model WechatUser {
 
   tasks Task[]
 
-  /// [IWechatUserPreference]
+  /// [IWechatPreference]
   preference Json?
-  /// [IWechatUserData]
+  /// [IWechatData]
   data       Json?
 }
 
@@ -258,9 +258,9 @@ model WechatRoom {
   // todo: owner
   ownerId String? // : "wxid_ck85xup8b1bj21",
 
-  /// [IWechatUserPreference]
+  /// [IWechatPreference]
   preference Json?
-  /// [IWechatUserData]
+  /// [IWechatData]
   data       Json?
   Task       Task[]
 }

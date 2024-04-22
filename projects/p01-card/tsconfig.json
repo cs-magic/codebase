@@ -10,7 +10,7 @@
     "isolatedModules": true,
     /* Strictness */
     "strict": true,
-
+    "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": false,
     /* Bundled projects */
@@ -35,7 +35,11 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "../../core/prisma/prisma/json.d.ts.bak",
+      "../../node_modules/.prisma"
+    ]
   },
   "include": [
     ".eslintrc.cjs",
@@ -48,9 +52,11 @@
     ".next-tmp/types/**/*.ts",
     "../../**/*.ts",
     "../../**/*.tsx",
+    "../../node_modules/.prisma/**/*.ts"
   ],
   "exclude": [
     "../../node_modules",
+    // exclude it since there is Wechaty extended
     "../../opensource/puppet-padlocal"
   ],
 }

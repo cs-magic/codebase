@@ -14,7 +14,7 @@ export enum CommandStyle {
 /**
  * 用户偏好（可用户手动修改）
  */
-export type IWechatUserPreference = {
+export type IWechatPreference = {
   lang: LangType
   model: LlmModelType
   backend: BackendType
@@ -30,6 +30,6 @@ export type IWechatUserPreference = {
 /**
  * 用户数据（不可用户手动修改）
  */
-export type IWechatUserData = {
+export type IWechatData = {
   //
 }

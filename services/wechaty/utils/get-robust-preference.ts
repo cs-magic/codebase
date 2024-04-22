@@ -1,8 +1,8 @@
-import { IWechatUserPreference } from "../schema/wechat-user"
+import { IWechatPreference } from "../schema/wechat-user"
 
 export const getRobustPreference = (row: {
   preference: any
-}): IWechatUserPreference => {
+}): IWechatPreference => {
   const preference = row.preference
   return {
     ...{

@@ -7,7 +7,7 @@ import { fileURLToPath } from "url"
 import { type Message } from "wechaty"
 import { type LangType } from "../../../packages/i18n/schema"
 import { type IBotStaticContext, type IBotTemplate } from "../schema/bot"
-import { IWechatUserPreference } from "../schema/wechat-user"
+import { IWechatPreference } from "../schema/wechat-user"
 import { getConvPreference } from "./get-conv-preference"
 import { getUserPreference } from "./get-user-preference"
 
@@ -34,8 +34,8 @@ export async function getBotTemplate(
 }
 
 export async function renderTemplate(
-  userPreference: IWechatUserPreference,
-  convPreference: IWechatUserPreference,
+  userPreference: IWechatPreference,
+  convPreference: IWechatPreference,
   botContext: IBotStaticContext,
 ): Promise<IBotTemplate> {
   // logger.info({ preference })
