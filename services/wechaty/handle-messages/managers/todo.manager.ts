@@ -1,5 +1,6 @@
 import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
-import taskStatusSchema from "@cs-magic/prisma/prisma/generated/zod/inputTypeSchemas/TaskStatusSchema"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { taskStatusSchema, TaskTimer } from "@cs-magic/prisma/schema/task"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
 import { Job, scheduleJob } from "node-schedule"
@@ -303,10 +304,10 @@ export class TodoManager extends BaseManager {
     await prisma.task.update({
       where: { id: task.id },
       data: {
-        timer: {
-          ...task.timer,
+        timer: JSON.stringify({
+          ...parseJsonSafe<TaskTimer>(task.timer),
           disabled: true,
-        },
+        }),
       },
     })
     await this.conv.say("√ unset")
@@ -343,10 +344,10 @@ export class TodoManager extends BaseManager {
       await prisma.task.update({
         where: { id: task.id },
         data: {
-          timer: {
-            ...task.timer,
+          timer: JSON.stringify({
+            ...parseJsonSafe<TaskTimer>(task.timer),
             disabled: false,
-          },
+          }),
         },
       })
       await conv.say(

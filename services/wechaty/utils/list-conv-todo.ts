@@ -17,6 +17,7 @@ export const listConvTodo = async (message: Message) => {
         }
       : {
           ownerId: message.talker().id,
+          roomId: null,
         },
     orderBy: { createdAt: "asc" },
   })

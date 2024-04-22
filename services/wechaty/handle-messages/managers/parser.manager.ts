@@ -1,5 +1,4 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
@@ -8,10 +7,9 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch/fetch-wxmp-article"
+import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch"
 import { CardSimulator } from "../../../../packages/spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getConvPreference } from "../../utils/get-conv-preference"
 import { getConvTable } from "../../utils/get-conv-table"
 import { getQuotedMessage } from "../../utils/get-quoted-message"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -55,10 +53,10 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ParserManager extends BaseManager {
-  public i18n = i18n
   static name: FeatureType = "parser"
   static uniParser: CardSimulator | null = null
   static toParse = 0
+  public i18n = i18n
 
   async help() {
     const commands = await this.getCommands()
@@ -148,9 +146,10 @@ export class ParserManager extends BaseManager {
     await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
-        preference: {
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           parserEnabled: true,
-        },
+        }),
       },
     })
     await this.standardReply(
@@ -166,9 +165,10 @@ export class ParserManager extends BaseManager {
     await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
-        preference: {
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           parserEnabled: false,
-        },
+        }),
       },
     })
     await this.standardReply(
@@ -199,10 +199,7 @@ export class ParserManager extends BaseManager {
 
       if (!isWxmpArticleUrl(url)) return
 
-      const convPreference = await getConvPreference({
-        convId: message.convId,
-        isRoom: !!message.roomTopic,
-      })
+      const convPreference = await this.getConvPreference()
       if (!convPreference.parserEnabled) return
 
       // initLogWithTimer()

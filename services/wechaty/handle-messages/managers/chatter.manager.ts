@@ -140,13 +140,10 @@ export class ChatterManager extends BaseManager {
     await getConvTable(!!this.message.room()).update({
       where: { id: this.convId },
       data: {
-        preference: {
-          ...(await getConvPreference({
-            isRoom: this.isRoom,
-            convId: this.convId,
-          })),
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           chatterEnabled: true,
-        },
+        }),
       },
     })
     await this.standardReply(
@@ -164,13 +161,10 @@ export class ChatterManager extends BaseManager {
     await getConvTable(this.isRoom).update({
       where: { id: this.convId },
       data: {
-        preference: {
-          ...(await getConvPreference({
-            isRoom: this.isRoom,
-            convId: this.convId,
-          })),
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           chatterEnabled: false,
-        },
+        }),
       },
     })
     await this.standardReply(

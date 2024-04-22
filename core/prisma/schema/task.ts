@@ -1,3 +1,14 @@
+import { z } from "zod"
+
+export const taskStatusSchema = z.enum([
+  "pending",
+  "running",
+  "paused",
+  "done",
+  "discarded",
+])
+export type TaskStatus = z.infer<typeof taskStatusSchema>
+
 export type TaskTimer = {
   startDate: Date
   disabled?: boolean

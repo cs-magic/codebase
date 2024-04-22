@@ -23,7 +23,7 @@ status: |-
   Preference(Conv|User):
     model: {{convPreference.model}} | {{userPreference.model}}
     backend: {{convPreference.backend}} | {{userPreference.backend}}
-    chatter enabled: {{{convPreference.chatEnabled}}} | {{{userPreference.chatEnabled}}}
+    chatter enabled: {{{convPreference.chatterEnabled}}} | {{{userPreference.chatterEnabled}}}
     parser enabled: {{{convPreference.parserEnabled}}} | {{{userPreference.parserEnabled}}}
     max output lines: {{{convPreference.maxOutputLines}}} | {{{userPreference.maxOutputLines}}}
     command style: {{{convPreference.commandStyle}}} | {{{userPreference.commandStyle}}}

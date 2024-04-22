@@ -1,9 +1,6 @@
 import { FileBox } from "file-box"
 import { z } from "zod"
-import {
-  type LangType,
-  langTypeSchema,
-} from "../../../../packages/i18n/schema"
+import { type LangType, langTypeSchema } from "../../../../packages/i18n/schema"
 import { type BackendType } from "../../../../packages/llm/schema/llm"
 import {
   type LlmModelType,
@@ -148,35 +145,30 @@ export class SystemManager extends BaseManager {
   }
 
   async setCommandStyle(commandStyle: CommandStyle) {
-    const preference = await getConvPreference({
-      convId: this.convId,
-      isRoom: this.isRoom,
-    })
     await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
       data: {
-        preference: {
-          ...preference,
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           commandStyle,
-        },
+        }),
       },
     })
     await this.getStatus(true)
   }
 
   async setMaxOutputLines(maxOutputLines?: number) {
-    const preference = await this.getConvPreference()
     await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
       data: {
-        preference: {
-          ...preference,
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           maxOutputLines,
-        },
+        }),
       },
     })
     await this.getStatus(true)
@@ -192,16 +184,15 @@ export class SystemManager extends BaseManager {
   }
 
   async setModel(value: LlmModelType) {
-    const preference = await this.getConvPreference()
     await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
       data: {
-        preference: {
-          ...preference,
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           model: value,
-        },
+        }),
       },
     })
     await this.getStatus(true)
@@ -211,16 +202,15 @@ export class SystemManager extends BaseManager {
   }
 
   async setBackend(value: BackendType) {
-    const preference = await this.getConvPreference()
     await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
       data: {
-        preference: {
-          ...preference,
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           backend: value,
-        },
+        }),
       },
     })
     await this.getStatus(true)
@@ -231,16 +221,15 @@ export class SystemManager extends BaseManager {
   }
 
   async setLang(value: LangType) {
-    const preference = await this.getConvPreference()
     await getConvTable(this.isRoom).update({
       where: {
         id: this.convId,
       },
       data: {
-        preference: {
-          ...preference,
+        preference: JSON.stringify({
+          ...(await this.getConvPreference()),
           lang: value,
-        },
+        }),
       },
     })
     await this.getStatus(true)
