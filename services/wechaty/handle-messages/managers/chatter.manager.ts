@@ -202,12 +202,8 @@ export class ChatterManager extends BaseManager {
     )
       return
 
-    const convInDB = await getConvRow({
-      convId: this.convId,
-      isRoom: this.isRoom,
-    })
-    const preference = getRobustPreference(convInDB)
-    if (!preference.chatterEnabled) {
+    const convPreference = await this.getConvPreference()
+    if (!convPreference.chatterEnabled) {
       // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
       return
     }
@@ -231,7 +227,7 @@ export class ChatterManager extends BaseManager {
 
     const res = await safeCallLLM({
       messages: context,
-      model: preference.model,
+      model: convPreference.model,
     })
 
     if (res.error) throw new Error(res.error)

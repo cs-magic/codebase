@@ -1,37 +1,44 @@
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import { IWechatPreference } from "../schema/wechat-user"
 
-export const getRobustPreference = (row: {
-  preference: any
-}): IWechatPreference => {
-  const preference = row.preference
-  return {
-    ...{
-      lang: "en",
-      model: "gpt-3.5-turbo",
-      backend: "nodejs",
-      chatEnabled: false,
-      parserEnabled: false,
-      fetch: {
-        detail: {
-          request: {
-            backendType: "nodejs",
-            approachType: "simulate",
-          },
-          llmResponse: {
-            model: "gpt-3.5-turbo",
-            enabled: true,
-            withImage: false,
-          },
+export const defaultPreference: IWechatPreference = {
+  lang: "en",
+  model: "gpt-3.5-turbo",
+  backend: "nodejs",
+  chatterEnabled: false,
+  parserEnabled: false,
+  fetch: {
+    detail: {
+      request: {
+        backendType: "nodejs",
+        approach: {
+          type: "simulate",
+          headless: true,
         },
-        stat: {
-          enabled: false,
-        },
-        comments: {
-          enabled: false,
-        },
-        withCache: true,
+      },
+      summary: {
+        enabled: false,
+        model: "gpt-3.5-turbo",
+        withImage: false,
       },
     },
-    ...preference,
+    stat: {
+      enabled: false,
+    },
+    comments: {
+      enabled: false,
+    },
+    withCache: true,
+  },
+}
+
+export const getRobustPreference = (
+  row: {
+    preference?: any
+  } | null,
+): IWechatPreference => {
+  return {
+    ...defaultPreference,
+    ...parseJsonSafe<IWechatPreference>(row?.preference),
   }
 }

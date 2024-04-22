@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { logger } from "@cs-magic/log/logger";
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot";
-import { useAtom } from "jotai";
-import { QRCodeSVG } from "qrcode.react";
-import { getEnv } from "../../../../packages/env";
-import { useInit } from "../../../../packages/hooks/use-init";
-import { socketStatusMap } from "../../../../packages/transport/schema";
-import { Button } from "../../../../packages/ui-shadcn/components/button";
-import { cn } from "../../../../packages/ui-shadcn/utils";
-import { ButtonWithLoading } from "../../../../packages/ui/components/button-with-loading";
-import { FlexContainer } from "../../../../packages/ui/components/flex-container";
-import { LabelLine } from "../../../../packages/ui/components/label-line";
-import { useUserIsAdmin } from "../hooks/use-user";
+import { logger } from "@cs-magic/log/logger"
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot"
+import { useAtom } from "jotai"
+import { QRCodeSVG } from "qrcode.react"
+import { getEnv } from "../../../../packages/env"
+import { useInit } from "../../../../packages/hooks/use-init"
+import { socketStatusMap } from "../../../../packages/transport/schema"
+import { Button } from "../../../../packages/ui-shadcn/components/button"
+import { cn } from "../../../../packages/ui-shadcn/utils"
+import { ButtonWithLoading } from "../../../../packages/ui/components/button-with-loading"
+import { FlexContainer } from "../../../../packages/ui/components/flex-container"
+import { LabelLine } from "../../../../packages/ui/components/label-line"
+import { useUserIsAdmin } from "../hooks/use-user"
 import {
   botLoggedInAtom,
   botLoggingAtom,
@@ -22,68 +22,68 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "../store/bot.atom";
-import { StandardCard } from "./standard-card";
+} from "../store/bot.atom"
+import { StandardCard } from "./standard-card"
 
-const env = getEnv();
+const env = getEnv()
 
 export const Bot = () => {
-  const [botScanning, setBotScanning] = useAtom(botScanningAtom);
-  const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom);
-  const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom);
-  const [botUser, setBotUser] = useAtom(botUserAtom);
-  const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom);
-  const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom);
-  const [botLogging, setBotLogging] = useAtom(botLoggingAtom);
+  const [botScanning, setBotScanning] = useAtom(botScanningAtom)
+  const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom)
+  const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom)
+  const [botUser, setBotUser] = useAtom(botUserAtom)
+  const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom)
+  const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom)
+  const [botLogging, setBotLogging] = useAtom(botLoggingAtom)
 
-  const isAdmin = useUserIsAdmin();
+  const isAdmin = useUserIsAdmin()
 
   const socket = useInit<WebSocket>(() => {
-    const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!);
+    const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!)
 
-    socket.addEventListener("error", console.error);
+    socket.addEventListener("error", console.error)
 
     socket.addEventListener("open", () => {
-      setBotSocketOpened(true);
-    });
+      setBotSocketOpened(true)
+    })
 
     socket.addEventListener("close", () => {
-      setBotSocketOpened(false);
-    });
+      setBotSocketOpened(false)
+    })
 
     socket.addEventListener("message", (event: MessageEvent<string>) => {
       // console.log({ event });
 
       try {
-        const data = JSON.parse(event.data) as IWechatBotTransfer;
+        const data = JSON.parse(event.data) as IWechatBotTransfer
 
-        console.log("-- data: ", data);
+        console.log("-- data: ", data)
         switch (data.type) {
           case "scan":
-            setBotScanning(true);
-            setBotScanValue(data.data.value);
-            setBotScanStatus(data.data.status);
-            break;
+            setBotScanning(true)
+            setBotScanValue(data.data.value)
+            setBotScanStatus(data.data.status)
+            break
 
           case "login":
-            setBotScanning(false);
-            setBotUser(data.data);
-            break;
+            setBotScanning(false)
+            setBotUser(data.data)
+            break
 
           case "loggedIn":
-            setBotLoggedIn(data.data);
-            setBotLogging(false);
-            break;
+            setBotLoggedIn(data.data)
+            setBotLogging(false)
+            break
         }
       } catch (e) {
         // prettyError(e);
       }
-    });
+    })
 
-    return socket;
-  });
+    return socket
+  })
 
-  logger.info({ botUser });
+  logger.info({ botUser })
 
   return (
     <FlexContainer
@@ -113,8 +113,8 @@ export const Bot = () => {
                 loading={botLogging}
                 disabled={botScanning || botLoggedIn}
                 onClick={() => {
-                  setBotLogging(true);
-                  socket?.send("/start 1");
+                  setBotLogging(true)
+                  socket?.send("start 1")
                 }}
               >
                 Log In
@@ -123,7 +123,7 @@ export const Bot = () => {
               <Button
                 disabled={!botUser || !botLoggedIn}
                 onClick={() => {
-                  socket?.send("/stop");
+                  socket?.send("stop")
                 }}
               >
                 Pause
@@ -133,7 +133,7 @@ export const Bot = () => {
                 <Button
                   disabled={!botUser || !botLoggedIn}
                   onClick={() => {
-                    socket?.send("/logout");
+                    socket?.send("logout")
                   }}
                 >
                   Log Out
@@ -161,5 +161,5 @@ export const Bot = () => {
         </>
       )}
     </FlexContainer>
-  );
-};
+  )
+}
