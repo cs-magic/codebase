@@ -1,40 +1,40 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe";
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
-import { Card } from "@prisma/client";
-import { useAtom, useSetAtom } from "jotai";
-import { QRCodeSVG } from "qrcode.react";
-import { useEffect } from "react";
-import moment from "../../../../packages/datetime/moment";
-import { cn } from "../../../../packages/ui-shadcn/utils";
-import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio";
-import { CardInnerPreview } from "../schema/card";
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { Card } from "@prisma/client"
+import { useAtom, useSetAtom } from "jotai"
+import { QRCodeSVG } from "qrcode.react"
+import { useEffect } from "react"
+import moment from "../../../../packages/datetime/moment"
+import { cn } from "../../../../packages/ui-shadcn/utils"
+import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio"
+import { CardInnerPreview } from "../schema/card"
 import {
   cardAuthorRenderedAtom,
   cardAuthorWithTitleAtom,
-} from "../store/card.atom";
-import { UserAvatar } from "./user-avatar";
-import { getPlatformName } from "@/utls/utils";
+} from "../store/card.atom"
+import { UserAvatar } from "./user-avatar"
+import { getPlatformName } from "@/utils/utils"
 
 export const CardContentAuthor = ({
   render,
 }: {
-  render?: CardInnerPreview | null;
+  render?: CardInnerPreview | null
 }) => {
   // console.log("-- author: ", card?.author)
-  const author = render?.author;
+  const author = render?.author
   // console.log("author: ", author);
 
-  const [withRawTitle] = useAtom(cardAuthorWithTitleAtom);
+  const [withRawTitle] = useAtom(cardAuthorWithTitleAtom)
 
   const Line1 = () => (
     <div className={"truncate text-xs text-muted-foreground"}>
       原标题：{render?.title}
     </div>
-  );
+  )
 
   const Line21 = () => (
     <span className={"mr-1 text-nowrap"}>{author?.name}</span>
-  );
+  )
 
   const Line22 = () => (
     <div>
@@ -45,7 +45,7 @@ export const CardContentAuthor = ({
       <span>发表于</span>
       <span>{getPlatformName(render?.platformType)}</span>
     </div>
-  );
+  )
 
   const Line2 = () => (
     <div
@@ -57,12 +57,12 @@ export const CardContentAuthor = ({
       <Line21 />
       <Line22 />
     </div>
-  );
+  )
 
-  const setAuthorRendered = useSetAtom(cardAuthorRenderedAtom);
+  const setAuthorRendered = useSetAtom(cardAuthorRenderedAtom)
   useEffect(() => {
-    setAuthorRendered(false);
-  }, [author?.image]);
+    setAuthorRendered(false)
+  }, [author?.image])
 
   return (
     <div className={"flex h-8 shrink-0 items-center"}>
@@ -97,5 +97,5 @@ export const CardContentAuthor = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}

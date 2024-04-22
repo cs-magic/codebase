@@ -1,6 +1,6 @@
 import { withError } from "@cs-magic/common/utils/with-error"
+import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
 // todo: avoid import from project
-import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utls/card-platform/wechat-article/utils"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"

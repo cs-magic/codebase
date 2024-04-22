@@ -4,18 +4,23 @@ import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Card, LlmResponse } from "@prisma/client"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
+import { safeJSON } from "openai/core"
 import { SummaryOptions } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
 import {
   RequestApproachType,
   RequestOptions,
 } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/requestPage"
 
-import { BackendType } from "../../../../packages/llm/schema/llm"
+import {
+  BackendType,
+  ICallLlmResponse,
+} from "../../../../packages/llm/schema/llm"
 import { LlmModelType } from "../../../../packages/llm/schema/providers"
 import {
   CardPreviewEngineType,
   GenWxmpArticleCardFetchOptions,
   ICardPreview,
+  IMedia,
 } from "@/schema/card"
 import { getCardUrl } from "@/utils"
 
@@ -114,14 +119,13 @@ export const requestIsHeadlessAtom = atomWithStorage("request.headless", true)
 
 export const parseLlmResponseInput = (llmResponseInput: string) => {
   const llmResponse = parseJsonSafe<LlmResponse>(llmResponseInput)
-  const summaryContent =
-    llmResponse?.response?.response?.choices[0]?.message.content
-  const summaryParsed = parseSummary(summaryContent)
+  const response = parseJsonSafe<ICallLlmResponse>(llmResponse?.response)
+  if (!response) return null
 
   return {
     summary: {
-      parsed: summaryParsed,
-      model: llmResponse?.response?.options.model ?? "gpt-3.5-turbo",
+      parsed: parseSummary(response.response?.choices[0]?.message.content),
+      model: response.options.model ?? "gpt-3.5-turbo",
     },
     id: llmResponse?.id,
   }
@@ -138,7 +142,7 @@ export const cardPreviewAtom = atom<ICardPreview>((get) => {
 
   console.log({ llmResponseInput })
 
-  const id = llmResponse.id
+  const id = llmResponse?.id
   return {
     outer: id
       ? {
@@ -148,13 +152,13 @@ export const cardPreviewAtom = atom<ICardPreview>((get) => {
       : null,
     inner: article
       ? {
-          author: article.author,
-          cover: article.cover,
+          author: parseJsonSafe<IUserSummary>(article.author),
+          cover: parseJsonSafe<IMedia>(article.cover),
           platformType: article.platformType,
           sourceUrl: article.sourceUrl,
           time: article.time,
           title: article.title,
-          summary: llmResponse.summary,
+          summary: llmResponse?.summary ?? null,
         }
       : null,
   }

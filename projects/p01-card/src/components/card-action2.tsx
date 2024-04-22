@@ -1,6 +1,6 @@
 "use client"
 
-import { updateOssUrl } from "@/utls/update-oss-url.action"
+import { updateOssUrl } from "@/utils/update-oss-url.action"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"
 import { useAtom } from "jotai"

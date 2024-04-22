@@ -1,27 +1,27 @@
-"use server";
+"use server"
 
-import { Card, Prisma } from "@prisma/client";
-import { prisma } from "../../../../../../packages/db/providers/prisma";
-import { IXiaoHongShuNotePageData } from "../../../../../../packages/xhs/schema";
+import { Card, Prisma } from "@prisma/client"
+import { prisma } from "../../../../../../packages/db/providers/prisma"
+import { IXiaoHongShuNotePageData } from "../../../../../../packages/xhs/schema"
 
 export const xiaohongshu2card = (
   inputData: IXiaoHongShuNotePageData,
 ): Promise<Card> => {
-  const note = inputData.note.noteDetailMap[inputData.note.firstNoteId]?.note;
-  if (!note) throw new Error("no note");
+  const note = inputData.note.noteDetailMap[inputData.note.firstNoteId]?.note
+  if (!note) throw new Error("no note")
 
   const data: Prisma.CardUncheckedCreateInput = {
     platformType: "xhsNote",
     platformId: "?",
 
-    stat: null,
+    stat: "",
     sourceUrl: null,
     contentMd: null,
-    platformData: null,
+    platformData: "",
     updatedAt: new Date(),
     createdAt: new Date(),
-    cover: null,
-    author: null,
+    cover: "",
+    author: "",
     time: null,
     iFrames: [],
     title: note.title,
@@ -42,7 +42,7 @@ export const xiaohongshu2card = (
       },
       type: "image",
     })),
-  };
+  }
 
   return prisma.card.upsert({
     where: {
@@ -53,5 +53,5 @@ export const xiaohongshu2card = (
     },
     create: data,
     update: data,
-  });
-};
+  })
+}

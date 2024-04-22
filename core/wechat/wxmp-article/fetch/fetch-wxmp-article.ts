@@ -1,5 +1,5 @@
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
-import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utls/card-platform/wechat-article/utils"
+import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { prisma } from "../../../../packages/db/providers/prisma"
 import { md2summary } from "./approaches/nodejs/md2summary"
@@ -55,9 +55,8 @@ export const fetchWxmpArticle = async (
     llmResponse = await prisma.llmResponse.create({
       data: {
         cardId: article.id,
-        response: await md2summary(
-          article.contentMd!,
-          options?.detail?.summary,
+        response: JSON.stringify(
+          await md2summary(article.contentMd!, options?.detail?.summary),
         ),
       },
     })

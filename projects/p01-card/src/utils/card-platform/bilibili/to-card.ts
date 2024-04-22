@@ -1,24 +1,24 @@
-"use server";
+"use server"
 
-import { Card, Prisma } from "@prisma/client";
-import { IBilibiliVideoDetail } from "../../../../../../packages/bilibili/schema";
-import { getBilibiliIFrameUrl } from "../../../../../../packages/bilibili/utils";
-import { prisma } from "../../../../../../packages/db/providers/prisma";
+import { Card, Prisma } from "@prisma/client"
+import { IBilibiliVideoDetail } from "../../../../../../packages/bilibili/schema"
+import { getBilibiliIFrameUrl } from "../../../../../../packages/bilibili/utils"
+import { prisma } from "../../../../../../packages/db/providers/prisma"
 
 export const bilibili2card = (
   inputData: IBilibiliVideoDetail,
 ): Promise<Card> => {
-  const { width, height } = inputData.View.dimension;
-  const ratio = width / height;
+  const { width, height } = inputData.View.dimension
+  const ratio = width / height
 
   const data: Prisma.CardUncheckedCreateInput = {
     createdAt: new Date(),
     updatedAt: new Date(),
     time: null,
     contentMd: null,
-    author: null,
-    stat: null,
-    platformData: null,
+    author: "",
+    stat: "",
+    platformData: "",
 
     sourceUrl: null,
 
@@ -36,7 +36,7 @@ export const bilibili2card = (
         type: "iFrame",
       },
     ],
-  };
+  }
 
   return prisma.card.upsert({
     where: {
@@ -47,5 +47,5 @@ export const bilibili2card = (
     },
     create: data,
     update: data,
-  });
-};
+  })
+}
