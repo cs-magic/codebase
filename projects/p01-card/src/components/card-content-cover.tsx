@@ -1,19 +1,19 @@
-import { useSetAtom } from "jotai";
-import Image from "next/image";
-import { useEffect } from "react";
-import { AspectRatio } from "../../../../packages/ui-shadcn/components/aspect-ratio";
-import { IMedia } from "../schema/card";
-import { cardCoverRenderedAtom } from "../store/card.atom";
+import { useSetAtom } from "jotai"
+import Image from "next/image"
+import { useEffect } from "react"
+import { AspectRatio } from "../../../../packages/ui-shadcn/components/aspect-ratio"
+import { IMedia } from "../schema/card"
+import { cardCoverRenderedAtom } from "../store/card.atom"
 
-export const Cover = ({ cover }: { cover?: IMedia }) => {
-  const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom);
+export const Cover = ({ cover }: { cover?: IMedia | null }) => {
+  const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom)
 
   useEffect(() => {
     // console.log("-- src changed")
-    setCardCoverRendered(false);
-  }, [cover?.url]);
+    setCardCoverRendered(false)
+  }, [cover?.url])
 
-  if (!cover) return null;
+  if (!cover) return null
 
   return (
     <div id={"card-media"} className={"w-full shrink-0"}>
@@ -22,7 +22,7 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
         <Image
           onLoad={() => {
             // console.log("-- cover loaded")
-            setCardCoverRendered(true);
+            setCardCoverRendered(true)
           }}
           src={cover.url}
           alt={""}
@@ -32,5 +32,5 @@ export const Cover = ({ cover }: { cover?: IMedia }) => {
         />
       </AspectRatio>
     </div>
-  );
-};
+  )
+}

@@ -1,27 +1,27 @@
-import { LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { FlexContainer } from "../../../../packages/ui/components/flex-container";
+import { LucideIcon } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { FlexContainer } from "../../../../packages/ui/components/flex-container"
 
 export const CardFooterItem = ({
   Icon,
   value,
 }: {
-  Icon: LucideIcon;
-  value?: string;
+  Icon: LucideIcon
+  value?: string | null
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [fontSize, setFontSize] = useState(14);
+  const ref = useRef<HTMLDivElement>(null)
+  const [fontSize, setFontSize] = useState(14)
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) return
 
-    const { scrollWidth, offsetWidth, clientWidth } = ref.current;
+    const { scrollWidth, offsetWidth, clientWidth } = ref.current
     // console.log({ scrollWidth, offsetWidth, clientWidth });
 
     if (scrollWidth > clientWidth) {
-      setFontSize((f) => f - 1);
+      setFontSize((f) => f - 1)
     }
-  }, [ref.current, value, fontSize]);
+  }, [ref.current, value, fontSize])
 
   return (
     <FlexContainer orientation={"vertical"} className={"!gap-1 !p-0 "}>
@@ -34,5 +34,5 @@ export const CardFooterItem = ({
         {value ?? "-"}
       </div>
     </FlexContainer>
-  );
-};
+  )
+}

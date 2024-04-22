@@ -1,6 +1,6 @@
 import { $Enums } from "@prisma/client"
 
-export const getPlatformName = (type?: $Enums.PlatformType): string => {
+export const getPlatformName = (type?: $Enums.PlatformType | null): string => {
   switch (type) {
     case "wxmpArticle":
       return "公众号"

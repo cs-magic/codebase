@@ -16,26 +16,6 @@ generator json {
   // (e.g.  export namespace PrismaJson { export type MyType = {a: 1, b: 2} }; will generate namespace.MyType["TYPE HERE"])
 }
 
-generator zod {
-  provider                         = "npx zod-prisma-types"
-  output                           = "./generated/zod" // default is ./generated/zod
-  useMultipleFiles                 = true // default is false
-  writeBarrelFiles                 = true // default is true
-  createInputTypes                 = true // default is true
-  createModelTypes                 = true // default is true
-  addInputTypeValidation           = true // default is true
-  addIncludeType                   = true // default is true
-  addSelectType                    = true // default is true
-  validateWhereUniqueInput         = true // default is true
-  createOptionalDefaultValuesTypes = true // default is false
-  createRelationValuesTypes        = true // default is false
-  createPartialTypes               = true // default is false
-  useDefaultValidators             = true // default is true
-  coerceDate                       = true // default is true
-  writeNullishInModelTypes         = true // default is false
-  // prismaClientPath                 = "./path/to/prisma/client" // default is client output path
-}
-
 datasource db {
   provider = "postgresql"
   // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
@@ -109,7 +89,7 @@ model Card {
 
   // 微信可能不知道实际id是多少
   platformId   String?
-  /// [ICardPlatform]
+  // [ICardPlatform]
   platformData Json?
 
   sourceUrl   String?

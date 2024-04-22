@@ -2,6 +2,20 @@
 
 ## Tech
 
+### tsc
+
+todo: `tsc` 只能在 `p01` 下才可以编译，根目录不行
+
+### eslint
+
+currently works:
+
+![eslint-config.png](docs/eslint-config.png)
+
+todo: 
+- with extend
+- IDE no warning when setting Automatic
+
 ### jest(ts-jest)
 
 - configuration

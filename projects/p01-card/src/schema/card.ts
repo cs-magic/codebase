@@ -9,7 +9,7 @@ import { FetchWxmpArticleDetailOptions } from "../../../../core/wechat/wxmp-arti
 import { LlmModelType } from "../../../../packages/llm/schema/providers"
 import { IArticleSummaryParsed } from "@/utils/parse-summary"
 
-export type ICardPlatform<T extends $Enums.PlatformType> =
+export type ICardPlatform<T extends $Enums.PlatformType = any> =
   T extends typeof $Enums.PlatformType.wxmpArticle
     ? {
         sn: string | null // 这个最重要

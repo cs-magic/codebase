@@ -6,48 +6,38 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-
-
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": false,
-
-
     /* Bundled projects */
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
-
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
     "noEmit": true,
     "incremental": true,
-    "jsx": "preserve",
-
-//    "moduleDetection": "force",
-//    "lib": [
-//      "dom",
-//      "dom.iterable",
-//      "ES2022"
-//    ],
     /* Path Aliases */
     "baseUrl": ".",
-    "typeRoots": [
-      "core/prisma/prisma/json.d.ts.bak",
-      "node_modules/.prisma"
+    },
+    "noImplicitAny": true,
+    "types": [
+      // jest 要摆在 node 前面，否则 tsc 会报错找不到 jest 的定义
+      "jest",
+      "node"
     ],
-    "noImplicitAny": true
-  },
+
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.js",
-    ".next/types/**/*.ts",
-    ".next-tmp/types/**/*.ts"
+    "**/*.js"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    // exclude it since there is Wechaty extended
+    "opensource/puppet-padlocal"
   ]
 }
