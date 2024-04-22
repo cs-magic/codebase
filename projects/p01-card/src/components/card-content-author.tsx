@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import moment from "../../../../packages/datetime/moment"
 import { cn } from "../../../../packages/ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio"
-import { CardInnerPreview } from "../schema/card"
+import { ICardInnerPreview } from "../schema/card"
 import {
   cardAuthorRenderedAtom,
   cardAuthorWithTitleAtom,
@@ -18,7 +18,7 @@ import { getPlatformName } from "@/utils/utils"
 export const CardContentAuthor = ({
   render,
 }: {
-  render?: CardInnerPreview | null
+  render?: ICardInnerPreview | null
 }) => {
   // console.log("-- author: ", card?.author)
   const author = render?.author

@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { cn } from "../../../../packages/ui-shadcn/utils";
-import MarkMap from "../../../../packages/visualization/markmap";
-import { CardInnerPreview } from "../schema/card";
-import { CardContentAuthor } from "./card-content-author";
-import { Cover } from "./card-content-cover";
-import { Tags } from "./card-content-tags";
+import { cn } from "../../../../packages/ui-shadcn/utils"
+import MarkMap from "../../../../packages/visualization/markmap"
+import { ICardInnerPreview } from "../schema/card"
+import { CardContentAuthor } from "./card-content-author"
+import { Cover } from "./card-content-cover"
+import { Tags } from "./card-content-tags"
 
 export const CardContent = ({
   innerPreview,
 }: {
-  innerPreview?: CardInnerPreview | null;
+  innerPreview?: ICardInnerPreview | null
 }) => {
   // console.log("-- summary: ", summary)
 
@@ -54,5 +54,5 @@ export const CardContent = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

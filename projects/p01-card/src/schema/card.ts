@@ -72,7 +72,8 @@ export const cardPreviewEngineTypeSchema = z.enum([
 ])
 export type CardPreviewEngineType = z.infer<typeof cardPreviewEngineTypeSchema>
 
-export type CardInnerPreview = {
+export type ICardInnerPreview = {
+  id: string | null
   title: string | null
   cover: IMedia | null
   sourceUrl: string | null
@@ -91,6 +92,6 @@ export type CardOuterPreview = {
 }
 
 export type ICardPreview = {
-  inner: CardInnerPreview | null
+  inner: ICardInnerPreview | null
   outer: CardOuterPreview | null
 }

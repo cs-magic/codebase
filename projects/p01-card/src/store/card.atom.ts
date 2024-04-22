@@ -1,28 +1,22 @@
-import { parseSummary } from "@/utils/parse-summary"
+import {
+  CardPreviewEngineType,
+  GenWxmpArticleCardFetchOptions,
+  ICardInnerPreview,
+  ICardPreview,
+} from "@/schema/card"
+import { getCardUrl } from "@/utils"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import { Card, LlmResponse } from "@prisma/client"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { safeJSON } from "openai/core"
 import { SummaryOptions } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
 import {
   RequestApproachType,
   RequestOptions,
 } from "../../../../core/wechat/wxmp-article/fetch/approaches/nodejs/requestPage"
 
-import {
-  BackendType,
-  ICallLlmResponse,
-} from "../../../../packages/llm/schema/llm"
+import { BackendType } from "../../../../packages/llm/schema/llm"
 import { LlmModelType } from "../../../../packages/llm/schema/providers"
-import {
-  CardPreviewEngineType,
-  GenWxmpArticleCardFetchOptions,
-  ICardPreview,
-  IMedia,
-} from "@/schema/card"
-import { getCardUrl } from "@/utils"
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
 
@@ -117,50 +111,23 @@ export const requestIsHeadlessAtom = atomWithStorage("request.headless", true)
 // derived
 //////////////////////////////
 
-export const parseLlmResponseInput = (llmResponseInput: string) => {
-  const llmResponse = parseJsonSafe<LlmResponse>(llmResponseInput)
-  const response = parseJsonSafe<ICallLlmResponse>(llmResponse?.response)
-  if (!response) return null
-
-  return {
-    summary: {
-      parsed: parseSummary(response.response?.choices[0]?.message.content),
-      model: response.options.model ?? "gpt-3.5-turbo",
-    },
-    id: llmResponse?.id,
-  }
-}
-
 /**
  * todo: parseJS ??
  */
-export const cardPreviewAtom = atom<ICardPreview>((get) => {
-  const article = parseJsonSafe<Card>(get(articleInputAtom))
+export const cardPreviewAtom = atom<ICardPreview | null>((get) => {
   const user = get(cardUserAtom)
   const llmResponseInput = get(llmResponseInputAtom)
-  const llmResponse = parseLlmResponseInput(llmResponseInput)
+  const inner = parseJsonSafe<ICardInnerPreview>(llmResponseInput)
 
-  console.log({ llmResponseInput })
+  console.log({ llmResponseInput, inner })
+  if (!inner) return null
 
-  const id = llmResponse?.id
   return {
-    outer: id
-      ? {
-          id,
-          user,
-        }
-      : null,
-    inner: article
-      ? {
-          author: parseJsonSafe<IUserSummary>(article.author),
-          cover: parseJsonSafe<IMedia>(article.cover),
-          platformType: article.platformType,
-          sourceUrl: article.sourceUrl,
-          time: article.time,
-          title: article.title,
-          summary: llmResponse?.summary ?? null,
-        }
-      : null,
+    outer: {
+      id: inner?.id,
+      user,
+    },
+    inner: inner,
   }
 })
 
@@ -182,7 +149,7 @@ export const cardUserAtom = atom<IUserSummary>((get) => ({
 
 export const cardOssIdAtom = atom<string | null>((get) => {
   const preview = get(cardPreviewAtom)
-  const id = preview.outer?.id
+  const id = preview?.outer?.id
   if (!id) return null
   return getCardUrl(id)
 })

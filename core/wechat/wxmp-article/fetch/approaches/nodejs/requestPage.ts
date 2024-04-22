@@ -26,15 +26,17 @@ export const requestPage = async (
   url: string,
   options?: RequestOptions,
 ): Promise<Prisma.CardUncheckedCreateInput> => {
+  // !important: 不加这个会导致环境异常: <h2 class=\"weui-msg__title\">环境异常</h2>\n        <p class=\"weui-msg__desc\">当前环境异常，完成验证后即可继续访问。</p>
+  url = url.replace(/amp;/g, "")
+
   // 1. fetch page
-  // error response:
-  // <h2 class=\"weui-msg__title\">环境异常</h2>\n        <p class=\"weui-msg__desc\">当前环境异常，完成验证后即可继续访问。</p>
   let pageText: string
-  if (options?.approach?.type === "api") {
-    pageText = (await api.get<string>(url)).data
-  } else {
+  if (options?.approach?.type === "simulate") {
+    // simulate 也非万能，在服务端出现了 navigate 无法抵达 networkidle 的问题
     wxmpArticleSimulator.launchOptions.headless = options?.approach?.headless
     pageText = await wxmpArticleSimulator.crawl(url)
+  } else {
+    pageText = (await api.get<string>(url)).data
   }
   // console.debug(pageText)
 

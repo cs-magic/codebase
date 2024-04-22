@@ -1,19 +1,18 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
-import { formatString } from "@cs-magic/common/utils/format-string"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch"
 import { CardSimulator } from "../../../../packages/spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvTable } from "../../utils/get-conv-table"
 import { getQuotedMessage } from "../../utils/get-quoted-message"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { parseText } from "../../utils/parse-message"
+import { url2preview } from "../../utils/url-preview"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum(["enable", "disable"])
@@ -181,6 +180,7 @@ export class ParserManager extends BaseManager {
     user,
     message,
   }: {
+    // todo: dynamic sender with fixed card url
     user: IUserSummary
     message: {
       convId: string
@@ -206,17 +206,14 @@ export class ParserManager extends BaseManager {
 
       void this.notify(`parsing[${ParserManager.toParse}] mid=${message.id}`)
       ++ParserManager.toParse
-      const reuslt = await fetchWxmpArticle(url, convPreference.fetch)
-      // todo: dynamic sender with fixed card url
 
-      logger.info(`-- parsing content`)
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
 
-      const cardContent = JSON.stringify(reuslt.llmResponse)
-      logger.info(`-- inputting: ${formatString(cardContent, 120)}`)
+      const inner = url2preview(url, convPreference.fetch)
+
       const { cardUrl } = await ParserManager.uniParser.genCard(
-        cardContent,
+        JSON.stringify(inner),
         user,
       )
 

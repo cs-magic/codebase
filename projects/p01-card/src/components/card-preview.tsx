@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { useAtom, useAtomValue } from "jotai";
-import { useRef } from "react";
-import { Action2Type, GenCardApproach, ICardPreview } from "../schema/card";
-import { cardRenderedAtom, cardUserAtom } from "../store/card.atom";
-import { CardAction2 } from "./card-action2";
-import { CardContent } from "./card-content";
-import { CardFooter } from "./card-footer";
-import { CardHeader } from "./card-header";
+import { useAtom, useAtomValue } from "jotai"
+import { useRef } from "react"
+import { Action2Type, GenCardApproach, ICardPreview } from "../schema/card"
+import { cardRenderedAtom, cardUserAtom } from "../store/card.atom"
+import { CardAction2 } from "./card-action2"
+import { CardContent } from "./card-content"
+import { CardFooter } from "./card-footer"
+import { CardHeader } from "./card-header"
 
 export const CardPreview = ({
   preview,
   genCardApproach,
   withActions,
 }: {
-  preview?: ICardPreview;
-  genCardApproach?: GenCardApproach;
-  withActions?: boolean;
+  preview?: ICardPreview | null
+  genCardApproach?: GenCardApproach
+  withActions?: boolean
 }) => {
-  const obj = useRef<HTMLDivElement>(null);
-  const [rendered] = useAtom(cardRenderedAtom);
-  const user = useAtomValue(cardUserAtom);
+  const obj = useRef<HTMLDivElement>(null)
+  const [rendered] = useAtom(cardRenderedAtom)
+  const user = useAtomValue(cardUserAtom)
 
   // console.log("-- preview: ", { rendered })
 
   const Action = ({ type }: { type: Action2Type }) => (
     <CardAction2 type={type} obj={obj} rendered={rendered} />
-  );
+  )
 
   return (
     <div className={"flex w-full max-w-[375px] flex-col gap-2"}>
@@ -50,5 +50,5 @@ export const CardPreview = ({
         <CardFooter outPreview={preview?.outer} />
       </div>
     </div>
-  );
-};
+  )
+}
