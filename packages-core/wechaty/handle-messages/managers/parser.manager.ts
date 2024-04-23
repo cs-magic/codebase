@@ -225,7 +225,7 @@ export class ParserManager extends BaseManager {
       const file = FileBox.fromUrl(cardUrl)
       void this.addTask(async () => this.conv?.say(file))
       void this.notify(`parsed mid=${message.id}`)
-      logger.info("✅ -- sent file")
+      logger.info("-- sent file")
     } catch (e) {
       const s = formatError(e)
       void this.notify(`❌ ` + s)

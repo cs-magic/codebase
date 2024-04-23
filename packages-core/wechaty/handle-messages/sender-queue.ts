@@ -5,9 +5,9 @@ import { sleep } from "../../../packages-to-classify/datetime/utils"
 export type QueueTask = () => Promise<any>
 
 export class SenderQueue {
-  private queue: QueueTask[]
-  private processing: boolean
-  private qps: number
+  static queue: QueueTask[]
+  static processing: boolean
+  static qps: number
 
   constructor(qps = 10) {
     const QPS_MAX = 100
@@ -16,36 +16,37 @@ export class SenderQueue {
       logger.warn(`qps limited to be the max = ${QPS_MAX}`)
     }
 
-    this.qps = qps
-    this.queue = []
-    this.processing = false
+    SenderQueue.qps = qps
+    SenderQueue.queue = []
+    SenderQueue.processing = false
   }
 
   get cnt() {
-    return this.queue.length
+    return SenderQueue.queue.length
   }
 
   async addTask(task: QueueTask) {
-    this.queue.push(task)
+    SenderQueue.queue.push(task)
     logger.info(`🆕 task(cnt=${this.cnt})`)
-    if (!this.processing) {
-      this.processing = true
+    if (!SenderQueue.processing) {
+      SenderQueue.processing = true
       await this._runTask()
     }
   }
 
   private async _runTask() {
-    while (this.queue.length > 0) {
+    while (SenderQueue.queue.length > 0) {
       try {
-        const task = this.queue.shift()!
+        const task = SenderQueue.queue.shift()!
+        logger.info(`🏃🏻‍task(cnt=${this.cnt})`)
         await task()
+        logger.info(`✅ task (cnt=${this.cnt})`)
       } catch (e) {
         formatError(e)
       } finally {
-        logger.info(`✅ task (cnt=${this.cnt})`)
-        await sleep(1000 / this.qps) // 限时
+        await sleep(1000 / SenderQueue.qps) // 限时
       }
     }
-    this.processing = false
+    SenderQueue.processing = false
   }
 }
