@@ -1,9 +1,9 @@
+import { cardCoverRenderedAtom } from "@/store/card.rendered.atom"
 import { useSetAtom } from "jotai"
 import Image from "next/image"
 import { useEffect } from "react"
 import { AspectRatio } from "../../../../packages/ui-shadcn/components/aspect-ratio"
 import { IMedia } from "../schema/card"
-import { cardCoverRenderedAtom } from "../store/card.atom"
 
 export const Cover = ({ cover }: { cover?: IMedia | null }) => {
   const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom)

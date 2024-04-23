@@ -1,7 +1,16 @@
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import {
+  GenWxmpArticleCardFetchOptions,
+  ICardInnerPreview,
+  IMedia,
+} from "@cs-magic/p01-card/src/schema/card"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
+import { parseSummary } from "@cs-magic/p01-card/src/utils/parse-summary"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { prisma } from "../../../../packages/db/providers/prisma"
+
+import { ILlmRes } from "../../../../packages/llm/schema/llm.api"
 import { md2summary } from "./approaches/nodejs/md2summary"
 import { requestPage } from "./approaches/nodejs/requestPage"
 
@@ -62,8 +71,20 @@ export const fetchWxmpArticle = async (
     })
   }
 
-  return {
-    article,
-    llmResponse,
+  const response = parseJsonSafe<ILlmRes>(llmResponse.response)
+  const inner: ICardInnerPreview = {
+    id: llmResponse.id,
+    summary: {
+      parsed: parseSummary(response?.response?.choices[0]?.message.content),
+      model: response?.options.model ?? "gpt-3.5-turbo",
+    },
+    title: article.title,
+    time: article.time,
+    sourceUrl: article.sourceUrl,
+    platformType: article.platformType,
+    cover: parseJsonSafe<IMedia>(article.cover),
+    author: parseJsonSafe<IUserSummary>(article.author),
   }
+
+  return { inner }
 }

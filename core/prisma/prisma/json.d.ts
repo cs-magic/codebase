@@ -2,8 +2,6 @@ declare global {
   // 要放在里面
 
   namespace PrismaJson {
-    export { ICallLlmResponse } from "../../../packages/llm/schema/llm"
-
     export {
       IMedia,
       ICardStat,
@@ -25,3 +23,4 @@ declare global {
     export { IUserSummary } from "../schema/user.summary"
   }
 }
+export { ILlmRes } from "../../../packages/llm/schema/llm.api"

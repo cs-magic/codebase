@@ -1,21 +1,17 @@
-"use client";
+"use client"
 
-import {
-  CalendarHeartIcon,
-  FingerprintIcon,
-  MilestoneIcon,
-} from "lucide-react";
-import moment from "../../../../packages/datetime/moment";
-import { cn } from "../../../../packages/ui-shadcn/utils";
+import { CalendarHeartIcon, FingerprintIcon, MilestoneIcon } from "lucide-react"
+import moment from "../../../../packages/datetime/moment"
+import { cn } from "../../../../packages/ui-shadcn/utils"
 
-import { packageJson } from "../config";
-import { CardOuterPreview } from "../schema/card";
-import { CardFooterItem } from "./card-footer-item";
+import { packageJson } from "../config"
+import { CardOuterPreview } from "../schema/card"
+import { CardFooterItem } from "./card-footer-item"
 
 export const CardFooter = ({
   outPreview,
 }: {
-  outPreview?: CardOuterPreview | null;
+  outPreview?: CardOuterPreview | null
 }) => {
   return (
     <div
@@ -30,5 +26,5 @@ export const CardFooter = ({
         <CardFooterItem Icon={MilestoneIcon} value={packageJson.version} />
       </div>
     </div>
-  );
-};
+  )
+}

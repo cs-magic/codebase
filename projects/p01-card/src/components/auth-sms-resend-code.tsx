@@ -1,11 +1,11 @@
-"use client";
-import { useAtom } from "jotai";
-import { smsCodeCurCountdownSecondsAtom } from "../../../../common/auth-sms/store";
-import { useSmsSendCode } from "../../../../common/auth-sms/hooks/use-sms-send-code";
+"use client"
+import { useAtom } from "jotai"
+import { smsCodeCurCountdownSecondsAtom } from "../../../../common/auth-sms/store"
+import { useSmsSendCode } from "../../../../common/auth-sms/hooks/use-sms-send-code"
 
 export const SmsResendCode = () => {
-  const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom);
-  const sendCode = useSmsSendCode();
+  const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)
+  const sendCode = useSmsSendCode()
 
   return (
     <div className={"flex items-center text-xs text-muted-foreground "}>
@@ -21,5 +21,5 @@ export const SmsResendCode = () => {
         `(${downtime}秒)`
       )}
     </div>
-  );
-};
+  )
+}

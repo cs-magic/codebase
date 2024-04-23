@@ -6,7 +6,7 @@ import {
   IWechatArticleStat,
 } from "../../../../core/wechat/wxmp-article/detail/schema"
 import { FetchWxmpArticleDetailOptions } from "../../../../core/wechat/wxmp-article/fetch/schema"
-import { LlmModelType } from "../../../../packages/llm/schema/providers"
+import { LlmModelType } from "../../../../packages/llm/schema/llm.models"
 import { IArticleSummaryParsed } from "@/utils/parse-summary"
 
 export type ICardPlatform<T extends $Enums.PlatformType = any> =

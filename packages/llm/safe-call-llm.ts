@@ -7,11 +7,10 @@ import { v4 } from "uuid"
 import { getEnv } from "../env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
-import { ICallLlmOptions, ICallLlmResponse } from "./schema/llm"
 
-export const safeCallLLM = async (
-  options: ICallLlmOptions,
-): Promise<ICallLlmResponse> => {
+import { ILlmReq, ILlmRes } from "./schema/llm.api"
+
+export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
   const env = getEnv()
   // logEnv("api_key")
   // console.log({ env })

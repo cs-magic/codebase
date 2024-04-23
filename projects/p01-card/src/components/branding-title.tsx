@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { HTMLAttributes } from "react";
-import { cn } from "../../../../packages/ui-shadcn/utils";
+import Link from "next/link"
+import { HTMLAttributes } from "react"
+import { cn } from "../../../../packages/ui-shadcn/utils"
 
-import { config } from "../config";
+import { config } from "../config"
 
 export const BrandingTitle = ({
   withDescription,
@@ -32,5 +32,5 @@ export const BrandingTitle = ({
 
       {/*{withDescription && <span className={"text-sm"}>全栈 AI 平台</span>}*/}
     </Link>
-  );
-};
+  )
+}

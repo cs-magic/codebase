@@ -1,7 +1,7 @@
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
 import { type LangType } from "../../../packages/i18n/schema"
-import { type BackendType } from "../../../packages/llm/schema/llm"
-import { type LlmModelType } from "../../../packages/llm/schema/providers"
+import { type BackendType } from "../../../packages/llm/schema/llm.base"
+import { LlmModelType } from "../../../packages/llm/schema/llm.models"
 
 export enum CommandStyle {
   standard = "standard",

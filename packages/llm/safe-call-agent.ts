@@ -6,9 +6,10 @@ import path from "path"
 import { compressContent } from "@cs-magic/common/utils/compress-content"
 import { Path } from "../path"
 import { safeCallLLM } from "./safe-call-llm"
-import { AgentConfig } from "./schema/agent"
-import { ICallLlmOptions, ILlmMessage } from "./schema/llm"
-import { LlmModelType } from "./schema/providers"
+import { ILlmMessage } from "./schema/llm.base"
+import { LlmModelType } from "./schema/llm.models"
+
+import { IAgentReq, ILlmReq } from "./schema/llm.api"
 
 // const __filename = fileURLToPath(import.meta.url)
 
@@ -21,7 +22,7 @@ export const safeCallAgent = async ({
   input: string
   model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
-} & { options?: Omit<ICallLlmOptions, "messages" | "model"> }) => {
+} & { options?: Omit<ILlmReq, "messages" | "model"> }) => {
   logger.info("-- agent calling: %o", {
     agentType,
     model,
@@ -34,7 +35,7 @@ export const safeCallAgent = async ({
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface
-  const agent = yaml.load(yamlConfig) as AgentConfig
+  const agent = yaml.load(yamlConfig) as IAgentReq
 
   model = model ?? agent.model
   if (!model) throw new Error("no model found")

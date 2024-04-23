@@ -1,33 +1,35 @@
-import { useAtom } from "jotai";
-import React from "react";
-import { backendTypeSchema } from "../../../../packages/llm/schema/llm";
-import { llmModelTypeSchema } from "../../../../packages/llm/schema/providers";
-import { Input } from "../../../../packages/ui-shadcn/components/input";
-import { Separator } from "../../../../packages/ui-shadcn/components/separator";
+import {
+  cardLlmModelTypeAtom,
+  cardLlmEnabledAtom,
+  cardSummaryWithImageAtom,
+} from "@/store/card.llm.atom"
+import {
+  cardFetchEngineAtom,
+  cardFetchWithCacheAtom,
+  cardFetchStatEnabledAtom,
+  cardFetchCommentsEnabledAtom,
+} from "@/store/card.query.atom"
+import { useAtom } from "jotai"
+import React from "react"
+import { backendTypeSchema } from "../../../../packages/llm/schema/llm.base"
+import { llmModelTypeSchema } from "../../../../packages/llm/schema/llm.models"
+import { Input } from "../../../../packages/ui-shadcn/components/input"
+import { Separator } from "../../../../packages/ui-shadcn/components/separator"
 import {
   AtomSelector,
   AtomSwitcher,
-} from "../../../../packages/ui/components/atom-switcher";
-import { LabelLine } from "../../../../packages/ui/components/label-line";
-import { mapSpacingVerticalAtom } from "../../../../packages/visualization/store";
-import {
-  cardAuthorWithTitleAtom,
-  cardFetchEngineAtom,
-  cardLLMEnabledAtom,
-  cardLLMTypeAtom,
-  cardMdWithImgAtom,
-  cardRefetchCardAtom,
-  cardRefetchCommentsAtom,
-  cardRefetchPageAtom,
-} from "../store/card.atom";
-import { CardAction1 } from "./card-action1";
-import { CardInputUrl } from "./card-input-url";
-import { CardInputUser } from "./card-input-user";
+} from "../../../../packages/ui/components/atom-switcher"
+import { LabelLine } from "../../../../packages/ui/components/label-line"
+import { mapSpacingVerticalAtom } from "../../../../packages/visualization/store"
+import { cardAuthorWithTitleAtom } from "../store/card.atom"
+import { CardAction1 } from "./card-action1"
+import { CardInputUrl } from "./card-input-url"
+import { CardInputUser } from "./card-input-user"
 
 export const CardInputFrontend = () => {
   const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
     mapSpacingVerticalAtom,
-  );
+  )
   return (
     <>
       <CardInputUrl />
@@ -36,19 +38,22 @@ export const CardInputFrontend = () => {
 
       <Separator orientation={"horizontal"} />
 
-      <AtomSwitcher atom={cardRefetchPageAtom} name={"refetch-page"} />
+      <AtomSwitcher atom={cardFetchWithCacheAtom} name={"fetch-with-cache"} />
 
-      <AtomSwitcher atom={cardLLMEnabledAtom} name={"llm-enabled"} />
+      <AtomSwitcher atom={cardLlmEnabledAtom} name={"llm-enabled"} />
 
       <AtomSelector
-        atom={cardLLMTypeAtom}
+        atom={cardLlmModelTypeAtom}
         name={"llm-type"}
         vs={llmModelTypeSchema.options}
       />
 
-      <AtomSwitcher atom={cardRefetchCardAtom} name={"refetch-stat"} />
+      <AtomSwitcher atom={cardFetchStatEnabledAtom} name={"refetch-stat"} />
 
-      <AtomSwitcher atom={cardRefetchCommentsAtom} name={"refetch-comments"} />
+      <AtomSwitcher
+        atom={cardFetchCommentsEnabledAtom}
+        name={"refetch-comments"}
+      />
 
       <Separator orientation={"horizontal"} />
 
@@ -58,7 +63,7 @@ export const CardInputFrontend = () => {
         vs={backendTypeSchema.options}
       />
 
-      <AtomSwitcher atom={cardMdWithImgAtom} name={"md-with-img"} />
+      <AtomSwitcher atom={cardSummaryWithImageAtom} name={"md-with-img"} />
 
       <Separator orientation={"horizontal"} />
 
@@ -69,7 +74,7 @@ export const CardInputFrontend = () => {
           type={"number"}
           value={mapSpacingVertical ?? 0}
           onChange={(event) => {
-            setMapSpacingVertical(Number(event.currentTarget.value));
+            setMapSpacingVertical(Number(event.currentTarget.value))
           }}
         />
       </LabelLine>
@@ -81,5 +86,5 @@ export const CardInputFrontend = () => {
         <CardAction1 type={"reset"} />
       </div>
     </>
-  );
-};
+  )
+}

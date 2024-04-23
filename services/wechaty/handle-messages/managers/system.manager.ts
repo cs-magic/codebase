@@ -1,11 +1,11 @@
 import { FileBox } from "file-box"
 import { z } from "zod"
 import { type LangType, langTypeSchema } from "../../../../packages/i18n/schema"
-import { type BackendType } from "../../../../packages/llm/schema/llm"
+import { type BackendType } from "../../../../packages/llm/schema/llm.base"
 import {
-  type LlmModelType,
+  LlmModelType,
   llmModelTypeSchema,
-} from "../../../../packages/llm/schema/providers"
+} from "../../../../packages/llm/schema/llm.models"
 import { FeatureMap } from "../../schema/commands"
 import { CommandStyle } from "../../schema/wechat-user"
 import { getConvPreference } from "../../utils/get-conv-preference"

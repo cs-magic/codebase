@@ -1,5 +1,5 @@
 import { safeCallAgent } from "../../../../../../packages/llm/safe-call-agent"
-import { LlmModelType } from "../../../../../../packages/llm/schema/providers"
+import { LlmModelType } from "../../../../../../packages/llm/schema/llm.models"
 
 export type SummaryOptions = {
   enabled?: boolean

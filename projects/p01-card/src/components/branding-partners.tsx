@@ -1,15 +1,15 @@
 import {
   Avatar,
   AvatarImage,
-} from "../../../../packages/ui-shadcn/components/avatar";
-import { ImageEqualHeight } from "../../../../packages/ui/components/image-equal-height";
-import { SeparatorContainer } from "../../../../packages/ui/components/separator-container";
+} from "../../../../packages/ui-shadcn/components/avatar"
+import { ImageEqualHeight } from "../../../../packages/ui/components/image-equal-height"
+import { SeparatorContainer } from "../../../../packages/ui/components/separator-container"
 
-import { config } from "../config";
+import { config } from "../config"
 
 export const BrandingPartners = () => {
-  const avatars = [config.website.avatar.mark, config.website.avatar.idoubi];
-  const sponsors: string[] = [];
+  const avatars = [config.website.avatar.mark, config.website.avatar.idoubi]
+  const sponsors: string[] = []
 
   return (
     <>
@@ -38,5 +38,5 @@ export const BrandingPartners = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}

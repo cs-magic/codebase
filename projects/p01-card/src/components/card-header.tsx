@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary";
-import { useSetAtom } from "jotai";
-import { useEffect } from "react";
-import { Label } from "../../../../packages/ui-shadcn/components/label";
+import { cardUserRenderedAtom } from "@/store/card.rendered.atom"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { useSetAtom } from "jotai"
+import { useEffect } from "react"
+import { Label } from "../../../../packages/ui-shadcn/components/label"
 
-import { config } from "../config";
-import { cardUserRenderedAtom } from "../store/card.atom";
-import { UserAvatar } from "./user-avatar";
+import { config } from "../config"
+import { UserAvatar } from "./user-avatar"
 
 export const CardHeader = ({ user }: { user?: IUserSummary | null }) => {
-  const setUserRendered = useSetAtom(cardUserRenderedAtom);
+  const setUserRendered = useSetAtom(cardUserRenderedAtom)
   useEffect(() => {
-    setUserRendered(false);
-  }, [user?.image]);
+    setUserRendered(false)
+  }, [user?.image])
 
   return (
     <div className={"flex items-center justify-between px-4 pb-2 pt-6 text-xs"}>
@@ -24,7 +24,7 @@ export const CardHeader = ({ user }: { user?: IUserSummary | null }) => {
               user={user}
               imageProps={{
                 onLoad: () => {
-                  setUserRendered(true);
+                  setUserRendered(true)
                 },
               }}
             />
@@ -54,5 +54,5 @@ export const CardHeader = ({ user }: { user?: IUserSummary | null }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

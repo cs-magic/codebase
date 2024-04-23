@@ -1,8 +1,8 @@
-import { Badge } from "../../../../packages/ui-shadcn/components/ui/badge";
-import { cn } from "../../../../packages/ui-shadcn/utils";
+import { Badge } from "../../../../packages/ui-shadcn/components/ui/badge"
+import { cn } from "../../../../packages/ui-shadcn/utils"
 
 export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
-  if (!tags?.length) return null;
+  if (!tags?.length) return null
 
   return (
     <div className={"flex flex-wrap items-center gap-0"}>
@@ -20,5 +20,5 @@ export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
         </Badge>
       ))}
     </div>
-  );
-};
+  )
+}

@@ -1,25 +1,25 @@
-"use client";
+"use client"
 
-import { MenuIcon } from "lucide-react";
-import Link from "next/link";
-import React, { PropsWithChildren } from "react";
+import { MenuIcon } from "lucide-react"
+import Link from "next/link"
+import React, { PropsWithChildren } from "react"
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../../packages/ui-shadcn/components/sheet";
+} from "../../../../packages/ui-shadcn/components/sheet"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "../../../../packages/ui-shadcn/components/ui/navigation-menu";
-import { cn } from "../../../../packages/ui-shadcn/utils";
-import { IconContainer } from "../../../../packages/ui/components/icon-container";
-import { config } from "../config";
-import { BrandingTitle } from "./branding-title";
-import { UserButton } from "./header-user";
+} from "../../../../packages/ui-shadcn/components/ui/navigation-menu"
+import { cn } from "../../../../packages/ui-shadcn/utils"
+import { IconContainer } from "../../../../packages/ui/components/icon-container"
+import { config } from "../config"
+import { BrandingTitle } from "./branding-title"
+import { UserButton } from "./header-user"
 
 const Menus = () => (
   <>
@@ -29,7 +29,7 @@ const Menus = () => (
       </LinkItem>
     ))}
   </>
-);
+)
 
 export const Header = () => {
   return (
@@ -55,8 +55,8 @@ export const Header = () => {
         <UserButton />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const MobileConversations = () => (
   <Sheet>
@@ -76,7 +76,7 @@ const MobileConversations = () => (
       </NavigationMenu>
     </SheetContent>
   </Sheet>
-);
+)
 
 const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
   return (
@@ -89,5 +89,5 @@ const LinkItem = ({ href, children }: { href: string } & PropsWithChildren) => {
         </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>
-  );
-};
+  )
+}

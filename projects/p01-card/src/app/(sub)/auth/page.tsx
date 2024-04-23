@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { UnexpectedError } from "@cs-magic/common/schema/error";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useEnvironments } from "../../../../../../packages/hooks/use-environments";
-import { Label } from "../../../../../../packages/ui-shadcn/components/label";
-import { Loading } from "../../../../../../packages/ui/components/loading";
-import { Auth } from "../../../components/auth";
-import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in";
-import { AuthUpdateProfile } from "../../../components/auth-update-profile";
-import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in";
+import { UnexpectedError } from "@cs-magic/common/schema/error"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { useEnvironments } from "../../../../../../packages/hooks/use-environments"
+import { Label } from "../../../../../../packages/ui-shadcn/components/label"
+import { Loading } from "../../../../../../packages/ui/components/loading"
+import { Auth } from "../../../components/auth"
+import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
+import { AuthUpdateProfile } from "../../../components/auth-update-profile"
+import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in"
 
 export default function AuthPage() {
-  const session = useSession();
-  const router = useRouter();
-  const { isWechat } = useEnvironments();
+  const session = useSession()
+  const router = useRouter()
+  const { isWechat } = useEnvironments()
 
-  const profileOk = !!session.data?.user?.name && !!session.data.user.image;
-  const phoneOk = !!session.data?.user?.phone;
-  const wxidOk = !!session.data?.user?.wxid;
+  const profileOk = !!session.data?.user?.name && !!session.data.user.image
+  const phoneOk = !!session.data?.user?.phone
+  const wxidOk = !!session.data?.user?.wxid
 
   useEffect(() => {
-    if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/");
-  }, [phoneOk, profileOk, wxidOk, isWechat]);
+    if (phoneOk && profileOk && (wxidOk || !isWechat)) router.push("/")
+  }, [phoneOk, profileOk, wxidOk, isWechat])
 
   useEffect(() => {
     // if (devEnabled && process.env.NODE_ENV !== "production")
@@ -31,11 +31,11 @@ export default function AuthPage() {
     //   duration: Infinity,
     //   closeButton: true,
     // })
-  }, [session]);
+  }, [session])
 
   switch (session.status) {
     case "authenticated":
-      if (!phoneOk) return <AuthSmsSignIn />;
+      if (!phoneOk) return <AuthSmsSignIn />
 
       if (isWechat && !wxidOk)
         return (
@@ -50,19 +50,19 @@ export default function AuthPage() {
 
             <AuthWechatSignIn />
           </div>
-        );
+        )
 
-      if (!profileOk) return <AuthUpdateProfile />;
+      if (!profileOk) return <AuthUpdateProfile />
 
-      return <Loading />;
+      return <Loading />
 
     case "loading":
-      return <Loading />;
+      return <Loading />
 
     case "unauthenticated":
-      return <Auth />;
+      return <Auth />
 
     default:
-      throw new UnexpectedError();
+      throw new UnexpectedError()
   }
 }

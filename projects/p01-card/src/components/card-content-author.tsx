@@ -1,3 +1,4 @@
+import { cardAuthorRenderedAtom } from "@/store/card.rendered.atom"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Card } from "@prisma/client"
@@ -8,10 +9,7 @@ import moment from "../../../../packages/datetime/moment"
 import { cn } from "../../../../packages/ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../../../packages/ui/components/aspect-ratio"
 import { ICardInnerPreview } from "../schema/card"
-import {
-  cardAuthorRenderedAtom,
-  cardAuthorWithTitleAtom,
-} from "../store/card.atom"
+import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
 import { getPlatformName } from "@/utils/utils"
 

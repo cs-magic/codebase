@@ -1,12 +1,15 @@
-"use server";
+"use server"
 
-import { NotImplementedError } from "@cs-magic/common/schema/error";
-import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url";
-import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url";
-import { logger } from "@cs-magic/log/logger";
-import { Card, LlmResponse } from "@prisma/client";
-import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch";
-import { GenWxmpArticleCardFetchOptions } from "../schema/card";
+import { NotImplementedError } from "@cs-magic/common/schema/error"
+import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
+import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
+import { logger } from "@cs-magic/log/logger"
+import { Card, LlmResponse } from "@prisma/client"
+import { fetchWxmpArticle } from "../../../../core/wechat/wxmp-article/fetch"
+import {
+  GenWxmpArticleCardFetchOptions,
+  ICardInnerPreview,
+} from "../schema/card"
 
 /**
  * 从用户输入的 url 中返回解析出的结构
@@ -16,14 +19,14 @@ import { GenWxmpArticleCardFetchOptions } from "../schema/card";
 export const genCardFromUrl = async (
   inputUrlLike: string,
   options?: GenWxmpArticleCardFetchOptions,
-): Promise<{ article: Card; llmResponse: LlmResponse }> => {
-  const urlParsed = extractFirstUrl(inputUrlLike);
-  logger.info("-- genCardFromUrl: %o", { inputUrlLike, urlParsed });
+): Promise<{ inner: ICardInnerPreview }> => {
+  const urlParsed = extractFirstUrl(inputUrlLike)
+  logger.info("-- genCardFromUrl: %o", { inputUrlLike, urlParsed })
   if (!urlParsed)
-    throw new Error(`invalid url to be parsed from ${inputUrlLike}`);
+    throw new Error(`invalid url to be parsed from ${inputUrlLike}`)
 
   if (isWxmpArticleUrl(urlParsed))
-    return await fetchWxmpArticle(urlParsed, options);
+    return await fetchWxmpArticle(urlParsed, options)
 
   // todo: other platforms
   // if (/xhslink|xiaohongshu/.test(urlParsed)) {
@@ -50,5 +53,5 @@ export const genCardFromUrl = async (
   //   return bilibili2card(resDetail.data);
   // }
 
-  throw new NotImplementedError();
-};
+  throw new NotImplementedError()
+}

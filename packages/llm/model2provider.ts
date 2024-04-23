@@ -1,4 +1,4 @@
-import { LlmProviderType } from "./schema/providers"
+import { LlmProviderType } from "./schema/llm.providers"
 
 export const model2provider = (modelType: string): LlmProviderType => {
   if (modelType.startsWith("gpt")) return "openai"

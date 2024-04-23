@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { useEnvironments } from "../../../../packages/hooks/use-environments";
-import JoinComponents from "../../../../packages/ui/components/join-components";
-import { SeparatorContainer } from "../../../../packages/ui/components/separator-container";
-import { Label } from "../../../../packages/ui-shadcn/components/label";
-import { AuthSmsSignIn } from "./auth-sms-sign-in";
-import { AuthWechatSignIn } from "./auth-wechat-sign-in";
-import { BrandingTitle } from "./branding-title";
+import { useEnvironments } from "../../../../packages/hooks/use-environments"
+import JoinComponents from "../../../../packages/ui/components/join-components"
+import { SeparatorContainer } from "../../../../packages/ui/components/separator-container"
+import { Label } from "../../../../packages/ui-shadcn/components/label"
+import { AuthSmsSignIn } from "./auth-sms-sign-in"
+import { AuthWechatSignIn } from "./auth-wechat-sign-in"
+import { BrandingTitle } from "./branding-title"
 
 export const Auth = () => {
-  const { isWechat } = useEnvironments();
+  const { isWechat } = useEnvironments()
 
   return (
     <div className={"flex w-full flex-col items-center gap-4"}>
@@ -31,5 +31,5 @@ export const Auth = () => {
         separator={<SeparatorContainer>或者</SeparatorContainer>}
       />
     </div>
-  );
-};
+  )
+}

@@ -8,7 +8,8 @@ import {
 import { parseSummary } from "@cs-magic/p01-card/src/utils/parse-summary"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { fetchWxmpArticle } from "../../../core/wechat/wxmp-article/fetch"
-import { ICallLlmResponse } from "../../../packages/llm/schema/llm"
+
+import { ILlmRes } from "../../../packages/llm/schema/llm.api"
 
 export const url2preview = async (
   url: string,
@@ -16,7 +17,7 @@ export const url2preview = async (
 ) => {
   const result = await fetchWxmpArticle(url, fetchOptions)
 
-  const response = parseJsonSafe<ICallLlmResponse>(result.llmResponse.response)
+  const response = parseJsonSafe<ILlmRes>(result.llmResponse.response)
 
   const inner: ICardInnerPreview = {
     id: result.llmResponse.id,

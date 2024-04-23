@@ -7,7 +7,7 @@ import { parse } from "node-html-parser"
 import { z } from "zod"
 import { api } from "../../../../../../packages/api-client/api"
 import { parseMetaFromHtml } from "../../../../../../packages/html/utils"
-import { BackendType } from "../../../../../../packages/llm/schema/llm"
+import { BackendType } from "../../../../../../packages/llm/schema/llm.base"
 import { html2md } from "../../../../../../packages/markdown/html2md"
 import { WxmpArticleSimulator } from "../../../../../../packages/spider/wxmp-article-simulator"
 

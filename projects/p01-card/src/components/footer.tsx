@@ -1,12 +1,12 @@
-import { BrandingPartners } from "./branding-partners";
-import Link from "next/link";
-import { ImageEqualHeight } from "../../../../packages/ui/components/image-equal-height";
+import { BrandingPartners } from "./branding-partners"
+import Link from "next/link"
+import { ImageEqualHeight } from "../../../../packages/ui/components/image-equal-height"
 
-import { config } from "../config";
-import { CsMagicBrand } from "./assets";
+import { config } from "../config"
+import { CsMagicBrand } from "./assets"
 
 export const Footer = () => {
-  const enterprises: string[] = [];
+  const enterprises: string[] = []
 
   return (
     <div className={"mt-auto flex shrink-0 flex-col items-center gap-2 p-4"}>
@@ -39,5 +39,5 @@ export const Footer = () => {
 
       {config.website.partners.show && <BrandingPartners />}
     </div>
-  );
-};
+  )
+}
