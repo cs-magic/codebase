@@ -1,5 +1,5 @@
-import friendShipParser from "./event-friendship.js";
-import roomInviteParser from "./event-room-invite.js";
+import friendShipParser from "./event-friendship";
+import roomInviteParser from "./event-room-invite";
 import roomJoinParser from "./event-room-join.js";
 import roomLeaveParser from "./event-room-leave.js";
 import roomTopicParser from "./event-room-topic.js";

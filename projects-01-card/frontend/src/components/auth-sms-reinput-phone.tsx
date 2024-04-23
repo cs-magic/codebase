@@ -1,7 +1,10 @@
 "use client"
 import { useAtom, useSetAtom } from "jotai"
 import { EditIcon } from "lucide-react"
-import { smsStageAtom, userPhoneAtom } from "../../../../common/auth-sms/store"
+import {
+  smsStageAtom,
+  userPhoneAtom,
+} from "../../../../packages-common/auth-sms/store"
 
 export const SmsReInputPhone = () => {
   const [phone] = useAtom(userPhoneAtom)

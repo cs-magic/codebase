@@ -7,12 +7,10 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*",
-    "common/*",
-    "core/*",
-    "opensource/*",
-    "services/*",
-    "projects/*"
+    "packages-common/*",
+    "packages-core/*",
+    "packages-to-classify/*",
+    "projects-01-card/*"
   ],
   "scripts": {
     "test": "jest"
@@ -20,12 +18,7 @@
   "packageManager": "yarn@4.1.1",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "jotai": "^2.8.0",
-    "jotai-devtools": "^0.9.0",
-    "jotai-immer": "^0.3.0",
-    "jotai-scope": "^0.5.1",
     "lodash": "^4.17.21",
-    "next-auth": "^4.24.7",
     "zod": "^3.23.0"
   },
   "devDependencies": {
@@ -42,5 +35,10 @@
     "ts-jest": "^29.1.2",
     "ts-jest-mock-import-meta": "^1.2.0",
     "typescript": "^5.4.5"
+  },
+  "git": {
+    "scripts": {
+      "pre-push": "npx git-scripts-pre-push"
+    }
   }
 }

@@ -13,5 +13,8 @@
   "dependencies": {
     "prisma": "^5.12.1",
     "prisma-json-types-generator": "^3.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }

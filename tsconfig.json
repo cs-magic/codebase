@@ -38,6 +38,6 @@
   "exclude": [
     "node_modules",
     // exclude it since there is Wechaty extended
-    "opensource/puppet-padlocal"
+    "packages-opensource/wechaty-puppet-padlocal"
   ]
 }

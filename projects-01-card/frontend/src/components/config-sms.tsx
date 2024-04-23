@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useAtom } from "jotai";
-import { SmsProviderType } from "../../../../common/auth-sms/schema";
+import { useAtom } from "jotai"
+import { SmsProviderType } from "../../../../packages-common/auth-sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../../../common/auth-sms/store";
-import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input";
-import { Label } from "../../../../packages-to-classify/ui-shadcn/components/label";
+} from "../../../../packages-common/auth-sms/store"
+import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
+import { Label } from "../../../../packages-to-classify/ui-shadcn/components/label"
 import {
   Select,
   SelectContent,
@@ -15,15 +15,15 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../packages-to-classify/ui-shadcn/components/select";
+} from "../../../../packages-to-classify/ui-shadcn/components/select"
 
-import { StandardCard } from "./standard-card";
+import { StandardCard } from "./standard-card"
 
 export const ConfigSMSCard = () => {
-  const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom);
+  const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)
   const [smsCountdownSeconds, setSmsCountdownSeconds] = useAtom(
     smsCodeToCountdownSecondsAtom,
-  );
+  )
   return (
     <StandardCard title={"SMS"}>
       <Label>Provider Type</Label>
@@ -56,5 +56,5 @@ export const ConfigSMSCard = () => {
         type={"number"}
       />
     </StandardCard>
-  );
-};
+  )
+}

@@ -42,6 +42,6 @@
       "node_modules",
 
       // 因为我们 redeclare 了 wechaty 的接口，所以要忽略，否则编译不通过
-      "../../opensource/puppet-padlocal",
+      "../../packages-opensource/wechaty-puppet-padlocal"
     ]
 }

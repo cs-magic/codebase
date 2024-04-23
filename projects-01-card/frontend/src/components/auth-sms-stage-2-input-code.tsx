@@ -4,11 +4,11 @@ import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
-import { SMS_PROVIDER_ID } from "../../../../common/auth-sms/const"
+import { SMS_PROVIDER_ID } from "../../../../packages-common/auth-sms/const"
 import {
   smsCodeAtom,
   smsSignInPayloadAtom,
-} from "../../../../common/auth-sms/store"
+} from "../../../../packages-common/auth-sms/store"
 import { Label } from "../../../../packages-to-classify/ui-shadcn/components/label"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import { SMS_DIGIT_SIZE } from "../../../../packages-to-classify/ui/config"

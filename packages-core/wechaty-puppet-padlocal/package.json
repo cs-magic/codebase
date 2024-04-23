@@ -92,15 +92,20 @@
   "dependencies": {
     "@types/config": "0.0.41",
     "@types/node-cleanup": "^2.1.2",
+    "brolog": "1.14.2",
     "fast-xml-parser": "^3.17.6",
     "file-box": "^1.4.14",
     "flash-store": "^1.0.6",
     "fs-extra": "^10.0.0",
+    "gerror": "^1.0.16",
+    "jest-resolve": "^29.7.0",
     "lru-cache": "^6.0.0",
     "node-cleanup": "^2.1.2",
     "padlocal-client-ts": "^0.5.3",
     "quick-lru": "^6.0.2",
+    "rxjs": "^7.8.1",
     "state-switch": "^1.6.3",
+    "typescript": "^5.4.5",
     "xml2js": "^0.4.23"
   },
   "publishConfig": {
