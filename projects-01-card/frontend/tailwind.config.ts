@@ -6,8 +6,9 @@ const config = {
     "./src/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./tests/**/*.{ts,tsx}",
-    "../../packages/**/*.{ts,tsx}",
-    "../../common/**/*.{ts,tsx}",
+    "../../packages-common/**/*.{ts,tsx}",
+    "../../packages-core/**/*.{ts,tsx}",
+    "../../packages-to-classify/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
