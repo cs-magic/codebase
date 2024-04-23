@@ -1,5 +1,5 @@
 import { loadEnvServerSide } from "../../../../packages-to-classify/env/utils/load-env-server-side"
-import { sampleWxmpArticleUrl } from "../config"
+import { sampleWxmpArticleUrl } from "../../../../sample"
 import { fetchWxmpArticle } from "./fetch-wxmp-article"
 
 loadEnvServerSide()

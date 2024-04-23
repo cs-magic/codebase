@@ -1,15 +1,5 @@
 import { IBilibiliVideo } from "./schema"
 
-/**
- * sample: https://www.bilibili.com/video/BV1yW4y1L7wA/?spm_id_from=333.880.my_history.page.click
- * @param {string} url
- * @returns {string}
- */
-export const getBvidFromUrl = (url: string): string | null => {
-  const m = url.match(/(BV.*?)(?=(\/|$))/)
-  return m?.[1] ?? null
-}
-
 export const getBilibiliIFrameUrl = (video: IBilibiliVideo) => {
   let url = "//player.bilibili.com/player.html"
   url += `?bvid=${video.bvid}&cid=794775520`

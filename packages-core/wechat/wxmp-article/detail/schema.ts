@@ -1,4 +1,4 @@
-import { wechatArticleCommentSample } from "./sample"
+import { sampleWxmpArticleComment } from "../../../../sample"
 
 export type IFetchWechatArticleStat = {
   // query
@@ -21,4 +21,4 @@ export type IWechatArticleStat = {
   biz: string
 }
 
-export type IWechatArticleComment = typeof wechatArticleCommentSample
+export type IWechatArticleComment = typeof sampleWxmpArticleComment

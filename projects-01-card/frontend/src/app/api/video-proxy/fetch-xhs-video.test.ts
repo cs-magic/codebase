@@ -1,15 +1,13 @@
 "use server"
 
 import axios from "axios"
-import { promises } from "fs"
 
 import nodeFetch from "node-fetch"
 import { request } from "undici"
+import { FetchApproach } from "../../../../../../packages-to-classify/api-client/schema"
 import { sampleXiaoHongShuVideoUrl } from "../../../samples"
 
-export type FetchType = "fetch" | "node-fetch" | "undici" | "axios"
-
-const fetchArrayBuffer = async (lib: FetchType): Promise<ArrayBuffer> => {
+const fetchArrayBuffer = async (lib: FetchApproach): Promise<ArrayBuffer> => {
   console.log("-- fetching using: ", lib)
 
   const url = sampleXiaoHongShuVideoUrl
@@ -48,13 +46,13 @@ const fetchArrayBuffer = async (lib: FetchType): Promise<ArrayBuffer> => {
   }
 }
 
-export const fetchXiaohongshuVideo = async (lib: FetchType) => {
-  const arrayBuffer = await fetchArrayBuffer(lib)
+// export const fetchXiaohongshuVideo = async (lib: FetchType) => {
+//   const arrayBuffer = await fetchArrayBuffer(lib)
+//
+//   await promises.writeFile("data.mp4", Buffer.from(arrayBuffer))
+//
+//   console.log("-- wrote")
+// }
 
-  await promises.writeFile("data.mp4", Buffer.from(arrayBuffer))
-
-  console.log("-- wrote")
-}
-
-void fetchXiaohongshuVideo("fetch")
+// void fetchXiaohongshuVideo("fetch")
 // void fetchXiaohongshuVideo("node-fetch")

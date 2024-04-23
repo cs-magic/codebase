@@ -13,3 +13,5 @@ export type IApiBase<S extends ApiStatus, I = any, O = any> = S extends "idle"
 export type IApi<I = any, O = any> = IApiBase<ApiStatus, I, O>
 
 export type ApiMethod = "GET" | "POST"
+
+export type FetchApproach = "fetch" | "node-fetch" | "undici" | "axios"

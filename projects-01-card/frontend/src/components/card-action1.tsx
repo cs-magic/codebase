@@ -23,6 +23,7 @@ export const CardAction1 = ({ type }: { type: Action1Type }) => {
       case "generate":
         const generated = await genCardFromUrl(inputUrl, options)
         logger.info("generated: %o", generated)
+        logger.info(JSON.stringify(generated))
         setCardInnerInput(JSON.stringify(generated))
         break
 
