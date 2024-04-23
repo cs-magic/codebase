@@ -1,6 +1,6 @@
 import config_ from "./config.json"
 
-import packageJson_ from "../../package.json"
+import monorepoPackageJson from "../../../../package.json"
 
 export const config = config_
-export const packageJson = packageJson_
+config.version = monorepoPackageJson.version
