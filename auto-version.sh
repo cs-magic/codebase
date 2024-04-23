@@ -7,3 +7,5 @@ awk 'BEGIN{FS=OFS="\""} /"version": "V/ {
     b[3]++;
     $4 = b[1] "." b[2] "." b[3] " (" a[2]  # 重建包含后缀的版本号
 } 1' package.json > temp.json && mv temp.json package.json
+
+git add .
