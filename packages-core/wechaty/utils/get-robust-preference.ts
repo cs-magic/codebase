@@ -3,8 +3,6 @@ import { IWechatPreference } from "../schema/wechat-user"
 
 export const defaultPreference: IWechatPreference = {
   lang: "en",
-  model: "gpt-3.5-turbo",
-  backend: "nodejs",
   chatterEnabled: false,
   parserEnabled: false,
   fetch: {

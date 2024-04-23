@@ -1,22 +1,17 @@
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { type LangType, langTypeSchema } from "../../../../packages-to-classify/i18n/schema"
-import { type BackendType } from "../../../../packages-to-classify/llm/schema/llm.base"
-import {
-  LlmModelType,
-  llmModelTypeSchema,
-} from "../../../../packages-to-classify/llm/schema/llm.models"
+import { langTypeSchema } from "../../../../packages-to-classify/i18n/schema"
+import { backendTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.base"
+import { llmModelTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.models"
 import { FeatureMap } from "../../schema/commands"
 import { CommandStyle } from "../../schema/wechat-user"
-import { getConvPreference } from "../../utils/get-conv-preference"
-import { getConvTable } from "../../utils/get-conv-table"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum([
   "list-models",
   "set-model",
-  // "set-backend",
+  "set-backend",
   "list-langs",
   "set-lang",
   "set-avatar",
@@ -84,6 +79,9 @@ const i18n: FeatureMap<CommandType> = {
       "set-command-style": {
         type: "set-command-style",
       },
+      "set-backend": {
+        type: "set-backend",
+      },
     },
   },
 }
@@ -109,13 +107,17 @@ export class SystemManager extends BaseManager {
           break
 
         case "set-model":
-          const model = await llmModelTypeSchema.parseAsync(parsed.args)
-          await this.setModel(model)
+          await this.updatePreferenceInDB(
+            "fetch.detail.summary.model",
+            await llmModelTypeSchema.parseAsync(parsed.args),
+          )
           break
 
         case "set-lang":
-          const lang = await langTypeSchema.parseAsync(parsed.args)
-          await this.setLang(lang)
+          await this.updatePreferenceInDB(
+            "lang",
+            await langTypeSchema.parseAsync(parsed.args),
+          )
           break
 
         case "set-avatar":
@@ -129,49 +131,28 @@ export class SystemManager extends BaseManager {
           console.log("-- done set avatar")
           break
 
+        case "set-backend":
+          await this.updatePreferenceInDB(
+            "fetch.detail.request.backendType",
+            await backendTypeSchema.parseAsync(parsed.args),
+          )
+          break
+
         case "set-max-output-lines":
-          await this.setMaxOutputLines(
+          await this.updatePreferenceInDB(
+            "maxOutputLines",
             await z.number().int().min(1).parseAsync(Number(parsed.args)),
           )
           break
 
         case "set-command-style":
-          await this.setCommandStyle(
+          await this.updatePreferenceInDB(
+            "commandStyle",
             await z.nativeEnum(CommandStyle).parseAsync(parsed.args),
           )
           break
       }
     }
-  }
-
-  async setCommandStyle(commandStyle: CommandStyle) {
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          commandStyle,
-        }),
-      },
-    })
-    await this.getStatus(true)
-  }
-
-  async setMaxOutputLines(maxOutputLines?: number) {
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          maxOutputLines,
-        }),
-      },
-    })
-    await this.getStatus(true)
   }
 
   async listModels() {
@@ -181,60 +162,5 @@ export class SystemManager extends BaseManager {
       ),
       ["system set-model"],
     )
-  }
-
-  async setModel(value: LlmModelType) {
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          model: value,
-        }),
-      },
-    })
-    await this.getStatus(true)
-    // await this.standardReply(`模型更新成功：${preference.model} --> ${value}`, [
-    //   "system list-models",
-    // ])
-  }
-
-  async setBackend(value: BackendType) {
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          backend: value,
-        }),
-      },
-    })
-    await this.getStatus(true)
-    // await this.standardReply(
-    //   `后端更新成功：${preference.backend} --> ${value}`,
-    //   ["system list-backends"],
-    // )
-  }
-
-  async setLang(value: LangType) {
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          lang: value,
-        }),
-      },
-    })
-    await this.getStatus(true)
-    // await this.standardReply(`语言更新成功：${preference.lang} --> ${value}`, [
-    //   "system list-langs",
-    // ])
   }
 }

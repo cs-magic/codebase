@@ -221,7 +221,7 @@ export class ChatterManager extends BaseManager {
 
     const res = await safeCallLLM({
       messages: context,
-      model: convPreference.model,
+      model: convPreference.fetch?.detail?.summary?.model ?? "gpt-3.5-turbo",
     })
 
     if (res.error) throw new Error(res.error)

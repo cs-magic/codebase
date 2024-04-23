@@ -2,14 +2,15 @@ import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { set } from "lodash"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getBotContext } from "../../utils/bot-context"
 import { botNotify } from "../../utils/bot-notify"
 import { getBotTemplate } from "../../utils/bot-template"
 import { formatFooter } from "../../utils/format-footer"
-import { formatTalker } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
+import { getConvTable } from "../../utils/get-conv-table"
 import { getUserPreference } from "../../utils/get-user-preference"
 import {
   padlocalVersion,
@@ -202,5 +203,19 @@ export class BaseManager {
 
   async notify(content: Sayable) {
     void botNotify(this.bot, this.message, content)
+  }
+
+  async updatePreferenceInDB(path: string, value: any) {
+    const conv = await this.getConvPreference()
+    set(conv, path, value)
+    await getConvTable(this.isRoom).update({
+      where: {
+        id: this.convId,
+      },
+      data: {
+        preference: JSON.stringify(conv),
+      },
+    })
+    await this.getStatus(true)
   }
 }

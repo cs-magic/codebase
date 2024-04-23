@@ -21,9 +21,9 @@ status: |-
     alive-time: {{aliveTime}}
   ------------------------------
   Preference(Conv|User):
-    model: {{convPreference.model}} | {{userPreference.model}}
-    backend: {{convPreference.backend}} | {{userPreference.backend}}
+    model: {{convPreference.fetch.detail.summary.model}} | {{userPreference.fetch.detail.summary.model}}
     chatter enabled: {{{convPreference.chatterEnabled}}} | {{{userPreference.chatterEnabled}}}
     parser enabled: {{{convPreference.parserEnabled}}} | {{{userPreference.parserEnabled}}}
+    backend: {{convPreference.fetch.detail.request.backendType}} | {{userPreference.fetch.detail.request.backendType}}
     max output lines: {{{convPreference.maxOutputLines}}} | {{{userPreference.maxOutputLines}}}
     command style: {{{convPreference.commandStyle}}} | {{{userPreference.commandStyle}}}
