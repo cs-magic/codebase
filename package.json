@@ -19,6 +19,8 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.0"
   },
   "devDependencies": {
@@ -32,6 +34,7 @@
     "eslint-config-next": "^14.2.2",
     "jest": "^29.7.0",
     "pino-pretty": "^11.0.0",
+    "tailwindcss": "^3.4.3",
     "ts-jest": "^29.1.2",
     "ts-jest-mock-import-meta": "^1.2.0",
     "typescript": "^5.4.5"
