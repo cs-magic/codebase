@@ -239,13 +239,6 @@ export class TodoManager extends BaseManager {
         ...serializeTaskGroup("done", true),
         ...serializeTaskGroup("discarded", true),
       ].join("\n"),
-      [
-        // "todo list",
-        // "todo filter [TITLE]",
-        // "todo add [TITLE]",
-        // "todo update [N] [STATUS]",
-        // "todo rename [N] [NEW-TITLE]",
-      ],
     )
 
     const preference = await this.getUserPreference()

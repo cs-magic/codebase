@@ -205,7 +205,7 @@ export class BaseManager {
     void botNotify(this.bot, this.message, content)
   }
 
-  async updatePreferenceInDB(path: string, value: any) {
+  async updatePreferenceInDB(path: string, value: any, replyStatus = true) {
     const conv = await this.getConvPreference()
     set(conv, path, value)
     await getConvTable(this.isRoom).update({
@@ -216,6 +216,6 @@ export class BaseManager {
         preference: JSON.stringify(conv),
       },
     })
-    await this.getStatus(true)
+    if (replyStatus) await this.getStatus(true)
   }
 }

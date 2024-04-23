@@ -10,7 +10,6 @@ import { z } from "zod"
 import { CardSimulator } from "../../../../packages-to-classify/spider/card-simulator"
 import { url2preview } from "../../../common/url2preview"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getConvTable } from "../../utils/get-conv-table"
 import { getQuotedMessage } from "../../utils/get-quoted-message"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { parseText } from "../../utils/parse-message"
@@ -132,49 +131,25 @@ export class ParserManager extends BaseManager {
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "enable":
-          await this.enableParser()
+          await this.updatePreferenceInDB("parserEnabled", true, false)
+          await this.standardReply(
+            `Congratulation, Super Parser has been activated!\nI can help you parse shared links, give me a try! 😄`,
+            [
+              "- I currently supports wxmp article, other media types (e.g. videos) are on the roadmap, hold on!",
+              "- You can deactivate me via sending: `parser disable`.",
+            ],
+          )
           break
 
         case "disable":
-          await this.disableParser()
+          await this.updatePreferenceInDB("parserEnabled", false, false)
+          await this.standardReply(
+            `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
+            ["- You can activate me via sending: `parser enable`."],
+          )
           break
       }
     }
-  }
-
-  async enableParser() {
-    await getConvTable(this.isRoom).update({
-      where: { id: this.convId },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          parserEnabled: true,
-        }),
-      },
-    })
-    await this.standardReply(
-      `Congratulation, Super Parser has been activated!\nI can help you parse shared links, give me a try! 😄`,
-      [
-        "- I currently supports wxmp article, other media types (e.g. videos) are on the roadmap, hold on!",
-        "- You can deactivate me via sending: `parser disable`.",
-      ],
-    )
-  }
-
-  async disableParser() {
-    await getConvTable(this.isRoom).update({
-      where: { id: this.convId },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          parserEnabled: false,
-        }),
-      },
-    })
-    await this.standardReply(
-      `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
-      ["- You can activate me via sending: `parser enable`."],
-    )
   }
 
   async safeParseCard({
