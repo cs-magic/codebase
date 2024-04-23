@@ -2,13 +2,13 @@ import {
   cardLlmModelTypeAtom,
   cardLlmEnabledAtom,
   cardSummaryWithImageAtom,
-} from "@/store/card.llm.atom"
+} from "@/store/card.summary.atom"
 import {
   cardFetchEngineAtom,
   cardFetchWithCacheAtom,
   cardFetchStatEnabledAtom,
   cardFetchCommentsEnabledAtom,
-} from "@/store/card.query.atom"
+} from "@/store/card.request.atom"
 import { useAtom } from "jotai"
 import React from "react"
 import { backendTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.base"

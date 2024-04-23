@@ -1,6 +1,7 @@
 "use client"
 
 import { cardRenderedAtom } from "@/store/card.rendered.atom"
+import { cardUserAtom } from "@/store/card.user.atom"
 import { useAtom, useAtomValue } from "jotai"
 import { useRef } from "react"
 import {
@@ -8,7 +9,6 @@ import {
   GenCardApproach,
   ICardPreview,
 } from "../../../../packages-core/common/schema/card"
-import { cardUserAtom } from "../store/card.atom"
 import { CardAction2 } from "./card-action2"
 import { CardContent } from "./card-content"
 import { CardFooter } from "./card-footer"

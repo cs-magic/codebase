@@ -1,4 +1,4 @@
-import { sampleWxmpArticleUrl } from "../../../../../sample"
+import { sampleWxmpArticleUrl } from "../../../../common/sample"
 import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
 
 describe("wxapi without token", () => {

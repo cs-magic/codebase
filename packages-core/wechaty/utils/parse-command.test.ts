@@ -3,19 +3,19 @@ import { parseLimitedCommand } from "./parse-command"
 
 describe("parse command", () => {
   it("", () => {
-    const result = parseLimitedCommand("/set-backend", ["set-backend"])
+    const result = parseLimitedCommand("set-backend", ["set-backend"])
     expect(result?.command).toBe("set-backend")
     expect(result?.args).toBe("")
   })
 
   it("", () => {
-    const result = parseLimitedCommand("/set-backend  ", ["set-backend"])
+    const result = parseLimitedCommand("set-backend  ", ["set-backend"])
     expect(result?.command).toBe("set-backend")
     expect(result?.args).toBe("")
   })
 
   it("", () => {
-    const result = parseLimitedCommand("/set-backend  nodejs ss ", [
+    const result = parseLimitedCommand("set-backend  nodejs ss ", [
       "set-backend",
     ])
     expect(result?.command).toBe("set-backend")

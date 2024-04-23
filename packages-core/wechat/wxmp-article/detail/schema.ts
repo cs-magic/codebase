@@ -1,4 +1,4 @@
-import { sampleWxmpArticleComment } from "../../../../sample"
+import { sampleWxmpArticleComment } from "../../../common/sample"
 
 export type IFetchWechatArticleStat = {
   // query

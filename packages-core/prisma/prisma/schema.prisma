@@ -124,6 +124,9 @@ model LlmResponse {
   // 基于核心内容总结后的结果
   /// [ICallLlmResponse]
   response Json?
+
+  // 每一种模型都可以生成一张图  
+  ossUrl String?
 }
 
 enum PlatformType {

@@ -5,7 +5,7 @@ import axios from "axios"
 import nodeFetch from "node-fetch"
 import { request } from "undici"
 import { FetchApproach } from "../../../../../../packages-to-classify/api-client/schema"
-import { sampleXiaoHongShuVideoUrl } from "../../../../../../sample"
+import { sampleXiaoHongShuVideoUrl } from "../../../../../../packages-core/common/sample"
 
 const fetchArrayBuffer = async (lib: FetchApproach): Promise<ArrayBuffer> => {
   console.log("-- fetching using: ", lib)

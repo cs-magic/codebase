@@ -26,15 +26,16 @@ export class CardSimulator extends BaseSimulator {
     if (!this.page) await this.initPage()
     if (!this.page) throw new UnexpectedError()
 
-    logger.info("-- inputting user if necessary: %o", user)
+    logger.debug("-- inputting user if necessary: %o", user)
     if (user?.name && user.image) {
       await this.page.locator("#card-user-name").fill(user.name)
       await this.page.locator("#card-user-avatar").fill(user.image)
     }
 
-    logger.info(`-- inputting content(length=${content.length}) `)
+    logger.debug(`-- inputting content: %o`, content)
     await this.page.locator("#card-content").fill(content)
-    // const inputtedContent = await page.locator("#card-content").innerText()
+
+    // const inputtedContent = await this.page.locator("#card-content").innerText()
     // logger.info("-- inputted content length: ", {
     //   target: content.length,
     //   actual: inputtedContent,

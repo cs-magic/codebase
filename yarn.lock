@@ -1969,6 +1969,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/p01-common@workspace:^, @cs-magic/p01-common@workspace:packages-core/common":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/p01-common@workspace:packages-core/common"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/prisma@workspace:packages-core/prisma":
   version: 0.0.0-use.local
   resolution: "@cs-magic/prisma@workspace:packages-core/prisma"
@@ -1976,6 +1982,14 @@ __metadata:
     prisma: "npm:^5.12.1"
     prisma-json-types-generator: "npm:^3.0.4"
     typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/wechat@workspace:packages-core/wechat":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/wechat@workspace:packages-core/wechat"
+  dependencies:
+    "@cs-magic/p01-common": "workspace:^"
   languageName: unknown
   linkType: soft
 

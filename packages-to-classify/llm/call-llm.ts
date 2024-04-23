@@ -1,4 +1,4 @@
-import { ILlmMessage } from "@cs-magic/p01-card/src/schema/message"
+import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import OpenAI, { ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api } from "../api-client/api"

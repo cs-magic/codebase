@@ -1,5 +1,7 @@
 "use client"
 
+import { cardOssAtom, cardPreviewAtom } from "@/store/card.atom"
+import { cardPreviewEngineAtom } from "@/store/card.rendered.atom"
 import { updateOssUrl } from "@/utils/update-oss-url.action"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"
@@ -7,17 +9,8 @@ import { useAtom } from "jotai"
 import { domToBlob } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
+import { Action2Type, ActionType } from "@cs-magic/p01-common/schema/card"
 import { uploadFile } from "../../../../packages-to-classify/oss/upload"
-import { getOssUrl } from "../../../../packages-to-classify/oss/utils"
-import {
-  Action2Type,
-  ActionType,
-} from "../../../../packages-core/common/schema/card"
-import {
-  cardOssIdAtom,
-  cardPreviewAtom,
-  cardPreviewEngineAtom,
-} from "@/store/card.atom"
 import { CardAction } from "./card-action"
 
 export const CardAction2 = ({
@@ -30,7 +23,7 @@ export const CardAction2 = ({
   rendered: boolean
 }) => {
   const [preview] = useAtom(cardPreviewAtom)
-  const [cardOssId] = useAtom(cardOssIdAtom)
+  const [oss] = useAtom(cardOssAtom)
   const [engine] = useAtom(cardPreviewEngineAtom)
 
   const action = async (type: ActionType) => {
@@ -78,15 +71,14 @@ export const CardAction2 = ({
       //     break
       //
       case "upload":
-        if (!cardOssId) return
-        const file = new File([blob], cardOssId, {
+        if (!oss) return
+        const file = new File([blob], oss.key, {
           type: blob.type,
         })
         await uploadFile(file)
-        const ossUrl = getOssUrl(cardOssId)
 
-        await updateOssUrl(cardOssId, ossUrl)
-        toast.success(`uploaded at ${ossUrl}`, {
+        await updateOssUrl(oss.id, oss.url)
+        toast.success(`uploaded at ${oss.url}`, {
           closeButton: true,
         })
     }

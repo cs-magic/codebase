@@ -1,22 +1,24 @@
-"use server";
+"use server"
 
 import {
-  cardDetailSchema,
-  ICardDetail,
-} from "@cs-magic/prisma/schema/card.detail";
-import { prisma } from "../../../../packages-to-classify/db/providers/prisma";
+  cardLlmResponseSchema,
+  ICardLlmResponse,
+} from "@cs-magic/prisma/schema/card.detail"
+import { prisma } from "../../../../packages-to-classify/db/providers/prisma"
 
 export const updateOssUrl = async (
-  cardId: string,
+  llmResponseId: string,
   ossUrl: string,
-): Promise<ICardDetail> => {
-  return prisma.card.update({
+): Promise<ICardLlmResponse> => {
+  console.log("-- updateOssUrl: ", { llmResponseId, ossUrl })
+
+  return prisma.llmResponse.update({
     where: {
-      id: cardId,
+      id: llmResponseId,
     },
     data: {
       ossUrl,
     },
-    ...cardDetailSchema,
-  });
-};
+    ...cardLlmResponseSchema,
+  })
+}

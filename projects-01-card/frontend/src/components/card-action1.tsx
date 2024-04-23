@@ -1,14 +1,10 @@
+import { cardGenOptionsAtom } from "@/store/card.gen.atom"
+import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
 import { genCardFromUrl } from "@/utils/gen-card"
 import { logger } from "@cs-magic/log/logger"
 import { useAtom, useSetAtom } from "jotai"
 import { Action1Type } from "../../../../packages-core/common/schema/card"
-import {
-  cardArticleUrlAtom,
-  cardGenOptionsAtom,
-  cardInnerInputAtom,
-  cardUserAvatarAtom,
-  cardUserNameAtom,
-} from "../store/card.atom"
+import { cardArticleUrlAtom, cardInnerInputAtom } from "../store/card.atom"
 import { CardAction } from "./card-action"
 
 export const CardAction1 = ({ type }: { type: Action1Type }) => {

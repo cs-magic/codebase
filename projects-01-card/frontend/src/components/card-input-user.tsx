@@ -1,10 +1,10 @@
 "use client"
 
+import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
 import { useAtom } from "jotai"
 import React from "react"
 import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
 import { LabelLine } from "../../../../packages-to-classify/ui/components/label-line"
-import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.atom"
 
 export const CardInputUser = () => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)

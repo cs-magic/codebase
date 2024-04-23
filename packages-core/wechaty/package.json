@@ -6,7 +6,8 @@
   "scripts": {
     "prerun": "yarn workspace wechaty-puppet-padlocal build",
     "dev:watch": "tsx index.ts",
-    "dev": "tsx index.ts"
+    "dev": "tsx index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

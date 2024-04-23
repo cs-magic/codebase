@@ -1,5 +1,6 @@
 "use client"
 
+import { cardPreviewEngineAtom } from "@/store/card.rendered.atom"
 import { useAtomValue } from "jotai"
 import React from "react"
 import { useSearchParam } from "../../../../packages-to-classify/hooks/use-search-param"
@@ -11,7 +12,7 @@ import {
   cardPreviewEngineTypeSchema,
   type GenCardApproach,
 } from "../../../../packages-core/common/schema/card"
-import { cardPreviewAtom, cardPreviewEngineAtom } from "../store/card.atom"
+import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreview } from "./card-preview"

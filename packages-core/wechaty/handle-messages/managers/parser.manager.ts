@@ -213,7 +213,7 @@ export class ParserManager extends BaseManager {
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
 
-      const inner = url2preview(url, convPreference.fetch)
+      const inner = await url2preview(url, convPreference.fetch)
 
       const { cardUrl } = await ParserManager.uniParser.genCard(
         JSON.stringify(inner),

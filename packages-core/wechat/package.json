@@ -1,0 +1,12 @@
+{
+  "name": "@cs-magic/wechat",
+  "packageManager": "yarn@4.1.1",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts"
+  },
+  "dependencies": {
+    "@cs-magic/p01-common": "workspace:^"
+  }
+}

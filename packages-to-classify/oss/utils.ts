@@ -2,16 +2,16 @@ import { OSS_DOMAIN } from "./const"
 
 /**
  * based on ali oss, ref: https://help.aliyun.com/zh/oss/user-guide/resize-images-4
- * @param s
+ * @param ossKeyWithSuffix
  * @param width
  * @param height
  */
 export const getOssUrl = (
-  s: string,
+  ossKeyWithSuffix: string,
   params?: { width?: number; height?: number },
 ) => {
-  if (!/^(?:\/|http)/.test(s)) {
-    s = OSS_DOMAIN + s
+  if (!/^(?:\/|http)/.test(ossKeyWithSuffix)) {
+    ossKeyWithSuffix = OSS_DOMAIN + ossKeyWithSuffix
   }
 
   const width = params?.width
@@ -28,5 +28,5 @@ export const getOssUrl = (
     else if (height) prefix += `m_lfit，h_${height}`
   }
 
-  return s + prefix
+  return ossKeyWithSuffix + prefix
 }

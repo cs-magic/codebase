@@ -1,34 +1,18 @@
+import { cardUserAtom } from "@/store/card.user.atom"
+
+import { getOssKeyWithSuffix } from "@/utils/get-oss-key-with-suffix"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import {
-  CardPreviewEngineType,
-  GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   ICardPreview,
-} from "../../../../packages-core/common/schema/card"
-import { cardSummaryOptionsAtom } from "@/store/card.llm.atom"
-import {
-  cardFetchCommentsEnabledAtom,
-  cardFetchWithCacheAtom,
-} from "@/store/card.query.atom"
-
-import { getCardUrl } from "@/utils/get-card-url"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+} from "@cs-magic/p01-common/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import {
-  RequestApproachType,
-  RequestOptions,
-} from "../../../../packages-core/wechat/wxmp-article/fetch/approaches/nodejs/requestPage"
-
-import { BackendType } from "../../../../packages-to-classify/llm/schema/llm.base"
+import { getOssUrl } from "../../../../packages-to-classify/oss/utils"
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
 
 export const cardInnerInputAtom = atomWithStorage("card.inner.input", "")
-
-export const cardUserIdAtom = atomWithStorage("card.user.id", "")
-export const cardUserAvatarAtom = atomWithStorage("card.user.avatar", "")
-export const cardUserNameAtom = atomWithStorage("card.user.name", "")
 
 export const cardAuthorWithTitleAtom = atomWithStorage(
   "card.author.with-title",
@@ -36,23 +20,6 @@ export const cardAuthorWithTitleAtom = atomWithStorage(
 )
 
 export const cardNewContentAtom = atomWithStorage("card.new.content", "")
-
-export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngineType>(
-  "card.preview.engine",
-  "modern-screenshot",
-)
-
-export const backendTypeAtom = atomWithStorage<BackendType>(
-  "backend.type",
-  "nodejs",
-)
-
-export const requestApproachTypeAtom = atomWithStorage<RequestApproachType>(
-  "request.approach.type",
-  "simulate",
-)
-
-export const requestIsHeadlessAtom = atomWithStorage("request.headless", true)
 
 ///////////////////////////////
 // derived
@@ -64,50 +31,24 @@ export const cardPreviewAtom = atom<ICardPreview | null>((get) => {
   const inner = parseJsonSafe<ICardInnerPreview>(llmResponseInput)
 
   console.log({ llmResponseInput, inner })
-  if (!inner) return null
-
   return {
     outer: {
-      id: inner?.id,
+      id: "",
       user,
     },
-    inner: inner,
+    inner,
   }
 })
 
-export const cardUserAtom = atom<IUserSummary>((get) => ({
-  id: get(cardUserIdAtom),
-  name: get(cardUserNameAtom),
-  image: get(cardUserAvatarAtom),
-}))
-
-export const cardOssIdAtom = atom<string | null>((get) => {
+export const cardOssAtom = atom((get) => {
   const preview = get(cardPreviewAtom)
-  const id = preview?.outer?.id
+  const id = preview?.inner?.id
+  console.log("-- cardOssId: ", { preview, id })
   if (!id) return null
-  return getCardUrl(id)
+  const key = getOssKeyWithSuffix(id)
+  return {
+    id,
+    key,
+    url: getOssUrl(key, {}),
+  }
 })
-
-export const requestOptionsAtom = atom<RequestOptions>((get) => ({
-  backendType: get(backendTypeAtom),
-  approach: {
-    type: get(requestApproachTypeAtom),
-    headless: get(requestIsHeadlessAtom),
-  },
-}))
-
-export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
-  (get) => ({
-    stat: {
-      enabled: false,
-    },
-    comments: {
-      enabled: get(cardFetchCommentsEnabledAtom),
-    },
-    withCache: get(cardFetchWithCacheAtom),
-    detail: {
-      request: get(requestOptionsAtom),
-      llmResponse: get(cardSummaryOptionsAtom),
-    },
-  }),
-)

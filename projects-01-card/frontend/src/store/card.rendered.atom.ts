@@ -1,4 +1,6 @@
+import { CardPreviewEngineType } from "@cs-magic/p01-common/schema/card"
 import { atom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
 
 export const cardMindmapRenderedAtom = atom(true)
 export const cardCoverRenderedAtom = atom(false)
@@ -15,3 +17,8 @@ export const cardRenderedAtom = atom((get) => {
   // console.log({ cover, mindmap, user, author, rendered })
   return rendered
 })
+
+export const cardPreviewEngineAtom = atomWithStorage<CardPreviewEngineType>(
+  "card.preview.engine",
+  "modern-screenshot",
+)

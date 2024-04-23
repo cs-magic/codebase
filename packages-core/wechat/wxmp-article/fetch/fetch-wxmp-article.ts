@@ -1,5 +1,5 @@
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-card/src/schema/card"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { Card, LlmResponse } from "@prisma/client"
 import { prisma } from "../../../../packages-to-classify/db/providers/prisma"
@@ -41,6 +41,8 @@ export const fetchWxmpArticle = async (
     })
   }
 
+  console.log("-- article: ", article)
+
   const model = options?.detail?.summary?.model ?? "gpt-3.5-turbo"
 
   // console.log({ found })
@@ -54,15 +56,21 @@ export const fetchWxmpArticle = async (
     },
   })
   if (!llmResponse) {
+    const response = await md2summary(
+      article.contentMd!,
+      options?.detail?.summary,
+    )
     llmResponse = await prisma.llmResponse.create({
       data: {
+        // use query id as the storage id
+        id: response.query.id,
         cardId: article.id,
-        response: JSON.stringify(
-          await md2summary(article.contentMd!, options?.detail?.summary),
-        ),
+        response: JSON.stringify(response),
       },
     })
   }
+
+  console.log("-- llmResponse: ", llmResponse)
 
   return {
     article,
