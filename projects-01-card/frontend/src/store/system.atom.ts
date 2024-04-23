@@ -1,8 +1,8 @@
-import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
-import { BEST_VIEWPOINT } from "../../../../packages-to-classify/ui/config";
-import { uiScreenAtom } from "../../../../packages-to-classify/ui/store";
-import { ScenarioType } from "../schema/scenario";
+import { atom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
+import { BEST_VIEWPOINT } from "../../../../packages-to-classify/ui/config"
+import { uiScreenAtom } from "../../../../packages-to-classify/ui/store"
+import { ScenarioType } from "../../../../packages-core/common/schema/scenario"
 
 //////////////////////////////
 // base
@@ -12,22 +12,19 @@ import { ScenarioType } from "../schema/scenario";
  * 场景类型
  */
 
-export const scenarioTypeAtom = atom<ScenarioType>("text2text");
+export const scenarioTypeAtom = atom<ScenarioType>("text2text")
 
 /**
  * 用户当前的输入，用于后续跳转
  */
-export const userInputAtom = atom("");
+export const userInputAtom = atom("")
 
 /**
  * 用于用户打断生成
  */
-export const appStopGeneratingScopeAtom = atom(false);
+export const appStopGeneratingScopeAtom = atom(false)
 
-export const appsPlaceholderCountAtom = atomWithStorage(
-  "apps.placeholder.n",
-  2,
-);
+export const appsPlaceholderCountAtom = atomWithStorage("apps.placeholder.n", 2)
 
 //////////////////////////////
 // derived
@@ -43,4 +40,4 @@ export const maxAppsOnScreenAtom = atom((get) =>
     ),
     2, // se: 375x667
   ),
-);
+)

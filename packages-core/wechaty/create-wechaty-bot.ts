@@ -2,27 +2,24 @@ import { logger } from "@cs-magic/log/logger"
 import dotenv from "dotenv"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
-import { PuppetPadlocal } from "@cs-magic/wechaty-puppet-padlocal"
 import { getEnv } from "../../packages-to-classify/env"
+import { logEnv } from "../../packages-to-classify/env/utils/log-env"
 import { Path } from "../../packages-to-classify/path"
 import { handleMessage } from "./handle-messages/handle-message"
 import { SenderQueue } from "./handle-messages/sender-queue"
 import { initBotStaticContext } from "./utils/bot-context"
 import { getBotWxid } from "./utils/bot-wxid"
 
+// load wechaty-puppet env
 dotenv.config({ path: Path.envFile })
-// logEnv("wechaty")
-
-const env = getEnv()
+getEnv()
+logEnv("wechaty")
 
 export const createWechatyBot = ({ name }: { name?: string }) => {
   logger.info(`-- init bot(name=${name})`)
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
-    puppet: new PuppetPadlocal({
-      token: env.WECHATY_PUPPET_PADLOCAL_TOKEN,
-    }),
   }) as Wechaty // 等会再更新其他扩展的信息
 
   bot

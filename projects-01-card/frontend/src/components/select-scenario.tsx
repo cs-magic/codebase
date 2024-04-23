@@ -2,17 +2,17 @@ import {
   Select,
   SelectContent,
   SelectValue,
-} from "../../../../packages-to-classify/ui-shadcn/components/select";
-import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select";
-import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets";
-import { scenarioTypeAtom } from "../store/system.atom";
+} from "../../../../packages-to-classify/ui-shadcn/components/select"
+import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
+import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
+import { scenarioTypeAtom } from "../store/system.atom"
 
-import { SelectModel } from "./_select-model";
-import { useAtom } from "jotai";
-import { ScenarioType } from "../schema/scenario";
+import { SelectModel } from "./_select-model"
+import { useAtom } from "jotai"
+import { ScenarioType } from "../../../../packages-core/common/schema/scenario"
 
 export const SelectScenario = () => {
-  const [type, setType] = useAtom(scenarioTypeAtom);
+  const [type, setType] = useAtom(scenarioTypeAtom)
 
   return (
     <Select value={type} onValueChange={(s) => setType(s as ScenarioType)}>
@@ -33,5 +33,5 @@ export const SelectScenario = () => {
         />
       </SelectContent>
     </Select>
-  );
-};
+  )
+}

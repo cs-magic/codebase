@@ -1,4 +1,4 @@
-import { deserializeRefMsgPayload } from "@cs-magic/wechaty-puppet-padlocal"
+import { deserializeRefMsgPayload } from "../../wechaty-puppet/ref-msg"
 
 export type PadlocalVersion = "raw@1.20" | "mark@2024-04-19"
 

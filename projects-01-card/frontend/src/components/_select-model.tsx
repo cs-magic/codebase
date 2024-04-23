@@ -1,4 +1,4 @@
-import { ScenarioType } from "../schema/scenario"
+import { ScenarioType } from "../../../../packages-core/common/schema/scenario"
 import { ElementType } from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import {

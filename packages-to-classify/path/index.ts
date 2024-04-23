@@ -12,6 +12,8 @@ export class Path {
 
   static projectDir = path.dirname(Path.packagesDir)
 
+  static llmPackageDir = path.join(Path.projectDir, "packages-to-classify/llm")
+
   static envFile = path.join(Path.projectDir, ".env")
   static envLocalFile = path.join(Path.projectDir, ".env.local")
   static generatedDir = ensureDirSync(path.join(Path.projectDir, ".generated"))

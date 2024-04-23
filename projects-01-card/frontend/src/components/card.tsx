@@ -10,7 +10,7 @@ import { AtomSelector } from "../../../../packages-to-classify/ui/components/ato
 import {
   cardPreviewEngineTypeSchema,
   type GenCardApproach,
-} from "../schema/card"
+} from "../../../../packages-core/common/schema/card"
 import { cardPreviewAtom, cardPreviewEngineAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"

@@ -3,7 +3,7 @@ import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   ICardPreview,
-} from "@/schema/card"
+} from "../../../../packages-core/common/schema/card"
 import { cardSummaryOptionsAtom } from "@/store/card.llm.atom"
 import {
   cardFetchCommentsEnabledAtom,

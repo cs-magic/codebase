@@ -1,4 +1,14 @@
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import last from "lodash/last"
+
+export const sampleUserAvatar =
+  "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0"
+export const sampleUser: IUserSummary = {
+  id: "",
+  name: "南川 Mark",
+  image: sampleUserAvatar,
+  avatar: sampleUserAvatar,
+}
 
 export const sampleWxmpArticleUrls = [
   "https://mp.weixin.qq.com/s/HdVZGKjViUVe1bd9v17ANQ",
@@ -77,3 +87,6 @@ export const sampleWxmpArticleComment = {
     start_offset: 0,
   },
 }
+export const sampleXiaoHongShuVideoUrl =
+  // "https://sns-video-al.xhscdn.com/stream/110/259/01e5f031772b1784010370038e32417132_259.mp4"
+  "https://sns-video-al.xhscdn.com/stream/110/258/01e5f031772b1784010370038e32416831_258.mp4"

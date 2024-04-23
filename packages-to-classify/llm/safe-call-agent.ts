@@ -31,7 +31,7 @@ export const safeCallAgent = async ({
   })
 
   const yamlConfig = await promises.readFile(
-    path.join(Path.projectDir, `packages/llm/config/${agentType}.agent.yml`),
+    path.join(Path.llmPackageDir, `config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface

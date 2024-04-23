@@ -1,4 +1,4 @@
-import { PuppetPadlocal, VERSION, deserializeRefMsgPayload } from "./puppet-padlocal";
+import { PuppetPadlocal, VERSION, AppMessageType } from "./puppet-padlocal";
 
-export { VERSION, PuppetPadlocal, deserializeRefMsgPayload };
+export { VERSION, PuppetPadlocal, AppMessageType };
 export default PuppetPadlocal;

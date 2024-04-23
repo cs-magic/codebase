@@ -3,11 +3,12 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
-import { url2preview } from "@cs-magic/p01-card/src/utils/url-preview"
+
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
 import { CardSimulator } from "../../../../packages-to-classify/spider/card-simulator"
+import { url2preview } from "../../../common/url2preview"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvTable } from "../../utils/get-conv-table"
 import { getQuotedMessage } from "../../utils/get-quoted-message"
@@ -84,7 +85,7 @@ export class ParserManager extends BaseManager {
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
-        talkerName: this.talkingUser.name,
+        talkerName: this.talkingUser.name ?? "",
         text,
         id: message.id,
       },
@@ -107,7 +108,7 @@ export class ParserManager extends BaseManager {
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
-        talkerName: this.talkingUser.name,
+        talkerName: this.talkingUser.name ?? "",
         text,
         id: message.id,
       },
@@ -194,18 +195,20 @@ export class ParserManager extends BaseManager {
       const url = parseUrlFromWechatUrlMessage(parseText(message.text))
       // 仅供测试环境
       // await dumpFile({ text: message.text, url }, `${Date.now()}.json`)
-      logger.info(`-- url in message: ${url}`)
+      logger.info(`parser url=${url}`)
       if (!url) return
 
-      if (!isWxmpArticleUrl(url)) return
+      if (!isWxmpArticleUrl(url))
+        return logger.info(`passed since it's not wxmp article`)
 
       const convPreference = await this.getConvPreference()
-      if (!convPreference.parserEnabled) return
+      if (!convPreference.parserEnabled)
+        return logger.info(`passed since parser disabled`)
 
       // initLogWithTimer()
 
-      void this.notify(`parsing[${ParserManager.toParse}] mid=${message.id}`)
       ++ParserManager.toParse
+      void this.notify(`parsing [${ParserManager.toParse}] mid=${message.id}`)
 
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()

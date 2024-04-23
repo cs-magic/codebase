@@ -4,10 +4,11 @@ import { z } from "zod"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "../../../../packages-core/wechat/wxmp-article/detail/schema"
-import { FetchWxmpArticleDetailOptions } from "../../../../packages-core/wechat/wxmp-article/fetch/schema"
-import { LlmModelType } from "../../../../packages-to-classify/llm/schema/llm.models"
-import { IArticleSummaryParsed } from "@/utils/parse-summary"
+} from "../../wechat/wxmp-article/detail/schema"
+import { FetchWxmpArticleDetailOptions } from "../../wechat/wxmp-article/fetch/schema"
+import { LlmModelType } from "../../../packages-to-classify/llm/schema/llm.models"
+
+import { IArticleSummaryParsed } from "./query"
 
 export type ICardPlatform<T extends $Enums.PlatformType = any> =
   T extends typeof $Enums.PlatformType.wxmpArticle

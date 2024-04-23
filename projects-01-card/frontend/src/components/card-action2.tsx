@@ -9,7 +9,10 @@ import { RefObject } from "react"
 import { toast } from "sonner"
 import { uploadFile } from "../../../../packages-to-classify/oss/upload"
 import { getOssUrl } from "../../../../packages-to-classify/oss/utils"
-import { Action2Type, ActionType } from "@/schema/card"
+import {
+  Action2Type,
+  ActionType,
+} from "../../../../packages-core/common/schema/card"
 import {
   cardOssIdAtom,
   cardPreviewAtom,

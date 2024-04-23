@@ -6,3 +6,11 @@ export type IBaseResponse = {
   error?: string | null
   updatedAt?: Date
 }
+
+export type IArticleSummaryParsed = {
+  title?: string
+  description?: string
+  mindmap?: string
+  comment?: string
+  tags?: string[]
+}

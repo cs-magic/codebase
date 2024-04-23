@@ -3,7 +3,7 @@ import { useSetAtom } from "jotai"
 import Image from "next/image"
 import { useEffect } from "react"
 import { AspectRatio } from "../../../../packages-to-classify/ui-shadcn/components/aspect-ratio"
-import { IMedia } from "../schema/card"
+import { IMedia } from "../../../../packages-core/common/schema/card"
 
 export const Cover = ({ cover }: { cover?: IMedia | null }) => {
   const setCardCoverRendered = useSetAtom(cardCoverRenderedAtom)

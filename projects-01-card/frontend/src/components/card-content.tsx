@@ -2,7 +2,7 @@
 
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import MarkMap from "../../../../packages-to-classify/visualization/markmap"
-import { ICardInnerPreview } from "../schema/card"
+import { ICardInnerPreview } from "../../../../packages-core/common/schema/card"
 import { CardContentAuthor } from "./card-content-author"
 import { Cover } from "./card-content-cover"
 import { Tags } from "./card-content-tags"

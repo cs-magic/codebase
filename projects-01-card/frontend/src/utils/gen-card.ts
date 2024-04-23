@@ -1,14 +1,14 @@
 "use server"
 
-import { url2preview } from "@/utils/url-preview"
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { logger } from "@cs-magic/log/logger"
+import { url2preview } from "../../../../packages-core/common/url2preview"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
-} from "../schema/card"
+} from "../../../../packages-core/common/schema/card"
 
 /**
  * 从用户输入的 url 中返回解析出的结构

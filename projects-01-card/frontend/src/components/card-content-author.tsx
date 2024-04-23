@@ -8,10 +8,10 @@ import { useEffect } from "react"
 import moment from "../../../../packages-to-classify/datetime/moment"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import { VerticalAspectRatio } from "../../../../packages-to-classify/ui/components/aspect-ratio"
-import { ICardInnerPreview } from "../schema/card"
+import { ICardInnerPreview } from "../../../../packages-core/common/schema/card"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import { UserAvatar } from "./user-avatar"
-import { getPlatformName } from "@/utils/utils"
+import { getPlatformName } from "@/utils/card-platform/get-platform-name"
 
 export const CardContentAuthor = ({
   render,

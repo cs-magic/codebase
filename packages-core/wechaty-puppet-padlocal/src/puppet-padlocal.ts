@@ -7,7 +7,7 @@ import PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import { genIdempotentId } from "padlocal-client-ts/dist/utils/Utils.js";
 import { CacheManager, RoomMemberMap } from "./padlocal/cache-manager.js";
 import { isIMContactId, isRoomId } from "./padlocal/utils/is-type.js";
-import { parseAppmsgMessagePayload, deserializeRefMsgPayload } from "./padlocal/messages/message-appmsg.js";
+import { parseAppmsgMessagePayload, AppMessageType } from "./padlocal/messages/message-appmsg.js";
 import { parseMiniProgramMessagePayload } from "./padlocal/messages/message-miniprogram.js";
 import { parseEvent, EventType } from "./padlocal/events/mod.js";
 import * as XMLParser from "fast-xml-parser";
@@ -1664,5 +1664,5 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 }
 
-export { PuppetPadlocal, VERSION, deserializeRefMsgPayload };
+export { PuppetPadlocal, VERSION, AppMessageType };
 export default PuppetPadlocal;

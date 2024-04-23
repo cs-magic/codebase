@@ -13,7 +13,7 @@ import { HTMLAttributes } from "react"
 import { Atom } from "../../../../packages-to-classify/state-management/jotai/types"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import { ButtonWithLoading } from "../../../../packages-to-classify/ui/components/button-with-loading"
-import { ActionType } from "../schema/card"
+import { ActionType } from "../../../../packages-core/common/schema/card"
 
 export const CardAction = ({
   disabled,

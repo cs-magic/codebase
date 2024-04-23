@@ -1,6 +1,6 @@
 import { EyeIcon, HeartIcon, MessageSquareTextIcon } from "lucide-react"
 import { StatItem } from "../../../../packages-to-classify/ui/components/stat-item"
-import { ICardStat } from "../schema/card"
+import { ICardStat } from "../../../../packages-core/common/schema/card"
 
 export const Stat = ({ stat }: { stat: ICardStat | null | undefined }) => {
   if (!stat) return null

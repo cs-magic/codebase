@@ -1,14 +1,14 @@
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { logger } from "@cs-magic/log/logger"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   IMedia,
-} from "@/schema/card"
-import { parseSummary } from "@/utils/parse-summary"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
-import { logger } from "@cs-magic/log/logger"
+} from "./schema/card"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import { fetchWxmpArticle } from "../../../../packages-core/wechat/wxmp-article/fetch"
-import { ILlmRes } from "../../../../packages-to-classify/llm/schema/llm.api"
+import { ILlmRes } from "../../packages-to-classify/llm/schema/llm.api"
+import { fetchWxmpArticle } from "../wechat/wxmp-article/fetch"
+import { parseSummary } from "./utils/parse-summary"
 
 export const url2preview = async (
   url: string,
@@ -31,7 +31,7 @@ export const url2preview = async (
     },
   }
 
-  logger.info(`-- inputting: %o`, inner)
+  logger.info(`-- inputting inner: %o`, inner)
 
   return inner
 }

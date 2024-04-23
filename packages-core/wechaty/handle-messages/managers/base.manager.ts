@@ -1,7 +1,7 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
-import { IUserSummaryFull } from "@cs-magic/prisma/schema/user.summary"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getBotContext } from "../../utils/bot-context"
@@ -69,15 +69,16 @@ export class BaseManager {
     return this.conv.id
   }
 
-  get talkingUser(): IUserSummaryFull {
+  get talkingUser(): IUserSummary {
     const sender = this.message.talker()
     const image = sender.payload?.avatar
-    if (!image) throw new Error("talking user has no avatar")
+    // puppet-web有问题，拿不到avatar
+    // if (!image) throw new Error("talking user has no avatar")
 
     return {
       id: sender.id,
       name: sender.name(),
-      image,
+      image: image ?? null,
     }
   }
 
@@ -100,13 +101,6 @@ export class BaseManager {
 
   async getRoomTopic() {
     return await this.room?.topic()
-  }
-
-  async formatTalker() {
-    return await formatTalker({
-      talkerName: this.talkingUser.name,
-      roomTopic: await this.getRoomTopic(),
-    })
   }
 
   async parse(input?: string) {
