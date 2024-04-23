@@ -5,7 +5,7 @@ import { promises } from "fs"
 
 import nodeFetch from "node-fetch"
 import { request } from "undici"
-import { sampleXiaoHongShuVideoUrl } from "../../../../samples"
+import { sampleXiaoHongShuVideoUrl } from "../../../samples"
 
 export type FetchType = "fetch" | "node-fetch" | "undici" | "axios"
 
