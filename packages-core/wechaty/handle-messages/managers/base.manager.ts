@@ -128,7 +128,7 @@ export class BaseManager {
   }
 
   async getData() {
-    return this.i18n[(await this.getLang()) ?? "en"]!
+    return this.i18n[await this.getLang()] ?? this.i18n.en
   }
 
   async getTitle() {
