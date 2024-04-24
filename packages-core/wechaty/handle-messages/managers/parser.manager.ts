@@ -57,7 +57,9 @@ export class ParserManager extends BaseManager {
         "Status:",
         `  - enabled: ${preference.parserEnabled}`,
       ].join("\n"),
-      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+      Object.keys(commands).map(
+        (command) => `  ${ParserManager.name} ${command}`,
+      ),
     )
   }
 

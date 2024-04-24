@@ -3,10 +3,7 @@ import { types } from "wechaty"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../packages-to-classify/llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getConvPreference } from "../../utils/get-conv-preference"
-import { getConvRow } from "../../utils/get-conv-row"
 import { getConvTable } from "../../utils/get-conv-table"
-import { getRobustPreference } from "../../utils/get-robust-preference"
 import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-topic"
 import { listTopics } from "../../utils/list-topics"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -61,7 +58,9 @@ export class ChatterManager extends BaseManager {
         "Status:",
         `  - enabled: ${preference.chatterEnabled}`,
       ].join("\n"),
-      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+      Object.keys(commands).map(
+        (command) => `  ${ChatterManager.name} ${command}`,
+      ),
     )
   }
 
@@ -90,30 +89,8 @@ export class ChatterManager extends BaseManager {
         case "disable":
           await this.disableChat()
           break
-
-        // case "list":
-        //   await this.listTopicsAction()
-        //   break
-        //
-        // case "new":
-        //   await this.newTopic(parsed.args)
-        //   break
       }
     }
-  }
-
-  async _listTopics() {
-    return listTopics(this.convId)
-  }
-
-  async listTopicsAction() {
-    const topics = await this._listTopics()
-    await this.standardReply(
-      Object.keys(topics)
-        .map((k, index) => `${index + 1}. ${k} (${topics[k]}条消息)`)
-        .join("\n"),
-      ["chatter new"],
-    )
   }
 
   async enableChat() {
@@ -131,7 +108,7 @@ export class ChatterManager extends BaseManager {
       [
         // "chatter list",
         // "chatter new",
-        "- You should @me if you are in a group chat.",
+        "- You should @me or using prefix of `?` if you are in a group chat.",
         "- You can deactivate me via sending: `chatter disable`",
       ],
     )
@@ -170,7 +147,7 @@ export class ChatterManager extends BaseManager {
         ) &&
         // 支持 叹号快捷触发
         //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
-        !/^[!！]/.exec(this.text)) ||
+        !/^[?？]/.exec(this.text)) ||
       // 过滤非文本 todo: image/xxxx
       m.type() !== types.Message.Text
     )

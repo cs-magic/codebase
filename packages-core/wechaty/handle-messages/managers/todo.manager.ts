@@ -93,7 +93,9 @@ export class TodoManager extends BaseManager {
     const desc = await this.getDescription()
     await this.standardReply(
       [desc].join("\n"),
-      Object.keys(commands).map((command) => `  ${this.name} ${command}`),
+      Object.keys(commands).map(
+        (command) => `  ${TodoManager.name} ${command}`,
+      ),
     )
   }
 

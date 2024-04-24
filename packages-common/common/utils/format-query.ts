@@ -21,7 +21,7 @@ export const formatQuery = (
 
   lines.push(content)
 
-  if (options?.tips) lines.push("TIPS: ", options.tips)
+  if (options?.tips) lines.push(["TIPS: ", options.tips].join("\n"))
 
   if (options?.commandStyle === CommandStyle.standard && options?.footer)
     lines.push("  " + options.footer)
