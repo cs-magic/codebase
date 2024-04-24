@@ -217,7 +217,7 @@ export class ChatterManager extends BaseManager {
     }))
     // logger.info(`--  context(len=${context.length})`)
 
-    void this.notify(`calling LLM`)
+    void this.notify(`🌈 calling LLM`)
 
     const res = await safeCallLLM({
       messages: context,
@@ -233,6 +233,6 @@ export class ChatterManager extends BaseManager {
       )
 
     void this.addTask(() => m.say(content))
-    void this.notify(`✅ calling LLM`)
+    void this.notify(`✅ called LLM`)
   }
 }

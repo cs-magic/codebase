@@ -183,7 +183,9 @@ export class ParserManager extends BaseManager {
       // initLogWithTimer()
 
       ++ParserManager.toParse
-      void this.notify(`parsing [${ParserManager.toParse}] mid=${message.id}`)
+      void this.notify(
+        `🌈 parsing [${ParserManager.toParse}] mid=${message.id}`,
+      )
 
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
@@ -198,7 +200,7 @@ export class ParserManager extends BaseManager {
 
       const file = FileBox.fromUrl(cardUrl)
       void this.addTask(async () => this.conv?.say(file))
-      void this.notify(`parsed mid=${message.id}`)
+      void this.notify(`✅ parsed mid=${message.id}`)
       logger.info("-- sent file")
     } catch (e) {
       const s = formatError(e)
