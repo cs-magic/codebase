@@ -1,7 +1,10 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
-import { parseUrlFromWechatUrlMessage } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
+import {
+  parseTitleFromWechatUrlMessage,
+  parseUrlFromWechatUrlMessage,
+} from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
@@ -166,7 +169,8 @@ export class ParserManager extends BaseManager {
       talkerName: string
     }
   }) {
-    const url = parseUrlFromWechatUrlMessage(parseText(message.text))
+    const text = parseText(message.text)
+    const url = parseUrlFromWechatUrlMessage(text)
     // 仅供测试环境
     // await dumpFile({ text: message.text, url }, `${Date.now()}.json`)
     logger.info(`parser url=${url}`)
@@ -183,9 +187,8 @@ export class ParserManager extends BaseManager {
       // initLogWithTimer()
 
       ++ParserManager.toParse
-      void this.notify(
-        `🌈 parsing [${ParserManager.toParse}] mid=${message.id}`,
-      )
+      const title = parseTitleFromWechatUrlMessage(text)
+      void this.notify(`🌈 正在解析[${ParserManager.toParse}]: ${title}`)
 
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
@@ -200,7 +203,7 @@ export class ParserManager extends BaseManager {
 
       const file = FileBox.fromUrl(cardUrl)
       void this.addTask(async () => this.conv?.say(file))
-      void this.notify(`✅ parsed mid=${message.id}`)
+      void this.notify(`✅ 解析成功: ${title}`)
       logger.info("-- sent file")
     } catch (e) {
       const s = formatError(e)

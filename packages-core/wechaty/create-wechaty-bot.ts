@@ -17,7 +17,26 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     name, // 加了名字后就可以自动存储了
   }) as Wechaty // 等会再更新其他扩展的信息
 
+  let newInviteesCount = 0
+  const targetInviteesCount = 1
   bot
+    .on("room-join", async (room, inviteeList, inviter, date) => {
+      const roomTopic = await room.topic()
+      const isTargetRoom = /test|机器猫/.test(roomTopic)
+      const roomNotice = await room.announce()
+      logger.info(`invitees: %o`, inviteeList)
+      logger.info(`notice: %o`, roomNotice)
+      if (isTargetRoom) {
+        newInviteesCount += inviteeList.length
+        if (newInviteesCount >= targetInviteesCount) {
+          newInviteesCount = 0
+          // 不能是空字符
+          if (roomNotice.trim()) {
+            await room.say(roomNotice)
+          }
+        }
+      }
+    })
     .on("error", async (err) => {
       // prettyError(err)
     })
