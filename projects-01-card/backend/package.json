@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev-watch": "tsx atch src/server.ts",
-    "dev": "tsx src/server.ts"
+    "_tsx": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config",
+    "dev-watch": "yarn _tsx watch src/server.ts",
+    "dev": "yarn _tsx src/server.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

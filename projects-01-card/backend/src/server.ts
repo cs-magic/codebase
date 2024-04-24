@@ -2,17 +2,13 @@ import { genId } from "@cs-magic/common/utils/gen-id"
 import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import fw from "@fastify/websocket"
-import dotenv from "dotenv"
 
 import Fastify from "fastify"
 import remove from "lodash/remove"
-import { Path } from "../../../packages-to-classify/path"
 import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
 import { syncClients } from "./utils/sync-clients"
 import { transferMessage } from "./utils/transfer-message"
-
-dotenv.config({ path: Path.envFile })
 
 logger.info("fastify initializing...")
 const fastify = Fastify({

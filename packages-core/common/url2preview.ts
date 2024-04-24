@@ -15,7 +15,9 @@ export const url2preview = async (
   fetchOptions?: GenWxmpArticleCardFetchOptions,
 ) => {
   const result = await fetchWxmpArticle(url, fetchOptions)
-  const response = parseJsonSafe<ILlmRes>(result.llmResponse.response)
+  const llmResponse = parseJsonSafe<ILlmRes>(result.llmResponse.response)
+  const response = llmResponse?.response
+  if (!response) throw new Error("llm no response")
 
   const inner: ICardInnerPreview = {
     id: result.llmResponse.id,
@@ -26,8 +28,8 @@ export const url2preview = async (
     time: result.article.time,
     title: result.article.title,
     summary: {
-      parsed: parseSummary(response?.response?.choices[0]?.message.content),
-      model: response?.options.model ?? "gpt-3.5-turbo",
+      parsed: parseSummary(response.choices[0]?.message.content),
+      model: llmResponse.options.model,
     },
   }
 

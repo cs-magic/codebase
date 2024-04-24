@@ -38,7 +38,7 @@ export class SenderQueue {
     while (SenderQueue.queue.length > 0) {
       try {
         const task = SenderQueue.queue.shift()!
-        logger.info(`🏃🏻‍task(cnt=${this.cnt})`)
+        logger.info(`🏃 task(cnt=${this.cnt})`)
         await task()
         logger.info(`✅ task (cnt=${this.cnt})`)
       } catch (e) {

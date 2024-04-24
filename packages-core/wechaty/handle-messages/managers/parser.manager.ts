@@ -166,20 +166,20 @@ export class ParserManager extends BaseManager {
       talkerName: string
     }
   }) {
+    const url = parseUrlFromWechatUrlMessage(parseText(message.text))
+    // 仅供测试环境
+    // await dumpFile({ text: message.text, url }, `${Date.now()}.json`)
+    logger.info(`parser url=${url}`)
+    if (!url) return
+
+    if (!isWxmpArticleUrl(url))
+      return logger.info(`passed since it's not wxmp article`)
+
+    const convPreference = await this.getConvPreference()
+    if (!convPreference.parserEnabled)
+      return logger.info(`passed since parser disabled`)
+
     try {
-      const url = parseUrlFromWechatUrlMessage(parseText(message.text))
-      // 仅供测试环境
-      // await dumpFile({ text: message.text, url }, `${Date.now()}.json`)
-      logger.info(`parser url=${url}`)
-      if (!url) return
-
-      if (!isWxmpArticleUrl(url))
-        return logger.info(`passed since it's not wxmp article`)
-
-      const convPreference = await this.getConvPreference()
-      if (!convPreference.parserEnabled)
-        return logger.info(`passed since parser disabled`)
-
       // initLogWithTimer()
 
       ++ParserManager.toParse
@@ -194,7 +194,6 @@ export class ParserManager extends BaseManager {
         JSON.stringify(inner),
         user,
       )
-
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)

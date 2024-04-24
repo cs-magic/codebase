@@ -1,3 +1,4 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { logger } from "@cs-magic/log/logger"
 import { Message, Sayable, Wechaty } from "wechaty"
 import moment from "../../../packages-to-classify/datetime/moment"
@@ -12,7 +13,11 @@ export const botNotify = async (
   const group = await botGetNotificationGroup(bot)
   if (!group) return logger.error(`no notification group found`)
   if (typeof content === "string") {
-    content = `${content}\n--------\nby ${await formatTalkerFromMessage(message)}\n${moment().format("MM/DD hh:mm:ss")}`
+    content = [
+      content,
+      SEPARATOR_LINE,
+      `by ${await formatTalkerFromMessage(message)}\n${moment().format("MM/DD hh:mm:ss")}`,
+    ].join("\n")
   }
   void bot.sendQueue.addTask(() => group.say(content))
 }

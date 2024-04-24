@@ -97,6 +97,6 @@ export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
     error,
   }
 
-  console.log(`✅ ${formatString(JSON.stringify(res), 60)}`)
+  logger.info(`llm response: ${formatString(JSON.stringify(res), 60)}`)
   return res
 }

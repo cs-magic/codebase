@@ -41,7 +41,7 @@ export const handleMessage = async (
         break
     }
 
-    logger.debug(`✅ ${result.command} ${result.args}`)
+    logger.debug(`parsed command: ${result.command} ${result.args}`)
   } catch (e) {
     formatError(e)
   }

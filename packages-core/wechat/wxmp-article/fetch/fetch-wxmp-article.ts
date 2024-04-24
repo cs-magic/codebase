@@ -1,3 +1,5 @@
+import { formatString } from "@cs-magic/common/utils/format-string"
+import { logger } from "@cs-magic/log/logger"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
@@ -7,6 +9,7 @@ import { md2summary } from "./approaches/nodejs/md2summary"
 import { requestPage } from "./approaches/nodejs/requestPage"
 
 export type FetchWxmpArticleRes = { article: Card; llmResponse: LlmResponse }
+
 export const fetchWxmpArticle = async (
   url: string,
   options?: GenWxmpArticleCardFetchOptions,
@@ -41,7 +44,7 @@ export const fetchWxmpArticle = async (
     })
   }
 
-  console.log("-- article: ", article)
+  logger.debug(`-- article: ${formatString(JSON.stringify(article), 120)}`)
 
   const model = options?.detail?.summary?.model ?? "gpt-3.5-turbo"
 
@@ -70,7 +73,9 @@ export const fetchWxmpArticle = async (
     })
   }
 
-  console.log("-- llmResponse: ", llmResponse)
+  logger.debug(
+    `-- llmResponse: ${formatString(JSON.stringify(llmResponse), 120)}`,
+  )
 
   return {
     article,
