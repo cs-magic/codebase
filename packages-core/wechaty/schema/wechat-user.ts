@@ -22,11 +22,18 @@ export type IWechatPreference = {
   maxOutputLines?: number
   commandStyle?: CommandStyle
   fetch?: GenWxmpArticleCardFetchOptions
+
+  onRoomJoin?: {
+    sayAnnounce?: {
+      enabled?: boolean
+      n?: number
+    }
+  }
 }
 
 /**
  * 用户数据（不可用户手动修改）
  */
 export type IWechatData = {
-  //
+  roomNewInvitees: string[]
 }

@@ -2,7 +2,13 @@ import { z } from "zod"
 import { LangType } from "../../../packages-to-classify/i18n/schema"
 import { Priority } from "../handle-messages/managers/todo.manager"
 
-export const featureTypeSchema = z.enum(["system", "todo", "chatter", "parser"])
+export const featureTypeSchema = z.enum([
+  "system",
+  "todo",
+  "chatter",
+  "parser",
+  "room",
+])
 export type FeatureType = z.infer<typeof featureTypeSchema>
 
 export const managerTypeSchema = z.enum(["base", ...featureTypeSchema.options])
@@ -21,14 +27,17 @@ export const commandsSchema = z.enum([
 ])
 export type CommandType = z.infer<typeof commandsSchema>
 
-export type FeatureMap<T extends string> = Record<
-  LangType,
-  {
-    title: string
-    description: string
-    commands: Record<
-      string,
-      { type: T; description?: string; priority?: Priority }
-    >
-  }
->
+export type Feature<T> = {
+  title: string
+  description: string
+  commands: Record<
+    string,
+    { type: T; description?: string; priority?: Priority }
+  >
+}
+
+export type FeatureMap<T extends string> = {
+  [K in Exclude<LangType, "en">]?: Feature<T>
+} & {
+  en: Feature<T>
+}

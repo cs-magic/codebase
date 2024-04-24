@@ -20,36 +20,6 @@ const commandTypeSchema = z.enum([
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
-  zh: {
-    title: "操作系统",
-    description: "这里是一些特权命令",
-    commands: {
-      查询模型: {
-        type: "list-models",
-        description: "查询支持的大模型列表",
-      },
-      设置模型: {
-        type: "set-model",
-        description: "设置选用另一款大语言模型",
-      },
-      查询语言: {
-        type: "list-langs",
-        description: "查询支持的语言列表",
-      },
-      设置语言: {
-        type: "set-lang",
-        description: "设置选用另一种系统语言",
-      },
-      设置头像: {
-        type: "set-avatar",
-        description: "",
-      },
-      设置最大输出行数: {
-        type: "set-max-output-lines",
-        description: "",
-      },
-    },
-  },
   en: {
     title: "Operating System",
     description: "There are some administrative commands",
@@ -92,7 +62,9 @@ export class SystemManager extends BaseManager {
   async parse(input?: string) {
     if (!input) return this.help()
 
-    const commands = this.i18n[await this.getLang()].commands
+    const commands = this.i18n[await this.getLang()]?.commands
+    if (!commands) return
+
     const parsed = parseLimitedCommand(
       input,
       z.enum(Object.keys(commands) as [string, ...string[]]),

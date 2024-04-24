@@ -11,16 +11,16 @@ declare global {
     export {
       IWechatArticleStat,
       IWechatArticleComment,
-    } from "../../wechat/wxmp-article/detail/schema"
+    } from "@cs-magic/wechat/wxmp-article/detail/schema"
 
     export {
       IWechatUserData,
       IWechatUserPreference,
     } from "@cs-magic/wechaty/schema/wechat-user"
 
-    export { TaskTimer } from "../schema/task"
+    export { TaskTimer } from "./task"
 
-    export { IUserSummary } from "../schema/user.summary"
+    export { IUserSummary } from "./user.summary"
   }
 }
 export { ILlmRes } from "../../../packages-to-classify/llm/schema/llm.api"

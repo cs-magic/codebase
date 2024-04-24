@@ -21,20 +21,6 @@ import { BaseManager } from "./base.manager"
 const commandTypeSchema = z.enum(["enable", "disable"])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
-  zh: {
-    title: "万能解析器",
-    description: "您可以发送一篇公众号文章给我，我将为您解析，生成精美的卡片",
-    commands: {
-      启动: {
-        type: "enable",
-        description: "启用万能解析器",
-      },
-      停止: {
-        type: "disable",
-        description: "停止万能解析器",
-      },
-    },
-  },
   en: {
     title: "Super Parser",
     description:
@@ -120,7 +106,8 @@ export class ParserManager extends BaseManager {
   async parse(input?: string) {
     if (!input) return this.help()
 
-    const commands = this.i18n[await this.getLang()].commands
+    const commands = this.i18n[await this.getLang()]?.commands
+    if (!commands) return
 
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],

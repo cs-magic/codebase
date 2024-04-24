@@ -1,5 +1,9 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
-import { IWechatPreference } from "../schema/wechat-user"
+import { IWechatData, IWechatPreference } from "../schema/wechat-user"
+
+export const defaultData: IWechatData = {
+  roomNewInvitees: [],
+}
 
 export const defaultPreference: IWechatPreference = {
   lang: "en",
@@ -28,6 +32,12 @@ export const defaultPreference: IWechatPreference = {
     },
     withCache: true,
   },
+  onRoomJoin: {
+    sayAnnounce: {
+      enabled: false,
+      n: 1,
+    },
+  },
 }
 
 export const getRobustPreference = (
@@ -38,5 +48,16 @@ export const getRobustPreference = (
   return {
     ...defaultPreference,
     ...parseJsonSafe<IWechatPreference>(row?.preference),
+  }
+}
+
+export const getRobustData = (
+  row: {
+    data?: any
+  } | null,
+): IWechatData => {
+  return {
+    ...defaultData,
+    ...parseJsonSafe<IWechatData>(row?.data),
   }
 }

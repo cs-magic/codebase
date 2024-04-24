@@ -19,6 +19,7 @@ import { storageMessage } from "../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatterManager } from "./managers/chatter.manager"
 import { ParserManager } from "./managers/parser.manager"
+import { RoomManager } from "./managers/room.manager"
 import { SystemManager } from "./managers/system.manager"
 import { TodoManager } from "./managers/todo.manager"
 
@@ -29,6 +30,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     parser: new ParserManager(bot, message),
     system: new SystemManager(bot, message),
     base: new BaseManager(bot, message),
+    room: new RoomManager(bot, message),
   } satisfies Record<ManagerType, BaseManager>
 
   try {
@@ -107,6 +109,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
         case "parse":
           return await tmm.parser.parseQuote()
+
+        case "room":
+          return await tmm.room.parse(result.args)
       }
     }
 

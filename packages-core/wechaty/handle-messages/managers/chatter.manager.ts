@@ -19,28 +19,6 @@ const commandTypeSchema = z.enum([
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
-  zh: {
-    title: "AI 聊天室",
-    description: "你可以与搭载了主流大模型能力的 AI 进行聊天",
-    commands: {
-      启动: {
-        type: "enable",
-        description: "启用 AI 聊天（直接 @我 即可回复您）",
-      },
-      停止: {
-        type: "disable",
-        description: "停止 AI 聊天",
-      },
-      // 新话题: {
-      //   type: "new",
-      //   description: "开启新话题",
-      // },
-      // 历史: {
-      //   type: "list",
-      //   description: "查询话题历史",
-      // },
-    },
-  },
   en: {
     title: "Super Chatter",
     description:
@@ -90,7 +68,9 @@ export class ChatterManager extends BaseManager {
   async parse(input?: string) {
     if (!input) return this.help()
 
-    const commands = this.i18n[await this.getLang()].commands
+    const commands = this.i18n[await this.getLang()]?.commands
+    if (!commands) return
+
     const commandTypeSchema = z.enum(
       Object.keys(commands) as [string, ...string[]],
     )

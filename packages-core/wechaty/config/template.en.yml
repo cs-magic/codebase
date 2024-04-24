@@ -26,3 +26,6 @@ status: |-
     backend: {{convPreference.fetch.detail.request.backendType}} | {{userPreference.fetch.detail.request.backendType}}
     max output lines: {{{convPreference.maxOutputLines}}} | {{{userPreference.maxOutputLines}}}
     command style: {{{convPreference.commandStyle}}} | {{{userPreference.commandStyle}}}
+    onRoomJoin.sayAnnounce:
+      enabled: {{{convPreference.onRoomJoin.sayAnnounce.enabled}}}
+      n: {{{convPreference.onRoomJoin.sayAnnounce.n}}}

@@ -39,32 +39,6 @@ const commandTypeSchema = z.enum([
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
-  zh: {
-    title: "任务管理",
-    description: "",
-    commands: {
-      历史: {
-        type: "list",
-        description: "查询任务历史",
-      },
-      新增: {
-        type: "add",
-        description: "添加一个新任务",
-      },
-      重命名: {
-        type: "set-title",
-        description: "修改一个任务的标题",
-      },
-      更新: {
-        type: "set-status",
-        description: "更新一个任务的状态（待开始，进行中，已完成，已取消）",
-      },
-      筛选: {
-        type: "filter",
-        description: "筛选任务（否则结果可能太长啦）",
-      },
-    },
-  },
   en: {
     title: "Todo Manager",
     description:
@@ -132,7 +106,9 @@ export class TodoManager extends BaseManager {
   async parse(input?: string) {
     if (!input) return this.help()
 
-    const commands = this.i18n[await this.getLang()].commands
+    const commands = this.i18n[await this.getLang()]?.commands
+    if (!commands) return
+
     const parsed = parseLimitedCommand(
       input ?? "",
       z.enum(Object.keys(commands) as [string, ...string[]]),
