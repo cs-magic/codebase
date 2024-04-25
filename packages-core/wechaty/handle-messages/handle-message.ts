@@ -56,15 +56,17 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       /**
        * reply with a message
        */
-      // void message.say(
-      //   new bot.UrlLink({
-      //     title: "title",
-      //     description: "description",
-      //     url: "https://p01.cs-magic.cn",
-      //     thumbnailUrl:
-      //       "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
-      //   }),
-      // )
+      void message.say(
+        new bot.UrlLink({
+          title:
+            "自定义内容 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890",
+          description:
+            "自定义摘要 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890",
+          url: "https://p01.cs-magic.cn",
+          thumbnailUrl:
+            "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
+        }),
+      )
     }
 
     await storageMessage(message)

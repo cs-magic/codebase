@@ -8,6 +8,8 @@ export type ILlmReq = {
   temperature?: number
   topP?: number
   stream?: boolean
+  // 用户标识，例如 userId@roomId@wechat
+  user?: string
 }
 
 export type ILlmRes = {

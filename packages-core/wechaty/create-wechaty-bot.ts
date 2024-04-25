@@ -1,4 +1,3 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import { logger } from "@cs-magic/log/logger"
 import qrcodeTerminal from "qrcode-terminal"
 import { type Wechaty, WechatyBuilder } from "wechaty"
@@ -6,7 +5,6 @@ import { prisma } from "../../packages-to-classify/db/providers/prisma"
 import { logEnv } from "../../packages-to-classify/env/utils/log-env"
 import { handleMessage } from "./handle-messages/handle-message"
 import { SenderQueue } from "./handle-messages/sender-queue"
-import { IWechatData, IWechatPreference } from "./schema/wechat-user"
 import { initBotStaticContext } from "./utils/bot-context"
 import { getBotWxid } from "./utils/bot-wxid"
 import {
@@ -25,6 +23,25 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
   }) as Wechaty // 等会再更新其他扩展的信息
 
   bot
+    .on("login", async (user) => {
+      logger.info(`-- User logged in: %o`, user.payload)
+
+      bot.wxid = getBotWxid(user)
+
+      bot.staticContext = await initBotStaticContext()
+
+      bot.sendQueue = new SenderQueue(10)
+    })
+    .on("message", async (message) => {
+      await handleMessage(bot, message)
+    })
+    .on("room-invite", async (room) => {
+      logger.info(
+        `auto accept invitation into room(id=${room.id}, topic=${await room.topic()})`,
+      )
+      // todo: notify and decide
+      await room.accept()
+    })
     .on("room-join", async (room, inviteeList, inviter, date) => {
       const roomNotice = await room.announce()
       logger.info(`invitees: %o`, inviteeList)
@@ -63,18 +80,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
       )
       qrcodeTerminal.generate(value, { small: true })
     })
-    .on("login", async (user) => {
-      logger.info(`-- User logged in: %o`, user.payload)
 
-      bot.wxid = getBotWxid(user)
-
-      bot.staticContext = initBotStaticContext()
-
-      bot.sendQueue = new SenderQueue(10)
-    })
-    .on("message", async (message) => {
-      await handleMessage(bot, message)
-    })
   // .start()
 
   return bot

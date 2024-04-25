@@ -1,18 +1,40 @@
 import { Message } from "wechaty"
+import { prisma } from "../../../packages-to-classify/db/providers/prisma"
+import { LlmScenario } from "../schema/bot"
+import { getRobustData } from "./get-robust-preference"
 
-export const formatTalker = async (message: {
-  talkerName: string
-  roomTopic?: string
-}) => {
-  let s = message.talkerName
-  if (message.roomTopic) {
-    s += `@${message.roomTopic}`
+/**
+ * 展示用户信息，与它的调用量
+ *
+ * @param message
+ * @param type
+ */
+export const formatTalkerFromMessage = async (
+  message: Message,
+  type?: LlmScenario,
+) => {
+  let s = message.talker().name()
+  if (type) {
+    const row = await prisma.wechatUser.findUnique({
+      where: { id: message.talker().id },
+    })
+    const data = getRobustData(row)
+    s += `(${data.llm[type].success}/${data.llm[type].called})`
   }
+
+  const roomTopic = await message.room()?.topic()
+
+  if (roomTopic) {
+    s += `@${roomTopic}`
+
+    if (type) {
+      const row = await prisma.wechatRoom.findUnique({
+        where: { id: message.room()?.id },
+      })
+      const data = getRobustData(row)
+      s += `(${data.llm[type].success}/${data.llm[type].called})`
+    }
+  }
+
   return s
 }
-
-export const formatTalkerFromMessage = async (message: Message) =>
-  formatTalker({
-    talkerName: message.talker().name(),
-    roomTopic: await message.room()?.topic(),
-  })

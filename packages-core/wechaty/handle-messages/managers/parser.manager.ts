@@ -177,11 +177,15 @@ export class ParserManager extends BaseManager {
 
       ++ParserManager.toParse
       const title = parseTitleFromWechatUrlMessage(text)
-      void this.notify(`🌈 正在解析[${ParserManager.toParse}]: ${title}`)
+      void this.notify(
+        `🌈 正在解析[${ParserManager.toParse}]: ${title}`,
+        "parser",
+      )
 
       if (!ParserManager.uniParser)
         ParserManager.uniParser = new CardSimulator()
 
+      // todo: add userIdentity into parser
       const inner = await url2preview(url, convPreference.fetch)
 
       const { cardUrl } = await ParserManager.uniParser.genCard(
@@ -192,11 +196,11 @@ export class ParserManager extends BaseManager {
 
       const file = FileBox.fromUrl(cardUrl)
       void this.addTask(async () => this.conv?.say(file))
-      void this.notify(`✅ 解析成功: ${title}`)
+      void this.notify(`✅ 解析成功: ${title}`, "parser")
       logger.info("-- sent file")
     } catch (e) {
       const s = formatError(e)
-      void this.notify(`❌ ` + s)
+      void this.notify(`❌ ` + s, "parser")
     } finally {
       --ParserManager.toParse
     }

@@ -1,5 +1,6 @@
 import { type Message, type Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
+import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 import { type IBotContext, type IBotStaticContext } from "../schema/bot"
 import { getBotTemplate } from "./bot-template"
 
@@ -20,7 +21,8 @@ export const getBotContext = async (
   }
 }
 
-export const initBotStaticContext = (): IBotStaticContext => ({
+export const initBotStaticContext = async (): Promise<IBotStaticContext> => ({
   version: packageJson.version,
   startTime: Date.now(),
+  jobs: [], // todo: await prisma.task.findMany({where: {timer: {}}})
 })

@@ -1,4 +1,4 @@
-import { CommandStyle } from "@cs-magic/wechaty/schema/wechat-user"
+import { CommandStyle } from "@cs-magic/prisma/schema/wechat-user"
 import { SEPARATOR_BOX, SEPARATOR_LINE } from "../const"
 
 /**

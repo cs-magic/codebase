@@ -16,17 +16,17 @@ import { IAgentReq, ILlmReq } from "./schema/llm.api"
 export const safeCallAgent = async ({
   input,
   agentType = "default",
-  options,
+  llmOptions,
   model,
 }: {
   input: string
   model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
-} & { options?: Omit<ILlmReq, "messages" | "model"> }) => {
+} & { llmOptions?: Omit<ILlmReq, "messages" | "model"> }) => {
   logger.info("-- agent calling: %o", {
     agentType,
     model,
-    options,
+    llmOptions,
     inputLength: input.length,
   })
 
@@ -64,6 +64,6 @@ export const safeCallAgent = async ({
     messages,
     topP: agent.top_p,
     temperature: agent.temperature,
-    ...options,
+    ...llmOptions,
   })
 }

@@ -4,6 +4,7 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { type Message, Sayable, type Wechaty } from "wechaty"
+import { LlmScenario } from "../../schema/bot"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getBotContext } from "../../utils/bot-context"
 import { botNotify } from "../../utils/bot-notify"
@@ -40,6 +41,10 @@ export class BaseManager {
     // todo: bot on message
     this.bot = bot
     this.message = message
+  }
+
+  async getUserIdentity() {
+    return `${this.talkingUser.id}_${this.room?.id}@wechat`
   }
 
   get room() {
@@ -196,8 +201,8 @@ export class BaseManager {
     void this.bot.sendQueue.addTask(task)
   }
 
-  async notify(content: Sayable) {
-    void botNotify(this.bot, this.message, content)
+  async notify(content: Sayable, llmScenario?: LlmScenario) {
+    void botNotify(this.bot, this.message, content, llmScenario)
   }
 
   async updatePreferenceInDB(path: string, value: any, replyStatus = true) {

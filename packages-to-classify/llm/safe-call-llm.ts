@@ -4,17 +4,13 @@ import { logger } from "@cs-magic/log/logger"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
-import { getEnv } from "../env"
+import { env } from "../env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
 
 import { ILlmReq, ILlmRes } from "./schema/llm.api"
 
 export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
-  const env = getEnv()
-  // logEnv("api_key")
-  // console.log({ env })
-
   const llmModelType = options.model
   const llmProviderType = model2provider(llmModelType)
 

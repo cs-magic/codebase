@@ -4,7 +4,7 @@ import { langTypeSchema } from "../../../../packages-to-classify/i18n/schema"
 import { backendTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.base"
 import { llmModelTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.models"
 import { FeatureMap } from "../../schema/commands"
-import { CommandStyle } from "../../schema/wechat-user"
+import { CommandStyle } from "@cs-magic/prisma/schema/wechat-user"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
@@ -12,8 +12,8 @@ const commandTypeSchema = z.enum([
   "list-models",
   "set-model",
   "set-backend",
-  "list-langs",
-  "set-lang",
+  // "list-langs",
+  // "set-lang",
   "set-avatar",
   "set-max-output-lines",
   "set-command-style",
@@ -32,14 +32,14 @@ const i18n: FeatureMap<CommandType> = {
         type: "set-model",
         description: "switch to another LLM model",
       },
-      "list-langs": {
-        type: "list-langs",
-        description: "list supported languages",
-      },
-      "set-lang": {
-        type: "set-lang",
-        description: "switch to another language",
-      },
+      // "list-langs": {
+      //   type: "list-langs",
+      //   description: "list supported languages",
+      // },
+      // "set-lang": {
+      //   type: "set-lang",
+      //   description: "switch to another language",
+      // },
       "set-avatar": {
         type: "set-avatar",
       },
@@ -85,12 +85,12 @@ export class SystemManager extends BaseManager {
           )
           break
 
-        case "set-lang":
-          await this.updatePreferenceInDB(
-            "lang",
-            await langTypeSchema.parseAsync(parsed.args),
-          )
-          break
+        // case "set-lang":
+        //   await this.updatePreferenceInDB(
+        //     "lang",
+        //     await langTypeSchema.parseAsync(parsed.args),
+        //   )
+        //   break
 
         case "set-avatar":
           const avatarUrl = await z

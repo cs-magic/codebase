@@ -1,44 +1,10 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
-import { IWechatData, IWechatPreference } from "../schema/wechat-user"
-
-export const defaultData: IWechatData = {
-  roomNewInvitees: [],
-}
-
-export const defaultPreference: IWechatPreference = {
-  lang: "en",
-  chatterEnabled: false,
-  parserEnabled: false,
-  fetch: {
-    detail: {
-      request: {
-        backendType: "nodejs",
-        approach: {
-          type: "simulate",
-          headless: true,
-        },
-      },
-      summary: {
-        enabled: false,
-        model: "gpt-3.5-turbo",
-        withImage: false,
-      },
-    },
-    stat: {
-      enabled: false,
-    },
-    comments: {
-      enabled: false,
-    },
-    withCache: true,
-  },
-  onRoomJoin: {
-    sayAnnounce: {
-      enabled: false,
-      n: 1,
-    },
-  },
-}
+import {
+  defaultWechatData,
+  defaultWechatPreference,
+  IWechatData,
+  IWechatPreference,
+} from "@cs-magic/prisma/schema/wechat-user"
 
 export const getRobustPreference = (
   row: {
@@ -46,7 +12,7 @@ export const getRobustPreference = (
   } | null,
 ): IWechatPreference => {
   return {
-    ...defaultPreference,
+    ...defaultWechatPreference,
     ...parseJsonSafe<IWechatPreference>(row?.preference),
   }
 }
@@ -57,7 +23,7 @@ export const getRobustData = (
   } | null,
 ): IWechatData => {
   return {
-    ...defaultData,
+    ...defaultWechatData,
     ...parseJsonSafe<IWechatData>(row?.data),
   }
 }

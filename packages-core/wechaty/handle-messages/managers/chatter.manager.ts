@@ -1,6 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { types } from "wechaty"
 import { z } from "zod"
+import { prisma } from "../../../../packages-to-classify/db/providers/prisma"
 import { safeCallLLM } from "../../../../packages-to-classify/llm"
 import { FeatureMap, FeatureType } from "../../schema/commands"
 import { getConvTable } from "../../utils/get-conv-table"
@@ -174,11 +175,12 @@ export class ChatterManager extends BaseManager {
     }))
     // logger.info(`--  context(len=${context.length})`)
 
-    void this.notify(`🌈 calling LLM`)
+    void this.notify(`🌈 calling LLM`, "chatter")
 
     const res = await safeCallLLM({
       messages: context,
       model: convPreference.fetch?.detail?.summary?.model ?? "gpt-3.5-turbo",
+      user: await this.getUserIdentity(),
     })
 
     if (res.error) throw new Error(res.error)
@@ -190,6 +192,9 @@ export class ChatterManager extends BaseManager {
       )
 
     void this.addTask(() => m.say(content))
-    void this.notify(`✅ called LLM`)
+    void this.notify(
+      [`✅ called LLM`, SEPARATOR_LINE, content].join("\n"),
+      "chatter",
+    )
   }
 }

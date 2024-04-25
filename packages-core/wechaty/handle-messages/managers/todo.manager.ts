@@ -311,22 +311,20 @@ export class TodoManager extends BaseManager {
     const nextTime = moment(new Date(job.nextInvocation()))
     console.log({ nextTime })
 
-    if (job) {
-      await prisma.task.update({
-        where: { id: task.id },
-        data: {
-          timer: JSON.stringify({
-            ...parseJsonSafe<TaskTimer>(task.timer),
-            disabled: false,
-          }),
-        },
-      })
-      await conv.say(
-        `设置成功，下一次提醒在：${nextTime.format("MM-DD HH:mm")}`,
-      )
-    } else {
-      await conv.say(`设置失败，原因：非法输入`)
-    }
+    await prisma.task.update({
+      where: { id: task.id },
+      data: {
+        timer: JSON.stringify({
+          ...parseJsonSafe<TaskTimer>(task.timer),
+          disabled: !job,
+        }),
+      },
+    })
+    await conv.say(
+      job
+        ? `设置成功，下一次提醒在：${nextTime.format("MM-DD HH:mm")}`
+        : `设置失败，原因：非法输入`,
+    )
   }
 
   async setPriorities(indices: number[], priority: Priority) {

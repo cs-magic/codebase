@@ -1,5 +1,5 @@
 import { Message } from "wechaty"
-import { IWechatPreference } from "../schema/wechat-user"
+import { IWechatPreference } from "@cs-magic/prisma/schema/wechat-user"
 import { getRobustPreference } from "./get-robust-preference"
 import { getUserRow } from "./get-user-row"
 

@@ -7,7 +7,7 @@ import { fileURLToPath } from "url"
 import { type Message } from "wechaty"
 import { type LangType } from "../../../packages-to-classify/i18n/schema"
 import { type IBotStaticContext, type IBotTemplate } from "../schema/bot"
-import { IWechatPreference } from "../schema/wechat-user"
+import { IWechatPreference } from "@cs-magic/prisma/schema/wechat-user"
 import { getConvPreference } from "./get-conv-preference"
 import { getUserPreference } from "./get-user-preference"
 

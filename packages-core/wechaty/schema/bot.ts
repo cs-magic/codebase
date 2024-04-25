@@ -1,3 +1,4 @@
+import { Job } from "node-schedule"
 import { type Contact } from "wechaty-puppet/payloads"
 
 type IUser = Contact
@@ -5,6 +6,7 @@ type IUser = Contact
 export type IBotStaticContext = {
   version: string
   startTime: number
+  jobs: Job[]
 }
 
 export type IBotTemplate = {
@@ -33,3 +35,4 @@ export type IWechatBotTransfer =
     }
 
 export type { IUser }
+export type LlmScenario = "chatter" | "parser"

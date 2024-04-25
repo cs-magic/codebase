@@ -5,7 +5,7 @@ import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { Card, LlmResponse } from "@prisma/client"
 import { prisma } from "../../../../packages-to-classify/db/providers/prisma"
-import { md2summary } from "./approaches/nodejs/md2summary"
+import { md2summary, SummaryOptions } from "./approaches/nodejs/md2summary"
 import { requestPage } from "./approaches/nodejs/requestPage"
 
 export type FetchWxmpArticleRes = { article: Card; llmResponse: LlmResponse }
@@ -62,6 +62,7 @@ export const fetchWxmpArticle = async (
     const response = await md2summary(
       article.contentMd!,
       options?.detail?.summary,
+      // todo: add summaryOptions with user
     )
     llmResponse = await prisma.llmResponse.create({
       data: {
