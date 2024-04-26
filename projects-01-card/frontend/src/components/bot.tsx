@@ -1,7 +1,8 @@
 "use client"
 
 import { logger } from "@cs-magic/log/logger"
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot"
+
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
 import { getEnv } from "../../../../packages-to-classify/env"

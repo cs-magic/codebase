@@ -4,21 +4,18 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { type Message, Sayable, type Wechaty } from "wechaty"
-import { LlmScenario } from "../../schema/bot"
-import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getBotContext } from "../../utils/bot-context"
-import { botNotify } from "../../utils/bot-notify"
-import { getBotTemplate } from "../../utils/bot-template"
-import { formatFooter } from "../../utils/format-footer"
-import { getConvPreference } from "../../utils/get-conv-preference"
-import { getConvTable } from "../../utils/get-conv-table"
-import { getUserPreference } from "../../utils/get-user-preference"
+
+import { LlmScenario } from "../../../schema/bot.utils"
+import { FeatureMap, FeatureType } from "../../../schema/commands"
+import { formatFooter } from "../../../utils/format-footer"
+import { getConvPreference } from "../../../utils/get-conv-preference"
+import { getConvTable } from "../../../utils/get-conv-table"
+import { getUserPreference } from "../../../utils/get-user-preference"
 import {
   padlocalVersion,
   parseQuote,
   parseText,
-} from "../../utils/parse-message"
-import { QueueTask } from "../sender-queue"
+} from "../../../utils/parse-message"
 
 export class BaseManager {
   public message: Message
@@ -43,10 +40,6 @@ export class BaseManager {
     this.message = message
   }
 
-  async getUserIdentity() {
-    return `${this.talkingUser.id}_${this.room?.id}@wechat`
-  }
-
   get room() {
     return this.message.room()
   }
@@ -61,10 +54,6 @@ export class BaseManager {
 
   get quote() {
     return parseQuote(this.message.text(), padlocalVersion)
-  }
-
-  get botWxid() {
-    return this.bot.wxid
   }
 
   get conv() {
@@ -86,6 +75,10 @@ export class BaseManager {
       name: sender.name(),
       image: image ?? null,
     }
+  }
+
+  async getUserIdentity() {
+    return `${this.talkingUser.id}_${this.room?.id}@wechat`
   }
 
   async getQuotedMessage() {
@@ -128,10 +121,6 @@ export class BaseManager {
     return (await this.getConvPreference()).lang
   }
 
-  async getContext() {
-    return getBotContext(this.bot, this.message)
-  }
-
   async getData() {
     return this.i18n[await this.getLang()] ?? this.i18n.en
   }
@@ -148,18 +137,14 @@ export class BaseManager {
     return (await this.getData()).commands
   }
 
-  async getTemplate() {
-    return getBotTemplate(this.message, this.bot.staticContext)
-  }
-
   async getStatus(reply = false) {
-    const content = (await this.getTemplate()).status
+    const content = await this.bot.context.getStatus()
     if (reply) await this.standardReply(content)
     return content
   }
 
   async getHelp(reply = false) {
-    const content = (await this.getTemplate()).help
+    const content = await this.bot.context.getHelp()
     if (reply) await this.standardReply(content)
     return content
   }
@@ -178,14 +163,13 @@ export class BaseManager {
     }
     content = lines.join("\n")
 
-    const context = await getBotContext(this.bot, this.message)
     const pretty = formatQuery(content, {
       title: await this.getTitle(),
       tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
-      footer: formatFooter(context),
+      footer: formatFooter(this.bot.context.data),
       commandStyle: preference.commandStyle,
     })
-    void this.addTask(() => this.message.say(pretty))
+    void this.bot.context.addSendTask(() => this.message.say(pretty))
   }
 
   async help() {
@@ -197,12 +181,8 @@ export class BaseManager {
     )
   }
 
-  async addTask(task: QueueTask) {
-    void this.bot.sendQueue.addTask(task)
-  }
-
   async notify(content: Sayable, llmScenario?: LlmScenario) {
-    void botNotify(this.bot, this.message, content, llmScenario)
+    void this.bot.context.notify(this.message, content, llmScenario)
   }
 
   async updatePreferenceInDB(path: string, value: any, replyStatus = true) {

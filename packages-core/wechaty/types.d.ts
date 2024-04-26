@@ -1,11 +1,8 @@
 import { type WechatyBuilder } from "wechaty"
-import { SenderQueue } from "./handle-messages/sender-queue"
-import { type IBotStaticContext } from "./schema/bot"
+import { type IBotContext } from "./schema/bot.context"
 
 declare module "wechaty" {
   interface Wechaty extends ReturnType<typeof WechatyBuilder.build> {
-    staticContext: IBotStaticContext
-    wxid: string
-    sendQueue: SenderQueue
+    context: IBotContext
   }
 }

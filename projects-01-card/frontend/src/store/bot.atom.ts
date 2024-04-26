@@ -1,12 +1,12 @@
-import { IUser } from "@cs-magic/wechaty/schema/bot";
-import { atom } from "jotai";
+import { IUser } from "@cs-magic/wechaty/schema/bot.utils"
+import { atom } from "jotai"
 
-export const botSocketOpenedAtom = atom(false);
+export const botSocketOpenedAtom = atom(false)
 
-export const botScanValueAtom = atom("");
-export const botUserAtom = atom<IUser | null>(null);
-export const botLoggedInAtom = atom(false);
-export const botLoggingAtom = atom(false);
+export const botScanValueAtom = atom("")
+export const botUserAtom = atom<IUser | null>(null)
+export const botLoggedInAtom = atom(false)
+export const botLoggingAtom = atom(false)
 
 export enum ScanStatus {
   Unknown = 0,
@@ -17,5 +17,5 @@ export enum ScanStatus {
   Timeout = 5,
 }
 
-export const botScanStatusAtom = atom<ScanStatus>(ScanStatus.Unknown);
-export const botScanningAtom = atom(false);
+export const botScanStatusAtom = atom<ScanStatus>(ScanStatus.Unknown)
+export const botScanningAtom = atom(false)

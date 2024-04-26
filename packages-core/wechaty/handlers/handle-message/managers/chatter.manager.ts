@@ -1,13 +1,11 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { types } from "wechaty"
 import { z } from "zod"
-import { prisma } from "../../../../packages-to-classify/db/providers/prisma"
-import { safeCallLLM } from "../../../../packages-to-classify/llm"
-import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getConvTable } from "../../utils/get-conv-table"
-import { listMessagesOfLatestTopic } from "../../utils/list-messages-of-latest-topic"
-import { listTopics } from "../../utils/list-topics"
-import { parseLimitedCommand } from "../../utils/parse-command"
+import { safeCallLLM } from "../../../../../packages-to-classify/llm"
+import { FeatureMap, FeatureType } from "../../../schema/commands"
+import { getConvTable } from "../../../utils/get-conv-table"
+import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic"
+import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum([
@@ -144,7 +142,7 @@ export class ChatterManager extends BaseManager {
           // including @all
           // await m.mentionSelf()
           // excluding @all
-          (await m.mentionList()).some((m) => m.id === this.botWxid)
+          (await m.mentionList()).some((m) => m.id === this.bot.context.wxid)
         ) &&
         // 支持 叹号快捷触发
         //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
@@ -161,13 +159,13 @@ export class ChatterManager extends BaseManager {
     }
 
     const filteredMessages = await listMessagesOfLatestTopic(
-      this.botWxid,
+      this.bot.context.wxid,
       this.convId,
     )
 
     const context = filteredMessages.map((m) => ({
       role:
-        m.talkerId === this.botWxid
+        m.talkerId === this.bot.context.wxid
           ? ("assistant" as const)
           : ("user" as const),
       // todo: merge chats
@@ -191,7 +189,7 @@ export class ChatterManager extends BaseManager {
         `invalid response content, please check Query(id=${res.query.id})`,
       )
 
-    void this.addTask(() => m.say(content))
+    void this.bot.context.addSendTask(() => m.say(content))
     void this.notify(
       [`✅ called LLM`, SEPARATOR_LINE, content].join("\n"),
       "chatter",

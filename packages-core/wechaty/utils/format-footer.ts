@@ -1,4 +1,2 @@
-import { IBotContext } from "../schema/bot"
-
-export const formatFooter = (context: IBotContext) =>
+export const formatFooter = (context: { name: string; version: string }) =>
   `${context.name} ${context.version}`

@@ -1,21 +1,24 @@
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import qrcodeTerminal from "qrcode-terminal"
-import { type Wechaty, WechatyBuilder } from "wechaty"
-import { prisma } from "../../packages-to-classify/db/providers/prisma"
+import { ScanStatus, type Wechaty, WechatyBuilder } from "wechaty"
 import { logEnv } from "../../packages-to-classify/env/utils/log-env"
-import { handleMessage } from "./handle-messages/handle-message"
-import { SenderQueue } from "./handle-messages/sender-queue"
-import { initBotStaticContext } from "./utils/bot-context"
-import { getBotWxid } from "./utils/bot-wxid"
-import {
-  getRobustData,
-  getRobustPreference,
-} from "./utils/get-robust-preference"
+import { handleMessage } from "./handlers/handle-message"
+import { handleRoomInvite } from "./handlers/handle-room-invite"
+import { handleRoomJoin } from "./handlers/handle-room-join"
+import { initBotContext } from "./schema/bot.context"
 
-// load wechaty-puppet env
-logEnv("wechaty")
-
+/**
+ * 这是一个 wrapper， 请在其他地方 start
+ *
+ * todo: 当 bot 被拉到一个群的时候，自动触发一句说明
+ *
+ * @param name
+ */
 export const createWechatyBot = ({ name }: { name?: string }) => {
+  // log env to ensure puppet info.
+  logEnv("wechaty")
+
   logger.info(`-- init bot(name=${name})`)
 
   const bot = WechatyBuilder.build({
@@ -23,65 +26,85 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
   }) as Wechaty // 等会再更新其他扩展的信息
 
   bot
-    .on("login", async (user) => {
-      logger.info(`-- User logged in: %o`, user.payload)
+    //////////////////////////////
+    // basic
+    //////////////////////////////
 
-      bot.wxid = getBotWxid(user)
-
-      bot.staticContext = await initBotStaticContext()
-
-      bot.sendQueue = new SenderQueue(10)
-    })
-    .on("message", async (message) => {
-      await handleMessage(bot, message)
-    })
-    .on("room-invite", async (room) => {
-      logger.info(
-        `auto accept invitation into room(id=${room.id}, topic=${await room.topic()})`,
-      )
-      // todo: notify and decide
-      await room.accept()
-    })
-    .on("room-join", async (room, inviteeList, inviter, date) => {
-      const roomNotice = await room.announce()
-      logger.info(`invitees: %o`, inviteeList)
-      logger.info(`notice: %o`, roomNotice)
-      const roomInDB = await prisma.wechatRoom.findUnique({
-        where: { id: room.id },
-      })
-      if (!roomInDB) return
-
-      const preference = getRobustPreference(roomInDB)
-      if (!preference.onRoomJoin?.sayAnnounce?.enabled) return
-
-      const data = getRobustData(roomInDB)
-      data.roomNewInvitees.push(...inviteeList.map((i) => i.id))
-      if (
-        data.roomNewInvitees.length >=
-        (preference.onRoomJoin?.sayAnnounce?.n ?? 1)
-      ) {
-        data.roomNewInvitees = []
-        // 不能是空字符
-        if (roomNotice.trim()) await room.say(roomNotice)
-      }
-      await prisma.wechatRoom.update({
-        where: { id: roomInDB.id },
-        data: {
-          data: JSON.stringify(data),
-        },
-      })
-    })
-    .on("error", async (err) => {
-      // prettyError(err)
-    })
     .on("scan", (value, status) => {
       logger.info(
-        `Scan the following  QR Code to login: ${status}\n[or from web]: https://wechaty.js.org/qrcode/${encodeURIComponent(value)} `,
+        `onScan (status=${ScanStatus[status]}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(value)}`,
       )
       qrcodeTerminal.generate(value, { small: true })
     })
 
-  // .start()
+    .on("login", async (user) => {
+      logger.info(`onLogin: %o`, user.payload)
+      bot.context = await initBotContext(bot)
+    })
+
+    .on("logout", (user, reason) => {
+      logger.info(`-- User logged out: %o, reason: ${reason}`, user.payload)
+    })
+
+    .on("error", async (err) => {
+      formatError(err)
+    })
+
+    //////////////////////////////
+    // social init
+    //////////////////////////////
+
+    .on("friendship", (friendship) => {
+      logger.info(`onFriendship: %o`, friendship)
+    })
+
+    .on("room-invite", async (room) => {
+      await handleRoomInvite(bot, room)
+    })
+
+    //////////////////////////////
+    // social going
+    //////////////////////////////
+
+    .on("message", async (message) => {
+      await handleMessage(bot, message)
+    })
+
+    .on("room-join", async (...args) => {
+      await handleRoomJoin(bot, ...args)
+    })
+
+    .on("post", (post) => {
+      logger.info(`onPost: %o`, post)
+    })
+
+    //////////////////////////////
+    // utils
+    //////////////////////////////
+
+    .on("dong", (data) => {
+      logger.info(`onDong: %o`, data)
+    })
+
+    .on("heartbeat", (data) => {
+      logger.info(`onHeartbeat: %o`, data)
+    })
+
+    .on("puppet", (puppet) => {
+      logger.info(`onPuppet: %o`, puppet)
+    })
+
+    .on("ready", () => {
+      logger.info(`onReady`)
+    })
+
+    .on("start", () => {
+      logger.info(`onStart`)
+    })
+
+    .on("stop", () => {
+      logger.info(`onStop`)
+    })
 
   return bot
 }

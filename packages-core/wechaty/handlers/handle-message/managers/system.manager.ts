@@ -1,11 +1,11 @@
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { langTypeSchema } from "../../../../packages-to-classify/i18n/schema"
-import { backendTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.base"
-import { llmModelTypeSchema } from "../../../../packages-to-classify/llm/schema/llm.models"
-import { FeatureMap } from "../../schema/commands"
+import { langTypeSchema } from "../../../../../packages-to-classify/i18n/schema"
+import { backendTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.base"
+import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.models"
+import { FeatureMap } from "../../../schema/commands"
 import { CommandStyle } from "@cs-magic/prisma/schema/wechat-user"
-import { parseLimitedCommand } from "../../utils/parse-command"
+import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum([

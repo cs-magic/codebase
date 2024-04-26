@@ -6,16 +6,14 @@ import {
   commandsSchema,
   type CommandType,
   ManagerType,
-} from "../schema/commands"
-import { getBotContext } from "../utils/bot-context"
-import { botNotify } from "../utils/bot-notify"
-import { formatFooter } from "../utils/format-footer"
-import { formatMessage } from "../utils/format-message"
-import { formatTalkerFromMessage } from "../utils/format-talker"
-import { getConvPreference } from "../utils/get-conv-preference"
-import { parseLimitedCommand } from "../utils/parse-command"
-import { parseText } from "../utils/parse-message"
-import { storageMessage } from "../utils/storage-message"
+} from "../../schema/commands"
+import { formatFooter } from "../../utils/format-footer"
+import { formatMessage } from "../../utils/format-message"
+import { formatTalkerFromMessage } from "../../utils/format-talker"
+import { getConvPreference } from "../../utils/get-conv-preference"
+import { parseLimitedCommand } from "../../utils/parse-command"
+import { parseText } from "../../utils/parse-message"
+import { storageMessage } from "../../utils/storage-message"
 import { BaseManager } from "./managers/base.manager"
 import { ChatterManager } from "./managers/chatter.manager"
 import { ParserManager } from "./managers/parser.manager"
@@ -81,7 +79,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     if (result) {
       switch (result.command) {
         case "ding":
-          return void bot.sendQueue.addTask(() => message.say("dong"))
+          return void bot.context.addSendTask(() => message.say("dong"))
 
         case "help":
           return await tmm.base.getHelp(true)
@@ -136,18 +134,16 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-    const context = await getBotContext(bot, message)
     const preference = await getConvPreference({
       convId: message.conversation().id,
       isRoom: !!message.room(),
     })
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
-    void botNotify(
-      bot,
+    void bot.context.notify(
       message,
       formatQuery(`ERR: ${s}`, {
         title: `System Notification`,
-        footer: formatFooter(context),
+        footer: formatFooter(bot.context.data),
         commandStyle: preference.commandStyle,
       }),
     )

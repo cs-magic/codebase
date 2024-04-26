@@ -1,6 +1,7 @@
 import { Message } from "wechaty"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
-import { LlmScenario } from "../schema/bot"
+
+import { LlmScenario } from "../schema/bot.utils"
 import { getRobustData } from "./get-robust-preference"
 
 /**

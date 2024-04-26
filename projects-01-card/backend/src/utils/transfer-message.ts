@@ -1,4 +1,4 @@
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot"
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { WebSocket } from "ws"
 
 export const transferMessage = (

@@ -10,12 +10,12 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { CardSimulator } from "../../../../packages-to-classify/spider/card-simulator"
-import { url2preview } from "../../../common/url2preview"
-import { FeatureMap, FeatureType } from "../../schema/commands"
-import { getQuotedMessage } from "../../utils/get-quoted-message"
-import { parseLimitedCommand } from "../../utils/parse-command"
-import { parseText } from "../../utils/parse-message"
+import { CardSimulator } from "../../../../../packages-to-classify/spider/card-simulator"
+import { url2preview } from "@cs-magic/p01-common/url2preview"
+import { FeatureMap, FeatureType } from "../../../schema/commands"
+import { getQuotedMessage } from "../../../utils/get-quoted-message"
+import { parseLimitedCommand } from "../../../utils/parse-command"
+import { parseText } from "../../../utils/parse-message"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum(["enable", "disable"])
@@ -195,7 +195,7 @@ export class ParserManager extends BaseManager {
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      void this.addTask(async () => this.conv?.say(file))
+      void this.bot.context.addSendTask(async () => this.conv?.say(file))
       void this.notify(`✅ 解析成功: ${title}`, "parser")
       logger.info("-- sent file")
     } catch (e) {
