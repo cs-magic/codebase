@@ -29,7 +29,7 @@ export type IBotContext = BotData & {
 }
 
 export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
-  const name = "AI 助手"
+  const name = "小川"
   const version = packageJson.version
   const startTime = Date.now()
 
