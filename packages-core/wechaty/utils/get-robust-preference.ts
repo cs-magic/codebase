@@ -4,7 +4,7 @@ import {
   defaultWechatPreference,
   IWechatData,
   IWechatPreference,
-} from "schema/bot.preference"
+} from "../schema/bot.preference"
 
 export const getRobustPreference = (
   row: {
