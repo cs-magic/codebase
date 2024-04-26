@@ -4,7 +4,7 @@ import {
   defaultWechatPreference,
   IWechatData,
   IWechatPreference,
-} from "@cs-magic/prisma/schema/wechat-user"
+} from "schema/bot.preference"
 
 export const getRobustPreference = (
   row: {

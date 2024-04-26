@@ -1,4 +1,4 @@
-import { IWechatPreference } from "@cs-magic/prisma/schema/wechat-user"
+import { IWechatPreference } from "schema/bot.preference"
 import { getConvRow } from "./get-conv-row"
 import { getRobustPreference } from "./get-robust-preference"
 

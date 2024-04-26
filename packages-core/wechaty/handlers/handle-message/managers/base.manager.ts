@@ -4,12 +4,12 @@ import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { type Message, Sayable, type Wechaty } from "wechaty"
+import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 
 import { LlmScenario } from "../../../schema/bot.utils"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { formatFooter } from "../../../utils/format-footer"
 import { getConvPreference } from "../../../utils/get-conv-preference"
-import { getConvTable } from "../../../utils/get-conv-table"
 import { getUserPreference } from "../../../utils/get-user-preference"
 import {
   padlocalVersion,
@@ -118,7 +118,7 @@ export class BaseManager {
   }
 
   async getLang() {
-    return (await this.getConvPreference()).lang
+    return (await this.getConvPreference()).display.lang
   }
 
   async getData() {
@@ -152,7 +152,7 @@ export class BaseManager {
   async standardReply(content: string, tips?: string[]) {
     const preference = await this.getConvPreference()
     // truncate middle lines
-    const N = preference.maxOutputLines ?? 20
+    const N = preference.display.maxLines
     let lines = content.split("\n")
     if (lines.length > N) {
       lines = [
@@ -167,7 +167,7 @@ export class BaseManager {
       title: await this.getTitle(),
       tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
       footer: formatFooter(this.bot.context.data),
-      commandStyle: preference.commandStyle,
+      commandStyle: preference.display.style,
     })
     void this.bot.context.addSendTask(() => this.message.say(pretty))
   }
@@ -185,17 +185,42 @@ export class BaseManager {
     void this.bot.context.notify(this.message, content, llmScenario)
   }
 
-  async updatePreferenceInDB(path: string, value: any, replyStatus = true) {
-    const conv = await this.getConvPreference()
-    set(conv, path, value)
-    await getConvTable(this.isRoom).update({
-      where: {
-        id: this.convId,
-      },
-      data: {
-        preference: JSON.stringify(conv),
-      },
-    })
+  async updatePreferenceInDB(
+    path: string,
+    value: any,
+    replyStatus = true,
+    level: "user" | "conv" = "conv",
+  ) {
+    const row =
+      level === "conv"
+        ? await this.getConvPreference()
+        : await this.getUserPreference()
+
+    set(row, path, value)
+
+    if (level === "conv") {
+      const roomId = this.room?.id
+      if (roomId) {
+        await prisma.wechatRoom.update({
+          where: {
+            id: roomId,
+          },
+          data: {
+            preference: JSON.stringify(row),
+          },
+        })
+      }
+    } else {
+      await prisma.wechatUser.update({
+        where: {
+          id: this.talkingUser.id,
+        },
+        data: {
+          preference: JSON.stringify(row),
+        },
+      })
+    }
+
     if (replyStatus) await this.getStatus(true)
   }
 }

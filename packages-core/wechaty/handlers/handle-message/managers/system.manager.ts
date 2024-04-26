@@ -1,10 +1,9 @@
 import { FileBox } from "file-box"
+import { CommandStyle } from "schema/bot.preference"
 import { z } from "zod"
-import { langTypeSchema } from "../../../../../packages-to-classify/i18n/schema"
 import { backendTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.base"
 import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.models"
 import { FeatureMap } from "../../../schema/commands"
-import { CommandStyle } from "@cs-magic/prisma/schema/wechat-user"
 import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
@@ -112,14 +111,14 @@ export class SystemManager extends BaseManager {
 
         case "set-max-output-lines":
           await this.updatePreferenceInDB(
-            "maxOutputLines",
+            "display.maxLines",
             await z.number().int().min(1).parseAsync(Number(parsed.args)),
           )
           break
 
         case "set-command-style":
           await this.updatePreferenceInDB(
-            "commandStyle",
+            "display.style",
             await z.nativeEnum(CommandStyle).parseAsync(parsed.args),
           )
           break

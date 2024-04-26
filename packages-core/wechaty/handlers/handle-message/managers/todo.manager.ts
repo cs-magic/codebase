@@ -1,7 +1,6 @@
 import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
 import { taskStatusSchema, TaskTimer } from "@cs-magic/prisma/schema/task"
-import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
@@ -85,8 +84,8 @@ const i18n: FeatureMap<CommandType> = {
 
 export class TodoManager extends BaseManager {
   static name: FeatureType = "todo"
-  public i18n = i18n
   static jobs: Record<string, Job> = {}
+  public i18n = i18n
 
   async help() {
     const commands = await this.getCommands()
@@ -179,7 +178,7 @@ export class TodoManager extends BaseManager {
    */
   async listOrFilterTodo() {
     const preference = await this.getUserPreference()
-    return this.listTodo({ filter: preference.todoFilter })
+    return this.listTodo({ filter: preference.features.todo.filter })
   }
 
   async listTodo(options?: { filter?: string }) {
@@ -209,6 +208,13 @@ export class TodoManager extends BaseManager {
       return ans
     }
 
+    await this.updatePreferenceInDB(
+      "features.todo.filter",
+      options?.filter,
+      false,
+      "user",
+    )
+
     await this.standardReply(
       [
         ...serializeTaskGroup("running"),
@@ -218,17 +224,6 @@ export class TodoManager extends BaseManager {
         ...serializeTaskGroup("discarded", true),
       ].join("\n"),
     )
-
-    const preference = await this.getUserPreference()
-    await prisma.wechatUser.update({
-      where: { id: this.message.talker().id },
-      data: {
-        preference: {
-          ...omit(preference, ["todoFilter"]),
-          todoFilter: options?.filter,
-        },
-      },
-    })
   }
 
   async addTodo(title: string) {

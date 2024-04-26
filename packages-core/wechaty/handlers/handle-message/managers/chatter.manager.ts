@@ -55,7 +55,8 @@ export class ChatterManager extends BaseManager {
         desc,
         SEPARATOR_LINE,
         "Status:",
-        `  - enabled: ${preference.chatterEnabled}`,
+        `  - enabled: ${preference.features.chatter.enabled}`,
+        `  - model: ${preference.features.chatter.model}`,
       ].join("\n"),
       Object.keys(commands).map(
         (command) => `  ${ChatterManager.name} ${command}`,
@@ -93,24 +94,7 @@ export class ChatterManager extends BaseManager {
   }
 
   async enableChat() {
-    await getConvTable(!!this.message.room()).update({
-      where: { id: this.convId },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          chatterEnabled: true,
-        }),
-      },
-    })
-    await this.standardReply(
-      `Congratulation, Super Chatter has been activated!\nI almost know anything, hope you would like! 😄`,
-      [
-        // "chatter list",
-        // "chatter new",
-        "- You should @me or using prefix of `?` if you are in a group chat.",
-        "- You can deactivate me via sending: `chatter disable`",
-      ],
-    )
+    await this.updatePreferenceInDB("features.chatter.enabled", true, true)
   }
 
   async disableChat() {
@@ -153,7 +137,7 @@ export class ChatterManager extends BaseManager {
       return
 
     const convPreference = await this.getConvPreference()
-    if (!convPreference.chatterEnabled) {
+    if (!convPreference.features.chatter.enabled) {
       // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
       return
     }

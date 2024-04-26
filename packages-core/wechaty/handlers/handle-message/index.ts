@@ -144,7 +144,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       formatQuery(`ERR: ${s}`, {
         title: `System Notification`,
         footer: formatFooter(bot.context.data),
-        commandStyle: preference.commandStyle,
+        commandStyle: preference.display.style,
       }),
     )
   }

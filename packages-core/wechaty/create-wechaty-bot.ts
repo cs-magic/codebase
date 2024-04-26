@@ -30,11 +30,11 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     // basic
     //////////////////////////////
 
-    .on("scan", (value, status) => {
+    .on("scan", async (qrcode, status, data) => {
       logger.info(
-        `onScan (status=${ScanStatus[status]}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(value)}`,
+        `onScan (status=${ScanStatus[status]}, data=${data}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
       )
-      qrcodeTerminal.generate(value, { small: true })
+      qrcodeTerminal.generate(qrcode, { small: true })
     })
 
     .on("login", async (user) => {

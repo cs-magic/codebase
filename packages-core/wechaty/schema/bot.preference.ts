@@ -1,5 +1,6 @@
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
 import { type LangType } from "../../../packages-to-classify/i18n/schema"
+import { LlmModelType } from "../../../packages-to-classify/llm/schema/llm.models"
 
 export enum CommandStyle {
   standard = "standard",
@@ -13,13 +14,11 @@ export enum CommandStyle {
  * 用户偏好（可用户手动修改）
  */
 export type IWechatPreference = {
-  lang: LangType
-  chatterEnabled: boolean
-  parserEnabled: boolean
-  todoFilter?: string
-  maxOutputLines?: number
-  commandStyle?: CommandStyle
-  fetch?: GenWxmpArticleCardFetchOptions
+  display: {
+    lang: LangType
+    maxLines: number
+    style: CommandStyle
+  }
 
   onRoomJoin?: {
     sayAnnounce?: {
@@ -27,11 +26,53 @@ export type IWechatPreference = {
       n?: number
     }
   }
+
+  features: {
+    chatter: {
+      enabled: boolean
+      model: LlmModelType
+    }
+    parser: {
+      enabled: boolean
+      model: LlmModelType
+    }
+    todo: {
+      enabled: boolean
+      filter?: string
+    }
+  }
+
+  fetch?: GenWxmpArticleCardFetchOptions
 }
 export const defaultWechatPreference: IWechatPreference = {
-  lang: "en",
-  chatterEnabled: false,
-  parserEnabled: false,
+  display: {
+    lang: "en",
+    maxLines: 20,
+    style: CommandStyle.simple,
+  },
+
+  onRoomJoin: {
+    sayAnnounce: {
+      enabled: false,
+      n: 1,
+    },
+  },
+
+  features: {
+    chatter: {
+      enabled: false,
+      model: "gpt-3.5-turbo",
+    },
+    parser: {
+      enabled: false,
+      model: "gpt-4",
+    },
+    todo: {
+      enabled: true,
+      filter: undefined,
+    },
+  },
+
   fetch: {
     detail: {
       request: {
@@ -54,12 +95,6 @@ export const defaultWechatPreference: IWechatPreference = {
       enabled: false,
     },
     withCache: true,
-  },
-  onRoomJoin: {
-    sayAnnounce: {
-      enabled: false,
-      n: 1,
-    },
   },
 }
 

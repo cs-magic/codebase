@@ -6,12 +6,12 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
+import { url2preview } from "@cs-magic/p01-common/url2preview"
 
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
 import { z } from "zod"
 import { CardSimulator } from "../../../../../packages-to-classify/spider/card-simulator"
-import { url2preview } from "@cs-magic/p01-common/url2preview"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { getQuotedMessage } from "../../../utils/get-quoted-message"
 import { parseLimitedCommand } from "../../../utils/parse-command"
@@ -55,7 +55,8 @@ export class ParserManager extends BaseManager {
         desc,
         SEPARATOR_LINE,
         "Status:",
-        `  - enabled: ${preference.parserEnabled}`,
+        `  - enabled: ${preference.features.parser.enabled}`,
+        `  - model  : ${preference.features.parser.model}`,
       ].join("\n"),
       Object.keys(commands).map(
         (command) => `  ${ParserManager.name} ${command}`,
@@ -123,21 +124,18 @@ export class ParserManager extends BaseManager {
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "enable":
-          await this.updatePreferenceInDB("parserEnabled", true, false)
-          await this.standardReply(
-            `Congratulation, Super Parser has been activated!\nI can help you parse shared links, give me a try! 😄`,
-            [
-              "- I currently supports wxmp article, other media types (e.g. videos) are on the roadmap, hold on!",
-              "- You can deactivate me via sending: `parser disable`.",
-            ],
+          await this.updatePreferenceInDB(
+            "features.parser.enabled",
+            true,
+            false,
           )
           break
 
         case "disable":
-          await this.updatePreferenceInDB("parserEnabled", false, false)
-          await this.standardReply(
-            `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
-            ["- You can activate me via sending: `parser enable`."],
+          await this.updatePreferenceInDB(
+            "features.parser.enabled",
+            false,
+            false,
           )
           break
       }
@@ -169,7 +167,7 @@ export class ParserManager extends BaseManager {
       return logger.info(`passed since it's not wxmp article`)
 
     const convPreference = await this.getConvPreference()
-    if (!convPreference.parserEnabled)
+    if (!convPreference.features.parser.enabled)
       return logger.info(`passed since parser disabled`)
 
     try {
