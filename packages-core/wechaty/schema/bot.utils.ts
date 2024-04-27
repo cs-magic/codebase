@@ -1,7 +1,7 @@
-import type { Contact } from "wechaty-puppet/dist/esm/src/mods/payloads"
+import type { payloads } from "wechaty"
 
 export type IWechatBotScan = { value: string; status: number }
-export type IUser = Contact
+export type IUser = payloads.Contact
 export type IWechatBotTransfer =
   | {
       type: "scan"
