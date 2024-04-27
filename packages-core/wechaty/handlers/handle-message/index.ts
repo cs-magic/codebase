@@ -8,7 +8,7 @@ import {
   ManagerType,
 } from "../../schema/commands"
 import { formatFooter } from "../../utils/format-footer"
-import { formatMessage } from "../../utils/format-message"
+import { formatWechatyMessage } from "../../utils/format-wechaty-message"
 import { formatTalkerFromMessage } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -34,7 +34,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
   try {
     logger.info(
       `[onMessage] ${await formatTalkerFromMessage(message)}: %o`,
-      formatMessage(message, 600),
+      formatWechatyMessage(message, 600),
     )
 
     if (message.text() === "test") {

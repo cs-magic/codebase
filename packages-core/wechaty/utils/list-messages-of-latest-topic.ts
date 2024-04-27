@@ -130,6 +130,12 @@ export const listMessagesOfLatestTopic = async (
     take: -20,
   })
 
+  while (messages.length) {
+    // ensure first message is from user
+    if (messages[0]!.talkerId === botWxid) messages.splice(0, 1)
+    else break
+  }
+
   // logger.info({
   //   lastUserSetCommand,
   //   lastUserStartChat,

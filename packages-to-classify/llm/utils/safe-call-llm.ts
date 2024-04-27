@@ -4,11 +4,12 @@ import { logger } from "@cs-magic/log/logger"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
-import { env } from "../env"
+import { env } from "../../env"
 import { callLlm } from "./call-llm"
 import { model2provider } from "./model2provider"
 
-import { ILlmReq, ILlmRes } from "./schema/llm.api"
+import { ILlmReq, ILlmRes } from "../schema/llm.api"
+import { formatLlmMessage } from "./format-llm-message"
 
 export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
   const llmModelType = options.model
@@ -54,10 +55,7 @@ export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
   logger.debug(
     [
       `>> calling LLM(provider=${llmProviderType}, model=${queryConfig.model}, api_key=${apiKey}): `,
-      ...queryConfig.messages.map(
-        (m) =>
-          `  [${m.role[0]!.toUpperCase()}]: ${formatString(JSON.stringify(m.content), 60)}`,
-      ),
+      ...queryConfig.messages.map((m) => formatLlmMessage(m, 60)),
     ].join("\n"),
   )
 

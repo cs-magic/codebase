@@ -1,8 +1,11 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { logger } from "@cs-magic/log/logger"
+import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import { types } from "wechaty"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../../packages-to-classify/llm"
+
+import { formatLlmMessage } from "../../../../../packages-to-classify/llm/utils/format-llm-message"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic"
 import { BaseManager } from "./base.manager"
@@ -98,7 +101,8 @@ export class ChatterManager extends BaseManager {
       this.convId,
     )
 
-    const context = filteredMessages.map((m) => ({
+    const model = convPreference.features.chatter.model ?? "gpt-3.5-turbo"
+    const messages: ILlmMessage[] = filteredMessages.map((m) => ({
       role:
         m.talkerId === this.bot.context.wxid
           ? ("assistant" as const)
@@ -108,11 +112,18 @@ export class ChatterManager extends BaseManager {
     }))
     // logger.info(`--  context(len=${context.length})`)
 
-    void this.notify(`🌈 calling LLM`, "chatter")
+    void this.notify(
+      [
+        `🌈 calling LLM (model=${model})`,
+        SEPARATOR_LINE,
+        ...messages.map(formatLlmMessage),
+      ].join("\n"),
+      "chatter",
+    )
 
     const res = await safeCallLLM({
-      messages: context,
-      model: convPreference.features.chatter.model ?? "gpt-3.5-turbo",
+      messages,
+      model,
       user: await this.getUserIdentity(),
     })
 

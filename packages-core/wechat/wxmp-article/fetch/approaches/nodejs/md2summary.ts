@@ -1,4 +1,4 @@
-import { safeCallAgent } from "../../../../../../packages-to-classify/llm/safe-call-agent"
+import { safeCallAgent } from "../../../../../../packages-to-classify/llm/utils/safe-call-agent"
 import { ILlmReq } from "../../../../../../packages-to-classify/llm/schema/llm.api"
 import { LlmModelType } from "../../../../../../packages-to-classify/llm/schema/llm.models"
 

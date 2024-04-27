@@ -1,15 +1,15 @@
 import { logger } from "@cs-magic/log/logger"
+import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"
 
 import { compressContent } from "@cs-magic/common/utils/compress-content"
-import { Path } from "../path"
+import { Path } from "../../path"
 import { safeCallLLM } from "./safe-call-llm"
-import { ILlmMessage } from "./schema/llm.base"
-import { LlmModelType } from "./schema/llm.models"
+import { LlmModelType } from "../schema/llm.models"
 
-import { IAgentReq, ILlmReq } from "./schema/llm.api"
+import { IAgentReq, ILlmReq } from "../schema/llm.api"
 
 // const __filename = fileURLToPath(import.meta.url)
 
