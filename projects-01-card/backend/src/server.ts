@@ -7,6 +7,7 @@ import Fastify from "fastify"
 import remove from "lodash/remove"
 import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
+import { startBot } from "./utils/start-bot"
 import { syncClients } from "./utils/sync-clients"
 import { transferMessage } from "./utils/transfer-message"
 
@@ -26,38 +27,7 @@ void fastify.register(async function (fastify) {
     sockets: [],
   }
 
-  /**
-   * 卸载这里，方便监听 onScan
-   */
-  const startBot = async () => {
-    let { bot, scan, sockets } = context
-    // 避免重复登录，会导致 padLocal 报错
-    if (!bot) {
-      logger.info("-- creating bot")
-      bot = createWechatyBot({
-        name: "1", // todo
-      })
-        .on("scan", (value, status) => {
-          context.scan = { value, status }
-          logger.info(`updated scan: ${JSON.stringify(context.scan)}`)
-          transferMessage({ type: "scan", data: context.scan }, sockets)
-        })
-        .on("login", (user) => {
-          // console.log("-- login: ", user)
-          context.scan = null
-          context.bot = bot
-          syncClients(context)
-        })
-    }
-
-    // todo: if has cache,  start auto, o.w. wait for triggering in the frontend ?
-    if (!bot.isLoggedIn) {
-      logger.info("-- starting bot")
-      await bot.start()
-    }
-  }
-
-  await startBot()
+  await startBot(context)
 
   fastify.get(
     "/ws",

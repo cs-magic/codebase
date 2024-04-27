@@ -15,7 +15,13 @@ import { initBotContext } from "./schema/bot.context"
  *
  * @param name
  */
-export const createWechatyBot = ({ name }: { name?: string }) => {
+export const createWechatyBot = ({
+  name,
+  token,
+}: {
+  name?: string
+  token?: string
+}) => {
   // log env to ensure puppet info.
   logEnv("wechaty")
 
@@ -26,6 +32,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     puppetOptions: {
       // I added in padlocal, 2024-04-27 08:49:22
       restartOnFailure: false,
+      token,
     },
   }) as Wechaty // 等会再更新其他扩展的信息
 
@@ -96,7 +103,7 @@ export const createWechatyBot = ({ name }: { name?: string }) => {
     })
 
     .on("puppet", (puppet) => {
-      logger.info(`onPuppet: %o`, puppet)
+      logger.debug(`onPuppet: %o`, puppet)
     })
 
     .on("ready", () => {

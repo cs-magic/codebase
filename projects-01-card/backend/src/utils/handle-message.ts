@@ -1,10 +1,22 @@
+import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import { parseLimitedCommand } from "@cs-magic/wechaty/utils/parse-command"
+import path from "path"
+import { Path } from "../../../../packages-to-classify/path"
 import { BotCommandType, botCommandTypeSchema } from "../config"
 import { IContext } from "../schema/context"
 import { startBot } from "./start-bot"
 import { syncClients } from "./sync-clients"
+
+export const wechatyDataPath = path.join(Path.dataDir, "wechaty.data.json")
+export type IWechatData = {
+  puppet?: {
+    padlocal?: {
+      token?: string
+    }
+  }
+}
 
 export const handleMessage = async (
   context: IContext,
@@ -25,7 +37,7 @@ export const handleMessage = async (
     switch (result.command) {
       case "start":
         await context.bot?.stop()
-        context = await startBot(context)
+        await startBot(context)
         break
 
       case "stop":
@@ -39,11 +51,22 @@ export const handleMessage = async (
         break
 
       case "update-token":
-        process.env.WECHATY_PUPPET_PADLOCAL_TOKEN = `puppet_padlocal_${result.args}`
+        const data: IWechatData = {
+          puppet: {
+            padlocal: {
+              token: `puppet_padlocal_${result.args}`,
+            },
+          },
+        }
+        await dumpFile(data, { fp: wechatyDataPath })
         // 切换 iPad 设备时，如果不先退出登录，在另一个设备登录后手机会被强制重新登陆，并限制扫码功能（需要好友解封）
         // todo 2024-04-27 09:23:31: 验证先退出登录后，是否可以有效缓解这个问题，如果不行的话只能直接买号了
+        logger.info("logging out")
         await context.bot?.logout()
-        context = await startBot(context)
+        logger.info("logged out")
+        logger.info("starting new bot")
+        await startBot(context)
+        logger.info("started new bot")
         break
 
       default:

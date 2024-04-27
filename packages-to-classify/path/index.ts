@@ -17,4 +17,5 @@ export class Path {
   static envFile = path.join(Path.projectDir, ".env")
   static envLocalFile = path.join(Path.projectDir, ".env.local")
   static generatedDir = ensureDirSync(path.join(Path.projectDir, ".generated"))
+  static dataDir = ensureDirSync(path.join(Path.projectDir, ".data"))
 }
