@@ -40,7 +40,9 @@ export const handleMessage = async (
 
       case "update-token":
         process.env.WECHATY_PUPPET_PADLOCAL_TOKEN = `puppet_padlocal_${result.args}`
-        await context.bot?.stop()
+        // 切换 iPad 设备时，如果不先退出登录，在另一个设备登录后手机会被强制重新登陆，并限制扫码功能（需要好友解封）
+        // todo 2024-04-27 09:23:31: 验证先退出登录后，是否可以有效缓解这个问题，如果不行的话只能直接买号了
+        await context.bot?.logout()
         context = await startBot(context)
         break
 
