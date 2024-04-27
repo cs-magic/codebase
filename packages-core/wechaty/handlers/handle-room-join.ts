@@ -66,8 +66,8 @@ ${SEPARATOR_LINE}
 
   const preference = getRobustPreference(roomInDB)
   if (
-    preference.onRoomJoin?.sayAnnounce?.enabled &&
-    data.room.newInvitees.length >= (preference.onRoomJoin?.sayAnnounce?.n ?? 1)
+    preference.on.roomJoin.sayAnnounce.enabled &&
+    data.room.newInvitees.length >= preference.on.roomJoin.sayAnnounce.n
   ) {
     data.room.newInvitees = []
     // 不能是空字符

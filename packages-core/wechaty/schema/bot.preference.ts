@@ -20,10 +20,12 @@ export type IWechatPreference = {
     style: CommandStyle
   }
 
-  onRoomJoin?: {
-    sayAnnounce?: {
-      enabled?: boolean
-      n?: number
+  on: {
+    roomJoin: {
+      sayAnnounce: {
+        enabled: boolean
+        n: number
+      }
     }
   }
 
@@ -50,10 +52,12 @@ export const defaultWechatPreference: IWechatPreference = {
     style: CommandStyle.simple,
   },
 
-  onRoomJoin: {
-    sayAnnounce: {
-      enabled: false,
-      n: 1,
+  on: {
+    roomJoin: {
+      sayAnnounce: {
+        enabled: true,
+        n: 5,
+      },
     },
   },
 
