@@ -24,6 +24,7 @@ export const handleMessage = async (
 
     switch (result.command) {
       case "start":
+        await context.bot?.stop()
         context = await startBot(context)
         break
 
@@ -35,6 +36,12 @@ export const handleMessage = async (
       case "logout":
         await context.bot?.logout()
         syncClients(context)
+        break
+
+      case "update-token":
+        process.env.WECHATY_PUPPET_PADLOCAL_TOKEN = `puppet_padlocal_${result.args}`
+        await context.bot?.stop()
+        context = await startBot(context)
         break
 
       default:

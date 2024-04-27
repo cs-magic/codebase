@@ -124,18 +124,14 @@ export class ParserManager extends BaseManager {
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "enable":
-          await this.updatePreferenceInDB(
-            "features.parser.enabled",
-            true,
-            false,
-          )
+          await this.updatePreferenceInDB("features.parser.enabled", true, true)
           break
 
         case "disable":
           await this.updatePreferenceInDB(
             "features.parser.enabled",
             false,
-            false,
+            true,
           )
           break
       }

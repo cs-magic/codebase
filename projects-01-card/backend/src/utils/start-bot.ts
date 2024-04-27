@@ -1,3 +1,4 @@
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import { IContext } from "../schema/context"
@@ -12,6 +13,9 @@ export const startBot = async (context: IContext): Promise<IContext> => {
     bot = createWechatyBot({
       name: "1", // todo
     })
+      .on("error", (error) => {
+        formatError(error)
+      })
       .on("scan", (value, status) => {
         scan = { value, status }
         logger.info(`updated scan: ${JSON.stringify(scan)}`)

@@ -4,8 +4,10 @@ import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
 import moment from "../../../packages-to-classify/datetime/moment"
-import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { formatTalkerFromMessage } from "../utils/format-talker"
+import { getConvPreferenceFromMessage } from "../utils/get-conv-preference"
+import { getUserPreference } from "../utils/get-user-preference"
+import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
 
 type BotData = {
@@ -25,7 +27,7 @@ export type IBotContext = BotData & {
     llmScenario?: LlmScenario,
   ) => Promise<void>
   getHelp: () => Promise<string>
-  getStatus: () => Promise<string>
+  getStatus: (message: Message) => Promise<string>
 }
 
 export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
@@ -47,7 +49,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
     name,
     version,
     startTime,
-    jobs: [], // todo: await prisma.task.findMany({where: {timer: {}}})
+    jobs: [], // todo: await prisma.task.findMany({where: {timer: {})
     wxid: bot.currentUser.id,
   }
 
@@ -80,8 +82,10 @@ Basic Commands：
   help: (show usage)
 `
     },
-    getStatus: async () => {
+    getStatus: async (message) => {
       const aliveTime = formatDuration((Date.now() - botData.startTime) / 1e3)
+      const convPreference = await getConvPreferenceFromMessage(message)
+      const userPreference = await getUserPreference(message)
       return `
 Basic:
   name: ${name}
@@ -89,15 +93,15 @@ Basic:
   alive-time: ${aliveTime}
 ------------------------------
 Preference(Conv|User):
-  model: {{convPreference.fetch.detail.summary.model}} | {{userPreference.fetch.detail.summary.model}}
-  chatter enabled: {{{convPreference.chatterEnabled}}} | {{{userPreference.chatterEnabled}}}
-  parser enabled: {{{convPreference.parserEnabled}}} | {{{userPreference.parserEnabled}}}
-  backend: {{convPreference.fetch.detail.request.backendType}} | {{userPreference.fetch.detail.request.backendType}}
-  max output lines: {{{convPreference.maxOutputLines}}} | {{{userPreference.maxOutputLines}}}
-  command style: {{{convPreference.commandStyle}}} | {{{userPreference.commandStyle}}}
+  model: ${convPreference.fetch?.detail?.summary?.model} | ${userPreference?.fetch?.detail?.summary?.model}
+  chatter enabled: ${convPreference.features.chatter.enabled} | ${userPreference.features.chatter.enabled}
+  parser enabled: ${convPreference.features.parser.enabled} | ${userPreference.features.parser.enabled}
+  backend: ${convPreference?.fetch?.detail?.request?.backendType} | ${userPreference?.fetch?.detail?.request?.backendType}
+  max output lines: ${convPreference.display.maxLines} | ${userPreference.display.maxLines}
+  command style: ${convPreference.display.style} | ${userPreference.display.style}
   onRoomJoin.sayAnnounce:
-    enabled: {{{convPreference.onRoomJoin.sayAnnounce.enabled}}}
-    n: {{{convPreference.onRoomJoin.sayAnnounce.n}}}
+    enabled: ${convPreference?.onRoomJoin?.sayAnnounce?.enabled}
+    n: ${convPreference?.onRoomJoin?.sayAnnounce?.n}
 `
     },
   }

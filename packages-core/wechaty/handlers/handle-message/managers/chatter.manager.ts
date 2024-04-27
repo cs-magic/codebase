@@ -83,34 +83,22 @@ export class ChatterManager extends BaseManager {
 
       switch (commandType) {
         case "enable":
-          await this.enableChat()
+          await this.updatePreferenceInDB(
+            "features.chatter.enabled",
+            true,
+            true,
+          )
           break
 
         case "disable":
-          await this.disableChat()
+          await this.updatePreferenceInDB(
+            "features.chatter.enabled",
+            false,
+            true,
+          )
           break
       }
     }
-  }
-
-  async enableChat() {
-    await this.updatePreferenceInDB("features.chatter.enabled", true, true)
-  }
-
-  async disableChat() {
-    await getConvTable(this.isRoom).update({
-      where: { id: this.convId },
-      data: {
-        preference: JSON.stringify({
-          ...(await this.getConvPreference()),
-          chatterEnabled: false,
-        }),
-      },
-    })
-    await this.standardReply(
-      `Okay, I'm going to take a break!\nFeel free to activate me again when you need me~ 👋🏻`,
-      ["- You can activate me via sending: `chatter enable`."],
-    )
   }
 
   async safeReplyWithAI() {

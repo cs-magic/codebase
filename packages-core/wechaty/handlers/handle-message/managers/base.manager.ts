@@ -138,7 +138,7 @@ export class BaseManager {
   }
 
   async getStatus(reply = false) {
-    const content = await this.bot.context.getStatus()
+    const content = await this.bot.context.getStatus(this.message)
     if (reply) await this.standardReply(content)
     return content
   }

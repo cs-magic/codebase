@@ -38,6 +38,7 @@ const VERSION = packageJson.version || "0.0.0";
 export type PuppetPadlocalOptions = PUPPET.PuppetOptions & {
   serverCAFilePath?: string;
   defaultLoginPolicy?: PadLocal.LoginPolicy;
+  restartOnFailure?: boolean;
 };
 
 const PRE = "[PuppetPadlocal]";
@@ -218,7 +219,7 @@ class PuppetPadlocal extends PUPPET.Puppet {
       })
       .catch(async (error) => {
         log.error(`start client failed: ${error.stack}`);
-        await this._stopClient(true);
+        await this._stopClient(!!this.options.restartOnFailure);
       });
   }
 
