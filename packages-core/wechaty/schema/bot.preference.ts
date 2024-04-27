@@ -99,7 +99,12 @@ export const defaultWechatPreference: IWechatPreference = {
  * 用户数据（不可用户手动修改）
  */
 export type IWechatData = {
-  roomNewInvitees: string[]
+  room: {
+    newInvitees: string[]
+    welcome: {
+      sent: boolean
+    }
+  }
   vipLevel: number
   balance: number
   llm: {
@@ -115,7 +120,13 @@ export type IWechatData = {
 }
 
 export const defaultWechatData: IWechatData = {
-  roomNewInvitees: [],
+  room: {
+    newInvitees: [],
+    welcome: {
+      sent: false,
+    },
+  },
+
   balance: 0,
   vipLevel: 0,
   llm: {

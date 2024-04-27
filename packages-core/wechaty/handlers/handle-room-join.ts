@@ -24,10 +24,19 @@ export const handleRoomJoin = async (
   inviter: Contact,
   date: Date | undefined,
 ) => {
-  void bot.context.addSendTask(async () => {
-    const { name, version } = bot.context.data
+  const { name, version } = bot.context.data
 
-    await room.say(`感谢${inviter.name()}邀请！
+  const roomInDB = await prisma.wechatRoom.findUnique({
+    where: { id: room.id },
+  })
+  if (!roomInDB) return
+
+  const data = getRobustData(roomInDB)
+  data.room.newInvitees.push(...inviteeList.map((i) => i.id))
+
+  if (!data.room.welcome.sent) {
+    void bot.context.addSendTask(async () => {
+      await room.say(`感谢${inviter.name()}邀请！
 ${SEPARATOR_LINE}
 大家好啊，我是大家的 AI 助手「${name}」，以下是我能为大家提供的服务：
   - 发送一篇公众号文章到本会话内，我将基于大模型为您总结
@@ -43,7 +52,10 @@ ${SEPARATOR_LINE}
 当前版本：${version}
 当前时间：${moment().format("YYYY/MM/DD HH:mm")}
 `)
-  })
+      // pessimistic update
+      data.room.welcome.sent = true
+    })
+  }
 
   const roomNotice = await room.announce()
   logger.info(
@@ -52,23 +64,16 @@ ${SEPARATOR_LINE}
   )
   logger.info(`notice: %o`, roomNotice)
 
-  const roomInDB = await prisma.wechatRoom.findUnique({
-    where: { id: room.id },
-  })
-  if (!roomInDB) return
-
   const preference = getRobustPreference(roomInDB)
-  if (!preference.onRoomJoin?.sayAnnounce?.enabled) return
-
-  const data = getRobustData(roomInDB)
-  data.roomNewInvitees.push(...inviteeList.map((i) => i.id))
   if (
-    data.roomNewInvitees.length >= (preference.onRoomJoin?.sayAnnounce?.n ?? 1)
+    preference.onRoomJoin?.sayAnnounce?.enabled &&
+    data.room.newInvitees.length >= (preference.onRoomJoin?.sayAnnounce?.n ?? 1)
   ) {
-    data.roomNewInvitees = []
+    data.room.newInvitees = []
     // 不能是空字符
     if (roomNotice.trim()) await room.say(roomNotice)
   }
+
   await prisma.wechatRoom.update({
     where: { id: roomInDB.id },
     data: {
