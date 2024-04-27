@@ -1,4 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { logger } from "@cs-magic/log/logger"
 import { types } from "wechaty"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../../packages-to-classify/llm"
@@ -65,31 +66,32 @@ export class ChatterManager extends BaseManager {
   async safeReplyWithAI() {
     const m = this.message
     if (
+      // 过滤非文本 todo: image/xxxx
+      m.type() !== types.Message.Text ||
       // 过滤自己的消息
       m.self() ||
       // 过滤微信官方
       m.talker().id === "weixin" ||
       // 过滤群聊中没有at自己的消息 （私信要回）
       (m.room() &&
+        // 没有被 at
         !(
           // including @all
           // await m.mentionSelf()
           // excluding @all
-          (await m.mentionList()).some((m) => m.id === this.bot.context.wxid)
+          (await m.mentionList()).some(
+            (contact) => contact.id === this.bot.context.wxid,
+          )
         ) &&
-        // 支持 叹号快捷触发
+        // 也没有问号开头
         //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
-        !/^[?？]/.exec(this.text)) ||
-      // 过滤非文本 todo: image/xxxx
-      m.type() !== types.Message.Text
+        !/^\s*[?？]/.exec(this.text))
     )
       return
 
     const convPreference = await this.getConvPreference()
-    if (!convPreference.features.chatter.enabled) {
-      // await this.standardReply("此会话中暂没有开启AI聊天哦", ["enable-chat"])
-      return
-    }
+    if (!convPreference.features.chatter.enabled)
+      return logger.debug(`!convPreference.features.chatter.enabled`)
 
     const filteredMessages = await listMessagesOfLatestTopic(
       this.bot.context.wxid,
@@ -110,9 +112,7 @@ export class ChatterManager extends BaseManager {
 
     const res = await safeCallLLM({
       messages: context,
-      model:
-        convPreference.features.parser.options?.detail?.summary?.model ??
-        "gpt-3.5-turbo",
+      model: convPreference.features.chatter.model ?? "gpt-3.5-turbo",
       user: await this.getUserIdentity(),
     })
 

@@ -1,15 +1,16 @@
-export function evalObject(input: string): unknown {
+import { isNumeric } from "./is-numeric"
+
+export function evalObject(input?: string): unknown {
   // Attempt to convert the input string to a number
-  const number = Number(input)
-  if (!isNaN(number)) {
-    return number // Return the number if conversion was successful
+  if (isNumeric(input)) {
+    return Number(input) // Return the number if conversion was successful
   }
 
   // Convert 'true' or 'false' strings to boolean values
-  if (input.toLowerCase() === "true") {
+  if (input?.toLowerCase() === "true") {
     return true
   }
-  if (input.toLowerCase() === "false") {
+  if (input?.toLowerCase() === "false") {
     return false
   }
 

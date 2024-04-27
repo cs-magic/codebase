@@ -6,11 +6,12 @@ import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { type Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
+import { IWechatPreference } from "../../../schema/bot.preference"
 
 import { LlmScenario } from "../../../schema/bot.utils"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { formatFooter } from "../../../utils/format-footer"
-import { getConvPreference } from "../../../utils/get-conv-preference"
+import { getConvPreferenceFromMessage } from "../../../utils/get-conv-preference"
 import { getUserPreference } from "../../../utils/get-user-preference"
 import {
   padlocalVersion,
@@ -111,7 +112,7 @@ export class BaseManager {
    * todo: cache preference
    */
   async getConvPreference() {
-    return getConvPreference({ convId: this.convId, isRoom: this.isRoom })
+    return getConvPreferenceFromMessage(this.message)
   }
 
   async getUserPreference() {
@@ -194,24 +195,23 @@ export class BaseManager {
     reply: string | boolean | undefined = undefined,
     level: "user" | "conv" = "conv",
   ) {
-    const convertedValue = evalObject(value)
+    const updatePreference = (preference: IWechatPreference) => {
+      const convertedValue = evalObject(value)
 
-    const preference =
-      level === "conv"
-        ? await this.getConvPreference()
-        : await this.getUserPreference()
-
-    logger.info(
-      `updating preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
-    )
-    set(preference, path, convertedValue)
-    logger.info(
-      `updated preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
-    )
+      logger.info(
+        `updating preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
+      )
+      set(preference, path, convertedValue)
+      logger.info(
+        `updated preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
+      )
+    }
 
     const roomId = this.room?.id
     // 私聊，或者在群内显式指定
     if (!roomId || level === "user") {
+      const preference = await this.getUserPreference()
+      updatePreference(preference)
       await prisma.wechatUser.update({
         where: {
           id: this.talkingUser.id,
@@ -221,6 +221,8 @@ export class BaseManager {
         },
       })
     } else {
+      const preference = await this.getConvPreference()
+      updatePreference(preference)
       await prisma.wechatRoom.update({
         where: {
           id: roomId,

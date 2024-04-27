@@ -1,6 +1,6 @@
 {
   "name": "@cs-magic/p01-card",
-  "version": "V0.6.143 (α)",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "postinstall": "patch-package",

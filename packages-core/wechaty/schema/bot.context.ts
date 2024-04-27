@@ -1,15 +1,14 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatDuration } from "@cs-magic/common/utils/format-duration"
+import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
 import moment from "../../../packages-to-classify/datetime/moment"
 import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreferenceFromMessage } from "../utils/get-conv-preference"
-import { getUserPreference } from "../utils/get-user-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
-import yaml from "js-yaml"
 
 type BotData = {
   name: string
@@ -86,15 +85,10 @@ Basic Commands：
     getStatus: async (message) => {
       const aliveTime = formatDuration((Date.now() - botData.startTime) / 1e3)
       const convPreference = await getConvPreferenceFromMessage(message)
-      return `
-Basic:
-  name: ${name}
-  version: ${version}
-  alive-time: ${aliveTime}
-------------------------------
-Preference:
-  ${yaml.dump(convPreference, { indent: 2 })}
-`
+      return [
+        yaml.dump({ Basic: { name, version, aliveTime } }),
+        yaml.dump({ Preference: convPreference }),
+      ].join(SEPARATOR_LINE + "\n")
     },
   }
 }

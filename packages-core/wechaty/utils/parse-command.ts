@@ -28,18 +28,3 @@ export const parseLimitedCommand = <T extends string>(
   // logger.info({ text, command, args })
   return { command, args }
 }
-
-export const parseCommand = (text: string): IParseCommandRes<string> => {
-  // 正则使用 `` 而非 // 的时候要 \s --> \\s
-  // - /A, ok
-  // - /A b, ok
-  // - /Ab, not ok
-  const m = new RegExp(`^\\s*(.*?)(?:\\s+(.*?))?\\s*$`).exec(text)
-
-  if (!m) return null
-
-  const command = m[1]!
-  const args = m[2] ?? ""
-  // logger.info({ text, command, args })
-  return { command, args }
-}

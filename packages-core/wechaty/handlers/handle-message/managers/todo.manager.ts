@@ -208,13 +208,6 @@ export class TodoManager extends BaseManager {
       return ans
     }
 
-    await this.updatePreferenceInDB(
-      "features.todo.filter",
-      options?.filter,
-      false,
-      "user",
-    )
-
     await this.standardReply(
       [
         ...serializeTaskGroup("running"),
