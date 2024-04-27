@@ -86,7 +86,7 @@ export class ChatterManager extends BaseManager {
           await this.updatePreferenceInDB(
             "features.chatter.enabled",
             true,
-            true,
+            "好的，已开启 AI 聊天功能~",
           )
           break
 
@@ -94,7 +94,7 @@ export class ChatterManager extends BaseManager {
           await this.updatePreferenceInDB(
             "features.chatter.enabled",
             false,
-            true,
+            "好的，已关闭 AI 聊天功能~",
           )
           break
       }

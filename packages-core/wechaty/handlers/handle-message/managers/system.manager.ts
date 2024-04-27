@@ -81,6 +81,7 @@ export class SystemManager extends BaseManager {
           await this.updatePreferenceInDB(
             "fetch.detail.summary.model",
             await llmModelTypeSchema.parseAsync(parsed.args),
+            "已更新 ~",
           )
           break
 
@@ -106,6 +107,7 @@ export class SystemManager extends BaseManager {
           await this.updatePreferenceInDB(
             "fetch.detail.request.backendType",
             await backendTypeSchema.parseAsync(parsed.args),
+            "已更新 ~",
           )
           break
 
@@ -113,6 +115,7 @@ export class SystemManager extends BaseManager {
           await this.updatePreferenceInDB(
             "display.maxLines",
             await z.number().int().min(1).parseAsync(Number(parsed.args)),
+            "已更新 ~",
           )
           break
 
@@ -120,6 +123,7 @@ export class SystemManager extends BaseManager {
           await this.updatePreferenceInDB(
             "display.style",
             await z.nativeEnum(CommandStyle).parseAsync(parsed.args),
+            "已更新 ~",
           )
           break
       }

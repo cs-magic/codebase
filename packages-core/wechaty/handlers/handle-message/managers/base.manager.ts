@@ -3,7 +3,10 @@ import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
+import * as repl from "node:repl"
 import { type Message, Sayable, type Wechaty } from "wechaty"
+import { ContactInterface } from "wechaty/src/user-modules/contact"
+import { string } from "zod"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 
 import { LlmScenario } from "../../../schema/bot.utils"
@@ -188,39 +191,56 @@ export class BaseManager {
   async updatePreferenceInDB(
     path: string,
     value: any,
-    replyStatus = true,
+    // if string, reply with the string
+    // if boolean, reply with status
+    reply: string | boolean | undefined = undefined,
     level: "user" | "conv" = "conv",
   ) {
-    const row =
+    const preference =
       level === "conv"
         ? await this.getConvPreference()
         : await this.getUserPreference()
 
-    set(row, path, value)
+    logger.info(
+      `updating preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
+    )
+    set(preference, path, value)
+    logger.info(
+      `updated preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
+    )
 
-    if (level === "conv") {
-      const roomId = this.room?.id
-      if (roomId) {
-        await prisma.wechatRoom.update({
-          where: {
-            id: roomId,
-          },
-          data: {
-            preference: JSON.stringify(row),
-          },
-        })
-      }
-    } else {
+    const roomId = this.room?.id
+    // 私聊，或者在群内显式指定
+    if (!roomId || level === "user") {
       await prisma.wechatUser.update({
         where: {
           id: this.talkingUser.id,
         },
         data: {
-          preference: JSON.stringify(row),
+          preference: JSON.stringify(preference),
+        },
+      })
+    } else {
+      await prisma.wechatRoom.update({
+        where: {
+          id: roomId,
+        },
+        data: {
+          preference: JSON.stringify(preference),
         },
       })
     }
 
-    if (replyStatus) await this.getStatus(true)
+    if (reply) {
+      if (typeof reply === "string") {
+        await this.bot.context.addSendTask(async () => {
+          await this.message.say(reply)
+        })
+      }
+
+      if (typeof reply === "boolean") {
+        await this.getStatus(true)
+      }
+    }
   }
 }

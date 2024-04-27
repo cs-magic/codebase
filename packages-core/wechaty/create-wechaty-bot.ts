@@ -99,7 +99,8 @@ export const createWechatyBot = ({
 
     .on("heartbeat", (data) => {
       // 比较频繁，大概一分钟一次这样子
-      logger.debug(`onHeartbeat: %o`, data)
+      // logger.debug(`onHeartbeat: %o`, data)
+      logger.debug(".")
     })
 
     .on("puppet", (puppet) => {

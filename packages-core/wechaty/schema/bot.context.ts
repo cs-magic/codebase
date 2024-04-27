@@ -9,6 +9,7 @@ import { getConvPreferenceFromMessage } from "../utils/get-conv-preference"
 import { getUserPreference } from "../utils/get-user-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
+import yaml from "js-yaml"
 
 type BotData = {
   name: string
@@ -85,23 +86,14 @@ Basic Commands：
     getStatus: async (message) => {
       const aliveTime = formatDuration((Date.now() - botData.startTime) / 1e3)
       const convPreference = await getConvPreferenceFromMessage(message)
-      const userPreference = await getUserPreference(message)
       return `
 Basic:
   name: ${name}
   version: ${version}
   alive-time: ${aliveTime}
 ------------------------------
-Preference(Conv|User):
-  model: ${convPreference.fetch?.detail?.summary?.model} | ${userPreference?.fetch?.detail?.summary?.model}
-  chatter enabled: ${convPreference.features.chatter.enabled} | ${userPreference.features.chatter.enabled}
-  parser enabled: ${convPreference.features.parser.enabled} | ${userPreference.features.parser.enabled}
-  backend: ${convPreference?.fetch?.detail?.request?.backendType} | ${userPreference?.fetch?.detail?.request?.backendType}
-  max output lines: ${convPreference.display.maxLines} | ${userPreference.display.maxLines}
-  command style: ${convPreference.display.style} | ${userPreference.display.style}
-  onRoomJoin.sayAnnounce:
-    enabled: ${convPreference?.onRoomJoin?.sayAnnounce?.enabled}
-    n: ${convPreference?.onRoomJoin?.sayAnnounce?.n}
+Preference:
+  ${yaml.dump(convPreference, { indent: 2 })}
 `
     },
   }
