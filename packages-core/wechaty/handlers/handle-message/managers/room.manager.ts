@@ -34,43 +34,4 @@ const i18n: FeatureMap<CommandType> = {
 
 export class RoomManager extends BaseManager {
   public i18n = i18n
-
-  async parse(input?: string) {
-    if (!input) return this.help()
-
-    const commands = this.i18n[await this.getLang()]?.commands
-    if (!commands) return
-
-    const parsed = parseLimitedCommand(
-      input,
-      z.enum(Object.keys(commands) as [string, ...string[]]),
-    )
-    if (parsed) {
-      const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]?.type
-      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
-      switch (commandType) {
-        case "enable-announce":
-          await this.updatePreferenceInDB(
-            "onRoomJoin.sayAnnounce.enabled",
-            true,
-          )
-          break
-
-        case "disable-announce":
-          await this.updatePreferenceInDB(
-            "onRoomJoin.sayAnnounce.enabled",
-            false,
-          )
-          break
-
-        case "set-announce-n":
-          await this.updatePreferenceInDB(
-            "onRoomJoin.sayAnnounce.n",
-            await z.number().int().min(1).parseAsync(Number(parsed.args)),
-          )
-          break
-      }
-    }
-  }
 }

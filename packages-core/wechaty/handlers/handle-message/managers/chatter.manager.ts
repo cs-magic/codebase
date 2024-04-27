@@ -3,9 +3,7 @@ import { types } from "wechaty"
 import { z } from "zod"
 import { safeCallLLM } from "../../../../../packages-to-classify/llm"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
-import { getConvTable } from "../../../utils/get-conv-table"
 import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic"
-import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum([
@@ -64,43 +62,6 @@ export class ChatterManager extends BaseManager {
     )
   }
 
-  async parse(input?: string) {
-    if (!input) return this.help()
-
-    const commands = this.i18n[await this.getLang()]?.commands
-    if (!commands) return
-
-    const commandTypeSchema = z.enum(
-      Object.keys(commands) as [string, ...string[]],
-    )
-
-    const parsed = parseLimitedCommand(input, commandTypeSchema)
-
-    if (parsed) {
-      const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]?.type
-      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
-
-      switch (commandType) {
-        case "enable":
-          await this.updatePreferenceInDB(
-            "features.chatter.enabled",
-            true,
-            "好的，已开启 AI 聊天功能~",
-          )
-          break
-
-        case "disable":
-          await this.updatePreferenceInDB(
-            "features.chatter.enabled",
-            false,
-            "好的，已关闭 AI 聊天功能~",
-          )
-          break
-      }
-    }
-  }
-
   async safeReplyWithAI() {
     const m = this.message
     if (
@@ -149,7 +110,9 @@ export class ChatterManager extends BaseManager {
 
     const res = await safeCallLLM({
       messages: context,
-      model: convPreference.fetch?.detail?.summary?.model ?? "gpt-3.5-turbo",
+      model:
+        convPreference.features.parser.options?.detail?.summary?.model ??
+        "gpt-3.5-turbo",
       user: await this.getUserIdentity(),
     })
 

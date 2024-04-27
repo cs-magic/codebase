@@ -141,7 +141,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
     void bot.context.notify(
       message,
-      formatQuery(`ERR: ${s}`, {
+      formatQuery(`❌ ${s}`, {
         title: `System Notification`,
         footer: formatFooter(bot.context.data),
         commandStyle: preference.display.style,

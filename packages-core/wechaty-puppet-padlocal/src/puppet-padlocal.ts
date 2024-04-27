@@ -973,7 +973,7 @@ class PuppetPadlocal extends PUPPET.Puppet {
       mentionIdList
     );
     const messageRevokeInfo = response.getMessagerevokeinfo()!;
-    logger.info(`messageSendText: %o`, { toUserName, text, response, messageRevokeInfo });
+    // logger.info(`messageSendText: %o`, { toUserName, text, response, messageRevokeInfo });
 
     const pushContent = isRoomId(toUserName) ? `${this._client!.selfContact!.getNickname()}: ${text}` : text;
 

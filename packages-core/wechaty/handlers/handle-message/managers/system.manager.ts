@@ -1,21 +1,15 @@
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { backendTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.base"
 import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.models"
-import { CommandStyle } from "../../../schema/bot.preference"
 import { FeatureMap } from "../../../schema/commands"
 import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BaseManager } from "./base.manager"
 
 const commandTypeSchema = z.enum([
   "list-models",
-  "set-model",
-  "set-backend",
   // "list-langs",
-  // "set-lang",
   "set-avatar",
-  "set-max-output-lines",
-  "set-command-style",
+  "set-preference",
 ])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
@@ -27,29 +21,17 @@ const i18n: FeatureMap<CommandType> = {
         type: "list-models",
         description: "list supported LLM models",
       },
-      "set-model": {
-        type: "set-model",
-        description: "switch to another LLM model",
-      },
+
       // "list-langs": {
       //   type: "list-langs",
       //   description: "list supported languages",
       // },
-      // "set-lang": {
-      //   type: "set-lang",
-      //   description: "switch to another language",
-      // },
+
       "set-avatar": {
         type: "set-avatar",
       },
-      "set-max-output-lines": {
-        type: "set-max-output-lines",
-      },
-      "set-command-style": {
-        type: "set-command-style",
-      },
-      "set-backend": {
-        type: "set-backend",
+      "set-preference": {
+        type: "set-preference",
       },
     },
   },
@@ -77,21 +59,6 @@ export class SystemManager extends BaseManager {
           await this.listModels()
           break
 
-        case "set-model":
-          await this.updatePreferenceInDB(
-            "fetch.detail.summary.model",
-            await llmModelTypeSchema.parseAsync(parsed.args),
-            "已更新 ~",
-          )
-          break
-
-        // case "set-lang":
-        //   await this.updatePreferenceInDB(
-        //     "lang",
-        //     await langTypeSchema.parseAsync(parsed.args),
-        //   )
-        //   break
-
         case "set-avatar":
           const avatarUrl = await z
             .string()
@@ -103,29 +70,13 @@ export class SystemManager extends BaseManager {
           console.log("-- done set avatar")
           break
 
-        case "set-backend":
-          await this.updatePreferenceInDB(
-            "fetch.detail.request.backendType",
-            await backendTypeSchema.parseAsync(parsed.args),
-            "已更新 ~",
-          )
+        case "set-preference": {
+          const [key, val] = parsed.args.split(/\s*=\s*/)
+          // todo: validate key
+          if (!key || !val) return
+          await this.updatePreferenceInDB(key, val, "当前会话配置已更新 ~")
           break
-
-        case "set-max-output-lines":
-          await this.updatePreferenceInDB(
-            "display.maxLines",
-            await z.number().int().min(1).parseAsync(Number(parsed.args)),
-            "已更新 ~",
-          )
-          break
-
-        case "set-command-style":
-          await this.updatePreferenceInDB(
-            "display.style",
-            await z.nativeEnum(CommandStyle).parseAsync(parsed.args),
-            "已更新 ~",
-          )
-          break
+        }
       }
     }
   }

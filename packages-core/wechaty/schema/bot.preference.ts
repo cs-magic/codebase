@@ -34,15 +34,13 @@ export type IWechatPreference = {
     }
     parser: {
       enabled: boolean
-      model: LlmModelType
+      options?: GenWxmpArticleCardFetchOptions
     }
     todo: {
       enabled: boolean
       filter?: string
     }
   }
-
-  fetch?: GenWxmpArticleCardFetchOptions
 }
 export const defaultWechatPreference: IWechatPreference = {
   display: {
@@ -65,36 +63,34 @@ export const defaultWechatPreference: IWechatPreference = {
     },
     parser: {
       enabled: false,
-      model: "gpt-4",
+      options: {
+        detail: {
+          request: {
+            backendType: "nodejs",
+            approach: {
+              type: "simulate",
+              headless: true,
+            },
+          },
+          summary: {
+            enabled: false,
+            model: "gpt-3.5-turbo",
+            withImage: false,
+          },
+        },
+        stat: {
+          enabled: false,
+        },
+        comments: {
+          enabled: false,
+        },
+        withCache: true,
+      },
     },
     todo: {
       enabled: true,
       filter: undefined,
     },
-  },
-
-  fetch: {
-    detail: {
-      request: {
-        backendType: "nodejs",
-        approach: {
-          type: "simulate",
-          headless: true,
-        },
-      },
-      summary: {
-        enabled: false,
-        model: "gpt-3.5-turbo",
-        withImage: false,
-      },
-    },
-    stat: {
-      enabled: false,
-    },
-    comments: {
-      enabled: false,
-    },
-    withCache: true,
   },
 }
 

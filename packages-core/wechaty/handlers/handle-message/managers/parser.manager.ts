@@ -1,4 +1,3 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import {
@@ -14,7 +13,6 @@ import { z } from "zod"
 import { CardSimulator } from "../../../../../packages-to-classify/spider/card-simulator"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { getQuotedMessage } from "../../../utils/get-quoted-message"
-import { parseLimitedCommand } from "../../../utils/parse-command"
 import { parseText } from "../../../utils/parse-message"
 import { BaseManager } from "./base.manager"
 
@@ -49,15 +47,8 @@ export class ParserManager extends BaseManager {
   async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
-    const preference = await this.getConvPreference()
     await this.standardReply(
-      [
-        desc,
-        SEPARATOR_LINE,
-        "Status:",
-        `  - enabled: ${preference.features.parser.enabled}`,
-        `  - model  : ${preference.features.parser.model}`,
-      ].join("\n"),
+      desc,
       Object.keys(commands).map(
         (command) => `  ${ParserManager.name} ${command}`,
       ),
@@ -106,42 +97,6 @@ export class ParserManager extends BaseManager {
     })
   }
 
-  async parse(input?: string) {
-    if (!input) return this.help()
-
-    const commands = this.i18n[await this.getLang()]?.commands
-    if (!commands) return
-
-    const commandTypeSchema = z.enum(
-      Object.keys(commands) as [string, ...string[]],
-    )
-
-    const parsed = parseLimitedCommand(input ?? "", commandTypeSchema)
-
-    if (parsed) {
-      const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]?.type
-      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
-      switch (commandType) {
-        case "enable":
-          await this.updatePreferenceInDB(
-            "features.parser.enabled",
-            true,
-            "好的，已开启 AI 解析功能~",
-          )
-          break
-
-        case "disable":
-          await this.updatePreferenceInDB(
-            "features.parser.enabled",
-            false,
-            "好的，已关闭 AI 解析功能~",
-          )
-          break
-      }
-    }
-  }
-
   async safeParseCard({
     user,
     message,
@@ -184,7 +139,10 @@ export class ParserManager extends BaseManager {
         ParserManager.uniParser = new CardSimulator()
 
       // todo: add userIdentity into parser
-      const inner = await url2preview(url, convPreference.fetch)
+      const inner = await url2preview(
+        url,
+        convPreference.features.parser.options,
+      )
 
       const { cardUrl } = await ParserManager.uniParser.genCard(
         JSON.stringify(inner),

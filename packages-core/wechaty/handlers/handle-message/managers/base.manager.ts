@@ -1,12 +1,10 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
+import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
-import * as repl from "node:repl"
 import { type Message, Sayable, type Wechaty } from "wechaty"
-import { ContactInterface } from "wechaty/src/user-modules/contact"
-import { string } from "zod"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 
 import { LlmScenario } from "../../../schema/bot.utils"
@@ -190,12 +188,14 @@ export class BaseManager {
 
   async updatePreferenceInDB(
     path: string,
-    value: any,
+    value: string,
     // if string, reply with the string
     // if boolean, reply with status
     reply: string | boolean | undefined = undefined,
     level: "user" | "conv" = "conv",
   ) {
+    const convertedValue = evalObject(value)
+
     const preference =
       level === "conv"
         ? await this.getConvPreference()
@@ -204,7 +204,7 @@ export class BaseManager {
     logger.info(
       `updating preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
     )
-    set(preference, path, value)
+    set(preference, path, convertedValue)
     logger.info(
       `updated preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
     )
