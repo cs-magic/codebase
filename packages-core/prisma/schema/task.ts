@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import { z } from "zod"
 
 export const taskStatusSchema = z.enum([
@@ -20,3 +21,10 @@ export type TaskTimer = {
       weekdays: number[] // [0-6]
     }
 )
+export const taskDetailSchema = Prisma.validator<Prisma.TaskDefaultArgs>()({
+  include: {
+    room: true,
+    owner: true,
+  },
+})
+export type ITaskDetail = Prisma.TaskGetPayload<typeof taskDetailSchema>

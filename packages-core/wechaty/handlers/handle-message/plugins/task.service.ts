@@ -1,22 +1,22 @@
 import { parseFunction } from "@cs-magic/common/utils/parse-function"
 import { logger } from "@cs-magic/log/logger"
+import { ITaskDetail, taskDetailSchema } from "@cs-magic/prisma/schema/task"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { Priority } from "./task.plugin"
-import { Task, type TaskStatus } from ".prisma/client"
+import { type TaskStatus } from ".prisma/client"
 
-export interface ITask extends Task {
+export type ITaskWithIndex = ITaskDetail & {
   index: number
 }
 
 const serializeTaskGroup = (
-  tasks: ITask[],
+  tasks: ITaskWithIndex[],
   status: TaskStatus,
   onlyCount = false,
-  roomName?: string,
   showRoom?: boolean,
 ) => {
   const items = sortBy(
@@ -31,10 +31,10 @@ const serializeTaskGroup = (
   const ans = [`${status} (${items.length})`]
   if (!onlyCount)
     ans.push(
-      ...items.map(
-        (t) =>
-          `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} [${t.priority}]`,
-      ),
+      ...items.map((t) => {
+        const roomName = t.room?.topic
+        return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} [${t.priority}]`
+      }),
     )
   return ans
 }
@@ -62,8 +62,9 @@ export class TaskService {
     this.message = message
   }
 
-  async list() {
+  async list(): Promise<ITaskWithIndex[]> {
     const tasks = await prisma.task.findMany({
+      ...taskDetailSchema,
       orderBy: {
         createdAt: "asc",
       },
@@ -89,15 +90,13 @@ export class TaskService {
 
   async format() {
     const tasks = await this.list()
-    // todo:
-    const roomName = this.message.roomId
     const showRoom = !this.message.roomId
     const s = [
-      ...serializeTaskGroup(tasks, "running", false, roomName, showRoom),
-      ...serializeTaskGroup(tasks, "pending", false, roomName, showRoom),
-      ...serializeTaskGroup(tasks, "paused", false, roomName, showRoom),
-      ...serializeTaskGroup(tasks, "done", true, roomName, showRoom),
-      ...serializeTaskGroup(tasks, "discarded", true, roomName, showRoom),
+      ...serializeTaskGroup(tasks, "running", false, showRoom),
+      ...serializeTaskGroup(tasks, "pending", false, showRoom),
+      ...serializeTaskGroup(tasks, "paused", false, showRoom),
+      ...serializeTaskGroup(tasks, "done", true, showRoom),
+      ...serializeTaskGroup(tasks, "discarded", true, showRoom),
     ].join("\n")
     logger.debug(`list: ${s}`)
     return s
@@ -157,6 +156,8 @@ export class TaskService {
         "index",
         // todo: why incompatible
         "timer",
+        "room",
+        "owner",
       ]),
     })
     logger.debug("updated: %o", s)
