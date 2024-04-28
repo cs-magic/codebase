@@ -1,5 +1,5 @@
 import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
 import { taskStatusSchema, TaskTimer } from "@cs-magic/prisma/schema/task"
 import sortBy from "lodash/sortBy"
 import { Job, scheduleJob } from "node-schedule"
@@ -14,7 +14,7 @@ import {
   parsePriorities,
   parseTimer,
 } from "../../../utils/parse-indices-number"
-import { BaseManager } from "./base.manager"
+import { BasePlugin } from "./base.plugin"
 import { type TaskStatus } from ".prisma/client"
 
 export enum Priority {
@@ -29,9 +29,7 @@ const commandTypeSchema = z.enum([
   "list",
   "filter",
   "add",
-  "set-priorities",
-  "set-status",
-  "set-title",
+  "update",
   "add-note",
   "set-timer",
   "unset-timer",
@@ -57,17 +55,8 @@ const i18n: FeatureMap<CommandType> = {
         type: "add",
         description: "add a todo with title",
       },
-      "set-title": {
-        type: "set-title",
-        description: "rename the title a todo",
-      },
-      "set-status": {
-        type: "set-status",
-        description:
-          "update the status of a todo (pending,running,done,discarded)",
-      },
-      "set-priorities": {
-        type: "set-priorities",
+      update: {
+        type: "update",
       },
       "add-note": {
         type: "add-note",
@@ -82,7 +71,7 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class TodoManager extends BaseManager {
+export class TaskPlugin extends BasePlugin {
   static name: FeatureType = "todo"
   static jobs: Record<string, Job> = {}
   public i18n = i18n
@@ -92,9 +81,7 @@ export class TodoManager extends BaseManager {
     const desc = await this.getDescription()
     await this.standardReply(
       [desc].join("\n"),
-      Object.keys(commands).map(
-        (command) => `  ${TodoManager.name} ${command}`,
-      ),
+      Object.keys(commands).map((command) => `  ${TaskPlugin.name} ${command}`),
     )
   }
 
@@ -107,7 +94,7 @@ export class TodoManager extends BaseManager {
   async parse(input?: string) {
     if (!input) return this.help()
 
-    const commands = this.i18n[await this.getLang()]?.commands
+    const commands = await this.getCommands()
     if (!commands) return
 
     const parsed = parseLimitedCommand(
@@ -132,30 +119,6 @@ export class TodoManager extends BaseManager {
         case "add":
           await this.addTodo(await z.string().min(1).parseAsync(parsed.args))
           break
-
-        case "set-title": {
-          const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(parsed.args)
-          if (!m) throw new Error("输入不合法")
-          const newTitle = await z.string().min(1).parseAsync(m?.[2])
-          await this.renameTodo(Number(m[1]), newTitle)
-          break
-        }
-
-        case "set-status": {
-          const m = /^\s*(\d+)\s*(\S+)\s*(.*)?$/.exec(parsed.args)
-          if (!m) throw new Error("输入不合法")
-          const index = Number(m[1])
-          const newStatus = await taskStatusSchema.parseAsync(m?.[2])
-          const note = m?.[3]
-          await this.updateTodo(index, newStatus, note)
-          break
-        }
-
-        case "set-priorities": {
-          const { priority, indices } = await parsePriorities(parsed.args)
-          await this.setPriorities(indices, priority)
-          break
-        }
 
         case "set-timer": {
           const { index, timer } = await parseTimer(parsed.args)
@@ -254,11 +217,11 @@ export class TodoManager extends BaseManager {
     const task = tasks[index]
     if (!task) throw new Error("task not exists")
 
-    const job = TodoManager.jobs[task.id]
+    const job = TaskPlugin.jobs[task.id]
     if (!job) throw new Error("task without job")
     job.cancel()
 
-    delete TodoManager.jobs[task.id]
+    delete TaskPlugin.jobs[task.id]
 
     await prisma.task.update({
       where: { id: task.id },
@@ -282,10 +245,10 @@ export class TodoManager extends BaseManager {
       : await this.bot.Contact.find({ id: task.ownerId! })
     if (!conv) throw new Error("not found cov")
 
-    let job = TodoManager.jobs[task.id]
+    let job = TaskPlugin.jobs[task.id]
     if (job) job.cancel()
 
-    job = TodoManager.jobs[task.id] = scheduleJob(timer, async () => {
+    job = TaskPlugin.jobs[task.id] = scheduleJob(timer, async () => {
       await conv.say(
         [
           "⏰ " + task.title + " 开始啦~",
@@ -294,7 +257,7 @@ export class TodoManager extends BaseManager {
         ].join("\n"),
       )
     })
-    console.log("jobs: ", TodoManager.jobs)
+    console.log("jobs: ", TaskPlugin.jobs)
 
     const nextTime = moment(new Date(job.nextInvocation()))
     console.log({ nextTime })

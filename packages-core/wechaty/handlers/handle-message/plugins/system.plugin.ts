@@ -3,7 +3,7 @@ import { z } from "zod"
 import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.models"
 import { FeatureMap } from "../../../schema/commands"
 import { parseLimitedCommand } from "../../../utils/parse-command"
-import { BaseManager } from "./base.manager"
+import { BasePlugin } from "./base.plugin"
 
 const commandTypeSchema = z.enum([
   "list-models",
@@ -37,7 +37,7 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class SystemManager extends BaseManager {
+export class SystemPlugin extends BasePlugin {
   public i18n = i18n
 
   async parse(input?: string) {

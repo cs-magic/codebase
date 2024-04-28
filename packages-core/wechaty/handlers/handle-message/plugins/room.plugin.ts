@@ -6,7 +6,7 @@ import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/sche
 import { FeatureMap } from "../../../schema/commands"
 import { CommandStyle } from "schema/bot.preference"
 import { parseLimitedCommand } from "../../../utils/parse-command"
-import { BaseManager } from "./base.manager"
+import { BasePlugin } from "./base.plugin"
 
 const commandTypeSchema = z.enum([
   "enable-announce",
@@ -32,6 +32,6 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class RoomManager extends BaseManager {
+export class RoomPlugin extends BasePlugin {
   public i18n = i18n
 }

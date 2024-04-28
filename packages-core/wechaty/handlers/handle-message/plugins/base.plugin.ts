@@ -4,7 +4,7 @@ import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
-import { type Message, Sayable, type Wechaty } from "wechaty"
+import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { IWechatPreference } from "../../../schema/bot.preference"
 
@@ -19,7 +19,7 @@ import {
   parseText,
 } from "../../../utils/parse-message"
 
-export class BaseManager {
+export class BasePlugin {
   public message: Message
   public bot: Wechaty
   public name: FeatureType | null = null
@@ -111,11 +111,11 @@ export class BaseManager {
   /**
    * todo: cache preference
    */
-  async getConvPreference() {
+  async getConvPreference(): Promise<IWechatPreference> {
     return getConvPreferenceFromMessage(this.message)
   }
 
-  async getUserPreference() {
+  async getUserPreference(): Promise<IWechatPreference> {
     return getUserPreference(this.message)
   }
 

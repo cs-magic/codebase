@@ -8,7 +8,7 @@ import { safeCallLLM } from "../../../../../packages-to-classify/llm"
 import { formatLlmMessage } from "../../../../../packages-to-classify/llm/utils/format-llm-message"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic"
-import { BaseManager } from "./base.manager"
+import { BasePlugin } from "./base.plugin"
 
 const commandTypeSchema = z.enum([
   "enable",
@@ -44,7 +44,7 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class ChatterManager extends BaseManager {
+export class ChatterPlugin extends BasePlugin {
   static name: FeatureType = "chatter"
   public i18n = i18n
 
@@ -61,7 +61,7 @@ export class ChatterManager extends BaseManager {
         `  - model: ${preference.features.chatter.model}`,
       ].join("\n"),
       Object.keys(commands).map(
-        (command) => `  ${ChatterManager.name} ${command}`,
+        (command) => `  ${ChatterPlugin.name} ${command}`,
       ),
     )
   }

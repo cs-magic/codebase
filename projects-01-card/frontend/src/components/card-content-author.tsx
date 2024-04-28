@@ -1,5 +1,5 @@
 import { cardAuthorRenderedAtom } from "@/store/card.rendered.atom"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { parseJsonSafe } from "../../../../packages-common/common/utils/parse-json"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Card } from "@prisma/client"
 import { useAtom, useSetAtom } from "jotai"

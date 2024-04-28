@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { LangType } from "../../../packages-to-classify/i18n/schema"
-import { Priority } from "../handlers/handle-message/managers/todo.manager"
+import { Priority } from "../handlers/handle-message/plugins/task.plugin"
 
 export const featureTypeSchema = z.enum([
   "system",

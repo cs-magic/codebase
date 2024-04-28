@@ -1,7 +1,7 @@
 import { cardUserAtom } from "@/store/card.user.atom"
 
 import { getOssKeyWithSuffix } from "@/utils/get-oss-key-with-suffix"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { parseJsonSafe } from "../../../../packages-common/common/utils/parse-json"
 import {
   ICardInnerPreview,
   ICardPreview,

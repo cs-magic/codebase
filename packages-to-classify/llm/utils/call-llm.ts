@@ -1,11 +1,10 @@
-import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
-import OpenAI, { ClientOptions } from "openai"
+import { type ILlmMessage } from "@cs-magic/p01-common/schema/message"
+import OpenAI, { type ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api } from "../../api-client/api"
 import { backendApi } from "../../api-client/backend-api"
-import { LlmModelType } from "../schema/llm.models"
-import { LlmProviderType } from "../schema/llm.providers"
-import ChatCompletionCreateParamsNonStreaming = OpenAI.ChatCompletionCreateParamsNonStreaming
+import { type LlmModelType } from "../schema/llm.models"
+import { type LlmProviderType } from "../schema/llm.providers"
 
 export type ICompletion = OpenAI.Chat.Completions.ChatCompletion
 
@@ -60,7 +59,7 @@ export const callLlm = async ({
           ...clientConfig,
         }).chat.completions
           // todo: type hint
-          .create(queryConfig as ChatCompletionCreateParamsNonStreaming)
+          .create(queryConfig as OpenAI.ChatCompletionCreateParamsNonStreaming)
       )
   }
 }

@@ -14,7 +14,7 @@ import { CardSimulator } from "../../../../../packages-to-classify/spider/card-s
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { getQuotedMessage } from "../../../utils/get-quoted-message"
 import { parseText } from "../../../utils/parse-message"
-import { BaseManager } from "./base.manager"
+import { BasePlugin } from "./base.plugin"
 
 const commandTypeSchema = z.enum(["enable", "disable"])
 type CommandType = z.infer<typeof commandTypeSchema>
@@ -38,7 +38,7 @@ const i18n: FeatureMap<CommandType> = {
   },
 }
 
-export class ParserManager extends BaseManager {
+export class ParserPlugin extends BasePlugin {
   static name: FeatureType = "parser"
   static uniParser: CardSimulator | null = null
   static toParse = 0
@@ -50,7 +50,7 @@ export class ParserManager extends BaseManager {
     await this.standardReply(
       desc,
       Object.keys(commands).map(
-        (command) => `  ${ParserManager.name} ${command}`,
+        (command) => `  ${ParserPlugin.name} ${command}`,
       ),
     )
   }
@@ -128,15 +128,14 @@ export class ParserManager extends BaseManager {
     try {
       // initLogWithTimer()
 
-      ++ParserManager.toParse
+      ++ParserPlugin.toParse
       const title = parseTitleFromWechatUrlMessage(text)
       void this.notify(
-        `🌈 正在解析[${ParserManager.toParse}]: ${title}`,
+        `🌈 正在解析[${ParserPlugin.toParse}]: ${title}`,
         "parser",
       )
 
-      if (!ParserManager.uniParser)
-        ParserManager.uniParser = new CardSimulator()
+      if (!ParserPlugin.uniParser) ParserPlugin.uniParser = new CardSimulator()
 
       // todo: add userIdentity into parser
       const inner = await url2preview(
@@ -144,7 +143,7 @@ export class ParserManager extends BaseManager {
         convPreference.features.parser.options,
       )
 
-      const { cardUrl } = await ParserManager.uniParser.genCard(
+      const { cardUrl } = await ParserPlugin.uniParser.genCard(
         JSON.stringify(inner),
         user,
       )
@@ -158,7 +157,7 @@ export class ParserManager extends BaseManager {
       const s = formatError(e)
       void this.notify(`❌ ` + s, "parser")
     } finally {
-      --ParserManager.toParse
+      --ParserPlugin.toParse
     }
   }
 }

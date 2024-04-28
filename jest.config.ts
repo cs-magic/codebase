@@ -33,6 +33,8 @@ const jestConfig: JestConfigWithTsJest = {
       },
     ],
   },
+
+  transformIgnorePatterns: ["node_modules/(?!(nanoid)/)"],
 }
 
 export default jestConfig

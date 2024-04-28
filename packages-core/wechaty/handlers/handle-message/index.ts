@@ -14,22 +14,22 @@ import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { parseText } from "../../utils/parse-message"
 import { storageMessage } from "../../utils/storage-message"
-import { BaseManager } from "./managers/base.manager"
-import { ChatterManager } from "./managers/chatter.manager"
-import { ParserManager } from "./managers/parser.manager"
-import { RoomManager } from "./managers/room.manager"
-import { SystemManager } from "./managers/system.manager"
-import { TodoManager } from "./managers/todo.manager"
+import { BasePlugin } from "./plugins/base.plugin"
+import { ChatterPlugin } from "./plugins/chatter.plugin"
+import { ParserPlugin } from "./plugins/parser.plugin"
+import { RoomPlugin } from "./plugins/room.plugin"
+import { SystemPlugin } from "./plugins/system.plugin"
+import { TaskPlugin } from "./plugins/task.plugin"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   const tmm = {
-    todo: new TodoManager(bot, message),
-    chatter: new ChatterManager(bot, message),
-    parser: new ParserManager(bot, message),
-    system: new SystemManager(bot, message),
-    base: new BaseManager(bot, message),
-    room: new RoomManager(bot, message),
-  } satisfies Record<ManagerType, BaseManager>
+    todo: new TaskPlugin(bot, message),
+    chatter: new ChatterPlugin(bot, message),
+    parser: new ParserPlugin(bot, message),
+    system: new SystemPlugin(bot, message),
+    base: new BasePlugin(bot, message),
+    room: new RoomPlugin(bot, message),
+  } satisfies Record<ManagerType, BasePlugin>
 
   try {
     logger.info(
@@ -117,9 +117,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     else {
       // free handlers
       if (message.type() === types.Message.Url)
-        await new ParserManager(bot, message).parseSelf()
+        await new ParserPlugin(bot, message).parseSelf()
       else {
-        await new ChatterManager(bot, message).safeReplyWithAI()
+        await new ChatterPlugin(bot, message).safeReplyWithAI()
       }
     }
   } catch (e) {

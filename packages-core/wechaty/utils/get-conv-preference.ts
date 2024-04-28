@@ -1,5 +1,5 @@
-import { IWechatPreference } from "schema/bot.preference"
 import { Message } from "wechaty"
+import { IWechatPreference } from "../schema/bot.preference"
 import { getConvRow } from "./get-conv-row"
 import { getRobustPreference } from "./get-robust-preference"
 

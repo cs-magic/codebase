@@ -1,4 +1,4 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json-safe"
+import { parseJsonSafe } from "packages-common/common/utils/parse-json"
 import { logger } from "@cs-magic/log/logger"
 import {
   GenWxmpArticleCardFetchOptions,

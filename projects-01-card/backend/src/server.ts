@@ -1,4 +1,4 @@
-import { genId } from "@cs-magic/common/utils/gen-id"
+import { genNanoId } from "@cs-magic/common/utils/gen-nano-id"
 import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import fw from "@fastify/websocket"
@@ -35,7 +35,7 @@ void fastify.register(async function (fastify) {
     async (socket /* WebSocket */, req /* FastifyRequest */) => {
       // The WebSocket connection is established at this point, ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
 
-      const id = genId()
+      const id = genNanoId()
 
       socket.id = id
 

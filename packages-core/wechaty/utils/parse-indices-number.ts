@@ -1,6 +1,6 @@
 import { ERR_MSG_INVALID_INPUT } from "@cs-magic/common/const"
 import { z } from "zod"
-import { Priority } from "../handlers/handle-message/managers/todo.manager"
+import { Priority } from "../handlers/handle-message/plugins/task.plugin"
 
 export const parseIndex = async (input: string) => {
   const m = /^\s*(\d+)\s*(.*?)\s*$/.exec(input)

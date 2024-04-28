@@ -1,17 +1,18 @@
-export const parseJs = <T = any>(s?: string): T | null => {
+import { parseJs } from "./parse-js"
+
+export const parseJsonSafe = <T>(s?: any): T | null => {
+  // logger.debug("parseJsonSafe: %o", s)
+
+  if (!s) return null
+  if (typeof s === "object") return s as T
+
   try {
-    return eval(`( ${s} )`) as T
+    if (typeof s === "string" && s.startsWith('"'))
+      return parseJsonSafe(JSON.parse(s))
+    return parseJsonSafe(parseJs<T>(s as string))
   } catch (e) {
-    // console.error(`failed to parse js from: ${s}`)
     return null
   }
 }
 
-export const parseJson = <T = any>(s?: string): T | null => {
-  try {
-    return JSON.parse(s ?? "") as T
-  } catch (e) {
-    // console.error(`failed to parse js from: ${s}`)
-    return null
-  }
-}
+export const safeParseJson = parseJsonSafe
