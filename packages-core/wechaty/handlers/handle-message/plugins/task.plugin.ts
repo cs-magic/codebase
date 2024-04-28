@@ -96,7 +96,11 @@ export class TaskPlugin extends BasePlugin {
         break
 
       case "add":
-        const title = z.string().trim().min(1).parse(parsed._[1])
+        const title = z
+          .string()
+          .trim()
+          .min(1)
+          .parse(parsed._.slice(1).join(" "))
         await service.add(title)
         // todo: better input
         await sync()
