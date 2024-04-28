@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { deserializeRefMsgPayload } from "../../wechaty-puppet/ref-msg"
 
 export type PadlocalVersion = "raw@1.20" | "mark@2024-04-19"
@@ -29,5 +30,10 @@ export const parseQuote = (
               },
       }
 }
-export const parseText = (messageText: string) =>
-  (parseQuote(messageText, padlocalVersion)?.content ?? messageText).trim()
+export const parseText = (messageText: string) => {
+  const text = (
+    parseQuote(messageText, padlocalVersion)?.content ?? messageText
+  ).trim()
+  logger.debug("parseText: %o", { text, messageText })
+  return text
+}

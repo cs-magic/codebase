@@ -21,6 +21,21 @@ describe("parse command", () => {
     expect(result?.command).toBe("set-backend")
     expect(result?.args).toBe("nodejs ss")
   })
+
+  it("parse multiple line", () => {
+    const result = parseLimitedCommand(
+      "todo update 65\n" +
+        'this.status="done"\n' +
+        'this.notes.push("这个好像是张蔚加的，不知道为啥会在我这")',
+      ["todo"],
+    )
+    expect(result?.command).toBe("todo")
+    expect(result?.args).toBe(
+      "update 65\n" +
+        'this.status="done"\n' +
+        'this.notes.push("这个好像是张蔚加的，不知道为啥会在我这")',
+    )
+  })
 })
 
 const backendSchema = z.union([z.literal("a"), z.literal("b")])

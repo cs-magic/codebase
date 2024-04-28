@@ -17,9 +17,11 @@ export const parseLimitedCommand = <T extends string>(
   // - /A, ok
   // - /A b, ok
   // - /Ab, not ok
-  const m = new RegExp(`^${prefix}(${ms.join("|")})(?:\\s+(.*?))?\\s*$`).exec(
-    text,
-  )
+  const m = new RegExp(
+    `^${prefix}(${ms.join("|")})(?:\\s+(.*?))?\\s*$`,
+    // m 匹配每一行：https://zh.javascript.info/regexp-multiline-mode
+    "sg",
+  ).exec(text)
 
   if (!m) return null
 

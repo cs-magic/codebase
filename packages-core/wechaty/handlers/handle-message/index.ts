@@ -71,7 +71,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     const text = parseText(message.text())
     const result = parseLimitedCommand<CommandType>(text, commandsSchema)
-    // logger.debug("parsed command: %o", { text, result })
+    logger.debug("parsed command: %o", { text, result })
 
     if (result) {
       switch (result.command) {

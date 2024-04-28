@@ -1,5 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { parseCommand } from "@cs-magic/common/utils/parse-command"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import { logger } from "@cs-magic/log/logger"
 import { TaskTimer } from "@cs-magic/prisma/schema/task"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
@@ -7,8 +9,6 @@ import moment from "../../../../../packages-to-classify/datetime/moment"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { listConvTodo } from "../../../utils/list-conv-todo"
-import { parseLimitedCommand } from "../../../utils/parse-command"
-import { parseIndex } from "../../../utils/parse-indices-number"
 import { BasePlugin } from "./base.plugin"
 import { TaskService } from "./task.service"
 
@@ -84,52 +84,46 @@ export class TaskPlugin extends BasePlugin {
     const commands = await this.getCommands()
     if (!commands) return
 
-    const parsed = parseLimitedCommand(
-      input ?? "",
-      z.enum(Object.keys(commands) as [string, ...string[]]),
-    )
-    if (parsed) {
-      const service = new TaskService(this.message.payload!)
-      const sync = async () => this.reply(await service.format())
+    const service = new TaskService(this.message.payload!)
+    const sync = async () => this.reply(await service.format())
 
-      const commandKeyInInput = parsed.command
-      const commandKeyInEnum = commands[commandKeyInInput]?.type
-      const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
-      switch (commandType) {
-        case "list":
-          await sync()
-          break
+    const parsed = parseCommand(input)
+    logger.debug("parsed: %o", parsed)
 
-        case "add":
-          // todo: better input
-          await service.add(parsed.args)
-          await sync()
-          break
+    switch (parsed._[0]) {
+      case "list":
+        await sync()
+        break
 
-        case "update": {
-          const { index, rest } = await parseIndex(parsed.args)
-          if (rest) {
-            await service.update(index, rest)
-            await sync()
-          }
-          break
-        }
+      case "add":
+        const title = z.string().trim().min(1).parse(parsed._[1])
+        await service.add(title)
+        // todo: better input
+        await sync()
+        break
 
-        case "set-timer": {
-          const { index, rest } = await parseIndex(parsed.args)
-          if (rest) {
-            await this.setTimer(index, rest)
-            await sync()
-          }
-          break
-        }
+      case "update": {
+        const index = z.number().int().min(0).parse(parsed._[1])
+        const rest = parsed._.slice(2).join("\n")
+        await service.update(index, rest)
+        await sync()
+        break
+      }
 
-        case "unset-timer": {
-          const { index, rest } = await parseIndex(parsed.args)
-          await this.unsetTimer(index, rest)
-          await sync()
-          break
-        }
+      case "set-timer": {
+        const index = z.number().int().min(0).parse(parsed._[1])
+        const rest = parsed._.slice(2).join("")
+        await this.setTimer(index, rest)
+        await sync()
+        break
+      }
+
+      case "unset-timer": {
+        const index = z.number().int().min(0).parse(parsed._[1])
+        const rest = parsed._.slice(2).join("")
+        await this.unsetTimer(index, rest)
+        await sync()
+        break
       }
     }
   }
