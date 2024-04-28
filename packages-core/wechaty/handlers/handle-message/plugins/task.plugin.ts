@@ -1,6 +1,6 @@
 import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-import { taskStatusSchema, TaskTimer } from "@cs-magic/prisma/schema/task"
+import { TaskTimer } from "@cs-magic/prisma/schema/task"
 import sortBy from "lodash/sortBy"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
@@ -9,12 +9,9 @@ import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { listConvTodo } from "../../../utils/list-conv-todo"
 import { parseLimitedCommand } from "../../../utils/parse-command"
-import {
-  parseIndex,
-  parsePriorities,
-  parseTimer,
-} from "../../../utils/parse-indices-number"
+import { parseIndex } from "../../../utils/parse-indices-number"
 import { BasePlugin } from "./base.plugin"
+import { TaskService } from "./task.service"
 import { type TaskStatus } from ".prisma/client"
 
 export enum Priority {
@@ -121,14 +118,21 @@ export class TaskPlugin extends BasePlugin {
           break
 
         case "set-timer": {
-          const { index, timer } = await parseTimer(parsed.args)
-          await this.setTimer(index, timer)
+          const { index, rest } = await parseIndex(parsed.args)
+          if (rest) await this.setTimer(index, rest)
           break
         }
 
         case "unset-timer": {
-          const { index, reason } = await parseIndex(parsed.args)
-          await this.unsetTimer(index, reason)
+          const { index, rest } = await parseIndex(parsed.args)
+          await this.unsetTimer(index, rest)
+          break
+        }
+
+        case "update": {
+          const { index, rest } = await parseIndex(parsed.args)
+          const service = new TaskService(this.message.payload!)
+          if (rest) await service.update(index, rest)
           break
         }
       }
