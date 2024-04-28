@@ -22,10 +22,8 @@ export enum Priority {
 
 const commandTypeSchema = z.enum([
   "list",
-  "filter",
   "add",
   "update",
-  "add-note",
   "set-timer",
   "unset-timer",
 ])
@@ -42,19 +40,12 @@ const i18n: FeatureMap<CommandType> = {
         type: "list",
         description: "list todo",
       },
-      filter: {
-        type: "filter",
-        description: "filter todo in case of it's too long",
-      },
       add: {
         type: "add",
         description: "add a todo with title",
       },
       update: {
         type: "update",
-      },
-      "add-note": {
-        type: "add-note",
       },
       "set-timer": {
         type: "set-timer",
@@ -143,34 +134,6 @@ export class TaskPlugin extends BasePlugin {
     }
   }
 
-  /**
-   *
-   * @param index
-   * @param reason todo
-   */
-  async unsetTimer(index: number, reason?: string) {
-    const tasks = await listConvTodo(this.message)
-    const task = tasks[index]
-    if (!task) throw new Error("task not exists")
-
-    const job = TaskPlugin.jobs[task.id]
-    if (!job) throw new Error("task without job")
-    job.cancel()
-
-    delete TaskPlugin.jobs[task.id]
-
-    await prisma.task.update({
-      where: { id: task.id },
-      data: {
-        timer: JSON.stringify({
-          ...parseJsonSafe<TaskTimer>(task.timer),
-          disabled: true,
-        }),
-      },
-    })
-    await this.conv.say("√ unset")
-  }
-
   async setTimer(index: number, timer: string) {
     const tasks = await listConvTodo(this.message)
     const task = tasks[index]
@@ -212,5 +175,33 @@ export class TaskPlugin extends BasePlugin {
         ? `设置成功，下一次提醒在：${nextTime.format("MM-DD HH:mm")}`
         : `设置失败，原因：非法输入`,
     )
+  }
+
+  /**
+   *
+   * @param index
+   * @param reason todo
+   */
+  async unsetTimer(index: number, reason?: string) {
+    const tasks = await listConvTodo(this.message)
+    const task = tasks[index]
+    if (!task) throw new Error("task not exists")
+
+    const job = TaskPlugin.jobs[task.id]
+    if (!job) throw new Error("task without job")
+    job.cancel()
+
+    delete TaskPlugin.jobs[task.id]
+
+    await prisma.task.update({
+      where: { id: task.id },
+      data: {
+        timer: JSON.stringify({
+          ...parseJsonSafe<TaskTimer>(task.timer),
+          disabled: true,
+        }),
+      },
+    })
+    await this.conv.say("√ unset")
   }
 }

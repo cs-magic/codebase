@@ -16,6 +16,8 @@ const serializeTaskGroup = (
   tasks: ITask[],
   status: TaskStatus,
   onlyCount = false,
+  roomName?: string,
+  showRoom?: boolean,
 ) => {
   const items = sortBy(
     tasks
@@ -28,7 +30,12 @@ const serializeTaskGroup = (
   )
   const ans = [`${status} (${items.length})`]
   if (!onlyCount)
-    ans.push(...items.map((t) => `  ${t.index}) ${t.title} [${t.priority}]`))
+    ans.push(
+      ...items.map(
+        (t) =>
+          `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} [${t.priority}]`,
+      ),
+    )
   return ans
 }
 
@@ -82,12 +89,15 @@ export class TaskService {
 
   async format() {
     const tasks = await this.list()
+    // todo:
+    const roomName = this.message.roomId
+    const showRoom = !this.message.roomId
     const s = [
-      ...serializeTaskGroup(tasks, "running"),
-      ...serializeTaskGroup(tasks, "pending"),
-      ...serializeTaskGroup(tasks, "paused"),
-      ...serializeTaskGroup(tasks, "done", true),
-      ...serializeTaskGroup(tasks, "discarded", true),
+      ...serializeTaskGroup(tasks, "running", false, roomName, showRoom),
+      ...serializeTaskGroup(tasks, "pending", false, roomName, showRoom),
+      ...serializeTaskGroup(tasks, "paused", false, roomName, showRoom),
+      ...serializeTaskGroup(tasks, "done", true, roomName, showRoom),
+      ...serializeTaskGroup(tasks, "discarded", true, roomName, showRoom),
     ].join("\n")
     logger.debug(`list: ${s}`)
     return s
