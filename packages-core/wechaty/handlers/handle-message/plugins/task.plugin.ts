@@ -1,7 +1,6 @@
-import { ERR_MSG_INVALID_INPUT, SEPARATOR_LINE } from "@cs-magic/common/const"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
 import { TaskTimer } from "@cs-magic/prisma/schema/task"
-import sortBy from "lodash/sortBy"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
 import moment from "../../../../../packages-to-classify/datetime/moment"
@@ -12,7 +11,6 @@ import { parseLimitedCommand } from "../../../utils/parse-command"
 import { parseIndex } from "../../../utils/parse-indices-number"
 import { BasePlugin } from "./base.plugin"
 import { TaskService } from "./task.service"
-import { type TaskStatus } from ".prisma/client"
 
 export enum Priority {
   highest = 1,
@@ -70,6 +68,7 @@ const i18n: FeatureMap<CommandType> = {
 
 export class TaskPlugin extends BasePlugin {
   static name: FeatureType = "todo"
+  // todo: global jobs
   static jobs: Record<string, Job> = {}
   public i18n = i18n
 
@@ -99,116 +98,49 @@ export class TaskPlugin extends BasePlugin {
       z.enum(Object.keys(commands) as [string, ...string[]]),
     )
     if (parsed) {
+      const service = new TaskService(this.message.payload!)
+      const sync = async () => this.reply(await service.format())
+
       const commandKeyInInput = parsed.command
       const commandKeyInEnum = commands[commandKeyInInput]?.type
       const commandType = await commandTypeSchema.parseAsync(commandKeyInEnum)
       switch (commandType) {
         case "list":
-          await this.listTodo()
-          break
-
-        case "filter":
-          await this.listTodo({
-            filter: await z.string().min(1).parseAsync(parsed.args),
-          })
+          await sync()
           break
 
         case "add":
-          await this.addTodo(await z.string().min(1).parseAsync(parsed.args))
+          // todo: better input
+          await service.add(parsed.args)
+          await sync()
           break
+
+        case "update": {
+          const { index, rest } = await parseIndex(parsed.args)
+          if (rest) {
+            await service.update(index, rest)
+            await sync()
+          }
+          break
+        }
 
         case "set-timer": {
           const { index, rest } = await parseIndex(parsed.args)
-          if (rest) await this.setTimer(index, rest)
+          if (rest) {
+            await this.setTimer(index, rest)
+            await sync()
+          }
           break
         }
 
         case "unset-timer": {
           const { index, rest } = await parseIndex(parsed.args)
           await this.unsetTimer(index, rest)
-          break
-        }
-
-        case "update": {
-          const { index, rest } = await parseIndex(parsed.args)
-          const service = new TaskService(this.message.payload!)
-          if (rest) await service.update(index, rest)
+          await sync()
           break
         }
       }
     }
-  }
-
-  /**
-   * 在用户 list 或者 filter 之后会改变用户的查询偏好
-   * 基于这个偏好，我们确定输出的形式
-   */
-  async listOrFilterTodo() {
-    const preference = await this.getUserPreference()
-    return this.listTodo({ filter: preference.features.todo.filter })
-  }
-
-  async listTodo(options?: { filter?: string }) {
-    const tasks = (await listConvTodo(this.message))
-      .map((k, i) => ({
-        ...k,
-        i,
-      }))
-      .filter(
-        (item) =>
-          !options?.filter || item.title.toLowerCase().includes(options.filter),
-      )
-
-    const serializeTaskGroup = (status: TaskStatus, onlyCount = false) => {
-      const items = sortBy(
-        tasks
-          .filter((t) => t.status === status)
-          .map((t) => {
-            if (!t.priority) t.priority = Priority.normal // possible null
-            return t
-          }),
-        "priority",
-      )
-      const ans = [`${status} (${items.length})`]
-      if (!onlyCount)
-        ans.push(...items.map((t) => `  ${t.i}) ${t.title} [${t.priority}]`))
-      return ans
-    }
-
-    await this.standardReply(
-      [
-        ...serializeTaskGroup("running"),
-        ...serializeTaskGroup("pending"),
-        ...serializeTaskGroup("paused"),
-        ...serializeTaskGroup("done", true),
-        ...serializeTaskGroup("discarded", true),
-      ].join("\n"),
-    )
-  }
-
-  async addTodo(title: string) {
-    await prisma.task.create({
-      data: {
-        roomId: this.message.room()?.id,
-        ownerId: this.message.talker().id,
-        title,
-      },
-    })
-    return this.listOrFilterTodo()
-  }
-
-  async renameTodo(index: number, newTitle: string) {
-    const tasks = await listConvTodo(this.message)
-    const task = tasks[index]
-    if (!task) throw new Error(ERR_MSG_INVALID_INPUT)
-
-    await prisma.task.update({
-      where: { id: task.id },
-      data: {
-        title: newTitle,
-      },
-    })
-    return this.listOrFilterTodo()
   }
 
   /**
@@ -280,42 +212,5 @@ export class TaskPlugin extends BasePlugin {
         ? `设置成功，下一次提醒在：${nextTime.format("MM-DD HH:mm")}`
         : `设置失败，原因：非法输入`,
     )
-  }
-
-  async setPriorities(indices: number[], priority: Priority) {
-    // find tasks of talker
-    const tasks = await listConvTodo(this.message)
-    const ids = indices.map((i) => tasks[i]?.id).filter((v) => !!v) as string[]
-    const updated = await prisma.task.updateMany({
-      where: {
-        id: {
-          in: ids,
-        },
-      },
-      data: {
-        priority,
-      },
-    })
-    console.log({ priority, indices, ids, updated })
-    return this.listOrFilterTodo()
-  }
-
-  async updateTodo(index: number, status: TaskStatus, note?: string) {
-    const tasks = await listConvTodo(this.message)
-    const task = tasks[index]
-    if (!task) throw new Error(ERR_MSG_INVALID_INPUT)
-
-    await prisma.task.update({
-      where: { id: task.id },
-      data: {
-        status: status,
-        notes: note
-          ? {
-              push: note,
-            }
-          : undefined,
-      },
-    })
-    return this.listOrFilterTodo()
   }
 }

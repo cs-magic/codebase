@@ -57,6 +57,9 @@ export class TaskService {
 
   async list() {
     const tasks = await prisma.task.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
       where: this.message.roomId
         ? {
             roomId: this.message.roomId,

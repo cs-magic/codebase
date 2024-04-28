@@ -187,6 +187,12 @@ export class BasePlugin {
     void this.bot.context.notify(this.message, content, llmScenario)
   }
 
+  async reply(message: Sayable) {
+    await this.bot.context.addSendTask(async () => {
+      await this.message.say(message)
+    })
+  }
+
   async updatePreferenceInDB(
     path: string,
     value: string,
