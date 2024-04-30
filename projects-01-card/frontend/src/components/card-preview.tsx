@@ -150,7 +150,7 @@ export const CardPreview = forwardRef<
           <UserAvatar
             imageProps={{
               onLoad: () => setCardAuthorRendered(true),
-              onChange: () => setCardUserRendered(false),
+              onChange: () => setCardAuthorRendered(false),
             }}
             user={preview?.inner?.author ?? null}
             avatarProps={{ className: "rounded-none" }}

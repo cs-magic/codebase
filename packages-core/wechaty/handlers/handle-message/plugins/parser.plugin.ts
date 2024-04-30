@@ -16,7 +16,7 @@ import { getQuotedMessage } from "../../../utils/get-quoted-message"
 import { parseText } from "../../../utils/parse-message"
 import { BasePlugin } from "./base.plugin"
 
-const commandTypeSchema = z.enum(["enable", "disable"])
+const commandTypeSchema = z.enum([""])
 type CommandType = z.infer<typeof commandTypeSchema>
 const i18n: FeatureMap<CommandType> = {
   en: {
@@ -25,16 +25,7 @@ const i18n: FeatureMap<CommandType> = {
       "Hello, I am the Super Parser!" +
       "\nI can parse almost anything!" +
       "\nSend me one wxmp article, now! 😠",
-    commands: {
-      enable: {
-        type: "enable",
-        description: "enable super parser",
-      },
-      disable: {
-        type: "disable",
-        description: "disable super parser",
-      },
-    },
+    commands: {},
   },
 }
 
