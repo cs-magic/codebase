@@ -3,15 +3,15 @@
 import { cardPreviewEngineAtom } from "@/store/card.rendered.atom"
 import { useAtomValue } from "jotai"
 import React from "react"
+import {
+  cardPreviewEngineTypeSchema,
+  type GenCardApproach,
+} from "../../../../packages-core/common/schema/card"
 import { useSearchParam } from "../../../../packages-to-classify/hooks/use-search-param"
 import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
 import { Separator } from "../../../../packages-to-classify/ui-shadcn/components/separator"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import { AtomSelector } from "../../../../packages-to-classify/ui/components/atom-switcher"
-import {
-  cardPreviewEngineTypeSchema,
-  type GenCardApproach,
-} from "../../../../packages-core/common/schema/card"
 import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
