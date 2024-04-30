@@ -33,7 +33,8 @@ export const cardPreviewAtom = atom<ICardPreview | null>((get) => {
   console.log({ llmResponseInput, inner })
   return {
     outer: {
-      id: "",
+      // todo: use outer.id instead of inner.id
+      id: inner?.id ?? "",
       user,
     },
     inner,

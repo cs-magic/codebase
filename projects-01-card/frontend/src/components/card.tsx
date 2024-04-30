@@ -15,7 +15,7 @@ import { AtomSelector } from "../../../../packages-to-classify/ui/components/ato
 import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
-import { CardPreview } from "./card-preview"
+import { CardPreviewContainer } from "./card-preview-container"
 import { StandardCard } from "./standard-card"
 
 export const Card = () => {
@@ -45,7 +45,7 @@ export const Card = () => {
 
         <Separator orientation={"horizontal"} />
 
-        <CardPreview
+        <CardPreviewContainer
           genCardApproach={renderType}
           preview={preview}
           withActions

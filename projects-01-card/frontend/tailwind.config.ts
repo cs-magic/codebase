@@ -22,7 +22,8 @@ const config = {
     extend: {
       fontFamily: {
         // 需要本地安装
-        card: ["PingFang SC"],
+        pingfang: ["PingFang SC"],
+        songti: ["Songti SC", "STSong"],
         art: [
           "Zapfino", //这个花体最飘逸！
           // "Trebuchet MS",
@@ -49,6 +50,9 @@ const config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+        },
+        primary2: {
+          DEFAULT: "hsl(var(--primary2))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -94,9 +98,29 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      borderStyle: {
+        "wider-dashed": "dashed", // Name your custom style
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+
+    require("@tailwindcss/forms"),
+
+    // @ts-ignore
+    function ({ addUtilities, theme }) {
+      const newUtilities = {
+        ".border-wider-dashed": {
+          borderStyle: "dashed",
+          borderWidth: "1px",
+          backgroundImage:
+            "repeating-linear-gradient(to right, transparent, transparent 10px, black 10px, black 40px)", // Adjust the spacing here
+        },
+      }
+      addUtilities(newUtilities, ["responsive"])
+    },
+  ],
 } satisfies Config
 
 export default config

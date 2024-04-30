@@ -8,6 +8,7 @@ import { Markmap } from "markmap-view"
 import { useEffect, useRef, useState } from "react"
 import { AspectRatio } from "../ui-shadcn/components/aspect-ratio"
 import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "./store"
+import React from "react"
 
 const transformer = new Transformer()
 
@@ -27,11 +28,13 @@ export default function MarkMap({ content }: { content?: string }) {
     const mm = Markmap.create(refSvg.current, {
       pan: false,
       spacingVertical,
+      spacingHorizontal: 50,
       zoom: false,
       maxWidth: 250, // 300大概一行20个字这样子
       duration: 0, // 这样就不用检测动画了
       autoFit: false,
 
+      color: () => `hsl(190 85% 19% / .3)`,
       // initialExpandLevel: 3,
     })
     refMm.current = mm
@@ -83,7 +86,7 @@ export default function MarkMap({ content }: { content?: string }) {
   return (
     <div className={"w-full"}>
       <AspectRatio ratio={ratio}>
-        <svg className="w-full h-full" ref={refSvg} />
+        <svg className="w-full h-full !font-songti" ref={refSvg} />
       </AspectRatio>
     </div>
   )

@@ -39,6 +39,8 @@
         --ring: 222.2 84% 4.9%;
 
         --radius: 0.5rem;
+
+        --primary2: 190 85% 19%;
     }
 
     .dark {
@@ -148,6 +150,53 @@
         background-blend-mode: screen;
     }
 
+
+    .card-bg {
+        /*@apply corner-gradient;*/
+        @apply bg-gradient-to-b from-[rgb(249,244,238)] to-[rgb(212,233,238)];
+        /*@apply bg-gradient-to-b from-[#333333] to-[#aaaaaa];*/
+    }
+
+    .card-notch {
+        clip-path: polygon(
+                0% 50%, 10% 0%, 90% 0%,
+                100% 50%, 90% 100%, 10% 100%
+        );
+    }
+
+    .ticket {
+        width: 100%;
+        height: 16px;
+        background:
+                radial-gradient(8px at right, transparent 100%, white) right,
+                radial-gradient(8px at left , transparent 100%, white) left;
+        background-size: 51% 100%;
+        background-repeat: no-repeat;
+        /*border-radius: 10px;*/
+        /*filter: drop-shadow(0 0.5rem 0.2rem rgb(0 0 0 / 50%));*/
+    }
+
+
+    .card-notch-2 {
+        /*clip-path: circle(4px at 0% 50%), circle(4px at 100% 50%);*/
+
+        height: 16px;
+        width: 100%;
+        /*background:*/
+        /*        radial-gradient(8px at right, #0000 100%, white) right,*/
+        /*        radial-gradient(8px at left , #0000 100%, white) left;*/
+
+        --mask1: radial-gradient(circle 8px at 0 50%, transparent 0, transparent 8px, white);
+        --mask2: radial-gradient(circle 8px at 100% 50%, transparent 0, transparent 8px, white);
+        /* webkit needed for Chrome */
+        -webkit-mask-image: var(--mask1), var(--mask2);
+        mask-image: var(--mask1), var(--mask2);
+    }
+
+    .bg-dots {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 11 11'%3E%3Crect x='5' y='5' width='1' height='1' fill='rgba(128,128,128,25%)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+    }
 }
 
 

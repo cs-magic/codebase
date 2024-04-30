@@ -55,15 +55,15 @@ export const CardAction2 = ({
     if (!blob) return
 
     switch (type) {
-      //   case "copy":
-      //     await navigator.clipboard.write([
-      //       new ClipboardItem({
-      //         "image/png": blob,
-      //       }),
-      //     ])
-      //     toast.success("copied image to clipboard")
-      //     break
-      //
+      case "copy":
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ])
+        toast.success("copied image to clipboard")
+        break
+
       //   case "download":
       //     const fp = `${card.platformType}_${card.platformId}.png`
       //     download(blob, fp)

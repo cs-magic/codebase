@@ -12,9 +12,9 @@ export const cardRenderedAtom = atom((get) => {
   const mindmap = get(cardMindmapRenderedAtom)
   const user = get(cardUserRenderedAtom)
   const author = get(cardAuthorRenderedAtom)
-  const rendered = cover && mindmap && author
+  const rendered = cover && mindmap && author && user
   // && user // puppet-web 可能获取不到avatar
-  // console.log({ cover, mindmap, user, author, rendered })
+  console.log({ cover, mindmap, user, author, rendered })
   return rendered
 })
 

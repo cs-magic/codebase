@@ -19,7 +19,8 @@
     "incremental": true,
     /* Path Aliases */
     "baseUrl": ".",
-    },
+    "jsx": "react"
+  },
     "noImplicitAny": true,
     "types": [
       // jest 要摆在 node 前面，否则 tsc 会报错找不到 jest 的定义

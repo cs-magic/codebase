@@ -11,6 +11,7 @@ export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
           className={cn(
             "text-nowrap",
             "bg-transparent",
+            "text-primary2/75",
             // "px-0"
             // "bg-muted"
           )}
