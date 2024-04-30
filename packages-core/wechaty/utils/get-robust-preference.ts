@@ -1,4 +1,5 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import omit from "lodash/omit"
 import {
   defaultWechatData,
   defaultWechatPreference,
@@ -11,9 +12,18 @@ export const getRobustPreference = (
     preference?: any
   } | null,
 ): IWechatPreference => {
+  // migrate
+  const preference = omit(parseJsonSafe<IWechatPreference>(row?.preference), [
+    "chatterEnabled",
+    "parserEnabled",
+    "model",
+    "lang",
+    "backend",
+  ])
+
   return {
     ...defaultWechatPreference,
-    ...parseJsonSafe<IWechatPreference>(row?.preference),
+    ...preference,
   }
 }
 

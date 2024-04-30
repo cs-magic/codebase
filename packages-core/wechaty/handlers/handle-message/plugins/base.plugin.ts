@@ -3,6 +3,7 @@ import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import omit from "lodash/omit"
 import set from "lodash/set"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
@@ -207,6 +208,7 @@ export class BasePlugin {
       logger.info(
         `updating preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,
       )
+      // migrate v1 --> v2
       set(preference, path, convertedValue)
       logger.info(
         `updated preference: path=${path}, value=${value}, preference=${JSON.stringify(preference)}`,

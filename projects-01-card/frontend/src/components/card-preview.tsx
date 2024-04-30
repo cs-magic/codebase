@@ -1,5 +1,6 @@
 import { Tags } from "@/components/card-content-tags"
 import { UserAvatar } from "@/components/user-avatar"
+import { config } from "@/config"
 import {
   cardAuthorRenderedAtom,
   cardCoverRenderedAtom,
@@ -61,16 +62,11 @@ export const CardPreview = forwardRef<
         id={"card-preview-inner-1"}
         className={cn(
           "flex flex-col gap-4 bg-white p-4 relative rounded-tl-[23px] rounded-tr-[10px]",
-          // "card-notch",
         )}
-        // style={{
-        //   clipPath:
-        //     "polygon(0 0, 25px 0, 25px 100%, 0 100%, 0 50px, 25px 50px, 275px 50px, 275px 0, 300px 0, 300px 100%, 275px 100%, 275px 50px, 25px 50px, 25px 100%, 0 100%);",
-        // }}
       >
         <div
           id={"card-preview-inner-header"}
-          className={"flex items-center gap-2 h-12 "}
+          className={"flex items-center gap-2 h-10"}
         >
           {user && (
             <UserAvatar
@@ -172,6 +168,13 @@ export const CardPreview = forwardRef<
             </VerticalAspectRatio>
           </div>
         </div>
+      </div>
+
+      <div className={"flex flex-col items-end p-2 text-primary2/10"}>
+        <div>
+          {preview?.inner?.id}@{config.version}
+        </div>
+        {/*<div></div>*/}
       </div>
     </div>
   )
