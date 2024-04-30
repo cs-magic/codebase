@@ -72,7 +72,10 @@ export const CardPreview = forwardRef<
           {user && (
             <UserAvatar
               user={user}
-              imageProps={{ onLoad: () => setCardUserRendered(true) }}
+              imageProps={{
+                onLoad: () => setCardUserRendered(true),
+                onChange: () => setCardUserRendered(false),
+              }}
             />
           )}
           <div>
@@ -101,6 +104,7 @@ export const CardPreview = forwardRef<
                 alt={"cover"}
                 className={"object-cover h-auto"}
                 onLoad={() => setCardCoverRendered(true)}
+                onChange={() => setCardCoverRendered(false)}
               />
             )}
           </AspectRatio>
@@ -144,7 +148,10 @@ export const CardPreview = forwardRef<
           className={"flex items-center gap-2 h-8"}
         >
           <UserAvatar
-            imageProps={{ onLoad: () => setCardAuthorRendered(true) }}
+            imageProps={{
+              onLoad: () => setCardAuthorRendered(true),
+              onChange: () => setCardUserRendered(false),
+            }}
             user={preview?.inner?.author ?? null}
             avatarProps={{ className: "rounded-none" }}
           />

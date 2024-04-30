@@ -18,7 +18,7 @@ export default function MarkMap({ content }: { content?: string }) {
 
   // 不能设置 ratio 为 0，否则会导致 svg 渲染算法出错
   const [ratio, setRatio] = useState(1)
-  const setCardRendered = useSetAtom(cardMindmapRenderedAtom)
+  const setCardMindmapRendered = useSetAtom(cardMindmapRenderedAtom)
   const [spacingVertical] = useAtom(mapSpacingVerticalAtom)
   const [maxLevels] = useAtom(mapLevelsMaxAtom)
 
@@ -76,9 +76,9 @@ export default function MarkMap({ content }: { content?: string }) {
    */
   useEffect(() => {
     if (content) {
-      setCardRendered(false)
+      setCardMindmapRendered(false)
       void refMm.current?.fit().then(() => {
-        setCardRendered(true)
+        setCardMindmapRendered(true)
       })
     }
   }, [ratio, content])
