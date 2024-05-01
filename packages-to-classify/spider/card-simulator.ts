@@ -41,21 +41,26 @@ export class CardSimulator extends BaseSimulator {
     //   actual: inputtedContent,
     // })
 
-    logger.info("-- generating")
+    logger.debug("-- generating")
     await this.page.waitForSelector("#upload-card:not([disabled])") // 可能要很长（涉及到LLM）
 
-    logger.info("-- clicking upload button")
+    logger.debug("-- clicking upload button")
     await this.page.locator("#upload-card").click()
 
-    logger.info("-- parsing toast")
+    logger.debug("-- parsing toast")
     const toastContent = await this.page.textContent(".toast div[data-title]")
     const cardUrl = /uploaded at (.*)/.exec(toastContent ?? "")?.[1]
     if (!cardUrl) throw new Error("no valid url parsed from toast")
-    logger.info(`-- parsed cardUrl: ${cardUrl}`)
+    logger.debug(`-- parsed cardUrl: ${cardUrl}`)
 
-    logger.info("-- closing toast")
+    logger.debug("-- closing toast")
     await this.page.locator(".toast button").click()
 
+    // clear, o.w. the actions can't be promised to be working expectedly
+    logger.debug("-- resetting input(state)")
+    await this.page.locator("#card-user-name").fill("")
+    await this.page.locator("#card-user-avatar").fill("")
+    await this.page.locator("#card-content").fill("")
     // await page.close()
 
     return { cardUrl }

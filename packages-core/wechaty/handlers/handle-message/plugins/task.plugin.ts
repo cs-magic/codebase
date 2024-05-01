@@ -108,7 +108,7 @@ export class TaskPlugin extends BasePlugin {
 
       case "update": {
         const index = z.number().int().min(0).parse(parsed._[1])
-        const rest = parsed._.slice(2).join("\n")
+        const rest = parsed._.slice(2).join(" ")
         await service.update(index, rest)
         await sync()
         break
@@ -116,7 +116,7 @@ export class TaskPlugin extends BasePlugin {
 
       case "set-timer": {
         const index = z.number().int().min(0).parse(parsed._[1])
-        const rest = parsed._.slice(2).join("")
+        const rest = parsed._.slice(2).join(" ")
         await this.setTimer(index, rest)
         await sync()
         break
@@ -124,7 +124,7 @@ export class TaskPlugin extends BasePlugin {
 
       case "unset-timer": {
         const index = z.number().int().min(0).parse(parsed._[1])
-        const rest = parsed._.slice(2).join("")
+        const rest = parsed._.slice(2).join(" ")
         await this.unsetTimer(index, rest)
         await sync()
         break
@@ -145,6 +145,7 @@ export class TaskPlugin extends BasePlugin {
     let job = TaskPlugin.jobs[task.id]
     if (job) job.cancel()
 
+    logger.debug(`setting timer: %o`, { index, timer })
     job = TaskPlugin.jobs[task.id] = scheduleJob(timer, async () => {
       await conv.say(
         [
