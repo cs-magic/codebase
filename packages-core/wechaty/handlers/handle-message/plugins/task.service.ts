@@ -148,9 +148,10 @@ export class TaskService {
     const tasks = await this.list()
     const task = tasks[index]
     if (!task) return
-    logger.debug(`task before: %o`, task)
+    logger.debug(`func: %o`, func)
+    logger.debug(`task before: \n%o`, task)
     parseFunction(func).bind(task)()
-    logger.debug(`task after: %o`, task)
+    logger.debug(`task after: \n%o`, task)
 
     const s = await prisma.task.update({
       where: { id: task.id },
