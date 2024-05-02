@@ -1,6 +1,8 @@
+import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
+import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
 import {
   commandsSchema,
@@ -33,8 +35,8 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
   try {
     logger.info(
-      `[onMessage] ${await formatTalkerFromMessage(message)}: %o`,
-      formatWechatyMessage(message, 600),
+      `[onMessage] ${await formatTalkerFromMessage(message)}: %o\n${SEPARATOR_BOX}\n${message.text()}\n${SEPARATOR_BOX}`,
+      omit(message.payload, ["text"]),
     )
 
     if (message.text() === "test") {
@@ -71,7 +73,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     const text = parseText(message.text())
     const result = parseLimitedCommand<CommandType>(text, commandsSchema)
-    logger.debug("parsed command: %o", { text, result })
+    // logger.debug("parsed command: %o", { text, result })
 
     if (result) {
       switch (result.command) {

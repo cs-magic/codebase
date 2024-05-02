@@ -34,6 +34,6 @@ export const parseText = (messageText: string) => {
   const text = (
     parseQuote(messageText, padlocalVersion)?.content ?? messageText
   ).trim()
-  logger.debug("parseText: %o", { text, messageText })
+  // logger.debug("parseText: %o", { text, messageText })
   return text
 }

@@ -20,20 +20,20 @@ const serializeTaskGroup = (
   showRoom?: boolean,
 ) => {
   const items = sortBy(
-    tasks
-      .filter((t) => t.status === status)
-      .map((t) => {
-        if (!t.priority) t.priority = Priority.normal // possible null
-        return t
-      }),
+    tasks.filter((t) => t.status === status),
+    // .map((t) => {
+    //   if (!t.priority) t.priority = Priority.normal // possible null
+    //   return t
+    // })
     "priority",
   )
   const ans = [`${status} (${items.length})`]
+
   if (!onlyCount)
     ans.push(
       ...items.map((t) => {
         const roomName = t.room?.topic
-        return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} [${t.priority}]`
+        return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} ${t.priority ? `[${t.priority}]` : ""}`
       }),
     )
   return ans
@@ -63,7 +63,7 @@ export class TaskService {
   }
 
   async list(): Promise<ITaskWithIndex[]> {
-    const tasks = await prisma.task.findMany({
+    const tasksInDB = await prisma.task.findMany({
       ...taskDetailSchema,
       orderBy: {
         createdAt: "asc",
@@ -85,7 +85,9 @@ export class TaskService {
             ],
           },
     })
-    return tasks.map((t, index) => ({ ...t, index }))
+    const tasks = tasksInDB.map((t, index) => ({ ...t, index }))
+    // logger.debug("tasks: \n%o", tasks)
+    return tasks
   }
 
   async format() {

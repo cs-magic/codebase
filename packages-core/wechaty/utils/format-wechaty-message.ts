@@ -4,7 +4,7 @@ import { type Message } from "wechaty"
 export const formatWechatyMessage = (message: Message, n = 120) => {
   const data = {
     ...message.payload,
-    text: formatString(message.payload?.text ?? "", n),
+    text: message.payload?.text ?? "",
   }
   return data
 }
