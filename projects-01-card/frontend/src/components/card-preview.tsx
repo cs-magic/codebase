@@ -2,9 +2,9 @@ import { Tags } from "@/components/card-content-tags"
 import { UserAvatar } from "@/components/user-avatar"
 import { config } from "@/config"
 import {
-  cardAuthorRenderedAtom,
+  cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,
-  cardUserRenderedAtom,
+  cardUserAvatarRenderedAtom,
 } from "@/store/card.rendered.atom"
 import { getPlatformName } from "@/utils/card-platform/get-platform-name"
 import { ICardPreview } from "@cs-magic/p01-common/schema/card"
@@ -31,9 +31,9 @@ export const CardPreview = forwardRef<
 >(({ preview, user }, ref) => {
   console.log({ user, preview })
 
-  const [, setCardAuthorRendered] = useAtom(cardAuthorRenderedAtom)
-  const [, setCardUserRendered] = useAtom(cardUserRenderedAtom)
+  const [, setCardUserRendered] = useAtom(cardUserAvatarRenderedAtom)
   const [, setCardCoverRendered] = useAtom(cardCoverRenderedAtom)
+  const [, setCardAuthorRendered] = useAtom(cardAuthorAvatarRenderedAtom)
 
   return (
     <div
@@ -69,15 +69,13 @@ export const CardPreview = forwardRef<
           id={"card-preview-inner-header"}
           className={"flex items-center gap-2 h-10"}
         >
-          {user && (
-            <UserAvatar
-              user={user}
-              imageProps={{
-                onLoad: () => setCardUserRendered(true),
-                onChange: () => setCardUserRendered(false),
-              }}
-            />
-          )}
+          <UserAvatar
+            user={user ?? null}
+            imageProps={{
+              onLoad: () => setCardUserRendered(true),
+              onChange: () => setCardUserRendered(false),
+            }}
+          />
           <div>
             <div className={"text-[16px]"}>{user?.name}</div>
             <span>分享给你一张卡片</span>
@@ -150,6 +148,7 @@ export const CardPreview = forwardRef<
           <UserAvatar
             imageProps={{
               onLoad: () => setCardAuthorRendered(true),
+              // onChange 有时候是不够的，比如是hidden状态，导致直接跳过
               onChange: () => setCardAuthorRendered(false),
             }}
             user={preview?.inner?.author ?? null}

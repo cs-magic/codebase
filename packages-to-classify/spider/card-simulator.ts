@@ -1,6 +1,7 @@
 import { UnexpectedError } from "@cs-magic/common/schema/error"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { sleep } from "../datetime/utils"
 import { getEnv } from "../env"
 import { BaseSimulator } from "./base-simulator"
 
@@ -8,18 +9,28 @@ import { BaseSimulator } from "./base-simulator"
  * !IMPORTANT: 需要 p01-card 项目启动
  */
 export class CardSimulator extends BaseSimulator {
-  async initPage() {
-    if (!this.page) {
-      this.page = await super.initPage()
-      const env = getEnv()
-      const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen?renderType=backend`
-      logger.info(`-- visiting: ${targetUrl}`)
-      await this.page.goto(targetUrl)
-    }
-    return this.page
-  }
+  static runningTasksCount = 0
 
   async genCard(
+    content: string,
+    user?: IUserSummary,
+  ): Promise<{ cardUrl: string }> {
+    let result
+    while (CardSimulator.runningTasksCount !== 0) {
+      await sleep(3e3) // wait 3s
+    }
+
+    try {
+      CardSimulator.runningTasksCount++
+      result = await this.genCardInner(content, user)
+    } finally {
+      CardSimulator.runningTasksCount--
+    }
+
+    return result
+  }
+
+  async genCardInner(
     content: string,
     user?: IUserSummary,
   ): Promise<{ cardUrl: string }> {
@@ -64,5 +75,16 @@ export class CardSimulator extends BaseSimulator {
     // await page.close()
 
     return { cardUrl }
+  }
+
+  async initPage() {
+    if (!this.page) {
+      this.page = await super.initPage()
+      const env = getEnv()
+      const targetUrl = `${env.NEXT_PUBLIC_APP_URL}/card/gen?renderType=backend`
+      logger.info(`-- visiting: ${targetUrl}`)
+      await this.page.goto(targetUrl)
+    }
+    return this.page
   }
 }
