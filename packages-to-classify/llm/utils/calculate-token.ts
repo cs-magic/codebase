@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import { encoding_for_model } from "tiktoken"
 import { LlmModelType } from "../schema/llm.models"
@@ -48,6 +49,7 @@ export const trimMessages = (messages: ILlmMessage[], model: LlmModelType) => {
   const targetLen = 6e3 - 100
   const curLen = calculateToken(messages, model)
   if (curLen > targetLen) {
+    logger.debug(`trimming messages(curLen=${curLen}, targetLen=${targetLen})`)
     messages.splice(0, 1)
     trimMessages(messages, model)
   }
