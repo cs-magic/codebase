@@ -9,7 +9,7 @@ import { Path } from "../../path"
 import { safeCallLLM } from "./safe-call-llm"
 import { LlmModelType } from "../schema/llm.models"
 
-import { IAgentReq, ILlmReq } from "../schema/llm.api"
+import { IAgentReq, ILlmQueryConfig } from "../schema/llm.api"
 
 // const __filename = fileURLToPath(import.meta.url)
 
@@ -22,7 +22,7 @@ export const safeCallAgent = async ({
   input: string
   model?: LlmModelType
   agentType?: "default" | "summarize-content" | "summarize-ancient-title"
-} & { llmOptions?: Omit<ILlmReq, "messages" | "model"> }) => {
+} & { llmOptions?: Omit<ILlmQueryConfig, "messages" | "model"> }) => {
   logger.info("-- agent calling: %o", {
     agentType,
     model,

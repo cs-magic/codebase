@@ -9460,6 +9460,7 @@ __metadata:
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.3"
     tailwindcss-animate: "npm:^1.0.7"
+    tiktoken: "npm:^1.0.14"
     ts-jest: "npm:^29.1.2"
     ts-jest-mock-import-meta: "npm:^1.2.0"
     typescript: "npm:^5.4.5"
@@ -23345,6 +23346,13 @@ __metadata:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: 10c0/4b09f3774099de0d4df26d95c5821a62faee32c7e96fb1f4ebd54a2d7c11c57fe88b0a0d49cf375de5fee5ae6bf4eb56dbbf29d07366864e2ee805349970d3cc
+  languageName: node
+  linkType: hard
+
+"tiktoken@npm:^1.0.14":
+  version: 1.0.14
+  resolution: "tiktoken@npm:1.0.14"
+  checksum: 10c0/2416d400f1e1c2e7fa57edb78cbc728348cd8eb2881a31324fd3db49a44254b935dbbe8c997149133f961223e04747d933a4261874dc64ec72c003fcfd329568
   languageName: node
   linkType: hard
 

@@ -98,6 +98,9 @@ export class BasePlugin {
     return null
   }
 
+  /**
+   * 最好用户 recall 玩之后，用户的消息还可以recall，不过目前还不支持，也许可以recall 多条 类似 recall -n 3 之类
+   */
   async recallQuotedMessage() {
     const quotedMessage = await this.getQuotedMessage()
     logger.info(`quoted message: %o`, quotedMessage)

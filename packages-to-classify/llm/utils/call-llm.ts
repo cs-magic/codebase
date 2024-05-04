@@ -1,9 +1,8 @@
-import { type ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import OpenAI, { type ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api } from "../../api-client/api"
 import { backendApi } from "../../api-client/backend-api"
-import { type LlmModelType } from "../schema/llm.models"
+import { ILlmQueryConfig } from "../schema/llm.api"
 import { type LlmProviderType } from "../schema/llm.providers"
 
 export type ICompletion = OpenAI.Chat.Completions.ChatCompletion
@@ -17,10 +16,7 @@ export const callLlm = async ({
   apiKey: string
   llmProviderType: LlmProviderType
   clientConfig: ClientOptions
-  queryConfig: {
-    model: LlmModelType
-    messages: ILlmMessage[]
-  }
+  queryConfig: ILlmQueryConfig
 }): Promise<ICompletion> => {
   switch (llmProviderType) {
     case "zhipu":
@@ -35,7 +31,6 @@ export const callLlm = async ({
           queryConfig,
           {
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${apiKey}`,
             },
           },
@@ -43,13 +38,8 @@ export const callLlm = async ({
       ).data
 
     case "dashscope":
-      return (
-        await backendApi.post<ICompletion>("/llm/base", queryConfig, {
-          headers: {
-            ContentType: "application/json",
-          },
-        })
-      ).data
+      return (await backendApi.post<ICompletion>("/llm/base", queryConfig, {}))
+        .data
 
     case "moonshot":
     case "openai":

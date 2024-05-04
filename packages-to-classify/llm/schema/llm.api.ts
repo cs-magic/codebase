@@ -2,7 +2,10 @@ import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import OpenAI from "openai"
 import { LlmModelType } from "./llm.models"
 
-export type ILlmReq = {
+/**
+ * 直接用于调用大模型的参数
+ */
+export type ILlmQueryConfig = {
   model: LlmModelType
   messages: ILlmMessage[]
   temperature?: number
@@ -12,8 +15,23 @@ export type ILlmReq = {
   user?: string
 }
 
+export type ILlmQueryConfigExtra = {
+  context?: {
+    trimStart?: {
+      whenTooLong?: boolean
+    }
+  }
+}
+export const defaultLlmQueryConfigExtra: ILlmQueryConfigExtra = {
+  context: {
+    trimStart: {
+      whenTooLong: true,
+    },
+  },
+}
+
 export type ILlmRes = {
-  options: ILlmReq
+  options: ILlmQueryConfig
   query: {
     id: string
     start: number

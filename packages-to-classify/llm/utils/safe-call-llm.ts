@@ -5,15 +5,23 @@ import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai/index"
 import { v4 } from "uuid"
 import { env } from "../../env"
+
+import {
+  defaultLlmQueryConfigExtra,
+  ILlmQueryConfig,
+  ILlmQueryConfigExtra,
+  ILlmRes,
+} from "../schema/llm.api"
+import { trimMessages } from "./calculate-token"
 import { callLlm } from "./call-llm"
+import { formatLlmMessage } from "./format-llm-message"
 import { model2provider } from "./model2provider"
 
-import { ILlmReq, ILlmRes } from "../schema/llm.api"
-import { formatLlmMessage } from "./format-llm-message"
-
-export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
-  const llmModelType = options.model
-  const llmProviderType = model2provider(llmModelType)
+export const safeCallLLM = async (
+  queryConfig: ILlmQueryConfig,
+  queryConfigExtra: ILlmQueryConfigExtra = defaultLlmQueryConfigExtra,
+): Promise<ILlmRes> => {
+  const llmProviderType = model2provider(queryConfig.model)
 
   const baseURL =
     llmProviderType === "moonshot" ? "https://api.moonshot.cn/v1" : undefined
@@ -40,17 +48,19 @@ export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
       ? [
           {
             role: "user" as const,
-            content: options.messages
+            content: queryConfig.messages
               .map((r) => r.content)
               .join("\n\n## 输入\n\n"),
           },
         ]
-      : options.messages
+      : queryConfig.messages
 
-  const queryConfig = {
-    model: llmModelType,
-    messages,
+  if (queryConfigExtra.context?.trimStart?.whenTooLong) {
+    // avoid context overflow
+    trimMessages(messages, queryConfig.model)
   }
+
+  queryConfig.messages = messages
 
   logger.debug(
     [
@@ -67,7 +77,7 @@ export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
 
   try {
     response = await callLlm({
-      queryConfig,
+      queryConfig: queryConfig,
       llmProviderType,
       apiKey,
       clientConfig,
@@ -79,7 +89,7 @@ export const safeCallLLM = async (options: ILlmReq): Promise<ILlmRes> => {
   }
   const end = Date.now()
   const res = {
-    options,
+    options: queryConfig,
     response,
     query: {
       id: queryId,

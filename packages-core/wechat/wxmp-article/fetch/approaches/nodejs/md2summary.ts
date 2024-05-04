@@ -1,5 +1,5 @@
 import { safeCallAgent } from "../../../../../../packages-to-classify/llm/utils/safe-call-agent"
-import { ILlmReq } from "../../../../../../packages-to-classify/llm/schema/llm.api"
+import { ILlmQueryConfig } from "../../../../../../packages-to-classify/llm/schema/llm.api"
 import { LlmModelType } from "../../../../../../packages-to-classify/llm/schema/llm.models"
 
 export type SummaryOptions = {
@@ -7,7 +7,7 @@ export type SummaryOptions = {
   model?: LlmModelType
   withImage?: boolean
 
-  llmOptions?: ILlmReq
+  llmOptions?: ILlmQueryConfig
 }
 
 export const md2summary = async (

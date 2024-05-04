@@ -96,6 +96,7 @@ export class ChatterPlugin extends BasePlugin {
     const convPreference = await this.getConvPreference()
     if (!convPreference.features.chatter.enabled) {
       const convData = await this.getConvData()
+      // todo: user control
       if (!convData.plugin.chatter.turnOnReminded) {
         // await this.reply(
         //   [
@@ -114,7 +115,7 @@ export class ChatterPlugin extends BasePlugin {
       this.convId,
     )
 
-    const model = convPreference.features.chatter.model ?? "gpt-3.5-turbo"
+    const model = convPreference.features.chatter.model
     const messages: ILlmMessage[] = filteredMessages.map((m) => ({
       role:
         m.talkerId === this.bot.context.wxid
