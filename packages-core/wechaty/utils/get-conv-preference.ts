@@ -1,17 +1,9 @@
 import { Message } from "wechaty"
-import { IWechatPreference } from "../schema/bot.preference"
+import { IWechatData, IWechatPreference } from "../schema/bot.preference"
 import { getConvRow } from "./get-conv-row"
-import { getRobustPreference } from "./get-robust-preference"
+import { getRobustData, getRobustPreference } from "./get-robust-preference"
 
-export const getConvPreference = async (message: {
-  convId: string
-  isRoom: boolean
-}): Promise<IWechatPreference> => {
-  const row = await getConvRow(message)
-  return getRobustPreference(row)
-}
-
-export const getConvPreferenceFromMessage = async (
+export const getConvPreference = async (
   message: Message,
 ): Promise<IWechatPreference> => {
   const row = await getConvRow({
@@ -19,4 +11,12 @@ export const getConvPreferenceFromMessage = async (
     isRoom: !!message.room(),
   })
   return getRobustPreference(row)
+}
+
+export const getConvData = async (message: Message): Promise<IWechatData> => {
+  const row = await getConvRow({
+    convId: message.conversation().id,
+    isRoom: !!message.room(),
+  })
+  return getRobustData(row)
 }

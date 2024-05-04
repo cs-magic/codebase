@@ -141,7 +141,7 @@ export const listMessagesOfLatestTopic = async (
   //   lastUserStartChat,
   //   messagesLen: messages.length,
   // })
-  logger.info("context: " + formatString(JSON.stringify(messages)))
+  // logger.info("context: " + formatString(JSON.stringify(messages)))
 
   return messages
 }

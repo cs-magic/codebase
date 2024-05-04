@@ -6,7 +6,7 @@ import { Message, Sayable, Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
 import moment from "../../../packages-to-classify/datetime/moment"
 import { formatTalkerFromMessage } from "../utils/format-talker"
-import { getConvPreferenceFromMessage } from "../utils/get-conv-preference"
+import { getConvPreference } from "../utils/get-conv-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
 
@@ -84,7 +84,7 @@ Basic Commands：
     },
     getStatus: async (message) => {
       const aliveTime = formatDuration((Date.now() - botData.startTime) / 1e3)
-      const convPreference = await getConvPreferenceFromMessage(message)
+      const convPreference = await getConvPreference(message)
       return [
         yaml.dump({ Basic: { name, version, aliveTime } }),
         yaml.dump({ Preference: convPreference }),

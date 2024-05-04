@@ -1,4 +1,4 @@
-import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
+import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
@@ -10,7 +10,6 @@ import {
   ManagerType,
 } from "../../schema/commands"
 import { formatFooter } from "../../utils/format-footer"
-import { formatWechatyMessage } from "../../utils/format-wechaty-message"
 import { formatTalkerFromMessage } from "../../utils/format-talker"
 import { getConvPreference } from "../../utils/get-conv-preference"
 import { parseLimitedCommand } from "../../utils/parse-command"
@@ -118,6 +117,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     // else if (text.startsWith("/")) await parseAsyncWithFriendlyErrorMessage(commandsSchema, text)
     else {
       // free handlers
+      if (message.type() === types.Message.Image) {
+        const image = await message.toFileBox()
+      }
       if (message.type() === types.Message.Url)
         await new ParserPlugin(bot, message).parseSelf()
       else {
@@ -133,10 +135,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-    const preference = await getConvPreference({
-      convId: message.conversation().id,
-      isRoom: !!message.room(),
-    })
+    const preference = await getConvPreference(message)
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
     void bot.context.notify(
       message,

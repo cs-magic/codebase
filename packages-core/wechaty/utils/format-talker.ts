@@ -20,7 +20,7 @@ export const formatTalkerFromMessage = async (
       where: { id: message.talker().id },
     })
     const data = getRobustData(row)
-    s += `(${data.llm[type].success}/${data.llm[type].called})`
+    s += `(${data.plugin[type].success}/${data.plugin[type].called})`
   }
 
   const roomTopic = await message.room()?.topic()
@@ -33,7 +33,7 @@ export const formatTalkerFromMessage = async (
         where: { id: message.room()?.id },
       })
       const data = getRobustData(row)
-      s += `(${data.llm[type].success}/${data.llm[type].called})`
+      s += `(${data.plugin[type].success}/${data.plugin[type].called})`
     }
   }
 

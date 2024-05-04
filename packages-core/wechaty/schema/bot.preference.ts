@@ -111,8 +111,9 @@ export type IWechatData = {
   }
   vipLevel: number
   balance: number
-  llm: {
+  plugin: {
     chatter: {
+      turnOnReminded: boolean
       called: number
       success: number
     }
@@ -133,8 +134,9 @@ export const defaultWechatData: IWechatData = {
 
   balance: 0,
   vipLevel: 0,
-  llm: {
+  plugin: {
     chatter: {
+      turnOnReminded: false,
       called: 0,
       success: 0,
     },

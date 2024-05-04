@@ -3,6 +3,7 @@ import { logger } from "@cs-magic/log/logger"
 import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
 import { types } from "wechaty"
 import { z } from "zod"
+import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { safeCallLLM } from "../../../../../packages-to-classify/llm"
 
 import { formatLlmMessage } from "../../../../../packages-to-classify/llm/utils/format-llm-message"
@@ -68,6 +69,11 @@ export class ChatterPlugin extends BasePlugin {
 
   async safeReplyWithAI() {
     const m = this.message
+    // todo: @all 的时候有bug
+    // const mentionList = await m.mentionList()
+    // const mentionIds = mentionList.map((m) => m.id)
+    // logger.debug("mention ids: %o", mentionIds)
+
     if (
       // 过滤非文本 todo: image/xxxx
       m.type() !== types.Message.Text ||
@@ -78,14 +84,9 @@ export class ChatterPlugin extends BasePlugin {
       // 过滤群聊中没有at自己的消息 （私信要回）
       (m.room() &&
         // 没有被 at
-        !(
-          // including @all
-          // await m.mentionSelf()
-          // excluding @all
-          (await m.mentionList()).some(
-            (contact) => contact.id === this.bot.context.wxid,
-          )
-        ) &&
+        (!(await m.mentionSelf()) ||
+          // ignore all
+          this.text.includes("@All")) &&
         // 也没有问号开头
         //   todo: 允许开头有空格，要与后续找信息时对上（重构一下）
         !/^\s*[?？]/.exec(this.text))
@@ -93,8 +94,20 @@ export class ChatterPlugin extends BasePlugin {
       return
 
     const convPreference = await this.getConvPreference()
-    if (!convPreference.features.chatter.enabled)
+    if (!convPreference.features.chatter.enabled) {
+      const convData = await this.getConvData()
+      if (!convData.plugin.chatter.turnOnReminded) {
+        // await this.reply(
+        //   [
+        //     "看起来您是想和我进行AI聊天，但是当前该插件功能并未开启，请先打开后继续",
+        //     SEPARATOR_LINE,
+        //     "该消息近仅提示一次",
+        //   ].join("\n"),
+        // )
+      }
+
       return logger.debug(`!convPreference.features.chatter.enabled`)
+    }
 
     const filteredMessages = await listMessagesOfLatestTopic(
       this.bot.context.wxid,
@@ -135,7 +148,7 @@ export class ChatterPlugin extends BasePlugin {
         `invalid response content, please check Query(id=${res.query.id})`,
       )
 
-    void this.bot.context.addSendTask(() => m.say(content))
+    void this.reply(content)
     void this.notify(
       [`✅ called LLM`, SEPARATOR_LINE, content].join("\n"),
       "chatter",

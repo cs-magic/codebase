@@ -1,3 +1,4 @@
+// import { logger } from "@cs-magic/log/logger";
 import type * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import { isIMRoomId, isRoomId } from "../../utils/is-type.js";
@@ -53,7 +54,11 @@ async function roomMessageSentBySelf(padLocalMessage: PadLocal.Message.AsObject,
  * @param ret
  * @param context
  */
-export const roomParser: MessageParser = async(padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message, context: MessageParserContext) => {
+export const roomParser: MessageParser = async (
+  padLocalMessage: PadLocal.Message.AsObject,
+  ret: PUPPET.payloads.Message,
+  context: MessageParserContext
+) => {
   await roomMessageSentByOthers(padLocalMessage, ret);
   await roomMessageSentBySelf(padLocalMessage, ret);
 
@@ -61,8 +66,12 @@ export const roomParser: MessageParser = async(padLocalMessage: PadLocal.Message
     context.isRoomMessage = true;
 
     let mentionIdList: string[];
-    if (padLocalMessage.atList.length === 1 && padLocalMessage.atList[0] === "announcement@all") {
-      const roomPayload = await context.puppet.roomPayload(ret.roomId);
+    // const atList = padLocalMessage.atList;
+    const roomPayload = await context.puppet.roomPayload(ret.roomId);
+    // const memberList = roomPayload.memberIdList;
+    // logger.debug(`mentions: %o`, { atList, memberList });
+
+    if (padLocalMessage.atList.includes("notify@all")) {
       mentionIdList = roomPayload.memberIdList;
     } else {
       mentionIdList = padLocalMessage.atList;
