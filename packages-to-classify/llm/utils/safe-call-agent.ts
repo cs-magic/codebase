@@ -62,7 +62,7 @@ export const safeCallAgent = async ({
   return await safeCallLLM({
     model,
     messages,
-    topP: agent.top_p,
+    // topP: agent.top_p,
     temperature: agent.temperature,
     ...llmOptions,
   })

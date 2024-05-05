@@ -13,5 +13,7 @@ export const llmModelTypeSchema = z.enum([
   "qwen-turbo",
   "qwen-plus",
   "qwen-max",
+  // wenxin
+  // claude
 ])
 export type LlmModelType = z.infer<typeof llmModelTypeSchema>

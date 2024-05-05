@@ -4,7 +4,6 @@ import { langTypeSchema } from "../../../../../packages-to-classify/i18n/schema"
 import { backendTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.base"
 import { llmModelTypeSchema } from "../../../../../packages-to-classify/llm/schema/llm.models"
 import { FeatureMap } from "../../../schema/commands"
-import { CommandStyle } from "schema/bot.preference"
 import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BasePlugin } from "./base.plugin"
 

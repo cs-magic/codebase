@@ -9,7 +9,8 @@ export type ILlmQueryConfig = {
   model: LlmModelType
   messages: ILlmMessage[]
   temperature?: number
-  topP?: number
+  // todo: topP 是不对的参数
+  // topP?: number
   stream?: boolean
   // 用户标识，例如 userId@roomId@wechat
   user?: string
