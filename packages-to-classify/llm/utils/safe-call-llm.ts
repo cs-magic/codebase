@@ -1,3 +1,4 @@
+import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
@@ -55,17 +56,19 @@ export const safeCallLLM = async (
         ]
       : queryConfig.messages
 
-  if (queryConfigExtra.context?.trimStart?.whenTooLong) {
-    // avoid context overflow
-    trimMessages(messages, queryConfig.model)
-  }
+  // if (queryConfigExtra.context?.trimStart?.whenTooLong) {
+  //   // avoid context overflow
+  //   trimMessages(messages, queryConfig.model)
+  // }
 
   queryConfig.messages = messages
 
   logger.debug(
     [
       `>> calling LLM(provider=${llmProviderType}, model=${queryConfig.model}, api_key=${apiKey}): `,
+      SEPARATOR_BOX,
       ...queryConfig.messages.map((m) => formatLlmMessage(m, 60)),
+      SEPARATOR_BOX,
     ].join("\n"),
   )
 

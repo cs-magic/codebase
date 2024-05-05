@@ -5,6 +5,7 @@ import { types } from "wechaty"
 import { z } from "zod"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { safeCallLLM } from "../../../../../packages-to-classify/llm"
+import { trimMessages } from "../../../../../packages-to-classify/llm/utils/calculate-token"
 
 import { formatLlmMessage } from "../../../../../packages-to-classify/llm/utils/format-llm-message"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
@@ -124,6 +125,8 @@ export class ChatterPlugin extends BasePlugin {
       // todo: merge chats
       content: m.text ?? "",
     }))
+
+    trimMessages(messages, model)
     // logger.info(`--  context(len=${context.length})`)
 
     void this.notify(
