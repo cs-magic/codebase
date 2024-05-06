@@ -18,10 +18,18 @@ import { callLlm } from "./call-llm"
 import { formatLlmMessage } from "./format-llm-message"
 import { model2provider } from "./model2provider"
 
+/**
+ * todo: 集中队列
+ *
+ * @param queryConfig
+ * @param queryConfigExtra
+ */
 export const safeCallLLM = async (
   queryConfig: ILlmQueryConfig,
   queryConfigExtra: ILlmQueryConfigExtra = defaultLlmQueryConfigExtra,
 ): Promise<ILlmRes> => {
+  // 队列上锁
+
   const llmProviderType = model2provider(queryConfig.model)
 
   const baseURL =

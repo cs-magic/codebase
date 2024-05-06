@@ -3,6 +3,8 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
 export const cardMindmapRenderedAtom = atom(true)
+// todo: 必须等思维导图有内容才可以生成卡片（大语言模型返回的思维导图可能是没有内容的）
+export const cardMindmapHasContentAtom = atom(true)
 export const cardCoverRenderedAtom = atom(false)
 export const cardAuthorAvatarRenderedAtom = atom(false)
 export const cardUserAvatarRenderedAtom = atom(false)

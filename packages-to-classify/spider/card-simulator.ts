@@ -30,6 +30,11 @@ export class CardSimulator extends BaseSimulator {
     return result
   }
 
+  /**
+   *
+   * @param content LLM 解析的结果
+   * @param user 微信的用户的昵称/头像
+   */
   async genCardInner(
     content: string,
     user?: IUserSummary,
