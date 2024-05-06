@@ -36,21 +36,18 @@ export const handleRoomJoin = async (
 
   if (!data.room.welcome.sent) {
     void bot.context.addSendTask(async () => {
-      await room.say(`感谢${inviter.name()}邀请！
+      await room.say(`大家好！我是好用到哭的 AI 助理「飞脑」！
 ${SEPARATOR_LINE}
-大家好啊，我是大家的 AI 助手「${name}」，以下是我能为大家提供的服务：
-  - 发送一篇公众号文章到本会话内，我将基于大模型为您总结
-  - 以问号开头问一个问题，我将基于大模型为您解答
-  - 定时提醒功能、社群管理功能（待完善）
+以下是我能为大家提供的服务：
+  - 发送一篇公众号文章，我将为您总结
+  - @我 问一个问题，我将为您解答
+  - 其他定时提醒功能、社群管理功能（待完善）
 期待能成为大家最得力的小助手呀！
 ${SEPARATOR_LINE}
-PS: 有任何建议或者意见，可以直接提出来哦（以加号开头），例如：
-+ 提个需求，我希望每五个人加入群聊，${name}就发送一次群通知
-+ 提个建议，我希望${name}回复的语气更可爱点
-+ 提个bug，刚刚${name}没有回复我的问题
-${SEPARATOR_LINE}
-当前版本：${version}
-当前时间：${moment().format("YYYY/MM/DD HH:mm")}
+- BUG 反馈请联系飞脑客服：MAGIC_SOSO
+- 续费请联系我的邀请者：${inviter.name()}
+- 当前版本：${version}
+- 当前时间：${moment().format("YYYY/MM/DD HH:mm")}
 `)
       // pessimistic update
       data.room.welcome.sent = true

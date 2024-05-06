@@ -33,7 +33,7 @@ export type IBotContext = BotData & {
 }
 
 export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
-  const name = "小川"
+  const name = "飞脑"
   const version = packageJson.version
   const startTime = Date.now()
 
@@ -59,6 +59,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
 
   // expose
   const addSendTask = async (task: QueueTask) => senderQueue.addTask(task)
+
   const botData: BotData = {
     name,
     version,

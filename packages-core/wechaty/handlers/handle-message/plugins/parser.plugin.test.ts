@@ -19,6 +19,10 @@ describe("test parser", () => {
     return cardUrl
   }
 
+  it("test single url", async () => {
+    await parseUrl(sampleWxmpArticleUrl)
+  }, 300e3)
+
   it("test multiple urls", async () => {
     await Promise.all(
       sampleWxmpArticleUrls.slice(0).map(async (url) => {

@@ -27,12 +27,12 @@ export class BasePlugin {
   public name: FeatureType | null = null
   public i18n: FeatureMap<string> = {
     zh: {
-      title: "小川助手",
+      title: "飞脑助手",
       description: "",
       commands: {},
     },
     en: {
-      title: "Okawa Plus",
+      title: "SWOT",
       description: "",
       commands: {},
     },

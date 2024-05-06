@@ -21,7 +21,7 @@ export const formatTalkerFromMessage = async (
     s += `@${roomTopic}`
 
     if (type) {
-      const data = await getConvData(message)
+      const data = await getConvData({ convId: message.conversation().id })
       s += `(${data.plugin[type].success}/${data.plugin[type].called})`
     }
   }
