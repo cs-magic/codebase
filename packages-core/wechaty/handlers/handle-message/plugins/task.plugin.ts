@@ -8,7 +8,6 @@ import { z } from "zod"
 import moment from "../../../../../packages-to-classify/datetime/moment"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
-import { listConvTodo } from "../../../utils/list-conv-todo"
 import { BasePlugin } from "./base.plugin"
 import { TaskService } from "./task.service"
 
@@ -63,6 +62,10 @@ export class TaskPlugin extends BasePlugin {
   static jobs: Record<string, Job> = {}
   public i18n = i18n
 
+  public service = new TaskService(this.message.payload!)
+
+  public sync = async () => this.reply(await this.service.format())
+
   async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
@@ -84,15 +87,12 @@ export class TaskPlugin extends BasePlugin {
     const commands = await this.getCommands()
     if (!commands) return
 
-    const service = new TaskService(this.message.payload!)
-    const sync = async () => this.reply(await service.format())
-
     const parsed = parseCommand(input)
     logger.debug("parsed: %o", parsed)
 
     switch (parsed._[0]) {
       case "list":
-        await sync()
+        await this.sync()
         break
 
       case "add":
@@ -101,16 +101,16 @@ export class TaskPlugin extends BasePlugin {
           .trim()
           .min(1)
           .parse(parsed._.slice(1).join(" "))
-        await service.add(title)
+        await this.service.add(title)
         // todo: better input
-        await sync()
+        await this.sync()
         break
 
       case "update": {
         const index = z.number().int().min(0).parse(parsed._[1])
         const rest = parsed._.slice(2).join(" ")
-        await service.update(index, rest)
-        await sync()
+        await this.service.update(index, rest)
+        await this.sync()
         break
       }
 
@@ -118,7 +118,7 @@ export class TaskPlugin extends BasePlugin {
         const index = z.number().int().min(0).parse(parsed._[1])
         const rest = parsed._.slice(2).join(" ")
         await this.setTimer(index, rest)
-        await sync()
+        await this.sync()
         break
       }
 
@@ -126,20 +126,20 @@ export class TaskPlugin extends BasePlugin {
         const index = z.number().int().min(0).parse(parsed._[1])
         const rest = parsed._.slice(2).join(" ")
         await this.unsetTimer(index, rest)
-        await sync()
+        await this.sync()
         break
       }
     }
   }
 
   async setTimer(index: number, timer: string) {
-    const tasks = await listConvTodo(this.message)
+    const tasks = await this.service.list()
     const task = tasks[index]
     if (!task) throw new Error("task not exists")
 
-    const conv = task.roomId
-      ? await this.bot.Room.find({ id: task.roomId })
-      : await this.bot.Contact.find({ id: task.ownerId! })
+    const conv = task.conv?.ownerId
+      ? await this.bot.Room.find({ id: task.conv.id })
+      : await this.bot.Contact.find({ id: task.conv?.id })
     if (!conv) throw new Error("not found cov")
 
     let job = TaskPlugin.jobs[task.id]
@@ -182,7 +182,7 @@ export class TaskPlugin extends BasePlugin {
    * @param reason todo
    */
   async unsetTimer(index: number, reason?: string) {
-    const tasks = await listConvTodo(this.message)
+    const tasks = await this.service.list()
     const task = tasks[index]
     if (!task) throw new Error("task not exists")
 
