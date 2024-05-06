@@ -1,6 +1,7 @@
 import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { getConvPreference } from "@cs-magic/wechaty/utils/get-conv-preference"
 import { parseLimitedCommand } from "@cs-magic/wechaty/utils/parse-command"
 import path from "path"
@@ -55,7 +56,7 @@ export const handleMessage = async (
         syncClients(context)
         break
 
-      case "update-token":
+      case "update-token": {
         const data: IWechatData = {
           puppet: {
             padlocal: {
@@ -73,13 +74,19 @@ export const handleMessage = async (
         await startBot(context)
         logger.info("started new bot")
         break
+      }
 
-      case "get-preference":
+      case "get-preference": {
         const convId = result.args
         const preference = await getConvPreference({ convId })
         logger.debug(`preference: %o`, preference)
-        socket.send(JSON.stringify(preference))
+        const data: IWechatBotTransfer = {
+          type: "preference",
+          data: preference,
+        }
+        socket.send(JSON.stringify(data))
         break
+      }
 
       case "set-preference":
         // todo

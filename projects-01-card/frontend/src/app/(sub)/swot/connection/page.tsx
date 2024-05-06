@@ -1,19 +1,7 @@
 "use client"
 
-import { logger } from "@cs-magic/log/logger"
-
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
-import { useAtom } from "jotai"
-import { QRCodeSVG } from "qrcode.react"
-import { getEnv } from "../../../../packages-to-classify/env"
-import { useInit } from "../../../../packages-to-classify/hooks/use-init"
-import { socketStatusMap } from "../../../../packages-to-classify/transport/schema"
-import { Button } from "../../../../packages-to-classify/ui-shadcn/components/button"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
-import { ButtonWithLoading } from "../../../../packages-to-classify/ui/components/button-with-loading"
-import { FlexContainer } from "../../../../packages-to-classify/ui/components/flex-container"
-import { LabelLine } from "../../../../packages-to-classify/ui/components/label-line"
-import { useUserIsAdmin } from "../hooks/use-user"
+import { StandardCard } from "@/components/standard-card"
+import { useUserIsAdmin } from "@/hooks/use-user"
 import {
   botLoggedInAtom,
   botLoggingAtom,
@@ -23,12 +11,21 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "../store/bot.atom"
-import { StandardCard } from "./standard-card"
+} from "@/store/bot.atom"
+import { logger } from "@cs-magic/log/logger"
+import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
+import { useAtom } from "jotai"
+import { QRCodeSVG } from "qrcode.react"
+import { env } from "../../../../../../../packages-to-classify/env"
+import { useInit } from "../../../../../../../packages-to-classify/hooks/use-init"
+import { socketStatusMap } from "../../../../../../../packages-to-classify/transport/schema"
+import { Button } from "../../../../../../../packages-to-classify/ui-shadcn/components/button"
+import { cn } from "../../../../../../../packages-to-classify/ui-shadcn/utils"
+import { ButtonWithLoading } from "../../../../../../../packages-to-classify/ui/components/button-with-loading"
+import { FlexContainer } from "../../../../../../../packages-to-classify/ui/components/flex-container"
+import { LabelLine } from "../../../../../../../packages-to-classify/ui/components/label-line"
 
-const env = getEnv()
-
-export const Bot = () => {
+export default function BotPage() {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)
   const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom)
   const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom)
@@ -40,6 +37,7 @@ export const Bot = () => {
   const isAdmin = useUserIsAdmin()
 
   const socket = useInit<WebSocket>(() => {
+    console.log("-- initing socket --")
     const socket = new WebSocket(env.NEXT_PUBLIC_SOCKET_URL!)
 
     socket.addEventListener("error", console.error)
