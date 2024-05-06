@@ -2,15 +2,14 @@ import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseFunction } from "@cs-magic/common/utils/parse-function"
 import { logger } from "@cs-magic/log/logger"
 import { ITaskDetail, taskDetailSchema } from "@cs-magic/prisma/schema/task"
+import _ from "lodash"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
-import groupBy from "lodash/groupBy"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { Priority } from "./task.plugin"
 import { type TaskStatus } from ".prisma/client"
-import _ from "lodash"
 
 export type ITaskWithIndex = ITaskDetail & {
   index: number
@@ -47,7 +46,7 @@ const serializeTaskGroup = (
       .map(([priority, items]) => [
         `-- P${priority}`,
         ...items.map((t) => {
-          const roomName = t.room?.topic
+          const roomName = t.conv?.topic
           return `${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""}`
         }),
       ])
@@ -90,19 +89,23 @@ export class TaskService {
       },
       where: this.message.roomId
         ? {
-            roomId: this.message.roomId,
+            conv: {
+              id: this.message.roomId,
+            },
           }
         : {
-            OR: [
-              { ownerId: this.message.talkerId },
-              {
-                room: {
+            conv: {
+              OR: [
+                {
                   memberIdList: {
                     has: this.message.talkerId,
                   },
                 },
-              },
-            ],
+                {
+                  id: this.message.talkerId,
+                },
+              ],
+            },
           },
     })
     const tasks = tasksInDB.map((t, index) => ({ ...t, index }))
@@ -139,7 +142,7 @@ export class TaskService {
   ) {
     const s = await prisma.task.create({
       data: {
-        room: this.message.roomId
+        conv: this.message.roomId
           ? {
               connectOrCreate: {
                 where: { id: this.message.roomId },
@@ -148,16 +151,14 @@ export class TaskService {
                 },
               },
             }
-          : undefined,
-        owner: {
-          connectOrCreate: {
-            where: { id: this.message.talkerId },
-            create: {
-              id: this.message.talkerId,
-              name: this.message.talkerId, // hack name
+          : {
+              connectOrCreate: {
+                where: { id: this.message.talkerId },
+                create: {
+                  id: this.message.talkerId,
+                },
+              },
             },
-          },
-        },
         title,
         priority,
         // todo: string repr of Job
@@ -185,8 +186,7 @@ export class TaskService {
         "index",
         // todo: why incompatible
         "timer",
-        "room",
-        "owner",
+        "conv",
       ]),
     })
     logger.debug("updated: %o", s)

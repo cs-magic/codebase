@@ -63,11 +63,11 @@ export const defaultWechatPreference: IWechatPreference = {
 
   features: {
     chatter: {
-      enabled: false,
+      enabled: true,
       model: "gpt-3.5-turbo",
     },
     parser: {
-      enabled: false,
+      enabled: true,
       options: {
         detail: {
           request: {

@@ -23,8 +23,7 @@ export type TaskTimer = {
 )
 export const taskDetailSchema = Prisma.validator<Prisma.TaskDefaultArgs>()({
   include: {
-    room: true,
-    owner: true,
+    conv: true,
   },
 })
 export type ITaskDetail = Prisma.TaskGetPayload<typeof taskDetailSchema>
