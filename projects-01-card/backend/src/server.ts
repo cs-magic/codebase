@@ -1,6 +1,5 @@
 import { genNanoId } from "@cs-magic/common/utils/gen-nano-id"
 import { logger } from "@cs-magic/log/logger"
-import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"
@@ -9,7 +8,6 @@ import { IContext } from "./schema/context"
 import { handleMessage } from "./utils/handle-message"
 import { startBot } from "./utils/start-bot"
 import { syncClients } from "./utils/sync-clients"
-import { transferMessage } from "./utils/transfer-message"
 
 logger.info("fastify initializing...")
 const fastify = Fastify({
@@ -44,7 +42,7 @@ void fastify.register(async function (fastify) {
       })
 
       socket.on("message", async (m: Buffer) => {
-        context = await handleMessage(context, m)
+        context = await handleMessage(context, m, id)
       })
 
       context.sockets.push(socket)

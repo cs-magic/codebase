@@ -48,7 +48,7 @@ export type IWechatPreference = {
 export const defaultWechatPreference: IWechatPreference = {
   display: {
     lang: "en",
-    maxLines: 20,
+    maxLines: 100,
     style: CommandStyle.simple,
   },
 

@@ -1,5 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { formatAction } from "@cs-magic/common/utils/format-action"
 import { formatDuration } from "@cs-magic/common/utils/format-duration"
+import { logger } from "@cs-magic/log/logger"
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
@@ -35,8 +37,20 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   const version = packageJson.version
   const startTime = Date.now()
 
+  // web protocol needs, o.w. rooms/contacts are loaded PARTIALLY
+  await formatAction(async () => await bot.ready(), "waiting bot ready")
+
+  const rooms = await bot.Room.findAll()
+  await Promise.all(
+    rooms.map(async (room, index) => {
+      logger.debug(
+        `[${index + 1}] Room(id=${room.id}, topic=${await room.topic()})`,
+      )
+    }),
+  )
   // wrap
   const s = /bot notification/i
+  // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
   const notificationGroup = await bot.Room.find({ topic: s })
   if (!notificationGroup) throw new Error(`no notification group, regex: ${s}`)
 
@@ -84,7 +98,9 @@ Basic Commands：
     },
     getStatus: async (message) => {
       const aliveTime = formatDuration((Date.now() - botData.startTime) / 1e3)
-      const convPreference = await getConvPreference(message)
+      const convPreference = await getConvPreference({
+        convId: message.conversation().id,
+      })
       return [
         yaml.dump({ Basic: { name, version, aliveTime } }),
         yaml.dump({ Preference: convPreference }),

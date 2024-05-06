@@ -117,11 +117,11 @@ export class BasePlugin {
    * todo: cache preference
    */
   async getConvPreference(): Promise<IWechatPreference> {
-    return getConvPreference(this.message)
+    return getConvPreference({ convId: this.convId })
   }
 
   async getConvData(): Promise<IWechatData> {
-    return getConvData(this.message)
+    return getConvData({ convId: this.convId })
   }
 
   async getLang() {

@@ -1,8 +1,10 @@
 import { dumpFile } from "@cs-magic/common/utils/dump-file"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
+import { getConvPreference } from "@cs-magic/wechaty/utils/get-conv-preference"
 import { parseLimitedCommand } from "@cs-magic/wechaty/utils/parse-command"
 import path from "path"
+import { WebSocket } from "ws"
 import { Path } from "../../../../packages-to-classify/path"
 import { BotCommandType, botCommandTypeSchema } from "../config"
 import { IContext } from "../schema/context"
@@ -21,8 +23,11 @@ export type IWechatData = {
 export const handleMessage = async (
   context: IContext,
   messageBuffer: Buffer,
+  socketId: string,
 ): Promise<IContext> => {
   try {
+    const socket = context.sockets.find((s) => s.id === socketId)!
+
     const message = messageBuffer.toString()
 
     const result = parseLimitedCommand<BotCommandType>(
@@ -71,7 +76,10 @@ export const handleMessage = async (
 
       case "get-preference":
         const convId = result.args
-      // const conv = await context.break
+        const preference = await getConvPreference({ convId })
+        logger.debug(`preference: %o`, preference)
+        socket.send(JSON.stringify(preference))
+        break
 
       case "set-preference":
         // todo

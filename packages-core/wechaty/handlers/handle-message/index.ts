@@ -135,7 +135,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
-    const preference = await getConvPreference(message)
+    const preference = await getConvPreference({
+      convId: message.conversation().id,
+    })
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
     void bot.context.notify(
       message,
