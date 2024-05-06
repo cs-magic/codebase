@@ -3,14 +3,24 @@ import { logger } from "@cs-magic/log/logger"
 import { ITaskDetail, taskDetailSchema } from "@cs-magic/prisma/schema/task"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
+import groupBy from "lodash/groupBy"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { Priority } from "./task.plugin"
 import { type TaskStatus } from ".prisma/client"
+import _ from "lodash"
 
 export type ITaskWithIndex = ITaskDetail & {
   index: number
+}
+
+export const taskStatusMap: Record<TaskStatus, string> = {
+  done: "已完成",
+  paused: "已暂停",
+  pending: "待开始",
+  running: "进行中",
+  discarded: "已取消",
 }
 
 const serializeTaskGroup = (
@@ -27,15 +37,24 @@ const serializeTaskGroup = (
     // })
     "priority",
   )
-  const ans = [`${status} (${items.length})`]
+  const ans = [`${taskStatusMap[status]} (${items.length})`]
 
-  if (!onlyCount)
-    ans.push(
-      ...items.map((t) => {
-        const roomName = t.room?.topic
-        return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""} ${t.priority ? `[${t.priority}]` : ""}`
-      }),
-    )
+  if (!onlyCount) {
+    const arr = _(items)
+      .groupBy("priority")
+      .entries()
+      .map(([priority, items]) => [
+        `-- 优先级：${priority}`,
+        ...items.map((t) => {
+          const roomName = t.room?.topic
+          return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""}`
+        }),
+      ])
+      // !important
+      .value()
+      .flat()
+    ans.push(...arr)
+  }
   return ans
 }
 
