@@ -95,7 +95,7 @@ export class SystemPlugin extends BasePlugin {
               const data = room.payload
               return !data
                 ? undefined
-                : await prisma.wechatRoom.upsert({
+                : await prisma.wechatConv.upsert({
                     where: { id: data.id },
                     create: data,
                     update: data,
@@ -115,7 +115,7 @@ export class SystemPlugin extends BasePlugin {
               const data = contact.payload
               return !data
                 ? undefined
-                : await prisma.wechatUser.upsert({
+                : await prisma.wechatConv.upsert({
                     where: { id: data.id },
                     create: data,
                     update: data,

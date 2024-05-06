@@ -16,6 +16,10 @@
       {
         "href": "/bot",
         "title": "微信机器人"
+      },
+      {
+        "href": "/swot/dashboard",
+        "title": "飞脑控制台"
       }
     ],
     "partners": {

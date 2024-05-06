@@ -69,6 +69,14 @@ export const handleMessage = async (
         logger.info("started new bot")
         break
 
+      case "get-preference":
+        const convId = result.args
+      // const conv = await context.break
+
+      case "set-preference":
+        // todo
+        break
+
       default:
         break
     }

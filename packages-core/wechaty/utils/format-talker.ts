@@ -1,8 +1,7 @@
 import { Message } from "wechaty"
-import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 
 import { LlmScenario } from "../schema/bot.utils"
-import { getRobustData } from "./get-robust-preference"
+import { getConvData } from "./get-conv-preference"
 
 /**
  * 展示用户信息，与它的调用量
@@ -15,13 +14,6 @@ export const formatTalkerFromMessage = async (
   type?: LlmScenario,
 ) => {
   let s = message.talker().name()
-  if (type) {
-    const row = await prisma.wechatUser.findUnique({
-      where: { id: message.talker().id },
-    })
-    const data = getRobustData(row)
-    s += `(${data.plugin[type].success}/${data.plugin[type].called})`
-  }
 
   const roomTopic = await message.room()?.topic()
 
@@ -29,10 +21,7 @@ export const formatTalkerFromMessage = async (
     s += `@${roomTopic}`
 
     if (type) {
-      const row = await prisma.wechatRoom.findUnique({
-        where: { id: message.room()?.id },
-      })
-      const data = getRobustData(row)
+      const data = await getConvData(message)
       s += `(${data.plugin[type].success}/${data.plugin[type].called})`
     }
   }

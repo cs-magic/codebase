@@ -3,7 +3,6 @@ import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import omit from "lodash/omit"
 import set from "lodash/set"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
@@ -16,7 +15,6 @@ import {
   getConvData,
   getConvPreference,
 } from "../../../utils/get-conv-preference"
-import { getUserPreference } from "../../../utils/get-user-preference"
 import {
   padlocalVersion,
   parseQuote,
@@ -126,10 +124,6 @@ export class BasePlugin {
     return getConvData(this.message)
   }
 
-  async getUserPreference(): Promise<IWechatPreference> {
-    return getUserPreference(this.message)
-  }
-
   async getLang() {
     return (await this.getConvPreference()).display.lang
   }
@@ -225,83 +219,16 @@ export class BasePlugin {
       )
     }
 
-    const roomId = this.room?.id
-    // 私聊，或者在群内显式指定
-    if (!roomId || level === "user") {
-      const preference = await this.getUserPreference()
-      updatePreference(preference)
-      await prisma.wechatUser.update({
-        where: {
-          id: this.talkingUser.id,
-        },
-        data: {
-          preference: JSON.stringify(preference),
-        },
-      })
-    } else {
-      const preference = await this.getConvPreference()
-      updatePreference(preference)
-      await prisma.wechatRoom.update({
-        where: {
-          id: roomId,
-        },
-        data: {
-          preference: JSON.stringify(preference),
-        },
-      })
-    }
+    const preference = await this.getConvPreference()
 
-    if (reply) {
-      if (typeof reply === "string") {
-        await this.bot.context.addSendTask(async () => {
-          await this.message.say(reply)
-        })
-      }
+    updatePreference(preference)
 
-      if (typeof reply === "boolean") {
-        await this.getStatus(true)
-      }
-    }
-  }
-
-  async updateDataInDB(
-    path: string,
-    value: string,
-    // if string, reply with the string
-    // if boolean, reply with status
-    reply: string | boolean | undefined = undefined,
-    level: "user" | "conv" = "conv",
-  ) {
-    const update = (preference: IWechatPreference) => {
-      const convertedValue = evalObject(value)
-      set(preference, path, convertedValue)
-    }
-
-    const roomId = this.room?.id
-    // 私聊，或者在群内显式指定
-    if (!roomId || level === "user") {
-      const preference = await this.getUserPreference()
-      update(preference)
-      await prisma.wechatUser.update({
-        where: {
-          id: this.talkingUser.id,
-        },
-        data: {
-          data: JSON.stringify(preference),
-        },
-      })
-    } else {
-      const preference = await this.getConvPreference()
-      update(preference)
-      await prisma.wechatRoom.update({
-        where: {
-          id: roomId,
-        },
-        data: {
-          data: JSON.stringify(preference),
-        },
-      })
-    }
+    await prisma.wechatConv.update({
+      where: { id: this.convId },
+      data: {
+        preference: JSON.stringify(preference),
+      },
+    })
 
     if (reply) {
       if (typeof reply === "string") {

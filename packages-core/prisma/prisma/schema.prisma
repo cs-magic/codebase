@@ -144,11 +144,8 @@ model Task {
   description String?
   status      TaskStatus @default(pending)
 
-  owner   WechatUser? @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId String?
-
-  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  roomId String?
+  conv   WechatConv? @relation(fields: [convId], references: [id], onDelete: Cascade)
+  convId String?
 
   notes    String[]
   priority Int      @default(5)
@@ -170,13 +167,13 @@ model WechatMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  talker   WechatUser @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
+  talker   WechatConv @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
   talkerId String // 'wxid_ck85xup8b1bj21',
 
-  listener   WechatUser? @relation("listener", fields: [listenerId], references: [id])
+  listener   WechatConv? @relation("listener", fields: [listenerId], references: [id])
   listenerId String?
 
-  room   WechatRoom? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  room   WechatConv? @relation("room", fields: [roomId], references: [id], onDelete: Cascade)
   roomId String? // : '47778688503@chatroom',
 
   timestamp     Int // 1712846017,
@@ -186,12 +183,14 @@ model WechatMessage {
   filename      String?
 }
 
-model WechatUser {
+model WechatConv {
   id        String   @id //
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name             String //: '南川 Mark',
+  /// user
+  // user necessary, room not, room is topic
+  name             String? //: '南川 Mark',
   // puppet-web 可能拿不到 avatar
   avatar           String? //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
   sentMessages     WechatMessage[] @relation("talker")
@@ -210,24 +209,11 @@ model WechatUser {
   address String? // puppet-web 有 address
   star    Boolean? // puppet-web 有星标
 
-  tasks Task[]
-
-  /// [IWechatPreference]
-  preference Json?
-  /// [IWechatData]
-  data       Json?
-}
-
-model WechatRoom {
-  id        String   @id //
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  messages WechatMessage[]
+  /// room
+  messages WechatMessage[] @relation("room")
 
   adminIdList  String[] //: [],
   memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
-  avatar       String? //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
   topic        String? //: "test bot 0-1"
 
   // todo: owner
@@ -237,5 +223,60 @@ model WechatRoom {
   preference Json?
   /// [IWechatData]
   data       Json?
-  Task       Task[]
+  tasks      Task[]
 }
+
+//
+// model WechatUser {
+//   id        String   @id //
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   name             String //: '南川 Mark',
+//   // puppet-web 可能拿不到 avatar
+//   avatar           String? //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
+//   sentMessages     WechatMessage[] @relation("talker")
+//   receivedMessages WechatMessage[] @relation("listener")
+//
+//   friend    Boolean? //: true,
+//   gender    Int? //: 1,
+//   type      Int? //: 1,
+//   weixin    String? //: "youshouldspeakhow",
+//   alias     String? //: "",
+//   city      String? //: "Haidian",
+//   province  String? // : "Beijing",
+//   signature String? //: "Run, don’t look back.",
+//   phone     String[] //: [],
+//
+//   address String? // puppet-web 有 address
+//   star    Boolean? // puppet-web 有星标
+//
+//   tasks Task[]
+//
+//   /// [IWechatPreference]
+//   preference Json?
+//   /// [IWechatData]
+//   data       Json?
+// }
+//
+// model WechatRoom {
+//   id        String   @id //
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   messages WechatMessage[]
+//
+//   adminIdList  String[] //: [],
+//   memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
+//   avatar       String? //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
+//   topic        String? //: "test bot 0-1"
+//
+//   // todo: owner
+//   ownerId String? // : "wxid_ck85xup8b1bj21",
+//
+//   /// [IWechatPreference]
+//   preference Json?
+//   /// [IWechatData]
+//   data       Json?
+//   Task       Task[]
+// }

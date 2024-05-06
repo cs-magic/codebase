@@ -1,16 +1,8 @@
-import { getConvTable } from "./get-conv-table"
+import { Message } from "wechaty"
+import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 
-export const getConvRow = async (message: {
-  isRoom: boolean
-  convId: string
-}) => {
-  const table = getConvTable(message.isRoom)
-
-  const convId = message.convId
-
-  const row = await table.findUniqueOrThrow({
-    where: { id: convId },
+export const getConvRow = async (message: Message) => {
+  return prisma.wechatConv.findUnique({
+    where: { id: message.conversation().id },
   })
-
-  return row
 }

@@ -26,7 +26,7 @@ export const handleRoomJoin = async (
 ) => {
   const { name, version } = bot.context.data
 
-  const roomInDB = await prisma.wechatRoom.findUnique({
+  const roomInDB = await prisma.wechatConv.findUnique({
     where: { id: room.id },
   })
   if (!roomInDB) return
@@ -74,7 +74,7 @@ ${SEPARATOR_LINE}
     if (roomNotice.trim()) await room.say(roomNotice)
   }
 
-  await prisma.wechatRoom.update({
+  await prisma.wechatConv.update({
     where: { id: roomInDB.id },
     data: {
       data: JSON.stringify(data),

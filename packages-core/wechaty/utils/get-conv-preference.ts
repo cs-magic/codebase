@@ -6,17 +6,11 @@ import { getRobustData, getRobustPreference } from "./get-robust-preference"
 export const getConvPreference = async (
   message: Message,
 ): Promise<IWechatPreference> => {
-  const row = await getConvRow({
-    convId: message.conversation().id,
-    isRoom: !!message.room(),
-  })
+  const row = await getConvRow(message)
   return getRobustPreference(row)
 }
 
 export const getConvData = async (message: Message): Promise<IWechatData> => {
-  const row = await getConvRow({
-    convId: message.conversation().id,
-    isRoom: !!message.room(),
-  })
+  const row = await getConvRow(message)
   return getRobustData(row)
 }
