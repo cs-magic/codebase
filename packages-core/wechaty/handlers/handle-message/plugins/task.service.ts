@@ -1,3 +1,4 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { parseFunction } from "@cs-magic/common/utils/parse-function"
 import { logger } from "@cs-magic/log/logger"
 import { ITaskDetail, taskDetailSchema } from "@cs-magic/prisma/schema/task"
@@ -37,17 +38,17 @@ const serializeTaskGroup = (
     // })
     "priority",
   )
-  const ans = [`${taskStatusMap[status]} (${items.length})`]
+  const ans = [`${taskStatusMap[status]}（数量：${items.length}）`]
 
   if (!onlyCount) {
     const arr = _(items)
       .groupBy("priority")
       .entries()
       .map(([priority, items]) => [
-        `-- 优先级：${priority}`,
+        `-- P${priority}`,
         ...items.map((t) => {
           const roomName = t.room?.topic
-          return `  ${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""}`
+          return `${t.index}) ${t.title} ${showRoom && roomName ? `(${roomName})` : ""}`
         }),
       ])
       // !important
@@ -113,10 +114,16 @@ export class TaskService {
     const tasks = await this.list()
     const showRoom = !this.message.roomId
     const s = [
+      `任务列表（数量：${tasks.length}）`,
+      SEPARATOR_LINE,
       ...serializeTaskGroup(tasks, "running", false, showRoom),
+      SEPARATOR_LINE,
       ...serializeTaskGroup(tasks, "pending", false, showRoom),
+      SEPARATOR_LINE,
       ...serializeTaskGroup(tasks, "paused", false, showRoom),
+      SEPARATOR_LINE,
       ...serializeTaskGroup(tasks, "done", true, showRoom),
+      SEPARATOR_LINE,
       ...serializeTaskGroup(tasks, "discarded", true, showRoom),
     ].join("\n")
     logger.debug(`list: ${s}`)
