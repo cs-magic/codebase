@@ -80,12 +80,12 @@ export const CardPreview = forwardRef<
               onChange: () => setCardUserRendered(false),
             }}
           />
-          <div>
-            <div className={"text-[16px]"}>{user?.name}</div>
-            <span>分享给你一张卡片</span>
+          <div className={"overflow-hidden"}>
+            <div className={"text-[16px] truncate"}>{user?.name}</div>
+            <span>分享给你一篇文章</span>
           </div>
 
-          <div className={"ml-auto flex items-center gap-2 h-full"}>
+          <div className={"ml-auto flex items-center gap-2 h-full shrink-0"}>
             <div className={"flex flex-col items-end text-light"}>
               {/*<div>{truncate(preview?.inner?.id ?? "", { length: 16 })}</div>*/}
               <div>{moment().format("YYYY-MM-DD")}</div>
