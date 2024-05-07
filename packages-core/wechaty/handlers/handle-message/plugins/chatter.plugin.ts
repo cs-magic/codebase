@@ -115,7 +115,10 @@ export class ChatterPlugin extends BasePlugin {
     // 顶层回复逻辑：只回答 上一次bot到本次bot准备回复之间，需要回答的N个问题（同一会话里，且已经有LLM在调用，且目前的消息不是队列的最尾部，则抛弃该LLM）
     // 中层选择1. 每条需要回复的消息，一一进行quote回复
     // 中层选择2. 所有待回复的消息，统一在一次回复里解决，然后不同的消息对象，使用 at 的技术
-    // 底层的逻辑（每一个问题怎么回复）： 【handleEachMessage】
+    // 底层的逻辑（每一个问题怎么回复）:【目的是意图识别的分类函数】
+    // 1. 先判断用户的这个问题是否是恶意问题【风控】黑名单违规记录+1，直到3直接封号，并给出友好提示
+    // 2. 是否需要进行文件解析【kimi】、文章解析【kimi】、图片理解【kimi/4v】等高消耗的大语言模型任务
+    // 3. 组合上下文去回复 【长窗口怎么去handle】
 
     // 拿取最新的上下文记录
     const filteredMessages = await listMessagesOfLatestTopic(
@@ -168,11 +171,3 @@ export class ChatterPlugin extends BasePlugin {
     )
   }
 }
-
-/**
- * 3.5 【目的是意图识别的分类函数】
- * 1. 先判断用户的这个问题是否是恶意问题【风控】黑名单违规记录+1，直到3直接封号，并给出友好提示
- * 2. 是否需要进行文件解析【kimi】、文章解析【kimi】、图片理解【kimi/4v】等高消耗的大语言模型任务
- * 3. 组合上下文去回复 【长窗口怎么去handle】
- */
-const handleEachMessage = () => {}
