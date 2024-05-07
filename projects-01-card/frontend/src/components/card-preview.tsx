@@ -161,7 +161,9 @@ export const CardPreview = forwardRef<
           id={"card-preview-inner-bottom"}
           className={cn(
             "flex items-center gap-2",
-            // 安卓手机上的二维码应该最少36px才可以被正常扫描
+            // 安卓手机上的二维码应该最少36px才可以被正常扫描（对于长链接）
+            // todo: 长链接前后端的二维码复杂度不一样， e.g.
+            // http://mp.weixin.qq.com/s?__biz=MzUzMjY0NDY4Ng==&amp;mid=2247501975&amp;idx=1&amp;sn=4aaf236bbe699fc823cd21294fd53549&amp;chksm=fab29eb6cdc517a0c4a92e0699aaa702ba5bf5273cf406955cb1fe76474b8ab93c3bb4f3a6ea&amp;mpshare=1&amp;scene=1&amp;srcid=05071hBRoirmnwmgxjcJgari&amp;sharer_shareinfo=42ee8660a40a6392e2d2d61eb681e18d&amp;sharer_shareinfo_first=42ee8660a40a6392e2d2d61eb681e18d#r
             " h-9",
           )}
         >
