@@ -1,21 +1,20 @@
 import { Tags } from "@/components/card-content-tags"
 import { UserAvatar } from "@/components/user-avatar"
-import { cardWatermarkTextAtom } from "@/store/card.request.atom"
-import { config } from "../../../../packages-core/common/config"
 import {
   cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,
   cardUserAvatarRenderedAtom,
 } from "@/store/card.rendered.atom"
+import { cardWatermarkTextAtom } from "@/store/card.request.atom"
+import { cardUserAvatarAtom } from "@/store/card.user.atom"
 import { getPlatformName } from "@/utils/card-platform/get-platform-name"
 import { ICardPreview } from "@cs-magic/p01-common/schema/card"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { useAtom } from "jotai"
-import { truncate } from "lodash"
-import { prefixes } from "next/dist/build/output/log"
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
 import { forwardRef } from "react"
+import { config } from "../../../../packages-core/common/config"
 import moment from "../../../../packages-to-classify/datetime/moment"
 import { AspectRatio } from "../../../../packages-to-classify/ui-shadcn/components/aspect-ratio"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
@@ -32,12 +31,14 @@ export const CardPreview = forwardRef<
 >(({ preview, user }, ref) => {
   console.log({ user, preview })
 
-  const [, setCardUserRendered] = useAtom(cardUserAvatarRenderedAtom)
-  const [, setCardCoverRendered] = useAtom(cardCoverRenderedAtom)
-  const [, setCardAuthorRendered] = useAtom(cardAuthorAvatarRenderedAtom)
-  const [cardWatermarkText, setCardWatermarkText] = useAtom(
-    cardWatermarkTextAtom,
+  const [cardUserAvatarRendered, setCardUserAvatarRendered] = useAtom(
+    cardUserAvatarRenderedAtom,
   )
+  const [, setCardCoverRendered] = useAtom(cardCoverRenderedAtom)
+  const [cardAuthorAvatarRendered, setCardAuthorAvatarRendered] = useAtom(
+    cardAuthorAvatarRenderedAtom,
+  )
+  const [cardWatermarkText] = useAtom(cardWatermarkTextAtom)
 
   return (
     <div
@@ -76,8 +77,13 @@ export const CardPreview = forwardRef<
           <UserAvatar
             user={user ?? null}
             imageProps={{
-              onLoad: () => setCardUserRendered(true),
-              onChange: () => setCardUserRendered(false),
+              onLoad: () => {
+                // 如果不加这个限制的话，可能在没有数据时置true (optional, since user input is independent)
+                if (user) {
+                  setCardUserAvatarRendered(true)
+                }
+              },
+              onChange: () => setCardUserAvatarRendered(false),
             }}
           />
           <div className={"overflow-hidden"}>
@@ -169,9 +175,14 @@ export const CardPreview = forwardRef<
         >
           <UserAvatar
             imageProps={{
-              onLoad: () => setCardAuthorRendered(true),
+              onLoad: () => {
+                // 如果不加这个限制的话，可能在没有数据时置true
+                if (preview?.inner?.author) {
+                  setCardAuthorAvatarRendered(true)
+                }
+              },
               // onChange 有时候是不够的，比如是hidden状态，导致直接跳过
-              onChange: () => setCardAuthorRendered(false),
+              onChange: () => setCardAuthorAvatarRendered(false),
             }}
             user={preview?.inner?.author ?? null}
             avatarProps={{ className: "rounded-none" }}
