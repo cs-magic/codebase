@@ -65,6 +65,14 @@ export class ParserPlugin extends BasePlugin {
     })
   }
 
+  async parseQuotedImage() {
+    if (!this.quote || this.quote.quoted.version !== "mark@2024-04-19") return
+    const id = this.quote.quoted.id
+    if (!id) return
+    const image = this.bot.Image.create(id)
+    void this.reply(await image.hd())
+  }
+
   async parseQuote() {
     if (!this.quote) return
 
@@ -141,11 +149,13 @@ export class ParserPlugin extends BasePlugin {
       logger.info(`-- sending file: ${cardUrl}`)
 
       const file = FileBox.fromUrl(cardUrl)
-      void this.bot.context.addSendTask(async () => this.conv?.say(file))
+      void this.reply(file)
       void this.notify(`✅ 解析成功: ${title}`, "parser")
       logger.info("-- sent file")
     } catch (e) {
       const s = formatError(e)
+      // todo: retry in inner logic
+      void this.reply("解析失败，请再试一次吧！")
       void this.notify(`❌ ` + s, "parser")
     } finally {
       --ParserPlugin.toParse
