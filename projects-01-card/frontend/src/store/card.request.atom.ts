@@ -26,7 +26,8 @@ export const cardFetchCommentsEnabledAtom = atomWithStorage(
 
 export const cardWatermarkTextAtom = atomWithStorage(
   "card.watermark.text",
-  "飞脑试用版",
+  // "飞脑体验版",
+  "",
 )
 
 export const backendTypeAtom = atomWithStorage<BackendType>(

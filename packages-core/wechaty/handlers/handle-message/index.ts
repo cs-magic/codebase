@@ -31,6 +31,8 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     room: new RoomPlugin(bot, message),
   } satisfies Record<ManagerType, BasePlugin>
 
+  // message.toImage()
+
   try {
     logger.info(
       `[onMessage ${types.Message[message.type()]}]: %o\n${await formatTalkerFromMessage(message)}\n${SEPARATOR_LINE}\n${message.text()}`,
