@@ -1,12 +1,11 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { logger } from "@cs-magic/log/logger"
 import { Contact, Room, Wechaty } from "wechaty"
-import moment from "../../../packages-to-classify/datetime/moment"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 import {
   getRobustData,
   getRobustPreference,
 } from "../utils/get-robust-preference"
+import { sendMessageOnRoomJoin } from "../utils/send-message-on-room-join"
 
 /**
  * 小群邀请自己也会触发该 hook
@@ -28,6 +27,14 @@ export const handleRoomJoin = async (
     where: { id: room.id },
   })
   if (!roomInDB) return
+
+  const includeSelf = inviteeList.some(
+    (invitee) => invitee.id === bot.context.wxid,
+  )
+  logger.info(`invitees has self: ${includeSelf}`)
+  if (includeSelf) {
+    void sendMessageOnRoomJoin(bot, room.id)
+  }
 
   const data = getRobustData(roomInDB)
   data.room.newInvitees.push(...inviteeList.map((i) => i.id))
