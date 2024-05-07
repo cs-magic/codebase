@@ -1,5 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { logger } from "@cs-magic/log/logger"
+import { config } from "@cs-magic/p01-common/config"
 import { Friendship, types, Wechaty } from "wechaty"
 import moment from "../../../packages-to-classify/datetime/moment"
 
@@ -35,7 +36,8 @@ ${SEPARATOR_LINE}
   - 其他定时提醒功能、社群管理功能（待完善）
 您也可以把我拉到其他群里，产生的费用您可以自行向群友收取。
 ${SEPARATOR_LINE}
-- BUG 反馈请联系飞脑客服：MAGIC_SOSO
+- BUG 反馈请联系飞脑客服：${config.company["customer-service"].wxid}
+- 飞脑十分注重用户隐私，与您的聊天记录不会共享于他人
 - 续费请扫码：XXX (新朋友免费赠送100飞币)
 - 当前版本：${bot.context.version}
 - 当前时间：${moment().format("YYYY/MM/DD HH:mm")}

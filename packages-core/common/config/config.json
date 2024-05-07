@@ -2,6 +2,11 @@
   "name": "",
   "version": "【从monorepo中拿】",
   "slogan": "",
+  "company": {
+    "customer-service": {
+      "wxid": "magic_soso"
+    }
+  },
   "website": {
     "title": "CS魔法社 P01",
     "menus": [

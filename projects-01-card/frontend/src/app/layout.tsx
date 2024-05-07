@@ -12,7 +12,7 @@ import { SessionProvider } from "../../../../packages-to-classify/ui/providers/s
 import ThemeProvider from "../../../../packages-to-classify/ui/providers/theme.provider"
 import { Dev } from "../components/dev"
 
-import { config } from "../config"
+import { config } from "../../../../packages-core/common/config"
 import GlobalHooksProviders from "../providers/global.provider"
 import "../styles/globals.css"
 

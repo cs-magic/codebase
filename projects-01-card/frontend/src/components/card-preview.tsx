@@ -1,6 +1,6 @@
 import { Tags } from "@/components/card-content-tags"
 import { UserAvatar } from "@/components/user-avatar"
-import { config } from "@/config"
+import { config } from "../../../../packages-core/common/config"
 import {
   cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,

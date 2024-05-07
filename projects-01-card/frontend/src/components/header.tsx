@@ -17,7 +17,7 @@ import {
 } from "../../../../packages-to-classify/ui-shadcn/components/ui/navigation-menu"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 import { IconContainer } from "../../../../packages-to-classify/ui/components/icon-container"
-import { config } from "../config"
+import { config } from "../../../../packages-core/common/config"
 import { BrandingTitle } from "./branding-title"
 import { UserButton } from "./header-user"
 

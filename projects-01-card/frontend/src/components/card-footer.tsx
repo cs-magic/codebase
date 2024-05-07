@@ -1,6 +1,6 @@
 "use client"
 
-import { config } from "@/config"
+import { config } from "../../../../packages-core/common/config"
 
 import { CardOuterPreview } from "../../../../packages-core/common/schema/card"
 import { CalendarHeartIcon, MilestoneIcon } from "lucide-react"

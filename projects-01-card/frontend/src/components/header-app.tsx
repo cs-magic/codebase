@@ -4,7 +4,7 @@ import Link from "next/link"
 import { toast } from "sonner"
 import { AspectRatio } from "../../../../packages-to-classify/ui-shadcn/components/aspect-ratio"
 
-import { config } from "../config"
+import { config } from "../../../../packages-core/common/config"
 
 export interface ISubAppIcon {
   id: string

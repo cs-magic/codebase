@@ -24,8 +24,6 @@ export const handleRoomJoin = async (
   inviter: Contact,
   date: Date | undefined,
 ) => {
-  const { name, version } = bot.context.data
-
   const roomInDB = await prisma.wechatConv.findUnique({
     where: { id: room.id },
   })
@@ -33,26 +31,6 @@ export const handleRoomJoin = async (
 
   const data = getRobustData(roomInDB)
   data.room.newInvitees.push(...inviteeList.map((i) => i.id))
-
-  if (!data.room.welcome.sent) {
-    void bot.context.addSendTask(async () => {
-      await room.say(`大家好！我是好用到哭的 AI 助理「飞脑」！
-${SEPARATOR_LINE}
-以下是我能为大家提供的服务：
-  - 发送一篇公众号文章，我将为您总结
-  - @我 问一个问题，我将为您解答
-  - 其他定时提醒功能、社群管理功能（待完善）
-期待能成为大家最得力的小助手呀！
-${SEPARATOR_LINE}
-- BUG 反馈请联系飞脑客服：MAGIC_SOSO
-- 续费请联系我的邀请者：${inviter.name()}
-- 当前版本：${version}
-- 当前时间：${moment().format("YYYY/MM/DD HH:mm")}
-`)
-      // pessimistic update
-      data.room.welcome.sent = true
-    })
-  }
 
   const roomNotice = await room.announce()
   logger.info(
