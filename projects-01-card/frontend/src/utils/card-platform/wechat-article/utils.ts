@@ -5,6 +5,7 @@ export type IWxmpArticleUrlParsed = {
   platformId?: string
   platformData: ICardPlatform<"wxmpArticle">
 }
+
 export const parseWxmpArticleUrl = (url: string): IWxmpArticleUrlParsed => {
   const params = new URL(url.replace(/&amp;/g, "&")).searchParams
 

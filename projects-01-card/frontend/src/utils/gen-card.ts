@@ -4,7 +4,7 @@ import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { logger } from "@cs-magic/log/logger"
-import { url2preview } from "../../../../packages-core/common/url2preview"
+import { wxmpUrl2preview } from "@cs-magic/p01-common/wxmpUrl2preview"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
@@ -24,7 +24,8 @@ export const genCardFromUrl = async (
   if (!urlParsed)
     throw new Error(`invalid url to be parsed from ${inputUrlLike}`)
 
-  if (isWxmpArticleUrl(urlParsed)) return await url2preview(urlParsed, options)
+  if (isWxmpArticleUrl(urlParsed))
+    return await wxmpUrl2preview(urlParsed, options)
 
   // todo: other platforms
   // if (/xhslink|xiaohongshu/.test(urlParsed)) {

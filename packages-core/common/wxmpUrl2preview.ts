@@ -10,7 +10,7 @@ import { ILlmRes } from "../../packages-to-classify/llm/schema/llm.api"
 import { fetchWxmpArticle } from "../wechat/wxmp-article/fetch"
 import { parseSummary } from "./utils/parse-summary"
 
-export const url2preview = async (
+export const wxmpUrl2preview = async (
   url: string,
   fetchOptions?: GenWxmpArticleCardFetchOptions,
 ) => {

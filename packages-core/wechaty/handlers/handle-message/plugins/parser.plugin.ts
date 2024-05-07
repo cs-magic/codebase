@@ -5,7 +5,7 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
-import { url2preview } from "@cs-magic/p01-common/url2preview"
+import { wxmpUrl2preview } from "@cs-magic/p01-common/wxmpUrl2preview"
 
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"
@@ -129,7 +129,7 @@ export class ParserPlugin extends BasePlugin {
       if (!ParserPlugin.uniParser) ParserPlugin.uniParser = new CardSimulator()
 
       // todo: add userIdentity into parser
-      const inner = await url2preview(
+      const inner = await wxmpUrl2preview(
         url,
         convPreference.features.parser.options,
       )
