@@ -159,7 +159,11 @@ export const CardPreview = forwardRef<
       <div id={"inner-2"} className={"bg-white p-4 rounded-b-[10px]"}>
         <div
           id={"card-preview-inner-bottom"}
-          className={"flex items-center gap-2 h-8"}
+          className={cn(
+            "flex items-center gap-2",
+            // 安卓手机上的二维码应该最少36px才可以被正常扫描
+            " h-9",
+          )}
         >
           <UserAvatar
             imageProps={{
