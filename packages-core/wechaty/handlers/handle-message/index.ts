@@ -1,4 +1,4 @@
-import { SEPARATOR_BOX } from "@cs-magic/common/const"
+import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
@@ -33,8 +33,8 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
   try {
     logger.info(
-      `[onMessage] ${await formatTalkerFromMessage(message)}: %o\n${SEPARATOR_BOX}\n${message.text()}\n${SEPARATOR_BOX}`,
-      omit(message.payload, ["text"]),
+      `[onMessage ${types.Message[message.type()]}]: %o\n${await formatTalkerFromMessage(message)}\n${SEPARATOR_LINE}\n${message.text()}`,
+      omit(message.payload, ["text", "type"]),
     )
 
     if (message.text() === "test") {
