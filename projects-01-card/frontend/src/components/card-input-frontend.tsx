@@ -8,6 +8,7 @@ import {
   cardFetchWithCacheAtom,
   cardFetchStatEnabledAtom,
   cardFetchCommentsEnabledAtom,
+  cardWatermarkTextAtom,
 } from "@/store/card.request.atom"
 import { useAtom } from "jotai"
 import React from "react"
@@ -30,6 +31,10 @@ export const CardInputFrontend = () => {
   const [mapSpacingVertical, setMapSpacingVertical] = useAtom(
     mapSpacingVerticalAtom,
   )
+  const [cardWatermarkText, setCardWatermarkText] = useAtom(
+    cardWatermarkTextAtom,
+  )
+
   return (
     <>
       <CardInputUrl />
@@ -75,6 +80,17 @@ export const CardInputFrontend = () => {
           value={mapSpacingVertical ?? 0}
           onChange={(event) => {
             setMapSpacingVertical(Number(event.currentTarget.value))
+          }}
+        />
+      </LabelLine>
+
+      <Separator orientation={"horizontal"} />
+
+      <LabelLine title={"watermark.text"}>
+        <Input
+          value={cardWatermarkText}
+          onChange={(event) => {
+            setCardWatermarkText(event.currentTarget.value)
           }}
         />
       </LabelLine>

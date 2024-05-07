@@ -1,8 +1,10 @@
 import { cardSummaryOptionsAtom } from "@/store/card.summary.atom"
 import {
   cardFetchCommentsEnabledAtom,
+  cardFetchStatEnabledAtom,
   cardFetchWithCacheAtom,
   cardReqOptionsAtom,
+  cardWatermarkTextAtom,
 } from "@/store/card.request.atom"
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
 import { atom } from "jotai"
@@ -10,7 +12,7 @@ import { atom } from "jotai"
 export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
   (get) => ({
     stat: {
-      enabled: false,
+      enabled: get(cardFetchStatEnabledAtom),
     },
     comments: {
       enabled: get(cardFetchCommentsEnabledAtom),
@@ -19,6 +21,9 @@ export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
     detail: {
       request: get(cardReqOptionsAtom),
       llmResponse: get(cardSummaryOptionsAtom),
+    },
+    watermark: {
+      text: get(cardWatermarkTextAtom),
     },
   }),
 )

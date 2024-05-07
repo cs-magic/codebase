@@ -1,5 +1,6 @@
 import { Tags } from "@/components/card-content-tags"
 import { UserAvatar } from "@/components/user-avatar"
+import { cardWatermarkTextAtom } from "@/store/card.request.atom"
 import { config } from "../../../../packages-core/common/config"
 import {
   cardAuthorAvatarRenderedAtom,
@@ -34,6 +35,9 @@ export const CardPreview = forwardRef<
   const [, setCardUserRendered] = useAtom(cardUserAvatarRenderedAtom)
   const [, setCardCoverRendered] = useAtom(cardCoverRenderedAtom)
   const [, setCardAuthorRendered] = useAtom(cardAuthorAvatarRenderedAtom)
+  const [cardWatermarkText, setCardWatermarkText] = useAtom(
+    cardWatermarkTextAtom,
+  )
 
   return (
     <div
@@ -119,8 +123,20 @@ export const CardPreview = forwardRef<
           {preview?.inner?.summary?.parsed.description}
         </div>
 
-        <div className={"bg-gray-50 rounded-lg p-2 bg-dots"}>
+        <div
+          className={"bg-gray-50 rounded-lg p-2 bg-dots relative"}
+          id={"card-preview-mindmap"}
+        >
           <MarkMap content={preview?.inner?.summary?.parsed.mindmap} />
+          {cardWatermarkText && (
+            <div
+              className={
+                "absolute inset-0 w-full h-full flex justify-center items-center text-2xl text-muted-foreground font-black tracking-[2rem]"
+              }
+            >
+              {cardWatermarkText}
+            </div>
+          )}
         </div>
 
         <Tags tags={preview?.inner?.summary?.parsed.tags} />

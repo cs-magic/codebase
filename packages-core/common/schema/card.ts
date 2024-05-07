@@ -62,6 +62,10 @@ export type GenWxmpArticleCardFetchOptions = {
   comments?: {
     enabled?: boolean
   }
+
+  watermark?: {
+    text?: string
+  }
 }
 
 export type GenCardApproach = "frontend" | "backend"
