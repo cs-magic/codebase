@@ -1,13 +1,13 @@
 import {
   ResponseFinalStatus,
   ResponseStatus,
-} from "@cs-magic/p01-card/src/schema/sse"
+} from "@cs-magic/p01-common/schema/sse"
 import Pusher from "pusher"
-import { redis } from "../../../../db/providers/redis"
-import { pusherServerConfigs } from "../../../../pusher/config"
-import { PusherServerId } from "../../../../pusher/schema"
-import { initPusherServer } from "../../../../pusher/server/init"
-import { ITransEvent } from "../../../../sse/schema"
+import { redis } from "../../../../../packages-to-classify/db/providers/redis"
+import { pusherServerConfigs } from "../../../../../packages-to-classify/pusher/config"
+import { PusherServerId } from "../../../../../packages-to-classify/pusher/schema"
+import { initPusherServer } from "../../../../../packages-to-classify/pusher/server/init"
+import { ITransEvent } from "../../../../../packages-to-classify/sse/schema"
 
 import { ILLMManagerPusher } from "./schema"
 

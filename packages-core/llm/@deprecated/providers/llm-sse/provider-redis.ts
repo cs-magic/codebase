@@ -1,6 +1,9 @@
 import { logger } from "@cs-magic/log/logger"
-import { redis } from "../../../../db/providers/redis"
-import { ITransClient, ITransEvent } from "../../../../sse/schema"
+import { redis } from "../../../../../packages-to-classify/db/providers/redis"
+import {
+  ITransClient,
+  ITransEvent,
+} from "../../../../../packages-to-classify/sse/schema"
 import { ILLMManagerTraditional } from "./schema"
 
 export class RedisLLMManager implements ILLMManagerTraditional {

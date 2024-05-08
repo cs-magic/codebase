@@ -3,9 +3,9 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { HttpsProxyAgent } from "https-proxy-agent"
-import OpenAI from "openai/index"
+import OpenAI from "openai"
 import { v4 } from "uuid"
-import { env } from "../../env"
+import { env } from "../../../packages-to-classify/env"
 
 import {
   defaultLlmQueryConfigExtra,

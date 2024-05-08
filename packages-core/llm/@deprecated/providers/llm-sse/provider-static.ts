@@ -1,10 +1,11 @@
+import { ResponseFinalStatus } from "@cs-magic/p01-common/schema/sse"
 import remove from "lodash/remove"
 import {
+  ITransChannel,
   ITransClient,
   ITransEvent,
-  ITransChannel,
-} from "../../../../sse/schema"
-import { ResponseFinalStatus } from "@cs-magic/p01-card/src/schema/sse"
+} from "../../../../../packages-to-classify/sse/schema"
+
 import { ILLMManagerTraditional } from "./schema"
 
 export class StaticLLMManager implements ILLMManagerTraditional {

@@ -1,7 +1,7 @@
 import OpenAI, { type ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
-import { api } from "../../api-client/api"
-import { backendApi } from "../../api-client/backend-api"
+import { api } from "../../../packages-to-classify/api-client/api"
+import { backendApi } from "../../../packages-to-classify/api-client/backend-api"
 import { ILlmQueryConfig } from "../schema/llm.api"
 import { type LlmProviderType } from "../schema/llm.providers"
 

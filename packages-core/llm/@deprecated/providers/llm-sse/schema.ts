@@ -1,9 +1,9 @@
+import { ResponseFinalStatus } from "@cs-magic/p01-common/schema/sse"
 import {
   ITransClient,
   ITransEvent,
   ITransChannel,
-} from "../../../../sse/schema"
-import { ResponseFinalStatus } from "@cs-magic/p01-card/src/schema/sse"
+} from "../../../../../packages-to-classify/sse/schema"
 
 export interface ILLMManagerTraditional {
   //////////////////////////////

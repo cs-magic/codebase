@@ -1,6 +1,6 @@
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
 import { type LangType } from "../../../packages-to-classify/i18n/schema"
-import { LlmModelType } from "../../../packages-to-classify/llm/schema/llm.models"
+import { LlmModelType } from "../../../packages-core/llm/schema/llm.models"
 
 export enum CommandStyle {
   standard = "standard",

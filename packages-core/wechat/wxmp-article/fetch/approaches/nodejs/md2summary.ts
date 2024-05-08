@@ -1,6 +1,6 @@
-import { safeCallAgent } from "../../../../../../packages-to-classify/llm/utils/safe-call-agent"
-import { ILlmQueryConfig } from "../../../../../../packages-to-classify/llm/schema/llm.api"
-import { LlmModelType } from "../../../../../../packages-to-classify/llm/schema/llm.models"
+import { safeCallAgent } from "../../../../../../packages-core/llm/utils/safe-call-agent"
+import { ILlmQueryConfig } from "../../../../../../packages-core/llm/schema/llm.api"
+import { LlmModelType } from "../../../../../../packages-core/llm/schema/llm.models"
 
 export type SummaryOptions = {
   enabled?: boolean

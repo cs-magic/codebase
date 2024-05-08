@@ -5,7 +5,7 @@ import yaml from "js-yaml"
 import path from "path"
 
 import { compressContent } from "@cs-magic/common/utils/compress-content"
-import { Path } from "../../path"
+import { Path } from "../../../packages-to-classify/path"
 import { safeCallLLM } from "./safe-call-llm"
 import { LlmModelType } from "../schema/llm.models"
 
