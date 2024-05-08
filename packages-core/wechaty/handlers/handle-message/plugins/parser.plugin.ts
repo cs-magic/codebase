@@ -169,7 +169,7 @@ export class ParserPlugin extends BasePlugin {
 
     logger.info("quoting reply")
     const post = await this.bot.Post.builder()
-      .add("this is the reply to a quoted messsage")
+      .add("this is the reply to a quoted message")
       .build()
 
     await post.reply(this.message) // I'm thinking about to rename the `post.reply()` to `post.replyTo()` so that it will be less confusing.
