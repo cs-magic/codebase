@@ -63,7 +63,7 @@ fastify.get("/", async function handler(request, reply) {
 
 try {
   logger.info("fastify listening...")
-  void fastify.listen({ port: 40414 })
+  void fastify.listen({ port: Number(process.env.PORT ?? 40414) })
 } catch (err) {
   fastify.log.error(err)
   process.exit(1)

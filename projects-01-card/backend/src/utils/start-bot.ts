@@ -2,7 +2,6 @@ import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
 import { IContext } from "../schema/context"
-import { loadBotToken } from "./load-bot-token"
 import { syncClients } from "./sync-clients"
 import { transferMessage } from "./transfer-message"
 
@@ -11,11 +10,8 @@ export const startBot = async (context: IContext) => {
   if (!context.bot) {
     logger.info("-- creating bot")
 
-    const token = await loadBotToken()
-
     context.bot = createWechatyBot({
       name: "1", // todo
-      token,
     })
       .on("error", (error) => {
         formatError(error)
