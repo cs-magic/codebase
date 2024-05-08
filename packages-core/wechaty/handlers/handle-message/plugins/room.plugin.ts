@@ -1,10 +1,5 @@
-import { FileBox } from "file-box"
 import { z } from "zod"
-import { langTypeSchema } from "../../../../../packages-to-classify/i18n/schema"
-import { backendTypeSchema } from "../../../../../packages-core/llm/schema/llm.base"
-import { llmModelTypeSchema } from "../../../../../packages-core/llm/schema/llm.models"
 import { FeatureMap } from "../../../schema/commands"
-import { parseLimitedCommand } from "../../../utils/parse-command"
 import { BasePlugin } from "./base.plugin"
 
 const commandTypeSchema = z.enum([

@@ -12,8 +12,8 @@ import {
 } from "@/store/card.request.atom"
 import { useAtom } from "jotai"
 import React from "react"
-import { backendTypeSchema } from "../../../../packages-core/llm/schema/llm.base"
-import { llmModelTypeSchema } from "../../../../packages-core/llm/schema/llm.models"
+import { backendTypeSchema } from "@cs-magic/llm/schema/llm.base"
+import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
 import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
 import { Separator } from "../../../../packages-to-classify/ui-shadcn/components/separator"
 import {

@@ -4,7 +4,7 @@ import {
 } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/requestPage"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { BackendType } from "../../../../packages-core/llm/schema/llm.base"
+import { BackendType } from "@cs-magic/llm/schema/llm.base"
 
 export const cardFetchWithCacheAtom = atomWithStorage<boolean>(
   "card.fetch.with-cache",

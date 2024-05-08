@@ -1,0 +1,5 @@
+{
+  "name": "@cs-magic/llm",
+  "packageManager": "yarn@4.1.1",
+  "type": "module"
+}

@@ -6,7 +6,7 @@ import {
   IWechatArticleStat,
 } from "../../wechat/wxmp-article/detail/schema"
 import { FetchWxmpArticleDetailOptions } from "../../wechat/wxmp-article/fetch/schema"
-import { LlmModelType } from "../../../packages-core/llm/schema/llm.models"
+import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 
 import { IArticleSummaryParsed } from "./query"
 

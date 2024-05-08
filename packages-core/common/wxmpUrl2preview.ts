@@ -1,14 +1,13 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
 import { logger } from "@cs-magic/log/logger"
-import * as sea from "node:sea"
+import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { fetchWxmpArticle } from "../wechat/wxmp-article/fetch"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   IMedia,
 } from "./schema/card"
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import { ILlmRes } from "../../packages-core/llm/schema/llm.api"
-import { fetchWxmpArticle } from "../wechat/wxmp-article/fetch"
 import { formatWxmpUrl } from "./utils/format-wxmp-article"
 import { parseSummary } from "./utils/parse-summary"
 

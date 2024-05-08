@@ -1,6 +1,6 @@
-import { safeCallAgent } from "../../../../../../packages-core/llm/utils/safe-call-agent"
-import { ILlmQueryConfig } from "../../../../../../packages-core/llm/schema/llm.api"
-import { LlmModelType } from "../../../../../../packages-core/llm/schema/llm.models"
+import { safeCallAgent } from "@cs-magic/llm/utils/safe-call-agent"
+import { ILlmQueryConfig } from "@cs-magic/llm/schema/llm.api"
+import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 
 export type SummaryOptions = {
   enabled?: boolean

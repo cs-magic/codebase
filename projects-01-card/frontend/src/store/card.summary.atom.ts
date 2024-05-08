@@ -1,7 +1,7 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { SummaryOptions } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
-import { LlmModelType } from "../../../../packages-core/llm/schema/llm.models"
+import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 
 export const cardLlmEnabledAtom = atomWithStorage<boolean>(
   "card.llm.enabled",

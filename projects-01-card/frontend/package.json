@@ -19,6 +19,7 @@
     "@alicloud/dysmsapi20180501": "^1.0.4",
     "@auth/prisma-adapter": "^1.4.0",
     "@cs-magic/auth": "workspace:^",
+    "@cs-magic/llm": "workspace:^",
     "@emotion/react": "^11.11.4",
     "@hookform/resolvers": "^3.3.4",
     "@langchain/core": "^0.1.32",
