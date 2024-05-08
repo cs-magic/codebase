@@ -1,7 +1,7 @@
-import { formatError } from "@cs-magic/common/utils/format-error"
+import { logger } from "@cs-magic/log/logger"
 import omit from "lodash/omit"
-import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 import { Message, types } from "wechaty"
+import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 
 export const storageMessage = async (message: Message) => {
   const talker = message.talker()
@@ -52,6 +52,7 @@ export const storageMessage = async (message: Message) => {
       },
     })
   } catch (e) {
-    formatError(e)
+    logger.debug(`skipped message storaging`)
+    // formatError(e)
   }
 }

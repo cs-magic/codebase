@@ -142,8 +142,8 @@ export class ChatterPlugin extends BasePlugin {
     void this.notify(
       [
         `🌈 calling LLM (model=${model})`,
-        SEPARATOR_LINE,
-        ...messages.map((m) => formatLlmMessage(m, 40)),
+        // SEPARATOR_LINE,
+        // ...messages.map((m) => formatLlmMessage(m, 40)),
       ].join("\n"),
       "chatter",
     )

@@ -172,7 +172,7 @@ export class ParserPlugin extends BasePlugin {
       .add("this is the reply to a quoted messsage")
       .build()
 
-    await post.retply(this.message) // I'm thinking about to rename the `post.reply()` to `post.replyTo()` so that it will be less confusing.
+    await post.reply(this.message) // I'm thinking about to rename the `post.reply()` to `post.replyTo()` so that it will be less confusing.
     await this.bot.publish(post)
 
     logger.info("quoted reply")

@@ -51,8 +51,6 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   // wrap
   const s = /bot notification/i
   // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
-  const notificationGroup = await bot.Room.find({ topic: s })
-  if (!notificationGroup) throw new Error(`no notification group, regex: ${s}`)
 
   // wrap
   const senderQueue = new SenderQueue(10)
@@ -80,7 +78,14 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
           `by ${await formatTalkerFromMessage(message, llmScenario)}\n${moment().format("MM/DD hh:mm:ss")}`,
         ].join("\n")
       }
-      void addSendTask(() => notificationGroup.say(content))
+      void addSendTask(async () => {
+        const notificationGroup = await bot.Room.find({ topic: s })
+        if (!notificationGroup)
+          return logger.debug(
+            `skipped notifying since no notification group found`,
+          )
+        await notificationGroup.say(content)
+      })
     },
     getHelp: async () => {
       return `
