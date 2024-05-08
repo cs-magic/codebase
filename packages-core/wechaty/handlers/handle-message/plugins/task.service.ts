@@ -108,8 +108,11 @@ export class TaskService {
             },
           },
     })
+
     const tasks = tasksInDB.map((t, index) => ({ ...t, index }))
-    // logger.debug("tasks: \n%o", tasks)
+    // todo: bug if turns on
+    // console.log("tasks: ", tasks)
+    logger.debug("tasks: \n%o", tasks)
     return tasks
   }
 

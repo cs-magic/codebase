@@ -161,4 +161,20 @@ export class ParserPlugin extends BasePlugin {
       --ParserPlugin.toParse
     }
   }
+
+  async quoteReply() {
+    if (!this.quote || this.quote.quoted.version !== "mark@2024-04-19") return
+    const id = this.quote.quoted.id
+    if (!id) return
+
+    logger.info("quoting reply")
+    const post = await this.bot.Post.builder()
+      .add("this is the reply to a quoted messsage")
+      .build()
+
+    await post.retply(this.message) // I'm thinking about to rename the `post.reply()` to `post.replyTo()` so that it will be less confusing.
+    await this.bot.publish(post)
+
+    logger.info("quoted reply")
+  }
 }

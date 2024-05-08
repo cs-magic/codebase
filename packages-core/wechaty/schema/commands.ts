@@ -18,6 +18,7 @@ export const quoteTypeSchema = z.enum([
   "parse",
   "recall",
   "test-create-image-from-id",
+  "quote-reply",
 ])
 export type QuoteType = z.infer<typeof quoteTypeSchema>
 

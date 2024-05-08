@@ -115,6 +115,10 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
         case "test-create-image-from-id": {
           return await tmm.parser.parseQuotedImage()
         }
+
+        case "quote-reply": {
+          return await tmm.parser.quoteReply()
+        }
       }
     }
 
