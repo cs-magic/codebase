@@ -1,5 +1,5 @@
-import { CommandStyle } from "@cs-magic/wechaty/schema/bot.preference"
-import { SEPARATOR_BOX, SEPARATOR_LINE } from "../const"
+import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
+import { CommandStyle } from "../schema/bot.preference"
 
 /**
  * 可用于微信的回复

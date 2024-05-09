@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
+    "@cs-magic/llm": "workspace:^",
     "@types/lodash": "^4.14.202",
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",

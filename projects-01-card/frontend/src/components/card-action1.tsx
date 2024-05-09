@@ -3,7 +3,7 @@ import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
 import { genCardFromUrl } from "@/utils/gen-card"
 import { logger } from "@cs-magic/log/logger"
 import { useAtom, useSetAtom } from "jotai"
-import { Action1Type } from "../../../../packages-core/common/schema/card"
+import { Action1Type } from "@cs-magic/wechat/schema/card"
 import { cardArticleUrlAtom, cardInnerInputAtom } from "../store/card.atom"
 import { CardAction } from "./card-action"
 

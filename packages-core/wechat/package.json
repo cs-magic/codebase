@@ -7,7 +7,6 @@
     "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts"
   },
   "dependencies": {
-    "@cs-magic/llm": "workspace:^",
-    "@cs-magic/p01-common": "workspace:^"
+    "@cs-magic/llm": "workspace:^"
   }
 }

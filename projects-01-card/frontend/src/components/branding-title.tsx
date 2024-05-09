@@ -2,7 +2,7 @@ import Link from "next/link"
 import { HTMLAttributes } from "react"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
 
-import { config } from "../../../../packages-core/common/config"
+import { config } from "../../../../packages-common/common/config"
 
 export const BrandingTitle = ({
   withDescription,

@@ -1,9 +1,9 @@
 import {
-  sampleUser,
   sampleWxmpArticleUrl,
   sampleWxmpArticleUrls,
-} from "@cs-magic/p01-common/sample"
-import { wxmpUrl2preview } from "@cs-magic/p01-common/wxmpUrl2preview"
+} from "@cs-magic/common/sample"
+import { sampleUser } from "@cs-magic/prisma/sample"
+import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import { CardSimulator } from "../../../../../packages-to-classify/spider/card-simulator"
 
 describe("test parser", () => {

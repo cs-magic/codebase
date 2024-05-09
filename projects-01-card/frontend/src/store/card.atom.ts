@@ -2,10 +2,7 @@ import { cardUserAtom } from "@/store/card.user.atom"
 
 import { getOssKeyWithSuffix } from "@/utils/get-oss-key-with-suffix"
 import { parseJsonSafe } from "../../../../packages-common/common/utils/parse-json"
-import {
-  ICardInnerPreview,
-  ICardPreview,
-} from "@cs-magic/p01-common/schema/card"
+import { ICardInnerPreview, ICardPreview } from "@cs-magic/wechat/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { getOssUrl } from "../../../../packages-to-classify/oss/utils"

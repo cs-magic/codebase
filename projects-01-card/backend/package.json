@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
+    "@cs-magic/llm": "workspace:^",
     "@cs-magic/log": "workspace:^",
     "@cs-magic/wechaty": "0.1.0",
     "@fastify/websocket": "^10.0.1",

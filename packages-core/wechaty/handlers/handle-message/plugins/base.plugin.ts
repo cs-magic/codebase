@@ -1,6 +1,5 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
-import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
@@ -11,6 +10,7 @@ import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 import { LlmScenario } from "../../../schema/bot.utils"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { formatFooter } from "../../../utils/format-footer"
+import { formatQuery } from "../../../utils/format-query"
 import {
   getConvData,
   getConvPreference,

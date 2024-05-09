@@ -1,8 +1,9 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { safeCallLLM } from "@cs-magic/llm"
-import { trimMessages } from "@cs-magic/llm/utils/calculate-token"
+// todo: why this not ok
+// import { safeCallLLM } from "@cs-magic/llm"
+import { trimMessages, safeCallLLM } from "packages-core/llm"
 import { logger } from "@cs-magic/log/logger"
-import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
+import { ILlmMessage } from "@cs-magic/common/schema/message"
 import { types } from "wechaty"
 import { z } from "zod"
 import { FeatureMap, FeatureType } from "../../../schema/commands"

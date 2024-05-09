@@ -1,5 +1,9 @@
 {
   "name": "@cs-magic/llm",
   "packageManager": "yarn@4.1.1",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@cs-magic/common": "workspace:^"
+  },
+  "main": "index.ts"
 }

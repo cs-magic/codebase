@@ -2,7 +2,7 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BEST_VIEWPOINT } from "../../../../packages-to-classify/ui/config"
 import { uiScreenAtom } from "../../../../packages-to-classify/ui/store"
-import { ScenarioType } from "../../../../packages-core/common/schema/scenario"
+import { ScenarioType } from "@cs-magic/common/schema/scenario"
 
 //////////////////////////////
 // base

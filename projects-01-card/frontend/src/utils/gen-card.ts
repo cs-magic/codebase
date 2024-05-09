@@ -4,11 +4,11 @@ import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import { logger } from "@cs-magic/log/logger"
-import { wxmpUrl2preview } from "@cs-magic/p01-common/wxmpUrl2preview"
+import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
-} from "../../../../packages-core/common/schema/card"
+} from "@cs-magic/wechat/schema/card"
 
 /**
  * 从用户输入的 url 中返回解析出的结构

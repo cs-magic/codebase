@@ -1,4 +1,4 @@
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/wechat/schema/card"
 import { type LangType } from "../../../packages-to-classify/i18n/schema"
 import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 

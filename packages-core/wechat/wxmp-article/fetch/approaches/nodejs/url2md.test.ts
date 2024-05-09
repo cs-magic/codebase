@@ -1,4 +1,4 @@
-import { sampleWxmpArticleUrl } from "@cs-magic/p01-common/sample"
+import { sampleWxmpArticleUrl } from "@cs-magic/common/sample"
 import { requestPage } from "./requestPage"
 
 it("should ", async () => {

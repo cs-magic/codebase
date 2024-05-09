@@ -1,6 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { logger } from "@cs-magic/log/logger"
-import { config } from "@cs-magic/p01-common/config"
+import { config } from "packages-common/common/config"
 import { Friendship, types, Wechaty } from "wechaty"
 import moment from "../../../packages-to-classify/datetime/moment"
 

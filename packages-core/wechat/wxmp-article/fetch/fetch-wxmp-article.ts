@@ -1,7 +1,7 @@
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
+import { GenWxmpArticleCardFetchOptions } from "packages-core/wechat/schema/card"
 import { cardDetailSchema } from "@cs-magic/prisma/schema/card.detail"
 import { Card, LlmResponse } from "@prisma/client"
 import { prisma } from "../../../../packages-to-classify/db/providers/prisma"

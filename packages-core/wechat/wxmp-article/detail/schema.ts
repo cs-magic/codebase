@@ -1,4 +1,4 @@
-import { sampleWxmpArticleComment } from "../../../common/sample"
+import { sampleWxmpArticleComment } from "@cs-magic/common/sample"
 
 export type IFetchWechatArticleStat = {
   // query

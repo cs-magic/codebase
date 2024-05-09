@@ -6,7 +6,7 @@ import React from "react"
 import {
   cardPreviewEngineTypeSchema,
   type GenCardApproach,
-} from "../../../../packages-core/common/schema/card"
+} from "@cs-magic/wechat/schema/card"
 import { useSearchParam } from "../../../../packages-to-classify/hooks/use-search-param"
 import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
 import { Separator } from "../../../../packages-to-classify/ui-shadcn/components/separator"

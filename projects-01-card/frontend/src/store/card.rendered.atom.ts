@@ -1,4 +1,4 @@
-import { CardPreviewEngineType } from "@cs-magic/p01-common/schema/card"
+import { CardPreviewEngineType } from "@cs-magic/wechat/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 

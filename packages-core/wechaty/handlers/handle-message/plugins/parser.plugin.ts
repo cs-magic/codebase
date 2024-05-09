@@ -5,7 +5,7 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
-import { wxmpUrl2preview } from "@cs-magic/p01-common/wxmpUrl2preview"
+import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { FileBox } from "file-box"

@@ -9,7 +9,7 @@ import { scenarioTypeAtom } from "../store/system.atom"
 
 import { SelectModel } from "./_select-model"
 import { useAtom } from "jotai"
-import { ScenarioType } from "../../../../packages-core/common/schema/scenario"
+import { ScenarioType } from "@cs-magic/common/schema/scenario"
 
 export const SelectScenario = () => {
   const [type, setType] = useAtom(scenarioTypeAtom)

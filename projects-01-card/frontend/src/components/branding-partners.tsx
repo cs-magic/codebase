@@ -5,7 +5,7 @@ import {
 import { ImageEqualHeight } from "../../../../packages-to-classify/ui/components/image-equal-height"
 import { SeparatorContainer } from "../../../../packages-to-classify/ui/components/separator-container"
 
-import { config } from "../../../../packages-core/common/config"
+import { config } from "../../../../packages-common/common/config"
 
 export const BrandingPartners = () => {
   const avatars = [config.website.avatar.mark, config.website.avatar.idoubi]

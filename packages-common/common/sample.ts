@@ -1,14 +1,4 @@
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import last from "lodash/last"
-
-export const sampleUserAvatar =
-  "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0"
-export const sampleUser: IUserSummary = {
-  id: "",
-  name: "南川 Mark",
-  image: sampleUserAvatar,
-  avatar: sampleUserAvatar,
-}
 
 export const sampleWxmpArticleUrls = [
   "https://mp.weixin.qq.com/s/HdVZGKjViUVe1bd9v17ANQ",

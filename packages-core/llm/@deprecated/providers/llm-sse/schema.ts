@@ -1,4 +1,4 @@
-import { ResponseFinalStatus } from "@cs-magic/p01-common/schema/sse"
+import { ResponseFinalStatus } from "@cs-magic/common/schema/sse"
 import {
   ITransClient,
   ITransEvent,

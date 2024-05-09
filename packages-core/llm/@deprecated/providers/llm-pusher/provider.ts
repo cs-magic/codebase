@@ -1,7 +1,7 @@
 import {
   ResponseFinalStatus,
   ResponseStatus,
-} from "@cs-magic/p01-common/schema/sse"
+} from "@cs-magic/common/schema/sse"
 import Pusher from "pusher"
 import { redis } from "../../../../../packages-to-classify/db/providers/redis"
 import { pusherServerConfigs } from "../../../../../packages-to-classify/pusher/config"

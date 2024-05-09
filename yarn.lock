@@ -1759,6 +1759,7 @@ __metadata:
   resolution: "@cs-magic/api@workspace:projects-01-card/backend"
   dependencies:
     "@cs-magic/common": "workspace:^"
+    "@cs-magic/llm": "workspace:^"
     "@cs-magic/log": "workspace:^"
     "@cs-magic/wechaty": "npm:0.1.0"
     "@fastify/websocket": "npm:^10.0.1"
@@ -1801,6 +1802,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cs-magic/common@workspace:packages-common/common"
   dependencies:
+    "@cs-magic/log": "workspace:^"
     "@types/lodash": "npm:^4.14.202"
     lodash: "npm:^4.17.21"
     nanoid: "npm:^5.0.7"
@@ -1810,6 +1812,8 @@ __metadata:
 "@cs-magic/llm@workspace:^, @cs-magic/llm@workspace:packages-core/llm":
   version: 0.0.0-use.local
   resolution: "@cs-magic/llm@workspace:packages-core/llm"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1977,12 +1981,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/p01-common@workspace:^, @cs-magic/p01-common@workspace:packages-core/common":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/p01-common@workspace:packages-core/common"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/prisma@workspace:packages-core/prisma":
   version: 0.0.0-use.local
   resolution: "@cs-magic/prisma@workspace:packages-core/prisma"
@@ -1998,7 +1996,6 @@ __metadata:
   resolution: "@cs-magic/wechat@workspace:packages-core/wechat"
   dependencies:
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/p01-common": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -2007,6 +2004,7 @@ __metadata:
   resolution: "@cs-magic/wechaty@workspace:packages-core/wechaty"
   dependencies:
     "@cs-magic/common": "workspace:^"
+    "@cs-magic/llm": "workspace:^"
     "@types/lodash": "npm:^4.14.202"
     "@types/node-schedule": "npm:^2.1.7"
     dotenv: "npm:^16.4.5"

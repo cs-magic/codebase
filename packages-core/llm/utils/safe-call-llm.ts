@@ -13,7 +13,6 @@ import {
   ILlmQueryConfigExtra,
   ILlmRes,
 } from "../schema/llm.api"
-import { trimMessages } from "./calculate-token"
 import { callLlm } from "./call-llm"
 import { formatLlmMessage } from "./format-llm-message"
 import { model2provider } from "./model2provider"

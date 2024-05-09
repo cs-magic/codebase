@@ -9,7 +9,7 @@ import { useAtom } from "jotai"
 import { domToBlob } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
-import { Action2Type, ActionType } from "@cs-magic/p01-common/schema/card"
+import { Action2Type, ActionType } from "@cs-magic/wechat/schema/card"
 import { uploadFile } from "../../../../packages-to-classify/oss/upload"
 import { CardAction } from "./card-action"
 

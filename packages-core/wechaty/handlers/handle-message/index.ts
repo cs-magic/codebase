@@ -1,6 +1,5 @@
-import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
-import { formatQuery } from "@cs-magic/common/utils/format-query"
 import { logger } from "@cs-magic/log/logger"
 import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
@@ -10,10 +9,12 @@ import {
   ManagerType,
 } from "../../schema/commands"
 import { formatFooter } from "../../utils/format-footer"
+import { formatQuery } from "../../utils/format-query"
 import { formatTalkerFromMessage } from "../../utils/format-talker"
 import { parseLimitedCommand } from "../../utils/parse-command"
 import { parseText } from "../../utils/parse-message"
 import { storageMessage } from "../../utils/storage-message"
+
 import { BasePlugin } from "./plugins/base.plugin"
 import { ChatterPlugin } from "./plugins/chatter.plugin"
 import { ParserPlugin } from "./plugins/parser.plugin"
@@ -29,7 +30,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     system: new SystemPlugin(bot, message),
     base: new BasePlugin(bot, message),
     room: new RoomPlugin(bot, message),
-  } satisfies Record<ManagerType, BasePlugin>
+  } satisfies Partial<Record<ManagerType, BasePlugin>>
 
   // message.toImage()
 
@@ -81,13 +82,16 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           return void bot.context.addSendTask(() => message.say("dong"))
 
         case "help":
-          return await tmm.base.getHelp(true)
+          await tmm.base.getHelp(true)
+          return
 
         case "status":
-          return await tmm.base.getStatus(true)
+          await tmm.base.getStatus(true)
+          return
 
         case "recall":
-          return await tmm.base.recallQuotedMessage()
+          await tmm.base.recallQuotedMessage()
+          return
 
         case "love":
           return await message.say(
@@ -95,29 +99,37 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           )
 
         case "system":
-          return await tmm.system.parse(result.args)
+          await tmm.system.parse(result.args)
+          return
 
         case "todo":
-          return await tmm.todo.parse(result.args)
+          await tmm.todo.parse(result.args)
+          return
 
         case "chatter":
-          return await tmm.chatter.parse(result.args)
+          // await tmm.chatter.parse(result.args)
+          return
 
         case "parser":
-          return await tmm.parser.parse(result.args)
+          await tmm.parser.parse(result.args)
+          return
 
         case "parse":
-          return await tmm.parser.parseQuote()
+          await tmm.parser.parseQuote()
+          return
 
         case "room":
-          return await tmm.room.parse(result.args)
+          // await tmm.room.parse(result.args)
+          return
 
         case "test-create-image-from-id": {
-          return await tmm.parser.parseQuotedImage()
+          await tmm.parser.parseQuotedImage()
+          return
         }
 
         case "quote-reply": {
-          return await tmm.parser.quoteReply()
+          await tmm.parser.quoteReply()
+          return
         }
       }
     }
@@ -129,9 +141,9 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       if (message.type() === types.Message.Image) {
         const image = await message.toFileBox()
       }
-      if (message.type() === types.Message.Url)
+      if (message.type() === types.Message.Url) {
         await new ParserPlugin(bot, message).parseSelf()
-      else {
+      } else {
         await new ChatterPlugin(bot, message).safeReplyWithAI()
       }
     }

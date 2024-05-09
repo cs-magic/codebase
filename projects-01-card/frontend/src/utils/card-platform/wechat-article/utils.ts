@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/log/logger"
-import { ICardPlatform } from "../../../../../../packages-core/common/schema/card"
+import { ICardPlatform } from "@cs-magic/wechat/schema/card"
 
 export type IWxmpArticleUrlParsed = {
   platformId?: string

@@ -6,7 +6,7 @@ import {
   cardReqOptionsAtom,
   cardWatermarkTextAtom,
 } from "@/store/card.request.atom"
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/p01-common/schema/card"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/wechat/schema/card"
 import { atom } from "jotai"
 
 export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(

@@ -8,7 +8,7 @@ import {
   Action2Type,
   GenCardApproach,
   ICardPreview,
-} from "@cs-magic/p01-common/schema/card"
+} from "@cs-magic/wechat/schema/card"
 import { CardAction2 } from "./card-action2"
 import { CardPreview } from "./card-preview"
 

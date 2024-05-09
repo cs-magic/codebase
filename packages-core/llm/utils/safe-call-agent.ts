@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/log/logger"
-import { ILlmMessage } from "@cs-magic/p01-common/schema/message"
+import { ILlmMessage } from "@cs-magic/common/schema/message"
 import { promises } from "fs"
 import yaml from "js-yaml"
 import path from "path"

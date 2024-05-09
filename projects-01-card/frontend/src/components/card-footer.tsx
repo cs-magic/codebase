@@ -1,8 +1,8 @@
 "use client"
 
-import { config } from "../../../../packages-core/common/config"
+import { config } from "../../../../packages-common/common/config"
 
-import { CardOuterPreview } from "../../../../packages-core/common/schema/card"
+import { CardOuterPreview } from "@cs-magic/wechat/schema/card"
 import { CalendarHeartIcon, MilestoneIcon } from "lucide-react"
 import moment from "../../../../packages-to-classify/datetime/moment"
 import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
