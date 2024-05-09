@@ -3,6 +3,7 @@ import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
+import * as repl from "node:repl"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
 import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
@@ -145,14 +146,14 @@ export class BasePlugin {
   }
 
   async getStatus(reply = false) {
-    const content = await this.bot.context.getStatus(this.message)
-    if (reply) await this.standardReply(content)
+    const content = await this.bot.context?.getStatus(this.message)
+    if (content && reply) await this.standardReply(content)
     return content
   }
 
   async getHelp(reply = false) {
-    const content = await this.bot.context.getHelp()
-    if (reply) await this.standardReply(content)
+    const content = await this.bot.context?.getHelp()
+    if (content && reply) await this.standardReply(content)
     return content
   }
 
@@ -173,10 +174,10 @@ export class BasePlugin {
     const pretty = formatQuery(content, {
       title: await this.getTitle(),
       tips: tips ? tips.map((t) => `  ${t}`).join("\n") : undefined,
-      footer: formatFooter(this.bot.context.data),
+      footer: formatFooter(this.bot.context?.data),
       commandStyle: preference.display.style,
     })
-    void this.bot.context.addSendTask(() => this.message.say(pretty))
+    void this.bot.context?.addSendTask(() => this.message.say(pretty))
   }
 
   async help() {
@@ -189,11 +190,11 @@ export class BasePlugin {
   }
 
   async notify(content: Sayable, llmScenario?: LlmScenario) {
-    void this.bot.context.notify(this.message, content, llmScenario)
+    void this.bot.context?.notify(this.message, content, llmScenario)
   }
 
   async reply(message: Sayable) {
-    await this.bot.context.addSendTask(async () => {
+    await this.bot.context?.addSendTask(async () => {
       await this.message.say(message)
     })
   }
@@ -232,9 +233,7 @@ export class BasePlugin {
 
     if (reply) {
       if (typeof reply === "string") {
-        await this.bot.context.addSendTask(async () => {
-          await this.message.say(reply)
-        })
+        await this.reply(reply)
       }
 
       if (typeof reply === "boolean") {

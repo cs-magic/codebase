@@ -29,7 +29,7 @@ export const handleRoomJoin = async (
   if (!roomInDB) return
 
   const includeSelf = inviteeList.some(
-    (invitee) => invitee.id === bot.context.wxid,
+    (invitee) => invitee.id === bot.context?.wxid,
   )
   logger.info(`invitees has self: ${includeSelf}`)
   if (includeSelf) {

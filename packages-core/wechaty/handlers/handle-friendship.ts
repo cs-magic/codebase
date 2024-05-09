@@ -27,7 +27,7 @@ export const handleFriendship = async (
 
   const user = friendship.contact()
 
-  await bot.context.addSendTask(async () => {
+  await bot.context?.addSendTask(async () => {
     await user.say(`您好啊！我是好用到哭的 AI 助理「飞脑」！
 ${SEPARATOR_LINE}
 这是我能为您提供的服务：
@@ -39,7 +39,7 @@ ${SEPARATOR_LINE}
 - BUG 反馈请联系飞脑客服：${config.company["customer-service"].wxid}
 - 飞脑十分注重用户隐私，与您的聊天记录不会共享于他人
 - 续费请扫码：XXX (新朋友免费赠送100飞币)
-- 当前版本：${bot.context.version}
+- 当前版本：${bot.context?.version}
 - 当前时间：${moment().format("YYYY/MM/DD HH:mm")}
 `)
   })

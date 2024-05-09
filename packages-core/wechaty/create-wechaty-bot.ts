@@ -31,6 +31,7 @@ export const createWechatyBot = ({
     },
   }) as Wechaty // 等会再更新其他扩展的信息
 
+  // todo: is ready ok ?
   handleWechatyBot(bot)
 
   return bot

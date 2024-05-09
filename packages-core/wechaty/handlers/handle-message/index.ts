@@ -79,7 +79,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     if (result) {
       switch (result.command) {
         case "ding":
-          return void bot.context.addSendTask(() => message.say("dong"))
+          return void bot.context?.addSendTask(() => message.say("dong"))
 
         case "help":
           await tmm.base.getHelp(true)
@@ -157,7 +157,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
-    void bot.context.notify(
+    void bot.context?.notify(
       message,
       formatQuery(`❌ ${s}`, {
         title: `System Notification`,

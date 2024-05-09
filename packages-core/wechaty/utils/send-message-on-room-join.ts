@@ -7,7 +7,7 @@ export const sendMessageOnRoomJoin = async (bot: Wechaty, roomId: string) => {
   const room = await bot.Room.find({ id: roomId })
   if (!room) return logger.warn(`not found room(id=${roomId})`)
 
-  void bot.context.addSendTask(async () => {
+  void bot.context?.addSendTask(async () => {
     await room.say(`大家好！我是好用到哭的 AI 助理「飞脑」！
 ${SEPARATOR_LINE}
 以下是我能为大家提供的服务：
@@ -18,7 +18,7 @@ ${SEPARATOR_LINE}
 ${SEPARATOR_LINE}
 - BUG 反馈请联系飞脑客服：MAGIC_SOSO
 - 飞脑十分注重用户隐私，当前会话内的聊天记录不会共享于他人
-- 当前版本：${bot.context.version}
+- 当前版本：${bot.context?.version}
 - 当前时间：${moment().format("YYYY/MM/DD HH:mm")}
 `)
   })

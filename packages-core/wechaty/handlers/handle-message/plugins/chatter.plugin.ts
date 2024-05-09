@@ -119,15 +119,15 @@ export class ChatterPlugin extends BasePlugin {
     // 3. 组合上下文去回复 【长窗口怎么去handle】
 
     // 拿取最新的上下文记录
-    const filteredMessages = await listMessagesOfLatestTopic(
-      this.bot.context.wxid,
-      this.convId,
-    )
+
+    const filteredMessages = this.bot.context?.wxid
+      ? await listMessagesOfLatestTopic(this.bot.context.wxid, this.convId)
+      : []
 
     const model = convPreference.features.chatter.model
     const messages: ILlmMessage[] = filteredMessages.map((m) => ({
       role:
-        m.talkerId === this.bot.context.wxid
+        m.talkerId === this.bot.context?.wxid
           ? ("assistant" as const)
           : ("user" as const),
       // todo: merge chats

@@ -13,7 +13,7 @@ declare module "wechaty-puppet/payloads" {
 
 declare module "wechaty" {
   interface Wechaty extends ReturnType<typeof WechatyBuilder.build> {
-    context: IBotContext
+    context?: IBotContext
   }
 
   // class Message extends BaseMessage {
