@@ -6,6 +6,7 @@ import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai"
 import { v4 } from "uuid"
 import { env } from "../../../packages-to-classify/env"
+import { logEnv } from "../../../packages-to-classify/env/utils/log-env"
 
 import {
   defaultLlmQueryConfigExtra,
@@ -16,6 +17,8 @@ import {
 import { callLlm } from "./call-llm"
 import { formatLlmMessage } from "./format-llm-message"
 import { model2provider } from "./model2provider"
+
+logEnv("api_key")
 
 /**
  * todo: 集中队列
@@ -32,12 +35,17 @@ export const safeCallLLM = async (
   const llmProviderType = model2provider(queryConfig.model)
 
   const baseURL =
-    llmProviderType === "moonshot" ? "https://api.moonshot.cn/v1" : undefined
+    llmProviderType === "moonshot"
+      ? "https://api.moonshot.cn/v1"
+      : llmProviderType === "deepseek"
+        ? "https://api.deepseek.com/v1"
+        : undefined
 
-  const apiKey =
-    env[`${llmProviderType}_api_key`.toUpperCase() as keyof typeof env]
+  const API_KEY_NAME =
+    `${llmProviderType}_api_key`.toUpperCase() as keyof typeof env
+  const apiKey = env[API_KEY_NAME]
 
-  if (!apiKey) throw new Error("API_KEY Missing!")
+  if (!apiKey) throw new Error(`missing env variable of ${API_KEY_NAME}`)
 
   const httpAgent = env.PROXY ? new HttpsProxyAgent(env.PROXY) : undefined
 

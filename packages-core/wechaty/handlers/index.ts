@@ -4,9 +4,9 @@ import qrcodeTerminal from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
 import { initBotContext } from "../schema/bot.context"
 import { handleFriendship } from "./handle-friendship"
+import { handleMessage } from "./handle-message"
 import { handleRoomInvite } from "./handle-room-invite"
 import { handleRoomJoin } from "./handle-room-join"
-import { handleMessage } from "./handle-message"
 
 export const handleWechatyBot = (bot: Wechaty) => {
   bot
@@ -76,8 +76,10 @@ export const handleWechatyBot = (bot: Wechaty) => {
       logger.debug(".")
     })
 
-    .on("puppet", (puppet) => {
-      logger.debug(`onPuppet: %o`, puppet)
+    .on("puppet", async (puppet) => {
+      logger.debug(`onPuppet`)
+      // 不要打印它，太长了；也不要存储，因为自循环
+      // logger.debug(puppet)
     })
 
     .on("ready", () => {

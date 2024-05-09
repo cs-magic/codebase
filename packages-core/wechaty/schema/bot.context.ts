@@ -38,7 +38,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   const startTime = Date.now()
 
   // web protocol needs, o.w. rooms/contacts are loaded PARTIALLY
-  await formatAction(async () => await bot.ready(), "waiting bot ready")
+  await formatAction(bot.ready, "waiting bot ready")
 
   const rooms = await bot.Room.findAll()
   await Promise.all(

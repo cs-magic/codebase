@@ -41,6 +41,7 @@ export const getEnv = () => ({
   MINIMAX_GROUP_ID: process.env.MINIMAX_GROUP_ID,
   BAICHUAN_API_KEY: process.env.BAICHUAN_API_KEY,
   DASHSCOPE_API_KEY: process.env.DASHSCOPE_API_KEY,
+  DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
 
   // log
   NEXT_PUBLIC_PINO_LOGFLARE_API_KEY:
