@@ -6,6 +6,7 @@ export const llmProviderTypeSchema = z.enum([
   "moonshot",
   "baichuan",
   "dashscope",
+  "deepseek",
 ])
 
 export type LlmProviderType = z.infer<typeof llmProviderTypeSchema>

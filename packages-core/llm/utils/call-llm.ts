@@ -42,6 +42,7 @@ export const callLlm = async ({
         .data
 
     case "moonshot":
+    case "deepseek":
     case "openai":
     default:
       return (

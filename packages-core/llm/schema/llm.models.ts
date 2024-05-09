@@ -15,5 +15,9 @@ export const llmModelTypeSchema = z.enum([
   "qwen-max",
   // wenxin
   // claude
+
+  // ref: https://platform.deepseek.com/docs
+  "deepseek-chat", // 32k
+  "deepseek-coder", // 16k
 ])
 export type LlmModelType = z.infer<typeof llmModelTypeSchema>
