@@ -6322,6 +6322,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-md5@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "@types/js-md5@npm:0.7.2"
+  checksum: 10c0/1fae04330096db7c64adaebb2ed2483173446517be920769c6566e24b1833f5dc2d5d1091ab67f0602b94744401fb10b599b6fea6ec2d707e3688e90acdd2127
+  languageName: node
+  linkType: hard
+
 "@types/js-yaml@npm:^4":
   version: 4.0.9
   resolution: "@types/js-yaml@npm:4.0.9"
@@ -9452,6 +9459,7 @@ __metadata:
   dependencies:
     "@types/eslint": "npm:^8.56.10"
     "@types/jest": "npm:^29.5.12"
+    "@types/js-md5": "npm:^0.7.2"
     "@types/lodash": "npm:^4.14.202"
     "@types/node": "npm:^20.12.7"
     "@types/yargs-parser": "npm:^21"
@@ -9461,6 +9469,7 @@ __metadata:
     eslint: "npm:8"
     eslint-config-next: "npm:^14.2.2"
     jest: "npm:^29.7.0"
+    js-md5: "npm:^0.8.3"
     lodash: "npm:^4.17.21"
     pino-pretty: "npm:^11.0.0"
     tailwind-merge: "npm:^2.3.0"
@@ -15731,6 +15740,13 @@ __metadata:
   version: 2.2.1
   resolution: "js-cookie@npm:2.2.1"
   checksum: 10c0/ee67fc0f8495d0800b851910b5eb5bf49d3033adff6493d55b5c097ca6da46f7fe666b10e2ecb13cfcaf5b88d71c205ce00a7e646de791689bfd053bbb36a376
+  languageName: node
+  linkType: hard
+
+"js-md5@npm:^0.8.3":
+  version: 0.8.3
+  resolution: "js-md5@npm:0.8.3"
+  checksum: 10c0/f7e41e95f8e5eb5eeb43085bec3832ae3dfe0020c42fcca5a4efe571213391a9e9594db31bd34624b7280af4f1f12c751b6a50074a15346ecf40a0d54115d77f
   languageName: node
   linkType: hard
 

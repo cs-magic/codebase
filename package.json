@@ -1,6 +1,6 @@
 {
   "name": "cs-magic",
-  "version": "V0.8.264 (α)",
+  "version": "V0.8.265 (α)",
   "repository": "git@github.com:MarkShawn2020/p01.git",
   "author": "markshawn2020 <shawninjuly@gmail.com>",
   "license": "MIT",
@@ -18,6 +18,7 @@
   "packageManager": "yarn@4.1.1",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "js-md5": "^0.8.3",
     "lodash": "^4.17.21",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@types/eslint": "^8.56.10",
     "@types/jest": "^29.5.12",
+    "@types/js-md5": "^0.7.2",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.12.7",
     "@types/yargs-parser": "^21",

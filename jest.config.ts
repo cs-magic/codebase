@@ -35,6 +35,9 @@ const jestConfig: JestConfigWithTsJest = {
   },
 
   transformIgnorePatterns: ["node_modules/(?!(nanoid)/)"],
+
+  // ref: https://stackoverflow.com/a/63020284/9422455
+  setupFiles: ["dotenv/config"],
 }
 
 export default jestConfig

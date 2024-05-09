@@ -137,14 +137,7 @@ export class ChatterPlugin extends BasePlugin {
     trimMessages(messages, model)
     // logger.info(`--  context(len=${context.length})`)
 
-    void this.notify(
-      [
-        `🌈 calling LLM (model=${model})`,
-        // SEPARATOR_LINE,
-        // ...messages.map((m) => formatLlmMessage(m, 40)),
-      ].join("\n"),
-      "chatter",
-    )
+    void this.notify([`🌈 calling LLM (model=${model})`].join("\n"), "chatter")
 
     // 送给 LLM
     // todo: 送给 agent

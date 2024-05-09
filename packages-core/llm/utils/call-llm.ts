@@ -1,3 +1,5 @@
+import { logger } from "@cs-magic/log/logger"
+import { md5 } from "js-md5"
 import OpenAI, { type ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
 import { api } from "../../../packages-to-classify/api-client/api"
@@ -42,6 +44,11 @@ export const callLlm = async ({
         .data
 
     case "moonshot":
+      // 2024-05-09 20:15:00: moonshot user 不能超过 32 位
+      if (queryConfig.user && queryConfig.user.length > 32) {
+        queryConfig.user = md5(queryConfig.user)
+      }
+
     case "deepseek":
     case "openai":
     default:

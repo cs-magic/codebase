@@ -82,7 +82,7 @@ export const safeCallLLM = async (
     [
       `>> calling LLM(provider=${llmProviderType}, model=${queryConfig.model}, api_key=${apiKey}): `,
       SEPARATOR_BOX,
-      ...queryConfig.messages.map((m) => formatLlmMessage(m, 60)),
+      ...queryConfig.messages.map((m) => formatLlmMessage(m, 240)),
       SEPARATOR_BOX,
     ].join("\n"),
   )
@@ -95,7 +95,7 @@ export const safeCallLLM = async (
 
   try {
     response = await callLlm({
-      queryConfig: queryConfig,
+      queryConfig,
       llmProviderType,
       apiKey,
       clientConfig,
