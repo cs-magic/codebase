@@ -1,6 +1,7 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { logger } from "@cs-magic/log/logger"
+import { LogLevel } from "@cs-magic/log/schema"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { md5 } from "js-md5"
 import set from "lodash/set"
@@ -190,8 +191,8 @@ export class BasePlugin {
     )
   }
 
-  async notify(content: Sayable, llmScenario?: LlmScenario) {
-    void this.bot.context?.notify(this.message, content, llmScenario)
+  async notify(content: Sayable, llmScenario?: LlmScenario, level?: LogLevel) {
+    void this.bot.context?.notify(this.message, content, llmScenario, level)
   }
 
   async reply(message: Sayable) {

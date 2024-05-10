@@ -5,9 +5,10 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
-import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
+import { LogLevel } from "@cs-magic/log/schema"
 
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
 import { CardSimulator } from "../../../../../packages-to-classify/spider/card-simulator"
@@ -153,10 +154,10 @@ export class ParserPlugin extends BasePlugin {
       void this.notify(`✅ 解析成功: ${title}`, "parser")
       logger.info("-- sent file")
     } catch (e) {
-      const s = formatError(e)
-      // todo: retry in inner logic
+      // extra reply to user
       void this.reply("解析失败，请再试一次吧！")
-      void this.notify(`❌ ` + s, "parser")
+      // uni handle in outer
+      throw e
     } finally {
       --ParserPlugin.toParse
     }

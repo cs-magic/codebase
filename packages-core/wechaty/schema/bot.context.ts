@@ -81,7 +81,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
         // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
         ;(await bot.Room.find({ topic: /飞脑通知/i }))?.say(content)
 
-        if (level && level > LogLevel.error)
+        if (level && level >= LogLevel.error)
           (await bot.Room.find({ topic: /飞脑报错/i }))?.say(content)
       })
     },

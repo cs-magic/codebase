@@ -20,6 +20,9 @@ export const callLlm = async ({
   clientConfig: ClientOptions
   queryConfig: ILlmQueryConfig
 }): Promise<ICompletion> => {
+  // 要过滤 message为空的情形，否则某些api（例如moonshot）会报错，see https://github.com/cs-magic/codebase/issues/19
+  queryConfig.messages = queryConfig.messages.filter((m) => !!m.content.length)
+
   switch (llmProviderType) {
     case "zhipu":
       return (await new ZhipuAi(clientConfig).createCompletions(

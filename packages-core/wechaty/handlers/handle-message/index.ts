@@ -1,6 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
+import { LogLevel } from "@cs-magic/log/schema"
 import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
 import {
@@ -157,13 +158,6 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
     // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
     // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
-    void bot.context?.notify(
-      message,
-      formatQuery(`❌ ${s}`, {
-        title: `System Notification`,
-        footer: formatFooter(bot.context.data),
-        // commandStyle: preference.display.style,
-      }),
-    )
+    void bot.context?.notify(message, `❌ ${s}`, undefined, LogLevel.error)
   }
 }
