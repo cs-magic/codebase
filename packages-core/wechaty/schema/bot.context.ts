@@ -2,6 +2,7 @@ import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatAction } from "@cs-magic/common/utils/format-action"
 import { formatDuration } from "@cs-magic/common/utils/format-duration"
 import { logger } from "@cs-magic/log/logger"
+import { LogLevel } from "@cs-magic/log/schema"
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
@@ -27,6 +28,7 @@ export type IBotContext = BotData & {
     message: Message,
     content: Sayable,
     llmScenario?: LlmScenario,
+    level?: LogLevel,
   ) => Promise<void>
   getHelp: () => Promise<string>
   getStatus: (message: Message) => Promise<string>
@@ -48,9 +50,6 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
       )
     }),
   )
-  // wrap
-  const s = /bot notification/i
-  // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
 
   // wrap
   const senderQueue = new SenderQueue(10)
@@ -70,7 +69,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
     ...botData,
     data: botData,
     addSendTask,
-    notify: async (message, content, llmScenario) => {
+    notify: async (message, content, llmScenario, level) => {
       if (typeof content === "string") {
         content = [
           content,
@@ -79,12 +78,11 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
         ].join("\n")
       }
       void addSendTask(async () => {
-        const notificationGroup = await bot.Room.find({ topic: s })
-        if (!notificationGroup)
-          return logger.debug(
-            `skipped notifying since no notification group found`,
-          )
-        await notificationGroup.say(content)
+        // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
+        ;(await bot.Room.find({ topic: /飞脑通知/i }))?.say(content)
+
+        if (level && level > LogLevel.error)
+          (await bot.Room.find({ topic: /飞脑报错/i }))?.say(content)
       })
     },
     getHelp: async () => {
