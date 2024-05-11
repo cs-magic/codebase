@@ -1,5 +1,6 @@
 import { logger } from "@cs-magic/log/logger"
 import { type Wechaty, WechatyBuilder } from "wechaty"
+import { env } from "../../packages-to-classify/env"
 import { logEnv } from "../../packages-to-classify/env/utils/log-env"
 import { handleWechatyBot } from "./handlers"
 
@@ -10,16 +11,11 @@ import { handleWechatyBot } from "./handlers"
  *
  * @param name
  */
-export const createWechatyBot = ({
-  name,
-  token,
-}: {
-  name?: string
-  token?: string
-}) => {
+export const createWechatyBot = () => {
   // log env to ensure puppet info.
   logEnv("wechaty")
 
+  const name = env.WECHATY_PUPPET_NAME ?? "default"
   logger.info(`-- init bot(name=${name})`)
 
   const bot = WechatyBuilder.build({
@@ -27,7 +23,6 @@ export const createWechatyBot = ({
     puppetOptions: {
       // I added in padlocal, 2024-04-27 08:49:22
       restartOnFailure: false,
-      token,
     },
   }) as Wechaty // 等会再更新其他扩展的信息
 

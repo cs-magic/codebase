@@ -1,3 +1,5 @@
+import * as process from "node:process"
+
 export const getEnv = () => ({
   // env
   NODE_ENV: process.env.NODE_ENV,
@@ -54,6 +56,7 @@ export const getEnv = () => ({
   // wechaty
   WECHATY_LOG: process.env.WECHATY_LOG,
   WECHATY_PUPPET: process.env.WECHATY_PUPPET,
+  WECHATY_PUPPET_NAME: process.env.WECHATY_PUPPET_NAME,
   WECHATY_PUPPET_PADLOCAL_TOKEN: process.env.WECHATY_PUPPET_PADLOCAL_TOKEN,
 
   PROXY:

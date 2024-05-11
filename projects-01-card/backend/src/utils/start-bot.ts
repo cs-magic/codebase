@@ -10,9 +10,7 @@ export const startBot = async (context: IContext) => {
   if (!context.bot) {
     logger.info("-- creating bot")
 
-    context.bot = createWechatyBot({
-      name: "1", // todo
-    })
+    context.bot = createWechatyBot()
       .on("error", (error) => {
         formatError(error)
       })
