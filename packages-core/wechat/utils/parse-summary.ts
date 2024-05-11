@@ -1,4 +1,4 @@
-import { ISummaryParsed } from "packages-core/wechat/schema/card"
+import { ISummaryParsed } from "../schema/card"
 
 /**
  *  regex of `/ms`: ref:  https://stackoverflow.com/a/66001191/9422455

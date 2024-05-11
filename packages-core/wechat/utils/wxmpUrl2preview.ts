@@ -2,14 +2,14 @@ import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
 import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
 import { logger } from "@cs-magic/log/logger"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import { fetchWxmpArticle } from "packages-core/wechat/wxmp-article/fetch"
+import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   IMedia,
-} from "packages-core/wechat/schema/card"
-import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
-import { parseSummary } from "packages-core/wechat/utils/parse-summary"
+} from "../schema/card"
+import { fetchWxmpArticle } from "../wxmp-article/fetch"
+import { parseSummary } from "./parse-summary"
 
 export const wxmpUrl2preview = async (
   url: string,

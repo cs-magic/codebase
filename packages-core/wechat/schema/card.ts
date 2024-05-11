@@ -1,14 +1,13 @@
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { $Enums, PlatformType } from "@prisma/client"
 import { z } from "zod"
+import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
+import { IArticleSummaryParsed } from "@cs-magic/common/schema/query"
 import {
   IWechatArticleComment,
   IWechatArticleStat,
-} from "packages-core/wechat/wxmp-article/detail/schema"
-import { FetchWxmpArticleDetailOptions } from "packages-core/wechat/wxmp-article/fetch/schema"
-import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
-
-import { IArticleSummaryParsed } from "@cs-magic/common/schema/query"
+} from "../wxmp-article/detail/schema"
+import { FetchWxmpArticleDetailOptions } from "../wxmp-article/fetch/schema"
 
 export type ICardPlatform<T extends $Enums.PlatformType = any> =
   T extends typeof $Enums.PlatformType.wxmpArticle
