@@ -1,13 +1,14 @@
 "use client"
 
+import DDS_lanhupage_0 from "@/app/swot/dashboard/comp"
 import { IWechatPreference } from "@cs-magic/wechaty/schema/bot.preference"
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { useEffect, useState } from "react"
-import { env } from "../../../../../../../packages-to-classify/env"
-import { useInit } from "../../../../../../../packages-to-classify/hooks/use-init"
-import { socketStatusMap } from "../../../../../../../packages-to-classify/transport/schema"
-import { FlexContainer } from "../../../../../../../packages-to-classify/ui/components/flex-container"
-import { LabelLine } from "../../../../../../../packages-to-classify/ui/components/label-line"
+import { env } from "../../../../../../packages-to-classify/env"
+import { useInit } from "../../../../../../packages-to-classify/hooks/use-init"
+import { socketStatusMap } from "../../../../../../packages-to-classify/transport/schema"
+import { FlexContainer } from "../../../../../../packages-to-classify/ui/components/flex-container"
+import { LabelLine } from "../../../../../../packages-to-classify/ui/components/label-line"
 
 export default function SwotDashboardPage() {
   const [preference, setPreference] = useState<IWechatPreference | null>(null)
@@ -47,22 +48,32 @@ export default function SwotDashboardPage() {
     return socket
   })
 
+  const Basic = () => {
+    return (
+      <>
+        {socket && (
+          <LabelLine title={"readyState"}>
+            {socketStatusMap[socket.readyState]}
+          </LabelLine>
+        )}
+
+        <LabelLine title={"preference"}>
+          <div className={"whitespace-pre"}>
+            {JSON.stringify(preference, null, 2)}
+          </div>
+        </LabelLine>
+      </>
+    )
+  }
+
   return (
     <FlexContainer
       orientation={"vertical"}
       className={"justify-start overflow-auto"}
     >
-      {socket && (
-        <LabelLine title={"readyState"}>
-          {socketStatusMap[socket.readyState]}
-        </LabelLine>
-      )}
+      {/*<Basic/>*/}
 
-      <LabelLine title={"preference"}>
-        <div className={"whitespace-pre"}>
-          {JSON.stringify(preference, null, 2)}
-        </div>
-      </LabelLine>
+      <DDS_lanhupage_0 />
     </FlexContainer>
   )
 }
