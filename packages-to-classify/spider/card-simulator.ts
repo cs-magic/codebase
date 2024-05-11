@@ -1,6 +1,9 @@
 import { UnexpectedError } from "@cs-magic/common/schema/error"
 import { logger } from "@cs-magic/log/logger"
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import {
+  IUserSummary,
+  IUserSummaryFilled,
+} from "@cs-magic/prisma/schema/user.summary"
 import { sleep } from "../datetime/utils"
 import { getEnv } from "../env"
 import { BaseSimulator } from "./base-simulator"
@@ -13,7 +16,7 @@ export class CardSimulator extends BaseSimulator {
 
   async genCard(
     content: string,
-    user?: IUserSummary,
+    user: IUserSummaryFilled,
   ): Promise<{ cardUrl: string }> {
     let result
     while (CardSimulator.runningTasksCount !== 0) {
@@ -37,16 +40,14 @@ export class CardSimulator extends BaseSimulator {
    */
   async genCardInner(
     content: string,
-    user?: IUserSummary,
+    user: IUserSummaryFilled,
   ): Promise<{ cardUrl: string }> {
     if (!this.page) await this.initPage()
     if (!this.page) throw new UnexpectedError()
 
     logger.debug("-- inputting user if necessary: %o", user)
-    if (user?.name && user.image) {
-      await this.page.locator("#card-user-name").fill(user.name)
-      await this.page.locator("#card-user-avatar").fill(user.image)
-    }
+    await this.page.locator("#card-user-name").fill(user.name)
+    await this.page.locator("#card-user-avatar").fill(user.image)
 
     logger.debug(`-- inputting content: %o`, content)
     await this.page.locator("#card-content").fill(content)

@@ -11,3 +11,20 @@ export type IUserSummary = Prisma.UserGetPayload<typeof userSummarySchema> & {
   // compatible
   avatar?: string
 }
+
+export type IUserSummaryFilled = {
+  name: string
+  image: string
+}
+
+export const convertUserSummary = (
+  user: IUserSummary,
+): IUserSummaryFilled | null => {
+  const avatar = user.avatar ?? user.image
+  if (user.name && avatar)
+    return {
+      name: user.name,
+      image: avatar,
+    }
+  return null
+}

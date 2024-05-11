@@ -1,13 +1,11 @@
-import { formatError } from "@cs-magic/common/utils/format-error"
 import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import {
   parseTitleFromWechatUrlMessage,
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
-import { LogLevel } from "@cs-magic/log/schema"
 
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { convertUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
@@ -55,7 +53,6 @@ export class ParserPlugin extends BasePlugin {
     // console.log({ text })
 
     return this.safeParseCard({
-      user: this.talkingUser,
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
@@ -86,7 +83,6 @@ export class ParserPlugin extends BasePlugin {
     const text = await z.string().parseAsync(message.text)
 
     return this.safeParseCard({
-      user: this.talkingUser,
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
@@ -98,11 +94,8 @@ export class ParserPlugin extends BasePlugin {
   }
 
   async safeParseCard({
-    user,
     message,
   }: {
-    // todo: dynamic sender with fixed card url
-    user: IUserSummary
     message: {
       convId: string
       text: string
@@ -111,6 +104,10 @@ export class ParserPlugin extends BasePlugin {
       talkerName: string
     }
   }) {
+    // todo: dynamic sender with fixed card url
+    const user = convertUserSummary(this.talkingUser)
+    if (!user) throw new Error("user not prepared")
+
     const text = parseText(message.text)
     const url = parseUrlFromWechatUrlMessage(text)
     // 仅供测试环境
@@ -155,7 +152,8 @@ export class ParserPlugin extends BasePlugin {
       logger.info("-- sent file")
     } catch (e) {
       // extra reply to user
-      void this.reply("解析失败，请再试一次吧！")
+      // void this.reply("解析失败，请再试一次吧！")
+
       // uni handle in outer
       throw e
     } finally {
