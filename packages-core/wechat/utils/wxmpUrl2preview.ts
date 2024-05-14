@@ -16,7 +16,7 @@ export const wxmpUrl2preview = async (
   fetchOptions?: GenWxmpArticleCardFetchOptions,
 ) => {
   if (/\/s\?/.test(url)) {
-    logger.info(`wxmpUrl2preview: url_raw=${url}`)
+    // logger.debug(`wxmpUrl2preview: url_raw=${url}`)
     const searchParams = new URL(url.replace(/amp;/g, "")).searchParams
     url = formatWxmpUrl({
       __biz: searchParams.get("__biz")!,

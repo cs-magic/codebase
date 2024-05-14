@@ -8,6 +8,6 @@ export const formatError = (e: unknown) => {
       : e instanceof Error
         ? e.message
         : (e as string)
-  logger.error(s)
+  logger.error(`❌ ${s}`)
   return s
 }
