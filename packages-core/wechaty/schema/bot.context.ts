@@ -12,6 +12,7 @@ import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
+import pick from "lodash/pick"
 
 type BotData = {
   name: string
@@ -64,6 +65,9 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
     jobs: [], // todo: await prisma.task.findMany({where: {timer: {})
     wxid: bot.currentUser.id,
   }
+
+  const puppet = bot.puppet
+  logger.debug(`puppet: %o`, pick(puppet, ["id", "name", "version"]))
 
   return {
     ...botData,
