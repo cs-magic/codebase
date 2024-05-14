@@ -55,7 +55,11 @@ export const handleWechatyBot = (bot: Wechaty) => {
     })
 
     .on("room-join", async (...args) => {
-      await handleRoomJoin(bot, ...args)
+      try {
+        await handleRoomJoin(bot, ...args)
+      } catch (e) {
+        formatError(e)
+      }
     })
 
     .on("post", (post) => {
