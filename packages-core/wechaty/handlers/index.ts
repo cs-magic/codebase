@@ -8,6 +8,14 @@ import { handleMessage } from "./handle-message"
 import { handleRoomInvite } from "./handle-room-invite"
 import { handleRoomJoin } from "./handle-room-join"
 
+export const safeHandle = async (p: Promise<unknown>) => {
+  try {
+    return await p
+  } catch (e) {
+    formatError(e)
+  }
+}
+
 export const handleWechatyBot = (bot: Wechaty) => {
   bot
     //////////////////////////////
@@ -31,35 +39,28 @@ export const handleWechatyBot = (bot: Wechaty) => {
     })
 
     .on("error", async (err) => {
-      formatError(err)
+      // 这里加 error 可能会重复 【可能会让底部的error报过来】
+      // formatError(err)
     })
 
     //////////////////////////////
-    // social init
-    //////////////////////////////
-
-    .on("friendship", async (friendship) => {
-      await handleFriendship(bot, friendship)
-    })
-
-    .on("room-invite", async (room) => {
-      await handleRoomInvite(bot, room)
-    })
-
-    //////////////////////////////
-    // social going
+    // social
     //////////////////////////////
 
     .on("message", async (message) => {
-      await handleMessage(bot, message)
+      await safeHandle(handleMessage(bot, message))
+    })
+
+    .on("friendship", async (friendship) => {
+      await safeHandle(handleFriendship(bot, friendship))
+    })
+
+    .on("room-invite", async (room) => {
+      await safeHandle(handleRoomInvite(bot, room))
     })
 
     .on("room-join", async (...args) => {
-      try {
-        await handleRoomJoin(bot, ...args)
-      } catch (e) {
-        formatError(e)
-      }
+      await safeHandle(handleRoomJoin(bot, ...args))
     })
 
     .on("post", (post) => {

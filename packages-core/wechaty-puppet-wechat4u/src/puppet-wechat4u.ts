@@ -16,6 +16,7 @@
  *   limitations under the License.
  *
  */
+import { logger } from "@cs-magic/log/logger"
 import Wechat4u from "wechat4u"
 import QuickLru from "@alloc/quick-lru"
 import * as PUPPET from "wechaty-puppet"
@@ -1109,6 +1110,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
     text?: string,
   ): Promise<void | string> {
     log.info(`\n=== fetching room announce ===\n`)
+    logger.info(`\n=== fetching room announce ===\n`)
     return PUPPET.throwUnsupportedError(roomId, text)
   }
 

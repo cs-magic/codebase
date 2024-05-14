@@ -1,4 +1,3 @@
-import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
 import { RoomInvitation, Wechaty } from "wechaty"
 
@@ -14,32 +13,28 @@ export const handleRoomInvite = async (
 ) => {
   logger.info(`onRoomInvite`)
 
-  try {
-    // todo: is the id of roomInvitation is the id of room (being accepted)?
-    const roomId = roomInvitation.id
-    logger.info({ roomId })
+  // todo: is the id of roomInvitation is the id of room (being accepted)?
+  const roomId = roomInvitation.id
+  logger.info({ roomId })
 
-    const puppetProtocol = bot.context?.puppet.type
-    if (puppetProtocol === "padlocal") {
-      logger.debug(`auto-accepting room-invitation`)
+  const puppetProtocol = bot.context?.puppet.type
+  if (puppetProtocol === "padlocal") {
+    logger.debug(`auto-accepting room-invitation`)
 
-      const roomTopic = await roomInvitation.topic()
-      logger.debug({ roomTopic })
+    const roomTopic = await roomInvitation.topic()
+    logger.debug({ roomTopic })
 
-      // todo: intelligent notify and decide
-      await roomInvitation.accept()
+    // todo: intelligent notify and decide
+    await roomInvitation.accept()
 
-      logger.debug(`accepted`)
-    } else {
-      // todo: wechat4u 不支持获取topic，不支持自动同意
-      logger.debug(
-        `skipped auto-accepting room-invitation since Protocol(type=${puppetProtocol}) not supports`,
-      )
-    }
-
-    // 不要在 room-invite 里发起群加入通知，而是在room-join里发，否则小群加入不会触发
-    // await sendRoomInMessage(bot, roomId)
-  } catch (e) {
-    formatError(e)
+    logger.debug(`accepted`)
+  } else {
+    // todo: wechat4u 不支持获取topic，不支持自动同意
+    logger.debug(
+      `skipped auto-accepting room-invitation since Protocol(type=${puppetProtocol}) not supports`,
+    )
   }
+
+  // 不要在 room-invite 里发起群加入通知，而是在room-join里发，否则小群加入不会触发
+  // await sendRoomInMessage(bot, roomId)
 }
