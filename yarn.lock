@@ -6510,6 +6510,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/promise-retry@npm:^1.1.3":
+  version: 1.1.6
+  resolution: "@types/promise-retry@npm:1.1.6"
+  dependencies:
+    "@types/retry": "npm:*"
+  checksum: 10c0/5af69d393b2d776c2303c590e58617d9a3af4381c410eb461dae6d52eb9e42fe976b061a7f2c6439a5cf55a7a20d04da277f4806ffb8c931aaf6875c10917def
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.12
   resolution: "@types/prop-types@npm:15.7.12"
@@ -6587,6 +6596,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/a58ba341cb9e7d74f71810a88862da7b2a6fa42e2a1fc0ce40498f6ea1d44382f0640117057da779f74c47039f7166bf48fad02dc876f94e005c7afa50f5e129
+  languageName: node
+  linkType: hard
+
+"@types/retry@npm:*":
+  version: 0.12.5
+  resolution: "@types/retry@npm:0.12.5"
+  checksum: 10c0/eaaca483cc62f2f02c0b8486847ee70986ca7f97afd7363037247dbe3e98df8bd56a5b50d58b1e96768a5a1be0307010d86e9991bd458d72e8df88be471bd720
   languageName: node
   linkType: hard
 
@@ -6719,7 +6735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/xml2js@npm:^0.4.5, @types/xml2js@npm:^0.4.9":
+"@types/xml2js@npm:^0.4.11, @types/xml2js@npm:^0.4.5, @types/xml2js@npm:^0.4.9":
   version: 0.4.14
   resolution: "@types/xml2js@npm:0.4.14"
   dependencies:
@@ -17512,7 +17528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memory-card@npm:^1.1.2":
+"memory-card@npm:^1.0.3, memory-card@npm:^1.1.2":
   version: 1.1.2
   resolution: "memory-card@npm:1.1.2"
   dependencies:
@@ -24819,6 +24835,31 @@ __metadata:
   checksum: 10c0/46d83fe6eccaed0163578a58b67c357ac09b1d4dabcca5673dab768ea3c73fc36ab0b8b9fff2e995f9eb7bebee09a8aca154171e7ed8a4408a733438a4e0722c
   languageName: node
   linkType: hard
+
+"wechaty-puppet-wechat4u@workspace:packages-core/wechaty-puppet-wechat4u":
+  version: 0.0.0-use.local
+  resolution: "wechaty-puppet-wechat4u@workspace:packages-core/wechaty-puppet-wechat4u"
+  dependencies:
+    "@alloc/quick-lru": "npm:^5.2.0"
+    "@chatie/eslint-config": "npm:^1.0.4"
+    "@chatie/git-scripts": "npm:^0.6.2"
+    "@chatie/semver": "npm:^0.4.7"
+    "@chatie/tsconfig": "npm:^4.6.2"
+    "@types/promise-retry": "npm:^1.1.3"
+    "@types/qrcode-terminal": "npm:^0.12.0"
+    "@types/xml2js": "npm:^0.4.11"
+    fast-xml-parser: "npm:^3.21.1"
+    memory-card: "npm:^1.0.3"
+    promise-retry: "npm:^2.0.1"
+    qrcode-terminal: "npm:^0.12.0"
+    wechat4u: "npm:^0.7.14"
+    wechaty: "npm:^1.20.2"
+    xml2js: "npm:^0.4.23"
+  peerDependencies:
+    "@swc/core": ^1.3.100
+    wechaty-puppet: ^1.20.2
+  languageName: unknown
+  linkType: soft
 
 "wechaty-puppet@npm:1.20.2":
   version: 1.20.2

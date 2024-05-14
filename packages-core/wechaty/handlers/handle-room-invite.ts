@@ -20,8 +20,8 @@ export const handleRoomInvite = async (
     logger.info({ roomId })
 
     // wechat4u 不支持获取topic
-    const roomTopic = await roomInvitation.topic()
-    logger.info({ roomTopic })
+    // const roomTopic = await roomInvitation.topic()
+    // logger.info({ roomTopic })
 
     // todo: intelligent notify and decide
     // wechat4u 不支持自动同意
