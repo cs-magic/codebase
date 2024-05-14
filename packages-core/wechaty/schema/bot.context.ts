@@ -5,6 +5,7 @@ import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
+import puppet from "refractor/lang/puppet"
 import { Message, Sayable, Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
 import moment from "../../../packages-to-classify/datetime/moment"
@@ -20,6 +21,10 @@ type BotData = {
   startTime: number
   wxid: string
   jobs: Job[]
+  puppet: {
+    name: string
+    type: "wechat4u" | "padlocal" | "unknown"
+  }
 }
 
 export type IBotContext = BotData & {
@@ -58,16 +63,24 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   // expose
   const addSendTask = async (task: QueueTask) => senderQueue.addTask(task)
 
+  const puppet = bot.puppet
+  const puppetName = puppet.name()
   const botData: BotData = {
     name,
     version,
     startTime,
     jobs: [], // todo: await prisma.task.findMany({where: {timer: {})
     wxid: bot.currentUser.id,
+    puppet: {
+      name: puppetName,
+      type: puppetName.includes("padlocal")
+        ? "padlocal"
+        : puppetName.includes("wechat4u")
+          ? "wechat4u"
+          : "unknown",
+    },
   }
-
-  const puppet = bot.puppet
-  logger.debug(`puppet: %o`, pick(puppet, ["id", "name", "version"]))
+  logger.debug(`bot data: %o`, botData)
 
   return {
     ...botData,

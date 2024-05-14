@@ -19,15 +19,23 @@ export const handleRoomInvite = async (
     const roomId = roomInvitation.id
     logger.info({ roomId })
 
-    // wechat4u 不支持获取topic
-    // const roomTopic = await roomInvitation.topic()
-    // logger.info({ roomTopic })
+    const puppetProtocol = bot.context?.puppet.type
+    if (puppetProtocol === "padlocal") {
+      logger.debug(`auto-accepting room-invitation`)
 
-    // todo: intelligent notify and decide
-    // wechat4u 不支持自动同意
-    logger.info(`accepting room invitation`)
-    await roomInvitation.accept()
-    logger.info(`accepted`)
+      const roomTopic = await roomInvitation.topic()
+      logger.debug({ roomTopic })
+
+      // todo: intelligent notify and decide
+      await roomInvitation.accept()
+
+      logger.debug(`accepted`)
+    } else {
+      // todo: wechat4u 不支持获取topic，不支持自动同意
+      logger.debug(
+        `skipped auto-accepting room-invitation since Protocol(type=${puppetProtocol}) not supports`,
+      )
+    }
 
     // 不要在 room-invite 里发起群加入通知，而是在room-join里发，否则小群加入不会触发
     // await sendRoomInMessage(bot, roomId)
