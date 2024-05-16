@@ -39,8 +39,8 @@ export const handleWechatyBot = (bot: Wechaty) => {
     })
 
     .on("error", async (err) => {
-      // 这里加 error 可能会重复 【可能会让底部的error报过来】
-      // formatError(err)
+      // 只要handle 一次
+      formatError(err)
     })
 
     //////////////////////////////
@@ -84,7 +84,7 @@ export const handleWechatyBot = (bot: Wechaty) => {
     .on("puppet", async (puppet) => {
       logger.debug(`onPuppet`)
       // 不要打印它，太长了；也不要存储，因为自循环
-      logger.debug(puppet)
+      // logger.debug(puppet)
     })
 
     .on("ready", () => {

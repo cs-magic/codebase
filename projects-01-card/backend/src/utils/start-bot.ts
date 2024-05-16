@@ -8,12 +8,9 @@ import { transferMessage } from "./transfer-message"
 export const startBot = async (context: IContext) => {
   // 避免重复登录，会导致 padLocal 报错
   if (!context.bot) {
-    logger.info("-- creating bot")
+    logger.info("-- creating bot, context: %o", context)
 
     context.bot = createWechatyBot()
-      .on("error", (error) => {
-        formatError(error)
-      })
       .on("scan", (value, status) => {
         context.scan = { value, status }
         logger.info(`updated scan: ${JSON.stringify(context.scan)}`)
@@ -28,7 +25,7 @@ export const startBot = async (context: IContext) => {
 
   // todo: if has cache,  start auto, o.w. wait for triggering in the frontend ?
   if (!context.bot.isLoggedIn) {
-    logger.info("-- starting bot")
+    logger.info("-- starting bot, context: %o", context)
     await context.bot.start()
   }
 }

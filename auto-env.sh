@@ -6,7 +6,7 @@ if [ -f .env ]; then
     # 首先使用grep命令排除以#!开头的行
     # 然后用sed命令替换等号后的值为空
     # 参考：https://chat.openai.com/c/8a759c7f-a368-46ee-b4fd-827b87f8242c
-    grep -v '^#!' .env | sed 's/=.*$/=/' > .env.sample
+    grep -v '^#!' .env | sed 's/=.*$/=/' | awk 'NR == 1 { prev = $0; print; next } { if ($0 != prev) { print } prev = $0 }' > .env.sample
 
     # 将修改的.env.sample添加到暂存区
     git add .env.sample
