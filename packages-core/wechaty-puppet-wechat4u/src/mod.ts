@@ -16,12 +16,9 @@
  *   limitations under the License.
  *
  */
-import { logger } from "@cs-magic/log/logger"
 import { PuppetWechat4u } from "./puppet-wechat4u.js"
 export { log, VERSION } from "./config.js"
 
 export { PuppetWechat4u }
 
 export default PuppetWechat4u
-
-logger.info(`\n== test if puppet mock works ==\n`)

@@ -84,7 +84,7 @@ export const handleWechatyBot = (bot: Wechaty) => {
     .on("puppet", async (puppet) => {
       logger.debug(`onPuppet`)
       // 不要打印它，太长了；也不要存储，因为自循环
-      // logger.debug(puppet)
+      logger.debug(puppet)
     })
 
     .on("ready", () => {
