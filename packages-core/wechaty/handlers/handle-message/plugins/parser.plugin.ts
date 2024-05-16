@@ -56,7 +56,6 @@ export class ParserPlugin extends BasePlugin {
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
-        talkerName: this.talkingUser.name ?? "",
         text,
         id: message.id,
       },
@@ -86,7 +85,6 @@ export class ParserPlugin extends BasePlugin {
       message: {
         convId: this.convId,
         roomTopic: await this.getRoomTopic(),
-        talkerName: this.talkingUser.name ?? "",
         text,
         id: message.id,
       },
@@ -101,11 +99,11 @@ export class ParserPlugin extends BasePlugin {
       text: string
       id: string
       roomTopic?: string
-      talkerName: string
     }
   }) {
     // todo: dynamic sender with fixed card url
-    const user = convertUserSummary(this.talkingUser)
+    // const user = convertUserSummary(this.talkingUser)
+    const user = await this.getTalkingUser()
     if (!user) throw new Error("user not prepared")
 
     const text = parseText(message.text)

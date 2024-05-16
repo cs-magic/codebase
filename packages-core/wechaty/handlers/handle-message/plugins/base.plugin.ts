@@ -2,7 +2,10 @@ import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import {
+  IUserSummary,
+  IUserSummaryFilled,
+} from "@cs-magic/prisma/schema/user.summary"
 import { md5 } from "js-md5"
 import set from "lodash/set"
 import * as repl from "node:repl"
@@ -71,21 +74,24 @@ export class BasePlugin {
     return this.conv.id
   }
 
-  get talkingUser(): IUserSummary {
+  async getTalkingUser(): Promise<IUserSummaryFilled> {
     const sender = this.message.talker()
-    const image = sender.payload?.avatar
+    const image =
+      this.bot.context?.puppet.type === "padlocal"
+        ? sender.payload!.avatar
+        : await (await sender.avatar()).toDataURL()
+    logger.info(`fetching talking User(image=${image})`)
     // puppet-web有问题，拿不到avatar
     // if (!image) throw new Error("talking user has no avatar")
 
     return {
-      id: sender.id,
       name: sender.name(),
-      image: image ?? null,
+      image: image,
     }
   }
 
   async getUserIdentity() {
-    return `${this.talkingUser.id}_${this.room?.id}@wechat`
+    return `${this.message.talker().id}_${this.room?.id}@wechat`
   }
 
   async getQuotedMessage() {
