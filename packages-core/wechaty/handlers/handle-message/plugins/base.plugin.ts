@@ -1,5 +1,6 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
 import {
@@ -80,7 +81,10 @@ export class BasePlugin {
       this.bot.context?.puppet.type === "padlocal"
         ? sender.payload!.avatar
         : await (await sender.avatar()).toDataURL()
-    logger.info(`fetching talking User(image=${image})`)
+
+    // DataURL formatted image 很长，避免打印 or truncate
+    // logger.debug(`fetching talking User(image=${formatString(image, 20)})`)
+
     // puppet-web有问题，拿不到avatar
     // if (!image) throw new Error("talking user has no avatar")
 
