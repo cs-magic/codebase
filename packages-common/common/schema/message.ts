@@ -9,10 +9,28 @@ export const messageRoleSchema = z.union([
 export type RoleType = z.infer<typeof messageRoleSchema>
 
 /**
- * todo: ensure it is consistent with Prisma.Message
+ * ref: https://platform.openai.com/docs/api-reference/chat/create#chat-create-messages
  */
 export const llmMessageSchema = z.object({
-  content: z.string(),
+  content: z.union([
+    z.string(),
+    z
+      .union([
+        z.object({
+          type: z.literal("text"),
+          text: z.string(),
+        }),
+        z.object({
+          type: z.literal("image_url"),
+          // 注意，示例是错的，必须是object才对
+          image_url: z.object({
+            url: z.string(),
+            detail: z.string().optional(),
+          }),
+        }),
+      ])
+      .array(),
+  ]),
   role: messageRoleSchema,
   name: z.string().optional(),
 })

@@ -26,6 +26,8 @@ export const callLlm = async ({
   switch (llmProviderType) {
     case "zhipu":
       return (await new ZhipuAi(clientConfig).createCompletions(
+        // todo: zhipu 支持 image_url 吗
+        // @ts-ignore
         queryConfig,
       )) as unknown as ICompletion // todo: without unknown
 
