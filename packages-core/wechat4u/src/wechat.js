@@ -113,9 +113,10 @@ class Wechat extends WechatCore {
             `连续${this.syncErrorCount}次同步失败，5s后尝试重启`,
           )
           debug(err)
+          debug("todo: 如何不重启也能确保程序运行（mark@2024-05-16 09:52:34）")
           this.emit("error", err)
           clearTimeout(this.retryPollingId)
-          setTimeout(() => this.restart(), 5 * 1000)
+          // setTimeout(() => this.restart(), 5 * 1000)
         } else {
           clearTimeout(this.retryPollingId)
           this.retryPollingId = setTimeout(
@@ -220,9 +221,6 @@ class Wechat extends WechatCore {
   }
 
   restart() {
-    debug("todo: 如何不重启也能确保程序运行（mark@2024-05-16 09:52:34）")
-    return
-
     debug("重启中...")
     return this._init()
       .catch((err) => {
@@ -269,9 +267,10 @@ class Wechat extends WechatCore {
     if (interval > 1 * 60 * 1000) {
       let err = new Error(`状态同步超过${interval / 1000}s未响应，5s后尝试重启`)
       debug(err)
+      debug("todo: 如何不重启也能确保程序运行（mark@2024-05-16 09:52:34）")
       this.emit("error", err)
       clearTimeout(this.checkPollingId)
-      setTimeout(() => this.restart(), 5 * 1000)
+      // setTimeout(() => this.restart(), 5 * 1000)
     } else {
       debug("心跳")
       this.notifyMobile().catch((err) => {

@@ -3,6 +3,12 @@ import omit from "lodash/omit"
 import { Message, types } from "wechaty"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 
+/**
+ * 存储信息
+ * 并用于后续的读取
+ *
+ * @param message
+ */
 export const storageMessage = async (message: Message) => {
   const talker = message.talker()
   const room = message.room()

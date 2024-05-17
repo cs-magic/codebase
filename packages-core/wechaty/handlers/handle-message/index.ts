@@ -45,14 +45,21 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     )
   }
 
+  const type = message.type()
+  const text = message.text()
+
   logger.info(
-    `[onMessage ${types.Message[message.type()]}]: %o\n${await formatTalkerFromMessage(message)}\n${SEPARATOR_LINE}\n${message.text()}`,
+    [
+      `[onMessage ${types.Message[type]}]: %o`,
+      await formatTalkerFromMessage(message),
+      SEPARATOR_LINE,
+      text,
+    ].join("\n"),
     omit(message.payload, ["text", "type"]),
   )
 
   await storageMessage(message)
 
-  const type = message.type()
   switch (type) {
     case types.Message.Url:
       await new ParserPlugin(bot, message).parseSelf()

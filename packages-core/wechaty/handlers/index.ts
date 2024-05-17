@@ -101,8 +101,10 @@ export const handleWechatyBot = (bot: Wechaty) => {
     // utils
     //////////////////////////////
 
-    .on("dong", (data) => {
-      logger.info(`onDong: %o`, data)
+    .on("puppet", async (puppet) => {
+      logger.debug(`onPuppet`)
+      // 不要打印它，太长了；也不要存储，因为自循环
+      // logger.debug(puppet)
     })
 
     .on("heartbeat", (data) => {
@@ -111,18 +113,16 @@ export const handleWechatyBot = (bot: Wechaty) => {
       logger.debug(".")
     })
 
-    .on("puppet", async (puppet) => {
-      logger.debug(`onPuppet`)
-      // 不要打印它，太长了；也不要存储，因为自循环
-      // logger.debug(puppet)
+    .on("start", () => {
+      logger.info(`onStart`)
     })
 
     .on("ready", () => {
       logger.info(`onReady`)
     })
 
-    .on("start", () => {
-      logger.info(`onStart`)
+    .on("dong", (data) => {
+      logger.info(`onDong: %o`, data)
     })
 
     .on("stop", () => {
