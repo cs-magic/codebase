@@ -202,7 +202,7 @@ export class BasePlugin {
   }
 
   async notify(content: Sayable, llmScenario?: LlmScenario, level?: LogLevel) {
-    void this.bot.context?.notify(this.message, content, llmScenario, level)
+    void this.bot.context?.notify(content, llmScenario, level)
   }
 
   async reply(message: Sayable) {

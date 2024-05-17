@@ -31,7 +31,6 @@ export type IBotContext = BotData & {
   data: BotData
   addSendTask: (task: QueueTask) => Promise<void>
   notify: (
-    message: Message,
     content: Sayable,
     llmScenario?: LlmScenario,
     level?: LogLevel,
@@ -86,14 +85,7 @@ export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
     ...botData,
     data: botData,
     addSendTask,
-    notify: async (message, content, llmScenario, level) => {
-      if (typeof content === "string") {
-        content = [
-          content,
-          SEPARATOR_LINE,
-          `by ${await formatTalkerFromMessage(message, llmScenario)}\n${moment().format("MM/DD hh:mm:ss")}`,
-        ].join("\n")
-      }
+    notify: async (content, llmScenario, level) => {
       void addSendTask(async () => {
         // !important 需要在手机上，手动地把对应的群，保存到通讯录，否则找不到
         ;(await bot.Room.find({ topic: /飞脑通知/i }))?.say(content)

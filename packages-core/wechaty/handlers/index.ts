@@ -1,18 +1,40 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
+import { LogLevel } from "@cs-magic/log/schema"
 import qrcodeTerminal from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
+import moment from "../../../packages-to-classify/datetime/moment"
 import { initBotContext } from "../schema/bot.context"
+import { formatTalkerFromMessage } from "../utils/format-talker"
 import { handleFriendship } from "./handle-friendship"
 import { handleMessage } from "./handle-message"
 import { handleRoomInvite } from "./handle-room-invite"
 import { handleRoomJoin } from "./handle-room-join"
 
-export const safeHandle = async (p: Promise<unknown>) => {
+export const safeHandle = async (
+  bot: Wechaty,
+  p: Promise<unknown>,
+  suffix?: string,
+) => {
   try {
     return await p
   } catch (e) {
-    formatError(e)
+    let s = formatError(e)
+
+    if (suffix) {
+      s = [s, SEPARATOR_LINE, suffix].join("\n")
+    }
+
+    // if we should expose to the user
+    // bug (not solved): https://github.com/wechaty/puppet-padlocal/issues/292
+    // from wang, 2024-04-13 01:36:14
+    if (s.includes("filterValue not found for filterKey: id"))
+      s = `对不起，您的平台（例如 win 3.9.9.43）不支持 at 小助手，请更换平台再试`
+
+    // !WARNING: 这是个 ANY EXCEPTION 机制，有可能导致无限循环，导致封号！！！
+    // void botNotify(bot, await formatBotQuery(context, "哎呀出错啦", s))
+    void bot.context?.notify(`❌ ${s}`, undefined, LogLevel.error)
   }
 }
 
@@ -48,19 +70,27 @@ export const handleWechatyBot = (bot: Wechaty) => {
     //////////////////////////////
 
     .on("message", async (message) => {
-      await safeHandle(handleMessage(bot, message))
+      await safeHandle(
+        bot,
+        handleMessage(bot, message),
+        `by ${await formatTalkerFromMessage(
+          message,
+          // todo: get type of inner
+          undefined,
+        )}\n${moment().format("MM/DD hh:mm:ss")}`,
+      )
     })
 
     .on("friendship", async (friendship) => {
-      await safeHandle(handleFriendship(bot, friendship))
+      await safeHandle(bot, handleFriendship(bot, friendship))
     })
 
     .on("room-invite", async (room) => {
-      await safeHandle(handleRoomInvite(bot, room))
+      await safeHandle(bot, handleRoomInvite(bot, room))
     })
 
     .on("room-join", async (...args) => {
-      await safeHandle(handleRoomJoin(bot, ...args))
+      await safeHandle(bot, handleRoomJoin(bot, ...args))
     })
 
     .on("post", (post) => {
