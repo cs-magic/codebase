@@ -1300,3 +1300,5 @@ export class PuppetWechat4u extends PUPPET.Puppet {
 }
 
 export default PuppetWechat4u
+
+logger.info(`\n== PuppetWechat4u ==\n`)

@@ -6,6 +6,7 @@ import WechatCore, { AlreadyLogoutError } from "./core"
 import ContactFactory from "./interface/contact"
 import MessageFactory from "./interface/message"
 import { getCONF, isStandardBrowserEnv } from "./util"
+import { logger } from "@cs-magic/log/logger"
 
 const debug = _debug("wechat")
 
@@ -332,6 +333,8 @@ class Wechat extends WechatCore {
           }
         })
         .then(() => {
+          // logger.info(`-- received msg [%o]`, msg)
+
           msg = this.Message.extend(msg)
           this.emit("message", msg)
           if (msg.MsgType === this.CONF.MSGTYPE_STATUSNOTIFY) {
@@ -426,3 +429,5 @@ class Wechat extends WechatCore {
 Wechat.STATE = getCONF().STATE
 
 exports = module.exports = Wechat
+
+logger.info(`\n== wechat4u ==\n`)

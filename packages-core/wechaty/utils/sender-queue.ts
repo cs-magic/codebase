@@ -27,7 +27,7 @@ export class SenderQueue {
 
   async addTask(task: QueueTask) {
     SenderQueue.queue.push(task)
-    logger.info(`🌈 task(cnt=${this.cnt})`)
+    logger.info(`🌈task (cnt=${this.cnt})`)
     if (!SenderQueue.processing) {
       SenderQueue.processing = true
       await this._runTask()
@@ -38,7 +38,7 @@ export class SenderQueue {
     while (SenderQueue.queue.length > 0) {
       try {
         const task = SenderQueue.queue.shift()!
-        logger.info(`⏳ task(cnt=${this.cnt})`)
+        // logger.info(`⏳ task(cnt=${this.cnt})`)
         await task()
         logger.info(`✅ task (cnt=${this.cnt})`)
       } catch (e) {

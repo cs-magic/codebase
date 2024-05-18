@@ -1,5 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import { formatError } from "@cs-magic/common/utils/format-error"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
 import qrcodeTerminal from "qrcode-terminal"
@@ -46,7 +47,7 @@ export const handleWechatyBot = (bot: Wechaty) => {
 
     .on("scan", async (qrcode, status, data) => {
       logger.info(
-        `onScan (status=${ScanStatus[status]}, data=${data}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
+        `onScan (status=${ScanStatus[status]}, data=${formatString(data ?? "", 20)}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
       )
       qrcodeTerminal.generate(qrcode, { small: true })
     })

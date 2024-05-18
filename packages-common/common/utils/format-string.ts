@@ -4,3 +4,5 @@ export const formatString = (s: string, maxLength?: number) => {
   const n = maxLength / 2
   return s.slice(0, n) + "..." + s.slice(s.length - n)
 }
+
+export const formatLine = formatString

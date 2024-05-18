@@ -13,28 +13,28 @@ export const referMsgParser: GenericMessageParser = async <T>(
   ret: PUPPET.payloads.Message,
   context: MessageParserContext,
 ) => {
-  logger.debug(`[refer] <-- ret: %o, localMessage: %o`, ret, localMessage)
+  const appMessagePayload = context.appMessagePayload
+  logger.info(`[refer] <-- ret`)
+  logger.info({ ret, localMessage, appMessagePayload })
 
   if (
-    !context.appMessagePayload ||
-    context.appMessagePayload.type !== AppMessageType.ReferMsg
+    !appMessagePayload ||
+    appMessagePayload.type !== AppMessageType.ReferMsg
   ) {
     return ret
   }
 
-  const appPayload = context.appMessagePayload
-
-  const referMessagePayload = appPayload.refermsg
+  const referMessagePayload = appMessagePayload.refermsg
 
   // todo: use extra type of PUPPET.types.Message, mark@2024-04-19 10:21:24
   ret.type = PUPPET.types.Message.Text
 
   // todo: possible undefined
   ret.text = !referMessagePayload
-    ? appPayload.title
+    ? appMessagePayload.title
     : `「${referMessagePayload.displayname}：${serializeRefMsgPayload(
         referMessagePayload,
-      )}」\n- - - - - - - - - - - - - - -\n${appPayload.title}`
+      )}」\n- - - - - - - - - - - - - - -\n${appMessagePayload.title}`
 
   logger.debug(`[refer] --> ret: %o`, ret)
 

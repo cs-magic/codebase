@@ -19,8 +19,8 @@ export const createWechatyBot = () => {
     name, // 加了名字后就可以自动存储了
 
     puppetOptions: {
-      // I added in padlocal, 2024-04-27 08:49:22
-      // restartOnFailure: false,
+      // mark@2024-04-27 08:49:22: for padlocal
+      restartOnFailure: false,
     },
   }) as Wechaty // 等会再更新其他扩展的信息
 

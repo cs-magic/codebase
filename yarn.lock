@@ -2004,6 +2004,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     node-schedule: "npm:^2.1.1"
     qrcode-terminal: "npm:^0.12.0"
+    wechat4u: "workspace:^"
     wechaty: "npm:^1.20.2"
     wechaty-puppet: "npm:1.20.2"
     wechaty-puppet-padlocal: "workspace:^"
@@ -27700,7 +27701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wechat4u@workspace:packages-core/wechat4u":
+"wechat4u@workspace:^, wechat4u@workspace:packages-core/wechat4u":
   version: 0.0.0-use.local
   resolution: "wechat4u@workspace:packages-core/wechat4u"
   dependencies:
