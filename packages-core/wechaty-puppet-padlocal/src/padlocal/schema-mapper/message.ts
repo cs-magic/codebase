@@ -2,7 +2,10 @@ import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import * as PUPPET from "wechaty-puppet";
 import { executeMessageParsers } from "./message/mod.js";
 
-export async function padLocalMessageToWechaty(puppet: PUPPET.Puppet, padLocalMessage: PadLocal.Message.AsObject): Promise<PUPPET.payloads.Message> {
+export async function padLocalMessageToWechaty(
+  puppet: PUPPET.Puppet,
+  padLocalMessage: PadLocal.Message.AsObject
+): Promise<PUPPET.payloads.Message> {
   // set default value for MessagePayloadBase, other fields will be fulfilled or updated var MessageParers
   const ret: PUPPET.payloads.Message = {
     id: padLocalMessage.id,

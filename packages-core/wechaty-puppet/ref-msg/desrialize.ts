@@ -1,18 +1,20 @@
 import { AppMessageType } from "wechaty-puppet-padlocal"
 import { z } from "zod"
 
-export type DeserializedRefMsgPayload = {
-  id: string
-  content: string
-  type: AppMessageType
-} | null
+export type DeserializedRefMsgPayload =
+  | {
+      id: string
+      content: string
+      type: AppMessageType
+    }
+  | string
 
 export const deserializeRefMsgPayload = (
   v: string,
 ): DeserializedRefMsgPayload => {
   const m = /^RefMsg\(id=(.*?), type=(.*?), content=(.*?)\)$/ms.exec(v)
   // logger.debug(`deserialized ref message payload: %o`, m);
-  if (!m) return null
+  if (!m) return v
   return {
     id: z.string().parse(m[1]),
     content: z.string().parse(m[3]),

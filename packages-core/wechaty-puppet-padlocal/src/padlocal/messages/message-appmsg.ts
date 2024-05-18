@@ -85,11 +85,6 @@ export interface ReferMsgPayload {
   content: string;
 }
 
-export const serializeRefMsgPayload = (payload: ReferMsgPayload) => {
-  // console.log("-- refMsgPayload: ", payload);
-  return `RefMsg(id=${payload.svrid}, type=${AppMessageType[Number(payload.type)]}, content=${payload.content})`;
-};
-
 export interface AppMessagePayload {
   des?: string;
   thumburl?: string;
