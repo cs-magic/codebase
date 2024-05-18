@@ -1,6 +1,6 @@
 import * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
-import type { MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
+import type { MessageParserContext } from "../../../../../wechaty-puppet/src/extra/message.parser";
 import { WechatMessageType } from "../../types.js";
 import { log } from "wechaty-puppet";
 import type { MessageParser } from "./message-parser.js";

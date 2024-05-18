@@ -1,19 +1,13 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
-import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
-import {
-  IUserSummary,
-  IUserSummaryFilled,
-} from "@cs-magic/prisma/schema/user.summary"
-import { md5 } from "js-md5"
+import { IUserSummaryFilled } from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
-import * as repl from "node:repl"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
-import { deserializeMsg } from "../../../../wechaty-puppet/msg/deserialize"
-import { puppetVersion } from "../../../../wechaty-puppet/version"
+import { deserializeMsg } from "../../../../wechaty-puppet/src/extra/deserialize-msg"
+import { puppetVersion } from "../../../../wechaty-puppet/src/extra/version"
 import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 
 import { LlmScenario } from "../../../schema/bot.utils"

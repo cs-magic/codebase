@@ -1,10 +1,11 @@
-import type { MessageParser, MessageParserContext } from './message-parser.js'
-import type * as PUPPET from 'wechaty-puppet'
-import { parseSysmsgMessagePayload } from '../../messages/message-sysmsg.js'
-import type { PatMessagePayload } from '../../messages/sysmsg/message-pat.js'
-import type { TodoMessagePayload } from '../../messages/sysmsg/message-todo.js'
-import type { RevokeMsgMessagePayload } from '../../messages/sysmsg/message-revokemsg.js'
-import type { WebMessageRawPayload } from '../../../web-schemas'
+import type { MessageParserContext } from "wechaty-puppet"
+import type { MessageParser } from "./message-parser.js"
+import type * as PUPPET from "wechaty-puppet"
+import { parseSysmsgMessagePayload } from "../../messages/message-sysmsg.js"
+import type { PatMessagePayload } from "../../messages/sysmsg/message-pat.js"
+import type { TodoMessagePayload } from "../../messages/sysmsg/message-todo.js"
+import type { RevokeMsgMessagePayload } from "../../messages/sysmsg/message-revokemsg.js"
+import type { WebMessageRawPayload } from "../../../web-schemas"
 
 /**
  * try to parse talker and listenerId from sysmsg for room messages
@@ -12,14 +13,19 @@ import type { WebMessageRawPayload } from '../../../web-schemas'
  * @param ret
  * @param context
  */
-export const sysmsgParser: MessageParser = async (webMessageRawPayload: WebMessageRawPayload, ret: PUPPET.payloads.Message, context: MessageParserContext) => {
+export const sysmsgParser: MessageParser = async (
+  webMessageRawPayload: WebMessageRawPayload,
+  ret: PUPPET.payloads.Message,
+  context: MessageParserContext,
+) => {
   const sysmsgPayload = await parseSysmsgMessagePayload(webMessageRawPayload)
   if (!sysmsgPayload) {
     return ret
   }
   switch (sysmsgPayload.type) {
-    case 'pat': {
-      const patMessagePayload: PatMessagePayload = sysmsgPayload.payload as PatMessagePayload
+    case "pat": {
+      const patMessagePayload: PatMessagePayload =
+        sysmsgPayload.payload as PatMessagePayload
 
       if (context.isRoomMessage) {
         ret.talkerId = patMessagePayload.pattedUserName
@@ -29,8 +35,9 @@ export const sysmsgParser: MessageParser = async (webMessageRawPayload: WebMessa
       break
     }
 
-    case 'roomtoolstips': {
-      const todoMessagePayload: TodoMessagePayload = sysmsgPayload.payload as TodoMessagePayload
+    case "roomtoolstips": {
+      const todoMessagePayload: TodoMessagePayload =
+        sysmsgPayload.payload as TodoMessagePayload
 
       if (context.isRoomMessage) {
         ret.talkerId = todoMessagePayload.operatorUserName
@@ -39,15 +46,16 @@ export const sysmsgParser: MessageParser = async (webMessageRawPayload: WebMessa
       break
     }
 
-    case 'revokemsg': {
-      const revokeMsgPayload: RevokeMsgMessagePayload = sysmsgPayload.payload as RevokeMsgMessagePayload
+    case "revokemsg": {
+      const revokeMsgPayload: RevokeMsgMessagePayload =
+        sysmsgPayload.payload as RevokeMsgMessagePayload
 
       if (context.isRoomMessage) {
         // Generic room message logic can get the right talkerId for revoke message
       } else {
         // Fix talkerId for single chat revoke message that sent by you
         // talkerId and listenerId for revoke message sent by others is right already
-        if (revokeMsgPayload.type === 'You') {
+        if (revokeMsgPayload.type === "You") {
           ret.listenerId = ret.talkerId
           ret.talkerId = context.puppet.currentUserId
         }
@@ -55,7 +63,7 @@ export const sysmsgParser: MessageParser = async (webMessageRawPayload: WebMessa
 
       break
     }
-    case 'roomtips': {
+    case "roomtips": {
       if (context.isRoomMessage) {
         ret.talkerId = webMessageRawPayload.FromUserName
       }

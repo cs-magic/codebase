@@ -86,9 +86,6 @@
     "tstest": "^1.0.1",
     "wechaty": "^1.19.10"
   },
-  "peerDependencies": {
-    "wechaty-puppet": "^1.19.6"
-  },
   "dependencies": {
     "@types/config": "0.0.41",
     "@types/node-cleanup": "^2.1.2",

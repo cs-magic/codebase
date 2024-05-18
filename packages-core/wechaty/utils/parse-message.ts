@@ -1,5 +1,5 @@
-import { deserializeMsg } from "../../wechaty-puppet/msg/deserialize"
-import { puppetVersion } from "../../wechaty-puppet/version"
+import { deserializeMsg } from "../../wechaty-puppet/src/extra/deserialize-msg"
+import { puppetVersion } from "../../wechaty-puppet/src/extra/version"
 
 export const parseText = (messageText: string) => {
   const text = (

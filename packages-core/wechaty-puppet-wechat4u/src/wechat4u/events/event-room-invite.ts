@@ -1,7 +1,7 @@
 import {
   type AppMessagePayload,
   AppMessageType,
-} from "../../../../wechaty-puppet/types/message"
+} from "../../../../wechaty-puppet/src/extra/message"
 import { parseAppmsgMessagePayload } from "../messages/message-appmsg.js"
 import type * as PUPPET from "wechaty-puppet"
 import type { WebMessageRawPayload } from "../../web-schemas.js"

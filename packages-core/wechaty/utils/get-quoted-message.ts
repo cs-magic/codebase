@@ -1,6 +1,6 @@
 import { types } from "wechaty"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
-import { PuppetVersion } from "../../wechaty-puppet/version"
+import { PuppetVersion } from "../../wechaty-puppet/src/extra/version"
 
 /**
  * todo: limited input

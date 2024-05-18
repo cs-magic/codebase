@@ -1,6 +1,6 @@
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
+import type { GenericMessageParser, MessageParserContext } from "wechaty-puppet";
 import type * as PUPPET from "wechaty-puppet";
-import type { GenericMessageParser, MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
 
 export type MessageParser = GenericMessageParser<PadLocal.Message.AsObject>;
 

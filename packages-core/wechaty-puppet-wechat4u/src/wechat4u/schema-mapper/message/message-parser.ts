@@ -1,17 +1,8 @@
 import { logger } from "@cs-magic/log/logger"
+import type { GenericMessageParser, MessageParserContext } from "wechaty-puppet"
 import type * as PUPPET from "wechaty-puppet"
-import type { AppMessagePayload } from "../../../../../wechaty-puppet/types/message"
-import type { GenericMessageParser } from "../../../../../wechaty-puppet/types/message.parser"
-import type { WebMessageRawPayload } from "../../../web-schemas.js"
 
-/**
- * Add customized message parser context info here
- */
-export type MessageParserContext = {
-  puppet: PUPPET.Puppet
-  isRoomMessage: boolean
-  appMessagePayload?: AppMessagePayload
-}
+import type { WebMessageRawPayload } from "../../../web-schemas.js"
 
 export type MessageParser = GenericMessageParser<WebMessageRawPayload>
 

@@ -20,7 +20,6 @@
     "qrcode-terminal": "^0.12.0",
     "wechat4u": "workspace:^",
     "wechaty": "^1.20.2",
-    "wechaty-puppet": "1.20.2",
     "wechaty-puppet-padlocal": "workspace:^",
     "wechaty-puppet-wechat4u": "workspace:^"
   },

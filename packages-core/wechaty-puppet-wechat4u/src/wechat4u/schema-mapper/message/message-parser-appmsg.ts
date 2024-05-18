@@ -1,14 +1,11 @@
 import * as PUPPET from "wechaty-puppet"
-import { log } from "wechaty-puppet"
-import { AppMessageType } from "../../../../../wechaty-puppet/types/message"
-import {
-  LOGPRE,
-  MessageParser,
-  MessageParserContext,
-} from "./message-parser.js"
+import { MessageParserContext, log } from "wechaty-puppet"
+import { AppMessageType } from "wechaty-puppet"
+import { LOGPRE, MessageParser } from "./message-parser.js"
 import { parseAppmsgMessagePayload } from "../../messages/message-appmsg.js"
 import type { WebMessageRawPayload } from "../../../web-schemas"
 
+// @ts-ignore
 export const appMsgParser: MessageParser = async (
   webMessageRawPayload: WebMessageRawPayload,
   ret: PUPPET.payloads.Message,

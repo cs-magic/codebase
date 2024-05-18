@@ -1,4 +1,4 @@
-import { referMsgParser } from "../../../../../wechaty-puppet/ref-msg/parser";
+import { referMsgParser } from "../../../../../wechaty-puppet/src/extra/parse-ref-msg";
 import { addMessageParser, executeMessageParsers } from "./message-parser.js";
 import { typeParser } from "./message-parser-type.js";
 import { roomParser } from "./message-parser-room.js";
