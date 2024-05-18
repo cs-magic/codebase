@@ -1,3 +1,4 @@
+import { logger } from "@cs-magic/log/logger"
 import type * as PUPPET from "wechaty-puppet"
 import type { AppMessagePayload } from "../../../../../wechaty-puppet/types/message"
 import type { GenericMessageParser } from "../../../../../wechaty-puppet/types/message.parser"
@@ -30,8 +31,11 @@ export async function executeMessageParsers(
     puppet,
   }
 
+  let i = 0
   for (const parser of messageParserList) {
     // @ts-ignore
+    ++i
+    logger.info(`parser[${i}/${messageParserList.length}]`)
     ret = await parser(webMessageRawPayload, ret, context)
   }
 

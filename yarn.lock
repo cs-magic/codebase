@@ -2007,6 +2007,7 @@ __metadata:
     wechaty: "npm:^1.20.2"
     wechaty-puppet: "npm:1.20.2"
     wechaty-puppet-padlocal: "workspace:^"
+    wechaty-puppet-wechat4u: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -27809,7 +27810,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wechaty-puppet-wechat4u@npm:^1.11.1, wechaty-puppet-wechat4u@workspace:packages-core/wechaty-puppet-wechat4u":
+"wechaty-puppet-wechat4u@npm:^1.11.1, wechaty-puppet-wechat4u@workspace:^, wechaty-puppet-wechat4u@workspace:packages-core/wechaty-puppet-wechat4u":
   version: 0.0.0-use.local
   resolution: "wechaty-puppet-wechat4u@workspace:packages-core/wechaty-puppet-wechat4u"
   dependencies:

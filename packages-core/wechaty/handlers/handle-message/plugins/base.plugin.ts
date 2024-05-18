@@ -12,6 +12,8 @@ import set from "lodash/set"
 import * as repl from "node:repl"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
+import { deserializeMsg } from "../../../../wechaty-puppet/msg/deserialize"
+import { puppetVersion } from "../../../../wechaty-puppet/version"
 import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 
 import { LlmScenario } from "../../../schema/bot.utils"
@@ -22,11 +24,7 @@ import {
   getConvData,
   getConvPreference,
 } from "../../../utils/get-conv-preference"
-import {
-  padlocalVersion,
-  parseQuote,
-  parseText,
-} from "../../../utils/parse-message"
+import { parseText } from "../../../utils/parse-message"
 
 export class BasePlugin {
   public message: Message
@@ -64,7 +62,7 @@ export class BasePlugin {
   }
 
   get quote() {
-    return parseQuote(this.message.text(), padlocalVersion)
+    return deserializeMsg(this.message.text(), puppetVersion)
   }
 
   get conv() {
@@ -100,8 +98,9 @@ export class BasePlugin {
 
   async getQuotedMessage() {
     if (this.quote?.quoted.version === "mark@2024-04-19") {
-      const id = this.quote?.quoted.id
-      if (id) {
+      const quoted = this.quote?.quoted
+      if ("id" in quoted) {
+        const id = quoted.id
         logger.debug(`quoted message id=${id}`)
         return await this.bot.Message.find({ id })
       }

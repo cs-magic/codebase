@@ -1,6 +1,6 @@
 import { types } from "wechaty"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
-import { PadlocalVersion } from "./parse-message"
+import { PuppetVersion } from "../../wechaty-puppet/version"
 
 /**
  * todo: limited input
@@ -10,7 +10,7 @@ import { PadlocalVersion } from "./parse-message"
 export const getQuotedMessage = async (
   id?: string,
   title?: string,
-  version: PadlocalVersion = "mark@2024-04-19",
+  version: PuppetVersion = "mark@2024-04-19",
 ) => {
   const row = await prisma.wechatMessage.findFirstOrThrow({
     where: {
