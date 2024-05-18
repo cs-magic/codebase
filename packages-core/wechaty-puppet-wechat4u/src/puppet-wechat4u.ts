@@ -453,11 +453,18 @@ export class PuppetWechat4u extends PUPPET.Puppet {
         )
         throw new Error("no id")
       }
+
       // 如果是消息的创建时间小于机器人启动的时间 直接丢弃
       if (msg.CreateTime < this.startTime) {
-        // log.warn('PuppetWechat4u', 'initHookEvents() wechat4u.on(message) is history message: %s', JSON.stringify(msg))
+        log.warn(
+          "PuppetWechat4u",
+          "initHookEvents() wechat4u.on(message) is history message: %s",
+          JSON.stringify(msg),
+        )
+        // 会重复【因为没有释放吧】
         return
       }
+
       this.cacheMessageRawPayload.set(msg.MsgId, msg)
       const event = await parseEvent(this, msg)
       switch (event.type) {

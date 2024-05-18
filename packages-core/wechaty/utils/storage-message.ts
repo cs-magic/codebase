@@ -15,13 +15,18 @@ export const storageMessage = async (message: Message) => {
   const listener = message.listener()
 
   const type = message.type()
-  const payload = omit(message.payload, ["talkerId", "roomId", "listenerId"])
+
+  const rawPayload = message.payload
+  // console.log("rawPayload: ", rawPayload)
+
+  const payload = omit(rawPayload, ["talkerId", "roomId", "listenerId"])
 
   // we can use `this.bot.Image.create(mid) to create an Image, but with image in the cache (after bot starts)`
   if (type === types.Message.Image) payload.text = `<Image id="${payload.id}"/>`
 
   try {
     await prisma.wechatMessage.create({
+      // todo: augmentation
       data: {
         ...payload,
 

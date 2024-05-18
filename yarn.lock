@@ -2006,6 +2006,7 @@ __metadata:
     qrcode-terminal: "npm:^0.12.0"
     wechat4u: "workspace:^"
     wechaty: "npm:^1.20.2"
+    wechaty-puppet: "workspace:^"
     wechaty-puppet-padlocal: "workspace:^"
     wechaty-puppet-wechat4u: "workspace:^"
   languageName: unknown

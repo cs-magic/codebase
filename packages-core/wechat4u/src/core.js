@@ -505,6 +505,9 @@ export default class WechatCore {
             ClientMsgId: clientMsgId,
           },
         }
+
+        // logger.debug(`wechat4u sending text message: %o`, data)
+
         return this.request({
           method: "POST",
           url: this.CONF.API_webwxsendmsg,
@@ -512,6 +515,9 @@ export default class WechatCore {
           data: data,
         }).then((res) => {
           let data = res.data
+
+          // logger.debug(`wechat4u send text message response: [%o]`, data)
+
           assert.equal(data.BaseResponse.Ret, 0, res)
           return data
         })

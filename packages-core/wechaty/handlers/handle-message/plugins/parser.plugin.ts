@@ -5,7 +5,6 @@ import {
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/log/logger"
 
-import { convertUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
@@ -62,20 +61,14 @@ export class ParserPlugin extends BasePlugin {
     })
   }
 
-  async parseQuotedImage() {
-    if (!this.quote || this.quote.quoted.version !== "mark@2024-04-19") return
-    const id = this.quote.quoted.id
-    if (!id) return
-    const image = this.bot.Image.create(id)
-    void this.reply(await image.hd())
-  }
-
   async parseQuote() {
     if (!this.quote) return
 
     const v = this.quote.quoted.version
     const message = await getQuotedMessage(
-      v === "mark@2024-04-19" ? this.quote.quoted.id : undefined,
+      v === "mark@2024-04-19" && "id" in this.quote.quoted
+        ? this.quote.quoted.id
+        : undefined,
       this.quote.quoted.content ?? "",
     )
 
@@ -157,21 +150,5 @@ export class ParserPlugin extends BasePlugin {
     } finally {
       --ParserPlugin.toParse
     }
-  }
-
-  async quoteReply() {
-    if (!this.quote || this.quote.quoted.version !== "mark@2024-04-19") return
-    const id = this.quote.quoted.id
-    if (!id) return
-
-    logger.info("quoting reply")
-    const post = await this.bot.Post.builder()
-      .add("this is the reply to a quoted message")
-      .build()
-
-    await post.reply(this.message) // I'm thinking about to rename the `post.reply()` to `post.replyTo()` so that it will be less confusing.
-    await this.bot.publish(post)
-
-    logger.info("quoted reply")
   }
 }

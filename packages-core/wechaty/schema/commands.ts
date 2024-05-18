@@ -8,18 +8,14 @@ export const featureTypeSchema = z.enum([
   "chatter",
   "parser",
   "room",
+  "test",
 ])
 export type FeatureType = z.infer<typeof featureTypeSchema>
 
 export const managerTypeSchema = z.enum(["base", ...featureTypeSchema.options])
 export type ManagerType = z.infer<typeof managerTypeSchema>
 
-export const quoteTypeSchema = z.enum([
-  "parse",
-  "recall",
-  "test-create-image-from-id",
-  "quote-reply",
-])
+export const quoteTypeSchema = z.enum(["parse", "recall"])
 export type QuoteType = z.infer<typeof quoteTypeSchema>
 
 export const commandsSchema = z.enum([

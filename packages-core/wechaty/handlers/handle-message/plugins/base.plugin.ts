@@ -1,13 +1,16 @@
 import { NotImplementedError } from "@cs-magic/common/schema/error"
 import { evalObject } from "@cs-magic/common/utils/eval-object"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
-import { IUserSummaryFilled } from "@cs-magic/prisma/schema/user.summary"
+import {
+  IUserSummaryFilled,
+  wechatMessageDetailSchema,
+} from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { Message, Sayable, type Wechaty } from "wechaty"
+import { deserializeMsg, puppetVersion } from "wechaty-puppet"
 import { prisma } from "../../../../../packages-to-classify/db/providers/prisma"
-import { deserializeMsg } from "../../../../wechaty-puppet/src/extra/deserialize-msg"
-import { puppetVersion } from "../../../../wechaty-puppet/src/extra/version"
 import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 
 import { LlmScenario } from "../../../schema/bot.utils"
@@ -19,6 +22,7 @@ import {
   getConvPreference,
 } from "../../../utils/get-conv-preference"
 import { parseText } from "../../../utils/parse-message"
+import { storageMessage } from "../../../utils/storage-message"
 
 export class BasePlugin {
   public message: Message
@@ -64,7 +68,9 @@ export class BasePlugin {
   }
 
   get convId() {
-    return this.conv.id
+    const convId = this.conv.id
+    logger.debug({ convId })
+    return convId
   }
 
   async getTalkingUser(): Promise<IUserSummaryFilled> {
@@ -88,6 +94,27 @@ export class BasePlugin {
 
   async getUserIdentity() {
     return `${this.message.talker().id}_${this.room?.id}@wechat`
+  }
+
+  async getLatestMessages(n = 10) {
+    const messages = await prisma.wechatMessage.findMany({
+      ...wechatMessageDetailSchema,
+      where: {
+        // 三者任一即可
+        OR: [
+          { roomId: this.convId },
+          { listenerId: this.convId, talkerId: this.bot.context?.wxid },
+          { talkerId: this.convId, listenerId: this.bot.context?.wxid },
+        ],
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+      take: -n,
+    })
+
+    logger.debug(messages.map((m) => formatString(JSON.stringify(m), 120)))
+    return messages
   }
 
   async getQuotedMessage() {
@@ -200,7 +227,10 @@ export class BasePlugin {
 
   async reply(message: Sayable) {
     await this.bot.context?.addSendTask(async () => {
-      await this.message.say(message)
+      const sentMessage = await this.message.say(message)
+      logger.debug(`\n-- sentMessage: [%o]`, sentMessage)
+
+      // await storageMessage(message)
     })
   }
 

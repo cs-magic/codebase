@@ -11,6 +11,7 @@ export const listMessagesOfLatestTopic = async (
 ) => {
   const lastUserSetCommand = await prisma.wechatMessage.findFirst({
     where: {
+      // todo: 这里是错的， listenerId, talkerId 应该要成对
       // 三者任一即可
       OR: [{ roomId: convId }, { listenerId: convId }, { talkerId: convId }],
       text: {

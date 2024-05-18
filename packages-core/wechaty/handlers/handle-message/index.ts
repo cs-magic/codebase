@@ -1,5 +1,4 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { safeCallLLM } from "@cs-magic/llm"
 import { logger } from "@cs-magic/log/logger"
 import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
@@ -19,34 +18,18 @@ import { ParserPlugin } from "./plugins/parser.plugin"
 import { RoomPlugin } from "./plugins/room.plugin"
 import { SystemPlugin } from "./plugins/system.plugin"
 import { TaskPlugin } from "./plugins/task.plugin"
+import { TestPlugin } from "./plugins/test.plugin"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   const tmm = {
+    base: new BasePlugin(bot, message),
     todo: new TaskPlugin(bot, message),
     chatter: new ChatterPlugin(bot, message),
     parser: new ParserPlugin(bot, message),
     system: new SystemPlugin(bot, message),
-    base: new BasePlugin(bot, message),
     room: new RoomPlugin(bot, message),
+    test: new TestPlugin(bot, message),
   } satisfies Partial<Record<ManagerType, BasePlugin>>
-
-  // message.toImage()
-
-  const sendLink = () => {
-    void message.say(
-      new bot.UrlLink({
-        title:
-          "自定义内容 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890",
-        description:
-          "自定义摘要 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890",
-        url: "https://p01.cs-magic.cn",
-        thumbnailUrl:
-          "https://avatars.githubusercontent.com/u/33591398?s=80&v=4",
-      }),
-    )
-  }
-
-  const base = tmm.base
 
   const type = message.type()
   const text = message.text()
@@ -73,41 +56,7 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       return
 
     case types.Message.Image:
-      {
-        logger.debug("== Image ==")
-        // todo: preference seems not work
-        const preference = await base.getConvPreference()
-        const enabled = preference.on.message.image.describe.enabled
-        logger.debug({ enabled })
-        if (!enabled) return
-
-        const action = async () => {
-          const image = await message.toFileBox()
-          const result = await safeCallLLM({
-            model: "gpt-4o",
-            messages: [
-              {
-                role: "user",
-                content: [
-                  {
-                    type: "text",
-                    text: "描述一下这张图里的内容",
-                  },
-                  {
-                    type: "image_url",
-                    image_url: {
-                      url: await image.toDataURL(),
-                    },
-                  },
-                ],
-              },
-            ],
-          })
-          const content = result.response?.choices[0]?.message.content
-          if (content) await base.reply(content)
-        }
-        // void action()
-      }
+      logger.debug("== Image ==")
       return
 
     case types.Message.Text: {
@@ -117,8 +66,16 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
       if (result) {
         switch (result.command) {
+          case "test":
+            return void tmm.test.run(result.args)
+
           case "ding":
-            return void bot.context?.addSendTask(() => message.say("dong"))
+            return void bot.context?.addSendTask(async () => {
+              logger.info(`\n-- sending ding`)
+              const sentMessage = await message.say("dong")
+              // logger.info(`\n-- sent`)
+              logger.info(`\n-- sentMessage: [%o]`, sentMessage)
+            })
 
           case "help":
             return await tmm.base.getHelp(true)
@@ -128,11 +85,6 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
 
           case "recall":
             return await tmm.base.recallQuotedMessage()
-
-          case "love":
-            return await message.say(
-              "你有什么想和我说的吗？（我是你最乖的树洞，我们之间的对话不会告诉任何人哦）",
-            )
 
           case "system":
             return await tmm.system.parse(result.args)
@@ -152,13 +104,11 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
           case "room":
             return // await tmm.room.parse(result.args)
 
-          case "test-create-image-from-id": {
-            return await tmm.parser.parseQuotedImage()
-          }
-
-          case "quote-reply": {
-            return await tmm.parser.quoteReply()
-          }
+          // todo: 树洞
+          case "love":
+            return await message.say(
+              "你有什么想和我说的吗？（我是你最乖的树洞，我们之间的对话不会告诉任何人哦）",
+            )
         }
       } else {
         await new ChatterPlugin(bot, message).safeReplyWithAI()
