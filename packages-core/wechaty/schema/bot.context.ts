@@ -5,15 +5,11 @@ import { logger } from "@cs-magic/log/logger"
 import { LogLevel } from "@cs-magic/log/schema"
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
-import puppet from "refractor/lang/puppet"
 import { Message, Sayable, Wechaty } from "wechaty"
 import packageJson from "../../../package.json"
-import moment from "../../../packages-to-classify/datetime/moment"
-import { formatTalkerFromMessage } from "../utils/format-talker"
 import { getConvPreference } from "../utils/get-conv-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
-import pick from "lodash/pick"
 
 type BotData = {
   name: string

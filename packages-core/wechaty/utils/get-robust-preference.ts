@@ -30,7 +30,7 @@ export const getRobustPreference = (
 
   // todo: merge 的最佳实践 【限制default schema】
   const preference = merge({ ...defaultWechatPreference }, rawPreference)
-  logger.debug(JSON.stringify({ rawPreference, preference }, null, 2))
+  // logger.debug(JSON.stringify({ rawPreference, preference }, null, 2))
   return preference
 }
 
