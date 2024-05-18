@@ -1,19 +1,20 @@
-import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb"
+import { logger } from "@cs-magic/log/logger"
 import * as PUPPET from "wechaty-puppet"
-import {
-  AppMessageType,
-  ReferMsgPayload,
-  MessageParser,
+import { AppMessageType } from "../types/message"
+import type {
+  GenericMessageParser,
   MessageParserContext,
-  // @ts-ignore
-} from "wechaty-puppet-padlocal"
+} from "../types/message.parser"
+
 import { serializeRefMsgPayload } from "./serialize"
 
-export const referMsgParser: MessageParser = async (
-  _padLocalMessage: PadLocal.Message.AsObject,
+export const referMsgParser: GenericMessageParser = async <T>(
+  localMessage: T,
   ret: PUPPET.payloads.Message,
   context: MessageParserContext,
 ) => {
+  logger.debug(`[refer] <-- ret: %o, localMessage: %o`, ret, localMessage)
+
   if (
     !context.appMessagePayload ||
     context.appMessagePayload.type !== AppMessageType.ReferMsg
@@ -23,14 +24,19 @@ export const referMsgParser: MessageParser = async (
 
   const appPayload = context.appMessagePayload
 
-  const referMessagePayload: ReferMsgPayload = appPayload.refermsg
+  const referMessagePayload = appPayload.refermsg
 
-  ret.type = PUPPET.types.Message.Text
-  // console.log("-- quoted: ", formatRefMsgPayload(referMessagePayload));
   // todo: use extra type of PUPPET.types.Message, mark@2024-04-19 10:21:24
-  ret.text = `「${referMessagePayload.displayname}：${serializeRefMsgPayload(
-    referMessagePayload,
-  )}」\n- - - - - - - - - - - - - - -\n${appPayload.title}`
+  ret.type = PUPPET.types.Message.Text
+
+  // todo: possible undefined
+  ret.text = !referMessagePayload
+    ? appPayload.title
+    : `「${referMessagePayload.displayname}：${serializeRefMsgPayload(
+        referMessagePayload,
+      )}」\n- - - - - - - - - - - - - - -\n${appPayload.title}`
+
+  logger.debug(`[refer] --> ret: %o`, ret)
 
   return ret
 }

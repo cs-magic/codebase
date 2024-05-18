@@ -5,9 +5,11 @@ import { FileBox, FileBoxInterface } from "file-box";
 import { KickOutEvent, PadLocalClient, Log as PadLocalLog } from "padlocal-client-ts";
 import PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import { genIdempotentId } from "padlocal-client-ts/dist/utils/Utils.js";
+import { AppMessageType, type ReferMsgPayload } from "../../wechaty-puppet/types/message";
+import type { MessageParserContext } from "../../wechaty-puppet/types/message.parser";
 import { CacheManager, RoomMemberMap } from "./padlocal/cache-manager.js";
 import { isIMContactId, isRoomId } from "./padlocal/utils/is-type.js";
-import { parseAppmsgMessagePayload, AppMessageType, ReferMsgPayload } from "./padlocal/messages/message-appmsg.js";
+import { parseAppmsgMessagePayload } from "./padlocal/messages/message-appmsg.js";
 import { parseMiniProgramMessagePayload } from "./padlocal/messages/message-miniprogram.js";
 import { parseEvent, EventType } from "./padlocal/events/mod.js";
 import * as XMLParser from "fast-xml-parser";
@@ -26,7 +28,7 @@ import nodeUrl from "url";
 import { addRunningPuppet, removeRunningPuppet } from "./cleanup.js";
 import { packageJson } from "./package-json.js";
 import { padLocalMessageToWechaty } from "./padlocal/schema-mapper/message.js";
-import type { MessageParser, MessageParserContext } from "./padlocal/schema-mapper/message/message-parser.js";
+import type { MessageParser } from "./padlocal/schema-mapper/message/message-parser.js";
 import { padLocalContactToWechaty } from "./padlocal/schema-mapper/contact.js";
 import {
   chatRoomMemberToContact,

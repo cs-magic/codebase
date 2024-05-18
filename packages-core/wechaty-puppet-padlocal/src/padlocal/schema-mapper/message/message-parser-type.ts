@@ -1,11 +1,12 @@
 import * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
+import type { MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
 import { WechatMessageType } from "../../types.js";
 import { log } from "wechaty-puppet";
-import type { MessageParser, MessageParserContext } from "./message-parser.js";
+import type { MessageParser } from "./message-parser.js";
 import { LOGPRE } from "./message-parser.js";
 
-const TypeMappings: { [key: number]: PUPPET.types.Message; } = {
+const TypeMappings: { [key: number]: PUPPET.types.Message } = {
   [WechatMessageType.Text]: PUPPET.types.Message.Text,
   [WechatMessageType.Image]: PUPPET.types.Message.Image,
   [WechatMessageType.Voice]: PUPPET.types.Message.Audio,
@@ -22,7 +23,11 @@ const TypeMappings: { [key: number]: PUPPET.types.Message; } = {
   [WechatMessageType.SysNotice]: PUPPET.types.Message.Unknown,
 };
 
-export const typeParser: MessageParser = async(padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message, _context: MessageParserContext) => {
+export const typeParser: MessageParser = async (
+  padLocalMessage: PadLocal.Message.AsObject,
+  ret: PUPPET.payloads.Message,
+  _context: MessageParserContext
+) => {
   const wechatMessageType = padLocalMessage.type as WechatMessageType;
   let type: PUPPET.types.Message | undefined = TypeMappings[wechatMessageType];
 

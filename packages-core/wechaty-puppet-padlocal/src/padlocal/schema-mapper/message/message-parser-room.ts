@@ -1,8 +1,9 @@
 // import { logger } from "@cs-magic/log/logger";
 import type * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
+import type { MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
 import { isIMRoomId, isRoomId } from "../../utils/is-type.js";
-import type { MessageParser, MessageParserContext } from "./message-parser.js";
+import type { MessageParser } from "./message-parser.js";
 
 async function roomMessageSentByOthers(padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message) {
   if (isRoomId(padLocalMessage.fromusername) || isIMRoomId(padLocalMessage.fromusername)) {

@@ -1,16 +1,27 @@
-import * as PUPPET from 'wechaty-puppet'
-import { log } from 'wechaty-puppet'
-import { LOGPRE, MessageParser, MessageParserContext } from './message-parser.js'
-import { AppMessageType, parseAppmsgMessagePayload } from '../../messages/message-appmsg.js'
-import type { WebMessageRawPayload } from '../../../web-schemas'
+import * as PUPPET from "wechaty-puppet"
+import { log } from "wechaty-puppet"
+import { AppMessageType } from "../../../../../wechaty-puppet/types/message"
+import {
+  LOGPRE,
+  MessageParser,
+  MessageParserContext,
+} from "./message-parser.js"
+import { parseAppmsgMessagePayload } from "../../messages/message-appmsg.js"
+import type { WebMessageRawPayload } from "../../../web-schemas"
 
-export const appMsgParser: MessageParser = async (webMessageRawPayload: WebMessageRawPayload, ret: PUPPET.payloads.Message, context: MessageParserContext) => {
+export const appMsgParser: MessageParser = async (
+  webMessageRawPayload: WebMessageRawPayload,
+  ret: PUPPET.payloads.Message,
+  context: MessageParserContext,
+) => {
   if (ret.type !== PUPPET.types.Message.Attachment) {
     return ret
   }
 
   try {
-    const appPayload = await parseAppmsgMessagePayload(webMessageRawPayload.Content)
+    const appPayload = await parseAppmsgMessagePayload(
+      webMessageRawPayload.Content,
+    )
     context.appMessagePayload = appPayload
     switch (appPayload.type) {
       case AppMessageType.Text:
@@ -59,7 +70,10 @@ export const appMsgParser: MessageParser = async (webMessageRawPayload: WebMessa
         break
     }
   } catch (e) {
-    log.warn(LOGPRE, `Error occurred while parse message attachment: ${JSON.stringify(webMessageRawPayload)} , ${(e as Error).stack}`)
+    log.warn(
+      LOGPRE,
+      `Error occurred while parse message attachment: ${JSON.stringify(webMessageRawPayload)} , ${(e as Error).stack}`,
+    )
   }
 
   return ret

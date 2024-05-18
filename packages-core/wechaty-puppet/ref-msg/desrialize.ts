@@ -1,5 +1,5 @@
-import { AppMessageType } from "wechaty-puppet-padlocal"
 import { z } from "zod"
+import { AppMessageType } from "../types/message"
 
 export type DeserializedRefMsgPayload =
   | {

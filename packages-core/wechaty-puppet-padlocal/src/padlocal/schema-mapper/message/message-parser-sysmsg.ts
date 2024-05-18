@@ -1,4 +1,5 @@
-import type { MessageParser, MessageParserContext } from "./message-parser.js";
+import type { MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
+import type { MessageParser } from "./message-parser.js";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import type * as PUPPET from "wechaty-puppet";
 import { parseSysmsgMessagePayload } from "../../messages/message-sysmsg.js";
@@ -12,7 +13,11 @@ import type { RevokeMsgMessagePayload } from "../../messages/sysmsg/message-revo
  * @param ret
  * @param context
  */
-export const sysmsgParser: MessageParser = async(padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message, context: MessageParserContext) => {
+export const sysmsgParser: MessageParser = async (
+  padLocalMessage: PadLocal.Message.AsObject,
+  ret: PUPPET.payloads.Message,
+  context: MessageParserContext
+) => {
   const sysmsgPayload = await parseSysmsgMessagePayload(padLocalMessage);
   if (!sysmsgPayload) {
     return ret;

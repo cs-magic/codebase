@@ -1,5 +1,4 @@
-// @ts-ignore
-import { AppMessageType, ReferMsgPayload } from "wechaty-puppet-padlocal"
+import { AppMessageType, ReferMsgPayload } from "../types/message"
 
 export const serializeRefMsgPayload = (payload: ReferMsgPayload) => {
   // console.log("-- refMsgPayload: ", payload);

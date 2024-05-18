@@ -1,17 +1,8 @@
-import type * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
-import type { AppMessagePayload } from "../../messages/message-appmsg";
+import type * as PUPPET from "wechaty-puppet";
+import type { GenericMessageParser, MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
 
-/**
- * Add customized message parser context info here
- */
-export type MessageParserContext = {
-  puppet: PUPPET.Puppet,
-  isRoomMessage: boolean,
-  appMessagePayload?: AppMessagePayload,
-};
-
-export type MessageParser = (padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message, context: MessageParserContext) => Promise<PUPPET.payloads.Message>;
+export type MessageParser = GenericMessageParser<PadLocal.Message.AsObject>;
 
 const messageParserList: Array<MessageParser> = [];
 
@@ -19,7 +10,11 @@ export function addMessageParser(parser: MessageParser) {
   messageParserList.push(parser);
 }
 
-export async function executeMessageParsers(puppet: PUPPET.Puppet, padLocalMessage: PadLocal.Message.AsObject, ret: PUPPET.payloads.Message): Promise<PUPPET.payloads.Message> {
+export async function executeMessageParsers(
+  puppet: PUPPET.Puppet,
+  padLocalMessage: PadLocal.Message.AsObject,
+  ret: PUPPET.payloads.Message
+): Promise<PUPPET.payloads.Message> {
   const context: MessageParserContext = {
     isRoomMessage: false,
     puppet,

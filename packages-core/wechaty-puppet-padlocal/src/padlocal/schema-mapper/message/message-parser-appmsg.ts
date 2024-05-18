@@ -1,8 +1,10 @@
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import * as PUPPET from "wechaty-puppet";
 import { log } from "wechaty-puppet";
-import { AppMessageType, parseAppmsgMessagePayload } from "../../messages/message-appmsg.js";
-import { LOGPRE, MessageParser, MessageParserContext } from "./message-parser.js";
+import { AppMessageType } from "../../../../../wechaty-puppet/types/message";
+import type { MessageParserContext } from "../../../../../wechaty-puppet/types/message.parser";
+import { parseAppmsgMessagePayload } from "../../messages/message-appmsg.js";
+import { LOGPRE, MessageParser } from "./message-parser.js";
 
 export const appMsgParser: MessageParser = async (
   padLocalMessage: PadLocal.Message.AsObject,
