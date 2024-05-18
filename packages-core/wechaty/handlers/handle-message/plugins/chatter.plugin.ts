@@ -125,14 +125,16 @@ export class ChatterPlugin extends BasePlugin {
       : []
 
     const model = convPreference.features.chatter.model
-    const messages: ILlmMessage[] = filteredMessages.map((m) => ({
-      role:
-        m.talkerId === this.bot.context?.wxid
-          ? ("assistant" as const)
-          : ("user" as const),
-      // todo: merge chats
-      content: m.text ?? "",
-    }))
+    const messages: ILlmMessage[] = filteredMessages
+      .filter((m) => !!m.text)
+      .map((m) => ({
+        role:
+          m.talkerId === this.bot.context?.wxid
+            ? ("assistant" as const)
+            : ("user" as const),
+        // todo: merge chats
+        content: `[${m.talker.name}]: ${m.text}`,
+      }))
 
     trimMessages(messages, model)
     // logger.info(`--  context(len=${context.length})`)

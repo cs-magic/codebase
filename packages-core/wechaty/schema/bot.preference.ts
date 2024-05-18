@@ -27,6 +27,13 @@ export type IWechatPreference = {
         n: number
       }
     }
+    message: {
+      image: {
+        describe: {
+          enabled: boolean
+        }
+      }
+    }
   }
 
   features: {
@@ -57,6 +64,13 @@ export const defaultWechatPreference: IWechatPreference = {
       sayAnnounce: {
         enabled: true,
         n: 5,
+      },
+    },
+    message: {
+      image: {
+        describe: {
+          enabled: false,
+        },
       },
     },
   },

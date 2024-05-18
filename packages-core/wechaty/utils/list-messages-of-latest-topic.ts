@@ -1,3 +1,4 @@
+import { wechatMessageDetailSchema } from "@cs-magic/prisma/schema/user.summary"
 import { prisma } from "../../../packages-to-classify/db/providers/prisma"
 
 /**
@@ -43,6 +44,7 @@ export const listMessagesOfLatestTopic = async (
   // if (!lastUserStartChat) throw new Error("no lastUserStartChat")
 
   const messages = await prisma.wechatMessage.findMany({
+    ...wechatMessageDetailSchema,
     where: {
       // AND, ref: https://chat.openai.com/c/895c1452-c3bd-4d5b-ba9f-c23c7750f412
       AND: [

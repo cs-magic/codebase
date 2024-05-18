@@ -28,3 +28,15 @@ export const convertUserSummary = (
     }
   return null
 }
+
+export const wechatMessageDetailSchema =
+  Prisma.validator<Prisma.WechatMessageDefaultArgs>()({
+    include: {
+      talker: true,
+      listener: true,
+      room: true,
+    },
+  })
+export type IWechatMessageDetail = Prisma.WechatMessageGetPayload<
+  typeof wechatMessageDetailSchema
+>

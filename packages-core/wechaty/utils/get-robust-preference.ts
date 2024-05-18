@@ -1,5 +1,8 @@
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import { logger } from "@cs-magic/log/logger"
+import merge from "lodash/merge"
 import omit from "lodash/omit"
+import assign from "lodash/assign"
 import {
   defaultWechatData,
   defaultWechatPreference,
@@ -13,18 +16,22 @@ export const getRobustPreference = (
   } | null,
 ): IWechatPreference => {
   // migrate
-  const preference = omit(parseJsonSafe<IWechatPreference>(row?.preference), [
-    "chatterEnabled",
-    "parserEnabled",
-    "model",
-    "lang",
-    "backend",
-  ])
+  const rawPreference = omit(
+    parseJsonSafe<IWechatPreference>(row?.preference),
+    [
+      "chatterEnabled",
+      "parserEnabled",
+      "model",
+      "lang",
+      "backend",
+      "features.image",
+    ],
+  )
 
-  return {
-    ...defaultWechatPreference,
-    ...preference,
-  }
+  // todo: merge 的最佳实践 【限制default schema】
+  const preference = merge({ ...defaultWechatPreference }, rawPreference)
+  logger.debug(JSON.stringify({ rawPreference, preference }, null, 2))
+  return preference
 }
 
 export const getRobustData = (
@@ -32,8 +39,5 @@ export const getRobustData = (
     data?: any
   } | null,
 ): IWechatData => {
-  return {
-    ...defaultWechatData,
-    ...parseJsonSafe<IWechatData>(row?.data),
-  }
+  return merge({ ...defaultWechatData }, parseJsonSafe<IWechatData>(row?.data))
 }

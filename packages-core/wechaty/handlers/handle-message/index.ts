@@ -1,4 +1,5 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { safeCallLLM } from "@cs-magic/llm"
 import { logger } from "@cs-magic/log/logger"
 import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
@@ -45,6 +46,8 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
     )
   }
 
+  const base = tmm.base
+
   const type = message.type()
   const text = message.text()
 
@@ -70,8 +73,41 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
       return
 
     case types.Message.Image:
-      logger.debug("== Image ==")
-      const image = await message.toFileBox()
+      {
+        logger.debug("== Image ==")
+        // todo: preference seems not work
+        const preference = await base.getConvPreference()
+        const enabled = preference.on.message.image.describe.enabled
+        logger.debug({ enabled })
+        if (!enabled) return
+
+        const action = async () => {
+          const image = await message.toFileBox()
+          const result = await safeCallLLM({
+            model: "gpt-4o",
+            messages: [
+              {
+                role: "user",
+                content: [
+                  {
+                    type: "text",
+                    text: "描述一下这张图里的内容",
+                  },
+                  {
+                    type: "image_url",
+                    image_url: {
+                      url: await image.toDataURL(),
+                    },
+                  },
+                ],
+              },
+            ],
+          })
+          const content = result.response?.choices[0]?.message.content
+          if (content) await base.reply(content)
+        }
+        // void action()
+      }
       return
 
     case types.Message.Text: {
@@ -85,16 +121,13 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
             return void bot.context?.addSendTask(() => message.say("dong"))
 
           case "help":
-            await tmm.base.getHelp(true)
-            return
+            return await tmm.base.getHelp(true)
 
           case "status":
-            await tmm.base.getStatus(true)
-            return
+            return await tmm.base.getStatus(true)
 
           case "recall":
-            await tmm.base.recallQuotedMessage()
-            return
+            return await tmm.base.recallQuotedMessage()
 
           case "love":
             return await message.say(
@@ -102,37 +135,29 @@ export const handleMessage = async (bot: Wechaty, message: Message) => {
             )
 
           case "system":
-            await tmm.system.parse(result.args)
-            return
+            return await tmm.system.parse(result.args)
 
           case "todo":
-            await tmm.todo.parse(result.args)
-            return
+            return await tmm.todo.parse(result.args)
 
           case "chatter":
-            // await tmm.chatter.parse(result.args)
-            return
+            return // await tmm.chatter.parse(result.args)
 
           case "parser":
-            await tmm.parser.parse(result.args)
-            return
+            return await tmm.parser.parse(result.args)
 
           case "parse":
-            await tmm.parser.parseQuote()
-            return
+            return await tmm.parser.parseQuote()
 
           case "room":
-            // await tmm.room.parse(result.args)
-            return
+            return // await tmm.room.parse(result.args)
 
           case "test-create-image-from-id": {
-            await tmm.parser.parseQuotedImage()
-            return
+            return await tmm.parser.parseQuotedImage()
           }
 
           case "quote-reply": {
-            await tmm.parser.quoteReply()
-            return
+            return await tmm.parser.quoteReply()
           }
         }
       } else {
