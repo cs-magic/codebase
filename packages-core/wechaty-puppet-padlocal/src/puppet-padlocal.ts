@@ -1671,3 +1671,5 @@ class PuppetPadlocal extends PUPPET.Puppet {
 export { PuppetPadlocal, VERSION, AppMessageType, MessageParser, MessageParserContext };
 export type { ReferMsgPayload };
 export default PuppetPadlocal;
+
+logger.info(`\n== PuppetPadlocal ==\n`);

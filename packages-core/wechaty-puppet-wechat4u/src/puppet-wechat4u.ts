@@ -871,7 +871,14 @@ export class PuppetWechat4u extends PUPPET.Puppet {
     /**
      * 发送文本消息，可以包含emoji(😒)和QQ表情([坏笑])
      */
-    await this.wechat4u.sendMsg(text, conversationId)
+    const msg = await this.wechat4u.sendMsg(text, conversationId)
+    logger.debug(`sent result: [%o]`, msg)
+    // learn from padlocal
+    setImmediate(() => {
+      this.emit("message", { messageId: msg.MsgId })
+    })
+
+    return msg.MsgId // return id
     /**
      * { BaseResponse: { Ret: 0, ErrMsg: '' },
      *  MsgID: '830582407297708303',

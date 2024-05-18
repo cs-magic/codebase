@@ -9,13 +9,13 @@ import { serializeRefMsgPayload } from "./serialize-ref-msg"
 import { types, type payloads } from "../mods/mod"
 
 export const referMsgParser: GenericMessageParser = async <T>(
-  localMessage: T,
+  _localMessage: T,
   ret: payloads.Message,
   context: MessageParserContext,
 ) => {
   const appMessagePayload = context.appMessagePayload
   logger.info(`[refer] <-- ret`)
-  logger.info({ ret, localMessage, appMessagePayload })
+  // logger.info({ ret, localMessage, appMessagePayload })
 
   if (
     !appMessagePayload ||
