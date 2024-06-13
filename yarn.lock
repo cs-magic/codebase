@@ -8020,6 +8020,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "async@npm:1.0.0"
+  checksum: 10c0/a65d15a1ec396bf29b3516ee5d4fcde6a55e28f6213a54ceecd14e83556cb5e8a446ae22a7737b3f6558e9cf1df134a4ed592839ef84363d86d288dcc026c3f8
+  languageName: node
+  linkType: hard
+
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -10256,6 +10263,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"colors@npm:1.0.x":
+  version: 1.0.3
+  resolution: "colors@npm:1.0.3"
+  checksum: 10c0/f9e40dd8b3e1a65378a7ced3fced15ddfd60aaf38e99a7521a7fdb25056b15e092f651cd0f5aa1e9b04fa8ce3616d094e07fc6c2bb261e24098db1ddd3d09a1d
+  languageName: node
+  linkType: hard
+
 "colors@npm:^1.4.0":
   version: 1.4.0
   resolution: "colors@npm:1.4.0"
@@ -10724,6 +10738,7 @@ __metadata:
     ts-jest: "npm:^29.1.2"
     ts-jest-mock-import-meta: "npm:^1.2.0"
     typescript: "npm:^5.4.5"
+    winston: "npm:2.4.4"
     yargs-parser: "npm:^21.1.1"
     zod: "npm:^3.23.0"
   languageName: unknown
@@ -10859,6 +10874,13 @@ __metadata:
   version: 2.1.8
   resolution: "cuid@npm:2.1.8"
   checksum: 10c0/6514d247c6de3e5cd32f485821365f4816ee14b777841fa717d37b7a8f791f3cb268be9e37ca54b110f6f5f625e4f0af581c3226aa14f259790539ba20fdaf61
+  languageName: node
+  linkType: hard
+
+"cycle@npm:1.0.x":
+  version: 1.0.3
+  resolution: "cycle@npm:1.0.3"
+  checksum: 10c0/f38aae412cea9e895e963e0ff8d4d19852e53b630e7fc1dd078da551f3a4c0a98c5f026d4626dfc0b42648b804dabf13a56faace60b09cf6f3cc706c0819f119
   languageName: node
   linkType: hard
 
@@ -13313,6 +13335,13 @@ __metadata:
   version: 1.4.1
   resolution: "extsprintf@npm:1.4.1"
   checksum: 10c0/e10e2769985d0e9b6c7199b053a9957589d02e84de42832c295798cb422a025e6d4a92e0259c1fb4d07090f5bfde6b55fd9f880ac5855bd61d775f8ab75a7ab0
+  languageName: node
+  linkType: hard
+
+"eyes@npm:0.1.x":
+  version: 0.1.8
+  resolution: "eyes@npm:0.1.8"
+  checksum: 10c0/4c79a9cbf45746d8c9f48cc957e35ad8ea336add1c7b8d5a0e002efc791a7a62b27b2188184ef1a1eea7bc3cd06b161791421e0e6c5fe78309705a162c53eea8
   languageName: node
   linkType: hard
 
@@ -16508,7 +16537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isstream@npm:~0.1.2":
+"isstream@npm:0.1.x, isstream@npm:~0.1.2":
   version: 0.1.2
   resolution: "isstream@npm:0.1.2"
   checksum: 10c0/a6686a878735ca0a48e0d674dd6d8ad31aedfaf70f07920da16ceadc7577b46d67179a60b313f2e6860cb097a2c2eb3cbd0b89e921ae89199a59a17c3273d66f
@@ -28246,6 +28275,20 @@ __metadata:
     triple-beam: "npm:^1.3.0"
     winston-transport: "npm:^4.7.0"
   checksum: 10c0/2c3cc7389a691e1638edcb0d4bfea72caa82d87d5681ec6131ac9bae780d94d06fb7b112edcd4ec37c8b947a1b64943941b761e34d67c6b0dac6e9c31ae4b25b
+  languageName: node
+  linkType: hard
+
+"winston@npm:2.4.4":
+  version: 2.4.4
+  resolution: "winston@npm:2.4.4"
+  dependencies:
+    async: "npm:~1.0.0"
+    colors: "npm:1.0.x"
+    cycle: "npm:1.0.x"
+    eyes: "npm:0.1.x"
+    isstream: "npm:0.1.x"
+    stack-trace: "npm:0.0.x"
+  checksum: 10c0/05af1417c3ec682e5782f73f5ec4ea7fd1a0338246665e3d6a4fb252a961fac7dfb637bdbaf77ed958530f2f7b5a9b964ad5d61b4965c1962c5b2a002527dab5
   languageName: node
   linkType: hard
 

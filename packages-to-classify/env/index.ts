@@ -1,5 +1,3 @@
-import * as process from "node:process"
-
 export const getEnv = () => ({
   // env
   NODE_ENV: process.env.NODE_ENV,
