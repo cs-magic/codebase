@@ -55,6 +55,7 @@ async function roomMessageSentBySelf(padLocalMessage: PadLocal.Message.AsObject,
  * @param ret
  * @param context
  */
+//@ts-ignore
 export const roomParser: MessageParser = async (
   padLocalMessage: PadLocal.Message.AsObject,
   ret: PUPPET.payloads.Message,

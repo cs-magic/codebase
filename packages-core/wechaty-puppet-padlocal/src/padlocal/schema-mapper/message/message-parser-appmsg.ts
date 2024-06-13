@@ -6,6 +6,7 @@ import type { MessageParserContext } from "../../../../../wechaty-puppet/src/ext
 import { parseAppmsgMessagePayload } from "../../messages/message-appmsg.js";
 import { LOGPRE, MessageParser } from "./message-parser.js";
 
+//@ts-ignore
 export const appMsgParser: MessageParser = async (
   padLocalMessage: PadLocal.Message.AsObject,
   ret: PUPPET.payloads.Message,

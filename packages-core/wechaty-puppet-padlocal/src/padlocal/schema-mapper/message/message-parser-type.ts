@@ -23,6 +23,7 @@ const TypeMappings: { [key: number]: PUPPET.types.Message } = {
   [WechatMessageType.SysNotice]: PUPPET.types.Message.Unknown,
 };
 
+// @ts-ignore
 export const typeParser: MessageParser = async (
   padLocalMessage: PadLocal.Message.AsObject,
   ret: PUPPET.payloads.Message,

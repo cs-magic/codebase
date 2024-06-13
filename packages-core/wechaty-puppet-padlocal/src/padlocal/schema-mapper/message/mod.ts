@@ -11,6 +11,7 @@ addMessageParser(typeParser);
 addMessageParser(roomParser);
 addMessageParser(singleChatParser);
 addMessageParser(appMsgParser);
+// @ts-ignore
 addMessageParser(referMsgParser);
 addMessageParser(sysmsgParser);
 

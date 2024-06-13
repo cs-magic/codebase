@@ -3,6 +3,7 @@ import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import type { MessageParserContext } from "../../../../../wechaty-puppet/src/extra/message.parser";
 import type { MessageParser } from "./message-parser";
 
+// @ts-ignore
 export const singleChatParser: MessageParser = async (
   padLocalMessage: PadLocal.Message.AsObject,
   ret: PUPPET.payloads.Message,
