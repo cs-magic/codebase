@@ -103,6 +103,7 @@
     "rxjs": "^7.8.1",
     "state-switch": "^1.6.3",
     "typescript": "^5.4.5",
+    "wechaty-puppet": "workspace:^",
     "xml2js": "^0.4.23"
   },
   "publishConfig": {
