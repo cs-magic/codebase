@@ -1,5 +1,5 @@
 import { withError } from "@cs-magic/common/utils/with-error"
-import { parseWxmpArticleUrl } from "@cs-magic/p01-card/src/utils/card-platform/wechat-article/utils"
+import { parseWxmpArticleUrl } from "@cs-magic/swot/src/utils/card-platform/wechat-article/utils"
 // todo: avoid import from project
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { Prisma } from "@prisma/client"

@@ -1,4 +1,4 @@
-import { appRouter } from "@cs-magic/p01-card/src/app/api/trpc"
+import { appRouter } from "@cs-magic/swot/src/app/api/trpc"
 
 import {
   createTRPCProxyClient,

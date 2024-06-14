@@ -1,4 +1,4 @@
-import { ResponseFinalStatus } from "@cs-magic/p01-card/src/schema/sse";
+import { ResponseFinalStatus } from "@cs-magic/swot/src/schema/sse"
 
 /**
  * 不能用 error 这是 sse 默认的 event-type
@@ -9,12 +9,12 @@ export type TransEventType =
   | "error"
   | "close"
   | "onClientConnected"
-  | "onClientDisconnected";
+  | "onClientDisconnected"
 
 export type GenericTransEvent<T extends TransEventType, V = any> = {
-  event: T;
-  data: V & { time?: number };
-};
+  event: T
+  data: V & { time?: number }
+}
 
 export type ITransEvent<T extends TransEventType = any> = T extends "init"
   ? GenericTransEvent<"init", object>
@@ -28,14 +28,14 @@ export type ITransEvent<T extends TransEventType = any> = T extends "init"
           ? GenericTransEvent<"onClientConnected", { id: string }>
           : T extends "onClientDisconnected"
             ? GenericTransEvent<"onClientDisconnected", { id: string }>
-            : never;
+            : never
 
 export type ITransClient = {
-  id: string;
-  onEvent: (event: ITransEvent) => void;
-};
+  id: string
+  onEvent: (event: ITransEvent) => void
+}
 
 export type ITransChannel = {
-  events: ITransEvent[];
-  clients: ITransClient[];
-};
+  events: ITransEvent[]
+  clients: ITransClient[]
+}

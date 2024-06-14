@@ -1,6 +1,6 @@
 "use client"
 
-import { cardMindmapRenderedAtom } from "@cs-magic/p01-card/src/store/card.rendered.atom"
+import { cardMindmapRenderedAtom } from "@cs-magic/swot/src/store/card.rendered.atom"
 import { useAtom, useSetAtom } from "jotai"
 import { IPureNode } from "markmap-common"
 import { Transformer } from "markmap-lib"

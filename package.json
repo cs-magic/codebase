@@ -8,9 +8,7 @@
   "type": "module",
   "workspaces": [
     "packages-common/*",
-    "packages-core/*",
-    "packages-to-classify/*",
-    "projects-01-card/*"
+    "projects-01-swot/*"
   ],
   "scripts": {
     "test": "jest"

@@ -9,7 +9,7 @@ import { getEnv } from "../env"
 import { BaseSimulator } from "./base-simulator"
 
 /**
- * !IMPORTANT: 需要 p01-card 项目启动
+ * !IMPORTANT: 需要 swot 项目启动
  */
 export class CardSimulator extends BaseSimulator {
   static runningTasksCount = 0

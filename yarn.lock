@@ -1747,9 +1747,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cs-magic/api@workspace:projects-01-card/backend":
+"@cs-magic/api@workspace:projects-01-swot/backend":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/api@workspace:projects-01-card/backend"
+  resolution: "@cs-magic/api@workspace:projects-01-swot/backend"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
@@ -1825,9 +1825,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/p01-card@workspace:projects-01-card/frontend":
+"@cs-magic/prisma@workspace:packages-common/prisma":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/p01-card@workspace:projects-01-card/frontend"
+  resolution: "@cs-magic/prisma@workspace:packages-common/prisma"
+  dependencies:
+    prisma: "npm:^5.12.1"
+    prisma-json-types-generator: "npm:^3.0.4"
+    typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/swot@workspace:projects-01-swot/frontend":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/swot@workspace:projects-01-swot/frontend"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
@@ -1971,16 +1981,6 @@ __metadata:
     zhipuai-sdk-nodejs-v4: "npm:^0.1.12"
     zod: "npm:3.21.1"
     zustand: "npm:^4.5.2"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/prisma@workspace:packages-common/prisma":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/prisma@workspace:packages-common/prisma"
-  dependencies:
-    prisma: "npm:^5.12.1"
-    prisma-json-types-generator: "npm:^3.0.4"
-    typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
 

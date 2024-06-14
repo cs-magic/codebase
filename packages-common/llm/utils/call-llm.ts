@@ -1,4 +1,3 @@
-import { logger } from "@cs-magic/log/logger"
 import { md5 } from "js-md5"
 import OpenAI, { type ClientOptions } from "openai"
 import ZhipuAi from "zhipuai-sdk-nodejs-v4"
