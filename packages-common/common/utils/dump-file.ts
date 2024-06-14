@@ -1,6 +1,6 @@
 import fs, { promises } from "fs"
 import path from "path"
-import { Path } from "../../../packages-to-classify/path"
+import { Path } from "@cs-magic/common/deps/path"
 import { formatAction } from "./format-action"
 
 export const dumpFile = async (

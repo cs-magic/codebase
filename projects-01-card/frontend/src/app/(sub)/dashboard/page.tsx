@@ -1,37 +1,37 @@
-"use client";
-import { EditIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { FlexContainer } from "../../../../../../packages-to-classify/ui/components/flex-container";
-import { Button } from "../../../../../../packages-to-classify/ui-shadcn/components/button";
+"use client"
+import { EditIcon } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "../../../../../../packages-to-classify/ui-shadcn/components/card";
-import { Label } from "../../../../../../packages-to-classify/ui-shadcn/components/label";
-import { useDraftSession } from "../../../../../../packages-to-classify/hooks/use-user-draft-session";
-import { useUserUpdateProfile } from "../../../../../../packages-to-classify/hooks/use-user-update-profile";
-import { UserInputAvatar } from "../../../components/user-input-avatar";
-import { UserInputName } from "../../../components/user-input-name";
-import { UserSignOutButton } from "../../../components/user-sign-out-button";
+} from "@cs-magic/common/deps/ui-shadcn/components/card"
+import { Label } from "@cs-magic/common/deps/ui-shadcn/components/label"
+import { useDraftSession } from "@cs-magic/common/deps/hooks/use-user-draft-session"
+import { useUserUpdateProfile } from "@cs-magic/common/deps/hooks/use-user-update-profile"
+import { UserInputAvatar } from "../../../components/user-input-avatar"
+import { UserInputName } from "../../../components/user-input-name"
+import { UserSignOutButton } from "../../../components/user-sign-out-button"
 
 export default function DashboardPage() {
-  const session = useSession();
-  const user = session.data?.user;
-  const { value: name, changed: nameChanged } = useDraftSession("name");
-  const { changed: imageChanged } = useDraftSession("image");
+  const session = useSession()
+  const user = session.data?.user
+  const { value: name, changed: nameChanged } = useDraftSession("name")
+  const { changed: imageChanged } = useDraftSession("image")
 
-  const updateProfile = useUserUpdateProfile();
+  const updateProfile = useUserUpdateProfile()
 
-  const [nameEditable, setNameEditable] = useState(false);
+  const [nameEditable, setNameEditable] = useState(false)
 
   useEffect(() => {
-    if (!nameChanged) setNameEditable(false);
-  }, [nameChanged]);
+    if (!nameChanged) setNameEditable(false)
+  }, [nameChanged])
 
   return (
     <FlexContainer
@@ -53,7 +53,7 @@ export default function DashboardPage() {
                     <EditIcon
                       className={"h-4 w-4 text-muted-foreground"}
                       onClick={() => {
-                        setNameEditable(true);
+                        setNameEditable(true)
                       }}
                     />
                   </div>
@@ -76,9 +76,9 @@ export default function DashboardPage() {
             disabled={!imageChanged && !nameChanged}
             className={"w-full"}
             onClick={async () => {
-              const res = await updateProfile();
-              if (res?.ok) toast.success("更新成功");
-              else toast.error("更新失败");
+              const res = await updateProfile()
+              if (res?.ok) toast.success("更新成功")
+              else toast.error("更新失败")
             }}
           >
             更新
@@ -88,5 +88,5 @@ export default function DashboardPage() {
 
       <UserSignOutButton />
     </FlexContainer>
-  );
+  )
 }

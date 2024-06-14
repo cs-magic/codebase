@@ -2,7 +2,7 @@ import {
   Select,
   SelectContent,
   SelectValue,
-} from "../../../../packages-to-classify/ui-shadcn/components/select"
+} from "@cs-magic/common/deps/ui-shadcn/components/select"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
 import { scenarioTypeAtom } from "../store/system.atom"

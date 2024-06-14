@@ -1,62 +1,62 @@
-"use client";
+"use client"
 
-import MdEditor from "@uiw/react-md-editor";
-import { produce } from "immer";
-import { useAtom } from "jotai";
-import { useState } from "react";
-import { useDrop } from "react-use";
-import { toast } from "sonner";
-import { FileComp } from "../../../../packages-to-classify/file/components";
-import { useUploadFiles } from "../../../../packages-to-classify/oss/hooks/use-upload-files";
-import { IUploadFile } from "../../../../packages-to-classify/oss/schema";
+import MdEditor from "@uiw/react-md-editor"
+import { produce } from "immer"
+import { useAtom } from "jotai"
+import { useState } from "react"
+import { useDrop } from "react-use"
+import { toast } from "sonner"
+import { FileComp } from "@cs-magic/common/deps/file/components"
+import { useUploadFiles } from "@cs-magic/common/deps/oss/hooks/use-upload-files"
+import { IUploadFile } from "@cs-magic/common/deps/oss/schema"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "../../../../packages-to-classify/ui-shadcn/components/tooltip";
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils";
-import { VerticalAspectRatio } from "../../../../packages-to-classify/ui/components/aspect-ratio";
-import { ButtonWithLoading } from "../../../../packages-to-classify/ui/components/button-with-loading";
-import { FlexContainer } from "../../../../packages-to-classify/ui/components/flex-container";
-import { cardNewContentAtom } from "../store/card.atom";
+} from "@cs-magic/common/deps/ui-shadcn/components/tooltip"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { VerticalAspectRatio } from "@cs-magic/common/deps/ui/components/aspect-ratio"
+import { ButtonWithLoading } from "@cs-magic/common/deps/ui/components/button-with-loading"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { cardNewContentAtom } from "../store/card.atom"
 
 export function NewCard() {
-  const [v, setV] = useAtom(cardNewContentAtom);
-  const [uploadFiles, setUploadFiles] = useState<IUploadFile[]>([]);
+  const [v, setV] = useAtom(cardNewContentAtom)
+  const [uploadFiles, setUploadFiles] = useState<IUploadFile[]>([])
   const { upload, isUploading } = useUploadFiles({
     onUploadChange: (index, file) => {
-      const n = uploadFiles.length;
+      const n = uploadFiles.length
 
       setUploadFiles((uploadFiles) =>
         produce(uploadFiles, (uploadFiles) => {
-          uploadFiles[n + index] = file;
+          uploadFiles[n + index] = file
           if (file.status === "finished" && file.success) {
-            setV((v) => v + `![${file.input.name}](${file.data})\n`);
+            setV((v) => v + `![${file.input.name}](${file.data})\n`)
           }
         }),
-      );
+      )
     },
-  });
+  })
 
   /**
    * ref:
    */
   useDrop({
     onFiles: async (files) => {
-      console.log("files", files);
+      console.log("files", files)
 
       if (isUploading)
-        return toast.error("please waiting last uploading finished");
+        return toast.error("please waiting last uploading finished")
 
       setUploadFiles((uploadFiles) => [
         ...uploadFiles,
         ...files.map((f) => ({ status: "idle" }) as IUploadFile),
-      ]);
-      await upload(files);
+      ])
+      await upload(files)
     },
     onUri: (uri) => console.log("uri", uri),
     onText: (text) => console.log("text", text),
-  });
+  })
 
   return (
     <FlexContainer
@@ -102,5 +102,5 @@ export function NewCard() {
         </div>
       </FlexContainer>
     </FlexContainer>
-  );
+  )
 }

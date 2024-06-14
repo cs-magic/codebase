@@ -5,7 +5,7 @@ import { parseJsonSafe } from "../../../../packages-common/common/utils/parse-js
 import { ICardInnerPreview, ICardPreview } from "@cs-magic/wechat/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { getOssUrl } from "../../../../packages-to-classify/oss/utils"
+import { getOssUrl } from "@cs-magic/common/deps/oss/utils"
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
 

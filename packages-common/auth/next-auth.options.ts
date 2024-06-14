@@ -5,8 +5,8 @@ import WechatProvider from "../auth-wechat/provider"
 import { IWechatProfile } from "../auth-wechat/schema"
 import { ProfileUpdateProvider } from "../auth-profile/provider"
 import { SmsProvider } from "../auth-sms/provider"
-import { prisma } from "../../packages-to-classify/db/providers/prisma"
-import { getEnv } from "../../packages-to-classify/env"
+import { prisma } from "@cs-magic/common/deps/db/providers/prisma"
+import { getEnv } from "@cs-magic/common/deps/env"
 
 import { tokenExpireSeconds } from "./config"
 

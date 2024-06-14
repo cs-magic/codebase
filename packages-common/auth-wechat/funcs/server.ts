@@ -1,5 +1,5 @@
 import { fetchWechatApi } from "@cs-magic/wechat/functions"
-import { getEnv } from "../../../packages-to-classify/env"
+import { getEnv } from "@cs-magic/common/deps/env"
 import {
   IWechatAdaptedToken,
   IWechatProfile,

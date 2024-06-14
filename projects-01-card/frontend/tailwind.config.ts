@@ -8,7 +8,7 @@ const config = {
     "./tests/**/*.{ts,tsx}",
     "../../packages-common/**/*.{ts,tsx}",
     "../../packages-core/**/*.{ts,tsx}",
-    "../../packages-to-classify/**/*.{ts,tsx}",
+    "@cs-magic/common/deps/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {

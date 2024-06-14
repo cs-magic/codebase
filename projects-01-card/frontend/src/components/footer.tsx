@@ -1,6 +1,6 @@
 import { BrandingPartners } from "./branding-partners"
 import Link from "next/link"
-import { ImageEqualHeight } from "../../../../packages-to-classify/ui/components/image-equal-height"
+import { ImageEqualHeight } from "@cs-magic/common/deps/ui/components/image-equal-height"
 
 import { config } from "../../../../packages-common/common/config"
 import { CsMagicBrand } from "./assets"

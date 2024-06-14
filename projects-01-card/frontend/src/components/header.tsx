@@ -7,16 +7,16 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../../packages-to-classify/ui-shadcn/components/sheet"
+} from "@cs-magic/common/deps/ui-shadcn/components/sheet"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "../../../../packages-to-classify/ui-shadcn/components/ui/navigation-menu"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
-import { IconContainer } from "../../../../packages-to-classify/ui/components/icon-container"
+} from "@cs-magic/common/deps/ui-shadcn/components/ui/navigation-menu"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { IconContainer } from "@cs-magic/common/deps/ui/components/icon-container"
 import { config } from "../../../../packages-common/common/config"
 import { BrandingTitle } from "./branding-title"
 import { UserButton } from "./header-user"

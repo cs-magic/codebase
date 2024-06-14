@@ -1,4 +1,4 @@
-import { PusherServerId } from "../../../packages-to-classify/pusher/schema"
+import { PusherServerId } from "@cs-magic/common/deps/pusher/schema"
 
 export type ResponseFinalStatus = "interrupted" | "responded" | "not-found"
 

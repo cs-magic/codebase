@@ -1,11 +1,11 @@
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { type NextRequest } from "next/server";
-import { getEnv } from "../../../../../../../packages-to-classify/env";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
+import { type NextRequest } from "next/server"
+import { getEnv } from "@cs-magic/common/deps/env"
 
-import { createTRPCContext } from "../../../../../../../packages-to-classify/trpc/context";
-import { appRouter } from "../index";
+import { createTRPCContext } from "@cs-magic/common/deps/trpc/context"
+import { appRouter } from "../index"
 
-const env = getEnv();
+const env = getEnv()
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -14,8 +14,8 @@ const env = getEnv();
 const createContext = async (req: NextRequest) => {
   return createTRPCContext({
     headers: req.headers,
-  });
-};
+  })
+}
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
@@ -28,9 +28,9 @@ const handler = (req: NextRequest) =>
         ? ({ path, error }) => {
             console.error(
               `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
-            );
+            )
           }
         : undefined,
-  });
+  })
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }

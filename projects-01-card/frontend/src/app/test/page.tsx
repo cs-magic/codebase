@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { FlexContainer } from "../../../../../packages-to-classify/ui/components/flex-container";
-import { ButtonLink } from "../../../../../packages-to-classify/ui/components/button-link";
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { ButtonLink } from "@cs-magic/common/deps/ui/components/button-link"
 
 export default function TestPage() {
   return (
@@ -23,5 +23,5 @@ export default function TestPage() {
 
       <ButtonLink href={"/test/video"}>video</ButtonLink>
     </FlexContainer>
-  );
+  )
 }

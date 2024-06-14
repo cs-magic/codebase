@@ -1,5 +1,5 @@
-import { Badge } from "../../../../packages-to-classify/ui-shadcn/components/ui/badge"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
+import { Badge } from "@cs-magic/common/deps/ui-shadcn/components/ui/badge"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
 
 export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {
   if (!tags?.length) return null

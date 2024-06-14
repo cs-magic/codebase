@@ -1,15 +1,15 @@
-import { useAtom } from "jotai";
-import { devEnabledAtom } from "../../../../packages-to-classify/dev/store";
-import { LabelLine } from "../../../../packages-to-classify/ui/components/label-line";
-import { Switch } from "../../../../packages-to-classify/ui-shadcn/components/switch";
-import { requestsSlideTextVisibleAtom } from "../store/ui.atom";
-import { StandardCard } from "./standard-card";
+import { useAtom } from "jotai"
+import { devEnabledAtom } from "@cs-magic/common/deps/dev/store"
+import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
+import { Switch } from "@cs-magic/common/deps/ui-shadcn/components/switch"
+import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
+import { StandardCard } from "./standard-card"
 
 export const ConfigDevCard = () => {
-  const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom);
+  const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)
   const [requestsSlideTextDisplay, setRequestsSlideTextDisplay] = useAtom(
     requestsSlideTextVisibleAtom,
-  );
+  )
 
   return (
     <StandardCard title={"Dev"}>
@@ -24,5 +24,5 @@ export const ConfigDevCard = () => {
         />
       </LabelLine>
     </StandardCard>
-  );
-};
+  )
+}

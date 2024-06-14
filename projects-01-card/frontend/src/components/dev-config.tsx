@@ -1,41 +1,41 @@
-import { useHotkeys } from "@mantine/hooks";
-import { useAtom } from "jotai";
-import { SettingsIcon } from "lucide-react";
-import * as process from "process";
-import { useState } from "react";
-import { devEnabledAtom } from "../../../../packages-to-classify/dev/store";
+import { useHotkeys } from "@mantine/hooks"
+import { useAtom } from "jotai"
+import { SettingsIcon } from "lucide-react"
+import * as process from "process"
+import { useState } from "react"
+import { devEnabledAtom } from "@cs-magic/common/deps/dev/store"
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../../../../packages-to-classify/ui-shadcn/components/sheet";
+} from "@cs-magic/common/deps/ui-shadcn/components/sheet"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../../../packages-to-classify/ui-shadcn/components/tabs";
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils";
-import { IconContainer } from "../../../../packages-to-classify/ui/components/icon-container";
-import { ConfigDevCard } from "./config-dev-card";
-import { ConfigLogCard } from "./config-log-card";
-import { ConfigSMSCard } from "./config-sms";
-import { ConfigTRPCCard } from "./config-trpc";
-import { UserSignOutButton } from "./user-sign-out-button";
+} from "@cs-magic/common/deps/ui-shadcn/components/tabs"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { IconContainer } from "@cs-magic/common/deps/ui/components/icon-container"
+import { ConfigDevCard } from "./config-dev-card"
+import { ConfigLogCard } from "./config-log-card"
+import { ConfigSMSCard } from "./config-sms"
+import { ConfigTRPCCard } from "./config-trpc"
+import { UserSignOutButton } from "./user-sign-out-button"
 
 export const DevConfig = () => {
-  const [devEnabled] = useAtom(devEnabledAtom);
+  const [devEnabled] = useAtom(devEnabledAtom)
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useHotkeys([
     [
       "shift+mod+P",
       () => {
-        setOpen(true);
+        setOpen(true)
       },
     ],
-  ]);
+  ])
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -86,5 +86,5 @@ export const DevConfig = () => {
         </Tabs>
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}

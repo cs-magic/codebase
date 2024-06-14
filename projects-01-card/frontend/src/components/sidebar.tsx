@@ -1,6 +1,6 @@
-"use client";
-import { HTMLAttributes } from "react";
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils";
+"use client"
+import { HTMLAttributes } from "react"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
 
 export const Sidebar = ({
   className,
@@ -13,5 +13,5 @@ export const Sidebar = ({
     >
       <div className={"grow overflow-auto"}></div>
     </div>
-  );
-};
+  )
+}

@@ -1,4 +1,4 @@
-import { prisma } from "../../../packages-to-classify/db/providers/prisma";
+import { prisma } from "@cs-magic/common/deps/db/providers/prisma"
 
 /**
  * @description
@@ -7,23 +7,23 @@ import { prisma } from "../../../packages-to-classify/db/providers/prisma";
  * 2. clean a row of table: `tsx scripts/clean-db TABLE_NAME ROW_ID`
  */
 const cleanDB = async () => {
-  const tableName = process.argv[2];
-  const rowId = process.argv[3];
-  console.log("cleaning table: ", tableName);
-  if (!tableName) return;
+  const tableName = process.argv[2]
+  const rowId = process.argv[3]
+  console.log("cleaning table: ", tableName)
+  if (!tableName) return
 
   // @ts-ignore
-  const table = prisma[tableName];
+  const table = prisma[tableName]
 
-  let result: string | null = null;
+  let result: string | null = null
   if (!rowId) {
-    result = await table.deleteMany();
+    result = await table.deleteMany()
   } else {
-    result = await table.deleteOne({ where: { id: rowId } });
+    result = await table.deleteOne({ where: { id: rowId } })
   }
-  console.log("cleaned result: ", result);
-};
+  console.log("cleaned result: ", result)
+}
 
 void cleanDB().finally(async () => {
-  await prisma.$disconnect();
-});
+  await prisma.$disconnect()
+})

@@ -1,6 +1,6 @@
-"use server";
-import { prisma } from "../../../../../../../packages-to-classify/db/providers/prisma";
+"use server"
+import { prisma } from "@cs-magic/common/deps/db/providers/prisma"
 
 export const updateUserNameViaTrpc = async (userId: string, name: string) => {
-  await prisma.user.update({ where: { id: userId }, data: { name } });
-};
+  await prisma.user.update({ where: { id: userId }, data: { name } })
+}

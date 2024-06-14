@@ -4,11 +4,11 @@ import DDS_lanhupage_0 from "@/app/swot/dashboard/comp"
 import { IWechatPreference } from "@cs-magic/wechaty/schema/bot.preference"
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { useEffect, useState } from "react"
-import { env } from "../../../../../../packages-to-classify/env"
-import { useInit } from "../../../../../../packages-to-classify/hooks/use-init"
-import { socketStatusMap } from "../../../../../../packages-to-classify/transport/schema"
-import { FlexContainer } from "../../../../../../packages-to-classify/ui/components/flex-container"
-import { LabelLine } from "../../../../../../packages-to-classify/ui/components/label-line"
+import { env } from "@cs-magic/common/deps/env"
+import { useInit } from "@cs-magic/common/deps/hooks/use-init"
+import { socketStatusMap } from "@cs-magic/common/deps/transport/schema"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
 
 export default function SwotDashboardPage() {
   const [preference, setPreference] = useState<IWechatPreference | null>(null)

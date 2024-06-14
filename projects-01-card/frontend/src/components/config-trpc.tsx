@@ -1,12 +1,12 @@
-import { api } from "../../../../packages-to-classify/trpc/react";
-import { LabelLine } from "../../../../packages-to-classify/ui/components/label-line";
-import { Button } from "../../../../packages-to-classify/ui-shadcn/components/button";
+import { api } from "@cs-magic/common/deps/trpc/react"
+import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
+import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
 
-import { StandardCard } from "./standard-card";
-import { TrpcLogEnabled } from "./config-trpc-log-enabled";
+import { StandardCard } from "./standard-card"
+import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 
 export const ConfigTRPCCard = () => {
-  const utils = api.useUtils();
+  const utils = api.useUtils()
 
   return (
     <StandardCard title={"TRPC"}>
@@ -15,12 +15,12 @@ export const ConfigTRPCCard = () => {
       <LabelLine title={"Invalidate ALL"}>
         <Button
           onClick={() => {
-            utils.invalidate();
+            utils.invalidate()
           }}
         >
           Invalidate
         </Button>
       </LabelLine>
     </StandardCard>
-  );
-};
+  )
+}

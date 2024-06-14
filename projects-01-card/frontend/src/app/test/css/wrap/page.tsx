@@ -1,4 +1,4 @@
-import { FlexContainer } from "../../../../../../../packages-to-classify/ui/components/flex-container";
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
 
 export default function TestCSSWrap() {
   return (
@@ -15,5 +15,5 @@ export default function TestCSSWrap() {
         cdc asc ssc sccdc cdaxsx sxscscs ccd cdc
       </div>
     </FlexContainer>
-  );
+  )
 }

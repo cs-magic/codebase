@@ -1,12 +1,12 @@
-import { InputWithEnter } from "../../../../packages-to-classify/ui/components/input";
-import { useDraftSession } from "../../../../packages-to-classify/hooks/use-user-draft-session";
+import { InputWithEnter } from "@cs-magic/common/deps/ui/components/input"
+import { useDraftSession } from "@cs-magic/common/deps/hooks/use-user-draft-session"
 
 export const UserInputName = ({
   onEnter,
 }: {
-  onEnter?: (s: string) => void;
+  onEnter?: (s: string) => void
 }) => {
-  const { draft, value, setDraft } = useDraftSession("name");
+  const { draft, value, setDraft } = useDraftSession("name")
 
   return (
     <InputWithEnter
@@ -14,11 +14,11 @@ export const UserInputName = ({
       autoFocus
       value={draft ?? ""}
       onChange={(event) => {
-        setDraft(event.currentTarget.value);
+        setDraft(event.currentTarget.value)
       }}
       onEnter={(s) => {
-        if (onEnter) onEnter(s);
+        if (onEnter) onEnter(s)
       }}
     />
-  );
-};
+  )
+}

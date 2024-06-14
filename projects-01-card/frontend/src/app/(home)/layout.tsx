@@ -1,7 +1,7 @@
-import { Footer } from "../../components/footer";
-import { Header } from "../../components/header";
-import React, { PropsWithChildren } from "react";
-import { FlexContainer } from "../../../../../packages-to-classify/ui/components/flex-container";
+import { Footer } from "../../components/footer"
+import { Header } from "../../components/header"
+import React, { PropsWithChildren } from "react"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
 
 export default function HomeLayout({ children }: PropsWithChildren) {
   return (
@@ -12,5 +12,5 @@ export default function HomeLayout({ children }: PropsWithChildren) {
 
       <Footer />
     </FlexContainer>
-  );
+  )
 }

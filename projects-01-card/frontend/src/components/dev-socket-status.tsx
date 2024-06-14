@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { useAtom } from "jotai";
-import { BarChart } from "lucide-react";
-import { devEnabledAtom } from "../../../../packages-to-classify/dev/store";
-import { pusherLatencyAtom } from "../../../../packages-to-classify/pusher/store";
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils";
-import { DevSocketStatusIcon } from "./dev-socket-status-icon";
+import { useAtom } from "jotai"
+import { BarChart } from "lucide-react"
+import { devEnabledAtom } from "@cs-magic/common/deps/dev/store"
+import { pusherLatencyAtom } from "@cs-magic/common/deps/pusher/store"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { DevSocketStatusIcon } from "./dev-socket-status-icon"
 
 export const DevSocketStatus = () => {
-  const [latency] = useAtom(pusherLatencyAtom);
+  const [latency] = useAtom(pusherLatencyAtom)
 
-  const [devEnabled] = useAtom(devEnabledAtom);
-  if (!devEnabled) return null;
+  const [devEnabled] = useAtom(devEnabledAtom)
+  if (!devEnabled) return null
 
   return (
     <div
@@ -31,5 +31,5 @@ export const DevSocketStatus = () => {
         {Math.floor(latency) + " ms"}
       </span>
     </div>
-  );
-};
+  )
+}

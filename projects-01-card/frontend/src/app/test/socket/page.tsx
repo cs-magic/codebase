@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { useAtom, useSetAtom } from "jotai";
-import { useEffect } from "react";
-import { usePusherClient } from "../../../../../../packages-to-classify/pusher/hooks/use-pusher-client";
-import { PusherServerId } from "../../../../../../packages-to-classify/pusher/schema";
+import { useAtom, useSetAtom } from "jotai"
+import { useEffect } from "react"
+import { usePusherClient } from "@cs-magic/common/deps/pusher/hooks/use-pusher-client"
+import { PusherServerId } from "@cs-magic/common/deps/pusher/schema"
 import {
   cleanPusherAtom,
   pusherServerIdAtom,
-} from "../../../../../../packages-to-classify/pusher/store";
-import { FlexContainer } from "../../../../../../packages-to-classify/ui/components/flex-container";
-import { Button } from "../../../../../../packages-to-classify/ui-shadcn/components/button";
+} from "@cs-magic/common/deps/pusher/store"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
 import {
   Select,
   SelectContent,
@@ -17,26 +17,26 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../../../packages-to-classify/ui-shadcn/components/select";
+} from "@cs-magic/common/deps/ui-shadcn/components/select"
 
 export default function TestSocketPage() {
-  const [serverId, setServerId] = useAtom(pusherServerIdAtom);
-  const clean = useSetAtom(cleanPusherAtom);
+  const [serverId, setServerId] = useAtom(pusherServerIdAtom)
+  const clean = useSetAtom(cleanPusherAtom)
 
-  const client = usePusherClient();
+  const client = usePusherClient()
 
   const c = () => {
-    console.log("cleaning...");
-    clean();
-  };
+    console.log("cleaning...")
+    clean()
+  }
 
   useEffect(() => {
-    window.addEventListener("beforeunload", c);
+    window.addEventListener("beforeunload", c)
     return () => {
-      c();
-      window.removeEventListener("beforeunload", c);
-    };
-  }, []);
+      c()
+      window.removeEventListener("beforeunload", c)
+    }
+  }, [])
 
   return (
     <FlexContainer orientation={"vertical"}>
@@ -65,12 +65,12 @@ export default function TestSocketPage() {
 
       <Button
         onClick={() => {
-          client?.send_event("pusher:ping", {});
-          console.log("ping");
+          client?.send_event("pusher:ping", {})
+          console.log("ping")
         }}
       >
         发送数据
       </Button>
     </FlexContainer>
-  );
+  )
 }

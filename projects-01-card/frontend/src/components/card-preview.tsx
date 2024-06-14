@@ -15,12 +15,12 @@ import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
 import { forwardRef } from "react"
 import { config } from "../../../../packages-common/common/config"
-import moment from "../../../../packages-to-classify/datetime/moment"
-import { AspectRatio } from "../../../../packages-to-classify/ui-shadcn/components/aspect-ratio"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
-import { CsMagicLogoSvg } from "../../../../packages-to-classify/ui/assets"
-import { VerticalAspectRatio } from "../../../../packages-to-classify/ui/components/aspect-ratio"
-import MarkMap from "../../../../packages-to-classify/visualization/markmap"
+import moment from "@cs-magic/common/deps/datetime/moment"
+import { AspectRatio } from "@cs-magic/common/deps/ui-shadcn/components/aspect-ratio"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { CsMagicLogoSvg } from "@cs-magic/common/deps/ui/assets"
+import { VerticalAspectRatio } from "@cs-magic/common/deps/ui/components/aspect-ratio"
+import MarkMap from "@cs-magic/common/deps/visualization/markmap"
 
 export const CardPreview = forwardRef<
   HTMLDivElement,

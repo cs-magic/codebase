@@ -7,11 +7,11 @@ import {
   cardPreviewEngineTypeSchema,
   type GenCardApproach,
 } from "@cs-magic/wechat/schema/card"
-import { useSearchParam } from "../../../../packages-to-classify/hooks/use-search-param"
-import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
-import { Separator } from "../../../../packages-to-classify/ui-shadcn/components/separator"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
-import { AtomSelector } from "../../../../packages-to-classify/ui/components/atom-switcher"
+import { useSearchParam } from "@cs-magic/common/deps/hooks/use-search-param"
+import { Input } from "@cs-magic/common/deps/ui-shadcn/components/input"
+import { Separator } from "@cs-magic/common/deps/ui-shadcn/components/separator"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { AtomSelector } from "@cs-magic/common/deps/ui/components/atom-switcher"
 import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"

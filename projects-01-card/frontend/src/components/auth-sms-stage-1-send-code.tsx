@@ -11,7 +11,7 @@ import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
 } from "../../../../packages-common/auth-sms/store"
-import { ButtonWithLoading } from "../../../../packages-to-classify/ui/components/button-with-loading"
+import { ButtonWithLoading } from "@cs-magic/common/deps/ui/components/button-with-loading"
 import {
   Form,
   FormControl,
@@ -19,8 +19,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../../packages-to-classify/ui-shadcn/components/form"
-import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
+} from "@cs-magic/common/deps/ui-shadcn/components/form"
+import { Input } from "@cs-magic/common/deps/ui-shadcn/components/input"
 
 export const AuthSmsStage1SendCode = () => {
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)

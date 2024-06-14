@@ -1,13 +1,13 @@
-"use client";
-import Link from "next/link";
-import { uiAlertDialogContent } from "../../../../packages-to-classify/ui/store";
-import { Button } from "../../../../packages-to-classify/ui-shadcn/components/button";
-import React from "react";
-import { ContentAlertDialog } from "../../../../packages-to-classify/ui/components/content-alert-dialog";
-import { useAtom } from "jotai";
+"use client"
+import Link from "next/link"
+import { uiAlertDialogContent } from "@cs-magic/common/deps/ui/store"
+import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
+import React from "react"
+import { ContentAlertDialog } from "@cs-magic/common/deps/ui/components/content-alert-dialog"
+import { useAtom } from "jotai"
 
 export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {
-  const [dynamicContent] = useAtom(uiAlertDialogContent);
+  const [dynamicContent] = useAtom(uiAlertDialogContent)
 
   return (
     <ContentAlertDialog>
@@ -22,5 +22,5 @@ export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {
         </Link>
       </div>
     </ContentAlertDialog>
-  );
-};
+  )
+}

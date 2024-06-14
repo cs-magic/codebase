@@ -1,10 +1,10 @@
 "use client"
 
+import { uiLoadingAlertDialogAtom } from "@cs-magic/common/deps/ui/store"
 import { useAtom, useSetAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { toast } from "sonner"
-import { uiLoadingAlertDialogAtom } from "../../../packages-to-classify/ui/store"
 import { $sendSms } from "../server/actions"
 import { $sendSmsViaAli } from "../server/providers/ali"
 import { $sendSmsViaTencent } from "../server/providers/tencent"

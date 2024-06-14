@@ -1,8 +1,8 @@
 "use server"
 
 import { Card, Prisma } from "@prisma/client"
-import { prisma } from "../../../../../../packages-to-classify/db/providers/prisma"
-import { IXiaoHongShuNotePageData } from "../../../../../../packages-to-classify/xhs/schema"
+import { prisma } from "@cs-magic/common/deps/db/providers/prisma"
+import { IXiaoHongShuNotePageData } from "@cs-magic/common/deps/xhs/schema"
 
 export const xiaohongshu2card = (
   inputData: IXiaoHongShuNotePageData,

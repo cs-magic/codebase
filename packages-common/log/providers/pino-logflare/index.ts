@@ -1,7 +1,7 @@
 import pino from "pino"
 import { logflarePinoVercel } from "pino-logflare"
 
-import { getEnv } from "../../../../packages-to-classify/env"
+import { getEnv } from "@cs-magic/common/deps/env"
 
 const env = getEnv()
 

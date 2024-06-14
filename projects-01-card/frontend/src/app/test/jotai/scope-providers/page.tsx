@@ -1,10 +1,10 @@
-"use client";
-import { Provider } from "jotai";
-import { ScopeProvider } from "jotai-scope";
-import { FlexContainer } from "../../../../../../../packages-to-classify/ui/components/flex-container";
-import { Label } from "../../../../../../../packages-to-classify/ui-shadcn/components/label";
-import { PlainContext } from "../plain-context";
-import { base1Atom, base2Atom } from "../store";
+"use client"
+import { Provider } from "jotai"
+import { ScopeProvider } from "jotai-scope"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { Label } from "@cs-magic/common/deps/ui-shadcn/components/label"
+import { PlainContext } from "../plain-context"
+import { base1Atom, base2Atom } from "../store"
 
 export default function ScopeProvidersPage() {
   return (
@@ -36,5 +36,5 @@ export default function ScopeProvidersPage() {
         <PlainContext />
       </FlexContainer>
     </Provider>
-  );
+  )
 }

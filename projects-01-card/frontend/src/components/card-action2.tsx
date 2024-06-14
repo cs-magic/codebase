@@ -10,7 +10,7 @@ import { domToBlob } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
 import { Action2Type, ActionType } from "@cs-magic/wechat/schema/card"
-import { uploadFile } from "../../../../packages-to-classify/oss/upload"
+import { uploadFile } from "@cs-magic/common/deps/oss/upload"
 import { CardAction } from "./card-action"
 
 export const CardAction2 = ({

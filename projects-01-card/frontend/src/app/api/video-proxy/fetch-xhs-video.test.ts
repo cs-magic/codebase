@@ -4,7 +4,7 @@ import axios from "axios"
 
 import nodeFetch from "node-fetch"
 import { request } from "undici"
-import { FetchApproach } from "../../../../../../packages-to-classify/api-client/schema"
+import { FetchApproach } from "@cs-magic/common/deps/api-client/schema"
 import { sampleXiaoHongShuVideoUrl } from "@cs-magic/common/sample"
 
 const fetchArrayBuffer = async (lib: FetchApproach): Promise<ArrayBuffer> => {

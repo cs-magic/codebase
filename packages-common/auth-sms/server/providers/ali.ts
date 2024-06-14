@@ -9,7 +9,7 @@ import { Config } from "@alicloud/openapi-client"
 import { RuntimeOptions } from "@alicloud/tea-util"
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/log/logger"
-import { getEnv } from "../../../../packages-to-classify/env"
+import { getEnv } from "@cs-magic/common/deps/env"
 
 const env = getEnv()
 

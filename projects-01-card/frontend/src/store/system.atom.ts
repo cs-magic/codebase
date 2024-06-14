@@ -1,7 +1,7 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { BEST_VIEWPOINT } from "../../../../packages-to-classify/ui/config"
-import { uiScreenAtom } from "../../../../packages-to-classify/ui/store"
+import { BEST_VIEWPOINT } from "@cs-magic/common/deps/ui/config"
+import { uiScreenAtom } from "@cs-magic/common/deps/ui/store"
 import { ScenarioType } from "@cs-magic/common/schema/scenario"
 
 //////////////////////////////

@@ -1,7 +1,7 @@
-import { Header } from "../../components/header";
-import { PropsWithChildren } from "react";
-import { cn } from "../../../../../packages-to-classify/ui-shadcn/utils";
-import { FlexContainer } from "../../../../../packages-to-classify/ui/components/flex-container";
+import { Header } from "../../components/header"
+import { PropsWithChildren } from "react"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
 
 export default function SubLayout({ children }: PropsWithChildren) {
   // console.log(ansiColors.red("== SubLayout =="))
@@ -22,5 +22,5 @@ export default function SubLayout({ children }: PropsWithChildren) {
 
       {/*<Footer />*/}
     </FlexContainer>
-  );
+  )
 }

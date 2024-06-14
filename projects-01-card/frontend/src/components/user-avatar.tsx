@@ -8,9 +8,9 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../../../packages-to-classify/ui-shadcn/components/avatar"
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils"
-import { VerticalAspectRatio } from "../../../../packages-to-classify/ui/components/aspect-ratio"
+} from "@cs-magic/common/deps/ui-shadcn/components/avatar"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
+import { VerticalAspectRatio } from "@cs-magic/common/deps/ui/components/aspect-ratio"
 
 export const UserAvatar = ({
   user,

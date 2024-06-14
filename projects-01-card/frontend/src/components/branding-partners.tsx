@@ -1,9 +1,9 @@
 import {
   Avatar,
   AvatarImage,
-} from "../../../../packages-to-classify/ui-shadcn/components/avatar"
-import { ImageEqualHeight } from "../../../../packages-to-classify/ui/components/image-equal-height"
-import { SeparatorContainer } from "../../../../packages-to-classify/ui/components/separator-container"
+} from "@cs-magic/common/deps/ui-shadcn/components/avatar"
+import { ImageEqualHeight } from "@cs-magic/common/deps/ui/components/image-equal-height"
+import { SeparatorContainer } from "@cs-magic/common/deps/ui/components/separator-container"
 
 import { config } from "../../../../packages-common/common/config"
 

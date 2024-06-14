@@ -1,36 +1,36 @@
-"use client";
-import { Controls } from "./tv-controls";
+"use client"
+import { Controls } from "./tv-controls"
 import {
   getTvScale,
   tvFullScreenAtom,
   tvScreenOnAtom,
-} from "../../../../packages-to-classify/extend-tv/store";
+} from "@cs-magic/common/deps/extend-tv/store"
 
-import "../styles/tv.css";
-import { useAtom } from "jotai";
-import { range } from "lodash";
-import { PropsWithChildren, useRef } from "react";
-import { useFullscreen, useMeasure } from "react-use";
-import { FlexContainer } from "../../../../packages-to-classify/ui/components/flex-container";
-import { cn } from "../../../../packages-to-classify/ui-shadcn/utils";
+import "../styles/tv.css"
+import { useAtom } from "jotai"
+import { range } from "lodash"
+import { PropsWithChildren, useRef } from "react"
+import { useFullscreen, useMeasure } from "react-use"
+import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
+import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
 
 /**
  * tv, ref: https://codepen.io/manz/pen/MWoRMja
  */
 export const TVContainer = ({ children }: PropsWithChildren) => {
-  const [isScreenOn] = useAtom(tvScreenOnAtom);
-  const [isFullScreen, setFullScreen] = useAtom(tvFullScreenAtom);
+  const [isScreenOn] = useAtom(tvScreenOnAtom)
+  const [isFullScreen, setFullScreen] = useAtom(tvFullScreenAtom)
 
-  const refFullScreen = useRef<HTMLDivElement>(null);
+  const refFullScreen = useRef<HTMLDivElement>(null)
   useFullscreen(refFullScreen, isFullScreen, {
     onClose: () => setFullScreen(false),
-  });
+  })
 
-  const channelDeg = 0;
-  const volumeDeg = 0;
+  const channelDeg = 0
+  const volumeDeg = 0
 
-  const [refViewport, viewport] = useMeasure<HTMLDivElement>();
-  const scale = getTvScale(viewport);
+  const [refViewport, viewport] = useMeasure<HTMLDivElement>()
+  const scale = getTvScale(viewport)
 
   // console.log({ scale, isScreenOn, isFullScreen })
 
@@ -149,5 +149,5 @@ export const TVContainer = ({ children }: PropsWithChildren) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

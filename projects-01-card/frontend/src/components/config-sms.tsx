@@ -6,8 +6,8 @@ import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
 } from "../../../../packages-common/auth-sms/store"
-import { Input } from "../../../../packages-to-classify/ui-shadcn/components/input"
-import { Label } from "../../../../packages-to-classify/ui-shadcn/components/label"
+import { Input } from "@cs-magic/common/deps/ui-shadcn/components/input"
+import { Label } from "@cs-magic/common/deps/ui-shadcn/components/label"
 import {
   Select,
   SelectContent,
@@ -15,7 +15,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../../packages-to-classify/ui-shadcn/components/select"
+} from "@cs-magic/common/deps/ui-shadcn/components/select"
 
 import { StandardCard } from "./standard-card"
 

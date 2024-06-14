@@ -4,7 +4,7 @@ import { logger } from "@cs-magic/log/logger" /**
  */
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
 
-import { getEnv } from "../../../../packages-to-classify/env"
+import { getEnv } from "@cs-magic/common/deps/env"
 
 const env = getEnv()
 
