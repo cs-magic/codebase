@@ -59,7 +59,8 @@ export const CardPreview = forwardRef<
         </div>
 
         <div className={"flex text-primary2"}>
-          —— 飞脑：你的下一代个人助理 ——
+          —— 飞脑：更懂你的跨平台AI助理 ——
+          {/*—— 飞脑：你的下一代个人助理 ——*/}
           {/*—— 飞脑：回归人的价值 ——*/}
         </div>
       </div>
