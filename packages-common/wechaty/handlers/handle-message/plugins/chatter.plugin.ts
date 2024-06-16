@@ -1,7 +1,7 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 // todo: why this not ok
 // import { safeCallLLM } from "@cs-magic/llm"
-import { trimMessages, safeCallLLM } from "packages-core/llm"
+import { trimMessages, safeCallLLM } from "packages-common/llm"
 import { logger } from "@cs-magic/log/logger"
 import { ILlmMessage } from "@cs-magic/common/schema/message"
 import { types } from "wechaty"

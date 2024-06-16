@@ -12,7 +12,7 @@ export class Path {
 
   static projectDir = path.dirname(Path.packagesDir)
 
-  static llmPackageDir = path.join(Path.projectDir, "packages-core/llm")
+  static llmPackageDir = path.join(Path.projectDir, "packages-common/llm")
 
   static envFile = path.join(Path.projectDir, ".env")
   static envLocalFile = path.join(Path.projectDir, ".env.local")
