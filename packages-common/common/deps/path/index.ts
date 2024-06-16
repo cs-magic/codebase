@@ -6,13 +6,11 @@ export class Path {
   // static currentFile = __filename
   static currentFile = fileURLToPath(import.meta.url) // 不能命名为 __filename，会导致重复定义
 
-  static packageDir = path.dirname(Path.currentFile)
+  static packageDir = path.dirname(
+    path.dirname(path.dirname(path.dirname(Path.currentFile))),
+  )
 
-  static packagesDir = path.dirname(Path.packageDir)
-
-  static projectDir = path.dirname(Path.packagesDir)
-
-  static llmPackageDir = path.join(Path.projectDir, "packages-common/llm")
+  static projectDir = path.dirname(Path.packageDir)
 
   static envFile = path.join(Path.projectDir, ".env")
   static envLocalFile = path.join(Path.projectDir, ".env.local")
