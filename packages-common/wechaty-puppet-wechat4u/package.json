@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc && tsc -p tsconfig.cjs.json",
-    "clean": "shx rm -fr dist",
+    "clean": "shx rm -fr dist/*",
     "dist": "npm-run-all clean build dist:commonjs",
     "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/wechaty-puppet-wechat4u/package.json",
     "lint": "npm-run-all lint:es lint:ts lint:md",
