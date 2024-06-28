@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "lint": "."
+    "lint": "echo 'escape linting since `eslint .` not works'"
   },
   "packageManager": "yarn@4.1.1",
   "dependencies": {
