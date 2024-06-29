@@ -55,6 +55,12 @@ export const handleWechatyBot = (bot: Wechaty) => {
     .on("login", async (user) => {
       logger.info(`onLogin: %o`, user.payload)
       bot.context = await initBotContext(bot)
+
+      const contacts = await bot.Contact.findAll()
+      const contact = contacts[0]
+      console.log(`getting contact avatar(id=${contact?.id})`)
+      if (!contact) return
+      const avatar = await contact.avatar()
     })
 
     .on("logout", (user, reason) => {

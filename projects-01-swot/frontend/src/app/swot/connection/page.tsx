@@ -167,13 +167,17 @@ export default function BotPage() {
               <div>id: {botUser?.id}</div>
               <div>name: {botUser?.name}</div>
 
-              <Button
-                onClick={() => {
-                  socket?.send("get-contacts")
-                }}
-              >
-                Get Contacts
-              </Button>
+              <div className={"flex gap-2"}>
+                <Button
+                  onClick={() => {
+                    socket?.send("get-contacts")
+                  }}
+                >
+                  Get Contacts
+                </Button>
+
+                <Button onClick={() => {}}>Dump Contacts</Button>
+              </div>
 
               {botContacts && (
                 <div className={"max-h-[320px] overflow-auto"}>
