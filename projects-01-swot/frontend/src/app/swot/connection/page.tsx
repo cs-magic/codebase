@@ -21,11 +21,16 @@ import { QRCodeSVG } from "qrcode.react"
 import { env } from "@cs-magic/common/deps/env"
 import { useInit } from "@cs-magic/common/deps/hooks/use-init"
 import { socketStatusMap } from "@cs-magic/common/deps/transport/schema"
-import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
+import {
+  Button,
+  buttonVariants,
+} from "@cs-magic/common/deps/ui-shadcn/components/button"
 import { cn } from "@cs-magic/common/deps/ui-shadcn/utils"
 import { ButtonWithLoading } from "@cs-magic/common/deps/ui/components/button-with-loading"
 import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
 import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
+import { CSVLink, CSVDownload } from "react-csv"
+import { toast } from "sonner"
 
 export default function BotPage() {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)
@@ -176,12 +181,25 @@ export default function BotPage() {
                   Get Contacts
                 </Button>
 
-                <Button onClick={() => {}}>Dump Contacts</Button>
+                {botContacts && (
+                  <CSVLink
+                    className={cn(buttonVariants({}))}
+                    data={botContacts}
+                    filename={"contacts.csv"}
+                    onClick={() => {
+                      toast.success("downloaded")
+                    }}
+                  >
+                    Dump Contacts
+                  </CSVLink>
+                )}
               </div>
 
               {botContacts && (
-                <div className={"max-h-[320px] overflow-auto"}>
-                  <DataTable columns={columns} data={botContacts} />
+                <div>
+                  <div className={"max-h-[320px] overflow-auto"}>
+                    <DataTable columns={columns} data={botContacts} />
+                  </div>
                 </div>
               )}
             </StandardCard>
