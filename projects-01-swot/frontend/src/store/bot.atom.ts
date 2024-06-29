@@ -1,10 +1,12 @@
 import { IUser } from "@cs-magic/wechaty/schema/bot.utils"
 import { atom } from "jotai"
+import { payloads } from "wechaty-puppet"
 
 export const botSocketOpenedAtom = atom(false)
 
 export const botScanValueAtom = atom("")
 export const botUserAtom = atom<IUser | null>(null)
+export const botContactsAtom = atom<payloads.Contact[] | null>(null)
 export const botLoggedInAtom = atom(false)
 export const botLoggingAtom = atom(false)
 

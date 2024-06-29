@@ -8,5 +8,6 @@ export const botCommandTypeSchema = z.enum([
   "update-token",
   "get-preference",
   "set-preference",
+  "get-contacts",
 ])
 export type BotCommandType = z.infer<typeof botCommandTypeSchema>

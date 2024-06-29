@@ -1,8 +1,10 @@
 "use client"
 
+import { columns, DataTable } from "@/app/swot/connection/contacts.table"
 import { StandardCard } from "@/components/standard-card"
 import { useUserIsAdmin } from "@/hooks/use-user"
 import {
+  botContactsAtom,
   botLoggedInAtom,
   botLoggingAtom,
   botScanningAtom,
@@ -30,6 +32,7 @@ export default function BotPage() {
   const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom)
   const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom)
   const [botUser, setBotUser] = useAtom(botUserAtom)
+  const [botContacts, setBotContacts] = useAtom(botContactsAtom)
   const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom)
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom)
   const [botLogging, setBotLogging] = useAtom(botLoggingAtom)
@@ -73,6 +76,14 @@ export default function BotPage() {
             setBotLoggedIn(data.data)
             setBotLogging(false)
             break
+
+          case "preference":
+            break
+
+          case "contacts":
+            // console.log("contacts: ", data.data.slice(0, 5))
+            setBotContacts(data.data.filter((c) => !!c.friend))
+            break
         }
       } catch (e) {
         // prettyError(e);
@@ -82,7 +93,7 @@ export default function BotPage() {
     return socket
   })
 
-  logger.info({ botUser })
+  logger.info({ botUser, botContacts })
 
   return (
     <FlexContainer
@@ -155,6 +166,20 @@ export default function BotPage() {
             <StandardCard title={"Bot Payload"}>
               <div>id: {botUser?.id}</div>
               <div>name: {botUser?.name}</div>
+
+              <Button
+                onClick={() => {
+                  socket?.send("get-contacts")
+                }}
+              >
+                Get Contacts
+              </Button>
+
+              {botContacts && (
+                <div className={"max-h-[320px] overflow-auto"}>
+                  <DataTable columns={columns} data={botContacts} />
+                </div>
+              )}
             </StandardCard>
           )}
         </>

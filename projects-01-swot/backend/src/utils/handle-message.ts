@@ -76,6 +76,17 @@ export const handleMessage = async (
         break
       }
 
+      case "get-contacts": {
+        const contacts = (await context.bot?.Contact.findAll()) ?? []
+        const data: IWechatBotTransfer = {
+          type: "contacts",
+          data: contacts.map((c) => c.payload!),
+        }
+        // console.log("contacts data: ", data.data.slice(0, 5))
+        socket.send(JSON.stringify(data))
+        break
+      }
+
       case "get-preference": {
         const convId = result.args
         const preference = await getConvPreference({ convId })

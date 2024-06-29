@@ -20,4 +20,8 @@ export type IWechatBotTransfer =
       type: "preference"
       data: IWechatPreference
     }
+  | {
+      type: "contacts"
+      data: payloads.Contact[]
+    }
 export type LlmScenario = "chatter" | "parser"
