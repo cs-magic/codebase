@@ -27,6 +27,17 @@ void fastify.register(async function (fastify) {
 
   await startBot(context)
 
+  fastify.get("/context", {}, async () => {
+    const bot = context.bot
+    return {
+      bot: {
+        id: bot?.id,
+        name: bot?.name,
+        scan: context.scan,
+      },
+    }
+  })
+
   fastify.get(
     "/ws",
     { websocket: true },
