@@ -104,6 +104,7 @@ const config = {
   plugins: [
     require("tailwindcss-animate"),
 
+    // todo: what does it use for ?
     // require("@tailwindcss/forms"),
 
     // @ts-ignore

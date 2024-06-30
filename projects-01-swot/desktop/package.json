@@ -1,11 +1,14 @@
 {
-  "name": "@cs-magic/tauri",
+  "name": "@cs-magic/desktop",
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev:next": "next dev",
+    "build:next": "next build",
+    "start:next": "next start",
+    "lint:next": "next lint",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "start": "tauri start"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
