@@ -3,7 +3,7 @@ import { useAtom } from "jotai"
 import { pusherLogLevelAtom } from "@cs-magic/common/deps/pusher/store"
 import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
-import { StandardCard } from "./standard-card"
+import { StandardCard } from "../../../../packages-common/common/deps/ui/components/standard-card"
 
 export const ConfigLogCard = () => {
   const [pusherLogLevel, setPusherLogLevel] = useAtom(pusherLogLevelAtom)

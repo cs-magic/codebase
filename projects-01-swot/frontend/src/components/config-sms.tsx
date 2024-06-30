@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@cs-magic/common/deps/ui-shadcn/components/select"
 
-import { StandardCard } from "./standard-card"
+import { StandardCard } from "../../../../packages-common/common/deps/ui/components/standard-card"
 
 export const ConfigSMSCard = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)

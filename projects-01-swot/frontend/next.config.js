@@ -6,6 +6,9 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
+  // ref: https://tauri.app/v1/guides/getting-started/setup/next-js#nextjs-static-exports
+  output: "export",
+
   reactStrictMode: false,
 
   distDir: process.env.DIST ?? ".next",
@@ -53,6 +56,8 @@ const config = {
 
   // ref: https://nextjs.org/docs/api-reference/next/image#remote-patterns
   images: {
+    unoptimized: true,
+
     remotePatterns: [
       // ref:https://stackoverflow.com/a/73951135/9422455
       { protocol: "http", hostname: "**" },

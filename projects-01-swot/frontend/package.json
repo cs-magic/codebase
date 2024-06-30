@@ -19,6 +19,7 @@
     "@alicloud/dysmsapi20180501": "^1.0.4",
     "@auth/prisma-adapter": "^1.4.0",
     "@cs-magic/auth": "workspace:^",
+    "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
     "@emotion/react": "^11.11.4",
     "@hookform/resolvers": "^3.3.4",
@@ -136,6 +137,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^1.5.14",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@types/ali-oss": "^6.16.11",

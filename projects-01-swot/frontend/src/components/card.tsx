@@ -16,7 +16,7 @@ import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreviewContainer } from "./card-preview-container"
-import { StandardCard } from "./standard-card"
+import { StandardCard } from "../../../../packages-common/common/deps/ui/components/standard-card"
 
 export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)

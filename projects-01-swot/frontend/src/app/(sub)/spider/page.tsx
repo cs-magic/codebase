@@ -22,7 +22,7 @@ import { Badge } from "@cs-magic/common/deps/ui-shadcn/components/ui/badge"
 import { FlexContainer } from "@cs-magic/common/deps/ui/components/flex-container"
 import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
 import { Textarea } from "@cs-magic/common/deps/ui/components/textarea-auto"
-import { StandardCard } from "../../../components/standard-card"
+import { StandardCard } from "../../../../../../packages-common/common/deps/ui/components/standard-card"
 import { serverFetch } from "./actions"
 import { cookie2headers } from "./utils"
 

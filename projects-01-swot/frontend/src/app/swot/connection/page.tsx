@@ -1,8 +1,8 @@
 "use client"
 
 import { columns, DataTable } from "@/app/swot/connection/contacts.table"
-import { StandardCard } from "@/components/standard-card"
-import { useUserIsAdmin } from "@/hooks/use-user"
+import { StandardCard } from "../../../../../../packages-common/common/deps/ui/components/standard-card"
+import { useUserIsAdmin } from "../../../../../../packages-common/common/deps/hooks/use-user"
 import {
   botContactsAtom,
   botLoggedInAtom,
@@ -13,7 +13,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "@/store/bot.atom"
+} from "../../../../../../packages-common/common/deps/store/bot.atom"
 import { logger } from "@cs-magic/log/logger"
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { useAtom } from "jotai"

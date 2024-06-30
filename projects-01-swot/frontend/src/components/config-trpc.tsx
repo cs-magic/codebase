@@ -2,7 +2,7 @@ import { api } from "@cs-magic/common/deps/trpc/react"
 import { LabelLine } from "@cs-magic/common/deps/ui/components/label-line"
 import { Button } from "@cs-magic/common/deps/ui-shadcn/components/button"
 
-import { StandardCard } from "./standard-card"
+import { StandardCard } from "../../../../packages-common/common/deps/ui/components/standard-card"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 
 export const ConfigTRPCCard = () => {
