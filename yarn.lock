@@ -1802,6 +1802,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/desktop@workspace:projects-01-swot/desktop":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/desktop@workspace:projects-01-swot/desktop"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+    "@tauri-apps/cli": "npm:^1.5.14"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^18"
+    "@types/react-dom": "npm:^18"
+    eslint: "npm:^8"
+    eslint-config-next: "npm:14.2.4"
+    next: "npm:14.2.4"
+    postcss: "npm:^8"
+    react: "npm:^18"
+    react-dom: "npm:^18"
+    tailwindcss: "npm:^3.4.1"
+    typescript: "npm:^5"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/llm@workspace:^, @cs-magic/llm@workspace:packages-common/llm":
   version: 0.0.0-use.local
   resolution: "@cs-magic/llm@workspace:packages-common/llm"
@@ -1835,9 +1855,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot@workspace:projects-01-swot/frontend":
+"@cs-magic/swot@workspace:projects-01-swot/web":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/swot@workspace:projects-01-swot/frontend"
+  resolution: "@cs-magic/swot@workspace:projects-01-swot/web"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
@@ -1986,26 +2006,6 @@ __metadata:
     zhipuai-sdk-nodejs-v4: "npm:^0.1.12"
     zod: "npm:3.21.1"
     zustand: "npm:^4.5.2"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/tauri@workspace:projects-01-swot/tauri":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/tauri@workspace:projects-01-swot/tauri"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    "@tauri-apps/cli": "npm:^1.5.14"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^18"
-    "@types/react-dom": "npm:^18"
-    eslint: "npm:^8"
-    eslint-config-next: "npm:14.2.4"
-    next: "npm:14.2.4"
-    postcss: "npm:^8"
-    react: "npm:^18"
-    react-dom: "npm:^18"
-    tailwindcss: "npm:^3.4.1"
-    typescript: "npm:^5"
   languageName: unknown
   linkType: soft
 

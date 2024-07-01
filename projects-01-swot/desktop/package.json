@@ -2,13 +2,17 @@
   "name": "@cs-magic/desktop",
   "version": "0.1.0",
   "scripts": {
-    "dev:next": "next dev",
-    "build:next": "next build",
-    "start:next": "next start",
+    "backend": "yarn workspace @cs-magic/api dev",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint:next": "next lint",
-    "dev": "tauri dev",
-    "build": "tauri build",
-    "start": "tauri start"
+    "dev:tauri": "yarn tauri dev",
+    "build:tauri": "tauri build",
+    "start:tauri": "yarn tauri start",
+    "dev:all": "run-p backend dev:tauri",
+    "build:all": "run-p build:tauri",
+    "start:all": "run-p backend start:tauri"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
