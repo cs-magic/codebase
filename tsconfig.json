@@ -1,42 +1,67 @@
 {
   "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
+    "outDir": "dist",
+    "ignoreDeprecations": "5.0",
+
+    /**
+     * Type import/export checkings
+     */
+    // https://devblogs.microsoft.com/typescript/announcing-typescript-3-8/#type-only-imports-exports
+    //    "importsNotUsedAsValues": "preserve",
+    // https://www.typescriptlang.org/tsconfig#isolatedModules
+    //    "isolatedModules": true,
+
+    "traceResolution"   : false,
+    "noLib"             : false,
+//    "declaration"       : true,
+//    "declarationMap"    : true,
+//    "sourceMap"         : true,
+//    "emitDecoratorMetadata"  : true,
+//    "experimentalDecorators" : true,
+
     "skipLibCheck": true,
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "checkJs": false,
-    /* Bundled projects */
-    "target": "ESNext",
-    "module": "ESNext",
+    "skipDefaultLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "module": "esnext",
+    "target": "esnext",
     "moduleResolution": "Bundler",
-    "moduleDetection": "force",
-    "noEmit": true,
-    "incremental": true,
-    /* Path Aliases */
-    "baseUrl": ".",
-    "jsx": "preserve"
-  },
+    "resolveJsonModule" : true,
+
+    "strict": true,
     "noImplicitAny": true,
-    "types": [
-      // jest 要摆在 node 前面，否则 tsc 会报错找不到 jest 的定义
-      "jest",
-      "node"
-    ],
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    "jsx": "preserve",
+
+    "baseUrl": ".",
+    "paths": {
+      "@cs-magic/common": ["./packages/common/src/index.ts"],
+      "@cs-magic/common/*": ["./packages/common/src/*"],
+      "@cs-magic/wechaty/*": ["./packages/wechaty/src/*"]
+    },
+  },
 
   "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js"
+    "./packages/wechaty/src/types.d.ts"
+//    "packages/**/*.ts",
+//    "apps/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "apps/swot-desktop/src-tauri/target"
   ],
+  "references": [
+    {"path": "./packages/log"},
+    {"path": "./packages/common"},
+    {"path": "./packages/wechaty"},
+    {"path": "./apps/swot-backend"},
+    {"path": "./apps/swot-desktop"},
+    {"path": "./apps/swot-web"},
+  ]
 }

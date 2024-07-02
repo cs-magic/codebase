@@ -1,0 +1,4 @@
+export declare function CachedPromise<T>(key: string, promise: Promise<T>): Promise<T>;
+type PromiseFunc<T> = () => Promise<T>;
+export declare function CachedPromiseFunc<T>(key: string, promiseFunc: PromiseFunc<T>): Promise<T>;
+export {};

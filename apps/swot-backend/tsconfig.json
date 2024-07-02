@@ -1,0 +1,16 @@
+{
+  "extends": ["../../tsconfig.json"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "composite": true
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../../packages/common"
+    },
+    {
+      "path": "../../packages/wechaty"
+    }
+  ]
+}
