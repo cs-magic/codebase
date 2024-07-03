@@ -1,5 +1,0 @@
-import { atom } from "jotai";
-///////////////////////////////
-// base
-//////////////////////////////
-export const transportTypeAtom = atom("pusher");
