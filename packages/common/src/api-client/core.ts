@@ -1,7 +1,7 @@
 /**
  * error handler: Axios & Error handling like a boss 😎 - DEV Community, https://dev.to/mperon/axios-error-handling-like-a-boss-333d
  */
-import { logger } from "@cs-magic/common"
+import { logger } from "../log"
 import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults } from "axios"
 import { toast } from "sonner"
 

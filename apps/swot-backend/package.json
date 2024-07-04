@@ -1,5 +1,5 @@
 {
-  "name": "@cs-magic/api",
+  "name": "@cs-magic/swot-backend",
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
   "type": "module",

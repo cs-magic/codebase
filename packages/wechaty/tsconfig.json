@@ -6,12 +6,7 @@
   },
   "include": ["./src"],
   "references": [
-    {
-      "path": "../log"
-    },
-
-    {
-      "path": "../common"
-    }
+    {"path": "../common"},
+    {"path": "../wechat"},
   ]
 }

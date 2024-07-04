@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common"
+import { logger } from "../log"
 import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"

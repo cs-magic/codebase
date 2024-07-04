@@ -1747,46 +1747,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cs-magic/api@workspace:apps/swot-backend":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/api@workspace:apps/swot-backend"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    "@cs-magic/llm": "workspace:^"
-    "@cs-magic/wechaty": "workspace:^"
-    "@fastify/websocket": "npm:^10.0.1"
-    "@types/dotenv": "npm:^8.2.0"
-    "@types/lodash": "npm:^4.14.202"
-    "@types/ws": "npm:^8.5.10"
-    dotenv: "npm:^16.4.5"
-    fastify: "npm:^4.26.2"
-    fastify-websocket: "npm:^4.3.0"
-    lodash: "npm:^4.17.21"
-    typescript: "npm:^5.4.5"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/auth-profile@workspace:packages/auth-profile":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/auth-profile@workspace:packages/auth-profile"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/auth-sms@workspace:packages/auth-sms":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/auth-sms@workspace:packages/auth-sms"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/auth-wechat@workspace:packages/auth-wechat":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/auth-wechat@workspace:packages/auth-wechat"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/auth@workspace:^, @cs-magic/auth@workspace:packages/auth":
   version: 0.0.0-use.local
   resolution: "@cs-magic/auth@workspace:packages/auth"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1794,7 +1759,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cs-magic/common@workspace:packages/common"
   dependencies:
-    "@cs-magic/auth": "workspace:^"
     "@types/lodash": "npm:^4.14.202"
     "@types/react": "npm:^18.2.57"
     "@types/winston": "npm:^2.4.4"
@@ -1812,9 +1776,45 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/desktop@workspace:apps/swot-desktop":
+"@cs-magic/llm@workspace:^, @cs-magic/llm@workspace:packages/llm":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/desktop@workspace:apps/swot-desktop"
+  resolution: "@cs-magic/llm@workspace:packages/llm"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/swot-backend@workspace:apps/swot-backend":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/swot-backend@workspace:apps/swot-backend"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+    "@cs-magic/llm": "workspace:^"
+    "@cs-magic/wechaty": "workspace:^"
+    "@fastify/websocket": "npm:^10.0.1"
+    "@types/dotenv": "npm:^8.2.0"
+    "@types/lodash": "npm:^4.14.202"
+    "@types/ws": "npm:^8.5.10"
+    dotenv: "npm:^16.4.5"
+    fastify: "npm:^4.26.2"
+    fastify-websocket: "npm:^4.3.0"
+    lodash: "npm:^4.17.21"
+    typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/swot-core@workspace:apps/swot-core":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/swot-core@workspace:apps/swot-core"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+    "@cs-magic/wechat": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/swot-desktop@workspace:apps/swot-desktop":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/swot-desktop@workspace:apps/swot-desktop"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@tauri-apps/cli": "npm:^1.5.14"
@@ -1832,27 +1832,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/llm@workspace:^, @cs-magic/llm@workspace:packages/llm":
+"@cs-magic/swot-web@workspace:apps/swot-web":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/llm@workspace:packages/llm"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/prisma@workspace:packages/prisma":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/prisma@workspace:packages/prisma"
-  dependencies:
-    prisma: "npm:^5.12.1"
-    prisma-json-types-generator: "npm:^3.0.4"
-    typescript: "npm:^5.4.5"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/swot@workspace:apps/swot-web":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/swot@workspace:apps/swot-web"
+  resolution: "@cs-magic/swot-web@workspace:apps/swot-web"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
@@ -1860,6 +1842,7 @@ __metadata:
     "@cs-magic/auth": "workspace:^"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
+    "@cs-magic/wechat": "workspace:^"
     "@emotion/react": "npm:^11.11.4"
     "@hookform/resolvers": "npm:^3.3.4"
     "@langchain/core": "npm:^0.1.32"
@@ -2004,10 +1987,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/wechat@workspace:packages/wechat":
+"@cs-magic/wechat@workspace:^, @cs-magic/wechat@workspace:packages/wechat":
   version: 0.0.0-use.local
   resolution: "@cs-magic/wechat@workspace:packages/wechat"
   dependencies:
+    "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
   languageName: unknown
   linkType: soft
@@ -2018,6 +2002,8 @@ __metadata:
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
+    "@cs-magic/wechat": "workspace:^"
+    "@swc/core": "npm:^1.6.7-nightly-20240703.2"
     "@types/lodash": "npm:^4.17.1"
     "@types/node-schedule": "npm:^2.1.7"
     dotenv: "npm:^16.4.5"
@@ -4263,68 +4249,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/debug@npm:5.14.0":
-  version: 5.14.0
-  resolution: "@prisma/debug@npm:5.14.0"
-  checksum: 10c0/a84cfc4132371f58667aeaa74fe25723dfafe06bb15ea110b3803d4cf17d80eac2599cd803a515b9d8b0bf500015ea6cc321a660f915597e6725feb66486ea5b
-  languageName: node
-  linkType: hard
-
-"@prisma/debug@npm:5.9.1":
-  version: 5.9.1
-  resolution: "@prisma/debug@npm:5.9.1"
-  checksum: 10c0/0e116019f5e8df7ec30503bcfd033e54c94a20e2a6d6abeed525eac3e0be8f40f8cd3b0cf43abad91d1ec80c3dbca8d827f753b2ccbf9eea20a05ff1cd1d12f5
-  languageName: node
-  linkType: hard
-
-"@prisma/engines-version@npm:5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48":
-  version: 5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
-  resolution: "@prisma/engines-version@npm:5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48"
-  checksum: 10c0/4700c69171b9a51e628496665c44810304bf3de210ad16443b3c5faddd82d92b26f50e0b559035b6f3bc2a4a064a19778808268301e500760f171d8aa4067ae6
-  languageName: node
-  linkType: hard
-
-"@prisma/engines@npm:5.14.0":
-  version: 5.14.0
-  resolution: "@prisma/engines@npm:5.14.0"
-  dependencies:
-    "@prisma/debug": "npm:5.14.0"
-    "@prisma/engines-version": "npm:5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48"
-    "@prisma/fetch-engine": "npm:5.14.0"
-    "@prisma/get-platform": "npm:5.14.0"
-  checksum: 10c0/5b62912c473f98a4208f843710bf4d1b59aad391a6c85123dd46804a7b7e8c850f3fae4acb647b4c9658e437c09c3c3b670b9d2d467942fc1ee1a3d737c1d298
-  languageName: node
-  linkType: hard
-
-"@prisma/fetch-engine@npm:5.14.0":
-  version: 5.14.0
-  resolution: "@prisma/fetch-engine@npm:5.14.0"
-  dependencies:
-    "@prisma/debug": "npm:5.14.0"
-    "@prisma/engines-version": "npm:5.14.0-25.e9771e62de70f79a5e1c604a2d7c8e2a0a874b48"
-    "@prisma/get-platform": "npm:5.14.0"
-  checksum: 10c0/732b9c19ffe6ea4ed19e67fbcae0dff2f624595c725aa6d1deeadb0ac3054be0808af6a480b2e6620b3b20f6429661cb31e3feb195e78969792d2924d45e01df
-  languageName: node
-  linkType: hard
-
-"@prisma/generator-helper@npm:5.9.1":
-  version: 5.9.1
-  resolution: "@prisma/generator-helper@npm:5.9.1"
-  dependencies:
-    "@prisma/debug": "npm:5.9.1"
-  checksum: 10c0/34179bc1aded0fec379393f9849046cf3ec3792ca9c052a5486720127af0a234aa0ce3f2b31b04246ac481549a028ddbd9c08259ddcbdce81e8f88db77d5d1f4
-  languageName: node
-  linkType: hard
-
-"@prisma/get-platform@npm:5.14.0":
-  version: 5.14.0
-  resolution: "@prisma/get-platform@npm:5.14.0"
-  dependencies:
-    "@prisma/debug": "npm:5.14.0"
-  checksum: 10c0/2763157532cb4a0e2aac030509a7289900d349b19c35403a4c1a97dcef2a932737edcaa013756a26fb222597519d356ede50f48832122e99cf8fe4e530cbfca1
-  languageName: node
-  linkType: hard
-
 "@protobufjs/aspromise@npm:^1.1.1, @protobufjs/aspromise@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/aspromise@npm:1.1.2"
@@ -5708,6 +5632,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-darwin-arm64@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-darwin-arm64@npm:1.6.7-nightly-20240703.2"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-x64@npm:1.3.44":
   version: 1.3.44
   resolution: "@swc/core-darwin-x64@npm:1.3.44"
@@ -5718,6 +5649,13 @@ __metadata:
 "@swc/core-darwin-x64@npm:1.5.7":
   version: 1.5.7
   resolution: "@swc/core-darwin-x64@npm:1.5.7"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-darwin-x64@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-darwin-x64@npm:1.6.7-nightly-20240703.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -5736,6 +5674,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm-gnueabihf@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.6.7-nightly-20240703.2"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-arm64-gnu@npm:1.3.44":
   version: 1.3.44
   resolution: "@swc/core-linux-arm64-gnu@npm:1.3.44"
@@ -5746,6 +5691,13 @@ __metadata:
 "@swc/core-linux-arm64-gnu@npm:1.5.7":
   version: 1.5.7
   resolution: "@swc/core-linux-arm64-gnu@npm:1.5.7"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-arm64-gnu@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.6.7-nightly-20240703.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
@@ -5764,6 +5716,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-arm64-musl@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-linux-arm64-musl@npm:1.6.7-nightly-20240703.2"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-linux-x64-gnu@npm:1.3.44":
   version: 1.3.44
   resolution: "@swc/core-linux-x64-gnu@npm:1.3.44"
@@ -5774,6 +5733,13 @@ __metadata:
 "@swc/core-linux-x64-gnu@npm:1.5.7":
   version: 1.5.7
   resolution: "@swc/core-linux-x64-gnu@npm:1.5.7"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@swc/core-linux-x64-gnu@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-linux-x64-gnu@npm:1.6.7-nightly-20240703.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -5792,6 +5758,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-linux-x64-musl@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-linux-x64-musl@npm:1.6.7-nightly-20240703.2"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-arm64-msvc@npm:1.3.44":
   version: 1.3.44
   resolution: "@swc/core-win32-arm64-msvc@npm:1.3.44"
@@ -5802,6 +5775,13 @@ __metadata:
 "@swc/core-win32-arm64-msvc@npm:1.5.7":
   version: 1.5.7
   resolution: "@swc/core-win32-arm64-msvc@npm:1.5.7"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-arm64-msvc@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.6.7-nightly-20240703.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -5820,6 +5800,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core-win32-ia32-msvc@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.6.7-nightly-20240703.2"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@swc/core-win32-x64-msvc@npm:1.3.44":
   version: 1.3.44
   resolution: "@swc/core-win32-x64-msvc@npm:1.3.44"
@@ -5830,6 +5817,13 @@ __metadata:
 "@swc/core-win32-x64-msvc@npm:1.5.7":
   version: 1.5.7
   resolution: "@swc/core-win32-x64-msvc@npm:1.5.7"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@swc/core-win32-x64-msvc@npm:1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core-win32-x64-msvc@npm:1.6.7-nightly-20240703.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -5919,6 +5913,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc/core@npm:^1.6.7-nightly-20240703.2":
+  version: 1.6.7-nightly-20240703.2
+  resolution: "@swc/core@npm:1.6.7-nightly-20240703.2"
+  dependencies:
+    "@swc/core-darwin-arm64": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-darwin-x64": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-linux-arm64-gnu": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-linux-arm64-musl": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-linux-x64-gnu": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-linux-x64-musl": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-win32-arm64-msvc": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-win32-ia32-msvc": "npm:1.6.7-nightly-20240703.2"
+    "@swc/core-win32-x64-msvc": "npm:1.6.7-nightly-20240703.2"
+    "@swc/counter": "npm:^0.1.3"
+    "@swc/types": "npm:^0.1.9"
+  peerDependencies:
+    "@swc/helpers": "*"
+  dependenciesMeta:
+    "@swc/core-darwin-arm64":
+      optional: true
+    "@swc/core-darwin-x64":
+      optional: true
+    "@swc/core-linux-arm-gnueabihf":
+      optional: true
+    "@swc/core-linux-arm64-gnu":
+      optional: true
+    "@swc/core-linux-arm64-musl":
+      optional: true
+    "@swc/core-linux-x64-gnu":
+      optional: true
+    "@swc/core-linux-x64-musl":
+      optional: true
+    "@swc/core-win32-arm64-msvc":
+      optional: true
+    "@swc/core-win32-ia32-msvc":
+      optional: true
+    "@swc/core-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    "@swc/helpers":
+      optional: true
+  checksum: 10c0/a06f308501bcace8f66895c89630c3555212f547d23b30406a1187d6066b12e886e47ba6118484137905bc557804cf01756c8b72a086118788a7e2e34f391437
+  languageName: node
+  linkType: hard
+
 "@swc/counter@npm:^0.1.2, @swc/counter@npm:^0.1.3":
   version: 0.1.3
   resolution: "@swc/counter@npm:0.1.3"
@@ -5959,6 +5999,15 @@ __metadata:
   dependencies:
     "@swc/counter": "npm:^0.1.3"
   checksum: 10c0/da7c542de0a44b85a98139db03920448e86309d28ad9e9335f91b4025e5f32ae4fbbfdd0f287330fb0de737e7c5ec4f64ade0fc5fffea6c2fd9ac681b1e97bea
+  languageName: node
+  linkType: hard
+
+"@swc/types@npm:^0.1.9":
+  version: 0.1.9
+  resolution: "@swc/types@npm:0.1.9"
+  dependencies:
+    "@swc/counter": "npm:^0.1.3"
+  checksum: 10c0/e47db2a06189f100696837ac3d56feaf67e8e68541b236c2de497e066689230f5cbb538fc0ca77c04739ae7653c20a2d79c7ab57ecf7506e2d008cb5e523f724
   languageName: node
   linkType: hard
 
@@ -11116,6 +11165,7 @@ __metadata:
     "@types/js-md5": "npm:^0.7.2"
     "@types/lodash": "npm:^4.14.202"
     "@types/node": "npm:^20.12.7"
+    "@types/react": "npm:^18.2.57"
     "@types/yargs-parser": "npm:^21"
     "@typescript-eslint/eslint-plugin": "npm:^7.14.1"
     "@typescript-eslint/parser": "npm:^7.14.1"
@@ -11134,6 +11184,7 @@ __metadata:
     lucide-react: "npm:^0.399.0"
     pino-pretty: "npm:^11.0.0"
     postcss: "npm:^8.4.39"
+    react: "npm:^18.3.1"
     rollup: "npm:^4.18.0"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.4"
@@ -23435,32 +23486,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma-json-types-generator@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "prisma-json-types-generator@npm:3.0.4"
-  dependencies:
-    "@prisma/generator-helper": "npm:5.9.1"
-    tslib: "npm:2.6.2"
-  peerDependencies:
-    prisma: ^5.1
-    typescript: ^5.1
-  bin:
-    prisma-json-types-generator: index.js
-  checksum: 10c0/526c21ab3acd0c440151a42612eca086bbd2d98cbd92a0557655f630d0c99aff4078a0220881828e8509d3134ffc3f3d79743020ef9716d7ff4ca3c057b78e1d
-  languageName: node
-  linkType: hard
-
-"prisma@npm:^5.12.1":
-  version: 5.14.0
-  resolution: "prisma@npm:5.14.0"
-  dependencies:
-    "@prisma/engines": "npm:5.14.0"
-  bin:
-    prisma: build/index.js
-  checksum: 10c0/2791e6445079e8301f7715b050ae4f6b064cc3ac4fe05abad42590ece12558e4676d90e58c9fe3e1c7c62fecaef9c87ce706ecdbd0f9ca4fdc0e2853a05b2080
-  languageName: node
-  linkType: hard
-
 "prismjs@npm:^1.27.0, prismjs@npm:^1.29.0":
   version: 1.29.0
   resolution: "prismjs@npm:1.29.0"
@@ -27621,17 +27646,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.6.2, tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
-  version: 2.6.2
-  resolution: "tslib@npm:2.6.2"
-  checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
-  languageName: node
-  linkType: hard
-
 "tslib@npm:^1.8.1, tslib@npm:^1.9.0":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10c0/69ae09c49eea644bc5ebe1bca4fa4cc2c82b7b3e02f43b84bd891504edf66dbc6b2ec0eef31a957042de2269139e4acff911e6d186a258fb14069cd7f6febce2
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
   languageName: node
   linkType: hard
 

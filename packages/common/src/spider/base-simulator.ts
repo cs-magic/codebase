@@ -1,4 +1,3 @@
-import { logger } from "@cs-magic/common"
 import {
   Browser as PlaywrightBrowser,
   BrowserType,
@@ -7,6 +6,8 @@ import {
 } from "playwright"
 import { Page as PlaywrightPage } from "playwright-core"
 import { Page as PuppetPage } from "puppeteer"
+
+import { logger } from "../log"
 import { DriverType } from "./schema"
 
 export type Page = PuppetPage & PlaywrightPage

@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts"
+    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts",
+    "build": "tsc -b"
   },
   "dependencies": {
+    "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^"
   }
 }

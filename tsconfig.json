@@ -43,7 +43,15 @@
     "paths": {
       "@cs-magic/common": ["./packages/common/src/index.ts"],
       "@cs-magic/common/*": ["./packages/common/src/*"],
-      "@cs-magic/wechaty/*": ["./packages/wechaty/src/*"]
+      "@cs-magic/llm/*": ["./packages/llm/src/*"],
+
+      "@cs-magic/wechat/*": ["./packages/wechat/src/*"],
+      "@cs-magic/wechaty/*": ["./packages/wechaty/src/*"],
+      "@cs-magic/wechaty-puppet/*": ["./packages/wechaty-puppet/src/*"],
+
+      "@cs-magic/swot-web/*": ["./packages/swot-web/src/*"],
+      "@cs-magic/swot-backend/*": ["./packages/swot-backend/src/*"],
+      "@cs-magic/swot-desktop/*": ["./packages/swot-desktop/src/*"],
     },
   },
 
@@ -57,11 +65,21 @@
     "apps/swot-desktop/src-tauri/target"
   ],
   "references": [
-    {"path": "./packages/log"},
-    {"path": "./packages/common"},
-    {"path": "./packages/wechaty"},
-    {"path": "./apps/swot-backend"},
-    {"path": "./apps/swot-desktop"},
-    {"path": "./apps/swot-web"},
+//    {"path": "./packages/common"},
+//    {"path": "./packages/llm"},
+//    {"path": "./packages/prisma"},
+//    {"path": "./packages/auth"},
+//
+//    {"path": "./packages/wechat"},
+//    {"path": "./packages/wechaty"},
+//    {"path": "./packages/wechat4u"},
+//    {"path": "./packages/wechaty-puppet"},
+//    {"path": "./packages/wechaty-puppet-padlocal"},
+//    {"path": "./packages/wechaty-puppet-wechat4u"},
+//
+//    {"path": "./apps/swot-core"},
+//    {"path": "./apps/swot-backend"},
+//    {"path": "./apps/swot-desktop"},
+//    {"path": "./apps/swot-web"},
   ]
 }

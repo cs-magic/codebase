@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common"
+import { logger } from "../../log"
 import pickBy from "lodash/pickBy"
 
 export const logEnv = (filter?: string) => {

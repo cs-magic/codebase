@@ -1,11 +1,9 @@
-import { UnexpectedError } from "@cs-magic/common/schema/error"
-import { logger } from "@cs-magic/common"
-import {
-  IUserSummary,
-  IUserSummaryFilled,
-} from "@cs-magic/prisma/schema/user.summary"
+import { IUserSummaryFilled } from "../schema/user.summary"
+import { UnexpectedError } from "../schema/error"
 import { sleep } from "../datetime/utils"
 import { getEnv } from "../env"
+import { logger } from "../log"
+
 import { BaseSimulator } from "./base-simulator"
 
 /**

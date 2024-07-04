@@ -29,10 +29,14 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    ".next-tmp/types/**/*.ts",
+    ".next-tmp/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "src-tauri"
+  ],
+  "references": [
+    {"path": "../../packages/common"},
+    {"path": "../../packages/wechat"},
   ]
 }

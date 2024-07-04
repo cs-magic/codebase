@@ -1,5 +1,5 @@
 {
-  "name": "@cs-magic/desktop",
+  "name": "@cs-magic/swot-desktop",
   "version": "0.1.0",
   "scripts": {
     "backend": "yarn workspace @cs-magic/api dev",

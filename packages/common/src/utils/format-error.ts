@@ -1,5 +1,5 @@
-import { logger } from "@cs-magic/common"
 import { AxiosError } from "axios"
+import logger from "../log"
 
 export const formatError = (e: unknown) => {
   const s =

@@ -16,6 +16,8 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
+    "@cs-magic/wechat": "workspace:^",
+    "@swc/core": "^1.6.7-nightly-20240703.2",
     "@types/lodash": "^4.17.1",
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",

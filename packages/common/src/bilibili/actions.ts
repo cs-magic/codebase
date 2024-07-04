@@ -1,6 +1,6 @@
 "use server"
 
-import { logger } from "@cs-magic/common"
+import { logger } from "../log"
 import { api } from "../api-client/api"
 import { IApiResult } from "../api-client/schema"
 import { IBilibiliVideoDetail } from "./schema"

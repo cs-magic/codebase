@@ -1,6 +1,7 @@
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/wechat/schema/card"
 import { type LangType } from "@cs-magic/common/i18n/schema"
 import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
+
+import { GenWxmpArticleCardFetchOptions } from "../../../../apps/swot-core/src/schema"
 
 export enum CommandStyle {
   standard = "standard",

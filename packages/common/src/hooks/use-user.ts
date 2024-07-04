@@ -1,5 +1,5 @@
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import { useSession } from "next-auth/react"
+import { IUserSummary } from "../schema/user.summary"
 
 export const useUserSummary = () => {
   const user = useSession().data?.user

@@ -1,7 +1,7 @@
 "use client"
 
 import { cardOssAtom, cardPreviewAtom } from "@/store/card.atom"
-import { cardPreviewEngineAtom } from "@/store/card.rendered.atom"
+import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import { updateOssUrl } from "@/utils/update-oss-url.action"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"

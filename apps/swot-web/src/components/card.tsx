@@ -1,6 +1,6 @@
 "use client"
 
-import { cardPreviewEngineAtom } from "@/store/card.rendered.atom"
+import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import { useAtomValue } from "jotai"
 import React from "react"
 import {

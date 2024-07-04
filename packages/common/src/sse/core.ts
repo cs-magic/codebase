@@ -1,5 +1,5 @@
-import { formatError } from "@cs-magic/common/utils/format-error"
-import { logger } from "@cs-magic/common"
+import { formatError } from "../utils/format-error"
+import { logger } from "../log"
 import { TransEventType } from "./schema"
 
 export const fetchSSE = (

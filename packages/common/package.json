@@ -2,8 +2,10 @@
   "name": "@cs-magic/common",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
   "dependencies": {
-    "@cs-magic/auth": "workspace:^",
     "@types/lodash": "^4.14.202",
     "anylogger": "^1.0.11",
     "jotai": "^2.8.4",
@@ -20,9 +22,5 @@
   "devDependencies": {
     "@types/react": "^18.2.57",
     "@types/winston": "^2.4.4"
-  },
-  "exports": {
-    ".": "./index.ts",
-    "./*": "./*.ts"
   }
 }

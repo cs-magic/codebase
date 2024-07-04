@@ -1,6 +1,6 @@
 "use client"
 
-import { cardUserAvatarRenderedAtom } from "@/store/card.rendered.atom"
+import { cardUserAvatarRenderedAtom } from "../store/card.rendered.atom"
 import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
 import { useAtom } from "jotai"
 import React from "react"

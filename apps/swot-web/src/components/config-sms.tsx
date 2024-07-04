@@ -1,11 +1,11 @@
 "use client"
 
 import { useAtom } from "jotai"
-import { SmsProviderType } from "../../../../packages/auth-sms/schema"
+import { SmsProviderType } from "../../../../packages/auth/src/sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../../../packages/auth-sms/store"
+} from "../../../../packages/auth/src/sms/store"
 import { Input } from "@cs-magic/common/ui-shadcn/components/input"
 import { Label } from "@cs-magic/common/ui-shadcn/components/label"
 import {

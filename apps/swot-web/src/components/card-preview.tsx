@@ -5,7 +5,7 @@ import {
   cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,
   cardUserAvatarRenderedAtom,
-} from "@/store/card.rendered.atom"
+} from "../store/card.rendered.atom"
 import { cardWatermarkTextAtom } from "@/store/card.request.atom"
 import { getPlatformName } from "@/utils/card-platform/get-platform-name"
 import { config } from "@cs-magic/common"

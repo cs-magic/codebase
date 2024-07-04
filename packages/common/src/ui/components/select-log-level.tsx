@@ -1,3 +1,4 @@
+import { LogLevel } from "../../log"
 import {
   Select,
   SelectContent,
@@ -6,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui-shadcn/components/select"
-import { LogLevel } from "@cs-magic/common"
 
 export const SelectLogLevel = ({
   value,

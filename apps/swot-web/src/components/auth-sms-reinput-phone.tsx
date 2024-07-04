@@ -4,7 +4,7 @@ import { EditIcon } from "lucide-react"
 import {
   smsStageAtom,
   userPhoneAtom,
-} from "../../../../packages/auth-sms/store"
+} from "../../../../packages/auth/src/sms/store"
 
 export const SmsReInputPhone = () => {
   const [phone] = useAtom(userPhoneAtom)
