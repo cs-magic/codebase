@@ -1,11 +1,11 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
-// todo: why this not ok
-// import { safeCallLLM } from "@cs-magic/llm"
-import { trimMessages, safeCallLLM } from "@cs-magic/llm"
 import { logger } from "@cs-magic/common"
 import { ILlmMessage } from "@cs-magic/common/schema/message"
+import { safeCallLLM, trimMessages } from "@cs-magic/llm/utils"
+
 import { types } from "wechaty"
 import { z } from "zod"
+
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic"
 import { BasePlugin } from "./base.plugin"

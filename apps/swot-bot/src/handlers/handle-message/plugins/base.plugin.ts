@@ -1,18 +1,17 @@
-import { NotImplementedError } from "@cs-magic/common/schema/error"
-import { evalObject } from "@cs-magic/common/utils/eval-object"
-import { formatString } from "@cs-magic/common/utils/format-string"
-import { logger } from "@cs-magic/common"
-import { LogLevel } from "@cs-magic/common"
-import {
-  IUserSummaryFilled,
-  wechatMessageDetailSchema,
-} from "@cs-magic/prisma/schema/user.summary"
 import set from "lodash/set"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
-import { prisma } from "@cs-magic/common"
-import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 
+import { logger, LogLevel, prisma } from "@cs-magic/common"
+import { NotImplementedError } from "@cs-magic/common/schema/error"
+import {
+  IUserSummaryFilled,
+  wechatMessageDetailSchema,
+} from "@cs-magic/common/schema/user.summary"
+import { evalObject } from "@cs-magic/common/utils/eval-object"
+import { formatString } from "@cs-magic/common/utils/format-string"
+
+import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
 import { LlmScenario } from "../../../schema/bot.utils"
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { formatFooter } from "../../../utils/format-footer"
@@ -22,7 +21,6 @@ import {
   getConvPreference,
 } from "../../../utils/get-conv-preference"
 import { parseText } from "../../../utils/parse-message"
-import { storageMessage } from "../../../utils/storage-message"
 
 export class BasePlugin {
   public message: Message

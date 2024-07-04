@@ -1,13 +1,15 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { parseFunction } from "@cs-magic/common/utils/parse-function"
-import { logger } from "@cs-magic/common"
-import { ITaskDetail, taskDetailSchema } from "@cs-magic/prisma/schema/task"
 import _ from "lodash"
 import omit from "lodash/omit"
 import sortBy from "lodash/sortBy"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
+
 import { prisma } from "@cs-magic/common"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { ITaskDetail, taskDetailSchema } from "@cs-magic/common/schema/task"
+import { parseFunction } from "@cs-magic/common/utils/parse-function"
+import { logger } from "@cs-magic/common"
+
 import { Priority } from "./task.plugin"
 import { type TaskStatus } from ".prisma/client"
 

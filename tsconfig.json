@@ -37,6 +37,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
+    // dot visit env variable
+    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedLocals": false,
+
     "jsx": "preserve",
 
     "baseUrl": ".",
@@ -56,8 +60,8 @@
       "@cs-magic/swot-bot/*": ["./apps/swot-bot/src/*"],
       "@cs-magic/swot-backend/*": ["./apps/swot-backend/src/*"],
       "@cs-magic/swot-web/*": ["./apps/swot-web/src/*"],
-      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/src/*"],
-    },
+      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/src/*"]
+    }
   },
 
   "include": [

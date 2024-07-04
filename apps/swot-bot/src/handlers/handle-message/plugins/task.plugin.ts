@@ -1,12 +1,14 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { TaskTimer } from "@cs-magic/common/schema/task"
 import { parseCommand } from "@cs-magic/common/utils/parse-command"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
 import { logger } from "@cs-magic/common"
-import { TaskTimer } from "@cs-magic/prisma/schema/task"
-import { Job, scheduleJob } from "node-schedule"
-import { z } from "zod"
 import moment from "@cs-magic/common/datetime/moment"
 import { prisma } from "@cs-magic/common"
+
+import { Job, scheduleJob } from "node-schedule"
+import { z } from "zod"
+
 import { FeatureMap, FeatureType } from "../../../schema/commands"
 import { BasePlugin } from "./base.plugin"
 import { TaskService } from "./task.service"

@@ -10,5 +10,6 @@
     {"path": "../../packages/common"},
     {"path": "../../packages/wechat"},
     {"path": "../../packages/wechaty-puppet"},
+    {"path": "../swot-core"},
   ]
 }

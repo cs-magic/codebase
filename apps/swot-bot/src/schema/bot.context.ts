@@ -3,10 +3,11 @@ import { formatAction } from "@cs-magic/common/utils/format-action"
 import { formatDuration } from "@cs-magic/common/utils/format-duration"
 import { logger } from "@cs-magic/common"
 import { LogLevel } from "@cs-magic/common"
+
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
-import packageJson from "../../../package.json"
+
 import { getConvPreference } from "../utils/get-conv-preference"
 import { QueueTask, SenderQueue } from "../utils/sender-queue"
 import { LlmScenario } from "./bot.utils"
@@ -37,7 +38,7 @@ export type IBotContext = BotData & {
 
 export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   const name = "飞脑"
-  const version = packageJson.version
+  const version = process.env.npm_package_version ?? "0.1.0"
   const startTime = Date.now()
 
   // web protocol needs, o.w. rooms/contacts are loaded PARTIALLY

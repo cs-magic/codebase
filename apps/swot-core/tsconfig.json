@@ -9,6 +9,5 @@
     {"path": "../../packages/common"},
     {"path": "../../packages/llm"},
     {"path": "../../packages/wechat"},
-    {"path": "../swot-core"},
   ]
 }

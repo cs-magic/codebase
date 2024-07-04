@@ -14,6 +14,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
+    "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
     "@swc/core": "^1.6.7-nightly-20240703.2",
     "@types/lodash": "^4.17.1",
