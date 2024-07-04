@@ -1,4 +1,4 @@
-import { logger } from "packages/log/logger"
+import { logger } from "@cs-magic/common"
 import qrcodeTerminal from "qrcode-terminal"
 import { ScanStatus, WechatyBuilder } from "wechaty"
 

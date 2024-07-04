@@ -3,10 +3,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "composite": true,
+
   },
   "include": ["./src"],
   "references": [
-    {"path": "../common"},
-    {"path": "../wechat"},
+    {"path": "../../packages/common"},
+    {"path": "../../packages/wechat"},
+    {"path": "../../packages/wechaty-puppet"},
   ]
 }

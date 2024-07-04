@@ -4,8 +4,8 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { logger } from "@cs-magic/common"
+import { wxmpUrl2preview } from "@cs-magic/swot-core/src/utils/wxmp-url2preview"
 
-import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
 import { CardSimulator } from "@cs-magic/common/spider/card-simulator"

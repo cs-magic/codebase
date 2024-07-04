@@ -12,12 +12,12 @@
       "dom.iterable",
       "esnext"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+//    "baseUrl": ".",
+//    "paths": {
+//      "@/*": [
+//        "src/*"
+//      ]
+//    }
   },
   // include 和 exclude 是独立的，extend的时候也要写上
   // nextjs 的 include是必须的，否则会报 push 错误

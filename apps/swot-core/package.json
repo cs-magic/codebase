@@ -2,8 +2,13 @@
   "name": "@cs-magic/swot-core",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
+    "@cs-magic/llm": "workspace:^",
+    "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^"
   }
 }

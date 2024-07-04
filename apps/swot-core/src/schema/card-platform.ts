@@ -1,6 +1,9 @@
-import { IWechatArticleComment, IWechatArticleStat } from "@cs-magic/wechat"
-
 import { $Enums } from "@prisma/client"
+
+import {
+  IWechatArticleComment,
+  IWechatArticleStat,
+} from "@cs-magic/wechat/wxmp-article"
 
 export type ICardPlatform<T extends $Enums.PlatformType = any> =
   T extends typeof $Enums.PlatformType.wxmpArticle

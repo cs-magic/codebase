@@ -1,24 +1,22 @@
 // todo: avoid import from project
-import { RequestOptions } from "@cs-magic/swot-core/src/schema"
-import { parseWxmpArticleUrl } from "@cs-magic/swot-core/src/utils/parse-wxmp-article-url"
+import { RequestOptions } from "../schema"
+import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
 import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"
 import { z } from "zod"
 
-import { api } from "../../../../../../packages/common/src/api-client/api"
-import { parseMetaFromHtml } from "../../../../../../packages/common/src/html/utils"
-import { html2md } from "../../../../../../packages/common/src/markdown/html2md"
-import { IUserSummary } from "../../../../../../packages/common/src/schema/user.summary"
-import { WxmpArticleSimulator } from "../../../../../../packages/common/src/spider/wxmp-article-simulator"
-import { withError } from "../../../../../../packages/common/src/utils/with-error"
+import { api } from "@cs-magic/common/api-client/api"
+import { parseMetaFromHtml } from "@cs-magic/common/html/utils"
+import { html2md } from "@cs-magic/common/markdown/html2md"
+import { IUserSummary } from "@cs-magic/common/schema/user.summary"
+import { WxmpArticleSimulator } from "@cs-magic/common/spider/wxmp-article-simulator"
+import { withError } from "@cs-magic/common/utils/with-error"
 
 // import { parseWxmpArticleUrl } from "@cs-magic/swot-web/utils/card-platform/wechat-article/utils"
 
 const wxmpArticleSimulator = new WxmpArticleSimulator()
 
-export type RequestApproachType = "api" | "simulate"
-
-export const request = async (
+export const wxmpRequest = async (
   url: string,
   options?: RequestOptions,
 ): Promise<Prisma.CardUncheckedCreateInput> => {

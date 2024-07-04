@@ -3,11 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "baseUrl": "src"
   },
   "include": ["./src"],
   "references": [
-    {"path": "../packages/common"},
-    {"path": "../packages/wechat"},
+    {"path": "../../packages/common"},
+    {"path": "../../packages/llm"},
+    {"path": "../../packages/wechat"},
+    {"path": "../swot-core"},
   ]
 }

@@ -1,8 +1,43 @@
 {
-  "extends": "@chatie/tsconfig",
+  "extends": [
+//    "../../tsconfig.json",
+    "@chatie/tsconfig"
+  ],
   "compilerOptions": {
     "outDir": "dist/esm",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+
+    "traceResolution"   : false,
+    "noLib"             : false,
+    //    "declaration"       : true,
+    //    "declarationMap"    : true,
+    //    "sourceMap"         : true,
+    //    "emitDecoratorMetadata"  : true,
+    //    "experimentalDecorators" : true,
+
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule" : true,
+
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+
+    "baseUrl": ".",
+    "paths": {
+      "@cs-magic/common": ["../common/src/index.ts"]
+    }
   },
   "exclude": [
     "node_modules/",
@@ -14,6 +49,11 @@
     "examples/**/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
-    "tests/**/*.ts",
+    "tests/**/*.ts"
   ],
+  "references": [
+    {
+      "path": "../common"
+    }
+  ]
 }

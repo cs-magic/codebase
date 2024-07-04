@@ -1,5 +1,5 @@
-import { safeCallLLM } from "@cs-magic/llm"
 import { logger } from "@cs-magic/common"
+import { safeCallLLM } from "@cs-magic/llm/utils"
 import last from "lodash/last"
 import { types } from "wechaty"
 import yargsParser from "yargs-parser"

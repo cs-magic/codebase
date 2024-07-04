@@ -16,7 +16,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
-    "@cs-magic/wechaty": "workspace:^",
+    "@cs-magic/swot-bot": "workspace:^",
     "@fastify/websocket": "^10.0.1",
     "@types/lodash": "^4.14.202",
     "dotenv": "^16.4.5",

@@ -6,11 +6,8 @@
   },
   "include": ["./src"],
   "references": [
-    {
-      "path": "../../packages/common"
-    },
-    {
-      "path": "../../packages/wechaty"
-    }
+    {"path": "../../packages/common"},
+    {"path": "../../packages/llm"},
+    {"path": "../swot-bot"}
   ]
 }

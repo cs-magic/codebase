@@ -1,6 +1,8 @@
 import { BackendType } from "@cs-magic/llm/schema/llm.base"
-import { RequestApproachType } from "@cs-magic/swot-web/src/utils/card-platform/wechat-article/request"
-import { FetchWxmpArticleDetailOptions } from "@cs-magic/wechat/wxmp-article/fetch/schema"
+
+import { RequestApproachType } from "./card"
+
+import { FetchWxmpArticleDetailOptions } from "./wxmp-article"
 
 export type GenWxmpArticleCardFetchOptions = {
   // 1. cache

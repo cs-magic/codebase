@@ -101,6 +101,7 @@
   },
   "dependencies": {
     "@alloc/quick-lru": "^5.2.0",
+    "@cs-magic/common": "workspace:^",
     "brolog": "^1.14.2",
     "clone-class": "^1.1.1",
     "file-box": "^1.4.13",

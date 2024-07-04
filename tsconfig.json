@@ -19,39 +19,44 @@
 //    "emitDecoratorMetadata"  : true,
 //    "experimentalDecorators" : true,
 
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "Bundler",
     "resolveJsonModule" : true,
 
     "strict": true,
-    "noImplicitAny": true,
     "strictNullChecks": true,
+    "noImplicitAny": true,
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     "jsx": "preserve",
 
     "baseUrl": ".",
     "paths": {
       "@cs-magic/common": ["./packages/common/src/index.ts"],
-      "@cs-magic/common/*": ["./packages/common/src/*"],
+      "@cs-magic/common/*": ["./packages/common/src/*.ts"],
       "@cs-magic/llm/*": ["./packages/llm/src/*"],
 
-      "@cs-magic/wechat/*": ["./packages/wechat/src/*"],
-      "@cs-magic/wechaty/*": ["./packages/wechaty/src/*"],
-      "@cs-magic/wechaty-puppet/*": ["./packages/wechaty-puppet/src/*"],
+      "@cs-magic/wechat4u/*": ["./packages/wechat4u/src/*"],
+      "wechaty-puppet/*": ["./packages/wechaty-puppet/src/*"],
+      "wechaty-puppet-padlocal/*": ["./packages/wechaty-puppet-padlocal/src/*"],
+      "wechaty-puppet-wechat4u/*": ["./packages/wechaty-puppet-wechat4u/src/*"],
 
-      "@cs-magic/swot-web/*": ["./packages/swot-web/src/*"],
-      "@cs-magic/swot-backend/*": ["./packages/swot-backend/src/*"],
-      "@cs-magic/swot-desktop/*": ["./packages/swot-desktop/src/*"],
+      "@cs-magic/wechat/*": ["./packages/wechat/src/*"],
+
+      "@cs-magic/swot-core/*": ["./apps/swot-core/src/*"],
+      "@cs-magic/swot-bot/*": ["./apps/swot-bot/src/*"],
+      "@cs-magic/swot-backend/*": ["./apps/swot-backend/src/*"],
+      "@cs-magic/swot-web/*": ["./apps/swot-web/src/*"],
+      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/src/*"],
     },
   },
 

@@ -2,6 +2,9 @@
   "name": "@cs-magic/auth",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
   "dependencies": {
     "@cs-magic/common": "workspace:^"
   }

@@ -1,8 +1,10 @@
-import { LlmModelType } from "@cs-magic/llm/src/schema/llm.models"
-import { ISummaryParsed } from "@cs-magic/swot-core/src/schema/summary"
 import { PlatformType } from "@prisma/client"
 import { z } from "zod"
-import { IUserSummary } from "../../../../packages/common/src/schema/user.summary"
+
+import { IUserSummary } from "@cs-magic/common/schema/user.summary"
+import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
+
+import { ISummaryParsed } from "./summary"
 
 export type ICardStat = {
   reads?: number
@@ -51,3 +53,5 @@ export type ICardPreview = {
   inner: ICardInnerPreview | null
   outer: CardOuterPreview | null
 }
+
+export type RequestApproachType = "api" | "simulate"

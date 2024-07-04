@@ -1,16 +1,15 @@
-import { IUserSummary } from "@cs-magic/common/schema/user.summary"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
 import { logger } from "@cs-magic/common"
-// import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
+import { IUserSummary } from "@cs-magic/common/schema/user.summary"
 import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
-import { parseSummary } from "@cs-magic/swot-core/src/utils/parse-summary"
-import {
-  GenWxmpArticleCardFetchOptions,
-  ICardInnerPreview,
-  IMedia,
-} from "../src/schema/card"
-import { fetchWxmpArticle } from "../wxmp-article/fetch"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+
+import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
+
+import { GenWxmpArticleCardFetchOptions } from "../schema"
+import { ICardInnerPreview, IMedia } from "../schema/card"
+
+import { parseSummary } from "./parse-summary"
+import { fetchWxmpArticle } from "./wxmp-fetch"
 
 export const wxmpUrl2preview = async (
   url: string,

@@ -3,9 +3,9 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
+    "build": "tsc -b",
     "test": "jest",
-    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts",
-    "build": "tsc -b"
+    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
