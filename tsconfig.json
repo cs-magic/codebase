@@ -20,9 +20,11 @@
 //    "experimentalDecorators" : true,
 
     "target": "esnext",
-    "module": "NodeNext",
-//    "moduleResolution": "Bundler",
-    "moduleResolution": "NodeNext",
+//    "module": "NodeNext",
+//    "moduleResolution": "NodeNext",
+
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule" : true,
 
     "strict": true,

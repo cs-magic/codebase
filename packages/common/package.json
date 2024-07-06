@@ -2,6 +2,10 @@
   "name": "@cs-magic/common",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "main": "src/index.js",
   "scripts": {
     "build": "tsc -b"
   },

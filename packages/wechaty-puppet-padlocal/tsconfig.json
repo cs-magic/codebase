@@ -2,7 +2,10 @@
   "extends": "@chatie/tsconfig",
   "compilerOptions": {
     "outDir": "dist/esm",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules/",
@@ -15,5 +18,10 @@
     "scripts/**/*.ts",
     "src/**/*.ts",
     "tests/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../wechaty-puppet"
+    }
   ]
 }

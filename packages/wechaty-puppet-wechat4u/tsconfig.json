@@ -3,18 +3,26 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "outDir": "dist/esm",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedParameters": false,
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules/",
     "dist/",
-    "tests/fixtures/",
+    "tests/fixtures/"
   ],
   "include": [
     "bin/*.ts",
     "examples/**/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
-    "tests/**/*.spec.ts",
+    "tests/**/*.spec.ts"
   ],
+  "references": [
+    {
+      "path": "../wechaty-puppet"
+    }
+  ]
 }

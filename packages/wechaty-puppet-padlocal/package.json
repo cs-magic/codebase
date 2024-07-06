@@ -23,7 +23,7 @@
     "postinstall": "yarn build",
     "clean": "shx rm -fr dist/*",
     "dist": "npm-run-all clean build dist:commonjs",
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "tsc -b && tsc -b tsconfig.cjs.json",
     "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/package.json",
     "lint": "npm-run-all lint:es lint:ts lint:md",
     "lint:md": "markdownlint README.md",

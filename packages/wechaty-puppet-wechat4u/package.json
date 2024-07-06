@@ -15,7 +15,7 @@
     "npm": ">=7"
   },
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "tsc -b && tsc -b tsconfig.cjs.json",
     "clean": "shx rm -fr dist/*",
     "dist": "npm-run-all clean build dist:commonjs",
     "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/wechaty-puppet-wechat4u/package.json",
@@ -67,6 +67,7 @@
   "homepage": "https://github.com/wechaty/wechaty-puppet-wechat4u#readme",
   "dependencies": {
     "@alloc/quick-lru": "^5.2.0",
+    "@cs-magic/common": "workspace:^",
     "fast-xml-parser": "^3.21.1",
     "promise-retry": "^2.0.1",
     "wechaty-puppet": "workspace:^",
