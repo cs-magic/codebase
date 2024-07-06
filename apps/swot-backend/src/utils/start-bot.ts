@@ -1,6 +1,6 @@
 import { formatError } from "@cs-magic/common/utils/format-error"
 import { logger } from "@cs-magic/common"
-import { createWechatyBot } from "@cs-magic/wechaty/create-wechaty-bot"
+import { createWechatyBot } from "@cs-magic/swot-bot/create-wechaty-bot"
 import { IContext } from "../schema/context"
 import { syncClients } from "./sync-clients"
 import { transferMessage } from "./transfer-message"

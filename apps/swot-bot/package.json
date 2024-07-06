@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "scripts": {
     "prerun": "yarn workspace wechaty-puppet-padlocal build; yarn workspace wechaty-puppet-wechat4u build",
     "_tsx": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config",

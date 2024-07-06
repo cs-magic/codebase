@@ -1,9 +1,10 @@
 {
   "extends": "@chatie/tsconfig",
   "compilerOptions": {
-    "esModuleInterop": true,
+    "composite": true,
     "outDir": "dist/esm",
     "ignoreDeprecations": "5.0",
+    "esModuleInterop": true,
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedParameters": false,
     "resolveJsonModule": true

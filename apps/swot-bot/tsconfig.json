@@ -1,15 +1,17 @@
 {
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
-    "outDir": "dist",
     "composite": true,
+    "outDir": "dist",
 
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*"],
   "references": [
     {"path": "../../packages/common"},
     {"path": "../../packages/wechat"},
     {"path": "../../packages/wechaty-puppet"},
+    {"path": "../../packages/wechaty-puppet-padlocal"},
+    {"path": "../../packages/wechaty-puppet-wechat4u"},
     {"path": "../swot-core"},
   ]
 }
