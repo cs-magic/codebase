@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common"
+import { logger } from "@cs-magic/common/log"
 import { RoomInvitation, Wechaty } from "wechaty"
 
 /**

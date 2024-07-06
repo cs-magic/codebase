@@ -4,7 +4,8 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./dist/src/index.js",
+    "./*": "./dist/src/*.js"
   },
   "scripts": {
     "prerun": "yarn workspace wechaty-puppet-padlocal build; yarn workspace wechaty-puppet-wechat4u build",

@@ -1,12 +1,16 @@
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import logger, { LogLevel } from "@cs-magic/common/log"
+import { NotImplementedError } from "@cs-magic/common/schema/error"
+import {
+  IUserSummaryFilled,
+  wechatMessageDetailSchema,
+} from "@cs-magic/common/schema/user.summary"
+import { evalObject } from "@cs-magic/common/utils/eval-object"
+import { formatString } from "@cs-magic/common/utils/format-string"
+
 import { set } from "lodash"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
-
-import { logger, LogLevel, prisma } from "@cs-magic/common"
-import { NotImplementedError } from "@cs-magic/common"
-import { IUserSummaryFilled, wechatMessageDetailSchema } from "@cs-magic/common"
-import { evalObject } from "@cs-magic/common"
-import { formatString } from "@cs-magic/common"
 
 import {
   IWechatData,

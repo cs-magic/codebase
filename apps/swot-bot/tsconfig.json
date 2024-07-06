@@ -3,9 +3,6 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-
-//    "module": "NodeNext",
-//    "moduleResolution": "NodeNext",
   },
   "include": ["src/**/*"],
   "references": [

@@ -1,6 +1,9 @@
-import { sampleWxmpArticleUrl, sampleWxmpArticleUrls } from "@cs-magic/common"
-import { IUserSummary, IUserSummaryFilled } from "@cs-magic/common"
-import { CardSimulator } from "@cs-magic/common"
+import {
+  sampleWxmpArticleUrl,
+  sampleWxmpArticleUrls,
+} from "@cs-magic/common/sample"
+import { IUserSummaryFilled } from "@cs-magic/common/schema/user.summary"
+import { CardSimulator } from "@cs-magic/common/spider/card-simulator"
 import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
 
 describe("test parser", () => {

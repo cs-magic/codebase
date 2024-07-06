@@ -1,4 +1,7 @@
-import { config, logger, SEPARATOR_LINE, moment } from "@cs-magic/common"
+import { config } from "@cs-magic/common"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { moment } from "@cs-magic/common/datetime/moment"
+import logger from "@cs-magic/common/log"
 import { Friendship, types, Wechaty } from "wechaty"
 
 /**

@@ -1,7 +1,7 @@
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import logger from "@cs-magic/common/log"
 import { omit } from "lodash"
 import { Message, types } from "wechaty"
-
-import { logger, prisma } from "@cs-magic/common"
 
 /**
  * 存储信息

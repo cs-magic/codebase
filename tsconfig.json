@@ -3,21 +3,13 @@
     "outDir": "dist",
     "ignoreDeprecations": "5.0",
 
-    /**
-     * Type import/export checkings
-     */
-    // https://devblogs.microsoft.com/typescript/announcing-typescript-3-8/#type-only-imports-exports
-    //    "importsNotUsedAsValues": "preserve",
-    // https://www.typescriptlang.org/tsconfig#isolatedModules
-    //    "isolatedModules": true,
-
     "traceResolution"   : false,
     "noLib"             : false,
-//    "declaration"       : true,
-//    "declarationMap"    : true,
-//    "sourceMap"         : true,
-//    "emitDecoratorMetadata"  : true,
-//    "experimentalDecorators" : true,
+    "declaration"       : true,
+    "declarationMap"    : true,
+    "sourceMap"         : true,
+    "emitDecoratorMetadata"  : true,
+    "experimentalDecorators" : true,
 
     "target": "esnext",
 
@@ -45,9 +37,10 @@
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+
     "jsx": "preserve",
 
-    "baseUrl": ".",
+//    "baseUrl": ".",
     "paths": {
 //      "@cs-magic/common": ["./packages/common/dist/src/index.js"],
 //      "@cs-magic/common/*": ["./packages/common/dist/src/*"],
@@ -69,7 +62,7 @@
   },
 
   "include": [
-    "./packages/wechaty/dist/src/types.d.ts"
+//    "./packages/wechaty/dist/src/types.d.ts"
 //    "packages/**/*.ts",
 //    "apps/**/*.ts"
   ],

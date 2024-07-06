@@ -1,7 +1,7 @@
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
 import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { prisma } from "@cs-magic/common"
 import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
 
 import { FeatureMap } from "../../../schema/commands.js"

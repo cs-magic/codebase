@@ -1,6 +1,6 @@
-import { logger } from "@cs-magic/common"
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import { logger } from "@cs-magic/common/log"
 import { Contact, Room, Wechaty } from "wechaty"
-import { prisma } from "@cs-magic/common"
 import {
   getRobustData,
   getRobustPreference,

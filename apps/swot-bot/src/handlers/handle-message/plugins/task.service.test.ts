@@ -1,6 +1,5 @@
+import { genRandomId } from "@cs-magic/common/utils/gen-random-id"
 import { types } from "wechaty-puppet"
-
-import { genRandomId } from "@cs-magic/common"
 
 import { TaskService } from "./task.service.js"
 

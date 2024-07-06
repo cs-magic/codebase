@@ -1,10 +1,10 @@
+import logger from "@cs-magic/common/log"
+import { CardSimulator } from "@cs-magic/common/spider/card-simulator"
+import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import {
-  CardSimulator,
-  isWxmpArticleUrl,
-  logger,
   parseTitleFromWechatUrlMessage,
   parseUrlFromWechatUrlMessage,
-} from "@cs-magic/common"
+} from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
@@ -106,8 +106,9 @@ export class ParserPlugin extends BasePlugin {
     logger.info(`parser url=${url}`)
     if (!url) return
 
-    if (!isWxmpArticleUrl(url))
+    if (!isWxmpArticleUrl(url)) {
       return logger.info(`passed since it's not wxmp article`)
+    }
 
     const convPreference = await this.getConvPreference()
     if (!convPreference.features.parser.enabled)

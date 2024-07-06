@@ -1,5 +1,6 @@
-import { env, logEnv } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
+import { env } from "@cs-magic/common/env"
+import { logEnv } from "@cs-magic/common/env/log-env"
+import { logger } from "@cs-magic/common/log"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 
 import { handleWechatyBot } from "./handlers/index.js"

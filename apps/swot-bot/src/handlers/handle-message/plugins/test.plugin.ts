@@ -2,7 +2,7 @@ import { last } from "lodash"
 import { types } from "wechaty"
 import yargsParser from "yargs-parser"
 
-import { logger } from "@cs-magic/common"
+import { logger } from "@cs-magic/common/log"
 import { safeCallLLM } from "@cs-magic/llm/utils/safe-call-llm"
 
 import { BasePlugin } from "./base.plugin.js"

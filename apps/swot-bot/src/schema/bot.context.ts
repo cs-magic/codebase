@@ -1,9 +1,7 @@
-import { SEPARATOR_LINE } from "@cs-magic/common"
-import { formatAction } from "@cs-magic/common"
-import { formatDuration } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
-import { LogLevel } from "@cs-magic/common"
-
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import logger, { LogLevel } from "@cs-magic/common/log"
+import { formatAction } from "@cs-magic/common/utils/format-action"
+import { formatDuration } from "@cs-magic/common/utils/format-duration"
 import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"

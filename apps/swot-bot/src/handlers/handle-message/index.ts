@@ -1,5 +1,5 @@
-import { SEPARATOR_LINE } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import logger from "@cs-magic/common/log"
 import { omit } from "lodash"
 import { type Message, types, type Wechaty } from "wechaty"
 import {

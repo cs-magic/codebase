@@ -1,6 +1,6 @@
-import { SEPARATOR_LINE } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
-import { ILlmMessage } from "@cs-magic/common"
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import logger from "@cs-magic/common/log"
+import { ILlmMessage } from "@cs-magic/common/schema/message"
 import { safeCallLLM } from "@cs-magic/llm/utils/safe-call-llm"
 import { trimMessages } from "@cs-magic/llm/utils/trim-messages"
 

@@ -1,12 +1,10 @@
+import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { moment } from "@cs-magic/common/datetime/moment"
+import { logger, LogLevel } from "@cs-magic/common/log"
+import { formatError } from "@cs-magic/common/utils/format-error"
+import { formatString } from "@cs-magic/common/utils/format-string"
 import qrcodeTerminal from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
-
-import { SEPARATOR_LINE } from "@cs-magic/common"
-import { formatError } from "@cs-magic/common"
-import { formatString } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
-import { LogLevel } from "@cs-magic/common"
-import { moment } from "@cs-magic/common"
 
 import { initBotContext } from "../schema/bot.context.js"
 import { formatTalkerFromMessage } from "../utils/format-talker.js"
