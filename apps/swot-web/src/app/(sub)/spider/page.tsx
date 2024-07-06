@@ -5,11 +5,11 @@ import { useAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { useEffect, useState } from "react"
 import { useCopyToClipboard } from "react-use"
-import { ApiMethod } from "@cs-magic/common/api-client/schema"
-import { sleep } from "@cs-magic/common/datetime/utils"
-import { Button } from "@cs-magic/common/ui-shadcn/components/button"
-import { Input } from "@cs-magic/common/ui-shadcn/components/input"
-import { Label } from "@cs-magic/common/ui-shadcn/components/label"
+import { ApiMethod } from "@cs-magic/common"
+import { sleep } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { Input } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
 import {
   Select,
   SelectContent,
@@ -17,11 +17,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common/ui-shadcn/components/select"
-import { Badge } from "@cs-magic/common/ui-shadcn/components/ui/badge"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Textarea } from "@cs-magic/common/ui/components/textarea-auto"
+} from "@cs-magic/common"
+import { Badge } from "../../../../../../packages/common/src/ui-shadcn/components/ui/badge"
+import { FlexContainer } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
+import { Textarea } from "@cs-magic/common"
 import { StandardCard } from "../../../../../../packages/common/ui/components/standard-card"
 import { serverFetch } from "./actions"
 import { cookie2headers } from "./utils"

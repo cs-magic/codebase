@@ -1,5 +1,6 @@
 import { customAlphabet } from "nanoid"
-import { ID_LEN } from "../const"
+
+import { ID_LEN } from "../const.js"
 
 /**
  * todo: pass test on nano import

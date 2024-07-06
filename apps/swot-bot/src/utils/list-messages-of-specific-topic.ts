@@ -1,5 +1,5 @@
-import { SEPARATOR_BOX } from "@cs-magic/common/const"
 import { prisma } from "@cs-magic/common"
+import { SEPARATOR_BOX } from "@cs-magic/common"
 
 export const listMessagesOfSpecificTopic = async (
   botWxid: string,

@@ -1,10 +1,9 @@
-import { IUserSummaryFilled } from "../schema/user.summary"
-import { UnexpectedError } from "../schema/error"
-import { sleep } from "../datetime/utils"
-import { getEnv } from "../env"
-import { logger } from "../log"
-
-import { BaseSimulator } from "./base-simulator"
+import { sleep } from "../datetime/utils.js"
+import { getEnv } from "../env/index.js"
+import { logger } from "../log/index.js"
+import { UnexpectedError } from "../schema/error.js"
+import { IUserSummaryFilled } from "../schema/user.summary.js"
+import { BaseSimulator } from "./base-simulator.js"
 
 /**
  * !IMPORTANT: 需要 swot 项目启动

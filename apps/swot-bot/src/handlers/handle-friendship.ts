@@ -1,8 +1,5 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { logger } from "@cs-magic/common"
-import { config } from "@cs-magic/common"
+import { config, logger, SEPARATOR_LINE, moment } from "@cs-magic/common"
 import { Friendship, types, Wechaty } from "wechaty"
-import moment from "@cs-magic/common/datetime/moment"
 
 /**
  * 单方面把bot删了后，再添加bot，不会触发 friendship

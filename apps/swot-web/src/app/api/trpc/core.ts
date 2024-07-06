@@ -1,10 +1,7 @@
 import { userDetailSchema } from "@cs-magic/prisma/schema/user.detail"
 import { z } from "zod"
 import { prisma } from "@cs-magic/common"
-import {
-  createTRPCRouter,
-  protectedProcedure,
-} from "@cs-magic/common/trpc/trpc"
+import { createTRPCRouter, protectedProcedure } from "@cs-magic/common"
 
 export const coreRouter = createTRPCRouter({
   getSelf: protectedProcedure.query(async ({ ctx }) =>

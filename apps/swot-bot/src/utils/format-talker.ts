@@ -1,7 +1,7 @@
 import { Message } from "wechaty"
 
-import { LlmScenario } from "../schema/bot.utils"
-import { getConvData } from "./get-conv-preference"
+import { LlmScenario } from "../schema/bot.utils.js"
+import { getConvData } from "./get-conv-preference.js"
 
 /**
  * 展示用户信息，与它的调用量

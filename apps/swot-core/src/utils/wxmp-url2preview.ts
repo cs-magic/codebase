@@ -1,8 +1,7 @@
-import { logger } from "@cs-magic/common"
+import logger from "@cs-magic/common/log"
 import { IUserSummary } from "@cs-magic/common/schema/user.summary"
 import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-
 import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
 
 import { GenWxmpArticleCardFetchOptions } from "../schema"

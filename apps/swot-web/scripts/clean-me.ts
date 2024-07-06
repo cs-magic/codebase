@@ -1,4 +1,4 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma"
+import { prisma } from "@cs-magic/common"
 
 const cleanMe = async () => {
   const result = await prisma.user.deleteMany({

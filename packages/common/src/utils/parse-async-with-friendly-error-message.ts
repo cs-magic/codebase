@@ -1,6 +1,6 @@
 import { ZodError } from "zod"
 
-import { InputValidatorSchema } from "../schema/utils"
+import { InputValidatorSchema } from "../schema/utils.js"
 
 export const parseAsyncWithFriendlyErrorMessage = async <T>(
   schema: InputValidatorSchema,

@@ -1,4 +1,4 @@
-import { BaseSimulator } from "./base-simulator"
+import { BaseSimulator } from "./base-simulator.js"
 
 /**
  * !IMPORTANT: 需要 swot 项目启动

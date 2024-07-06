@@ -13,7 +13,6 @@ const PRE = "[CacheManager]";
 export type RoomMemberMap = { [contactId: string]: PadLocal.ChatRoomMember.AsObject };
 
 export class CacheManager {
-
   private readonly _userName: string;
 
   private _messageCache?: LRU<string, PadLocal.Message.AsObject>; // because message count may be massive, so we just keep them in memory with LRU and with limited capacity
@@ -44,7 +43,7 @@ export class CacheManager {
       "puppet-padlocal-cache",
       path.sep,
       this._userName,
-      path.sep,
+      path.sep
     );
 
     const baseDirExist = await fs.pathExists(baseDir);
@@ -91,13 +90,13 @@ export class CacheManager {
     log.silly(PRE, "close()");
 
     if (
-      this._contactCache
-      && this._contactStrangerAliasCache
-      && this._roomMemberCache
-      && this._roomCache
-      && this._friendshipCache
-      && this._roomInvitationCache
-      && this._messageCache
+      this._contactCache &&
+      this._contactStrangerAliasCache &&
+      this._roomMemberCache &&
+      this._roomCache &&
+      this._friendshipCache &&
+      this._roomInvitationCache &&
+      this._messageCache
     ) {
       log.silly(PRE, "close() closing caches ...");
 
@@ -145,7 +144,10 @@ export class CacheManager {
     return this._messageRevokeCache!.get(messageId);
   }
 
-  public async setMessageRevokeInfo(messageId: string, messageSendResult: PadLocal.MessageRevokeInfo.AsObject): Promise<void> {
+  public async setMessageRevokeInfo(
+    messageId: string,
+    messageSendResult: PadLocal.MessageRevokeInfo.AsObject
+  ): Promise<void> {
     await this._messageRevokeCache!.set(messageId, messageSendResult);
   }
 
@@ -306,5 +308,4 @@ export class CacheManager {
   public setLabelList(labelList: PadLocal.Label[]): void {
     this._labelList = labelList;
   }
-
 }

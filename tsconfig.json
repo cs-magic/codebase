@@ -20,11 +20,12 @@
 //    "experimentalDecorators" : true,
 
     "target": "esnext",
+
 //    "module": "NodeNext",
 //    "moduleResolution": "NodeNext",
-
     "module": "ESNext",
     "moduleResolution": "Bundler",
+
     "resolveJsonModule" : true,
 
     "strict": true,
@@ -43,38 +44,38 @@
     // dot visit env variable
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
-
+    "noUnusedParameters": false,
     "jsx": "preserve",
 
     "baseUrl": ".",
     "paths": {
-      "@cs-magic/common": ["./packages/common/src/index.ts"],
-      "@cs-magic/common/*": ["./packages/common/src/*.ts"],
-      "@cs-magic/llm/*": ["./packages/llm/src/*"],
-
-      "@cs-magic/wechat4u/*": ["./packages/wechat4u/src/*"],
-      "wechaty-puppet/*": ["./packages/wechaty-puppet/src/*"],
-      "wechaty-puppet-padlocal/*": ["./packages/wechaty-puppet-padlocal/src/*"],
-      "wechaty-puppet-wechat4u/*": ["./packages/wechaty-puppet-wechat4u/src/*"],
-
-      "@cs-magic/wechat/*": ["./packages/wechat/src/*"],
-
-      "@cs-magic/swot-core/*": ["./apps/swot-core/src/*"],
-      "@cs-magic/swot-bot/*": ["./apps/swot-bot/src/*"],
-      "@cs-magic/swot-backend/*": ["./apps/swot-backend/src/*"],
-      "@cs-magic/swot-web/*": ["./apps/swot-web/src/*"],
-      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/src/*"]
+//      "@cs-magic/common": ["./packages/common/dist/src/index.js"],
+//      "@cs-magic/common/*": ["./packages/common/dist/src/*"],
+//      "@cs-magic/llm/*": ["./packages/llm/dist/src/*"],
+//
+//      "@cs-magic/wechat4u/*": ["./packages/wechat4u/dist/src/*"],
+//      "wechaty-puppet/*": ["./packages/wechaty-puppet/dist/src/*"],
+//      "wechaty-puppet-padlocal/*": ["./packages/wechaty-puppet-padlocal/dist/src/*"],
+//      "wechaty-puppet-wechat4u/*": ["./packages/wechaty-puppet-wechat4u/dist/src/*"],
+//
+//      "@cs-magic/wechat/*": ["./packages/wechat/dist/src/*"],
+//
+//      "@cs-magic/swot-core/*": ["./apps/swot-core/dist/src/*"],
+//      "@cs-magic/swot-bot/*": ["./apps/swot-bot/dist/src/*"],
+//      "@cs-magic/swot-backend/*": ["./apps/swot-backend/dist/src/*"],
+//      "@cs-magic/swot-web/*": ["./apps/swot-web/dist/src/*"],
+//      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/dist/src/*"]
     }
   },
 
   "include": [
-    "./packages/wechaty/src/types.d.ts"
+    "./packages/wechaty/dist/src/types.d.ts"
 //    "packages/**/*.ts",
 //    "apps/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "apps/swot-desktop/src-tauri/target"
+    "apps/swot-desktop/dist/src-tauri/target"
   ],
   "references": [
 //    {"path": "./packages/common"},

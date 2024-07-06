@@ -1,4 +1,4 @@
-import { IDimension } from "../ui/schema"
+import { IDimension } from "../ui/schema.js"
 
 export interface IBilibiliVideoDetail {
   View: {

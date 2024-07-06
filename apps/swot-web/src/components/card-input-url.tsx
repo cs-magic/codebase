@@ -2,8 +2,8 @@
 
 import { useAtom } from "jotai"
 import React from "react"
-import { Input } from "@cs-magic/common/ui-shadcn/components/input"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
+import { Input } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
 
 import { config } from "@cs-magic/common"
 import { cardArticleUrlAtom } from "../store/card.atom"

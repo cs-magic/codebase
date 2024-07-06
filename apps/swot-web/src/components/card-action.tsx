@@ -10,9 +10,9 @@ import {
 import { useAtom } from "jotai"
 import { capitalize } from "lodash"
 import { HTMLAttributes } from "react"
-import { Atom } from "@cs-magic/common/state-management/jotai/types"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
+import { Atom } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
+import { ButtonWithLoading } from "@cs-magic/common"
 import { ActionType } from "@cs-magic/wechat/schema/card"
 
 export const CardAction = ({

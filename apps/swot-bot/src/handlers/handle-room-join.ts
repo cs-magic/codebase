@@ -4,8 +4,8 @@ import { prisma } from "@cs-magic/common"
 import {
   getRobustData,
   getRobustPreference,
-} from "../utils/get-robust-preference"
-import { sendMessageOnRoomJoin } from "../utils/send-message-on-room-join"
+} from "../utils/get-robust-preference.js"
+import { sendMessageOnRoomJoin } from "../utils/send-message-on-room-join.js"
 
 /**
  * 小群邀请自己也会触发该 hook

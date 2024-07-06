@@ -1,13 +1,12 @@
 "use server"
 
-import { sha1 } from "js-sha1"
-
-import { getEnv } from "@cs-magic/common"
 import { api } from "@cs-magic/common/api-client/api"
+import { getEnv } from "@cs-magic/common/env/index"
+import { sha1 } from "js-sha1"
+import { fetchWechatApi } from "../functions"
 
 import { IWechatSDKToken } from "../schema"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
-import { fetchWechatApi } from "../functions"
 
 /**
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html

@@ -4,8 +4,8 @@ import { cardUserAvatarRenderedAtom } from "../store/card.rendered.atom"
 import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
 import { useAtom } from "jotai"
 import React from "react"
-import { Input } from "@cs-magic/common/ui-shadcn/components/input"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
+import { Input } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
 
 export const CardInputUser = () => {
   const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)

@@ -1,9 +1,6 @@
-import {
-  Avatar,
-  AvatarImage,
-} from "@cs-magic/common/ui-shadcn/components/avatar"
-import { ImageEqualHeight } from "@cs-magic/common/ui/components/image-equal-height"
-import { SeparatorContainer } from "@cs-magic/common/ui/components/separator-container"
+import { Avatar, AvatarImage } from "@cs-magic/common"
+import { ImageEqualHeight } from "@cs-magic/common"
+import { SeparatorContainer } from "@cs-magic/common"
 
 import { config } from "@cs-magic/common"
 

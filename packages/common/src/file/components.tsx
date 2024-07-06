@@ -1,11 +1,12 @@
-import { Check, CircleCheckBigIcon } from "lucide-react"
+import { Check } from "lucide-react"
 import Image from "next/image"
 import { HTMLAttributes } from "react"
-import { IUploadFile } from "../oss/schema"
-import { AspectRatio } from "../ui-shadcn/components/aspect-ratio"
-import { cn } from "../ui-shadcn/utils"
-import { FlexContainer } from "../ui/components/flex-container"
-import { Loading } from "../ui/components/loading"
+
+import { IUploadFile } from "../oss/schema.js"
+import { AspectRatio } from "../ui-shadcn/components/ui/aspect-ratio.js"
+import { cn } from "../ui-shadcn/utils.js"
+import { FlexContainer } from "../ui/components/flex-container.js"
+import { Loading } from "../ui/components/loading.js"
 
 export const FileComp = ({
   file,

@@ -1,4 +1,4 @@
-import { formatError } from "./format-error"
+import { formatError } from "./format-error.js"
 
 /**
  * todo: how to accept a func no matter it's sync or async ?

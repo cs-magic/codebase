@@ -1,17 +1,14 @@
-import type {
-  SayablePayload,
-  sayableTypes,
-}                             from './sayable.js'
-import type { TapType } from './tap.js'
+import type { SayablePayload, sayableTypes } from "./sayable.js"
+import type { TapType } from "./tap.js"
 
 /**
  * Huan(202201): numbers must be keep unchanged across versions
  */
 enum PostType {
   Unspecified = 0,
-  Moment  = 1,  // <- WeChat Moments (朋友圈)
-  Channel = 2,  // <- WeChat Channel (视频号)
-  Message = 3,  // Quoted Message or Muitiplepart Message
+  Moment = 1, // <- WeChat Moments (朋友圈)
+  Channel = 2, // <- WeChat Channel (视频号)
+  Message = 3, // Quoted Message or Muitiplepart Message
 }
 
 /**
@@ -25,7 +22,7 @@ enum PostType {
  *  but reference the `PostPayload` in interface directly
  *  to prevent the ts(2502) error
  */
- interface SayablePayloadPost {
+interface SayablePayloadPost {
   type: typeof sayableTypes.Post
   // eslint-disable-next-line no-use-before-define
   payload: PostPayload
@@ -48,9 +45,9 @@ enum PostType {
  *
  */
 interface PostPayloadBase {
-  parentId? : string    // `undefined` means it's original
-  rootId?   : string    // `undefined` means it's not a reply (original or repost)
-  type?     : PostType
+  parentId?: string // `undefined` means it's original
+  rootId?: string // `undefined` means it's not a reply (original or repost)
+  type?: PostType
 }
 
 interface PostPayloadClient extends PostPayloadBase {
@@ -64,7 +61,7 @@ interface PostPayloadClient extends PostPayloadBase {
 
 interface PostPayloadServer extends PostPayloadBase {
   id: string
-  sayableList: string[]  // The message id(s) for this post.
+  sayableList: string[] // The message id(s) for this post.
 
   contactId: string
   timestamp: number
@@ -80,24 +77,26 @@ interface PostPayloadServer extends PostPayloadBase {
   // The tap(i.e., liker) information need to be fetched from another API
 }
 
-type PostPayload =
-  | PostPayloadClient
-  | PostPayloadServer
+type PostPayload = PostPayloadClient | PostPayloadServer
 
-const isPostPayloadClient = (payload: PostPayload): payload is PostPayloadClient =>
-  payload instanceof Object
-    && !payload.id  // <- Huan(202201): here is enough to check if it's a PostPayloadClient
-    && Array.isArray(payload.sayableList)
-    && payload.sayableList.length > 0
-    && payload.sayableList[0] instanceof Object
-    && typeof payload.sayableList[0].type !== 'undefined'
+const isPostPayloadClient = (
+  payload: PostPayload,
+): payload is PostPayloadClient =>
+  payload instanceof Object &&
+  !payload.id && // <- Huan(202201): here is enough to check if it's a PostPayloadClient
+  Array.isArray(payload.sayableList) &&
+  payload.sayableList.length > 0 &&
+  payload.sayableList[0] instanceof Object &&
+  typeof payload.sayableList[0].type !== "undefined"
 
-const isPostPayloadServer = (payload: PostPayload): payload is PostPayloadServer =>
-  payload instanceof Object
-    && !!payload.id // <- Huan(202201): here is enough to check if it's a PostPayloadServer
-    && Array.isArray(payload.sayableList)
-    && payload.sayableList.length > 0
-    && typeof payload.sayableList[0] === 'string'
+const isPostPayloadServer = (
+  payload: PostPayload,
+): payload is PostPayloadServer =>
+  payload instanceof Object &&
+  !!payload.id && // <- Huan(202201): here is enough to check if it's a PostPayloadServer
+  Array.isArray(payload.sayableList) &&
+  payload.sayableList.length > 0 &&
+  typeof payload.sayableList[0] === "string"
 
 /**
  * orderBy: Sort order - https://cloud.google.com/apis/design/design_patterns#list_pagination
@@ -113,12 +112,12 @@ const isPostPayloadServer = (payload: PostPayload): payload is PostPayloadServer
  *
  */
 interface PostQueryFilter {
-  contactId? : string
-  id?        : string
-  orderBy?   : string
-  parentId?  : string    // two type of `undefined`: see above comments
-  rootId?    : string    // two type of `undefined`: see above comments
-  type?      : PostType
+  contactId?: string
+  id?: string
+  orderBy?: string
+  parentId?: string // two type of `undefined`: see above comments
+  rootId?: string // two type of `undefined`: see above comments
+  type?: PostType
 }
 
 export {

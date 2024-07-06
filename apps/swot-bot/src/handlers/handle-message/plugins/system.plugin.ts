@@ -1,10 +1,12 @@
-import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
 import { FileBox } from "file-box"
 import { z } from "zod"
+
 import { prisma } from "@cs-magic/common"
-import { FeatureMap } from "../../../schema/commands"
-import { parseLimitedCommand } from "../../../utils/parse-command"
-import { BasePlugin } from "./base.plugin"
+import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
+
+import { FeatureMap } from "../../../schema/commands.js"
+import { parseLimitedCommand } from "../../../utils/parse-command.js"
+import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([
   "list-models",

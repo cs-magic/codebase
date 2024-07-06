@@ -1,8 +1,8 @@
 "use server"
 
-import { NotImplementedError } from "@cs-magic/common/schema/error"
-import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
-import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
+import { NotImplementedError } from "@cs-magic/common"
+import { extractFirstUrl } from "@cs-magic/common"
+import { isWxmpArticleUrl } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
 import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
 import {

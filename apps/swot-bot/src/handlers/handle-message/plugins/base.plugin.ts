@@ -1,26 +1,26 @@
-import set from "lodash/set"
+import { set } from "lodash"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
 
 import { logger, LogLevel, prisma } from "@cs-magic/common"
-import { NotImplementedError } from "@cs-magic/common/schema/error"
-import {
-  IUserSummaryFilled,
-  wechatMessageDetailSchema,
-} from "@cs-magic/common/schema/user.summary"
-import { evalObject } from "@cs-magic/common/utils/eval-object"
-import { formatString } from "@cs-magic/common/utils/format-string"
+import { NotImplementedError } from "@cs-magic/common"
+import { IUserSummaryFilled, wechatMessageDetailSchema } from "@cs-magic/common"
+import { evalObject } from "@cs-magic/common"
+import { formatString } from "@cs-magic/common"
 
-import { IWechatData, IWechatPreference } from "../../../schema/bot.preference"
-import { LlmScenario } from "../../../schema/bot.utils"
-import { FeatureMap, FeatureType } from "../../../schema/commands"
-import { formatFooter } from "../../../utils/format-footer"
-import { formatQuery } from "../../../utils/format-query"
+import {
+  IWechatData,
+  IWechatPreference,
+} from "../../../schema/bot.preference.js"
+import { LlmScenario } from "../../../schema/bot.utils.js"
+import { FeatureMap, FeatureType } from "../../../schema/commands.js"
+import { formatFooter } from "../../../utils/format-footer.js"
+import { formatQuery } from "../../../utils/format-query.js"
 import {
   getConvData,
   getConvPreference,
-} from "../../../utils/get-conv-preference"
-import { parseText } from "../../../utils/parse-message"
+} from "../../../utils/get-conv-preference.js"
+import { parseText } from "../../../utils/parse-message.js"
 
 export class BasePlugin {
   public message: Message

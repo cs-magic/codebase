@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from "react"
-import { Orientation } from "../schema"
-import { cn } from "../../ui-shadcn/utils"
+import { cn } from "../../ui-shadcn/utils.js"
+import { Orientation } from "../schema.js"
 
 export const FlexContainer = forwardRef<
   HTMLDivElement,

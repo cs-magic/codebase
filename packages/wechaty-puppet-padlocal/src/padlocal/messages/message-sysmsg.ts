@@ -14,11 +14,11 @@ interface SysmsgXmlSchema {
   sysmsg: {
     $: {
       type: string;
-    },
-    pat?: PatXmlSchema,
-    sysmsgtemplate?: SysmsgTemplateXmlSchema,
-    todo?: TodoXmlSchema,
-    revokemsg?: RevokeMsgXmlSchema,
+    };
+    pat?: PatXmlSchema;
+    sysmsgtemplate?: SysmsgTemplateXmlSchema;
+    todo?: TodoXmlSchema;
+    revokemsg?: RevokeMsgXmlSchema;
   };
 }
 
@@ -27,10 +27,12 @@ type SysMsgPayload = PatMessagePayload | SysmsgTemplateMessagePayload | TodoMess
 
 export interface SysmsgMessagePayload {
   type: SysMsgType;
-  payload: SysMsgPayload
+  payload: SysMsgPayload;
 }
 
-export async function parseSysmsgMessagePayload(message: PadLocal.Message.AsObject): Promise<SysmsgMessagePayload | null> {
+export async function parseSysmsgMessagePayload(
+  message: PadLocal.Message.AsObject
+): Promise<SysmsgMessagePayload | null> {
   if (message.type !== WechatMessageType.SysTemplate) {
     return null;
   }
@@ -43,7 +45,7 @@ export async function parseSysmsgMessagePayload(message: PadLocal.Message.AsObje
 
   const sysmsgXml: SysmsgXmlSchema = await xmlToJson(content.substring(sysmsgIndex));
 
-  let payload : SysMsgPayload | undefined;
+  let payload: SysMsgPayload | undefined;
   switch (sysmsgXml.sysmsg.$.type) {
     case "pat":
       payload = await parsePatMessagePayload(sysmsgXml.sysmsg.pat!);
@@ -69,7 +71,9 @@ export async function parseSysmsgMessagePayload(message: PadLocal.Message.AsObje
   }
 }
 
-export async function parseSysmsgPatMessagePayload(message: PadLocal.Message.AsObject) : Promise<PatMessagePayload | null> {
+export async function parseSysmsgPatMessagePayload(
+  message: PadLocal.Message.AsObject
+): Promise<PatMessagePayload | null> {
   const sysmsgPayload = await parseSysmsgMessagePayload(message);
   if (!sysmsgPayload || sysmsgPayload.type !== "pat") {
     return null;
@@ -78,7 +82,9 @@ export async function parseSysmsgPatMessagePayload(message: PadLocal.Message.AsO
   return sysmsgPayload.payload as PatMessagePayload;
 }
 
-export async function parseSysmsgSysmsgTemplateMessagePayload(message: PadLocal.Message.AsObject) : Promise<SysmsgTemplateMessagePayload | null> {
+export async function parseSysmsgSysmsgTemplateMessagePayload(
+  message: PadLocal.Message.AsObject
+): Promise<SysmsgTemplateMessagePayload | null> {
   const sysmsgPayload = await parseSysmsgMessagePayload(message);
   if (!sysmsgPayload || sysmsgPayload.type !== "sysmsgtemplate") {
     return null;
@@ -87,7 +93,9 @@ export async function parseSysmsgSysmsgTemplateMessagePayload(message: PadLocal.
   return sysmsgPayload.payload as SysmsgTemplateMessagePayload;
 }
 
-export async function parseSysmsgTodoMessagePayload(message: PadLocal.Message.AsObject) : Promise<TodoMessagePayload | null> {
+export async function parseSysmsgTodoMessagePayload(
+  message: PadLocal.Message.AsObject
+): Promise<TodoMessagePayload | null> {
   const sysmsgPayload = await parseSysmsgMessagePayload(message);
   if (!sysmsgPayload || sysmsgPayload.type !== "roomtoolstips") {
     return null;
@@ -96,7 +104,9 @@ export async function parseSysmsgTodoMessagePayload(message: PadLocal.Message.As
   return sysmsgPayload.payload as TodoMessagePayload;
 }
 
-export async function parseSysmsgRevokeMsgMessagePayload(message: PadLocal.Message.AsObject) : Promise<RevokeMsgMessagePayload | null> {
+export async function parseSysmsgRevokeMsgMessagePayload(
+  message: PadLocal.Message.AsObject
+): Promise<RevokeMsgMessagePayload | null> {
   const sysmsgPayload = await parseSysmsgMessagePayload(message);
   if (!sysmsgPayload || sysmsgPayload.type !== "revokemsg") {
     return null;

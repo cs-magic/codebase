@@ -1,9 +1,9 @@
 import { PropsWithChildren, useEffect } from "react"
 import { useToggle } from "react-use"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { Button } from "@cs-magic/common/ui-shadcn/components/button"
-import { Label } from "@cs-magic/common/ui-shadcn/components/label"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
+import { FlexContainer } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { base1Atom, base2Atom } from "./store"
 import { useAtom } from "jotai"
 

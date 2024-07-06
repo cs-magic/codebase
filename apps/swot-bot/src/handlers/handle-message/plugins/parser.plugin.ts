@@ -1,18 +1,18 @@
-import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import {
+  CardSimulator,
+  isWxmpArticleUrl,
+  logger,
   parseTitleFromWechatUrlMessage,
   parseUrlFromWechatUrlMessage,
-} from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
-import { logger } from "@cs-magic/common"
-import { wxmpUrl2preview } from "@cs-magic/swot-core/src/utils/wxmp-url2preview"
-
+} from "@cs-magic/common"
+import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
 import { FileBox } from "file-box"
 import { z } from "zod"
-import { CardSimulator } from "@cs-magic/common/spider/card-simulator"
-import { FeatureMap, FeatureType } from "../../../schema/commands"
-import { getQuotedMessage } from "../../../utils/get-quoted-message"
-import { parseText } from "../../../utils/parse-message"
-import { BasePlugin } from "./base.plugin"
+
+import { FeatureMap, FeatureType } from "../../../schema/commands.js"
+import { getQuotedMessage } from "../../../utils/get-quoted-message.js"
+import { parseText } from "../../../utils/parse-message.js"
+import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([""])
 type CommandType = z.infer<typeof commandTypeSchema>

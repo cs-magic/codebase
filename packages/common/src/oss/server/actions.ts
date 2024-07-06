@@ -1,6 +1,6 @@
 "use server"
 
-import { oss } from "./config"
+import { oss } from "./config.js"
 
 export const getOssSignatureUrl = async (id: string) =>
   oss.signatureUrl(id, {

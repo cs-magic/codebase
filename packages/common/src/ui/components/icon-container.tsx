@@ -3,8 +3,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "../../ui-shadcn/components/tooltip"
-import { cn } from "../../ui-shadcn/utils"
+} from "../../ui-shadcn/components/ui/tooltip.js"
+import { cn } from "../../ui-shadcn/utils.js"
 
 export const IconContainer = forwardRef<
   HTMLButtonElement,

@@ -1,4 +1,4 @@
-import { parseFunction } from "./parse-function"
+import { parseFunction } from "./parse-function.js"
 
 describe("parseFunction", () => {
   it("should ", () => {

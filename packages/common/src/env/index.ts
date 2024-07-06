@@ -67,5 +67,3 @@ export const getEnv = () => ({
 })
 
 export const env = getEnv()
-
-export * from "./utils"

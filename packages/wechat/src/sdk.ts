@@ -13,6 +13,11 @@ export class WechatSDK {
     expires_in: number
   }
 
+  public async getSignature(url: string) {
+    const ticket = await this._getTicket()
+    return getWechatSignature(ticket, url)
+  }
+
   private async getToken() {
     if (!this.token) this.token = await getWechatToken()
     return this.token!.access_token
@@ -33,10 +38,5 @@ export class WechatSDK {
       }
     }
     return this.ticket.value
-  }
-
-  public async getSignature(url: string) {
-    const ticket = await this._getTicket()
-    return getWechatSignature(ticket, url)
   }
 }

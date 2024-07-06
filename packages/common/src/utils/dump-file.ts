@@ -1,7 +1,8 @@
 import fs, { promises } from "fs"
 import path from "path"
-import { formatAction } from "./format-action"
-import { generatedDir } from "../path"
+
+import { generatedDir } from "../path/index.js"
+import { formatAction } from "./format-action.js"
 
 export const dumpFile = async (
   content: string | object,

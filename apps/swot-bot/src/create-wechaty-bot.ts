@@ -1,7 +1,8 @@
 import { env, logEnv } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
 import { type Wechaty, WechatyBuilder } from "wechaty"
-import { handleWechatyBot } from "./handlers"
+
+import { handleWechatyBot } from "./handlers/index.js"
 
 /**
  * 这是一个 wrapper， 请在其他地方 start

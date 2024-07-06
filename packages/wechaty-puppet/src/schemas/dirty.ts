@@ -6,10 +6,10 @@
  */
 export enum DirtyType {
   Unspecified = 0,
-  Message     = 1,
-  Contact     = 2,
-  Room        = 3,
-  RoomMember  = 4,
-  Friendship  = 5,
-  Post        = 6,  // Issue #2245 - https://github.com/wechaty/wechaty/issues/2245
+  Message = 1,
+  Contact = 2,
+  Room = 3,
+  RoomMember = 4,
+  Friendship = 5,
+  Post = 6, // Issue #2245 - https://github.com/wechaty/wechaty/issues/2245
 }

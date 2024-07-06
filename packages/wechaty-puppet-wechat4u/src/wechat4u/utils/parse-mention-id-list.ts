@@ -2,10 +2,7 @@
  * Huan(202109): from Add mention - wechaty/wechaty#362
  *  https://github.com/wechaty/wechaty/pull/362/files
  */
-import {
-  log,
-  Puppet,
-}             from 'wechaty-puppet'
+import { log, Puppet } from "wechaty-puppet"
 
 /**
  * mobile: \u2005
@@ -33,12 +30,12 @@ const AT_SEPRATOR_REGEX = /[\u2005\u0020\s]+/
  * const contactList = await message.mention()
  * console.log(contactList)
  */
-async function parseMentionIdList (
+async function parseMentionIdList(
   puppet: Puppet,
   roomId: string,
   text: string,
 ): Promise<string[]> {
-  log.verbose('Message', 'mention()')
+  log.verbose("Message", "mention()")
 
   const atList = text.split(AT_SEPRATOR_REGEX)
   // console.log('atList: ', atList)
@@ -46,47 +43,49 @@ async function parseMentionIdList (
 
   // Using `filter(e => e.indexOf('@') > -1)` to filter the string without `@`
   const mentionNameList = atList
-    .filter(str => str.includes('@'))
-    .map(str => multipleAt(str))
+    .filter((str) => str.includes("@"))
+    .map((str) => multipleAt(str))
     .flat()
-    .filter(name => !!name)
+    .filter((name) => !!name)
 
   // convert 'hello@a@b@c' to [ 'c', 'b@c', 'a@b@c' ]
-  function multipleAt (str: string) {
-    str = str.replace(/^.*?@/, '@')
-    let name = ''
+  function multipleAt(str: string) {
+    str = str.replace(/^.*?@/, "@")
+    let name = ""
     const nameList: string[] = []
-    str.split('@')
-      .filter(mentionName => !!mentionName)
+    str
+      .split("@")
+      .filter((mentionName) => !!mentionName)
       .reverse()
-      .forEach(mentionName => {
+      .forEach((mentionName) => {
         // console.log('mentionName: ', mentionName)
-        name = mentionName + '@' + name
+        name = mentionName + "@" + name
         nameList.push(name.slice(0, -1)) // get rid of the `@` at beginning
       })
     return nameList
   }
 
-  log.silly('wechaty-puppet-wechat', 'mentionIdList(%s), mentionNameList = "%s"',
+  log.silly(
+    "wechaty-puppet-wechat",
+    'mentionIdList(%s), mentionNameList = "%s"',
     text,
     JSON.stringify(mentionNameList),
   )
 
   const contactIdListNested = await Promise.all(
-    mentionNameList.map(
-      name => puppet.roomMemberSearch(roomId, name),
-    ),
+    mentionNameList.map((name) => puppet.roomMemberSearch(roomId, name)),
   )
 
   const contactIdList = contactIdListNested.flat()
 
   if (contactIdList.length === 0) {
-    log.silly('wechaty-puppet-wechat',
+    log.silly(
+      "wechaty-puppet-wechat",
       [
-        'mentionIdList() contactIdList can not found member',
-        'using roomMemberSearch() from mentionNameList:',
-        mentionNameList.join(', '),
-      ].join(''),
+        "mentionIdList() contactIdList can not found member",
+        "using roomMemberSearch() from mentionNameList:",
+        mentionNameList.join(", "),
+      ].join(""),
     )
   }
   return contactIdList

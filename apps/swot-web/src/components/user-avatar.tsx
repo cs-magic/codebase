@@ -1,16 +1,12 @@
-import { upgradeUrl } from "@cs-magic/common/utils/upgrade-url"
+import { upgradeUrl } from "@cs-magic/common"
 import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import omit from "lodash/omit"
 import { UserIcon } from "lucide-react"
 import { ComponentPropsWithoutRef, HTMLAttributes } from "react"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@cs-magic/common/ui-shadcn/components/avatar"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { VerticalAspectRatio } from "@cs-magic/common/ui/components/aspect-ratio"
+import { Avatar, AvatarFallback, AvatarImage } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
+import { VerticalAspectRatio } from "@cs-magic/common"
 
 export const UserAvatar = ({
   user,

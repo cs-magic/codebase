@@ -1,6 +1,7 @@
 import { type WechatyBuilder, Message as BaseMessage } from "wechaty"
-import { type IBotContext } from "./schema/bot.context"
 import { Message as MessagePayload } from "wechaty-puppet/payloads"
+
+import { type IBotContext } from "./schema/bot.context.js"
 
 declare module "wechaty-puppet/payloads" {
   /**

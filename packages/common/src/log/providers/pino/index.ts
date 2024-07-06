@@ -3,7 +3,8 @@
  */
 
 import pino, { Logger } from "pino"
-import { logLevelData } from "./config"
+
+import { logLevelData } from "./config.js"
 
 const logLevels = new Map<string, string>(Object.entries(logLevelData))
 

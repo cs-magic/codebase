@@ -4,14 +4,19 @@
     "composite": true,
     "outDir": "dist",
 
+//    "module": "NodeNext",
+//    "moduleResolution": "NodeNext",
   },
   "include": ["src/**/*"],
   "references": [
     {"path": "../../packages/common"},
+    {"path": "../../packages/llm"},
+
     {"path": "../../packages/wechat"},
     {"path": "../../packages/wechaty-puppet"},
     {"path": "../../packages/wechaty-puppet-padlocal"},
     {"path": "../../packages/wechaty-puppet-wechat4u"},
-    {"path": "../swot-core"},
+
+    {"path": "../swot-core"}
   ]
 }

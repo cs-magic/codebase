@@ -1,7 +1,7 @@
+import { IUserSummary } from "@cs-magic/common/schema/user.summary"
 import { PlatformType } from "@prisma/client"
 import { z } from "zod"
 
-import { IUserSummary } from "@cs-magic/common/schema/user.summary"
 import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 
 import { ISummaryParsed } from "./summary"

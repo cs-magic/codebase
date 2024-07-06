@@ -1,36 +1,33 @@
-import { log } from '../config.js'
+import { log } from "../config.js"
 
-import type { PuppetSkeleton }    from '../puppet/puppet-skeleton.js'
-import {
-  MessageType,
-}                                 from '../schemas/message.js'
-import {
-  SayablePayload,
-  sayablePayloads,
-}                                 from '../schemas/sayable.js'
+import type { PuppetSkeleton } from "../puppet/puppet-skeleton.js"
+import { MessageType } from "../schemas/message.js"
+import { SayablePayload, sayablePayloads } from "../schemas/sayable.js"
 
-import type { MessageMixin }  from './message-mixin.js'
-import type { PostMixin }     from './post-mixin.js'
+import type { MessageMixin } from "./message-mixin.js"
+import type { PostMixin } from "./post-mixin.js"
 
-const sayableMixin = <MixinBase extends typeof PuppetSkeleton & MessageMixin & PostMixin>(mixinBase: MixinBase) => {
-
+const sayableMixin = <
+  MixinBase extends typeof PuppetSkeleton & MessageMixin & PostMixin,
+>(
+  mixinBase: MixinBase,
+) => {
   abstract class SayableMixin extends mixinBase {
-
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args)
-      log.verbose('PuppetSayableMixin', 'constructor()')
+      log.verbose("PuppetSayableMixin", "constructor()")
     }
 
-    async sayablePayload (
+    async sayablePayload(
       sayableId: string,
     ): Promise<undefined | SayablePayload> {
-      log.verbose('PuppetMessageMixin', 'sayablePayload(%s)', sayableId)
+      log.verbose("PuppetMessageMixin", "sayablePayload(%s)", sayableId)
 
       const payload = await this.messagePayload(sayableId)
 
       switch (payload.type) {
         case MessageType.Text:
-          return sayablePayloads.text(payload.text || '')
+          return sayablePayloads.text(payload.text || "")
 
         case MessageType.Image:
         case MessageType.Attachment:
@@ -62,8 +59,9 @@ const sayableMixin = <MixinBase extends typeof PuppetSkeleton & MessageMixin & P
         }
 
         default:
-          log.warn('PuppetSayableMixin',
-            'sayablePayload() can not convert not re-sayable type: %s(%s) for %s\n%s',
+          log.warn(
+            "PuppetSayableMixin",
+            "sayablePayload() can not convert not re-sayable type: %s(%s) for %s\n%s",
             MessageType[payload.type],
             payload.type,
             sayableId,
@@ -72,7 +70,6 @@ const sayableMixin = <MixinBase extends typeof PuppetSkeleton & MessageMixin & P
           return undefined
       }
     }
-
   }
 
   return SayableMixin
@@ -82,8 +79,5 @@ type SayableMixin = ReturnType<typeof sayableMixin>
 
 type ProtectedPropertySayableMixin = never
 
-export type {
-  SayableMixin,
-  ProtectedPropertySayableMixin,
-}
+export type { SayableMixin, ProtectedPropertySayableMixin }
 export { sayableMixin }

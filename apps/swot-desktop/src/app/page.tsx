@@ -1,5 +1,5 @@
-import { buttonVariants } from "@cs-magic/common/ui-shadcn/components/button"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
+import { buttonVariants } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import Image from "next/image"
 import Link from "next/link"
 

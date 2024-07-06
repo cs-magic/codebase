@@ -3,9 +3,9 @@
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
 
-import { isServer } from "../env/utils/is-server"
-import { uiInnerHeight, uiViewportHeight } from "../ui/store"
-import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top"
+import { isServer } from "../env/is-server.js"
+import { uiInnerHeight, uiViewportHeight } from "../ui/store.js"
+import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top.js"
 
 /**
  * 充分性：自动调整屏幕高度

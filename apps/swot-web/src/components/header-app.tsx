@@ -1,8 +1,8 @@
-import { MSG_TODO } from "@cs-magic/common/const"
+import { MSG_TODO } from "@cs-magic/common"
 import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
-import { AspectRatio } from "@cs-magic/common/ui-shadcn/components/aspect-ratio"
+import { AspectRatio } from "@cs-magic/common"
 
 import { config } from "@cs-magic/common"
 

@@ -1,39 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { xmlToJson } from '../utils/xml-to-json.js'
-import type { WebMessageRawPayload } from '../../web-schemas.js'
+import { xmlToJson } from "../utils/xml-to-json.js"
+import type { WebMessageRawPayload } from "../../web-schemas.js"
 
 interface EmotionXmlSchema {
   msg: {
     emoji: {
       $: {
-        type: string;
-        len: string;
-        cdnurl: string;
-        width: string;
-        height: string;
-        md5: string;
-      };
-    };
+        type: string
+        len: string
+        cdnurl: string
+        width: string
+        height: string
+        md5: string
+      }
+    }
     gameext: {
       $: {
-        content: string;
-        type: string;
-      };
-    };
-  };
+        content: string
+        type: string
+      }
+    }
+  }
 }
 
 export interface EmojiMessagePayload {
-  type: number;
-  len: number;
-  md5: string;
-  cdnurl: string;
-  width: number;
-  height: number;
-  gameext?: string;
+  type: number
+  len: number
+  md5: string
+  cdnurl: string
+  width: number
+  height: number
+  gameext?: string
 }
 
-export async function parseEmotionMessagePayload (message: WebMessageRawPayload): Promise<EmojiMessagePayload> {
+export async function parseEmotionMessagePayload(
+  message: WebMessageRawPayload,
+): Promise<EmojiMessagePayload> {
   const jsonPayload: EmotionXmlSchema = await xmlToJson(message.Content)
 
   const len = parseInt(jsonPayload.msg.emoji.$.len, 10) || 0
@@ -61,8 +63,10 @@ export async function parseEmotionMessagePayload (message: WebMessageRawPayload)
   }
 }
 
-export function generateEmotionPayload (emojiMessagePayload: EmojiMessagePayload): string {
+export function generateEmotionPayload(
+  emojiMessagePayload: EmojiMessagePayload,
+): string {
   return `<msg><emoji cdnurl="${emojiMessagePayload.cdnurl}" len="${emojiMessagePayload.len}" md5="${
     emojiMessagePayload.md5
-  }" type="${emojiMessagePayload.type}"/>${emojiMessagePayload.gameext || ''}</msg>`
+  }" type="${emojiMessagePayload.type}"/>${emojiMessagePayload.gameext || ""}</msg>`
 }

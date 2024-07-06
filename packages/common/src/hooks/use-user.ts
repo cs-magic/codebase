@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react"
-import { IUserSummary } from "../schema/user.summary"
+import { IUserSummary } from "../schema/user.summary.js"
 
 export const useUserSummary = () => {
   const user = useSession().data?.user

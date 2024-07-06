@@ -17,6 +17,7 @@
  *
  */
 import { PuppetWechat4u } from "./puppet-wechat4u.js"
+
 export { log, VERSION } from "./config.js"
 
 export { PuppetWechat4u }

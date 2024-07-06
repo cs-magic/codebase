@@ -1,4 +1,4 @@
-import type PadLocal  from "padlocal-client-ts/dist/proto/padlocal_pb.js";
+import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
 import { Puppet, log } from "wechaty-puppet";
 import type { Message } from "padlocal-client-ts/dist/proto/padlocal_pb";
 import type * as PUPPET from "wechaty-puppet";
@@ -28,9 +28,10 @@ export interface Event<T extends keyof EventPayloadSpec> {
 
 export type EventPayload = EventPayloadSpec[keyof EventPayloadSpec] | null;
 export type EventParserHandler = (puppet: Puppet, message: PadLocal.Message.AsObject) => Promise<EventPayload>;
-type EventParser = { type: EventType, handler: EventParserHandler, };
+type EventParser = { type: EventType; handler: EventParserHandler };
 
 const EventParserList: Array<EventParser> = [];
+
 export function addEventParser(eventType: EventType, parser: EventParserHandler): void {
   EventParserList.push({
     handler: parser,

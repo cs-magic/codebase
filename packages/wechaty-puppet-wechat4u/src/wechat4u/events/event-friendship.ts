@@ -1,8 +1,8 @@
-import { WebMessageRawPayload, WebMessageType } from '../../web-schemas.js'
-import * as PUPPET from 'wechaty-puppet'
-import { isContactId } from '../utils/is-type.js'
-import { xmlToJson } from '../utils/xml-to-json.js'
-import type { EventPayload } from './event.js'
+import { WebMessageRawPayload, WebMessageType } from "../../web-schemas.js"
+import * as PUPPET from "wechaty-puppet"
+import { isContactId } from "../utils/is-type.js"
+import { xmlToJson } from "../utils/xml-to-json.js"
+import type { EventPayload } from "./event.js"
 
 const FRIENDSHIP_CONFIRM_REGEX_LIST = [
   /^You have added (.+) as your WeChat contact. Start chatting!$/,
@@ -21,17 +21,17 @@ const FRIENDSHIP_VERIFY_REGEX_LIST = [
 interface ReceiveXmlSchema {
   msg: {
     $: {
-      fromusername: string;
-      encryptusername: string;
-      content: string;
-      scene: string;
-      ticket: string;
-      sourcenickname?: string;
-      sourceusername?: string;
-      sharecardnickname?: string;
-      sharecardusername?: string;
-    };
-  };
+      fromusername: string
+      encryptusername: string
+      content: string
+      scene: string
+      ticket: string
+      sourcenickname?: string
+      sourceusername?: string
+      sharecardnickname?: string
+      sharecardusername?: string
+    }
+  }
 }
 
 const isConfirm = (message: WebMessageRawPayload): boolean => {
@@ -46,7 +46,9 @@ const isNeedVerify = (message: WebMessageRawPayload): boolean => {
   })
 }
 
-const isReceive = async (message: WebMessageRawPayload): Promise<ReceiveXmlSchema | null> => {
+const isReceive = async (
+  message: WebMessageRawPayload,
+): Promise<ReceiveXmlSchema | null> => {
   if (message.MsgType !== WebMessageType.VERIFYMSG) {
     return null
   }
@@ -64,7 +66,10 @@ const isReceive = async (message: WebMessageRawPayload): Promise<ReceiveXmlSchem
   return null
 }
 
-export default async (_puppet: PUPPET.Puppet, message: WebMessageRawPayload): Promise<EventPayload> => {
+export default async (
+  _puppet: PUPPET.Puppet,
+  message: WebMessageRawPayload,
+): Promise<EventPayload> => {
   if (isConfirm(message)) {
     return {
       contactId: message.FromUserName,

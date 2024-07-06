@@ -3,18 +3,18 @@ import { EditIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { Button } from "@cs-magic/common/ui-shadcn/components/button"
+import { FlexContainer } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "@cs-magic/common/ui-shadcn/components/card"
-import { Label } from "@cs-magic/common/ui-shadcn/components/label"
-import { useDraftSession } from "@cs-magic/common/hooks/use-user-draft-session"
-import { useUserUpdateProfile } from "@cs-magic/common/hooks/use-user-update-profile"
+} from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
+import { useDraftSession } from "@cs-magic/common"
+import { useUserUpdateProfile } from "@cs-magic/common"
 import { UserInputAvatar } from "../../../components/user-input-avatar"
 import { UserInputName } from "../../../components/user-input-name"
 import { UserSignOutButton } from "../../../components/user-sign-out-button"

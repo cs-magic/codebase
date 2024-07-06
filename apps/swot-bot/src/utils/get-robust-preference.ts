@@ -1,14 +1,13 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-import { logger } from "@cs-magic/common"
-import merge from "lodash/merge"
-import omit from "lodash/omit"
-import assign from "lodash/assign"
+import { merge, omit } from "lodash"
+
+import { parseJsonSafe } from "@cs-magic/common"
+
 import {
   defaultWechatData,
   defaultWechatPreference,
   IWechatData,
   IWechatPreference,
-} from "../schema/bot.preference"
+} from "../schema/bot.preference.js"
 
 export const getRobustPreference = (
   row: {

@@ -1766,8 +1766,10 @@ __metadata:
     jotai: "npm:^2.8.4"
     lodash: "npm:^4.17.21"
     nanoid: "npm:^5.0.7"
+    next: "npm:^14.2.4"
     pino: "npm:^8.20.0"
     pino-logflare: "npm:^0.4.2"
+    prisma: "npm:^5.16.1"
     react: "npm:^18.3.1"
     ulog: "npm:2.0.0-beta.19"
     universal-logger: "npm:^1.0.1"
@@ -4265,6 +4267,52 @@ __metadata:
     prisma:
       optional: true
   checksum: 10c0/b213117401670ea131c044edb25637f6e8eca438163a7433b9f640f86847d53665d84655bc664cfafbdc32745c91cde595cb0390d77fb55941ab52bd925b8efb
+  languageName: node
+  linkType: hard
+
+"@prisma/debug@npm:5.16.1":
+  version: 5.16.1
+  resolution: "@prisma/debug@npm:5.16.1"
+  checksum: 10c0/f2e536b4b3479feee00adcacb5988d37027b771e682cf8f8a29c30b9216706aa39942fe14bf7fd8bb41c71f1b01074e3dca0632e359253def0bc4a86a5cfb3fd
+  languageName: node
+  linkType: hard
+
+"@prisma/engines-version@npm:5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303":
+  version: 5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303
+  resolution: "@prisma/engines-version@npm:5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303"
+  checksum: 10c0/de02aed86429fbae0c98dbcb35baa9e1583a37aa222692a832a24153ed173a5559257c31296ecbd8ae5a8a99887f3aaf0797d819ca45e562905ce0bea411fe75
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:5.16.1":
+  version: 5.16.1
+  resolution: "@prisma/engines@npm:5.16.1"
+  dependencies:
+    "@prisma/debug": "npm:5.16.1"
+    "@prisma/engines-version": "npm:5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303"
+    "@prisma/fetch-engine": "npm:5.16.1"
+    "@prisma/get-platform": "npm:5.16.1"
+  checksum: 10c0/062a97aee17734c937362672d5da730968e396f1e746ae1f146532324345093fdb01d243afba43843d3ca63b22f6beef83f49ec2649c0280597b875ad02bfe52
+  languageName: node
+  linkType: hard
+
+"@prisma/fetch-engine@npm:5.16.1":
+  version: 5.16.1
+  resolution: "@prisma/fetch-engine@npm:5.16.1"
+  dependencies:
+    "@prisma/debug": "npm:5.16.1"
+    "@prisma/engines-version": "npm:5.16.0-24.34ace0eb2704183d2c05b60b52fba5c43c13f303"
+    "@prisma/get-platform": "npm:5.16.1"
+  checksum: 10c0/d6fd9674948de65d2fbf23f4319d2ec584c97cbe34637109ae9e47b394a1dce33232f6a6739f7ca546c8ffd8217ba46b6a09ba3680a45a881f1cbfda34c9be3c
+  languageName: node
+  linkType: hard
+
+"@prisma/get-platform@npm:5.16.1":
+  version: 5.16.1
+  resolution: "@prisma/get-platform@npm:5.16.1"
+  dependencies:
+    "@prisma/debug": "npm:5.16.1"
+  checksum: 10c0/3fc626175411fbc379189567c6a3cde39e98237918b82c30804086bf8969ecd9909633e567380c8b04146a231a9692f8947dde7086585e74272b1e5eeb3d016f
   languageName: node
   linkType: hard
 
@@ -11475,8 +11523,11 @@ __metadata:
     lint: "npm:^0.8.19"
     lodash: "npm:^4.17.21"
     lucide-react: "npm:^0.399.0"
+    next: "npm:^14.2.4"
+    next-themes: "npm:^0.3.0"
     pino-pretty: "npm:^11.0.0"
     postcss: "npm:^8.4.39"
+    prisma: "npm:^5.16.1"
     react: "npm:^18.3.1"
     rollup: "npm:^4.18.0"
     tailwind-merge: "npm:^2.3.0"
@@ -21787,6 +21838,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-themes@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "next-themes@npm:0.3.0"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+    react-dom: ^16.8 || ^17 || ^18
+  checksum: 10c0/72bd670ad6b9f547dc18cece340dfd1ac41e3e7b37eb321d4767db90bfa2c239f937011cd0efe35ca0081f1ea260051bc0868808ef39b0fbff2ddefd7146cec6
+  languageName: node
+  linkType: hard
+
 "next@npm:14.2.4, next@npm:^14.2.4":
   version: 14.2.4
   resolution: "next@npm:14.2.4"
@@ -23847,6 +23908,17 @@ __metadata:
   version: 3.8.0
   resolution: "pretty-format@npm:3.8.0"
   checksum: 10c0/69f12937bfb7b2a537a7463b9f875a16322401f1e44d7702d643faa0d21991126c24c093217ef6da403b54c15942a834174fa1c016b72e2cb9edaae6bb3729b6
+  languageName: node
+  linkType: hard
+
+"prisma@npm:^5.16.1":
+  version: 5.16.1
+  resolution: "prisma@npm:5.16.1"
+  dependencies:
+    "@prisma/engines": "npm:5.16.1"
+  bin:
+    prisma: build/index.js
+  checksum: 10c0/f30b3f4f5c1c0bb918bd6bc69a8e0af01d21a1b9ad4529f8abe2dc4efff0a24bf7ac34eb2e6fb7bd9159d789a16dbe58a0f1b973478194feb5ecd1048262bf47
   languageName: node
   linkType: hard
 
@@ -29338,6 +29410,7 @@ __metadata:
     "@chatie/git-scripts": "npm:^0.6.2"
     "@chatie/semver": "npm:^0.4.7"
     "@chatie/tsconfig": "npm:^4.6.2"
+    "@cs-magic/common": "workspace:^"
     "@types/config": "npm:0.0.41"
     "@types/fs-extra": "npm:^9.0.13"
     "@types/jest": "npm:^27.4.0"

@@ -1,43 +1,41 @@
 import {
-  type FriendshipAddOptions,
-  type PuppetEventName,
+  CHAT_EVENT_DICT,
   type ChatEventName,
   ContactGender,
   ContactType,
   DirtyType,
+  type FriendshipAddOptions,
   FriendshipSceneType,
   FriendshipType,
   ImageType,
   MessageType,
   PostType,
-  TapType,
-  sayableTypes,
-
-  CHAT_EVENT_DICT,
   PUPPET_EVENT_DICT,
-
+  type PuppetEventName,
+  sayableTypes,
   ScanStatus,
+  TapType,
   YOU,
-}                       from '../schemas/mod.js'
+} from "../schemas/mod.js"
 
 export {
   type PuppetEventName,
   type ChatEventName,
   ContactGender,
-  ContactType         as Contact,
+  ContactType as Contact,
   FriendshipSceneType as FriendshipScene,
-  FriendshipType      as Friendship,
-  ImageType           as Image,
-  MessageType         as Message,
-  PostType            as Post,
-  TapType             as Tap,
-  sayableTypes        as Sayable,
+  FriendshipType as Friendship,
+  ImageType as Image,
+  MessageType as Message,
+  PostType as Post,
+  TapType as Tap,
+  sayableTypes as Sayable,
   /**
    * Huan(202201): `DirtyType as Payload` will be removed after Dec 31, 2023
    * @deprecated: use Dirty instead of Payload
    */
-  DirtyType           as Payload,
-  DirtyType           as Dirty,
+  DirtyType as Payload,
+  DirtyType as Dirty,
 }
 
 export {

@@ -1,7 +1,7 @@
 import OSS from "ali-oss"
 
-import { getEnv } from "../../env"
-import { OSS_BUCKET_NAME, OSS_REGION } from "../const"
+import { getEnv } from "../../env/index.js"
+import { OSS_BUCKET_NAME, OSS_REGION } from "../const.js"
 
 const env = getEnv()
 

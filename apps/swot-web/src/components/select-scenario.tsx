@@ -1,15 +1,11 @@
-import {
-  Select,
-  SelectContent,
-  SelectValue,
-} from "@cs-magic/common/ui-shadcn/components/select"
+import { Select, SelectContent, SelectValue } from "@cs-magic/common"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
 import { scenarioTypeAtom } from "../store/system.atom"
 
 import { SelectModel } from "./_select-model"
 import { useAtom } from "jotai"
-import { ScenarioType } from "@cs-magic/common/schema/scenario"
+import { ScenarioType } from "@cs-magic/common"
 
 export const SelectScenario = () => {
   const [type, setType] = useAtom(scenarioTypeAtom)

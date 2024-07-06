@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
-import { trpcReactLogEnabledAtom } from "@cs-magic/common/trpc/store"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Switch } from "@cs-magic/common/ui-shadcn/components/switch"
+import { trpcReactLogEnabledAtom } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
+import { Switch } from "@cs-magic/common"
 
 export const TrpcLogEnabled = () => {
   const [trpcReactLogEnabled, setTrpcReactLogEnabled] = useAtom(

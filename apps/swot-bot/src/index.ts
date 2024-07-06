@@ -1,3 +1,3 @@
-import { createWechatyBot } from "./create-wechaty-bot"
+import { createWechatyBot } from "./create-wechaty-bot.js"
 
 void createWechatyBot().start()

@@ -1,7 +1,7 @@
 import {
+  ITransChannel,
   ITransClient,
   ITransEvent,
-  ITransChannel,
   ResponseFinalStatus,
 } from "@cs-magic/common/sse/schema"
 

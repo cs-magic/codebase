@@ -1,9 +1,9 @@
-import { projectDir } from "@cs-magic/common"
-import { IAgentReq } from "../schema/llm.api"
-import { AgentType } from "../utils/safe-call-agent"
+import { projectDir } from "@cs-magic/common/path/index"
 import { promises } from "fs"
-import path from "path"
 import yaml from "js-yaml"
+import path from "path"
+import { IAgentReq } from "../schema/llm.api"
+import { AgentType } from "./safe-call-agent"
 
 export const loadAgent = async (agentType: AgentType) => {
   const yamlConfig = await promises.readFile(

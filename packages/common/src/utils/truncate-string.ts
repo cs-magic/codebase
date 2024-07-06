@@ -1,5 +1,5 @@
-import { ELLIPSE } from "../const"
-import { isAscii } from "./is-ascii"
+import { ELLIPSE } from "../const.js"
+import { isAscii } from "./is-ascii.js"
 
 export const truncateString = (
   s: string,

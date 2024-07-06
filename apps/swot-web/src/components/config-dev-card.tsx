@@ -1,7 +1,7 @@
 import { useAtom } from "jotai"
-import { devEnabledAtom } from "@cs-magic/common/dev/store"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Switch } from "@cs-magic/common/ui-shadcn/components/switch"
+import { devEnabledAtom } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
+import { Switch } from "@cs-magic/common"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 import { StandardCard } from "../../../../packages/common/ui/components/standard-card"
 

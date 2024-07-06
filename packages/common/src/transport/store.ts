@@ -1,5 +1,6 @@
 import { atom } from "jotai"
-import { TransportType } from "./schema"
+
+import { TransportType } from "./schema.js"
 
 ///////////////////////////////
 // base

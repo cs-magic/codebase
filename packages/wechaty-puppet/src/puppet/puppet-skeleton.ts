@@ -16,36 +16,23 @@
  *   limitations under the License.
  *
  */
-import * as UUID from 'uuid'
-
-import {
-  log,
-}                       from '../config.js'
+import type { WrapAsync } from "gerror"
 /**
  * Issue #165 - ReferenceError: Cannot access 'PuppetSkeleton' before initialization
  *  @see https://github.com/wechaty/puppet/issues/165
  */
+import { GError, wrapAsyncError } from "gerror"
+import * as UUID from "uuid"
 
-import {
-  GError,
-  wrapAsyncError,
-}                     from 'gerror'
-import type {
-  WrapAsync,
-}                     from 'gerror'
+import { log } from "../config.js"
 
-import type { EventErrorPayload } from '../schemas/event.js'
+import type { EventErrorPayload } from "../schemas/event.js"
 
-import type {
-  PuppetOptions,
-}                                 from '../schemas/puppet.js'
+import type { PuppetOptions } from "../schemas/puppet.js"
 
-import {
-  PuppetEventEmitter,
-}                                 from './events.js'
+import { PuppetEventEmitter } from "./events.js"
 
 abstract class PuppetSkeleton extends PuppetEventEmitter {
-
   /**
    * Puppet ID (UUID)
    *
@@ -64,7 +51,7 @@ abstract class PuppetSkeleton extends PuppetEventEmitter {
    *    by catcing any errors and emit them to error event
    *  2. wrap a Promise by catcing any errors and emit them to error event
    */
-  wrapAsync: WrapAsync = wrapAsyncError((e: any) => this.emit('error', e))
+  wrapAsync: WrapAsync = wrapAsyncError((e: any) => this.emit("error", e))
 
   /**
    * Huan(202110): keep constructor with `args: any[]` parameters
@@ -73,18 +60,16 @@ abstract class PuppetSkeleton extends PuppetEventEmitter {
    * We will save args[0] to `this.options` so that all mixins can access it
    * @param args
    */
-  constructor (
-    ...args: any[]
-  ) {
+  constructor(...args: any[]) {
     super()
-    log.verbose('PuppetSkeleton', 'constructor(%s)',
-      args.length
-        ? JSON.stringify(args[0])
-        : '',
+    log.verbose(
+      "PuppetSkeleton",
+      "constructor(%s)",
+      args.length ? JSON.stringify(args[0]) : "",
     )
 
-    this.id       = UUID.v4()
-    this.options  = args[0] || {}
+    this.id = UUID.v4()
+    this.options = args[0] || {}
 
     /**
      * We will use RxJS & Redux to handle the state of the puppet
@@ -100,20 +85,20 @@ abstract class PuppetSkeleton extends PuppetEventEmitter {
    *  and they must call `super.start()` and `super.stop()`
    *  so that all start()/stop() calls can be chained through all mixins.
    */
-  async start (): Promise<void> {
-    log.verbose('PuppetSkeleton', 'start()')
+  async start(): Promise<void> {
+    log.verbose("PuppetSkeleton", "start()")
   }
 
-  async stop (): Promise<void> {
-    log.verbose('PuppetSkeleton', 'stop()')
+  async stop(): Promise<void> {
+    log.verbose("PuppetSkeleton", "stop()")
   }
 
   /**
    * Convert any error payload to GError ,
    *  and re-emit a `error` event with EventErrorPayload(GError)
    */
-  override emit (event: any, ...args: any) {
-    if (event !== 'error') {
+  override emit(event: any, ...args: any) {
+    if (event !== "error") {
       return super.emit(event, ...args)
     }
 
@@ -122,7 +107,7 @@ abstract class PuppetSkeleton extends PuppetEventEmitter {
 
     if (arg0 instanceof GError) {
       gerr = arg0
-    } else if (arg0 && typeof arg0 === 'object' && 'gerror' in arg0) {
+    } else if (arg0 && typeof arg0 === "object" && "gerror" in arg0) {
       /**
        * in case of the `args` is an `EventErrorPayload`
        */
@@ -139,14 +124,11 @@ abstract class PuppetSkeleton extends PuppetEventEmitter {
       gerror: JSON.stringify(gerr),
     }
 
-    return super.emit('error', payload)
+    return super.emit("error", payload)
   }
-
 }
 
 type PuppetSkeletonProtectedProperty = never
 
-export type {
-  PuppetSkeletonProtectedProperty,
-}
+export type { PuppetSkeletonProtectedProperty }
 export { PuppetSkeleton }

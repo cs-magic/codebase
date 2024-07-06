@@ -1,24 +1,24 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
+import { SEPARATOR_LINE } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
-import omit from "lodash/omit"
+import { omit } from "lodash"
 import { type Message, types, type Wechaty } from "wechaty"
 import {
   commandsSchema,
   type CommandType,
   ManagerType,
-} from "../../schema/commands"
-import { formatTalkerFromMessage } from "../../utils/format-talker"
-import { parseLimitedCommand } from "../../utils/parse-command"
-import { parseText } from "../../utils/parse-message"
-import { storageMessage } from "../../utils/storage-message"
+} from "../../schema/commands.js"
+import { formatTalkerFromMessage } from "../../utils/format-talker.js"
+import { parseLimitedCommand } from "../../utils/parse-command.js"
+import { parseText } from "../../utils/parse-message.js"
+import { storageMessage } from "../../utils/storage-message.js"
 
-import { BasePlugin } from "./plugins/base.plugin"
-import { ChatterPlugin } from "./plugins/chatter.plugin"
-import { ParserPlugin } from "./plugins/parser.plugin"
-import { RoomPlugin } from "./plugins/room.plugin"
-import { SystemPlugin } from "./plugins/system.plugin"
-import { TaskPlugin } from "./plugins/task.plugin"
-import { TestPlugin } from "./plugins/test.plugin"
+import { BasePlugin } from "./plugins/base.plugin.js"
+import { ChatterPlugin } from "./plugins/chatter.plugin.js"
+import { ParserPlugin } from "./plugins/parser.plugin.js"
+import { RoomPlugin } from "./plugins/room.plugin.js"
+import { SystemPlugin } from "./plugins/system.plugin.js"
+import { TaskPlugin } from "./plugins/task.plugin.js"
+import { TestPlugin } from "./plugins/test.plugin.js"
 
 export const handleMessage = async (bot: Wechaty, message: Message) => {
   const tmm = {

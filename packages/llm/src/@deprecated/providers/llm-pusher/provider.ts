@@ -1,5 +1,5 @@
-import Pusher from "pusher"
-import { redis } from "@cs-magic/common"
+// import {
+import { redis } from "@cs-magic/common/db/providers/redis/connection"
 import { pusherServerConfigs } from "@cs-magic/common/pusher/config"
 import { PusherServerId } from "@cs-magic/common/pusher/schema"
 import { initPusherServer } from "@cs-magic/common/pusher/server/init"
@@ -8,6 +8,8 @@ import {
   ResponseFinalStatus,
   ResponseStatus,
 } from "@cs-magic/common/sse/schema"
+
+import Pusher from "pusher"
 
 import { ILLMManagerPusher } from "./schema"
 

@@ -1,14 +1,14 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { CallbacksOptions, type NextAuthOptions } from "next-auth"
-import { Adapter } from "next-auth/adapters"
 
 import { getEnv, prisma } from "@cs-magic/common"
+import { CallbacksOptions, type NextAuthOptions } from "next-auth"
+import { Adapter } from "next-auth/adapters"
+import { tokenExpireSeconds } from "./config"
 
 import { ProfileUpdateProvider } from "./providers/provider"
 import { SmsProvider } from "./providers/sms/provider"
 import WechatProvider from "./providers/wechat/provider"
 import { IWechatProfile } from "./providers/wechat/schema"
-import { tokenExpireSeconds } from "./config"
 
 const env = getEnv()
 

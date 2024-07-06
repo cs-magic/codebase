@@ -16,16 +16,9 @@
  *   limitations under the License.
  *
  */
-import { function as FP } from 'fp-ts'
+import { function as FP } from "fp-ts"
 
-import {
-  log,
-  VERSION,
-}                       from '../config.js'
-
-import type {
-  PuppetOptions,
-}                       from '../schemas/mod.js'
+import { log, VERSION } from "../config.js"
 
 import {
   cacheMixin,
@@ -35,19 +28,21 @@ import {
   memoryMixin,
   messageMixin,
   miscMixin,
+  postMixin,
+  readyMixin,
   roomInvitationMixin,
   roomMemberMixin,
   roomMixin,
+  sayableMixin,
   serviceMixin,
   tagMixin,
-  validateMixin,
-  readyMixin,
-  postMixin,
-  sayableMixin,
   tapMixin,
-}                        from '../mixins/mod.js'
+  validateMixin
+} from "../mixins/mod.js"
 
-import { PuppetSkeleton } from './puppet-skeleton.js'
+import type { PuppetOptions } from "../schemas/mod.js"
+
+import { PuppetSkeleton } from "./puppet-skeleton.js"
 
 /**
  * Mixins with Functional Programming: compose / pipe
@@ -91,7 +86,6 @@ const MixinBase = validateMixin(PipedBase)
  *
  */
 abstract class Puppet extends MixinBase {
-
   /**
    * Must overwrite by child class to identify their version
    *
@@ -100,11 +94,9 @@ abstract class Puppet extends MixinBase {
    */
   static override readonly VERSION = VERSION
 
-  constructor (
-    options: PuppetOptions = {},
-  ) {
+  constructor(options: PuppetOptions = {}) {
     super(options)
-    log.verbose('Puppet', 'constructor(%s)', JSON.stringify(options))
+    log.verbose("Puppet", "constructor(%s)", JSON.stringify(options))
   }
 
   /**
@@ -118,11 +110,9 @@ abstract class Puppet extends MixinBase {
    *
    *  @see https://github.com/wechaty/puppet/issues/163
    */
-  abstract override onStart (): Promise<void>
-  abstract override onStop  (): Promise<void>
+  abstract override onStart(): Promise<void>
 
+  abstract override onStop(): Promise<void>
 }
 
-export {
-  Puppet,
-}
+export { Puppet }

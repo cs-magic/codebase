@@ -1,6 +1,8 @@
 import { z } from "zod"
-import { LangType } from "@cs-magic/common/i18n/schema"
-import { Priority } from "../handlers/handle-message/plugins/task.plugin"
+
+import { LangType } from "@cs-magic/common"
+
+import { Priority } from "../handlers/handle-message/plugins/task.plugin.js"
 
 export const featureTypeSchema = z.enum([
   "system",

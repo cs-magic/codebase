@@ -1,9 +1,11 @@
-import { logger } from "@cs-magic/common"
-import { safeCallLLM } from "@cs-magic/llm/utils"
-import last from "lodash/last"
+import { last } from "lodash"
 import { types } from "wechaty"
 import yargsParser from "yargs-parser"
-import { BasePlugin } from "./base.plugin"
+
+import { logger } from "@cs-magic/common"
+import { safeCallLLM } from "@cs-magic/llm/utils/safe-call-llm"
+
+import { BasePlugin } from "./base.plugin.js"
 
 export class TestPlugin extends BasePlugin {
   async run(args: string) {

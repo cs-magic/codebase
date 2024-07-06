@@ -1,10 +1,8 @@
 "use server"
-import { logger } from "@cs-magic/common" /**
+import { getEnv, logger } from "@cs-magic/common" /**
  * `yarn add net tls`
  */
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
-
-import { getEnv } from "@cs-magic/common"
 
 const env = getEnv()
 

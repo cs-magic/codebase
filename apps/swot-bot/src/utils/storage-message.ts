@@ -1,7 +1,7 @@
-import { logger } from "@cs-magic/common"
-import omit from "lodash/omit"
+import { omit } from "lodash"
 import { Message, types } from "wechaty"
-import { prisma } from "@cs-magic/common"
+
+import { logger, prisma } from "@cs-magic/common"
 
 /**
  * 存储信息

@@ -1,7 +1,7 @@
-import { logger } from "../log"
 import ansiColors from "ansi-colors"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { logger } from "../log/index.js"
 
 /**
  * 充分性：增强router，例如打印一些追踪信息

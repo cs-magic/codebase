@@ -2,12 +2,14 @@
 
 import { HTMLAttributes, LegacyRef } from "react"
 import Markdown, { ExtraProps } from "react-markdown"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism"
 import rehypeKatex from "rehype-katex"
 import remarkMath from "remark-math"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+
+import { cn } from "../ui-shadcn/utils.js"
+
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
-import { dark, darcula } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { cn } from "../ui-shadcn/utils"
 
 export const MarkdownComp = ({
   children,

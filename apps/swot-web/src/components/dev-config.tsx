@@ -3,20 +3,11 @@ import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import * as process from "process"
 import { useState } from "react"
-import { devEnabledAtom } from "@cs-magic/common/dev/store"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@cs-magic/common/ui-shadcn/components/sheet"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@cs-magic/common/ui-shadcn/components/tabs"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { IconContainer } from "@cs-magic/common/ui/components/icon-container"
+import { devEnabledAtom } from "@cs-magic/common"
+import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/common"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
+import { IconContainer } from "@cs-magic/common"
 import { ConfigDevCard } from "./config-dev-card"
 import { ConfigLogCard } from "./config-log-card"
 import { ConfigSMSCard } from "./config-sms"

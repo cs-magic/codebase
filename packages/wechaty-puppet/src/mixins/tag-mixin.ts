@@ -1,14 +1,14 @@
-import { log } from '../config.js'
+import { log } from "../config.js"
 
-import type { PuppetSkeleton }   from '../puppet/puppet-skeleton.js'
+import type { PuppetSkeleton } from "../puppet/puppet-skeleton.js"
 
-const tagMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBase) => {
-
+const tagMixin = <MixinBase extends typeof PuppetSkeleton>(
+  mixinBase: MixinBase,
+) => {
   abstract class TagMixin extends mixinBase {
-
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args)
-      log.verbose('PuppetTagMixin', 'constructor()')
+      log.verbose("PuppetTagMixin", "constructor()")
     }
 
     /**
@@ -21,12 +21,14 @@ const tagMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBase)
      *  tagContactList() - get tags from all Contacts
      *
      */
-    abstract tagContactAdd (tagId: string, contactId: string)    : Promise<void>
-    abstract tagContactDelete (tagId: string)                    : Promise<void>
-    abstract tagContactList (contactId: string)                  : Promise<string[]>
-    abstract tagContactList ()                                   : Promise<string[]>
-    abstract tagContactRemove (tagId: string, contactId: string) : Promise<void>
+    abstract tagContactAdd(tagId: string, contactId: string): Promise<void>
 
+    abstract tagContactDelete(tagId: string): Promise<void>
+
+    abstract tagContactList(contactId: string): Promise<string[]>
+    abstract tagContactList(): Promise<string[]>
+
+    abstract tagContactRemove(tagId: string, contactId: string): Promise<void>
   }
 
   return TagMixin
@@ -34,7 +36,5 @@ const tagMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBase)
 
 type ProtectedPropertyTagMixin = never
 
-export type {
-  ProtectedPropertyTagMixin,
-}
+export type { ProtectedPropertyTagMixin }
 export { tagMixin }

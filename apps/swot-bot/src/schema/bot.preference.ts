@@ -1,7 +1,6 @@
-import { type LangType } from "@cs-magic/common/i18n/schema"
+import { type LangType } from "@cs-magic/common"
 import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
-
-import { GenWxmpArticleCardFetchOptions } from "../../../../apps/swot-core/src/schema"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-core/schema/index"
 
 export enum CommandStyle {
   standard = "standard",

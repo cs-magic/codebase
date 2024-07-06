@@ -1,81 +1,81 @@
-import type { DirtyType } from './dirty.js'
+import type { DirtyType } from "./dirty.js"
 
 /**
  * The event `scan` status number.
  */
 export enum ScanStatus {
-  Unknown   = 0,
-  Cancel    = 1,
-  Waiting   = 2,
-  Scanned   = 3,
+  Unknown = 0,
+  Cancel = 1,
+  Waiting = 2,
+  Scanned = 3,
   Confirmed = 4,
-  Timeout   = 5,
+  Timeout = 5,
 }
 
 export interface EventFriendshipPayload {
-  friendshipId: string,
+  friendshipId: string
 }
 
 export interface EventLoginPayload {
-  contactId: string,
+  contactId: string
 }
 
 export interface EventLogoutPayload {
-  contactId : string,
-  data?     : string,
+  contactId: string
+  data?: string
 }
 
 export interface EventMessagePayload {
-  messageId: string,
+  messageId: string
 }
 
 export interface EventPostPayload {
-  postId: string,
+  postId: string
 }
 
 export interface EventRoomInvitePayload {
-  roomInvitationId: string,
+  roomInvitationId: string
 }
 
 export interface EventRoomJoinPayload {
-  inviteeIdList : string[],
-  inviterId     : string,
-  roomId        : string,
-  timestamp     : number,
+  inviteeIdList: string[]
+  inviterId: string
+  roomId: string
+  timestamp: number
 }
 
 export interface EventRoomLeavePayload {
-  removeeIdList : string[],
-  removerId     : string,
-  roomId        : string,
-  timestamp     : number,
+  removeeIdList: string[]
+  removerId: string
+  roomId: string
+  timestamp: number
 }
 
 export interface EventRoomTopicPayload {
-  changerId : string,
-  newTopic  : string,
-  oldTopic  : string,
-  roomId    : string,
-  timestamp : number,
+  changerId: string
+  newTopic: string
+  oldTopic: string
+  roomId: string
+  timestamp: number
 }
 
 export interface EventRoomAnnouncePayload {
-  changerId: string,
-  newAnnounce: string,
-  oldAnnounce?: string,
-  roomId: string,
+  changerId: string
+  newAnnounce: string
+  oldAnnounce?: string
+  roomId: string
   timestamp: number
 }
 
 export interface EventScanPayload {
-  status: ScanStatus,
+  status: ScanStatus
 
-  qrcode? : string,
-  data?   : string,
+  qrcode?: string
+  data?: string
 }
 
 export interface EventDongPayload {
-  data?: string,
+  data?: string
 }
 
 /**
@@ -86,25 +86,25 @@ export interface EventDongPayload {
  * TODO: remove `data` after Dec 31, 2022
  */
 export type EventErrorPayload = {
-  data?   : string  // <- deprecated. use `gerror` instead.
-  gerror? : string
+  data?: string // <- deprecated. use `gerror` instead.
+  gerror?: string
 }
 
 export interface EventReadyPayload {
-  data?: string,
+  data?: string
 }
 
 export interface EventResetPayload {
-  data?: string,
+  data?: string
 }
 
 export interface EventHeartbeatPayload {
-  data?: string,
+  data?: string
 }
 
 export interface EventDirtyPayload {
-  payloadType : DirtyType,
-  payloadId   : string,
+  payloadType: DirtyType
+  payloadId: string
 }
 
 export type EventPayload =

@@ -1,6 +1,6 @@
-import { IWechatData, IWechatPreference } from "../schema/bot.preference"
-import { getConvRow } from "./get-conv-row"
-import { getRobustData, getRobustPreference } from "./get-robust-preference"
+import { IWechatData, IWechatPreference } from "../schema/bot.preference.js"
+import { getConvRow } from "./get-conv-row.js"
+import { getRobustData, getRobustPreference } from "./get-robust-preference.js"
 
 export const getConvPreference = async (message: {
   convId: string

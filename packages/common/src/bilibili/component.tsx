@@ -1,5 +1,5 @@
-import { IBilibiliVideo } from "./schema"
-import { getBilibiliIFrameUrl } from "./utils"
+import { IBilibiliVideo } from "./schema.js"
+import { getBilibiliIFrameUrl } from "./utils.js"
 
 /**
  *

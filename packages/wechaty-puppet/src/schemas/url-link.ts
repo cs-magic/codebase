@@ -1,6 +1,6 @@
 export interface UrlLinkPayload {
-  description?  : string,
-  thumbnailUrl? : string,
-  title         : string,
-  url           : string,
+  description?: string
+  thumbnailUrl?: string
+  title: string
+  url: string
 }

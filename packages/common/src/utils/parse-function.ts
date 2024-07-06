@@ -4,5 +4,7 @@ export const parseFunction = (s?: string) => {
   // return new Function(`return function() { ${s} }`)()
 
   // approach 2
-  return eval(`(function() {${s}})`)
+  return eval(`(function() {
+    ${s}
+  })`)
 }

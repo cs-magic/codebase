@@ -31,6 +31,6 @@ export type FileBoxMetadataMessageType = "unknown" | "emoticon";
 export type FileBoxMetadataMessagePayload = EmojiMessagePayload;
 
 export interface FileBoxMetadataMessage {
-  type: FileBoxMetadataMessageType,
-  payload: FileBoxMetadataMessagePayload
+  type: FileBoxMetadataMessageType;
+  payload: FileBoxMetadataMessagePayload;
 }

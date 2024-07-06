@@ -3,13 +3,10 @@
 import { useAtom } from "jotai"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
-import {
-  userImageAtom,
-  userNameAtom,
-} from "@cs-magic/common/src/store/user.atom"
-import { Button } from "@cs-magic/common/ui-shadcn/components/button"
-import { Label } from "@cs-magic/common/ui-shadcn/components/label"
-import { useUserUpdateProfile } from "@cs-magic/common/hooks/use-user-update-profile"
+import { userImageAtom, userNameAtom } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
+import { useUserUpdateProfile } from "@cs-magic/common"
 import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 

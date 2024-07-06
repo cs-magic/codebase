@@ -1,39 +1,35 @@
-import {
-  log,
-  NAME,
-  VERSION,
-}                       from '../config.js'
+import { log, NAME, VERSION } from "../config.js"
 
-import type { PuppetSkeleton }   from '../puppet/mod.js'
+import type { PuppetSkeleton } from "../puppet/mod.js"
 
-import type { MemoryMixin } from './memory-mixin.js'
+import type { MemoryMixin } from "./memory-mixin.js"
 
-const miscMixin = <MixinBase extends typeof PuppetSkeleton & MemoryMixin>(mixinBase: MixinBase) => {
-
+const miscMixin = <MixinBase extends typeof PuppetSkeleton & MemoryMixin>(
+  mixinBase: MixinBase,
+) => {
   abstract class MiscMixin extends mixinBase {
-
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args)
-      log.verbose('PuppetMiscMixin', 'constructor()')
+      log.verbose("PuppetMiscMixin", "constructor()")
     }
 
-    override toString () {
+    override toString() {
       let memoryName
       try {
-        memoryName = this.memory.name || 'NONAME'
+        memoryName = this.memory.name || "NONAME"
       } catch (_) {
-        memoryName = 'NOMEMORY'
+        memoryName = "NOMEMORY"
       }
 
       return [
-        'Puppet',
-        '<',
+        "Puppet",
+        "<",
         this.constructor.name,
-        '>',
-        '(',
+        ">",
+        "(",
         memoryName,
-        ')',
-      ].join('')
+        ")",
+      ].join("")
     }
 
     /**
@@ -41,32 +37,32 @@ const miscMixin = <MixinBase extends typeof PuppetSkeleton & MemoryMixin>(mixinB
      *  - If the puppet is work, it will emit a 'dong' event.
      *  - If the puppet is not work, it will not emit any 'dong' event.
      */
-    abstract ding (data?: string): void
+    abstract ding(data?: string): void
 
     /**
-      * Get the NPM name of the Puppet
-      */
-    name (): string {
+     * Get the NPM name of the Puppet
+     */
+    name(): string {
       return NAME
     }
 
     /**
-      * Get version from the Puppet Implementation
-      */
-    version (): string {
+     * Get version from the Puppet Implementation
+     */
+    version(): string {
       return VERSION
     }
 
     /**
-      * will be used by semver.satisfied(version, range)
-      */
-    wechatyVersionRange (strict = false): string {
+     * will be used by semver.satisfied(version, range)
+     */
+    wechatyVersionRange(strict = false): string {
       // FIXME: for development, we use `*` if not set
       if (strict) {
-        return '^0.16.0'
+        return "^0.16.0"
       }
 
-      return '*'
+      return "*"
 
       // TODO: test and uncomment the following codes after promote the `wehcaty-puppet` as a solo NPM module
 
@@ -84,7 +80,6 @@ const miscMixin = <MixinBase extends typeof PuppetSkeleton & MemoryMixin>(mixinB
 
       // return this.pkg.engines.wechaty
     }
-
   }
 
   return MiscMixin

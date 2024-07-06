@@ -1,7 +1,7 @@
-import { HTMLAttributes } from "react"
+import React, { HTMLAttributes } from "react"
 import { useMeasure } from "react-use"
-import { cn } from "../../ui-shadcn/utils"
-import React from "react"
+
+import { cn } from "../../ui-shadcn/utils.js"
 
 export const VerticalAspectRatio = ({
   ratio,

@@ -1,4 +1,4 @@
-import { isNumeric } from "./is-numeric"
+import { isNumeric } from "./is-numeric.js"
 
 export function evalObject(input?: string): unknown {
   // Attempt to convert the input string to a number

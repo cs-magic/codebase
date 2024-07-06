@@ -1,17 +1,19 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { formatError } from "@cs-magic/common/utils/format-error"
-import { formatString } from "@cs-magic/common/utils/format-string"
-import { logger } from "@cs-magic/common"
-import { LogLevel } from "@cs-magic/common"
 import qrcodeTerminal from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
-import moment from "@cs-magic/common/datetime/moment"
-import { initBotContext } from "../schema/bot.context"
-import { formatTalkerFromMessage } from "../utils/format-talker"
-import { handleFriendship } from "./handle-friendship"
-import { handleMessage } from "./handle-message"
-import { handleRoomInvite } from "./handle-room-invite"
-import { handleRoomJoin } from "./handle-room-join"
+
+import { SEPARATOR_LINE } from "@cs-magic/common"
+import { formatError } from "@cs-magic/common"
+import { formatString } from "@cs-magic/common"
+import { logger } from "@cs-magic/common"
+import { LogLevel } from "@cs-magic/common"
+import { moment } from "@cs-magic/common"
+
+import { initBotContext } from "../schema/bot.context.js"
+import { formatTalkerFromMessage } from "../utils/format-talker.js"
+import { handleFriendship } from "./handle-friendship.js"
+import { handleMessage } from "./handle-message/index.js"
+import { handleRoomInvite } from "./handle-room-invite.js"
+import { handleRoomJoin } from "./handle-room-join.js"
 
 export const safeHandle = async (
   bot: Wechaty,

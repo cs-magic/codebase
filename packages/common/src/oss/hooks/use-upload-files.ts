@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { IUploadFile } from "../schema"
-import { uploadFile } from "../upload"
+
+import { IUploadFile } from "../schema.js"
+import { uploadFile } from "../upload.js"
 
 export const useUploadFiles = ({
   onUploadChange,

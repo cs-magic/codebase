@@ -1,9 +1,8 @@
 "use server"
 
-import { api } from "../api-client/api"
-
-import { parseJs } from "../utils/parse-js"
-import { IXiaoHongShuNotePageData } from "./schema"
+import { api } from "../api-client/api.js"
+import { parseJs } from "../utils/parse-js.js"
+import { IXiaoHongShuNotePageData } from "./schema.js"
 
 /**
  * approach 1 (via server json):

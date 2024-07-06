@@ -1,10 +1,10 @@
-import remove from "lodash/remove"
 import {
   ITransChannel,
   ITransClient,
   ITransEvent,
   ResponseFinalStatus,
 } from "@cs-magic/common/sse/schema"
+import remove from "lodash/remove"
 
 import { ILLMManagerTraditional } from "./schema"
 

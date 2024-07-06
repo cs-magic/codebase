@@ -87,6 +87,7 @@
     "wechaty": "^1.19.10"
   },
   "dependencies": {
+    "@cs-magic/common": "workspace:^",
     "@types/config": "0.0.41",
     "@types/node-cleanup": "^2.1.2",
     "brolog": "1.14.2",

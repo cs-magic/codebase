@@ -1,5 +1,5 @@
-import { logger } from "../log"
-import { truncateString } from "../utils/truncate-string"
+import { logger } from "../log/index.js"
+import { truncateString } from "../utils/truncate-string.js"
 
 /**
  * @deprecated

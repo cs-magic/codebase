@@ -18,28 +18,39 @@
  *   limitations under the License.
  *
  */
-import { test }  from 'tstest'
+import { test } from "tstest"
 
-import './interface-of.js'
+import "./interface-of.js"
 
-import {
-  resolvePuppet,
-  resolvePuppetName,
-}                     from './puppet-resolver.js'
+import { resolvePuppet, resolvePuppetName } from "./puppet-resolver.js"
 
-test('resolvePuppet() for supported/unsupported name', async t => {
-  await t.rejects(()  =>  resolvePuppet({ puppet: 'fadfdsafa' as any }), 'reject when options.puppet is unknown')
-  await t.resolves(() =>  resolvePuppet({ puppet: 'yocto-queue' as any }), 'should resolve a valid npm package as puppet name')
+test("resolvePuppet() for supported/unsupported name", async (t) => {
+  await t.rejects(
+    () => resolvePuppet({ puppet: "fadfdsafa" as any }),
+    "reject when options.puppet is unknown",
+  )
+  await t.resolves(
+    () => resolvePuppet({ puppet: "yocto-queue" as any }),
+    "should resolve a valid npm package as puppet name",
+  )
 })
 
-test('resolvePuppetName() for ESM', async t => {
-  const PuppetConstructor = await resolvePuppetName('yocto-queue' as any)
-  t.equal(typeof PuppetConstructor, 'function', 'should get the puppet class function')
-  t.equal(PuppetConstructor.name, 'Queue', 'should return a valid puppet name')
+test("resolvePuppetName() for ESM", async (t) => {
+  const PuppetConstructor = await resolvePuppetName("yocto-queue" as any)
+  t.equal(
+    typeof PuppetConstructor,
+    "function",
+    "should get the puppet class function",
+  )
+  t.equal(PuppetConstructor.name, "Queue", "should return a valid puppet name")
 })
 
-test('resolvePuppetName() for CJS', async t => {
-  const PuppetConstructor = await resolvePuppetName('nop' as any)
-  t.equal(typeof PuppetConstructor, 'function', 'should get the puppet class function')
-  t.ok(PuppetConstructor.name === 'nop', 'should return a valid puppet name')
+test("resolvePuppetName() for CJS", async (t) => {
+  const PuppetConstructor = await resolvePuppetName("nop" as any)
+  t.equal(
+    typeof PuppetConstructor,
+    "function",
+    "should get the puppet class function",
+  )
+  t.ok(PuppetConstructor.name === "nop", "should return a valid puppet name")
 })

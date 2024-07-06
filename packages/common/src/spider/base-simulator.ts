@@ -7,16 +7,16 @@ import {
 import { Page as PlaywrightPage } from "playwright-core"
 import { Page as PuppetPage } from "puppeteer"
 
-import { logger } from "../log"
-import { DriverType } from "./schema"
+import { logger } from "../log/index.js"
+import { DriverType } from "./schema.js"
 
 export type Page = PuppetPage & PlaywrightPage
 
 export class BaseSimulator {
+  public launchOptions: LaunchOptions
   protected driver: BrowserType
   protected browser: PlaywrightBrowser | null = null
   protected page?: Page
-  public launchOptions: LaunchOptions
 
   constructor(
     driverType: DriverType = "playwright",

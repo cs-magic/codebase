@@ -3,7 +3,8 @@
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
-import { userImageAtom, userNameAtom } from "../store/user.atom"
+
+import { userImageAtom, userNameAtom } from "../store/user.atom.js"
 
 /**
  * 充分性：实时显示用户正在更新的昵称与头像

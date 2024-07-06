@@ -1,20 +1,15 @@
-import {
-  timeoutPromise,
-}                           from 'gerror'
+import { timeoutPromise } from "gerror"
 
-import { log }  from '../config.js'
+import { CacheAgent } from "../agents/mod.js"
 
-import type {
-  PuppetOptions,
-  EventDirtyPayload,
-}                               from '../schemas/mod.js'
-import { DirtyType }          from '../schemas/mod.js'
+import { log } from "../config.js"
 
-import { CacheAgent }           from '../agents/mod.js'
+import type { PuppetSkeleton } from "../puppet/mod.js"
 
-import type { PuppetSkeleton }   from '../puppet/mod.js'
+import type { EventDirtyPayload, PuppetOptions } from "../schemas/mod.js"
+import { DirtyType } from "../schemas/mod.js"
 
-import type { LoginMixin } from './login-mixin.js'
+import type { LoginMixin } from "./login-mixin.js"
 
 /**
  *
@@ -24,20 +19,22 @@ import type { LoginMixin } from './login-mixin.js'
  *    @see https://github.com/wechaty/puppet/issues/158
  *
  */
-const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinBase: MixinBase) => {
-
+const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(
+  mixinBase: MixinBase,
+) => {
   abstract class CacheMixin extends mixinBase {
-
     cache: CacheAgent
 
     __cacheMixinCleanCallbackList: (() => void)[]
 
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args)
-      log.verbose('PuppetCacheMixin', 'constructor(%s)',
+      log.verbose(
+        "PuppetCacheMixin",
+        "constructor(%s)",
         args[0]?.cache
-          ? '{ cache: ' + JSON.stringify(args[0].cache) + ' }'
-          : '',
+          ? "{ cache: " + JSON.stringify(args[0].cache) + " }"
+          : "",
       )
 
       const options: PuppetOptions = args[0] || {}
@@ -46,25 +43,28 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
       this.cache = new CacheAgent(options.cache)
     }
 
-    override async start (): Promise<void> {
-      log.verbose('PuppetCacheMixin', 'start()')
+    override async start(): Promise<void> {
+      log.verbose("PuppetCacheMixin", "start()")
       await super.start()
       this.cache.start()
 
       const onDirty = this.onDirty.bind(this)
 
-      this.on('dirty', onDirty)
-      log.verbose('PuppetCacheMixin', 'start() "dirty" event listener added')
+      this.on("dirty", onDirty)
+      log.verbose("PuppetCacheMixin", 'start() "dirty" event listener added')
 
       const cleanFn = () => {
-        this.off('dirty', onDirty)
-        log.verbose('PuppetCacheMixin', 'start() "dirty" event listener removed')
+        this.off("dirty", onDirty)
+        log.verbose(
+          "PuppetCacheMixin",
+          'start() "dirty" event listener removed',
+        )
       }
       this.__cacheMixinCleanCallbackList.push(cleanFn)
     }
 
-    override async stop (): Promise<void> {
-      log.verbose('PuppetCacheMixin', 'stop()')
+    override async stop(): Promise<void> {
+      log.verbose("PuppetCacheMixin", "stop()")
       this.cache.stop()
 
       this.__cacheMixinCleanCallbackList.map(setImmediate)
@@ -81,41 +81,51 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
      *
      * Call this method when you want to notify the server that the data cache need to be invalidated.
      */
-    dirtyPayload (
-      type : DirtyType,
-      id   : string,
-    ): void {
-      log.verbose('PuppetCacheMixin', 'dirtyPayload(%s<%s>, %s)', DirtyType[type], type, id)
+    dirtyPayload(type: DirtyType, id: string): void {
+      log.verbose(
+        "PuppetCacheMixin",
+        "dirtyPayload(%s<%s>, %s)",
+        DirtyType[type],
+        type,
+        id,
+      )
 
       /**
        * Huan(202111): we return first before emit the `dirty` event?
        */
-      setImmediate(() => this.emit('dirty', {
-        payloadId   : id,
-        payloadType : type,
-      }))
+      setImmediate(() =>
+        this.emit("dirty", {
+          payloadId: id,
+          payloadType: type,
+        }),
+      )
     }
 
     /**
      * OnDirty will be registered as a `dirty` event listener,
      *  and it will invalidate the cache.
      */
-    onDirty (
-      {
+    onDirty({ payloadType, payloadId }: EventDirtyPayload): void {
+      log.verbose(
+        "PuppetCacheMixin",
+        "onDirty(%s<%s>, %s)",
+        DirtyType[payloadType],
         payloadType,
         payloadId,
-      }: EventDirtyPayload,
-    ): void {
-      log.verbose('PuppetCacheMixin', 'onDirty(%s<%s>, %s)', DirtyType[payloadType], payloadType, payloadId)
+      )
 
       const dirtyFuncMap = {
-        [DirtyType.Contact]:      (id: string) => this.cache.contact.delete(id),
-        [DirtyType.Friendship]:   (id: string) => this.cache.friendship.delete(id),
-        [DirtyType.Message]:      (id: string) => this.cache.message.delete(id),
-        [DirtyType.Post]:         (id: string) => this.cache.post.delete(id),
-        [DirtyType.Room]:         (id: string) => this.cache.room.delete(id),
-        [DirtyType.RoomMember]:   (id: string) => this.cache.roomMember.delete(id),
-        [DirtyType.Unspecified]:  (id: string) => { throw new Error('Unspecified type with id: ' + id) },
+        [DirtyType.Contact]: (id: string) => this.cache.contact.delete(id),
+        [DirtyType.Friendship]: (id: string) =>
+          this.cache.friendship.delete(id),
+        [DirtyType.Message]: (id: string) => this.cache.message.delete(id),
+        [DirtyType.Post]: (id: string) => this.cache.post.delete(id),
+        [DirtyType.Room]: (id: string) => this.cache.room.delete(id),
+        [DirtyType.RoomMember]: (id: string) =>
+          this.cache.roomMember.delete(id),
+        [DirtyType.Unspecified]: (id: string) => {
+          throw new Error("Unspecified type with id: " + id)
+        },
       }
 
       const dirtyFunc = dirtyFuncMap[payloadType]
@@ -126,14 +136,20 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
      * When we are using PuppetService, the `dirty` event will be emitted from the server,
      *  and we need to wait for the `dirty` event so we can make sure the cache has been invalidated.
      */
-    async __dirtyPayloadAwait (
-      type : DirtyType,
-      id   : string,
-    ): Promise<void> {
-      log.verbose('PuppetCacheMixin', '__dirtyPayloadAwait(%s<%s>, %s)', DirtyType[type], type, id)
+    async __dirtyPayloadAwait(type: DirtyType, id: string): Promise<void> {
+      log.verbose(
+        "PuppetCacheMixin",
+        "__dirtyPayloadAwait(%s<%s>, %s)",
+        DirtyType[type],
+        type,
+        id,
+      )
 
       if (!this.__currentUserId) {
-        log.verbose('PuppetCacheMixin', '__dirtyPayloadAwait() will not dirty any payload when the puppet is not logged in')
+        log.verbose(
+          "PuppetCacheMixin",
+          "__dirtyPayloadAwait() will not dirty any payload when the puppet is not logged in",
+        )
         return
       }
 
@@ -151,9 +167,9 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
 
       let onDirty: ReturnType<typeof onDirtyResolve>
 
-      const future = new Promise<void>(resolve => {
+      const future = new Promise<void>((resolve) => {
         onDirty = onDirtyResolve(resolve)
-        this.on('dirty', onDirty)
+        this.on("dirty", onDirty)
       })
 
       /**
@@ -165,21 +181,22 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
        * 2. wait for the `dirty` event arrive, with a 5 seconds timeout
        */
       try {
-        await timeoutPromise(future, 5 * 1000)
-          .finally(() => this.off('dirty', onDirty))
-
+        await timeoutPromise(future, 5 * 1000).finally(() =>
+          this.off("dirty", onDirty),
+        )
       } catch (e) {
         // timeout, log warning & ignore it
-        log.warn('PuppetCacheMixin',
+        log.warn(
+          "PuppetCacheMixin",
           [
-            '__dirtyPayloadAwait() timeout.',
-            'The `dirty` event should be received but no one found.',
-            'Learn more from https://github.com/wechaty/puppet/issues/158',
-            'payloadType: %s(%s)',
-            'payloadId: %s',
-            'error: %s',
-            'stack: %s',
-          ].join('\n  '),
+            "__dirtyPayloadAwait() timeout.",
+            "The `dirty` event should be received but no one found.",
+            "Learn more from https://github.com/wechaty/puppet/issues/158",
+            "payloadType: %s(%s)",
+            "payloadId: %s",
+            "error: %s",
+            "stack: %s",
+          ].join("\n  "),
           DirtyType[type],
           type,
           id,
@@ -193,9 +210,7 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
        *  before we return, because there might be other `onDirty` listeners
        */
       await new Promise(setImmediate)
-
     }
-
   }
 
   return CacheMixin
@@ -204,13 +219,10 @@ const cacheMixin = <MixinBase extends typeof PuppetSkeleton & LoginMixin>(mixinB
 type CacheMixin = ReturnType<typeof cacheMixin>
 
 type ProtectedPropertyCacheMixin =
-  | 'cache'
-  | 'onDirty'
-  | '__cacheMixinCleanCallbackList'
-  | '__dirtyPayloadAwait'
+  | "cache"
+  | "onDirty"
+  | "__cacheMixinCleanCallbackList"
+  | "__dirtyPayloadAwait"
 
-export type {
-  CacheMixin,
-  ProtectedPropertyCacheMixin,
-}
+export type { CacheMixin, ProtectedPropertyCacheMixin }
 export { cacheMixin }

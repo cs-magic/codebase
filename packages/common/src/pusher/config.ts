@@ -1,4 +1,4 @@
-import { IPusherServerConfig, PusherServerId } from "./schema"
+import { IPusherServerConfig, PusherServerId } from "./schema.js"
 
 export const pusherServerConfigs: Record<PusherServerId, IPusherServerConfig> =
   {

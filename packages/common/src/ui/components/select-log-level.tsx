@@ -1,4 +1,4 @@
-import { LogLevel } from "../../log"
+import { LogLevel } from "../../log/index.js"
 import {
   Select,
   SelectContent,
@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../ui-shadcn/components/select"
+} from "../../ui-shadcn/components/ui/select.js"
 
 export const SelectLogLevel = ({
   value,

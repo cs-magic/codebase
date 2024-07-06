@@ -1,6 +1,6 @@
 "use client"
 import { HTMLAttributes } from "react"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
+import { cn } from "@cs-magic/common"
 
 export const Sidebar = ({
   className,

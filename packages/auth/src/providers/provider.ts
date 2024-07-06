@@ -1,7 +1,5 @@
+import { logger, prisma, userDetailSchema } from "@cs-magic/common"
 import Credentials from "next-auth/providers/credentials"
-
-import { logger, prisma } from "@cs-magic/common"
-import { userDetailSchema } from "@cs-magic/common/schema/user.detail"
 
 import { PROFILE_UPDATE_PROVIDER_ID } from "./sms/const"
 

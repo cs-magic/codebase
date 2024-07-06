@@ -1,4 +1,4 @@
-import { OSS_DOMAIN } from "./const"
+import { OSS_DOMAIN } from "./const.js"
 
 /**
  * based on ali oss, ref: https://help.aliyun.com/zh/oss/user-guide/resize-images-4

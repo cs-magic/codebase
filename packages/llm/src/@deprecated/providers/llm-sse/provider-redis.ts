@@ -1,5 +1,5 @@
-import { logger } from "@cs-magic/common"
-import { redis } from "@cs-magic/common"
+import { redis } from "@cs-magic/common/db/providers/redis/connection"
+import logger from "@cs-magic/common/log/index"
 import { ITransClient, ITransEvent } from "@cs-magic/common/sse/schema"
 import { ILLMManagerTraditional } from "./schema"
 

@@ -3,20 +3,16 @@
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import React, { PropsWithChildren } from "react"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@cs-magic/common/ui-shadcn/components/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/common"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@cs-magic/common/ui-shadcn/components/ui/navigation-menu"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { IconContainer } from "@cs-magic/common/ui/components/icon-container"
+} from "../../../../packages/common/src/ui-shadcn/components/ui/navigation-menu"
+import { cn } from "@cs-magic/common"
+import { IconContainer } from "@cs-magic/common"
 import { config } from "@cs-magic/common"
 import { BrandingTitle } from "./branding-title"
 import { UserButton } from "./header-user"

@@ -1,5 +1,5 @@
-import { InputValidatorType } from "../schema/utils"
-import { dumpInputValidator } from "./dump-input-validator"
+import { InputValidatorType } from "../schema/utils.js"
+import { dumpInputValidator } from "./dump-input-validator.js"
 
 export const formatInvalidInput = (
   input: string,

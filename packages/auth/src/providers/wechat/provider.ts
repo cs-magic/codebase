@@ -3,16 +3,8 @@ import { logger } from "@cs-magic/common"
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers/index"
 import { WECHAT_PROVIDER_ID } from "./config"
 import { getWechatAuthorizationUrl } from "./funcs/client"
-import {
-  adaptWechatAuthToken,
-  getWechatAuthToken,
-  getWechatUserProfile,
-} from "./funcs/server"
-import {
-  IWechatAdaptedProfile,
-  IWechatAdaptedToken,
-  IWechatProfile,
-} from "./schema"
+import { adaptWechatAuthToken, getWechatAuthToken, getWechatUserProfile } from "./funcs/server"
+import { IWechatAdaptedProfile, IWechatAdaptedToken, IWechatProfile } from "./schema"
 
 /**
  * todo: type hint on callbacks

@@ -1,4 +1,4 @@
-import { IArticleSummaryParsed } from "@cs-magic/common"
+import { IArticleSummaryParsed } from "@cs-magic/common/schema/query"
 
 export type ISummaryParsed = {
   result?: IArticleSummaryParsed

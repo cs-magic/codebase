@@ -1,9 +1,9 @@
 "use server"
 
-import { logger } from "../log"
-import { api } from "../api-client/api"
-import { IApiResult } from "../api-client/schema"
-import { IBilibiliVideoDetail } from "./schema"
+import { api } from "../api-client/api.js"
+import { IApiResult } from "../api-client/schema.js"
+import { logger } from "../log/index.js"
+import { IBilibiliVideoDetail } from "./schema.js"
 
 export const getBilibiliSummary = async (bvid: string) => {
   const { data } = await api.get(

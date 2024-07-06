@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import logger from "../log"
+import logger from "../log/index.js"
 
 export const formatError = (e: unknown) => {
   const s =

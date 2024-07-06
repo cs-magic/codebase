@@ -1,7 +1,7 @@
-import { ComponentProps } from "react"
 import Image from "next/image"
-import { cn } from "../../ui-shadcn/utils"
-import React from "react"
+import React, { ComponentProps } from "react"
+
+import { cn } from "../../ui-shadcn/utils.js"
 
 export const ImageEqualHeight = ({
   src,

@@ -1,40 +1,40 @@
-import { logger } from "@cs-magic/common";
-import * as PUPPET from "wechaty-puppet";
-import { log } from "wechaty-puppet";
-import { FileBox, FileBoxInterface } from "file-box";
-import { KickOutEvent, PadLocalClient, Log as PadLocalLog } from "padlocal-client-ts";
-import PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
-import { genIdempotentId } from "padlocal-client-ts/dist/utils/Utils.js";
-import { AppMessageType, type ReferMsgPayload } from "../../wechaty-puppet/src/extra/message";
-import type { MessageParserContext } from "../../wechaty-puppet/src/extra/message.parser";
-import { CacheManager, RoomMemberMap } from "./padlocal/cache-manager.js";
-import { isIMContactId, isRoomId } from "./padlocal/utils/is-type.js";
-import { parseAppmsgMessagePayload } from "./padlocal/messages/message-appmsg.js";
-import { parseMiniProgramMessagePayload } from "./padlocal/messages/message-miniprogram.js";
-import { parseEvent, EventType } from "./padlocal/events/mod.js";
+import { logger } from "@cs-magic/common/log";
+
 import * as XMLParser from "fast-xml-parser";
+import { FileBox, FileBoxInterface } from "file-box";
+import { KickOutEvent, Log as PadLocalLog, PadLocalClient } from "padlocal-client-ts";
+import PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
+import { Bytes, hexStringToBytes } from "padlocal-client-ts/dist/utils/ByteUtils.js";
+import { RetryStrategy, RetryStrategyRule } from "padlocal-client-ts/dist/utils/RetryStrategy.js";
+import { SerialExecutor } from "padlocal-client-ts/dist/utils/SerialExecutor.js";
+import { genIdempotentId } from "padlocal-client-ts/dist/utils/Utils.js";
+import nodeUrl from "url";
+import type { MessageParserContext } from "wechaty-puppet";
+import * as PUPPET from "wechaty-puppet";
+import { AppMessageType, log, type ReferMsgPayload } from "wechaty-puppet";
+import { addRunningPuppet, removeRunningPuppet } from "./cleanup.js";
+import { packageJson } from "./package-json.js";
+import { CacheManager, RoomMemberMap } from "./padlocal/cache-manager.js";
+import { isRoomLeaveDebouncing } from "./padlocal/events/event-room-leave.js";
+import { EventType, parseEvent } from "./padlocal/events/mod.js";
+import { parseAppmsgMessagePayload } from "./padlocal/messages/message-appmsg.js";
 import {
   EmojiMessagePayload,
   generateEmotionPayload,
   parseEmotionMessagePayload,
 } from "./padlocal/messages/message-emotion.js";
-import { Bytes, hexStringToBytes } from "padlocal-client-ts/dist/utils/ByteUtils.js";
-import { CachedPromiseFunc } from "./padlocal/utils/cached-promise.js";
-import { SerialExecutor } from "padlocal-client-ts/dist/utils/SerialExecutor.js";
-import { isRoomLeaveDebouncing } from "./padlocal/events/event-room-leave.js";
-import { FileBoxMetadataMessage, WechatMessageType } from "./padlocal/types.js";
-import { RetryStrategy, RetryStrategyRule } from "padlocal-client-ts/dist/utils/RetryStrategy.js";
-import nodeUrl from "url";
-import { addRunningPuppet, removeRunningPuppet } from "./cleanup.js";
-import { packageJson } from "./package-json.js";
+import { parseMiniProgramMessagePayload } from "./padlocal/messages/message-miniprogram.js";
+import { padLocalContactToWechaty } from "./padlocal/schema-mapper/contact.js";
 import { padLocalMessageToWechaty } from "./padlocal/schema-mapper/message.js";
 import type { MessageParser } from "./padlocal/schema-mapper/message/message-parser.js";
-import { padLocalContactToWechaty } from "./padlocal/schema-mapper/contact.js";
 import {
   chatRoomMemberToContact,
   padLocalRoomMemberToWechaty,
   padLocalRoomToWechaty,
 } from "./padlocal/schema-mapper/room.js";
+import { FileBoxMetadataMessage, WechatMessageType } from "./padlocal/types.js";
+import { CachedPromiseFunc } from "./padlocal/utils/cached-promise.js";
+import { isIMContactId, isRoomId } from "./padlocal/utils/is-type.js";
 
 const VERSION = packageJson.version || "0.0.0";
 
@@ -57,8 +57,6 @@ PadLocalLog.setLogger(log);
 
 class PuppetPadlocal extends PUPPET.Puppet {
   public static log = PadLocalLog;
-
-  private _client?: PadLocalClient;
   private _cacheMgr?: CacheManager;
   private _onPushSerialExecutor: SerialExecutor = new SerialExecutor();
   private _printVersion: boolean = true;
@@ -101,129 +99,14 @@ class PuppetPadlocal extends PUPPET.Puppet {
     }
   }
 
+  private _client?: PadLocalClient;
+
   public get client() {
     return this._client;
   }
 
   public async onStart(): Promise<void> {
     await this._startClient(PadLocal.LoginPolicy.DEFAULT);
-  }
-
-  private async _startClient(loginPolicy: PadLocal.LoginPolicy): Promise<void> {
-    this._startPuppetHeart();
-
-    addRunningPuppet(this);
-
-    await this._setupClient();
-
-    const ScanStatusName = {
-      [PUPPET.types.ScanStatus.Unknown]: "Unknown",
-      [PUPPET.types.ScanStatus.Cancel]: "Cancel",
-      [PUPPET.types.ScanStatus.Waiting]: "Waiting",
-      [PUPPET.types.ScanStatus.Scanned]: "Scanned",
-      [PUPPET.types.ScanStatus.Confirmed]: "Confirmed",
-      [PUPPET.types.ScanStatus.Timeout]: "Timeout",
-    };
-
-    const onQrCodeEvent = async (qrCodeEvent: PadLocal.QRCodeEvent) => {
-      let scanStatus: PUPPET.types.ScanStatus = PUPPET.types.ScanStatus.Unknown;
-      let qrCodeImageURL: string | undefined;
-      switch (qrCodeEvent.getStatus()) {
-        case PadLocal.QRCodeStatus.NEW:
-          qrCodeImageURL = qrCodeEvent.getImageurl();
-          scanStatus = PUPPET.types.ScanStatus.Waiting;
-          break;
-        case PadLocal.QRCodeStatus.SCANNED:
-          scanStatus = PUPPET.types.ScanStatus.Scanned;
-          break;
-        case PadLocal.QRCodeStatus.CONFIRMED:
-          scanStatus = PUPPET.types.ScanStatus.Confirmed;
-          break;
-        case PadLocal.QRCodeStatus.CANCELLED:
-          scanStatus = PUPPET.types.ScanStatus.Cancel;
-          break;
-        case PadLocal.QRCodeStatus.EXPIRED:
-          scanStatus = PUPPET.types.ScanStatus.Timeout;
-          break;
-      }
-
-      log.silly(
-        PRE,
-        `scan event, status: ${ScanStatusName[scanStatus]}${qrCodeImageURL ? ", with qrcode: " + qrCodeImageURL : ""}`
-      );
-
-      this.emit("scan", {
-        qrcode: qrCodeImageURL,
-        status: scanStatus,
-      });
-    };
-
-    const LoginTypeName = {
-      [PadLocal.LoginType.QRLOGIN]: "QrLogin",
-      [PadLocal.LoginType.AUTOLOGIN]: "AutoLogin",
-      [PadLocal.LoginType.ONECLICKLOGIN]: "OneClickLogin",
-    };
-
-    if (loginPolicy === PadLocal.LoginPolicy.DEFAULT && this.options.defaultLoginPolicy !== undefined) {
-      loginPolicy = this.options.defaultLoginPolicy;
-    }
-
-    this._client!.api.login(loginPolicy, {
-      onLoginStart: (loginType: PadLocal.LoginType) => {
-        log.info(PRE, `start login with type: ${LoginTypeName[loginType]}`);
-      },
-
-      onLoginSuccess: async (_) => {
-        this.wrapAsync(
-          this._onPushSerialExecutor.execute(async () => {
-            const userName = this._client!.selfContact!.getUsername();
-            log.silly(PRE, `login success: ${userName}`);
-
-            await this.login(this._client!.selfContact!.getUsername());
-
-            log.silly(PRE, "login success: DONE");
-          })
-        );
-      },
-
-      onOneClickEvent: onQrCodeEvent,
-
-      onQrCodeEvent,
-
-      // Will sync message and contact after login success, since last time login.
-      onSync: async (syncEvent: PadLocal.SyncEvent) => {
-        this.wrapAsync(
-          this._onPushSerialExecutor.execute(async () => {
-            log.silly(PRE, `login sync event: ${JSON.stringify(syncEvent.toObject())}`);
-
-            for (const contact of syncEvent.getContactList()) {
-              await this._onPushContact(contact);
-            }
-
-            for (const message of syncEvent.getMessageList()) {
-              await this._onPushMessage(message);
-            }
-          })
-        );
-      },
-    })
-      .then(() => {
-        this.wrapAsync(
-          this._onPushSerialExecutor.execute(async () => {
-            log.silly(PRE, "on ready");
-
-            this.emit("ready", {
-              data: "ready",
-            });
-          })
-        );
-
-        return null;
-      })
-      .catch(async (error) => {
-        log.error(`start client failed: ${error.stack}`);
-        await this._stopClient(!!this.options.restartOnFailure);
-      });
   }
 
   /**
@@ -251,32 +134,6 @@ class PuppetPadlocal extends PUPPET.Puppet {
    */
   public async onStop(): Promise<void> {
     await this._stopClient(false);
-  }
-
-  private async _stopClient(restart: boolean): Promise<void> {
-    if (this._client) {
-      this._client!.removeAllListeners();
-      await this._client!.shutdown();
-    }
-    this._client = undefined;
-
-    this.__currentUserId = undefined;
-
-    if (this._cacheMgr) {
-      await this._cacheMgr.close();
-      this._cacheMgr = undefined;
-    }
-
-    removeRunningPuppet(this);
-
-    this._stopPuppetHeart();
-
-    if (restart && this._restartStrategy.canRetry()) {
-      setTimeout(() => {
-        // one-click login after failure is strange, so skip it.
-        this.wrapAsync(this._startClient(PadLocal.LoginPolicy.SKIP_ONE_CLICK));
-      }, this._restartStrategy.nextRetryDelay());
-    }
   }
 
   /**
@@ -331,7 +188,9 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 
   override contactAlias(contactId: string): Promise<string>;
+
   override contactAlias(contactId: string, alias: string | null): Promise<void>;
+
   override async contactAlias(contactId: string, alias?: string | null): Promise<void | string> {
     const contact = await this.contactRawPayload(contactId);
 
@@ -360,7 +219,9 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 
   override async contactAvatar(contactId: string): Promise<FileBoxInterface>;
+
   override async contactAvatar(contactId: string, file: FileBoxInterface): Promise<void>;
+
   override async contactAvatar(contactId: string, file?: FileBoxInterface): Promise<void | FileBoxInterface> {
     if (file) {
       throw new Error("set avatar is not unsupported");
@@ -575,39 +436,6 @@ class PuppetPadlocal extends PUPPET.Puppet {
 
   override async friendshipSearchWeixin(weixin: string): Promise<null | string> {
     return this._friendshipSearch(weixin);
-  }
-
-  private async _friendshipSearch(id: string): Promise<null | string> {
-    const cachedContactSearch = await this._cacheMgr!.getContactSearch(id);
-    if (cachedContactSearch) {
-      return id;
-    }
-
-    const res = await this._client!.api.searchContact(id);
-
-    const searchId = `${SEARCH_CONTACT_PREFIX}${id}`;
-    await this._cacheMgr!.setContactSearch(searchId, res.toObject());
-
-    return searchId;
-  }
-
-  private async _findRoomIdForUserName(userName: string): Promise<string[]> {
-    const ret = [];
-
-    const roomIds = (await this._cacheMgr?.getRoomIds()) || [];
-    for (const roomId of roomIds) {
-      const roomMember = await this._cacheMgr?.getRoomMember(roomId);
-      if (!roomMember) {
-        continue;
-      }
-
-      const roomMemberIds = Object.keys(roomMember);
-      if (roomMemberIds.indexOf(userName) !== -1) {
-        ret.push(roomId);
-      }
-    }
-
-    return ret;
   }
 
   /****************************************************************************
@@ -1165,13 +993,17 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 
   override async roomTopic(roomId: string): Promise<string>;
+
   override async roomTopic(roomId: string, topic: string): Promise<void>;
+
   override async roomTopic(roomId: string, topic?: string): Promise<void | string> {
     await this._client!.api.setChatRoomName(roomId, topic || "");
   }
 
   override async roomAnnounce(roomId: string): Promise<string>;
+
   override async roomAnnounce(roomId: string, text: string): Promise<void>;
+
   override async roomAnnounce(roomId: string, text?: string): Promise<void | string> {
     if (text === undefined) {
       return this._client!.api.getChatRoomAnnouncement(roomId);
@@ -1288,10 +1120,6 @@ class PuppetPadlocal extends PUPPET.Puppet {
     return rawPayload;
   }
 
-  /****************************************************************************
-   * extra methods section
-   ***************************************************************************/
-
   /**
    * CAUTION: For edge case usage only!
    * Sync contact is a time-consuming action, may last for minutes especially when you have massive contacts.
@@ -1313,6 +1141,186 @@ class PuppetPadlocal extends PUPPET.Puppet {
         );
       },
     });
+  }
+
+  private async _startClient(loginPolicy: PadLocal.LoginPolicy): Promise<void> {
+    this._startPuppetHeart();
+
+    addRunningPuppet(this);
+
+    await this._setupClient();
+
+    const ScanStatusName = {
+      [PUPPET.types.ScanStatus.Unknown]: "Unknown",
+      [PUPPET.types.ScanStatus.Cancel]: "Cancel",
+      [PUPPET.types.ScanStatus.Waiting]: "Waiting",
+      [PUPPET.types.ScanStatus.Scanned]: "Scanned",
+      [PUPPET.types.ScanStatus.Confirmed]: "Confirmed",
+      [PUPPET.types.ScanStatus.Timeout]: "Timeout",
+    };
+
+    const onQrCodeEvent = async (qrCodeEvent: PadLocal.QRCodeEvent) => {
+      let scanStatus: PUPPET.types.ScanStatus = PUPPET.types.ScanStatus.Unknown;
+      let qrCodeImageURL: string | undefined;
+      switch (qrCodeEvent.getStatus()) {
+        case PadLocal.QRCodeStatus.NEW:
+          qrCodeImageURL = qrCodeEvent.getImageurl();
+          scanStatus = PUPPET.types.ScanStatus.Waiting;
+          break;
+        case PadLocal.QRCodeStatus.SCANNED:
+          scanStatus = PUPPET.types.ScanStatus.Scanned;
+          break;
+        case PadLocal.QRCodeStatus.CONFIRMED:
+          scanStatus = PUPPET.types.ScanStatus.Confirmed;
+          break;
+        case PadLocal.QRCodeStatus.CANCELLED:
+          scanStatus = PUPPET.types.ScanStatus.Cancel;
+          break;
+        case PadLocal.QRCodeStatus.EXPIRED:
+          scanStatus = PUPPET.types.ScanStatus.Timeout;
+          break;
+      }
+
+      log.silly(
+        PRE,
+        `scan event, status: ${ScanStatusName[scanStatus]}${qrCodeImageURL ? ", with qrcode: " + qrCodeImageURL : ""}`
+      );
+
+      this.emit("scan", {
+        qrcode: qrCodeImageURL,
+        status: scanStatus,
+      });
+    };
+
+    const LoginTypeName = {
+      [PadLocal.LoginType.QRLOGIN]: "QrLogin",
+      [PadLocal.LoginType.AUTOLOGIN]: "AutoLogin",
+      [PadLocal.LoginType.ONECLICKLOGIN]: "OneClickLogin",
+    };
+
+    if (loginPolicy === PadLocal.LoginPolicy.DEFAULT && this.options.defaultLoginPolicy !== undefined) {
+      loginPolicy = this.options.defaultLoginPolicy;
+    }
+
+    this._client!.api.login(loginPolicy, {
+      onLoginStart: (loginType: PadLocal.LoginType) => {
+        log.info(PRE, `start login with type: ${LoginTypeName[loginType]}`);
+      },
+
+      onLoginSuccess: async (_) => {
+        this.wrapAsync(
+          this._onPushSerialExecutor.execute(async () => {
+            const userName = this._client!.selfContact!.getUsername();
+            log.silly(PRE, `login success: ${userName}`);
+
+            await this.login(this._client!.selfContact!.getUsername());
+
+            log.silly(PRE, "login success: DONE");
+          })
+        );
+      },
+
+      onOneClickEvent: onQrCodeEvent,
+
+      onQrCodeEvent,
+
+      // Will sync message and contact after login success, since last time login.
+      onSync: async (syncEvent: PadLocal.SyncEvent) => {
+        this.wrapAsync(
+          this._onPushSerialExecutor.execute(async () => {
+            log.silly(PRE, `login sync event: ${JSON.stringify(syncEvent.toObject())}`);
+
+            for (const contact of syncEvent.getContactList()) {
+              await this._onPushContact(contact);
+            }
+
+            for (const message of syncEvent.getMessageList()) {
+              await this._onPushMessage(message);
+            }
+          })
+        );
+      },
+    })
+      .then(() => {
+        this.wrapAsync(
+          this._onPushSerialExecutor.execute(async () => {
+            log.silly(PRE, "on ready");
+
+            this.emit("ready", {
+              data: "ready",
+            });
+          })
+        );
+
+        return null;
+      })
+      .catch(async (error) => {
+        log.error(`start client failed: ${error.stack}`);
+        await this._stopClient(!!this.options.restartOnFailure);
+      });
+  }
+
+  private async _stopClient(restart: boolean): Promise<void> {
+    if (this._client) {
+      this._client!.removeAllListeners();
+      await this._client!.shutdown();
+    }
+    this._client = undefined;
+
+    this.__currentUserId = undefined;
+
+    if (this._cacheMgr) {
+      await this._cacheMgr.close();
+      this._cacheMgr = undefined;
+    }
+
+    removeRunningPuppet(this);
+
+    this._stopPuppetHeart();
+
+    if (restart && this._restartStrategy.canRetry()) {
+      setTimeout(() => {
+        // one-click login after failure is strange, so skip it.
+        this.wrapAsync(this._startClient(PadLocal.LoginPolicy.SKIP_ONE_CLICK));
+      }, this._restartStrategy.nextRetryDelay());
+    }
+  }
+
+  private async _friendshipSearch(id: string): Promise<null | string> {
+    const cachedContactSearch = await this._cacheMgr!.getContactSearch(id);
+    if (cachedContactSearch) {
+      return id;
+    }
+
+    const res = await this._client!.api.searchContact(id);
+
+    const searchId = `${SEARCH_CONTACT_PREFIX}${id}`;
+    await this._cacheMgr!.setContactSearch(searchId, res.toObject());
+
+    return searchId;
+  }
+
+  /****************************************************************************
+   * extra methods section
+   ***************************************************************************/
+
+  private async _findRoomIdForUserName(userName: string): Promise<string[]> {
+    const ret = [];
+
+    const roomIds = (await this._cacheMgr?.getRoomIds()) || [];
+    for (const roomId of roomIds) {
+      const roomMember = await this._cacheMgr?.getRoomMember(roomId);
+      if (!roomMember) {
+        continue;
+      }
+
+      const roomMemberIds = Object.keys(roomMember);
+      if (roomMemberIds.indexOf(userName) !== -1) {
+        ret.push(roomId);
+      }
+    }
+
+    return ret;
   }
 
   /****************************************************************************

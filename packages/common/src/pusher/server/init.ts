@@ -1,6 +1,7 @@
 import Pusher from "pusher"
-import { getEnv } from "../../env"
-import { IPusherServerConfig } from "../schema"
+
+import { getEnv } from "../../env/index.js"
+import { IPusherServerConfig } from "../schema.js"
 
 const env = getEnv()
 

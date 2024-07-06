@@ -19,31 +19,31 @@
 // tslint:disable:max-line-length
 
 export interface WebContactRawPayload {
-  Alias:        string,
-  City:         string,
-  NickName:     string,
-  Province:     string,
-  RemarkName:   string,
-  Sex:          number,
-  Signature:    string,
-  StarFriend:   string,
-  Uin:          string,
-  UserName:     string,
-  HeadImgUrl:   string,
-  VerifyFlag:   number,
-  ContactFlag:  number,
+  Alias: string
+  City: string
+  NickName: string
+  Province: string
+  RemarkName: string
+  Sex: number
+  Signature: string
+  StarFriend: string
+  Uin: string
+  UserName: string
+  HeadImgUrl: string
+  VerifyFlag: number
+  ContactFlag: number
 }
 
 export interface WebMessageMediaPayload {
-  ToUserName: string,
-  MsgType:    number,
-  MediaId:    string,
-  FileName:   string,
-  FileSize:   number,
-  FileMd5?:   string,
-  FileType?:  number,
-  MMFileExt?: string,
-  Signature?: string,
+  ToUserName: string
+  MsgType: number
+  MediaId: string
+  FileName: string
+  FileSize: number
+  FileMd5?: string
+  FileType?: number
+  MMFileExt?: string
+  Signature?: string
 }
 
 /**
@@ -70,26 +70,26 @@ export interface WebMessageMediaPayload {
  * @property {number} READER_TYPE             - AppMsgType.READER_TYPE              (100001) for READER_TYPE
  */
 export enum WebAppMsgType {
-  TEXT                     = 1,
-  IMG                      = 2,
-  AUDIO                    = 3,
-  VIDEO                    = 4,
-  URL                      = 5,
-  ATTACH                   = 6,
-  OPEN                     = 7,
-  EMOJI                    = 8,
-  VOICE_REMIND             = 9,
-  SCAN_GOOD                = 10,
-  GOOD                     = 13,
-  EMOTION                  = 15,
-  CARD_TICKET              = 16,
-  REALTIME_SHARE_LOCATION  = 17,
+  TEXT = 1,
+  IMG = 2,
+  AUDIO = 3,
+  VIDEO = 4,
+  URL = 5,
+  ATTACH = 6,
+  OPEN = 7,
+  EMOJI = 8,
+  VOICE_REMIND = 9,
+  SCAN_GOOD = 10,
+  GOOD = 13,
+  EMOTION = 15,
+  CARD_TICKET = 16,
+  REALTIME_SHARE_LOCATION = 17,
   // web 协议可以接收到小程序的数据格式，但是无法展示出来，可以用于识别小程序的参数
-  MINIPROGRAM              = 33,
-  MINIPROGRAMAPP           = 36,
-  TRANSFERS                = 2e3,
-  RED_ENVELOPES            = 2001,
-  READER_TYPE              = 100001,
+  MINIPROGRAM = 33,
+  MINIPROGRAMAPP = 36,
+  TRANSFERS = 2e3,
+  RED_ENVELOPES = 2001,
+  READER_TYPE = 100001,
 }
 
 /**
@@ -116,85 +116,85 @@ export enum WebAppMsgType {
  * @property {number} RECALLED            - MsgType.RECALLED            (10002) for RECALLED
  */
 export enum WebMessageType {
-  TEXT                = 1,
-  IMAGE               = 3,
-  VOICE               = 34,
-  VERIFYMSG           = 37,
-  POSSIBLEFRIEND_MSG  = 40,
-  SHARECARD           = 42,
-  VIDEO               = 43,
-  EMOTICON            = 47,
-  LOCATION            = 48,
-  APP                 = 49,
-  VOIPMSG             = 50,
-  STATUSNOTIFY        = 51,
-  VOIPNOTIFY          = 52,
-  VOIPINVITE          = 53,
-  MICROVIDEO          = 62,
-  SYSNOTICE           = 9999,
-  SYS                 = 10000,
-  RECALLED            = 10002,
+  TEXT = 1,
+  IMAGE = 3,
+  VOICE = 34,
+  VERIFYMSG = 37,
+  POSSIBLEFRIEND_MSG = 40,
+  SHARECARD = 42,
+  VIDEO = 43,
+  EMOTICON = 47,
+  LOCATION = 48,
+  APP = 49,
+  VOIPMSG = 50,
+  STATUSNOTIFY = 51,
+  VOIPNOTIFY = 52,
+  VOIPINVITE = 53,
+  MICROVIDEO = 62,
+  SYSNOTICE = 9999,
+  SYS = 10000,
+  RECALLED = 10002,
 }
 
 /**
  * from Message
  */
 export interface WebRecomendInfo {
-  UserName   : string,
-  NickName   : string,   // display_name
-  Content    : string,   // request message
-  HeadImgUrl : string,   // message.RecommendInfo.HeadImgUrl
+  UserName: string
+  NickName: string // display_name
+  Content: string // request message
+  HeadImgUrl: string // message.RecommendInfo.HeadImgUrl
 
-  Ticket     : string,   // a pass token
-  VerifyFlag : number,
+  Ticket: string // a pass token
+  VerifyFlag: number
 }
 
 export const enum WebMediaType {
-  Image      = 1,
-  Video      = 2,
-  Audio      = 3,
+  Image = 1,
+  Video = 2,
+  Audio = 3,
   Attachment = 4,
 }
 
 export interface WebMessageRawPayload {
-  MsgId:            string,
+  MsgId: string
 
-  MMActualSender:   string, // getUserContact(message.MMActualSender,message.MMPeerUserName).isContact()
-  MMPeerUserName:   string, // message.MsgType == CONF.MSGTYPE_TEXT && message.MMPeerUserName == 'newsapp'
-  ToUserName:       string,
-  FromUserName:     string,
-  MMActualContent:  string, // Content has @id prefix added by wx
-  Content:          string,
+  MMActualSender: string // getUserContact(message.MMActualSender,message.MMPeerUserName).isContact()
+  MMPeerUserName: string // message.MsgType == CONF.MSGTYPE_TEXT && message.MMPeerUserName == 'newsapp'
+  ToUserName: string
+  FromUserName: string
+  MMActualContent: string // Content has @id prefix added by wx
+  Content: string
 
-  MMDigest:         string,
-  MMDisplayTime:    number,  // Javascript timestamp of milliseconds
-  CreateTime:       number,
+  MMDigest: string
+  MMDisplayTime: number // Javascript timestamp of milliseconds
+  CreateTime: number
 
   /**
    * MsgType == MSGTYPE_APP && message.AppMsgType == CONF.APPMSGTYPE_URL
    * class="cover" mm-src="{{getMsgImg(message.MsgId,'slave')}}"
    */
-  Url:              string,
-  MMAppMsgDesc:     string,  // class="desc" ng-bind="message.MMAppMsgDesc"
+  Url: string
+  MMAppMsgDesc: string // class="desc" ng-bind="message.MMAppMsgDesc"
 
   /**
    * Attachment
    *
    * MsgType == MSGTYPE_APP && message.AppMsgType == CONF.APPMSGTYPE_ATTACH
    */
-  FileName:         string,  // FileName: '钢甲互联项目BP1108.pdf',
-  FileSize:         number,  // FileSize: '2845701',
-  MediaId:          string,  // MediaId: '@crypt_b1a45e3f_c21dceb3ac01349...
-  MMFileExt:        string,  // doc, docx ... 'undefined'?
-  Signature:        string,  // checkUpload return the signature used to upload large files
+  FileName: string // FileName: '钢甲互联项目BP1108.pdf',
+  FileSize: number // FileSize: '2845701',
+  MediaId: string // MediaId: '@crypt_b1a45e3f_c21dceb3ac01349...
+  MMFileExt: string // doc, docx ... 'undefined'?
+  Signature: string // checkUpload return the signature used to upload large files
 
-  MMAppMsgFileExt:      string,  // doc, docx ... 'undefined'?
-  MMAppMsgFileSize:     string,  // '2.7MB',
-  MMAppMsgDownloadUrl:  string,  // 'https://file.wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetmedia?...
-                                 // <a download ng-if="message.MMFileStatus == CONF.MM_SEND_FILE_STATUS_SUCCESS
-                                 // && (massage.MMStatus == CONF.MSG_SEND_STATUS_SUCC || massage.MMStatus === undefined)
-                                 // " href="{{message.MMAppMsgDownloadUrl}}">下载</a>
-  MMUploadProgress: number,  // < 100
+  MMAppMsgFileExt: string // doc, docx ... 'undefined'?
+  MMAppMsgFileSize: string // '2.7MB',
+  MMAppMsgDownloadUrl: string // 'https://file.wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetmedia?...
+  // <a download ng-if="message.MMFileStatus == CONF.MM_SEND_FILE_STATUS_SUCCESS
+  // && (massage.MMStatus == CONF.MSG_SEND_STATUS_SUCC || massage.MMStatus === undefined)
+  // " href="{{message.MMAppMsgDownloadUrl}}">下载</a>
+  MMUploadProgress: number // < 100
 
   /**
    * 模板消息
@@ -205,36 +205,36 @@ export interface WebMessageRawPayload {
    *  item.cover
    *  item.digest
    */
-  MMCategory:       any[],  //  item in message.MMCategory
+  MMCategory: any[] //  item in message.MMCategory
 
   /**
    * Type
    *
    * MsgType == CONF.MSGTYPE_VOICE : ng-style="{'width':40 + 7*message.VoiceLength/1000}
    */
-  MsgType:          number,
-  AppMsgType:       WebAppMsgType,  // message.MsgType == CONF.MSGTYPE_APP && message.AppMsgType == CONF.APPMSGTYPE_URL
-                              // message.MsgType == CONF.MSGTYPE_TEXT && message.SubMsgType != CONF.MSGTYPE_LOCATION
+  MsgType: number
+  AppMsgType: WebAppMsgType // message.MsgType == CONF.MSGTYPE_APP && message.AppMsgType == CONF.APPMSGTYPE_URL
+  // message.MsgType == CONF.MSGTYPE_TEXT && message.SubMsgType != CONF.MSGTYPE_LOCATION
 
-  SubMsgType:       WebMessageType, // "msgType":"{{message.MsgType}}",
-                                    // "subType":{{message.SubMsgType||0}},"msgId":"{{message.MsgId}}"
-  VoiceLength:      number,
+  SubMsgType: WebMessageType // "msgType":"{{message.MsgType}}",
+  // "subType":{{message.SubMsgType||0}},"msgId":"{{message.MsgId}}"
+  VoiceLength: number
   /**
    * Status-es
    */
-  Status:           string,
-  MMStatus:         number,  // img ng-show="message.MMStatus == 1" class="ico_loading"
-                             // ng-click="resendMsg(message)" ng-show="message.MMStatus == 5" title="重新发送"
-  MMFileStatus:     number,  // <p class="loading" ng-show="message.MMStatus == 1 || message.MMFileStatus == CONF.MM_SEND_FILE_STATUS_FAIL">
-                             // CONF.MM_SEND_FILE_STATUS_QUEUED, MM_SEND_FILE_STATUS_SENDING
+  Status: string
+  MMStatus: number // img ng-show="message.MMStatus == 1" class="ico_loading"
+  // ng-click="resendMsg(message)" ng-show="message.MMStatus == 5" title="重新发送"
+  MMFileStatus: number // <p class="loading" ng-show="message.MMStatus == 1 || message.MMFileStatus == CONF.MM_SEND_FILE_STATUS_FAIL">
+  // CONF.MM_SEND_FILE_STATUS_QUEUED, MM_SEND_FILE_STATUS_SENDING
 
   /**
    * Location
    */
-  MMLocationUrl:    string,  // ng-if="message.MsgType == CONF.MSGTYPE_TEXT && message.SubMsgType == CONF.MSGTYPE_LOCATION"
-                             // <a href="{{message.MMLocationUrl}}" target="_blank">
-                             // 'http://apis.map.qq.com/uri/v1/geocoder?coord=40.075041,116.338994'
-  MMLocationDesc:   string,  // MMLocationDesc: '北京市昌平区回龙观龙腾苑(五区)内(龙腾街南)',
+  MMLocationUrl: string // ng-if="message.MsgType == CONF.MSGTYPE_TEXT && message.SubMsgType == CONF.MSGTYPE_LOCATION"
+  // <a href="{{message.MMLocationUrl}}" target="_blank">
+  // 'http://apis.map.qq.com/uri/v1/geocoder?coord=40.075041,116.338994'
+  MMLocationDesc: string // MMLocationDesc: '北京市昌平区回龙观龙腾苑(五区)内(龙腾街南)',
 
   /**
    * MsgType == CONF.MSGTYPE_EMOTICON
@@ -247,9 +247,9 @@ export interface WebMessageRawPayload {
    *
    *  getMsgImg(message.MsgId,'slave')
    */
-  MMImgStyle:       string,  // ng-style="message.MMImgStyle"
-  MMPreviewSrc:     string,  // message.MMPreviewSrc || message.MMThumbSrc || getMsgImg(message.MsgId,'slave')
-  MMThumbSrc:       string,
+  MMImgStyle: string // ng-style="message.MMImgStyle"
+  MMPreviewSrc: string // message.MMPreviewSrc || message.MMThumbSrc || getMsgImg(message.MsgId,'slave')
+  MMThumbSrc: string
 
   /**
    * Friend Request & ShareCard ?
@@ -257,17 +257,17 @@ export interface WebMessageRawPayload {
    * MsgType == CONF.MSGTYPE_SHARECARD" ng-click="showProfile($event,message.RecommendInfo.UserName)
    * MsgType == CONF.MSGTYPE_VERIFYMSG
    */
-  RecommendInfo? : WebRecomendInfo,
+  RecommendInfo?: WebRecomendInfo
 
   /**
    * Transpond Message
    */
-  MsgIdBeforeTranspond? : string,    // oldMsg.MsgIdBeforeTranspond || oldMsg.MsgId,
-  isTranspond?          : boolean,
-  MMSourceMsgId?        : string,
-  MMSendContent?        : string,
+  MsgIdBeforeTranspond?: string // oldMsg.MsgIdBeforeTranspond || oldMsg.MsgId,
+  isTranspond?: boolean
+  MMSourceMsgId?: string
+  MMSendContent?: string
 
-  MMIsChatRoom? : boolean,
+  MMIsChatRoom?: boolean
 
   OriginalContent: string
 }
@@ -285,18 +285,18 @@ export interface WebMessageRawPayload {
 // }
 
 export interface WebRoomRawMember {
-  UserName    : string,
-  NickName    : string,
-  DisplayName : string,
-  HeadImgUrl  : string,
+  UserName: string
+  NickName: string
+  DisplayName: string
+  HeadImgUrl: string
 }
 
 export interface WebRoomRawPayload {
-  UserName:         string,
-  EncryChatRoomId:  string,
-  NickName:         string,
-  OwnerUin:         number,
-  ChatRoomOwner:    string,
-  HeadImgUrl?:      string,
-  MemberList?:      WebRoomRawMember[],
+  UserName: string
+  EncryChatRoomId: string
+  NickName: string
+  OwnerUin: number
+  ChatRoomOwner: string
+  HeadImgUrl?: string
+  MemberList?: WebRoomRawMember[]
 }

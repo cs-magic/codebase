@@ -1,6 +1,7 @@
 import { promises } from "fs"
 import path from "path"
-import { compressMd } from "./compress-md"
+
+import { compressMd } from "./compress-md.js"
 
 it("compress", async () => {
   const content = await promises.readFile(path.join(__dirname, "content.md"), {

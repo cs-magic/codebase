@@ -1,5 +1,6 @@
 import { z } from "zod"
-import { parseLimitedCommand } from "./parse-command"
+
+import { parseLimitedCommand } from "./parse-command.js"
 
 describe("parse command", () => {
   it("", () => {

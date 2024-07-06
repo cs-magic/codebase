@@ -1,6 +1,6 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { formatAction } from "@cs-magic/common/utils/format-action"
-import { formatDuration } from "@cs-magic/common/utils/format-duration"
+import { SEPARATOR_LINE } from "@cs-magic/common"
+import { formatAction } from "@cs-magic/common"
+import { formatDuration } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
 import { LogLevel } from "@cs-magic/common"
 
@@ -8,9 +8,9 @@ import yaml from "js-yaml"
 import { Job } from "node-schedule"
 import { Message, Sayable, Wechaty } from "wechaty"
 
-import { getConvPreference } from "../utils/get-conv-preference"
-import { QueueTask, SenderQueue } from "../utils/sender-queue"
-import { LlmScenario } from "./bot.utils"
+import { getConvPreference } from "../utils/get-conv-preference.js"
+import { QueueTask, SenderQueue } from "../utils/sender-queue.js"
+import { LlmScenario } from "./bot.utils.js"
 
 type BotData = {
   name: string

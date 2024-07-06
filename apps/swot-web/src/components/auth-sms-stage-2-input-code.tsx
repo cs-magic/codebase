@@ -9,10 +9,10 @@ import {
   smsCodeAtom,
   smsSignInPayloadAtom,
 } from "../../../../packages/auth/src/sms/store"
-import { Label } from "@cs-magic/common/ui-shadcn/components/label"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { SMS_DIGIT_SIZE } from "@cs-magic/common/ui/config"
-import { uiLoadingAlertDialogAtom } from "@cs-magic/common/ui/store"
+import { Label } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
+import { SMS_DIGIT_SIZE } from "@cs-magic/common"
+import { uiLoadingAlertDialogAtom } from "@cs-magic/common"
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
 import { useHotkeys } from "@mantine/hooks"

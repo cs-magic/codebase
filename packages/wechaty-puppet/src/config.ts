@@ -1,28 +1,20 @@
-import { FileBox }      from 'file-box'
-import { Brolog }       from 'brolog'
-import { MemoryCard }   from 'memory-card'
-import { StateSwitch }  from 'state-switch'
+import { Brolog } from "brolog"
+import { FileBox } from "file-box"
+import { MemoryCard } from "memory-card"
+import { StateSwitch } from "state-switch"
 
-import { packageJson } from './package-json.js'
+import * as envVars from "./env-vars.js"
 
-import * as envVars from './env-vars.js'
+import { packageJson } from "./package-json.js"
 
 const log = new Brolog()
-const logLevel = process.env['WECHATY_LOG']
+const logLevel = process.env["WECHATY_LOG"]
 if (logLevel) {
   log.level(logLevel.toLowerCase() as any)
-  log.silly('Puppet', 'Config: WECHATY_LOG set level to %s', logLevel)
+  log.silly("Puppet", "Config: WECHATY_LOG set level to %s", logLevel)
 }
 
-const VERSION = packageJson.version || '0.0.0'
-const NAME    = packageJson.name    || 'NONAME'
+const VERSION = packageJson.version || "0.0.0"
+const NAME = packageJson.name || "NONAME"
 
-export {
-  envVars,
-  FileBox,
-  log,
-  MemoryCard,
-  NAME,
-  StateSwitch,
-  VERSION,
-}
+export { envVars, FileBox, log, MemoryCard, NAME, StateSwitch, VERSION }

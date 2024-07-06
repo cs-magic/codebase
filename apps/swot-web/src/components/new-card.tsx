@@ -6,18 +6,14 @@ import { useAtom } from "jotai"
 import { useState } from "react"
 import { useDrop } from "react-use"
 import { toast } from "sonner"
-import { FileComp } from "@cs-magic/common/file/components"
-import { useUploadFiles } from "@cs-magic/common/oss/hooks/use-upload-files"
-import { IUploadFile } from "@cs-magic/common/oss/schema"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@cs-magic/common/ui-shadcn/components/tooltip"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
-import { VerticalAspectRatio } from "@cs-magic/common/ui/components/aspect-ratio"
-import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { FileComp } from "@cs-magic/common"
+import { useUploadFiles } from "@cs-magic/common"
+import { IUploadFile } from "@cs-magic/common"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
+import { VerticalAspectRatio } from "@cs-magic/common"
+import { ButtonWithLoading } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/common"
 import { cardNewContentAtom } from "../store/card.atom"
 
 export function NewCard() {

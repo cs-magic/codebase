@@ -1,4 +1,4 @@
-import { SessionProvider } from "@cs-magic/common/ui/providers/session.provider"
+import { SessionProvider } from "@cs-magic/common"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"

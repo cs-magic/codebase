@@ -1,5 +1,4 @@
-import { BaseSimulator } from "./base-simulator"
-import { WxmpArticleSimulator } from "./wxmp-article-simulator"
+import { WxmpArticleSimulator } from "./wxmp-article-simulator.js"
 
 const simulator = new WxmpArticleSimulator()
 

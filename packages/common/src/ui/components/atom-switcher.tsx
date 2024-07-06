@@ -1,14 +1,14 @@
-import { SetStateAction, useAtom } from "jotai"
-import { Atom, SetAtom } from "../../state-management/jotai/types"
+import { useAtom } from "jotai"
+import { Atom } from "../../store/jotai/types.js"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../ui-shadcn/components/select"
-import { Switch } from "../../ui-shadcn/components/switch"
-import { LabelLine } from "./label-line"
+} from "../../ui-shadcn/components/ui/select.js"
+import { Switch } from "../../ui-shadcn/components/ui/switch.js"
+import { LabelLine } from "./label-line.jsx"
 
 /**
  * @param atom

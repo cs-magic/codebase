@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { FeatureMap } from "../../../schema/commands"
-import { BasePlugin } from "./base.plugin"
+import { FeatureMap } from "../../../schema/commands.js"
+import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([
   "enable-announce",

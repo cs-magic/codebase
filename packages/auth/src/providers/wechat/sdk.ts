@@ -1,12 +1,5 @@
-import {
-  IWechatProfile,
-  IWechatRefreshedToken,
-} from "./schema"
-import {
-  getWechatAuthToken,
-  getWechatUserProfile,
-  refreshWechatAuthToken,
-} from "./funcs/server"
+import { getWechatAuthToken, getWechatUserProfile, refreshWechatAuthToken } from "./funcs/server"
+import { IWechatProfile, IWechatRefreshedToken } from "./schema"
 
 /**
  * 用于稳定地获取用户信息

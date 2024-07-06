@@ -12,7 +12,9 @@ export function padLocalRoomToWechaty(contact: PadLocal.Contact.AsObject): PUPPE
   };
 }
 
-export function padLocalRoomMemberToWechaty(chatRoomMember: PadLocal.ChatRoomMember.AsObject): PUPPET.payloads.RoomMember {
+export function padLocalRoomMemberToWechaty(
+  chatRoomMember: PadLocal.ChatRoomMember.AsObject
+): PUPPET.payloads.RoomMember {
   return {
     avatar: chatRoomMember.avatar,
     id: chatRoomMember.username,

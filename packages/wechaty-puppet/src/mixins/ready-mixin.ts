@@ -1,43 +1,40 @@
-import { BooleanIndicator } from 'state-switch'
+import { BooleanIndicator } from "state-switch"
 
-import {
-  log,
-} from '../config.js'
+import { log } from "../config.js"
 
-import type { PuppetSkeleton } from '../puppet/puppet-skeleton.js'
+import type { PuppetSkeleton } from "../puppet/puppet-skeleton.js"
 
-const readyMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBase) => {
-
+const readyMixin = <MixinBase extends typeof PuppetSkeleton>(
+  mixinBase: MixinBase,
+) => {
   abstract class ReadyMixin extends mixinBase {
-
     readyIndicator: BooleanIndicator
 
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args)
-      log.verbose('ReadyMixin', 'constructor()')
+      log.verbose("ReadyMixin", "constructor()")
 
       this.readyIndicator = new BooleanIndicator()
     }
 
-    override async start (): Promise<void> {
-      log.verbose('ReadyMixin', 'start()')
+    override async start(): Promise<void> {
+      log.verbose("ReadyMixin", "start()")
       await super.start()
 
-      this.on('ready', () => {
+      this.on("ready", () => {
         this.readyIndicator.value(true)
       })
 
-      this.on('logout', () => {
+      this.on("logout", () => {
         this.readyIndicator.value(false)
       })
-      this.on('reset', () => {
+      this.on("reset", () => {
         this.readyIndicator.value(false)
       })
-
     }
 
-    override async stop (): Promise<void> {
-      log.verbose('ReadyMixin', 'stop()')
+    override async stop(): Promise<void> {
+      log.verbose("ReadyMixin", "stop()")
       this.readyIndicator.value(false)
 
       /**
@@ -46,7 +43,6 @@ const readyMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBas
        */
       await super.stop()
     }
-
   }
 
   return ReadyMixin
@@ -54,7 +50,5 @@ const readyMixin = <MixinBase extends typeof PuppetSkeleton>(mixinBase: MixinBas
 
 type ReadyMixin = ReturnType<typeof readyMixin>
 
-export type {
-  ReadyMixin,
-}
+export type { ReadyMixin }
 export { readyMixin }

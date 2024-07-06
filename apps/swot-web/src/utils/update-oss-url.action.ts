@@ -4,7 +4,7 @@ import {
   cardLlmResponseSchema,
   ICardLlmResponse,
 } from "@cs-magic/prisma/schema/card.detail"
-import { prisma } from "@cs-magic/common/db/providers/prisma"
+import { prisma } from "@cs-magic/common"
 
 export const updateOssUrl = async (
   llmResponseId: string,

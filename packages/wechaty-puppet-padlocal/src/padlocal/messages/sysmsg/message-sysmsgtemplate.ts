@@ -37,15 +37,15 @@ export interface SysmsgTemplateXmlSchema {
 }
 
 export interface SysmsgTemplateLinkMember {
-  userName?: string,
-  nickName: string,
+  userName?: string;
+  nickName: string;
 }
 
 export type SysmsgTemplateLinkProfile = Array<SysmsgTemplateLinkMember>;
 
 export interface SysmsgTemplateLinkRevoke {
-  title: string,
-  userNameList: string[],
+  title: string;
+  userNameList: string[];
 }
 
 export type SysmsgTemplateLinkType = "link_profile" | "link_revoke";
@@ -53,9 +53,9 @@ export type SysmsgTemplateLinkType = "link_profile" | "link_revoke";
 export type SysmsgTemplateLinkPayload = SysmsgTemplateLinkProfile | SysmsgTemplateLinkRevoke;
 
 export interface SysmsgTemplateLink {
-  name: string,
-  payload: SysmsgTemplateLinkPayload,
-  type: SysmsgTemplateLinkType,
+  name: string;
+  payload: SysmsgTemplateLinkPayload;
+  type: SysmsgTemplateLinkType;
 }
 
 export interface SysmsgTemplateMessagePayload {
@@ -75,16 +75,18 @@ function toList(list: any): any[] {
   }
 }
 
-export async function parseSysmsgTemplateMessagePayload(sysmsgTemplateXml: SysmsgTemplateXmlSchema): Promise<SysmsgTemplateMessagePayload> {
+export async function parseSysmsgTemplateMessagePayload(
+  sysmsgTemplateXml: SysmsgTemplateXmlSchema
+): Promise<SysmsgTemplateMessagePayload> {
   const linkList = toList(sysmsgTemplateXml.content_template.link_list.link);
 
-  const allLinkList = linkList.map((link): SysmsgTemplateLink  => {
+  const allLinkList = linkList.map((link): SysmsgTemplateLink => {
     const type = link.$.type as SysmsgTemplateLinkType;
     let payload: SysmsgTemplateLinkPayload | undefined;
 
     if (type === "link_profile") {
       const memberList = toList(link.memberlist!.member);
-      payload = memberList.map((member: { nickname: string; username?: string; }): SysmsgTemplateLinkMember => {
+      payload = memberList.map((member: { nickname: string; username?: string }): SysmsgTemplateLinkMember => {
         return {
           nickName: member.nickname,
           userName: member.username,
@@ -109,7 +111,7 @@ export async function parseSysmsgTemplateMessagePayload(sysmsgTemplateXml: Sysms
   const template = sysmsgTemplateXml.content_template.template;
   const matches = [...template.matchAll(/\$(.+?)\$/g)];
 
-  const templateLinkList = matches.map(match => {
+  const templateLinkList = matches.map((match) => {
     const linkName = match[1];
     return allLinkList.filter((link) => link.name === linkName)[0]!;
   });
@@ -120,14 +122,25 @@ export async function parseSysmsgTemplateMessagePayload(sysmsgTemplateXml: Sysms
   };
 }
 
-export type SysmsgTemplateHandler<T> = (templateLinkList: SysmsgTemplateLink[], matchedRegexIndex: number) => Promise<T>;
+export type SysmsgTemplateHandler<T> = (
+  templateLinkList: SysmsgTemplateLink[],
+  matchedRegexIndex: number
+) => Promise<T>;
 
-export async function parseSysmsgTemplate<T>(sysmsgTemplatePayload: SysmsgTemplateMessagePayload, regexList: RegExp[], handler: SysmsgTemplateHandler<T>) : Promise<T | null> {
-  return parseTextWithRegexList(sysmsgTemplatePayload.template, regexList, async(matchedRegexIndex) => {
+export async function parseSysmsgTemplate<T>(
+  sysmsgTemplatePayload: SysmsgTemplateMessagePayload,
+  regexList: RegExp[],
+  handler: SysmsgTemplateHandler<T>
+): Promise<T | null> {
+  return parseTextWithRegexList(sysmsgTemplatePayload.template, regexList, async (matchedRegexIndex) => {
     return handler(sysmsgTemplatePayload.templateLinkList, matchedRegexIndex);
   });
 }
 
-export function createSysmsgTemplateRunner<T>(sysmsgTemplatePayload: SysmsgTemplateMessagePayload, regexList: RegExp[], handler: SysmsgTemplateHandler<T>): Runner<T> {
-  return async() => parseSysmsgTemplate<T>(sysmsgTemplatePayload, regexList, handler);
+export function createSysmsgTemplateRunner<T>(
+  sysmsgTemplatePayload: SysmsgTemplateMessagePayload,
+  regexList: RegExp[],
+  handler: SysmsgTemplateHandler<T>
+): Runner<T> {
+  return async () => parseSysmsgTemplate<T>(sysmsgTemplatePayload, regexList, handler);
 }

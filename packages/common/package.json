@@ -3,9 +3,12 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./dist/src/index.js",
+    "./log": "./dist/src/log/index.js",
+    "./env": "./dist/src/env/index.js",
+    "./*": "./dist/src/*.js"
   },
-  "main": "src/index.js",
+  "main": "./dist/src/index.js",
   "scripts": {
     "build": "tsc -b"
   },
@@ -15,8 +18,10 @@
     "jotai": "^2.8.4",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
+    "next": "^14.2.4",
     "pino": "^8.20.0",
     "pino-logflare": "^0.4.2",
+    "prisma": "^5.16.1",
     "react": "^18.3.1",
     "ulog": "2.0.0-beta.19",
     "universal-logger": "^1.0.1",

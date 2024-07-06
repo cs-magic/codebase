@@ -2,6 +2,9 @@
   "name": "@cs-magic/swot-core",
   "packageManager": "yarn@4.1.1",
   "type": "module",
+  "exports": {
+    "./*": "./dist/src/*.js"
+  },
   "scripts": {
     "build": "tsc -b"
   },

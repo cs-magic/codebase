@@ -16,7 +16,7 @@
  *   limitations under the License.
  *
  */
-import { logger } from "@cs-magic/common"
+import { logger } from "@cs-magic/common/log"
 import Wechat4u from "wechat4u"
 import QuickLru from "@alloc/quick-lru"
 import * as PUPPET from "wechaty-puppet"
@@ -103,6 +103,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
   override version() {
     return `${VERSION}<${super.version()}>`
   }
+
   override name() {
     return `${NAME}<${super.name()}>`
   }
@@ -278,6 +279,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
     const puppetThis = this
 
     const funcOrig = wechat4u[func]
+
     function funcNew(this: any) {
       log.verbose("PuppetWechat4u", "monkeyPatchOffState(%s) funcNew()", func)
 
@@ -291,6 +293,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
       }
       return funcOrig.call(this)
     }
+
     wechat4u[func] = funcNew
   }
 

@@ -1,6 +1,10 @@
 import { useAtom } from "jotai"
-import { initPusherClient } from "../client/init"
-import { pusherServerConfigs } from "../config"
+import { sum } from "lodash"
+import PusherJS from "pusher-js"
+import { useEffect, useRef } from "react"
+
+import { initPusherClient } from "../client/init.js"
+import { pusherServerConfigs } from "../config.js"
 import {
   pusherClientAtom,
   pusherLastPingTimeAtom,
@@ -8,10 +12,7 @@ import {
   pusherLatenciesAtom,
   pusherLatencyAtom,
   pusherServerIdAtom,
-} from "../store"
-import { useEffect, useRef } from "react"
-import { sum } from "lodash"
-import PusherJS from "pusher-js"
+} from "../store.js"
 
 export const usePusherClient = () => {
   const [serverId] = useAtom(pusherServerIdAtom)

@@ -1,4 +1,4 @@
-import { createTRPCRouter } from "@cs-magic/common/trpc/trpc"
+import { createTRPCRouter } from "@cs-magic/common"
 import { coreRouter } from "./core"
 
 /**

@@ -11,34 +11,35 @@
  *  because it might be transported via the GRPC interface,
  *  which can not serialize the `YOU` Symbol correctly.
  */
-export const YOU = Symbol.for('YOU@wechaty-puppet')
+export const YOU = Symbol.for("YOU@wechaty-puppet")
 
 /** @hidden */
 export const CHAT_EVENT_DICT = {
-  friendship    : 'receive a friend request',
-  login         : 'puppet had logged in',
-  logout        : 'puppet had logged out',
-  message       : 'received a new message',
-  post          : 'received a new post',
-  'room-invite' : 'received a room invitation',
-  'room-join'   : 'be added to a room',
-  'room-leave'  : 'leave or be removed from a room',
-  'room-topic'  : 'room topic had been changed',
-  scan          : 'a QR Code scan is required',
+  friendship: "receive a friend request",
+  login: "puppet had logged in",
+  logout: "puppet had logged out",
+  message: "received a new message",
+  post: "received a new post",
+  "room-invite": "received a room invitation",
+  "room-join": "be added to a room",
+  "room-leave": "leave or be removed from a room",
+  "room-topic": "room topic had been changed",
+  scan: "a QR Code scan is required",
 }
 export type ChatEventName = keyof typeof CHAT_EVENT_DICT
 
 /** @hidden */
 export const PUPPET_EVENT_DICT = {
   ...CHAT_EVENT_DICT,
-  dirty     : 'dirty the cache payload',
-  dong      : 'emit this event if you received a ding() call',
-  error     : "emit an Error instance when there's any Error need to report to Wechaty",
+  dirty: "dirty the cache payload",
+  dong: "emit this event if you received a ding() call",
+  error:
+    "emit an Error instance when there's any Error need to report to Wechaty",
   // Huan(202003): rename `watchdog` to `heartbeat`
   // watchdog  : 'feed the watchdog by emit this event',
-  heartbeat : 'feed the watchdog by emit this event',
-  ready     : 'emit this event after the puppet is ready(you define it)',
-  reset     : 'reset the puppet by emit this event',
+  heartbeat: "feed the watchdog by emit this event",
+  ready: "emit this event after the puppet is ready(you define it)",
+  reset: "reset the puppet by emit this event",
 }
 
 export type PuppetEventName = keyof typeof PUPPET_EVENT_DICT
@@ -48,18 +49,18 @@ export type PuppetEventName = keyof typeof PUPPET_EVENT_DICT
  * timeout: WatchDog Timeout in Seconds
  */
 export interface PuppetOptions {
-  endpoint?       : string
-  timeoutSeconds? : number
-  token?          : string
+  endpoint?: string
+  timeoutSeconds?: number
+  token?: string
   cache?: {
-    contact?        : number
-    friendship?     : number
-    message?        : number
-    post?           : number
-    room?           : number
-    roomInvitation? : number
-    roomMember?     : number
+    contact?: number
+    friendship?: number
+    message?: number
+    post?: number
+    room?: number
+    roomInvitation?: number
+    roomMember?: number
   }
 
-  [ puppetOptionKey: string ]: unknown,
+  [puppetOptionKey: string]: unknown
 }

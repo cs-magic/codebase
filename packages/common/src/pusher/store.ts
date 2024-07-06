@@ -3,9 +3,9 @@ import { atomWithStorage } from "jotai/utils"
 import Pusher from "pusher"
 import PusherJS from "pusher-js"
 
-import { LogLevel } from "../log"
-import { FixedArray } from "../schema/fixed-array"
-import { PusherConnectionState, PusherServerId } from "./schema"
+import { LogLevel } from "../log/index.js"
+import { FixedArray } from "../schema/fixed-array.js"
+import { PusherConnectionState, PusherServerId } from "./schema.js"
 
 //////////////////////////////
 // base

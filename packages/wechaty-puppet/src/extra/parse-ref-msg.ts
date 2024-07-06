@@ -1,4 +1,5 @@
-import { logger } from "@cs-magic/common"
+import { logger } from "@cs-magic/common/log"
+import { type payloads, types } from "../mods/mod"
 import { AppMessageType } from "./message"
 import type {
   GenericMessageParser,
@@ -6,7 +7,6 @@ import type {
 } from "./message.parser"
 
 import { serializeRefMsgPayload } from "./serialize-ref-msg"
-import { types, type payloads } from "../mods/mod"
 
 export const referMsgParser: GenericMessageParser = async <T>(
   _localMessage: T,

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { getEnv } from "../../../env"
+import { getEnv } from "../../../env/index.js"
 
 const env = getEnv()
 

@@ -4,8 +4,8 @@ import { config } from "@cs-magic/common"
 
 import { CardOuterPreview } from "@cs-magic/wechat/schema/card"
 import { CalendarHeartIcon, MilestoneIcon } from "lucide-react"
-import moment from "@cs-magic/common/datetime/moment"
-import { cn } from "@cs-magic/common/ui-shadcn/utils"
+import { moment } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { CardFooterItem } from "./card-footer-item"
 
 export const CardFooter = ({
