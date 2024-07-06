@@ -1,6 +1,6 @@
 import { SEPARATOR_LINE } from "@cs-magic/common/const"
 import logger from "@cs-magic/common/log"
-import { omit } from "lodash"
+import omit from "lodash/omit"
 import { type Message, types, type Wechaty } from "wechaty"
 import {
   commandsSchema,

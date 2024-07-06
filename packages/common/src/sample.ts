@@ -1,4 +1,4 @@
-import { last } from "lodash"
+import last from "lodash/last"
 
 export const sampleWxmpArticleUrls = [
   "https://mp.weixin.qq.com/s/HdVZGKjViUVe1bd9v17ANQ",

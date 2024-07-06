@@ -1,7 +1,7 @@
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"
-import { remove } from "lodash"
+import remove from "lodash/remove"
 
 import { genNanoId } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"

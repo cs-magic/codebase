@@ -38,5 +38,6 @@
   "references": [
     {"path": "../../packages/common"},
     {"path": "../../packages/wechat"},
+    {"path": "../swot-core"},
   ]
 }

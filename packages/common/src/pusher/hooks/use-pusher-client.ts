@@ -1,5 +1,5 @@
 import { useAtom } from "jotai"
-import { sum } from "lodash"
+import sum from "lodash/sum"
 import PusherJS from "pusher-js"
 import { useEffect, useRef } from "react"
 

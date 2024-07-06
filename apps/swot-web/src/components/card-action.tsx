@@ -1,19 +1,18 @@
 "use client"
 
+import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
+import { ActionType } from "@cs-magic/swot-core/schema/card"
+import { Atom, useAtom } from "jotai"
+import capitalize from "lodash/capitalize"
+import { HTMLAttributes } from "react"
+import { cn } from "../lib/utils"
 import {
   cardCopyingAtom,
   cardDownloadingAtom,
   cardGeneratingAtom,
   cardResettingAtom,
   cardUploadingAtom,
-} from "@/store/card.actions.atom"
-import { useAtom } from "jotai"
-import { capitalize } from "lodash"
-import { HTMLAttributes } from "react"
-import { Atom } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { ButtonWithLoading } from "@cs-magic/common"
-import { ActionType } from "@cs-magic/wechat/schema/card"
+} from "../store/card.actions.atom"
 
 export const CardAction = ({
   disabled,
