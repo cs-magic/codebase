@@ -3,6 +3,7 @@
 ## todo
 
 - [ ] run `swot-bot`
+- [ ] 跑通在 `wechat4u`（cjs） 中调用 `@cs-magic/common`（esm）
 - [ ] tsconfig.json 中 `"rootDir": "src",` 导致 `tsc` 无法生成 dist
 - [ ] `package/llm` 中 config 文件夹如何在编译后保留
 

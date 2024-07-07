@@ -11,7 +11,7 @@ import {
   getClientMsgId,
   getDeviceID,
 } from "./util"
-import { logger } from "@cs-magic/common"
+// import { logger } from "@cs-magic/common"
 
 const debug = _debug("core")
 export class AlreadyLogoutError extends Error {
@@ -516,7 +516,7 @@ export default class WechatCore {
         }).then((res) => {
           let data = res.data
 
-          logger.debug(`wechat4u send text message response: [%o]`, data)
+          // logger.debug(`wechat4u send text message response: [%o]`, data)
 
           assert.equal(data.BaseResponse.Ret, 0, res)
           return data

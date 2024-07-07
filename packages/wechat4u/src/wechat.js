@@ -7,7 +7,7 @@ import ContactFactory from "./interface/contact"
 import MessageFactory from "./interface/message"
 import { getCONF, isStandardBrowserEnv } from "./util"
 
-import { logger } from "@cs-magic/common"
+// import { logger } from "@cs-magic/common"
 
 const debug = _debug("wechat")
 
@@ -431,4 +431,4 @@ Wechat.STATE = getCONF().STATE
 
 exports = module.exports = Wechat
 
-logger.info(`\n== wechat4u ==\n`)
+// logger.info(`\n== wechat4u ==\n`)
