@@ -4,11 +4,15 @@
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
-    "./log": "./dist/src/log/index.js",
+    "./log": {
+      "default": "./dist/src/log/index.js",
+      "types": "./dist/src/log/index.d.ts"
+    },
     "./env": "./dist/src/env/index.js",
     "./*": "./dist/src/*.js"
   },
   "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "scripts": {
     "build": "tsc -b"
   },
@@ -18,7 +22,6 @@
     "jotai": "^2.8.4",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
-    "next": "^14.2.4",
     "pino": "^8.20.0",
     "pino-logflare": "^0.4.2",
     "prisma": "^5.16.1",

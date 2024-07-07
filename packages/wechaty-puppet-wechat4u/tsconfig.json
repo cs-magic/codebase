@@ -1,7 +1,7 @@
 {
   "extends": [
-    "@chatie/tsconfig",
-    "../../tsconfig.json",
+    "../../tsconfig.json", // bundle
+    "@chatie/tsconfig", // node √
   ],
   "compilerOptions": {
     "composite": true,

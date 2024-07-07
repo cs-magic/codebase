@@ -6,7 +6,8 @@ import WechatCore, { AlreadyLogoutError } from "./core"
 import ContactFactory from "./interface/contact"
 import MessageFactory from "./interface/message"
 import { getCONF, isStandardBrowserEnv } from "./util"
-import { logger } from "@cs-magic/log/logger"
+
+import { logger } from "@cs-magic/common"
 
 const debug = _debug("wechat")
 

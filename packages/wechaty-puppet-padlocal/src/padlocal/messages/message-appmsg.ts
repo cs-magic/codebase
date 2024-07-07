@@ -1,4 +1,4 @@
-import type { AppAttachPayload, AppMessagePayload } from "../../../../wechaty-puppet/src/extra/message";
+import type { AppAttachPayload, AppMessagePayload } from "wechaty-puppet";
 import { xmlToJson } from "../utils/xml-to-json.js";
 
 interface AppMsgXmlSchema {

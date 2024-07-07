@@ -5,11 +5,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/mod.js",
-      "require": "./dist/cjs/mod.js"
+      "import": "./dist/esm/src/mod.js",
+      "require": "./dist/cjs/src/mod.js"
     }
   },
-  "typings": "./dist/esm/mod.d.ts",
+  "typings": "./dist/esm/src/mod.d.ts",
   "engines": {
     "node": ">= 16",
     "npm": ">=7"

@@ -1,0 +1,14 @@
+{
+  "name": "test-arbitrary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkShawn2020/codebase.git"
+  }
+}

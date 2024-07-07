@@ -5,11 +5,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/wechaty-puppet-wechat4u/src/mod.js",
-      "require": "./dist/cjs/wechaty-puppet-wechat4u/src/mod.js"
+      "import": "./dist/esm/src/mod.js",
+      "require": "./dist/cjs/src/mod.js"
     }
   },
-  "types": "./dist/esm/wechaty-puppet-wechat4u/src/mod.d.ts",
+  "types": "./dist/esm/src/mod.d.ts",
   "engines": {
     "node": ">=16",
     "npm": ">=7"
@@ -18,7 +18,7 @@
     "build": "tsc -b && tsc -b tsconfig.cjs.json",
     "clean": "shx rm -fr dist/*",
     "dist": "npm-run-all clean build dist:commonjs",
-    "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/wechaty-puppet-wechat4u/package.json",
+    "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/package.json",
     "lint": "npm-run-all lint:es lint:ts lint:md",
     "lint:md": "markdownlint README.md",
     "lint:ts": "tsc --isolatedModules --noEmit",

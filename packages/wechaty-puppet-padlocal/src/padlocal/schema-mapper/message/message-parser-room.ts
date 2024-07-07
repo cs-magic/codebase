@@ -1,7 +1,7 @@
 // import { logger } from "@cs-magic/common";
 import type * as PUPPET from "wechaty-puppet";
 import type PadLocal from "padlocal-client-ts/dist/proto/padlocal_pb.js";
-import type { MessageParserContext } from "../../../../../wechaty-puppet/src/extra/message.parser";
+import type { MessageParserContext } from "wechaty-puppet";
 import { isIMRoomId, isRoomId } from "../../utils/is-type.js";
 import type { MessageParser } from "./message-parser.js";
 

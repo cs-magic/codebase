@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common/log";
+import { logger } from "@cs-magic/common";
 
 import * as XMLParser from "fast-xml-parser";
 import { FileBox, FileBoxInterface } from "file-box";

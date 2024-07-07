@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common/log"
+import { logger } from "@cs-magic/common"
 import { type payloads, types } from "../mods/mod"
 import { AppMessageType } from "./message"
 import type {

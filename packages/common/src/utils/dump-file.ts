@@ -16,10 +16,7 @@ export const dumpFile = async (
         fp: string
       },
 ) => {
-  const fd = path.join(process.cwd(), `__generated`)
-  if (!fs.existsSync(fd)) fs.mkdirSync(fd)
-
-  let fp: string = path.join(fd, `${Date.now()}.json`)
+  let fp: string = path.join(generatedDir, `${Date.now()}.json`)
 
   if (options) {
     if ("fn" in options) {

@@ -1,7 +1,7 @@
 {
   "extends": [
-    "@chatie/tsconfig",
     "../../tsconfig.json",
+    "@chatie/tsconfig",
   ],
   "compilerOptions": {
     "composite": true,
@@ -20,8 +20,6 @@
     "tests/**/*.ts"
   ],
   "references": [
-    {
-      "path": "../common"
-    }
+    {"path": "../common"},
   ]
 }

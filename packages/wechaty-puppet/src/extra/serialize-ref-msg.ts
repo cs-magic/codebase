@@ -1,4 +1,4 @@
-import { logger } from "@cs-magic/common/log"
+import { logger } from "@cs-magic/common"
 import { AppMessageType, ReferMsgPayload } from "./message"
 
 export const serializeRefMsgPayload = (payload: ReferMsgPayload) => {

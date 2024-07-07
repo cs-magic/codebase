@@ -13,24 +13,19 @@
     "dev:watch": "yarn _tsx watch src/index.ts",
     "dev": "yarn _tsx src/index.ts",
     "test": "jest",
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "start": "node --experimental-specifier-resolution=node ./dist/src/index.js | pino-pretty"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
-    "@swc/core": "^1.6.7-nightly-20240703.2",
-    "@types/lodash": "^4.17.1",
-    "dotenv": "^16.4.5",
-    "lodash": "^4.17.21",
     "node-schedule": "^2.1.1",
     "qrcode-terminal": "^0.12.0",
     "wechat4u": "workspace:^",
     "wechaty": "^1.20.2",
-    "wechaty-puppet": "workspace:^",
-    "wechaty-puppet-padlocal": "workspace:^",
-    "wechaty-puppet-wechat4u": "workspace:^"
+    "wechaty-puppet": "workspace:^"
   },
   "devDependencies": {
     "@types/node-schedule": "^2.1.7"

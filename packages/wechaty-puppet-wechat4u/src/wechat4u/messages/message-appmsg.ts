@@ -6,7 +6,7 @@ import type {
   AppMsgXmlSchema,
   ChannelsMsgPayload,
   MiniAppMsgPayload,
-} from "../../../../wechaty-puppet/src/extra/message"
+} from "wechaty-puppet"
 import { xmlToJson } from "../utils/xml-to-json.js"
 
 export async function parseAppmsgMessagePayload(

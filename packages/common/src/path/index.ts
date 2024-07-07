@@ -3,5 +3,5 @@ import path from "path"
 
 export const projectDir = process.cwd()
 
-export const generatedDir = path.join(projectDir, "__generated")
+export const generatedDir = path.join(projectDir, ".generated")
 if (!fs.existsSync(generatedDir)) fs.mkdirSync(generatedDir)
