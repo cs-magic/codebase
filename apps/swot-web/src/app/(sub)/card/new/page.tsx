@@ -1,5 +1,5 @@
-import { genPageTitle } from "@/utils/get-page-title"
 import { NewCard } from "../../../../components/new-card"
+import { genPageTitle } from "../../../../utils/get-page-title"
 
 export const metadata = {
   title: genPageTitle("新建卡片"),

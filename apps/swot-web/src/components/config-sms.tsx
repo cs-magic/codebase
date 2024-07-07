@@ -1,13 +1,12 @@
 "use client"
 
-import { useAtom } from "jotai"
-import { SmsProviderType } from "../../../../packages/auth/src/sms/schema"
+import { SmsProviderType } from "@cs-magic/auth/providers/sms/schema"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "../../../../packages/auth/src/sms/store"
-import { Input } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+} from "@cs-magic/auth/providers/sms/store"
+import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import {
   Select,
   SelectContent,
@@ -15,9 +14,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common"
-
-import { StandardCard } from "../../../../packages/common/ui/components/standard-card"
+} from "@cs-magic/common/ui/components/shadcn/ui/select"
+import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+import { useAtom } from "jotai"
 
 export const ConfigSMSCard = () => {
   const [smsProvider, setSmsProvider] = useAtom(smsProviderTypeAtom)

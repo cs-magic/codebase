@@ -1,8 +1,10 @@
-import { Avatar, AvatarImage } from "@cs-magic/common"
-import { ImageEqualHeight } from "@cs-magic/common"
-import { SeparatorContainer } from "@cs-magic/common"
-
 import { config } from "@cs-magic/common"
+import { ImageEqualHeight } from "@cs-magic/common/ui/components/image-equal-height"
+import { SeparatorContainer } from "@cs-magic/common/ui/components/separator-container"
+import {
+  Avatar,
+  AvatarImage,
+} from "@cs-magic/common/ui/components/shadcn/ui/avatar"
 
 export const BrandingPartners = () => {
   const avatars = [config.website.avatar.mark, config.website.avatar.idoubi]

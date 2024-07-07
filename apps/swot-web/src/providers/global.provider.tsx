@@ -1,7 +1,7 @@
 "use client"
+import { useDisplayAutoHeight } from "@cs-magic/common/hooks/use-display-auto-height"
+import { useEnhancedRouter } from "@cs-magic/common/hooks/use-enhanced-router"
 import { PropsWithChildren } from "react"
-import { useDisplayAutoHeight } from "@cs-magic/common"
-import { useEnhancedRouter } from "@cs-magic/common"
 
 export default function GlobalProvider({ children }: PropsWithChildren) {
   useDisplayAutoHeight()

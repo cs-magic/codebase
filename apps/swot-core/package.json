@@ -6,7 +6,7 @@
     "./*": "./dist/src/*.js"
   },
   "scripts": {
-    "build": "tsc -b"
+    "build": "rm -rf dist && tsc -b"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

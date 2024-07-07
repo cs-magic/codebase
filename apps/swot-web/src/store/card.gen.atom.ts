@@ -1,13 +1,13 @@
-import { cardSummaryOptionsAtom } from "@/store/card.summary.atom"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-core/schema/wxmp-article"
+import { atom } from "jotai"
 import {
   cardFetchCommentsEnabledAtom,
   cardFetchStatEnabledAtom,
   cardFetchWithCacheAtom,
   cardReqOptionsAtom,
   cardWatermarkTextAtom,
-} from "@/store/card.request.atom"
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/wechat/schema/card"
-import { atom } from "jotai"
+} from "./card.request.atom"
+import { cardSummaryOptionsAtom } from "./card.summary.atom"
 
 export const cardGenOptionsAtom = atom<GenWxmpArticleCardFetchOptions>(
   (get) => ({

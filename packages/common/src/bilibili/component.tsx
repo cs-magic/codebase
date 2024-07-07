@@ -1,3 +1,4 @@
+import React from "react"
 import { IBilibiliVideo } from "./schema.js"
 import { getBilibiliIFrameUrl } from "./utils.js"
 

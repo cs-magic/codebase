@@ -1,11 +1,14 @@
 {
   "name": "@cs-magic/auth",
   "packageManager": "yarn@4.1.1",
-  "type": "module",
+  "exports": {
+    "./*": "./dist/src/*.js"
+  },
   "scripts": {
-    "build": "tsc -b"
+    "build": "rm -rf dist && tsc -b"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^"
+    "@cs-magic/common": "workspace:^",
+    "next-auth": "^4.24.7"
   }
 }

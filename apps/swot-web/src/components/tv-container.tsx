@@ -5,7 +5,7 @@ import {
   tvScreenOnAtom,
 } from "@cs-magic/common/extend-tv/store"
 import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { cn } from "../lib/utils"
+import { cn } from "@cs-magic/common/ui/utils"
 import { Controls } from "./tv-controls"
 
 import "../styles/tv.css"

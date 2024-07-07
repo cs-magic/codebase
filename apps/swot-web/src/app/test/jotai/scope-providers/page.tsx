@@ -1,8 +1,8 @@
 "use client"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import { Provider } from "jotai"
 import { ScopeProvider } from "jotai-scope"
-import { FlexContainer } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
 import { PlainContext } from "../plain-context"
 import { base1Atom, base2Atom } from "../store"
 

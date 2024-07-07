@@ -1,14 +1,15 @@
-import { useAtom } from "jotai"
-import { Atom } from "../../store/jotai/types.js"
+import { Atom, PrimitiveAtom, useAtom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
+import { LabelLine } from "./label-line.jsx"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../ui-shadcn/components/ui/select.js"
-import { Switch } from "../../ui-shadcn/components/ui/switch.js"
-import { LabelLine } from "./label-line.jsx"
+} from "./shadcn/ui/select.jsx"
+import { Switch } from "./shadcn/ui/switch.jsx"
+import React from "react"
 
 /**
  * @param atom
@@ -19,10 +20,10 @@ export const AtomSwitcher = ({
   atom,
   name,
 }: {
-  atom: Atom<boolean>
+  atom: any // todo: augment
   name: string
 }) => {
-  const [v, setV] = useAtom(atom)
+  const [v, setV] = useAtom(atom as PrimitiveAtom<boolean>)
 
   return (
     <LabelLine title={name}>

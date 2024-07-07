@@ -1,7 +1,7 @@
+import { Nullable } from "@cs-magic/common/schema/base"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
-import { Nullable } from "../common/schema/base"
 import { ISendSms, ISmsSignIn, SmsProviderType, SmsStage } from "./schema"
 
 //////////////////////////////

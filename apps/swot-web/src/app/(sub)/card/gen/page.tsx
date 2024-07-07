@@ -1,6 +1,6 @@
-import { genPageTitle } from "@/utils/get-page-title"
 import { Suspense } from "react"
 import { Card } from "../../../../components/card"
+import { genPageTitle } from "../../../../utils/get-page-title"
 
 export const metadata = {
   title: genPageTitle("渲染卡片"),

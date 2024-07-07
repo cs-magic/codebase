@@ -1,11 +1,11 @@
 "use client"
 
 import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
+import { cn } from "@cs-magic/common/ui/utils"
 import { ActionType } from "@cs-magic/swot-core/schema/card"
-import { Atom, useAtom } from "jotai"
+import { atom, PrimitiveAtom, useAtom } from "jotai"
 import capitalize from "lodash/capitalize"
 import { HTMLAttributes } from "react"
-import { cn } from "../lib/utils"
 import {
   cardCopyingAtom,
   cardDownloadingAtom,
@@ -13,6 +13,8 @@ import {
   cardResettingAtom,
   cardUploadingAtom,
 } from "../store/card.actions.atom"
+
+const tAtom = atom(false)
 
 export const CardAction = ({
   disabled,
@@ -26,7 +28,7 @@ export const CardAction = ({
   disabled?: boolean
   type: ActionType
 } & HTMLAttributes<HTMLButtonElement>) => {
-  const atomMap: Record<ActionType, Atom<boolean>> = {
+  const atomMap: Record<ActionType, PrimitiveAtom<boolean>> = {
     generate: cardGeneratingAtom,
     copy: cardCopyingAtom,
     download: cardDownloadingAtom,
@@ -35,6 +37,7 @@ export const CardAction = ({
   }
 
   const [v, setV] = useAtom(atomMap[type])
+  const [v2, setV2] = useAtom(tAtom)
 
   return (
     <ButtonWithLoading

@@ -1,12 +1,13 @@
 "use client"
 
-import { useAtom, useSetAtom } from "jotai"
-import { useEffect } from "react"
-import { usePusherClient } from "@cs-magic/common"
-import { PusherServerId } from "@cs-magic/common"
-import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
+import { usePusherClient } from "@cs-magic/common/pusher/hooks/use-pusher-client"
+import { PusherServerId } from "@cs-magic/common/pusher/schema"
+import {
+  cleanPusherAtom,
+  pusherServerIdAtom,
+} from "@cs-magic/common/pusher/store"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
 import {
   Select,
   SelectContent,
@@ -14,7 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common"
+} from "@cs-magic/common/ui/components/shadcn/ui/select"
+import { useAtom, useSetAtom } from "jotai"
+import { useEffect } from "react"
 
 export default function TestSocketPage() {
   const [serverId, setServerId] = useAtom(pusherServerIdAtom)

@@ -1,14 +1,12 @@
 "use server"
 
-import { NotImplementedError } from "@cs-magic/common"
-import { extractFirstUrl } from "@cs-magic/common"
-import { isWxmpArticleUrl } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
-import { wxmpUrl2preview } from "@cs-magic/wechat/utils/wxmpUrl2preview"
-import {
-  GenWxmpArticleCardFetchOptions,
-  ICardInnerPreview,
-} from "@cs-magic/wechat/schema/card"
+import { NotImplementedError } from "@cs-magic/common/schema/error"
+import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
+import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
+import { ICardInnerPreview } from "@cs-magic/swot-core/schema/card"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-core/schema/wxmp-article"
+import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
 
 /**
  * 从用户输入的 url 中返回解析出的结构

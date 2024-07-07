@@ -1,4 +1,4 @@
-import { cn } from "@cs-magic/common"
+import { cn } from "@cs-magic/common/ui/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { HTMLAttributes } from "react"

@@ -1,5 +1,8 @@
+import {
+  tvFullScreenAtom,
+  tvScreenOnAtom,
+} from "@cs-magic/common/extend-tv/store"
 import { useSetAtom } from "jotai"
-import { tvFullScreenAtom, tvScreenOnAtom } from "@cs-magic/common"
 
 export const Controls = () => {
   const toggleFullscreen = useSetAtom(tvFullScreenAtom)

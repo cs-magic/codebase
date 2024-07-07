@@ -1,12 +1,12 @@
+import { logger } from "@cs-magic/common"
 import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import logger from "@cs-magic/common/log"
 import { cardDetailSchema } from "@cs-magic/common/schema/card.detail"
 import { formatString } from "@cs-magic/common/utils/format-string"
 import { FetchWxmpArticleRes } from "@cs-magic/wechat/wxmp-article/fetch/index"
 import { md2summary } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
 
+import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article"
 import { wxmpRequest } from "./wxmp-request"
-import { GenWxmpArticleCardFetchOptions } from "../schema"
 import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
 
 export const fetchWxmpArticle = async (

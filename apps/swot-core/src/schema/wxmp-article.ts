@@ -1,6 +1,7 @@
 import { SummaryOptions } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
 import { ICardPlatform } from "./card-platform"
-import { RequestOptions } from "./index"
+
+import { RequestOptions } from "./request"
 
 export type IWxmpArticleUrlParsed = {
   platformId?: string
@@ -10,4 +11,24 @@ export type IWxmpArticleUrlParsed = {
 export type FetchWxmpArticleDetailOptions = {
   request?: RequestOptions
   summary?: SummaryOptions
+}
+export type GenWxmpArticleCardFetchOptions = {
+  // 1. cache
+  withCache?: boolean
+
+  // 2. detail
+  detail?: FetchWxmpArticleDetailOptions
+
+  // 3. extra
+  stat?: {
+    enabled?: boolean
+  }
+
+  comments?: {
+    enabled?: boolean
+  }
+
+  watermark?: {
+    text?: string
+  }
 }

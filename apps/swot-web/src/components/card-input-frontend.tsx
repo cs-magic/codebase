@@ -1,25 +1,27 @@
 import {
-  cardLlmModelTypeAtom,
-  cardLlmEnabledAtom,
-  cardSummaryWithImageAtom,
-} from "@/store/card.summary.atom"
-import {
-  cardFetchEngineAtom,
-  cardFetchWithCacheAtom,
-  cardFetchStatEnabledAtom,
-  cardFetchCommentsEnabledAtom,
-  cardWatermarkTextAtom,
-} from "@/store/card.request.atom"
-import { useAtom } from "jotai"
-import React from "react"
+  AtomSelector,
+  AtomSwitcher,
+} from "@cs-magic/common/ui/components/atom-switcher"
+import { LabelLine } from "@cs-magic/common/ui/components/label-line"
+import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+import { Separator } from "@cs-magic/common/ui/components/shadcn/ui/separator"
+import { mapSpacingVerticalAtom } from "@cs-magic/common/visualization/store"
 import { backendTypeSchema } from "@cs-magic/llm/schema/llm.base"
 import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
-import { Input } from "@cs-magic/common"
-import { Separator } from "@cs-magic/common"
-import { AtomSelector, AtomSwitcher } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { mapSpacingVerticalAtom } from "@cs-magic/common"
+import { PrimitiveAtom, useAtom } from "jotai"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
+import {
+  cardFetchCommentsEnabledAtom,
+  cardFetchEngineAtom,
+  cardFetchStatEnabledAtom,
+  cardFetchWithCacheAtom,
+  cardWatermarkTextAtom,
+} from "../store/card.request.atom"
+import {
+  cardLlmEnabledAtom,
+  cardLlmModelTypeAtom,
+  cardSummaryWithImageAtom,
+} from "../store/card.summary.atom"
 import { CardAction1 } from "./card-action1"
 import { CardInputUrl } from "./card-input-url"
 import { CardInputUser } from "./card-input-user"

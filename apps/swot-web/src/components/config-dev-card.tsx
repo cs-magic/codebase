@@ -1,9 +1,9 @@
+import { devEnabledAtom } from "@cs-magic/common/dev/store"
+import { LabelLine } from "@cs-magic/common/ui/components/label-line"
+import { Switch } from "@cs-magic/common/ui/components/shadcn/ui/switch"
+import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
 import { useAtom } from "jotai"
-import { devEnabledAtom } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { Switch } from "@cs-magic/common"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
-import { StandardCard } from "../../../../packages/common/ui/components/standard-card"
 
 export const ConfigDevCard = () => {
   const [devEnabled, setDevEnabled] = useAtom(devEnabledAtom)

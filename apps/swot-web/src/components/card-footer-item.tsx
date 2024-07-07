@@ -1,6 +1,6 @@
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
 import { LucideIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { FlexContainer } from "@cs-magic/common"
 
 export const CardFooterItem = ({
   Icon,

@@ -1,6 +1,6 @@
+import { devEnabledAtom } from "@cs-magic/common/dev/store"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
 import { useAtom } from "jotai"
-import { devEnabledAtom } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
 
 export const DevData = () => {
   const [devEnabled] = useAtom(devEnabledAtom)

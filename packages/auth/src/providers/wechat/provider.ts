@@ -3,14 +3,22 @@ import { logger } from "@cs-magic/common"
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers/index"
 import { WECHAT_PROVIDER_ID } from "./config"
 import { getWechatAuthorizationUrl } from "./funcs/client"
-import { adaptWechatAuthToken, getWechatAuthToken, getWechatUserProfile } from "./funcs/server"
-import { IWechatAdaptedProfile, IWechatAdaptedToken, IWechatProfile } from "./schema"
+import {
+  adaptWechatAuthToken,
+  getWechatAuthToken,
+  getWechatUserProfile,
+} from "./funcs/server"
+import {
+  IWechatAdaptedProfile,
+  IWechatAdaptedToken,
+  IWechatProfile,
+} from "./schema"
 
 /**
  * todo: type hint on callbacks
  * ref:
  * 1. https://github.com/nextauthjs/next-auth/issues/5937
- * 2. node_modules/next-auth/src/providers/facebook.ts
+ * 2. node_modules/next-auth/providers/facebook.ts
  */
 export default function WechatProvider<P extends IWechatAdaptedProfile>(
   options: OAuthUserConfig<P>,

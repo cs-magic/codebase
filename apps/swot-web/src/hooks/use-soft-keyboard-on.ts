@@ -1,6 +1,6 @@
+import { uiInnerHeight } from "@cs-magic/common/ui/store"
 import { useAtom } from "jotai"
 import { useWindowSize } from "react-use"
-import { uiInnerHeight } from "@cs-magic/common"
 
 export const useSoftKeyboardOn = () => {
   const { height } = useWindowSize()

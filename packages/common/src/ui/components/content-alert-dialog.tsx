@@ -1,11 +1,9 @@
 "use client"
 import { useAtom } from "jotai"
 import React, { PropsWithChildren } from "react"
-import {
-  AlertDialog,
-  AlertDialogContent,
-} from "../../ui-shadcn/components/ui/alert-dialog.jsx"
+
 import { uiAlertDialogOpen } from "../store.js"
+import { AlertDialog, AlertDialogContent } from "./shadcn/ui/alert-dialog.jsx"
 
 export const ContentAlertDialog = ({ children }: PropsWithChildren) => {
   const [open, setOpen] = useAtom(uiAlertDialogOpen)

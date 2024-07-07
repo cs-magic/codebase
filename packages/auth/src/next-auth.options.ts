@@ -1,11 +1,12 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import { getEnv } from "@cs-magic/common/env"
 
-import { getEnv, prisma } from "@cs-magic/common"
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { Adapter } from "next-auth/adapters"
 import { tokenExpireSeconds } from "./config"
 
-import { ProfileUpdateProvider } from "./providers/provider"
+import { ProfileUpdateProvider } from "./providers/profile/provider"
 import { SmsProvider } from "./providers/sms/provider"
 import WechatProvider from "./providers/wechat/provider"
 import { IWechatProfile } from "./providers/wechat/schema"

@@ -1,4 +1,4 @@
-import { getEnv } from "@cs-magic/common"
+import { getEnv } from "@cs-magic/common/env"
 
 const env = getEnv()
 

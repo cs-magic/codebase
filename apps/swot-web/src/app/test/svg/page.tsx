@@ -1,12 +1,12 @@
 "use client"
 
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import {
   Text2ImageAppSVG,
   Text2TextAppSVG,
   V2AGIBrand,
 } from "../../../components/assets"
-import { Label } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
 
 export default function TestSVGPage() {
   return (

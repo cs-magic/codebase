@@ -1,4 +1,4 @@
-import { FlexContainer } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
 
 export default function TestCSSWrap() {
   return (

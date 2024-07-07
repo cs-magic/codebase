@@ -1,10 +1,10 @@
 "use server"
 
+import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
 import {
   cardLlmResponseSchema,
   ICardLlmResponse,
-} from "@cs-magic/prisma/schema/card.detail"
-import { prisma } from "@cs-magic/common"
+} from "@cs-magic/common/schema/card.detail"
 
 export const updateOssUrl = async (
   llmResponseId: string,

@@ -1,22 +1,21 @@
 "use client"
 
+import { useSearchParam } from "@cs-magic/common/hooks/use-search-param"
+import { AtomSelector } from "@cs-magic/common/ui/components/atom-switcher"
+import { Separator } from "@cs-magic/common/ui/components/shadcn/ui/separator"
+import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+import { cn } from "@cs-magic/common/ui/utils"
+import {
+  cardPreviewEngineTypeSchema,
+  GenCardApproach,
+} from "@cs-magic/swot-core/schema/card"
+import { cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import { useAtomValue } from "jotai"
 import React from "react"
-import {
-  cardPreviewEngineTypeSchema,
-  type GenCardApproach,
-} from "@cs-magic/wechat/schema/card"
-import { useSearchParam } from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
-import { Separator } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { AtomSelector } from "@cs-magic/common"
-import { cardPreviewAtom } from "../store/card.atom"
 import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreviewContainer } from "./card-preview-container"
-import { StandardCard } from "../../../../packages/common/ui/components/standard-card"
 
 export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)

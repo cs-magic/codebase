@@ -1,9 +1,9 @@
 "use client"
+import { ContentAlertDialog } from "@cs-magic/common/ui/components/content-alert-dialog"
+import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
+import { uiAlertDialogContent } from "@cs-magic/common/ui/store"
 import Link from "next/link"
-import { uiAlertDialogContent } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
 import React from "react"
-import { ContentAlertDialog } from "@cs-magic/common"
 import { useAtom } from "jotai"
 
 export const ReturnHomeAlertDialog = ({ content }: { content?: string }) => {

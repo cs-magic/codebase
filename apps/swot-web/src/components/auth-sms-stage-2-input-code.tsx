@@ -1,18 +1,19 @@
 "use client"
 
+import { SMS_PROVIDER_ID } from "@cs-magic/auth/providers/sms/const"
+import {
+  smsCodeAtom,
+  smsSignInPayloadAtom,
+} from "@cs-magic/auth/providers/sms/store"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+import { SMS_DIGIT_SIZE } from "@cs-magic/common/ui/config"
+import { uiLoadingAlertDialogAtom } from "@cs-magic/common/ui/store"
+import { cn } from "@cs-magic/common/ui/utils"
 import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
-import { SMS_PROVIDER_ID } from "../../../../packages/auth/src/sms/const"
-import {
-  smsCodeAtom,
-  smsSignInPayloadAtom,
-} from "../../../../packages/auth/src/sms/store"
-import { Label } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { SMS_DIGIT_SIZE } from "@cs-magic/common"
-import { uiLoadingAlertDialogAtom } from "@cs-magic/common"
+
 import { SmsReInputPhone } from "./auth-sms-reinput-phone"
 import { SmsResendCode } from "./auth-sms-resend-code"
 import { useHotkeys } from "@mantine/hooks"
@@ -50,7 +51,7 @@ export const AuthSmsStage2InputCode = () => {
 
   return (
     <div className={"flex w-full flex-col items-center gap-4"}>
-      <Label className={"text-semibold text-lg"}>验证您的手机号</Label>
+      验证您的手机号
       <div
         className={
           "flex flex-col items-center gap-2 text-xs text-muted-foreground"
@@ -116,7 +117,6 @@ export const AuthSmsStage2InputCode = () => {
 
         <SmsReInputPhone />
       </div>
-
       <SmsResendCode />
     </div>
   )

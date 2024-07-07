@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@cs-magic/common/deps/ui-shadcn/components",
-    "utils": "@cs-magic/common/deps/ui-shadcn/utils"
+    "components": "@cs-magic/common/ui/components/shadcn",
+    "utils": "@cs-magic/common/ui/utils"
   }
 }

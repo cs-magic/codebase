@@ -1,10 +1,10 @@
-import { cardGenOptionsAtom } from "@/store/card.gen.atom"
-import { cardUserAvatarAtom, cardUserNameAtom } from "@/store/card.user.atom"
-import { genCardFromUrl } from "@/utils/gen-card"
 import { logger } from "@cs-magic/common"
+import { Action1Type } from "@cs-magic/swot-core/schema/card"
 import { useAtom, useSetAtom } from "jotai"
-import { Action1Type } from "@cs-magic/wechat/schema/card"
 import { cardArticleUrlAtom, cardInnerInputAtom } from "../store/card.atom"
+import { cardGenOptionsAtom } from "../store/card.gen.atom"
+import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.user.atom"
+import { genCardFromUrl } from "../utils/gen-card"
 import { CardAction } from "./card-action"
 
 export const CardAction1 = ({ type }: { type: Action1Type }) => {

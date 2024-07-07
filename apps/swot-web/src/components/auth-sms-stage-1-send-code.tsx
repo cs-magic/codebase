@@ -1,17 +1,11 @@
 "use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useAtom, useSetAtom } from "jotai"
-import { useForm } from "react-hook-form"
-import { useSmsSendCode } from "../../../../packages/auth/src/sms/hooks/use-sms-send-code"
-import {
-  ISendSms,
-  sendSmsSchema,
-} from "../../../../packages/auth/src/sms/schema"
+import { useSmsSendCode } from "@cs-magic/auth/providers/sms/hooks/use-sms-send-code"
+import { ISendSms, sendSmsSchema } from "@cs-magic/auth/providers/sms/schema"
 import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
-} from "../../../../packages/auth/src/sms/store"
-import { ButtonWithLoading } from "@cs-magic/common"
+} from "@cs-magic/auth/providers/sms/store"
+import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
 import {
   Form,
   FormControl,
@@ -19,8 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
+} from "@cs-magic/common/ui/components/shadcn/ui/form"
+import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useAtom, useSetAtom } from "jotai"
+import { useForm } from "react-hook-form"
 
 export const AuthSmsStage1SendCode = () => {
   const [downtime] = useAtom(smsCodeCurCountdownSecondsAtom)

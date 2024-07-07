@@ -10,7 +10,7 @@ import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"
 import { z } from "zod"
 
-import { RequestOptions } from "../schema"
+import { RequestOptions } from "../schema/request"
 import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
 
 // import { parseWxmpArticleUrl } from "@cs-magic/swot-web/utils/card-platform/wechat-article/utils"

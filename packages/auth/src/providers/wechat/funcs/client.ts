@@ -1,4 +1,4 @@
-import { getEnv } from "@cs-magic/common"
+import { getEnv } from "@cs-magic/common/env"
 import { WECHAT_AUTH_CALLBACK_URL } from "../config"
 import { WechatScopeType } from "../schema"
 

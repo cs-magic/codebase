@@ -6,9 +6,6 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
-  // ref: https://tauri.app/v1/guides/getting-started/setup/next-js#nextjs-static-exports
-  output: "export",
-
   reactStrictMode: false,
 
   distDir: process.env.DIST ?? ".next",

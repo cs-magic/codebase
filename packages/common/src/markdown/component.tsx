@@ -7,9 +7,10 @@ import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism"
 import rehypeKatex from "rehype-katex"
 import remarkMath from "remark-math"
 
-import { cn } from "../ui-shadcn/utils.js"
+import { cn } from "../ui/utils"
 
 import "katex/dist/katex.min.css" // `rehype-katex` does not import the CSS for you
+import React from "react"
 
 export const MarkdownComp = ({
   children,

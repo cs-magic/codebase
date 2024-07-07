@@ -1,12 +1,10 @@
-import {
-  RequestApproachType,
-  RequestOptions,
-} from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/requestPage"
-import { atom } from "jotai"
+import { RequestApproachType } from "@cs-magic/swot-core/schema/card"
+import { RequestOptions } from "@cs-magic/swot-core/schema/request"
+import { atom, PrimitiveAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BackendType } from "@cs-magic/llm/schema/llm.base"
 
-export const cardFetchWithCacheAtom = atomWithStorage<boolean>(
+export const cardFetchWithCacheAtom = atomWithStorage(
   "card.fetch.with-cache",
   true,
 )
@@ -47,3 +45,7 @@ export const cardReqOptionsAtom = atom<RequestOptions>((get) => ({
     headless: get(requestIsHeadlessAtom),
   },
 }))
+//
+// export const func = (atom: PrimitiveAtom<boolean>) => {}
+//
+// func(cardFetchWithCacheAtom)

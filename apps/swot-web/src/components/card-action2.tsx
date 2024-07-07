@@ -1,16 +1,16 @@
 "use client"
 
-import { cardOssAtom, cardPreviewAtom } from "@/store/card.atom"
+import { uploadFile } from "@cs-magic/common/oss/upload"
+import { Action2Type, ActionType } from "@cs-magic/swot-core/schema/card"
+import { cardOssAtom, cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
-import { updateOssUrl } from "@/utils/update-oss-url.action"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"
 import { useAtom } from "jotai"
 import { domToBlob } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
-import { Action2Type, ActionType } from "@cs-magic/wechat/schema/card"
-import { uploadFile } from "@cs-magic/common"
+import { updateOssUrl } from "../utils/update-oss-url.action"
 import { CardAction } from "./card-action"
 
 export const CardAction2 = ({

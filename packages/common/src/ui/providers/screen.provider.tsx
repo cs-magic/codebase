@@ -4,6 +4,7 @@ import { PropsWithChildren, useEffect } from "react"
 import { useMeasure } from "react-use"
 
 import { uiScreenAtom } from "../store.js"
+import React from "react"
 
 export const ScreenProvider = ({ children }: PropsWithChildren) => {
   const [ref, { width, height }] = useMeasure<HTMLDivElement>()

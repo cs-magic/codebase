@@ -1,8 +1,8 @@
+import { getEnv } from "@cs-magic/common/env"
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
 import { type NextRequest } from "next/server"
-import { getEnv } from "@cs-magic/common"
+import { createTRPCContext } from "../../../../trpc/context"
 
-import { createTRPCContext } from "@cs-magic/common"
 import { appRouter } from "../index"
 
 const env = getEnv()

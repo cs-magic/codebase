@@ -12,16 +12,31 @@
       "dom.iterable",
       "esnext"
     ],
-//    "baseUrl": ".",
-//    "paths": {
-//      "@/*": [
-//        "src/*"
-//      ]
-//    }
+    "types": [
+      "jest",
+      "node"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    // for trpc api, ref: https://github.com/microsoft/TypeScript/issues/42873
+
+    "baseUrl": ".",
+    "paths": {
+      //          "@/*": ["src/*"],
+      "@trpc/react-query": [
+        "node_modules/@trpc/react-query/", // ref: https://github.com/microsoft/TypeScript/issues/29808#issuecomment-540292885
+      ]
+    }
   },
   // include 和 exclude 是独立的，extend的时候也要写上
   // nextjs 的 include是必须的，否则会报 push 错误
   "include": [
+    "jest.config.ts",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
@@ -33,11 +48,19 @@
   ],
   "exclude": [
     "node_modules",
-    "src-tauri"
   ],
   "references": [
-    {"path": "../../packages/common"},
-    {"path": "../../packages/wechat"},
-    {"path": "../swot-core"},
+    {
+      "path": "../../packages/common"
+    },
+    {
+      "path": "../../packages/auth"
+    },
+    {
+      "path": "../../packages/wechat"
+    },
+    {
+      "path": "../swot-core"
+    }
   ]
 }

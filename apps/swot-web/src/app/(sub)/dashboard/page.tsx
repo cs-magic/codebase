@@ -1,20 +1,20 @@
 "use client"
-import { EditIcon } from "lucide-react"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import { FlexContainer } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
+import { useDraftSession } from "@cs-magic/common/hooks/use-user-draft-session"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
-import { useDraftSession } from "@cs-magic/common"
-import { useUserUpdateProfile } from "@cs-magic/common"
+} from "@cs-magic/common/ui/components/shadcn/ui/card"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+import { EditIcon } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+
 import { UserInputAvatar } from "../../../components/user-input-avatar"
 import { UserInputName } from "../../../components/user-input-name"
 import { UserSignOutButton } from "../../../components/user-sign-out-button"
@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const { value: name, changed: nameChanged } = useDraftSession("name")
   const { changed: imageChanged } = useDraftSession("image")
 
-  const updateProfile = useUserUpdateProfile()
+  // const updateProfile = useUserUpdateProfile()
 
   const [nameEditable, setNameEditable] = useState(false)
 
@@ -76,9 +76,9 @@ export default function DashboardPage() {
             disabled={!imageChanged && !nameChanged}
             className={"w-full"}
             onClick={async () => {
-              const res = await updateProfile()
-              if (res?.ok) toast.success("更新成功")
-              else toast.error("更新失败")
+              // const res = await updateProfile()
+              // if (res?.ok) toast.success("更新成功")
+              // else toast.error("更新失败")
             }}
           >
             更新

@@ -1,11 +1,13 @@
-import { cardUserAtom } from "@/store/card.user.atom"
-
-import { getOssKeyWithSuffix } from "@/utils/get-oss-key-with-suffix"
-import { parseJsonSafe } from "../../../../packages/common/utils/parse-json"
-import { ICardInnerPreview, ICardPreview } from "@cs-magic/wechat/schema/card"
+import { getOssUrl } from "@cs-magic/common/oss/utils"
+import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import {
+  ICardInnerPreview,
+  ICardPreview,
+} from "@cs-magic/swot-core/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { getOssUrl } from "@cs-magic/common"
+import { getOssKeyWithSuffix } from "../utils/get-oss-key-with-suffix"
+import { cardUserAtom } from "./card.user.atom"
 
 export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
 

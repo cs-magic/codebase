@@ -1,11 +1,13 @@
 "use client"
+
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
+import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import { useSession } from "next-auth/react"
 import { useRef } from "react"
-import { api } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
+import { api } from "../../../../trpc/client"
+
 import { updateUserNameViaTrpc } from "./actions"
 
 export default function TestTrpcRouterInClientPage() {

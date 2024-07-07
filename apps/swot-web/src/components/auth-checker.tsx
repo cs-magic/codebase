@@ -1,6 +1,5 @@
 "use client"
 
-import { useAtom } from "jotai"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,7 +8,9 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "@cs-magic/common"
+} from "@cs-magic/common/ui/components/shadcn/ui/alert-dialog"
+import { useAtom } from "jotai"
+
 import { signIn } from "next-auth/react"
 
 import { checkAuthAlertDialogOpenAtom } from "../store/ui.atom"

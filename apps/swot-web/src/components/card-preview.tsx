@@ -1,25 +1,25 @@
-import { CsMagicLogoSvg } from "@/components/assets"
-import { Tags } from "@/components/card-content-tags"
-import { UserAvatar } from "@/components/user-avatar"
+import { config } from "@cs-magic/common"
+import { moment } from "@cs-magic/common/datetime/moment"
+import { IUserSummary } from "@cs-magic/common/schema/user.summary"
+import { VerticalAspectRatio } from "@cs-magic/common/ui/components/aspect-ratio"
+import { AspectRatio } from "@cs-magic/common/ui/components/shadcn/ui/aspect-ratio"
+import { cn } from "@cs-magic/common/ui/utils"
+import { ICardPreview } from "@cs-magic/swot-core/schema/card"
+import { useAtom } from "jotai"
+import Image from "next/image"
+import { QRCodeSVG } from "qrcode.react"
+import { forwardRef } from "react"
 import {
   cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,
   cardUserAvatarRenderedAtom,
 } from "../store/card.rendered.atom"
-import { cardWatermarkTextAtom } from "@/store/card.request.atom"
-import { getPlatformName } from "@/utils/card-platform/get-platform-name"
-import { config } from "@cs-magic/common"
-import { moment } from "@cs-magic/common"
-import { AspectRatio } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { VerticalAspectRatio } from "@cs-magic/common"
-import MarkMap from "@cs-magic/common"
-import { IUserSummary } from "@cs-magic/prisma/schema/user.summary"
-import { ICardPreview } from "@cs-magic/wechat/schema/card"
-import { useAtom } from "jotai"
-import Image from "next/image"
-import { QRCodeSVG } from "qrcode.react"
-import { forwardRef } from "react"
+import { cardWatermarkTextAtom } from "../store/card.request.atom"
+import { getPlatformName } from "../utils/card-platform/get-platform-name"
+import { CsMagicLogoSvg } from "./assets"
+import { Tags } from "./card-content-tags"
+import MarkMap from "./markmap"
+import { UserAvatar } from "./user-avatar"
 
 export const CardPreview = forwardRef<
   HTMLDivElement,

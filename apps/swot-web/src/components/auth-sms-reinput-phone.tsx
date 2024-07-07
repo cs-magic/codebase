@@ -1,10 +1,8 @@
 "use client"
+
+import { smsStageAtom, userPhoneAtom } from "@cs-magic/auth/providers/sms/store"
 import { useAtom, useSetAtom } from "jotai"
 import { EditIcon } from "lucide-react"
-import {
-  smsStageAtom,
-  userPhoneAtom,
-} from "../../../../packages/auth/src/sms/store"
 
 export const SmsReInputPhone = () => {
   const [phone] = useAtom(userPhoneAtom)

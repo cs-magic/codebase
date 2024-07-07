@@ -1,7 +1,6 @@
+import { CardPreviewEngineType } from "@cs-magic/swot-core/schema/card"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-
-import { CardPreviewEngineType } from "@cs-magic/swot-core/src/schema/card"
 
 export const cardMindmapRenderedAtom = atom(true)
 // todo: 必须等思维导图有内容才可以生成卡片（大语言模型返回的思维导图可能是没有内容的）

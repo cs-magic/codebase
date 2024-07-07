@@ -1,10 +1,10 @@
 "use client"
 
+import { devEnabledAtom } from "@cs-magic/common/dev/store"
+import { pusherLatencyAtom } from "@cs-magic/common/pusher/store"
+import { cn } from "@cs-magic/common/ui/utils"
 import { useAtom } from "jotai"
 import { BarChart } from "lucide-react"
-import { devEnabledAtom } from "@cs-magic/common"
-import { pusherLatencyAtom } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
 import { DevSocketStatusIcon } from "./dev-socket-status-icon"
 
 export const DevSocketStatus = () => {

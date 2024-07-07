@@ -1,20 +1,19 @@
+import { LoadingAlertDialog } from "@cs-magic/common/ui/components/loading"
+import { Toaster } from "@cs-magic/common/ui/components/shadcn/ui/sonner"
+import { TooltipProvider } from "@cs-magic/common/ui/components/shadcn/ui/tooltip"
+import JotaiProvider from "@cs-magic/common/ui/providers/jotai.provider"
+import { ScreenProvider } from "@cs-magic/common/ui/providers/screen.provider"
+import { SessionProvider } from "@cs-magic/common/ui/providers/session.provider"
+import ThemeProvider from "@cs-magic/common/ui/providers/theme.provider"
+import { cn } from "@cs-magic/common/ui/utils"
 import { type Viewport } from "next"
 import { Inter } from "next/font/google"
 
-import { TRPCReactProvider } from "@cs-magic/common"
-import { Toaster } from "@cs-magic/common"
-import { TooltipProvider } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { LoadingAlertDialog } from "@cs-magic/common"
-import JotaiProvider from "@cs-magic/common"
-import { ScreenProvider } from "@cs-magic/common"
-import { SessionProvider } from "@cs-magic/common"
-import ThemeProvider from "@cs-magic/common"
-import { Dev } from "../components/dev"
-
 import { config } from "@cs-magic/common"
+import { Dev } from "../components/dev"
 import GlobalHooksProviders from "../providers/global.provider"
 import "../styles/globals.css"
+import { TRPCReactProvider } from "../trpc/react"
 
 const inter = Inter({
   subsets: ["latin"],

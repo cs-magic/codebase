@@ -1,19 +1,18 @@
 "use client"
 
+import { userImageAtom, userNameAtom } from "@cs-magic/common/store/user.atom"
+import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import { useAtom } from "jotai"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
-import { userImageAtom, userNameAtom } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
-import { useUserUpdateProfile } from "@cs-magic/common"
 import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 
 export const AuthUpdateProfile = () => {
   const [name] = useAtom(userNameAtom)
   const [image] = useAtom(userImageAtom)
-  const updateProfile = useUserUpdateProfile()
+  // const updateProfile = useUserUpdateProfile()
 
   return (
     <div className={"flex w-full flex-col items-center gap-4"}>
@@ -33,14 +32,14 @@ export const AuthUpdateProfile = () => {
           disabled={!name || !image}
           className={"w-full"}
           onClick={async () => {
-            const res = await updateProfile()
-            if (res?.ok) {
-              toast.success("登录成功")
-            } else {
-              // e.g. 表里的记录被删了
-              toast.error("登录失败，请重试！")
-              void signOut()
-            }
+            // const res = await updateProfile()
+            // if (res?.ok) {
+            //   toast.success("登录成功")
+            // } else {
+            //   // e.g. 表里的记录被删了
+            //   toast.error("登录失败，请重试！")
+            //   void signOut()
+            // }
           }}
         >
           敬启 AI 世界

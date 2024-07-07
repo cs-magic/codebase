@@ -1,4 +1,4 @@
-import { cn } from "@cs-magic/common"
+import { cn } from "@cs-magic/common/ui/utils"
 import { SVGProps } from "react"
 
 /**

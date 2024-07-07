@@ -1,11 +1,11 @@
 "use server"
 
+import { FetchApproach } from "@cs-magic/common/api-client/schema"
+import { sampleXiaoHongShuVideoUrl } from "@cs-magic/common/sample"
 import axios from "axios"
 
 import nodeFetch from "node-fetch"
 import { request } from "undici"
-import { FetchApproach } from "@cs-magic/common"
-import { sampleXiaoHongShuVideoUrl } from "@cs-magic/common"
 
 const fetchArrayBuffer = async (lib: FetchApproach): Promise<ArrayBuffer> => {
   console.log("-- fetching using: ", lib)

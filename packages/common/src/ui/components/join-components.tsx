@@ -1,3 +1,4 @@
+import React from "react"
 import { cloneElement, Fragment, isValidElement } from "react"
 
 export const JoinComponents = ({

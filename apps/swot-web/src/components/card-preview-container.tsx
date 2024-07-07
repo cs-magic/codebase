@@ -1,16 +1,17 @@
 "use client"
 
-import { cardRenderedAtom } from "../store/card.rendered.atom"
-import { cardUserAtom } from "@/store/card.user.atom"
-import { useAtom, useAtomValue } from "jotai"
-import { useRef } from "react"
 import {
   Action2Type,
   GenCardApproach,
   ICardPreview,
-} from "@cs-magic/wechat/schema/card"
+} from "@cs-magic/swot-core/schema/card"
+import { cardRenderedAtom } from "../store/card.rendered.atom"
+import { useAtom, useAtomValue } from "jotai"
+import { cardUserAtom } from "../store/card.user.atom"
+
 import { CardAction2 } from "./card-action2"
 import { CardPreview } from "./card-preview"
+import { useRef } from "react"
 
 export const CardPreviewContainer = ({
   preview,

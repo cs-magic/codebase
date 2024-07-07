@@ -7,7 +7,9 @@
 import Dysmsapi, * as Api from "@alicloud/dysmsapi20170525"
 import { Config } from "@alicloud/openapi-client"
 import { RuntimeOptions } from "@alicloud/tea-util"
-import { formatError, getEnv, logger } from "@cs-magic/common"
+import { logger } from "@cs-magic/common"
+import { getEnv } from "@cs-magic/common/env"
+import { formatError } from "@cs-magic/common/utils/format-error"
 
 const env = getEnv()
 

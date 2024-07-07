@@ -38,7 +38,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
 
-    "jsx": "preserve",
+    "jsx": "react-jsx",
 
 //    "baseUrl": ".",
     "paths": {

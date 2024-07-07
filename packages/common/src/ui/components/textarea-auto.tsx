@@ -6,7 +6,8 @@ import ReactTextareaAutoSize from "react-textarea-autosize"
 
 import { useMounted } from "../../hooks/use-mounted.js"
 import { Atom } from "../../store/jotai/types.js"
-import { cn } from "../../ui-shadcn/utils.js"
+import { cn } from "../utils"
+import React from "react"
 
 const TextareaInner = forwardRef<
   HTMLTextAreaElement,

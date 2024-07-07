@@ -1,6 +1,6 @@
-import { useDraftSession } from "@cs-magic/common"
-import { uploadFile } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { useDraftSession } from "@cs-magic/common/hooks/use-user-draft-session"
+import { uploadFile } from "@cs-magic/common/oss/upload"
+import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
 import { UserAvatar } from "./user-avatar"
 
 export const UserInputAvatar = () => {

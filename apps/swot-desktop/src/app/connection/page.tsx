@@ -13,7 +13,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "../../bot.atom"
+} from "../../../../swot-core/src/bot.atom"
 import { logger } from "@cs-magic/common"
 import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
 import { useAtom } from "jotai"

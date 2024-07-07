@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react"
+import React from "react"
 
 export const StatItem = ({
   Icon,

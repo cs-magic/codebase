@@ -1,4 +1,4 @@
-import MarkMap from "@cs-magic/common"
+import MarkMap from "../../../components/markmap"
 
 export default function VisualizationPage() {
   const content =

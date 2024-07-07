@@ -1,6 +1,7 @@
 {
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
+    "jsx": "react",
     "composite": true,
     "outDir": "dist",
 //    "moduleResolution": "Node"
