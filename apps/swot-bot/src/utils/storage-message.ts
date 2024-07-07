@@ -19,7 +19,12 @@ export const storageMessage = async (message: Message) => {
   const rawPayload = message.payload
   // console.log("rawPayload: ", rawPayload)
 
-  const payload = omit(rawPayload, ["talkerId", "roomId", "listenerId"])
+  const payload = omit(rawPayload, ["talkerId", "roomId", "listenerId"]) as {
+    id: string
+    timestamp: number
+    type: types.Message
+    text?: string
+  }
 
   // we can use `this.bot.Image.create(mid) to create an Image, but with image in the cache (after bot starts)`
   if (type === types.Message.Image) payload.text = `<Image id="${payload.id}"/>`
