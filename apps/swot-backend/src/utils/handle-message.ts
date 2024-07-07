@@ -1,6 +1,6 @@
-import { dumpFile } from "@cs-magic/common"
-import { formatError } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
+import { dumpFile } from "@cs-magic/common/utils/dump-file"
+import { formatError } from "@cs-magic/common/utils/format-error"
 import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema/bot.utils"
 import { getConvPreference } from "@cs-magic/swot-bot/utils/get-conv-preference"
 import { parseLimitedCommand } from "@cs-magic/swot-bot/utils/parse-command"

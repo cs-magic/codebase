@@ -1,9 +1,9 @@
+import { genNanoId } from "@cs-magic/common/utils/gen-nano-id"
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"
 import remove from "lodash/remove"
 
-import { genNanoId } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
 
 import { IContext } from "./schema/context"

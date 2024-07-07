@@ -1,4 +1,3 @@
-import { formatError } from "@cs-magic/common"
 import { logger } from "@cs-magic/common"
 import { createWechatyBot } from "@cs-magic/swot-bot/create-wechaty-bot"
 import { IContext } from "../schema/context"
