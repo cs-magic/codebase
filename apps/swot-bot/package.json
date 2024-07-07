@@ -8,7 +8,6 @@
     "./*": "./dist/src/*.js"
   },
   "scripts": {
-    "prerun": "yarn workspace wechaty-puppet-padlocal build; yarn workspace wechaty-puppet-wechat4u build",
     "_tsx": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config",
     "dev:watch": "yarn _tsx watch src/index.ts",
     "dev": "yarn _tsx src/index.ts",
