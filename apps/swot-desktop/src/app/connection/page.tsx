@@ -1,8 +1,21 @@
 "use client"
 
+import { env } from "@cs-magic/common/env"
+import { useInit } from "@cs-magic/common/hooks/use-init"
+import { useUserIsAdmin } from "@cs-magic/common/hooks/use-user"
+import { socketStatusMap } from "@cs-magic/common/transport/schema"
+import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
+import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { LabelLine } from "@cs-magic/common/ui/components/label-line"
+import {
+  Button,
+  buttonVariants,
+} from "@cs-magic/common/ui/components/shadcn/ui/button"
+import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+import { cn } from "@cs-magic/common/ui/utils"
+import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema/bot.utils"
 import { columns, DataTable } from "./contacts.table"
-import { StandardCard } from "@cs-magic/common"
-import { useUserIsAdmin } from "@cs-magic/common"
+
 import {
   botContactsAtom,
   botLoggedInAtom,
@@ -15,19 +28,11 @@ import {
   ScanStatus,
 } from "../../../../swot-core/src/bot.atom"
 import { logger } from "@cs-magic/common"
-import { IWechatBotTransfer } from "@cs-magic/wechaty/schema/bot.utils"
-import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
-import { env } from "@cs-magic/common"
-import { useInit } from "@cs-magic/common"
-import { socketStatusMap } from "@cs-magic/common"
-import { Button, buttonVariants } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { ButtonWithLoading } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
+
 import { CSVLink, CSVDownload } from "react-csv"
 import { toast } from "sonner"
+import { useAtom } from "jotai"
 
 export default function BotPage() {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)

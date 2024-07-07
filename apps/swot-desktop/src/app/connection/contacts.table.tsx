@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "packages/common/src/ui-shadcn/components/table"
+} from "@cs-magic/common/ui/components/shadcn/ui/table"
 import {
   ColumnDef,
   flexRender,
