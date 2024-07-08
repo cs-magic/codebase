@@ -4,7 +4,7 @@ import { z } from "zod"
 
 import { LlmModelType } from "@cs-magic/llm/schema/llm.models"
 
-import { ISummaryParsed } from "./summary"
+import { ISummaryParsed } from "./summary.js"
 
 export type ICardStat = {
   reads?: number

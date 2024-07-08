@@ -1,5 +1,5 @@
-import { IContext } from "../schema/context"
-import { transferMessage } from "./transfer-message"
+import { IContext } from "../schema/context.js"
+import { transferMessage } from "./transfer-message.js"
 
 export const syncClients = (context: IContext) => {
   const { bot, sockets, scan } = context

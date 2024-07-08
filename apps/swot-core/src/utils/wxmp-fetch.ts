@@ -5,9 +5,9 @@ import { formatString } from "@cs-magic/common/utils/format-string"
 import { FetchWxmpArticleRes } from "@cs-magic/wechat/wxmp-article/fetch/index"
 import { md2summary } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
 
-import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article"
-import { wxmpRequest } from "./wxmp-request"
-import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
+import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article.js"
+import { wxmpRequest } from "./wxmp-request.js"
+import { parseWxmpArticleUrl } from "./parse-wxmp-article-url.js"
 
 export const fetchWxmpArticle = async (
   url: string,

@@ -4,9 +4,9 @@ import {
   ITransEvent,
   ResponseFinalStatus,
 } from "@cs-magic/common/sse/schema"
-import remove from "lodash/remove"
+import remove from "lodash/remove.js"
 
-import { ILLMManagerTraditional } from "./schema"
+import { ILLMManagerTraditional } from "./schema.js"
 
 export class StaticLLMManager implements ILLMManagerTraditional {
   static triggers: Record<string, ITransChannel> = {}

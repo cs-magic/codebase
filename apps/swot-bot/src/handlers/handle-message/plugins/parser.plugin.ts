@@ -6,7 +6,7 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
 import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
-import { FileBox } from "file-box"
+import { FileBox } from "@juzi/file-box"
 import { z } from "zod"
 
 import { FeatureMap, FeatureType } from "../../../schema/commands.js"

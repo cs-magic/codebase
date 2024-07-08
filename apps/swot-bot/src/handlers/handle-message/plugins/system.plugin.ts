@@ -1,5 +1,5 @@
 import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { FileBox } from "file-box"
+import { FileBox } from "@juzi/file-box"
 import { z } from "zod"
 
 import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"

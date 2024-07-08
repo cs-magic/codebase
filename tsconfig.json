@@ -40,8 +40,16 @@
 
     "jsx": "react-jsx",
 
-//    "baseUrl": ".",
+    "baseUrl": ".",
     "paths": {
+      //          "@/*": ["src/*"],
+//      "@trpc/react-query": [
+//        "node_modules/@trpc/react-query/", // ref: https://github.com/microsoft/TypeScript/issues/29808#issuecomment-540292885
+//      ]
+    }
+
+//    "baseUrl": ".",
+//    "paths": {
 //      "@cs-magic/common": ["./packages/common/dist/src/index.js"],
 //      "@cs-magic/common/*": ["./packages/common/dist/src/*"],
 //      "@cs-magic/llm/*": ["./packages/llm/dist/src/*"],
@@ -58,7 +66,7 @@
 //      "@cs-magic/swot-backend/*": ["./apps/swot-backend/dist/src/*"],
 //      "@cs-magic/swot-web/*": ["./apps/swot-web/dist/src/*"],
 //      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/dist/src/*"]
-    }
+//    }
   },
 
   "include": [
@@ -71,7 +79,7 @@
     "apps/swot-desktop/dist/src-tauri/target"
   ],
   "references": [
-//    {"path": "./packages/common"},
+    {"path": "./packages/common"},
 //    {"path": "./packages/llm"},
 //    {"path": "./packages/prisma"},
 //    {"path": "./packages/auth"},

@@ -1,5 +1,5 @@
-import { deserializeRefMsgPayload } from "./deserialize-ref-msg"
-import type { PuppetVersion } from "./version"
+import { deserializeRefMsgPayload } from "./deserialize-ref-msg.js"
+import type { PuppetVersion } from "./version.js"
 
 /**
  * 从 消息 中解析出被引用的数据

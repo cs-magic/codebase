@@ -16,7 +16,7 @@
  *   limitations under the License.
  *
  */
-import { logger } from "@cs-magic/common"
+// import { logger } from "@cs-magic/common"
 
 import Wechat4u from "wechat4u"
 import QuickLru from "@alloc/quick-lru"
@@ -876,7 +876,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
      * 发送文本消息，可以包含emoji(😒)和QQ表情([坏笑])
      */
     const msg = await this.wechat4u.sendMsg(text, conversationId)
-    logger.debug(`sent result: [%o]`, msg)
+    // logger.debug(`sent result: [%o]`, msg)
     // learn from padlocal
     setImmediate(() => {
       this.emit("message", { messageId: msg.MsgId })
@@ -1128,7 +1128,7 @@ export class PuppetWechat4u extends PUPPET.Puppet {
     text?: string,
   ): Promise<void | string> {
     log.info(`\n=== fetching room announce ===\n`)
-    logger.info(`\n=== fetching room announce ===\n`)
+    // logger.info(`\n=== fetching room announce ===\n`)
     return PUPPET.throwUnsupportedError(roomId, text)
   }
 
@@ -1319,4 +1319,4 @@ export class PuppetWechat4u extends PUPPET.Puppet {
 
 export default PuppetWechat4u
 
-logger.info(`\n== PuppetWechat4u ==\n`)
+// logger.info(`\n== PuppetWechat4u ==\n`)

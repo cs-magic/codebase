@@ -48,4 +48,4 @@ export * as impls from "./impls.js"
 export * as payloads from "./payloads.js"
 export * as types from "./types.js"
 
-export * from "../extra"
+export * from "../extra/index.js"

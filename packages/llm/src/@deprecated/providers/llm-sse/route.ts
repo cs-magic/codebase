@@ -2,8 +2,8 @@ import { ITransEvent } from "@cs-magic/common/sse/schema"
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
 
-import { StaticLLMManager } from "./provider-static"
-import { llmEncoder } from "./utils"
+import { StaticLLMManager } from "./provider-static.js"
+import { llmEncoder } from "./utils.js"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url).searchParams.get("r") ?? ""

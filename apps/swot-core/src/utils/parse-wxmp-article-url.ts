@@ -1,6 +1,5 @@
-import { ICardPlatform } from "../schema/card-platform"
-
-import { IWxmpArticleUrlParsed } from "../schema/wxmp-article"
+import { ICardPlatform } from "../schema/card-platform.js"
+import { IWxmpArticleUrlParsed } from "../schema/wxmp-article.js"
 
 export const parseWxmpArticleUrl = (url: string): IWxmpArticleUrlParsed => {
   const params = new URL(url.replace(/&amp;/g, "&")).searchParams

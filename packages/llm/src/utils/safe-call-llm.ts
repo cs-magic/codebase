@@ -13,10 +13,10 @@ import {
   ILlmQueryConfig,
   ILlmQueryConfigExtra,
   ILlmRes,
-} from "../schema/llm.api"
-import { callLlm } from "./call-llm"
-import { formatLlmMessage } from "./format-llm-message"
-import { model2provider } from "./model2provider"
+} from "../schema/llm.api.js"
+import { callLlm } from "./call-llm.js"
+import { formatLlmMessage } from "./format-llm-message.js"
+import { model2provider } from "./model2provider.js"
 
 logEnv("api_key")
 

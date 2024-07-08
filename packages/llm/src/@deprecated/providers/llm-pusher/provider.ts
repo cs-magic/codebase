@@ -11,7 +11,7 @@ import {
 
 import Pusher from "pusher"
 
-import { ILLMManagerPusher } from "./schema"
+import { ILLMManagerPusher } from "./schema.js"
 
 /**
  *

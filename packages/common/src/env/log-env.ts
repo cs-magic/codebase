@@ -1,4 +1,4 @@
-import pickBy from "lodash/pickBy"
+import pickBy from "lodash/pickBy.js"
 
 import { logger } from "../log/index.js"
 

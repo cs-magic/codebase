@@ -1,6 +1,6 @@
 import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
 import logger from "@cs-magic/common/log"
-import omit from "lodash/omit"
+import omit from "lodash/omit.js"
 import { Message, types } from "wechaty"
 
 /**

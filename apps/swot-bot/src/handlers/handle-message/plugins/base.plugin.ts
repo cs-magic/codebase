@@ -8,7 +8,7 @@ import {
 import { evalObject } from "@cs-magic/common/utils/eval-object"
 import { formatString } from "@cs-magic/common/utils/format-string"
 
-import set from "lodash/set"
+import set from "lodash/set.js"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
 

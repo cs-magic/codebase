@@ -4,10 +4,10 @@ import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
 import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
 import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
 
-import { ICardInnerPreview, IMedia } from "../schema/card"
-import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article"
-import { parseSummary } from "./parse-summary"
-import { fetchWxmpArticle } from "./wxmp-fetch"
+import { ICardInnerPreview, IMedia } from "../schema/card.js"
+import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article.js"
+import { parseSummary } from "./parse-summary.js"
+import { fetchWxmpArticle } from "./wxmp-fetch.js"
 
 export const wxmpUrl2preview = async (
   url: string,

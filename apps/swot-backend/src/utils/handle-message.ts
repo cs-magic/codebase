@@ -5,10 +5,10 @@ import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema/bot.utils"
 import { getConvPreference } from "@cs-magic/swot-bot/utils/get-conv-preference"
 import { parseLimitedCommand } from "@cs-magic/swot-bot/utils/parse-command"
 import path from "path"
-import { BotCommandType, botCommandTypeSchema } from "../schema/commands"
-import { IContext } from "../schema/context"
-import { startBot } from "./start-bot"
-import { syncClients } from "./sync-clients"
+import { BotCommandType, botCommandTypeSchema } from "../schema/commands.js"
+import { IContext } from "../schema/context.js"
+import { startBot } from "./start-bot.js"
+import { syncClients } from "./sync-clients.js"
 
 export const wechatyDataPath = path.join(process.cwd(), "wechaty.data.json")
 

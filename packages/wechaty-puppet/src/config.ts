@@ -1,5 +1,5 @@
 import { Brolog } from "brolog"
-import { FileBox } from "file-box"
+import { FileBox } from "@juzi/file-box"
 import { MemoryCard } from "memory-card"
 import { StateSwitch } from "state-switch"
 

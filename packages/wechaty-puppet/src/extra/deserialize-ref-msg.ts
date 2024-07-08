@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { AppMessageType } from "./message"
+import { AppMessageType } from "./message.js"
 
 export type DeserializedRefMsgPayload =
   | {

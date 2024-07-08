@@ -4,17 +4,13 @@
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
-    "./log": {
-      "default": "./dist/src/log/index.js",
-      "types": "./dist/src/log/index.d.ts"
-    },
+    "./log": "./dist/src/log/index.js",
     "./env": "./dist/src/env/index.js",
     "./ui/components/*": "./dist/src/ui/components/*.jsx",
     "./ui/providers/*": "./dist/src/ui/providers/*.jsx",
     "./*": "./dist/src/*.js"
   },
   "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc -b"
   },

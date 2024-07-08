@@ -2,15 +2,17 @@ import { genNanoId } from "@cs-magic/common/utils/gen-nano-id"
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"
-import remove from "lodash/remove"
+import remove from "lodash/remove.js"
 
 import { logger } from "@cs-magic/common"
 
-import { IContext } from "./schema/context"
+import { IContext } from "./schema/context.js"
 
-import { startBot } from "./utils/start-bot"
-import { syncClients } from "./utils/sync-clients"
-import { handleMessage } from "./utils/handle-message"
+import { startBot } from "./utils/start-bot.js"
+import { syncClients } from "./utils/sync-clients.js"
+import { handleMessage } from "./utils/handle-message.js"
+
+// import("wechaty-puppet-wechat4u") // for build
 
 logger.info("fastify initializing...")
 const fastify = Fastify({

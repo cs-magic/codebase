@@ -1,7 +1,8 @@
 import { redis } from "@cs-magic/common/db/providers/redis/connection"
 import logger from "@cs-magic/common/log/index"
 import { ITransClient, ITransEvent } from "@cs-magic/common/sse/schema"
-import { ILLMManagerTraditional } from "./schema"
+
+import { ILLMManagerTraditional } from "./schema.js"
 
 export class RedisLLMManager implements ILLMManagerTraditional {
   private triggerId: string

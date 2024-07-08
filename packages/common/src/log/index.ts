@@ -1,4 +1,4 @@
-import { pinoLogger } from "./providers/pino"
+import { pinoLogger } from "./providers/pino/index.js"
 
 // export const logger = pinoLogflareLogger
 export const logger = pinoLogger

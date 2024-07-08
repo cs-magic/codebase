@@ -1,4 +1,4 @@
-import { safeCallLLM } from "./safe-call-llm"
+import { safeCallLLM } from "./safe-call-llm.js"
 
 describe("", () => {
   it("test basic", async () => {

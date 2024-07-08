@@ -1,12 +1,12 @@
-import { logger } from "@cs-magic/common"
-import { type payloads, types } from "../mods/mod"
-import { AppMessageType } from "./message"
+// import { logger } from "@cs-magic/common"
+import { type payloads, types } from "../mods/mod.js"
+import { AppMessageType } from "./message.js"
 import type {
   GenericMessageParser,
   MessageParserContext,
-} from "./message.parser"
+} from "./message.parser.js"
 
-import { serializeRefMsgPayload } from "./serialize-ref-msg"
+import { serializeRefMsgPayload } from "./serialize-ref-msg.js"
 
 export const referMsgParser: GenericMessageParser = async <T>(
   _localMessage: T,
@@ -14,7 +14,7 @@ export const referMsgParser: GenericMessageParser = async <T>(
   context: MessageParserContext,
 ) => {
   const appMessagePayload = context.appMessagePayload
-  logger.info(`[refer] <-- ret`)
+  // logger.info(`[refer] <-- ret`)
   // logger.info({ ret, localMessage, appMessagePayload })
 
   if (
@@ -36,7 +36,7 @@ export const referMsgParser: GenericMessageParser = async <T>(
         referMessagePayload,
       )}」\n- - - - - - - - - - - - - - -\n${appMessagePayload.title}`
 
-  logger.debug(`[refer] --> ret: %o`, ret)
+  // logger.debug(`[refer] --> ret: %o`, ret)
 
   return ret
 }

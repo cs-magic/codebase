@@ -1,8 +1,8 @@
 import { logger } from "@cs-magic/common"
 import { createWechatyBot } from "@cs-magic/swot-bot/create-wechaty-bot"
-import { IContext } from "../schema/context"
-import { syncClients } from "./sync-clients"
-import { transferMessage } from "./transfer-message"
+import { IContext } from "../schema/context.js"
+import { syncClients } from "./sync-clients.js"
+import { transferMessage } from "./transfer-message.js"
 
 export const startBot = async (context: IContext) => {
   // 避免重复登录，会导致 padLocal 报错

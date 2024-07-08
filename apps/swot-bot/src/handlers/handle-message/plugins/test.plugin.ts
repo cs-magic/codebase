@@ -1,4 +1,4 @@
-import last from "lodash/last"
+import last from "lodash/last.js"
 import { types } from "wechaty"
 import yargsParser from "yargs-parser"
 

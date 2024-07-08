@@ -1,7 +1,7 @@
 import { SummaryOptions } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
-import { ICardPlatform } from "./card-platform"
 
-import { RequestOptions } from "./request"
+import { ICardPlatform } from "./card-platform.js"
+import { RequestOptions } from "./request.js"
 
 export type IWxmpArticleUrlParsed = {
   platformId?: string
