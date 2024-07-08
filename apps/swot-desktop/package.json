@@ -1,18 +1,18 @@
 {
   "name": "@cs-magic/swot-desktop",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "backend": "yarn workspace @cs-magic/api dev",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint:next": "next lint",
+    "dev:backend": "yarn workspace @cs-magic/swot-backend dev",
+    "dev:web": "next dev",
     "dev:tauri": "yarn tauri dev",
+    "build:backend": "yarn workspace @cs-magic/swot-backend build",
+    "build:web": "next build",
     "build:tauri": "tauri build",
-    "start:tauri": "yarn tauri start",
-    "dev:all": "run-p backend dev:tauri",
-    "build:all": "run-p build:tauri",
-    "start:all": "run-p backend start:tauri"
+    "start:backend": "yarn workspace @cs-magic/swot-backend start",
+    "start:web": "next start",
+    "start:tauri": "echo 'build 后直接在 App 中打开 wechat-manager'",
+    "lint:next": "next lint"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

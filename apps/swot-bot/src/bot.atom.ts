@@ -1,6 +1,6 @@
-import { IUser } from "@cs-magic/swot-bot/schema/bot.utils"
 import { atom } from "jotai"
 import { payloads } from "wechaty-puppet"
+import { IUser } from "./schema/bot.utils"
 
 export const botSocketOpenedAtom = atom(false)
 

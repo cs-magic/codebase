@@ -24,7 +24,7 @@ import {
   botScanValueAtom,
   botSocketOpenedAtom,
   botUserAtom,
-} from "@cs-magic/swot-core/bot.atom"
+} from "@cs-magic/swot-bot/bot.atom"
 
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"

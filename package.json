@@ -27,6 +27,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
+    "electron": "^31.1.0",
     "jotai": "^2.8.4",
     "js-md5": "^0.8.3",
     "lodash": "^4.17.21",
