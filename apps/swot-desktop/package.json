@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev:backend": "yarn workspace @cs-magic/swot-backend dev",
     "dev:web": "next dev",
     "dev:tauri": "yarn tauri dev",
-    "build:backend": "yarn workspace @cs-magic/swot-backend build",
     "build:web": "next build",
     "build:tauri": "tauri build",
-    "start:backend": "yarn workspace @cs-magic/swot-backend start",
     "start:web": "next start",
     "start:tauri": "echo 'build 后直接在 App 中打开 wechat-manager'",
     "lint:next": "next lint"
