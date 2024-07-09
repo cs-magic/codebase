@@ -17,6 +17,10 @@ yarn db:generate
   - mac: `brew install jq`
   - ubuntu: `sudo apt install jq`
 
+## bugfix
+
+### electron 安装时需要固定版本
+
 ## reference 
 
 - [Tech](./docs/tech.md)

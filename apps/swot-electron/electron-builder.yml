@@ -1,0 +1,12 @@
+appId: com.cs-magic.swot
+productName: Swot Desktop
+copyright: Copyright © 2024 MarkShawn
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

@@ -76,7 +76,7 @@
   ],
   "exclude": [
     "node_modules",
-    "apps/swot-desktop/dist/src-tauri/target"
+    "apps/swot-tauri/dist/src-tauri/target"
   ],
   "references": [
     {"path": "./packages/common"},
