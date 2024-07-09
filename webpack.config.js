@@ -23,7 +23,7 @@ module.exports = {
     path: "commonjs path", // 不要打包 path 模块（如果使用的话）
     "playwright-core": "commonjs playwright-core", // This will ignore 'playwright-core'
     "wechaty-puppet-service": "commonjs wechaty-puppet-service",
-    // "wechaty-puppet-wechat4u": "commonjs wechaty-puppet-wechat4u",
+    "wechaty-puppet-wechat4u": "commonjs wechaty-puppet-wechat4u",
     // 其他你可能使用的 Node.js 内置模块
   },
 

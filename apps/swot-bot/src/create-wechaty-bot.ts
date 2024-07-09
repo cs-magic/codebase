@@ -1,9 +1,10 @@
 import { env } from "@cs-magic/common/env"
 import { logEnv } from "@cs-magic/common/env/log-env"
 import { logger } from "@cs-magic/common/log"
-import { type Wechaty, WechatyBuilder } from "wechaty"
 
 import { handleWechatyBot } from "./handlers/index.js"
+
+import { type Wechaty, WechatyBuilder } from "wechaty"
 
 /**
  * 这是一个 wrapper， 请在其他地方 start

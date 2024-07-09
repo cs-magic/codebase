@@ -84,7 +84,7 @@
     "ts-jest": "^28.0.0-next.1",
     "tsc-watch": "^4.6.0",
     "tstest": "^1.0.1",
-    "wechaty": "^1.19.10"
+    "wechaty": "workspace:^"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
