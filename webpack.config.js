@@ -1,6 +1,9 @@
 // webpack.config.js
 const path = require("path")
 
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+
 module.exports = {
   // entry: "./apps/swot-backend/dist/src/server.js", // 替换为你的入口文件
   entry: "./apps/swot-bot/dist/src/index.js", // 替换为你的入口文件
@@ -23,4 +26,8 @@ module.exports = {
     // "wechaty-puppet-wechat4u": "commonjs wechaty-puppet-wechat4u",
     // 其他你可能使用的 Node.js 内置模块
   },
+
+  plugins: [
+    // new BundleAnalyzerPlugin()
+  ],
 }

@@ -10,8 +10,6 @@
     {"path": "../../packages/llm"},
 
     {"path": "../../packages/wechaty-puppet"},
-    {"path": "../../packages/wechaty-puppet-wechat4u"},
-    {"path": "../../packages/wechaty-puppet-padlocal"},
     {"path": "../../packages/wechat"},
 
     {"path": "../swot-core"}
