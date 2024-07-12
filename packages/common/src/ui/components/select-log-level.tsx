@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./shadcn/ui/select.jsx"
+} from "./shadcn/ui/select.js"
 
 export const SelectLogLevel = ({
   value,

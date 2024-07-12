@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ComponentProps } from "react"
 
 import { cn } from "../utils.js"
-import { buttonVariants } from "./shadcn/ui/button.jsx"
+import { buttonVariants } from "./shadcn/ui/button.js"
 import React from "react"
 
 export const ButtonLink = ({

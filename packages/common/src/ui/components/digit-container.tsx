@@ -2,7 +2,7 @@ import { ComponentProps, useEffect, useRef } from "react"
 
 import { cn } from "../utils.js"
 import { SMS_DIGIT_SIZE } from "../config.js"
-import { Input } from "./shadcn/ui/input.jsx"
+import { Input } from "./shadcn/ui/input.js"
 import React from "react"
 
 export const DigitContainer = ({

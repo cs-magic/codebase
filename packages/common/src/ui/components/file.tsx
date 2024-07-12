@@ -4,9 +4,9 @@ import { HTMLAttributes } from "react"
 
 import { IUploadFile } from "../../oss/schema.js"
 import { cn } from "../utils.js"
-import { FlexContainer } from "./flex-container.jsx"
-import { Loading } from "./loading.jsx"
-import { AspectRatio } from "./shadcn/ui/aspect-ratio.jsx"
+import { FlexContainer } from "./flex-container.js"
+import { Loading } from "./loading.js"
+import { AspectRatio } from "./shadcn/ui/aspect-ratio.js"
 import React from "react"
 
 export const FileComp = ({

@@ -1,8 +1,8 @@
 {
   "$schema": "../../../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "cp ../swot-backend/dist/bundle.js src-tauri/backend.bundle.js && npm run build:web",
-    "beforeDevCommand": "echo \"$(pwd)\" && cp ../swot-backend/dist/bundle.js src-tauri/backend.bundle.js && npm run dev:web",
+    "beforeBuildCommand": "cp -r ../../dist src-tauri && npm run build:web",
+    "beforeDevCommand": "echo \"$(pwd)\" && cp -r ../../dist src-tauri && npm run build:web && npm run dev:web",
     "devPath": "http://localhost:3000",
     "distDir": "../out"
   },
@@ -39,7 +39,7 @@
         "signingIdentity": null
       },
       "resources": [
-        "backend.bundle.js"
+        "dist"
       ],
       "shortDescription": "",
       "targets": "all",

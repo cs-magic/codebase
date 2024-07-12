@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react"
 
 import { cn } from "../utils.js"
-import { Card, CardContent, CardHeader, CardTitle } from "./shadcn/ui/card.jsx"
+import { Card, CardContent, CardHeader, CardTitle } from "./shadcn/ui/card.js"
 import React from "react"
 
 export const StandardCard = ({

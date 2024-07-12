@@ -12,7 +12,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js",
   },
-  mode: "development",
+
+  // mode: "development",
+  mode: "production",
   devtool: "source-map",
   target: "node", // 设置打包目标为 Node.js
   module: {
@@ -33,7 +35,7 @@ module.exports = {
     fs: "commonjs fs", // 不要打包 fs 模块
     path: "commonjs path", // 不要打包 path 模块（如果使用的话）
     "wechaty-puppet-service": "commonjs wechaty-puppet-service",
-    // "wechaty-puppet-wechat4u": "require('wechaty-puppet-wechat4u')",
+    // "wechaty-puppet-wechat4u": "require('wechaty-puppet-wechat4u')", // 要打包 wechat4u，否则得手动装很多依赖
     // 其他你可能使用的 Node.js 内置模块
   },
 

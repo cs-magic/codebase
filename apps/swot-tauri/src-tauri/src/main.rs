@@ -2,9 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::process::{Command, Child};
-use tauri::api::path::resource_dir;
 use std::sync::{Mutex, Arc};
-use tauri::Manager;
 
 fn main() {
   // Use an Arc<Mutex<>> to share the child process handle between threads
@@ -15,12 +13,12 @@ fn main() {
       let child_process = Arc::clone(&child_process);
       move |app| {
         let backend_path = app.path_resolver()
-          .resolve_resource("backend.bundle.js")
+          .resolve_resource("dist/main.js")
           .expect("failed to resolve resource");
 
         if let Some(path_str) = backend_path.to_str() {
           let child = Command::new("node")
-            .args(&["--experimental-specifier-resolution=node", path_str])
+            .args(&[path_str, "| pino pretty"])
             .spawn()
             .expect("failed to start backend");
 

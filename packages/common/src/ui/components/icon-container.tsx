@@ -1,11 +1,7 @@
 import { ComponentProps, forwardRef } from "react"
 
 import { cn } from "../utils.js"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "./shadcn/ui/tooltip.jsx"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./shadcn/ui/tooltip.js"
 import React from "react"
 
 export const IconContainer = forwardRef<
