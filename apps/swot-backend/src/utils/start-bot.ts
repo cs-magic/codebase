@@ -9,7 +9,8 @@ export const startBot = async (context: IContext) => {
   if (!context.bot) {
     logger.info("-- creating bot, context: %o", context)
 
-    context.bot = createWechatyBot()
+    const bot = await createWechatyBot()
+    bot
       .on("scan", (value, status) => {
         context.scan = { value, status }
         logger.info(`updated scan: ${JSON.stringify(context.scan)}`)
@@ -20,11 +21,12 @@ export const startBot = async (context: IContext) => {
         context.scan = null
         syncClients(context)
       })
+    context.bot = bot
   }
 
   // todo: if has cache,  start auto, o.w. wait for triggering in the frontend ?
-  if (!context.bot.isLoggedIn) {
+  if (!context.bot?.isLoggedIn) {
     logger.info("-- starting bot, context: %o", context)
-    await context.bot.start()
+    await context.bot?.start()
   }
 }

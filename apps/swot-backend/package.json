@@ -24,7 +24,8 @@
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "fastify-websocket": "^4.3.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "wechaty-puppet-padlocal": "workspace:^"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

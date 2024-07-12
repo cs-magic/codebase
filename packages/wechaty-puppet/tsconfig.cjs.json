@@ -4,4 +4,9 @@
     "module": "CommonJS",
     "outDir": "dist/cjs",
   },
+  "exclude": [
+    "node_modules/",
+    "dist/",
+    "tests/fixtures/smoke-testing.ts"
+  ]
 }

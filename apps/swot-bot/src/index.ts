@@ -4,4 +4,6 @@ import { createWechatyBot } from "./create-wechaty-bot.js"
 
 // import padlocal from "wechaty-puppet-padlocal"
 
-void createWechatyBot().start()
+void createWechatyBot().then((wechaty) => {
+  wechaty.start()
+})

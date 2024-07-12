@@ -1,16 +1,19 @@
+import wechatyPuppetWechat4u from "wechaty-puppet-wechat4u"
+console.log({ wechatyPuppetWechat4u })
+
 import { env } from "@cs-magic/common/env"
 import { logEnv } from "@cs-magic/common/env/log-env"
 import { logger } from "@cs-magic/common/log"
 
-import { handleWechatyBot } from "./handlers/index.js"
-
 import { type Wechaty, WechatyBuilder } from "wechaty"
+
+import { handleWechatyBot } from "./handlers/index.js"
 
 /**
  * 这是一个 wrapper， 请在其他地方 start
  *
  */
-export const createWechatyBot = () => {
+export const createWechatyBot = async () => {
   // log env to ensure puppet info.
   logEnv("wechaty")
 
@@ -19,7 +22,7 @@ export const createWechatyBot = () => {
 
   const bot = WechatyBuilder.build({
     name, // 加了名字后就可以自动存储了
-
+    puppet: "wechaty-puppet-wechat4u",
     puppetOptions: {
       // mark@2024-04-27 08:49:22: for padlocal
       restartOnFailure: false,

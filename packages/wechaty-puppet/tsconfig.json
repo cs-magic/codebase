@@ -1,11 +1,12 @@
 {
   "extends": [
     "../../tsconfig.json",
-    "@chatie/tsconfig",
+    "@chatie/tsconfig"
   ],
   "compilerOptions": {
     "composite": true,
     "outDir": "dist/esm",
+//    "noEmit": true, // ref: https://github.com/TypeStrong/typedoc/issues/1639#issuecomment-890345186
   },
   "exclude": [
     "node_modules/",
@@ -20,6 +21,6 @@
     "tests/**/*.ts"
   ],
   "references": [
-    {"path": "../common"},
+    {"path": "../common"}
   ]
 }

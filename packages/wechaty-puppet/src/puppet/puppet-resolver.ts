@@ -27,6 +27,8 @@ import type { PuppetConstructor, PuppetInterface } from "./puppet-interface.js"
 type PuppetNpmScope = `@${string}/` | ""
 type PuppetNpmName = `${PuppetNpmScope}wechaty-puppet-${string}`
 
+// import "wechaty-puppet-wechat4u" // for compile
+
 interface ResolveOptions {
   puppet: PuppetNpmName | PuppetInterface
   puppetOptions?: PuppetOptions
@@ -94,6 +96,11 @@ async function resolvePuppet(
   return puppetInstance
 }
 
+// function requireDynamically(path: string) {
+//   path = path.split("\\").join("/") // Normalize windows slashes
+//   return eval(`require('${path}');`) // Ensure Webpack does not analyze the require statement
+// }
+
 async function resolvePuppetName(
   puppetName: PuppetNpmName,
 ): Promise<PuppetConstructor> {
@@ -102,12 +109,20 @@ async function resolvePuppetName(
   let puppetModule
 
   try {
-    const modulePath = require.resolve(puppetName, { paths: [process.cwd()] })
-    console.info(`Resolved path for ${puppetName}: ${modulePath}`)
-
-    puppetModule = await import(/* webpackIgnore: true */ puppetName)
-    // console.info('puppetModule', puppetModule)
+    // puppetModule = requireDynamically(puppetName)
+    // const suffix = puppetName.slice(puppetName.lastIndexOf("-"))
+    // puppetModule = await import(`wechaty-puppet-${suffix}`)
+    // puppetModule = await import(
+    //   /* webpackChunkName: "wechaty-puppet-wechat4u" */
+    //   puppetName
+    // )
+    // const suffix = puppetName.slice(puppetName.lastIndexOf("-") + 1)
+    // puppetModule = await import(
+    //   /* webpackChunkName: "wechaty-puppet-wechat4u" */ `wechaty-puppet-${suffix}`
+    // )
+    puppetModule = (await import(`wechaty-puppet-wechat4u`)) as any
   } catch (e) {
+    log.error(e as unknown as string)
     // log.error(
     //   "Puppet",
     //   "resolvePuppetName %s",
@@ -166,7 +181,7 @@ async function resolvePuppetName(
   }
 
   // console.info(puppetModule)
-  const MyPuppet = puppetModule.default as PuppetConstructor
+  const MyPuppet = puppetModule.default as unknown as PuppetConstructor
 
   return MyPuppet
 }
