@@ -12,75 +12,75 @@ import { startBot } from "./utils/start-bot.js"
 import { syncClients } from "./utils/sync-clients.js"
 import { handleMessage } from "./utils/handle-message.js"
 
-// import("wechaty-puppet-wechat4u") // for build
-
-logger.info("fastify initializing...")
-const fastify = Fastify({
-  logger: true,
-})
-
-// socket
-void fastify.register(fw)
-void fastify.register(async function (fastify) {
-  // init context
-
-  let context: IContext = {
-    bot: null,
-    scan: null,
-    sockets: [],
-  }
-
-  await startBot(context)
-
-  fastify.get("/context", {}, async () => {
-    const bot = context.bot
-    return {
-      bot: {
-        id: bot?.id,
-        name: bot?.name,
-        scan: context.scan,
-      },
-    }
+export const initServer = () => {
+  logger.info("fastify initializing...")
+  const fastify = Fastify({
+    logger: true,
   })
 
-  fastify.get(
-    "/ws",
-    { websocket: true },
-    async (socket /* WebSocket */, req /* FastifyRequest */) => {
-      // The WebSocket connection is established at this point, ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
+  // socket
+  void fastify.register(fw)
+  void fastify.register(async function (fastify) {
+    // init context
 
-      const id = genNanoId()
+    let context: IContext = {
+      bot: null,
+      scan: null,
+      sockets: [],
+    }
 
-      socket.id = id
+    await startBot(context)
 
-      socket.on("close", () => {
-        remove(context.sockets, (s) => s.id === id)
-      })
+    fastify.get("/context", {}, async () => {
+      const bot = context.bot
+      return {
+        bot: {
+          id: bot?.id,
+          name: bot?.name,
+          scan: context.scan,
+        },
+      }
+    })
 
-      socket.on("message", async (m: Buffer) => {
-        context = await handleMessage(context, m, id)
-      })
+    fastify.get(
+      "/ws",
+      { websocket: true },
+      async (socket /* WebSocket */, req /* FastifyRequest */) => {
+        // The WebSocket connection is established at this point, ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
 
-      context.sockets.push(socket)
+        const id = genNanoId()
 
-      syncClients({
-        ...context,
-        // only self to update upon init
-        sockets: [socket],
-      })
-    },
-  )
-})
+        socket.id = id
 
-// http
-fastify.get("/", async function handler(request, reply) {
-  return { hello: "world" }
-})
+        socket.on("close", () => {
+          remove(context.sockets, (s) => s.id === id)
+        })
 
-try {
-  logger.info("fastify listening...")
-  void fastify.listen({ port: Number(process.env.PORT ?? 40414) })
-} catch (err) {
-  fastify.log.error(err)
-  process.exit(1)
+        socket.on("message", async (m: Buffer) => {
+          context = await handleMessage(context, m, id)
+        })
+
+        context.sockets.push(socket)
+
+        syncClients({
+          ...context,
+          // only self to update upon init
+          sockets: [socket],
+        })
+      },
+    )
+  })
+
+  // http
+  fastify.get("/", async function handler(request, reply) {
+    return { hello: "world" }
+  })
+
+  try {
+    logger.info("fastify listening...")
+    void fastify.listen({ port: Number(process.env.PORT ?? 40414) })
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
 }

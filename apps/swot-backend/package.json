@@ -4,16 +4,17 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "scripts": {
+    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/server.ts",
     "build": "rm -rf dist && tsc -b",
-    "start": "node --experimental-specifier-resolution=node dist/bundle.js | pino-pretty",
-    "stop": "",
-    "_tsx": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config",
-    "dev-watch": "yarn _tsx watch src/server.ts",
-    "dev": "yarn _tsx src/server.ts"
+    "start": "node dist/src/index.js | pino-pretty",
+    "stop": ""
   },
   "exports": {
-    "./*": "./*.js"
+    ".": "./dist/src/index.js",
+    "./*": "./dist/src/*.js"
   },
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",

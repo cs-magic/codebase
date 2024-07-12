@@ -21,7 +21,5 @@
   ],
   "references": [
     {"path": "../common"},
-    {"path": "../wechaty-puppet-wechat4u"},
-    {"path": "../wechaty-puppet-padlocal"},
   ]
 }

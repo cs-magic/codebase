@@ -1,12 +1,13 @@
 // webpack.config.js
 const path = require("path")
+const webpack = require("webpack")
 
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 module.exports = {
-  // entry: "./apps/swot-backend/dist/src/server.js", // 替换为你的入口文件
-  entry: "./apps/swot-bot/dist/src/index.js", // 替换为你的入口文件
+  entry: "./apps/swot-backend/dist/src/index.js", // 替换为你的入口文件
+  // entry: "./apps/swot-bot/dist/src/index.js", // 替换为你的入口文件
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -29,5 +30,9 @@ module.exports = {
 
   plugins: [
     // new BundleAnalyzerPlugin()
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^wechaty-puppet-.*$/,
+      contextRegExp: /context-regexp/,
+    }),
   ],
 }

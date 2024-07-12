@@ -102,28 +102,34 @@ async function resolvePuppetName(
   let puppetModule
 
   try {
-    puppetModule = await import(puppetName)
+    const modulePath = require.resolve(puppetName, { paths: [process.cwd()] })
+    console.info(`Resolved path for ${puppetName}: ${modulePath}`)
+
+    puppetModule = await import(/* webpackIgnore: true */ puppetName)
     // console.info('puppetModule', puppetModule)
   } catch (e) {
-    log.error(
-      "Puppet",
-      "resolvePuppetName %s",
-      [
-        "",
-        'Failed to import Wechaty Puppet Provider (WPP) NPM module: "' +
-          puppetName +
-          '"',
-        "Please make sure:",
-        " 1. it has been installed correctly. (run `npm install " +
-          puppetName +
-          "` if it doesn't)",
-        ' 2. "' + puppetName + '" is a valid Wechaty Puppet Provider (WPP).',
-        "",
-        "learn more about Wechaty Puppet Providers (WPP) from the official website:",
-        "<https://wechaty.js.org/docs/puppet-providers>",
-        "",
-      ].join("\n"),
-    )
+    // log.error(
+    //   "Puppet",
+    //   "resolvePuppetName %s",
+    //   [
+    //     "",
+    //     'Failed to import Wechaty Puppet Provider (WPP) NPM module: "' +
+    //       puppetName +
+    //       '"',
+    //     "Please make sure:",
+    //     " 1. it has been installed correctly. (run `npm install " +
+    //       puppetName +
+    //       "` if it doesn't)",
+    //     ' 2. "' + puppetName + '" is a valid Wechaty Puppet Provider (WPP).',
+    //     "",
+    //     "learn more about Wechaty Puppet Providers (WPP) from the official website:",
+    //     "<https://wechaty.js.org/docs/puppet-providers>",
+    //     "",
+    //   ].join("\n"),
+    // )
+
+    console.trace()
+
     throw e
   }
 

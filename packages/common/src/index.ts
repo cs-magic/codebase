@@ -1,5 +1,4 @@
 import config_ from "./config.json" assert { type: "json" }
-
 export const config = config_
 config.version = process.env.npm_package_version ?? "0.1.0"
 
