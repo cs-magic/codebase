@@ -14,6 +14,7 @@ import { rendererConfig } from "./webpack.renderer.config"
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    extraResource: ["../../dist"],
   },
   rebuildConfig: {},
   makers: [
@@ -37,11 +38,11 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: "./src/index.html",
-            js: "./src/renderer.ts",
+            html: "./src/renderer/index.html",
+            js: "./src/renderer/index.tsx",
             name: "main_window",
             preload: {
-              js: "./src/preload.ts",
+              js: "./src/main/preload.ts",
             },
           },
         ],
