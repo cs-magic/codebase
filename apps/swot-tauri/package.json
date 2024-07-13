@@ -7,6 +7,7 @@
     "dev:tauri": "yarn tauri dev | pino-pretty",
     "build:web": "next build",
     "build:tauri": "tauri build",
+    "build:tauri.debug": "tauri build --debug",
     "start:web": "next start",
     "start:tauri": "echo 'build 后直接在 App 中打开 wechat-manager'",
     "lint:next": "next lint"
