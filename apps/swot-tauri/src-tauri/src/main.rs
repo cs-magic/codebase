@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::process::{Command, Child};
+use std::process::{Command};
 use std::sync::{Mutex, Arc};
 
 fn main() {
@@ -13,7 +13,7 @@ fn main() {
       let child_process = Arc::clone(&child_process);
       move |app| {
         let backend_path = app.path_resolver()
-          .resolve_resource("dist/main.js")
+          .resolve_resource("../../../dist/main.js")
           .expect("failed to resolve resource");
 
         if let Some(path_str) = backend_path.to_str() {
@@ -35,7 +35,7 @@ fn main() {
     .expect("error while running tauri application")
     .run({
       let child_process = Arc::clone(&child_process);
-      move |app_handle, e| {
+      move |_, e| {
         if let tauri::RunEvent::ExitRequested { .. } = e {
           if let Some(mut child) = child_process.lock().unwrap().take() {
             // Kill the child process on exit

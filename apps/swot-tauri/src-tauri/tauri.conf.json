@@ -1,8 +1,8 @@
 {
   "$schema": "../../../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "cp -r ../../dist src-tauri && npm run build:web",
-    "beforeDevCommand": "echo \"$(pwd)\" && cp -r ../../dist src-tauri && npm run build:web && npm run dev:web",
+    "beforeBuildCommand": "npm run build:web",
+    "beforeDevCommand": "npm run dev:web",
     "devPath": "http://localhost:3000",
     "distDir": "../out"
   },
@@ -39,7 +39,8 @@
         "signingIdentity": null
       },
       "resources": [
-        "dist"
+        "../../../dist",
+        "../../../node_modules/.prisma"
       ],
       "shortDescription": "",
       "targets": "all",

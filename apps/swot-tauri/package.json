@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:web": "next dev",
-    "dev:tauri": "yarn tauri dev",
+    "dev:tauri": "yarn tauri dev | pino-pretty",
     "build:web": "next build",
     "build:tauri": "tauri build",
     "start:web": "next start",
