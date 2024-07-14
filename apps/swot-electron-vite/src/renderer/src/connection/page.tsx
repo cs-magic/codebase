@@ -1,8 +1,8 @@
 'use client'
 
-import { useUserIsAdmin } from '@cs-magic/auth'
-import { socketStatusMap, useInit, cn } from '@cs-magic/common'
 import { env } from '@cs-magic/env'
+import { socketStatusMap, useInit, cn } from '@cs-magic/common'
+// import { useUserIsAdmin } from '@cs-magic/auth'
 import {
   Button,
   buttonVariants,
@@ -25,7 +25,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus
-} from '@cs-magic/swot-bot'
+} from '@cs-magic/swot-bot-core'
 import { logger } from '@cs-magic/common'
 import { QRCodeSVG } from 'qrcode.react'
 
@@ -43,7 +43,7 @@ export default function BotPage() {
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom)
   const [botLogging, setBotLogging] = useAtom(botLoggingAtom)
 
-  const isAdmin = useUserIsAdmin()
+  // const isAdmin = useUserIsAdmin()
 
   const socket = useInit<WebSocket>(() => {
     console.log('-- initing socket --')
@@ -145,7 +145,8 @@ export default function BotPage() {
                 Pause
               </Button>
 
-              {isAdmin && (
+              {
+                // isAdmin &&
                 <Button
                   disabled={!botUser || !botLoggedIn}
                   onClick={() => {
@@ -154,7 +155,7 @@ export default function BotPage() {
                 >
                   Log Out
                 </Button>
-              )}
+              }
             </div>
           </StandardCard>
 

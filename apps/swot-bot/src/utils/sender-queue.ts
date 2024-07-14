@@ -1,6 +1,5 @@
-import { logger, formatError, sleep } from "@cs-magic/common"
-
-export type QueueTask = () => Promise<any>
+import { formatError, logger, sleep } from "@cs-magic/common"
+import { QueueTask } from "@cs-magic/swot-bot-core"
 
 export class SenderQueue {
   static queue: QueueTask[]

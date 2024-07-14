@@ -25,7 +25,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "../../../../swot-bot/src/schema/bot.atom"
+} from "../../../../swot-bot-core/src/schema/bot.atom"
 import { logger } from "@cs-magic/common"
 import { QRCodeSVG } from "qrcode.react"
 

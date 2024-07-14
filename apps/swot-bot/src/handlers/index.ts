@@ -9,8 +9,7 @@ import {
 import { generate } from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
 
-import { initBotContext } from "../schema"
-import { formatTalkerFromMessage } from "../utils"
+import { formatTalkerFromMessage, initBotContext } from "../utils"
 import { handleMessage } from "./handle-message"
 import { handleFriendship } from "./handle-friendship.js"
 import { handleRoomInvite } from "./handle-room-invite.js"

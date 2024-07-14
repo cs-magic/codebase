@@ -9,17 +9,9 @@ import { parseCommand, prisma } from "@cs-magic/os"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
 
-import { FeatureMap, FeatureType } from "../../../schema"
+import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
 import { BasePlugin } from "./base.plugin.js"
 import { TaskService } from "./task.service.js"
-
-export enum Priority {
-  highest = 1,
-  high = 3,
-  normal = 5,
-  low = 7,
-  lowest = 9,
-}
 
 const commandTypeSchema = z.enum([
   "list",

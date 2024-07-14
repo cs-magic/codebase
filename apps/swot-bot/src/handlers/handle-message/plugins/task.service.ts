@@ -11,7 +11,7 @@ import omit from "lodash/omit.js"
 import sortBy from "lodash/sortBy.js"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
-import { Priority } from "./task.plugin.js"
+import { Priority } from "../../../../../swot-bot-core/src/schema/priority"
 
 import { type TaskStatus } from ".prisma/client"
 

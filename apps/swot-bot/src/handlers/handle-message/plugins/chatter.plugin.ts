@@ -4,7 +4,10 @@ import { safeCallLLM, trimMessages } from "@cs-magic/llm"
 import { types } from "wechaty"
 import { z } from "zod"
 
-import { FeatureMap, FeatureType } from "../../../schema/commands.js"
+import {
+  FeatureMap,
+  FeatureType,
+} from "../../../../../swot-bot-core/src/schema/commands.js"
 import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic.js"
 import { BasePlugin } from "./base.plugin.js"
 

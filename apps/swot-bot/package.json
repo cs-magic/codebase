@@ -12,6 +12,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
+    "@cs-magic/swot-bot-core": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
     "node-schedule": "^2.1.1",

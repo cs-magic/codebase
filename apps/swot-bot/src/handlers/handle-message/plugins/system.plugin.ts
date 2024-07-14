@@ -3,7 +3,7 @@ import { prisma } from "@cs-magic/os"
 import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { FeatureMap } from "../../../schema"
+import { FeatureMap } from "../../../../../swot-bot-core/src/schema"
 import { parseLimitedCommand } from "../../../utils"
 import { BasePlugin } from "./base.plugin.js"
 

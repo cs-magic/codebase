@@ -19,7 +19,7 @@ import {
   IWechatData,
   IWechatPreference,
   LlmScenario,
-} from "../../../schema"
+} from "../../../../../swot-bot-core/src/schema"
 import {
   formatFooter,
   formatQuery,

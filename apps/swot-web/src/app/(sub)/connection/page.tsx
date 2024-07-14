@@ -20,7 +20,7 @@ import {
   botScanValueAtom,
   botSocketOpenedAtom,
   botUserAtom,
-} from "../../../../../swot-bot/src/schema/bot.atom"
+} from "../../../../../swot-bot-core/src/schema/bot.atom"
 
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"

@@ -1,7 +1,7 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 import { Button } from '@cs-magic/ui'
-// import ConnectionPage from './connection/page'
+import ConnectionPage from './connection/page'
 
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -40,7 +40,7 @@ function App(): JSX.Element {
 
         <Button className={'text-red-500'}>wow</Button>
       </div>
-      {/*<ConnectionPage />*/}
+      <ConnectionPage />
     </>
   )
 }

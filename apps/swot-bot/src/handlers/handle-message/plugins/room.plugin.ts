@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { FeatureMap } from "../../../schema/commands.js"
+import { FeatureMap } from "../../../../../swot-bot-core/src/schema/commands.js"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([

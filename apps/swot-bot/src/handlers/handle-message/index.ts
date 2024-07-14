@@ -5,7 +5,7 @@ import {
   commandsSchema,
   type CommandType,
   ManagerType,
-} from "../../schema/commands.js"
+} from "../../../../swot-bot-core/src/schema/commands.js"
 import { formatTalkerFromMessage } from "../../utils/format-talker.js"
 import { parseLimitedCommand } from "../../utils/parse-command.js"
 import { parseText } from "../../utils/parse-message.js"
