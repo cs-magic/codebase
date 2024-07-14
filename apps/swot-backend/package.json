@@ -12,7 +12,8 @@
   },
   "scripts": {
     "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
-    "build": "rm -rf dist && tsc -b && tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
+    "build": "rm -rf dist && tsc -b",
+    "build:cjs": "tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
     "start": "node dist/src/main.js | pino-pretty",
     "stop": ""
   },

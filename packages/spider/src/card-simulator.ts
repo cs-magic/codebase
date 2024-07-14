@@ -3,7 +3,7 @@ import { getEnv } from "@cs-magic/env"
 import { logger } from "@cs-magic/common"
 import { UnexpectedError } from "@cs-magic/common"
 import { IUserSummaryFilled } from "@cs-magic/common"
-import { BaseSimulator } from "./base-simulator"
+import { BaseSimulator } from "./base-simulator.js"
 
 /**
  * !IMPORTANT: 需要 swot 项目启动
@@ -43,8 +43,8 @@ export class CardSimulator extends BaseSimulator {
     if (!this.page) throw new UnexpectedError()
 
     logger.debug("-- inputting user if necessary: %o", user)
-    await this.page.locator("#card-user-name").fill(user.name)
-    await this.page.locator("#card-user-avatar").fill(user.image)
+    await this.page.locator("#card-user-name").fill(user.name as string)
+    await this.page.locator("#card-user-avatar").fill(user.image as string)
 
     logger.debug(`-- inputting content: %o`, content)
     await this.page.locator("#card-content").fill(content)
@@ -80,7 +80,7 @@ export class CardSimulator extends BaseSimulator {
     return { cardUrl }
   }
 
-  async initPage() {
+  override async initPage() {
     if (!this.page) {
       this.page = await super.initPage()
       const env = getEnv()

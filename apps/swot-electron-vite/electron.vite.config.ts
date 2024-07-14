@@ -11,12 +11,15 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   main: {
+    envDir: '../../',
     plugins: [externalizeDepsPlugin()]
   },
   preload: {
+    envDir: '../../',
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    envDir: '../../',
     // wechaty-puppet-wechat4u: commonjs / nodePolyfills
     resolve: {
       alias: {

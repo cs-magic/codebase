@@ -1,14 +1,14 @@
 import {
-  Browser as PlaywrightBrowser,
-  BrowserType,
+  type Browser as PlaywrightBrowser,
+  type BrowserType,
   chromium,
-  LaunchOptions,
+  type LaunchOptions,
 } from "playwright"
-import { Page as PlaywrightPage } from "playwright-core"
-import { Page as PuppetPage } from "puppeteer"
+import { type Page as PlaywrightPage } from "playwright-core"
+import { type Page as PuppetPage } from "puppeteer"
 
 import { logger } from "@cs-magic/common"
-import { DriverType } from "./schema"
+import { type DriverType } from "./schema.js"
 
 export type Page = PuppetPage & PlaywrightPage
 

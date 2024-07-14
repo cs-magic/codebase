@@ -29,7 +29,7 @@ export const listTopics = async (convId: string) => {
           break
       }
     } else if (started && lastTopic !== null && !row.text?.startsWith("/")) {
-      ++topicDict[lastTopic]
+      ++topicDict[lastTopic]!
     } else {
       // don't do anything
     }

@@ -6,7 +6,7 @@ import {
   moment,
   SEPARATOR_LINE,
 } from "@cs-magic/common"
-import { generate } from "qrcode-terminal"
+import qrcodeTerminal from "qrcode-terminal" // cjs package
 import { ScanStatus, Wechaty } from "wechaty"
 
 import { formatTalkerFromMessage, initBotContext } from "../utils/index.js"
@@ -51,7 +51,7 @@ export const handleWechatyBot = (bot: Wechaty) => {
       logger.info(
         `onScan (status=${ScanStatus[status]}, data=${formatString(data ?? "", 20)}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
       )
-      generate(qrcode, { small: true })
+      qrcodeTerminal.generate(qrcode, { small: true })
     })
 
     .on("login", async (user) => {

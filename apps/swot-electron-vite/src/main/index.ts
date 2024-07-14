@@ -1,9 +1,12 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+
 import icon from '../../resources/icon.png?asset'
 
-import backend from '@cs-magic/swot-backend'
+// console.log('\n[=== env ===] ', process.env)
+
+import { initServer } from '@cs-magic/swot-backend'
 
 function createWindow(): void {
   // Create the browser window.
@@ -14,7 +17,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
@@ -56,7 +59,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', async () => {
     console.log('pong')
     // start wechaty account service
-    backend.initServer()
+    initServer()
   })
 
   createWindow()
