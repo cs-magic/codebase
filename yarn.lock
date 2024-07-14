@@ -2035,7 +2035,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-backend@workspace:apps/swot-backend":
+"@cs-magic/swot-backend@workspace:^, @cs-magic/swot-backend@workspace:apps/swot-backend":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-backend@workspace:apps/swot-backend"
   dependencies:
@@ -2135,6 +2135,7 @@ __metadata:
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/env": "workspace:^"
+    "@cs-magic/swot-backend": "workspace:^"
     "@cs-magic/ui": "workspace:^"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"

@@ -18,6 +18,9 @@
     },
     {
       "path": "../../packages/llm"
+    },
+    {
+      "path": "../swot-backend"
     }
   ]
 }

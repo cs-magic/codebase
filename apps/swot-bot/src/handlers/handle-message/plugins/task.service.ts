@@ -6,12 +6,12 @@ import {
   taskDetailSchema,
 } from "@cs-magic/common"
 import { prisma } from "@cs-magic/os"
+import { Priority } from "@cs-magic/swot-bot-core"
 import chain from "lodash/chain"
 import omit from "lodash/omit.js"
 import sortBy from "lodash/sortBy.js"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
-import { Priority } from "../../../../../swot-bot-core/src/schema/priority"
 
 import { type TaskStatus } from ".prisma/client"
 

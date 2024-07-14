@@ -1,6 +1,6 @@
 import { Message } from "wechaty"
 
-import { LlmScenario } from "../../../swot-bot-core/src/schema/bot.utils.js"
+import { LlmScenario } from "@cs-magic/swot-bot-core"
 import { getConvData } from "./get-conv-preference.js"
 
 /**

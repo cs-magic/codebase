@@ -14,7 +14,7 @@
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
-    "post-install": "electron-builder install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/env": "workspace:^",
+    "@cs-magic/swot-backend": "workspace:^",
     "@cs-magic/ui": "workspace:^",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",

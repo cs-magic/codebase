@@ -7,7 +7,7 @@ import {
   defaultWechatPreference,
   IWechatData,
   IWechatPreference,
-} from "../../../swot-bot-core/src/schema/bot.preference.js"
+} from "@cs-magic/swot-bot-core"
 
 export const getRobustPreference = (
   row: {

@@ -1,7 +1,7 @@
 import { type WechatyBuilder } from "wechaty"
 import { Message as MessagePayload } from "wechaty-puppet/payloads"
 
-import { type IBotContext } from "../../swot-bot-core/src/schema/bot.context.js"
+import { type IBotContext } from "@cs-magic/swot-bot-core"
 
 declare module "wechaty-puppet/payloads" {
   /**

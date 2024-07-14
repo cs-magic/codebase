@@ -1,15 +1,17 @@
 import { logger, SEPARATOR_LINE } from "@cs-magic/common"
-import omit from "lodash/omit.js"
-import { type Message, types, type Wechaty } from "wechaty"
 import {
   commandsSchema,
   type CommandType,
   ManagerType,
-} from "../../../../swot-bot-core/src/schema/commands.js"
-import { formatTalkerFromMessage } from "../../utils/format-talker.js"
-import { parseLimitedCommand } from "../../utils/parse-command.js"
-import { parseText } from "../../utils/parse-message.js"
-import { storageMessage } from "../../utils/storage-message.js"
+} from "@cs-magic/swot-bot-core"
+import omit from "lodash/omit.js"
+import { type Message, types, type Wechaty } from "wechaty"
+import {
+  formatTalkerFromMessage,
+  parseLimitedCommand,
+  parseText,
+  storageMessage,
+} from "../../utils"
 
 import { BasePlugin } from "./plugins/base.plugin.js"
 import { ChatterPlugin } from "./plugins/chatter.plugin.js"

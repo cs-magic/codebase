@@ -1,5 +1,5 @@
 import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common"
-import { CommandStyle } from "../../../swot-bot-core/src/schema/bot.preference.js"
+import { CommandStyle } from "@cs-magic/swot-bot-core"
 
 /**
  * 可用于微信的回复

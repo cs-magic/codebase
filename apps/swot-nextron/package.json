@@ -1,6 +1,5 @@
 {
   "private": true,
-  "type": "module",
   "name": "@cs-magic/nextron",
   "description": "My application description",
   "version": "1.0.0",

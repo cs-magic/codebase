@@ -1,7 +1,6 @@
 {
   "name": "@cs-magic/swot-tauri",
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
     "dev:web": "next dev",
     "dev:tauri": "yarn tauri dev | pino-pretty",

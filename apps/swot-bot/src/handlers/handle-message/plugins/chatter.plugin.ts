@@ -1,14 +1,11 @@
 import { ILlmMessage, logger, SEPARATOR_LINE } from "@cs-magic/common"
 import { safeCallLLM, trimMessages } from "@cs-magic/llm"
 
+import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
+
 import { types } from "wechaty"
 import { z } from "zod"
-
-import {
-  FeatureMap,
-  FeatureType,
-} from "../../../../../swot-bot-core/src/schema/commands.js"
-import { listMessagesOfLatestTopic } from "../../../utils/list-messages-of-latest-topic.js"
+import { listMessagesOfLatestTopic } from "../../../utils"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([
