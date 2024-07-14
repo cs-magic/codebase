@@ -1,13 +1,12 @@
-// import {
-import { redis } from "@cs-magic/common/db/providers/redis/connection"
-import { pusherServerConfigs } from "@cs-magic/common/pusher/config"
-import { PusherServerId } from "@cs-magic/common/pusher/schema"
-import { initPusherServer } from "@cs-magic/common/pusher/server/init"
 import {
+  pusherServerConfigs,
+  PusherServerId,
+  initPusherServer,
   ITransEvent,
   ResponseFinalStatus,
   ResponseStatus,
-} from "@cs-magic/common/sse/schema"
+} from "@cs-magic/common"
+import { redis } from "@cs-magic/os"
 
 import Pusher from "pusher"
 

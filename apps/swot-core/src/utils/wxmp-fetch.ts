@@ -1,9 +1,6 @@
-import { logger } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { cardDetailSchema } from "@cs-magic/common/schema/card.detail"
-import { formatString } from "@cs-magic/common/utils/format-string"
-import { FetchWxmpArticleRes } from "@cs-magic/wechat/wxmp-article/fetch/index"
-import { md2summary } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
+import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
+import { prisma } from "@cs-magic/os"
+import { FetchWxmpArticleRes, md2summary } from "@cs-magic/wechat"
 
 import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article.js"
 import { wxmpRequest } from "./wxmp-request.js"

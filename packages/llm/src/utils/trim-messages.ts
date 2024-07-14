@@ -1,5 +1,4 @@
-import logger from "@cs-magic/common/log/index"
-import { ILlmMessage } from "@cs-magic/common/schema/message"
+import { ILlmMessage, logger } from "@cs-magic/common"
 
 import { LlmModelType } from "../schema/llm.models.js"
 import { calculateToken } from "./calculate-token.js"
@@ -18,7 +17,7 @@ export const trimMessages = (messages: ILlmMessage[], model: LlmModelType) => {
     curLen > targetLen ||
     // 第一条必须是system 或者 user
     // todo: 放到 call 里
-    (!!messages.length && !["system", "user"].includes(messages[0]!.role))
+    (!!messages.length && !["system", "user"].includes(messages[0].role))
   ) {
     logger.debug(`trimming messages(curLen=${curLen}, targetLen=${targetLen})`)
     messages.splice(0, 1)

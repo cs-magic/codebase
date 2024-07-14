@@ -1,4 +1,4 @@
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { FlexContainer } from "@cs-magic/common"
 
 export default async function HomePage() {
   return <FlexContainer></FlexContainer>

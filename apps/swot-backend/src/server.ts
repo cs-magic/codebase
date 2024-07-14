@@ -1,4 +1,4 @@
-import { genNanoId } from "@cs-magic/common/utils/gen-nano-id"
+import { genNanoId } from "@cs-magic/common"
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"

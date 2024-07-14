@@ -1,4 +1,4 @@
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { FlexContainer } from "@cs-magic/common"
 import { Footer } from "../../components/footer"
 import { Header } from "../../components/header"
 import React, { PropsWithChildren } from "react"

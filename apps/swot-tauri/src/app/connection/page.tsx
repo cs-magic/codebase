@@ -1,8 +1,7 @@
 "use client"
 
-import { env } from "@cs-magic/common/env"
+import { env } from "../../../../../packages/env/src"
 import { useInit } from "@cs-magic/common/hooks/use-init"
-import { useUserIsAdmin } from "@cs-magic/common/hooks/use-user"
 import { socketStatusMap } from "@cs-magic/common/transport/schema"
 import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
 import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
@@ -26,7 +25,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   ScanStatus,
-} from "@cs-magic/swot-bot/bot.atom"
+} from "../../../../swot-bot/src/schema/bot.atom"
 import { logger } from "@cs-magic/common"
 import { QRCodeSVG } from "qrcode.react"
 

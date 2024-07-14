@@ -1,10 +1,11 @@
-// todo: avoid import from project
-import { api } from "@cs-magic/common/api-client/api"
-import { parseMetaFromHtml } from "@cs-magic/common/html/utils"
-import { html2md } from "@cs-magic/common/markdown/html2md"
-import { IUserSummary } from "@cs-magic/common/schema/user.summary"
-import { WxmpArticleSimulator } from "@cs-magic/common/spider/wxmp-article-simulator"
-import { withError } from "@cs-magic/common/utils/with-error"
+import {
+  api,
+  parseMetaFromHtml,
+  html2md,
+  IUserSummary,
+  withError,
+} from "@cs-magic/common"
+import { WxmpArticleSimulator } from "@cs-magic/spider"
 
 import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"

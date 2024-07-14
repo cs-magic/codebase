@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 
-import "./common.css"
+import "./common"
 import "./index.responsive.css"
 
 class DDS_lanhupage_0 extends Component {

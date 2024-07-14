@@ -1,11 +1,10 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { FileBox } from "@juzi/file-box"
+import { llmModelTypeSchema } from "@cs-magic/llm"
+import { prisma } from "@cs-magic/os"
+import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
-
-import { FeatureMap } from "../../../schema/commands.js"
-import { parseLimitedCommand } from "../../../utils/parse-command.js"
+import { FeatureMap } from "../../../schema"
+import { parseLimitedCommand } from "../../../utils"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([

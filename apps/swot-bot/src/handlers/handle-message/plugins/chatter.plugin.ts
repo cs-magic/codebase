@@ -1,8 +1,5 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import logger from "@cs-magic/common/log"
-import { ILlmMessage } from "@cs-magic/common/schema/message"
-import { safeCallLLM } from "@cs-magic/llm/utils/safe-call-llm"
-import { trimMessages } from "@cs-magic/llm/utils/trim-messages"
+import { ILlmMessage, logger, SEPARATOR_LINE } from "@cs-magic/common"
+import { safeCallLLM, trimMessages } from "@cs-magic/llm"
 
 import { types } from "wechaty"
 import { z } from "zod"

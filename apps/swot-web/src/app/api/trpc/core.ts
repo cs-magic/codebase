@@ -1,5 +1,5 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { userDetailSchema } from "@cs-magic/common/schema/user.detail"
+import { prisma } from "@cs-magic/os"
+import { userDetailSchema } from "@cs-magic/common"
 import { z } from "zod"
 import { createTRPCRouter, protectedProcedure } from "../../../trpc/trpc"
 

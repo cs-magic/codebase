@@ -1,7 +1,7 @@
 "use server"
 
 import { logger } from "@cs-magic/common"
-import { getEnv } from "@cs-magic/common/env"
+import { getEnv } from "@cs-magic/env"
 /**
  * `yarn add net tls`
  */
@@ -21,8 +21,8 @@ const smsTencentClient = new v20210111.Client({
   // 为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中，请参考本文凭证管理章节。
   // 硬编码密钥到代码中有可能随代码泄露而暴露，有安全隐患，并不推荐。
   credential: {
-    secretId: env.TENCENT_AK,
-    secretKey: env.TENCENT_SK,
+    secretId: env?.TENCENT_AK,
+    secretKey: env?.TENCENT_SK,
   },
   // 产品地域
   region: tencentSmsConfig.region,

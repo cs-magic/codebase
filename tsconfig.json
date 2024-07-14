@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    //    "module": "NodeNext",
+    //    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+
     "ignoreDeprecations": "5.0",
+    "resolveJsonModule" : true,
 
     "traceResolution"   : false,
     "noLib"             : false,
@@ -10,15 +16,6 @@
     "sourceMap"         : true,
     "emitDecoratorMetadata"  : true,
     "experimentalDecorators" : true,
-
-    "target": "esnext",
-
-//    "module": "NodeNext",
-//    "moduleResolution": "NodeNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-
-    "resolveJsonModule" : true,
 
     "strict": true,
 //    "strictNullChecks": true,
@@ -38,10 +35,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
 
-    "jsx": "react-jsx",
-
     "baseUrl": ".",
     "paths": {
+//      "@cs-magic/common/*": ["./packages/common/dist/src/*.js"],
+//      "@cs-magic/common/utils": ["./packages/common/dist/src/utils.js"],
       //          "@/*": ["src/*"],
 //      "@trpc/react-query": [
 //        "node_modules/@trpc/react-query/", // ref: https://github.com/microsoft/TypeScript/issues/29808#issuecomment-540292885
@@ -69,11 +66,6 @@
 //    }
   },
 
-  "include": [
-//    "./packages/wechaty/dist/src/types.d.ts"
-//    "packages/**/*.ts",
-//    "apps/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
     "apps/swot-tauri/dist/src-tauri/target"

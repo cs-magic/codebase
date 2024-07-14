@@ -1,6 +1,6 @@
 "use client"
 
-import { uiLoadingAlertDialogAtom } from "@cs-magic/common/ui/store"
+import { uiLoadingAlertDialogAtom } from "@cs-magic/common"
 import { useAtom, useSetAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"

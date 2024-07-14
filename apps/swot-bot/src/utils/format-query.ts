@@ -1,4 +1,4 @@
-import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common/const"
+import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common"
 import { CommandStyle } from "../schema/bot.preference.js"
 
 /**

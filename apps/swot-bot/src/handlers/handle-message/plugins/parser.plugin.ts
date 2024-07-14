@@ -1,17 +1,17 @@
-import logger from "@cs-magic/common/log"
-import { CardSimulator } from "@cs-magic/common/spider/card-simulator"
-import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
 import {
+  isWxmpArticleUrl,
+  logger,
   parseTitleFromWechatUrlMessage,
   parseUrlFromWechatUrlMessage,
-} from "@cs-magic/common/utils/parse-url-from-wechat-url-message"
-import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"
-import { FileBox } from "@juzi/file-box"
+} from "@cs-magic/common"
+import { CardSimulator } from "@cs-magic/spider"
+import { wxmpUrl2preview } from "@cs-magic/swot-core"
+import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { FeatureMap, FeatureType } from "../../../schema/commands.js"
-import { getQuotedMessage } from "../../../utils/get-quoted-message.js"
-import { parseText } from "../../../utils/parse-message.js"
+import { FeatureMap, FeatureType } from "../../../schema"
+import { getQuotedMessage } from "../../../utils"
+import { parseText } from "../../../utils"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([""])

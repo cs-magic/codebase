@@ -1,8 +1,10 @@
-import { logger } from "@cs-magic/common"
-import { IUserSummary } from "@cs-magic/common/schema/user.summary"
-import { formatWxmpUrl } from "@cs-magic/common/utils/format-wxmp-article"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-import { ILlmRes } from "@cs-magic/llm/schema/llm.api"
+import {
+  logger,
+  IUserSummary,
+  formatWxmpUrl,
+  parseJsonSafe,
+} from "@cs-magic/common"
+import { ILlmRes } from "@cs-magic/llm"
 
 import { ICardInnerPreview, IMedia } from "../schema/card.js"
 import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article.js"

@@ -1,4 +1,4 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import { prisma } from "@cs-magic/os"
 
 export const getConvRow = async (message: { convId: string }) => {
   return prisma.wechatConv.findUnique({

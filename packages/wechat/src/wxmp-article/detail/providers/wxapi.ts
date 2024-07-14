@@ -1,4 +1,5 @@
-import { api } from "@cs-magic/common/api-client/api"
+import { api } from "@cs-magic/common"
+
 import axios from "axios"
 import { getWechatArticleUrlFromShortId } from "../../utils"
 import { IWechatArticleComment, IWechatArticleStat } from "../schema"
@@ -20,7 +21,7 @@ type IWxapiResponse<T> = {
  * @param url
  */
 export const fetchWechatArticleStat = async (id: string) => {
-  const token = process.env.WXAPI_TOKEN!
+  const token = process.env?.WXAPI_TOKEN!
 
   const { data: res } = await wxapiApi.post<IWxapiResponse<IWechatArticleStat>>(
     "/wxapi/readnum",
@@ -39,7 +40,7 @@ export const fetchWechatArticleStat = async (id: string) => {
 }
 
 export const fetchWechatArticleComments = async (id: string) => {
-  const token = process.env.WXAPI_TOKEN!
+  const token = process.env?.WXAPI_TOKEN!
 
   const { data: res } = await wxapiApi.postForm<
     IWxapiResponse<IWechatArticleComment[]>

@@ -1,13 +1,17 @@
 {
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
-    "jsx": "react",
     "composite": true,
-    "outDir": "dist",
+    "outDir": "dist"
 //    "moduleResolution": "Node"
   },
   "include": [
     "./src/**/*",
     "./src/**/*.json"
   ],
+  "references": [
+    {
+      "path": "../env"
+    }
+  ]
 }

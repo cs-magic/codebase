@@ -1,23 +1,22 @@
-import wechatyPuppetWechat4u from "wechaty-puppet-wechat4u"
-console.log({ wechatyPuppetWechat4u })
-
-import { env } from "@cs-magic/common/env"
-import { logEnv } from "@cs-magic/common/env/log-env"
-import { logger } from "@cs-magic/common/log"
+import { logger } from "@cs-magic/common"
+import { env, logEnv } from "@cs-magic/env"
 
 import { type Wechaty, WechatyBuilder } from "wechaty"
+import wechatyPuppetWechat4u from "wechaty-puppet-wechat4u"
 
-import { handleWechatyBot } from "./handlers/index.js"
+import { handleWechatyBot } from "./handlers"
+
+console.log({ wechatyPuppetWechat4u })
 
 /**
  * 这是一个 wrapper， 请在其他地方 start
  *
  */
-export const createWechatyBot = async () => {
+export const createWechatyBot = () => {
   // log env to ensure puppet info.
   logEnv("wechaty")
 
-  const name = env.WECHATY_PUPPET_NAME ?? "default"
+  const name = env?.WECHATY_PUPPET_NAME ?? "default"
   logger.info(`-- init bot(name=${name})`)
 
   const bot = WechatyBuilder.build({

@@ -1,8 +1,8 @@
 "use client"
 
-import { userImageAtom, userNameAtom } from "@cs-magic/common/store/user.atom"
-import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
-import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+import { userImageAtom, userNameAtom } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"

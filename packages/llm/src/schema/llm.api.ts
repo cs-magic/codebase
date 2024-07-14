@@ -1,4 +1,4 @@
-import { ILlmMessage } from "@cs-magic/common/schema/message"
+import { ILlmMessage } from "@cs-magic/common"
 import OpenAI from "openai"
 
 import { LlmModelType } from "./llm.models.js"

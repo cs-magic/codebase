@@ -1,5 +1,5 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { wechatMessageDetailSchema } from "@cs-magic/common/schema/user.summary"
+import { wechatMessageDetailSchema } from "@cs-magic/common"
+import { prisma } from "@cs-magic/os"
 
 /**
  * 获取最后一次

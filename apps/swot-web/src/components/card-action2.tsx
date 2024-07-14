@@ -1,6 +1,6 @@
 "use client"
 
-import { uploadFile } from "@cs-magic/common/oss/upload"
+import { uploadFile } from "@cs-magic/common"
 import { Action2Type, ActionType } from "@cs-magic/swot-core/schema/card"
 import { cardOssAtom, cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"

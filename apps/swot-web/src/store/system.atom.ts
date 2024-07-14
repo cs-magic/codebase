@@ -1,6 +1,6 @@
-import { ScenarioType } from "@cs-magic/common/schema/scenario"
-import { BEST_VIEWPOINT } from "@cs-magic/common/ui/config"
-import { uiScreenAtom } from "@cs-magic/common/ui/store"
+import { ScenarioType } from "@cs-magic/common"
+import { BEST_VIEWPOINT } from "@cs-magic/common"
+import { uiScreenAtom } from "@cs-magic/common"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 

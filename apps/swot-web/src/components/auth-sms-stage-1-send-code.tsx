@@ -5,7 +5,7 @@ import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
 } from "@cs-magic/auth/providers/sms/store"
-import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
+import { ButtonWithLoading } from "@cs-magic/common"
 import {
   Form,
   FormControl,
@@ -13,8 +13,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@cs-magic/common/ui/components/shadcn/ui/form"
-import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+} from "@cs-magic/common"
+import { Input } from "@cs-magic/common"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom, useSetAtom } from "jotai"
 import { useForm } from "react-hook-form"

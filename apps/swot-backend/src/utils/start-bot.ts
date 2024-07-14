@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { createWechatyBot } from "@cs-magic/swot-bot/create-wechaty-bot"
+import { createWechatyBot } from "@cs-magic/swot-bot"
 import { IContext } from "../schema/context.js"
 import { syncClients } from "./sync-clients.js"
 import { transferMessage } from "./transfer-message.js"

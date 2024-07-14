@@ -1,5 +1,5 @@
 "use client"
-import { cn } from "@cs-magic/common/ui/utils"
+import { cn } from "@cs-magic/common"
 import { HTMLAttributes } from "react"
 
 export const Sidebar = ({

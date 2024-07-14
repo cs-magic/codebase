@@ -1,9 +1,9 @@
 "use server"
 
 import { logger } from "@cs-magic/common"
-import { NotImplementedError } from "@cs-magic/common/schema/error"
-import { extractFirstUrl } from "@cs-magic/common/utils/extract-first-url"
-import { isWxmpArticleUrl } from "@cs-magic/common/utils/is-wxmp-article-url"
+import { NotImplementedError } from "@cs-magic/common"
+import { extractFirstUrl } from "@cs-magic/common"
+import { isWxmpArticleUrl } from "@cs-magic/common"
 import { ICardInnerPreview } from "@cs-magic/swot-core/schema/card"
 import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-core/schema/wxmp-article"
 import { wxmpUrl2preview } from "@cs-magic/swot-core/utils/wxmp-url2preview"

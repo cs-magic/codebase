@@ -22,6 +22,30 @@ yarn db:generate
 
 ### electron 安装时需要固定版本
 
+### file-box、padlocal-ts包默认安装的 jimp 是 0.16，没有 es/index.js，导致 vite 打包时错误，在根目录强制为 0.22 即可，see: https://chatgpt.com/c/5dfc8a13-42b2-4c1b-9596-81e23cf1f4bb
+
+```json lines
+// $ROOT/package.json
+{
+  "resolutions": {
+    "jimp": "0.22.12"
+  }
+}
+```
+
+### qrcode-terminal octal
+
+```shell
+gsed -i 's#\\033\[40m  \\033\[0m#\u001B[40m  \u001B[0m#g' node_modules/qrcode-terminal/lib/main.js
+gsed -i 's#\\033\[47m  \\033\[0m#\u001B[47m  \u001B[0m#g' node_modules/qrcode-terminal/lib/main.js
+```
+
+### tiktoken wasm problem
+
+see: https://chatgpt.com/c/84c78d18-bdee-4646-b2f6-4f54d95db0e0
+
+
+
 ## reference 
 
 - [Tech](./docs/tech.md)

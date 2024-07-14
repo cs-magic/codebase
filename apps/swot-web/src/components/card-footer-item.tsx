@@ -1,4 +1,4 @@
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { FlexContainer } from "@cs-magic/common"
 import { LucideIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 

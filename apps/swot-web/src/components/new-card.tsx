@@ -1,17 +1,13 @@
 "use client"
 
-import { useUploadFiles } from "@cs-magic/common/oss/hooks/use-upload-files"
-import { IUploadFile } from "@cs-magic/common/oss/schema"
-import { VerticalAspectRatio } from "@cs-magic/common/ui/components/aspect-ratio"
-import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
-import { FileComp } from "@cs-magic/common/ui/components/file"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@cs-magic/common/ui/components/shadcn/ui/tooltip"
-import { cn } from "@cs-magic/common/ui/utils"
+import { useUploadFiles } from "@cs-magic/common"
+import { IUploadFile } from "@cs-magic/common"
+import { VerticalAspectRatio } from "@cs-magic/common"
+import { ButtonWithLoading } from "@cs-magic/common"
+import { FileComp } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/common"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import MdEditor from "@uiw/react-md-editor"
 import { produce } from "immer"
 import { useAtom } from "jotai"

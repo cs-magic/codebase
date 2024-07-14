@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "esbuild": "^0.23.0",
+    "jimp": "^0.22.12",
     "jotai": "^2.8.4",
     "js-md5": "^0.8.3",
     "lodash": "^4.17.21",
@@ -90,5 +91,8 @@
     "scripts": {
       "pre-push": "npx git-scripts-pre-push"
     }
+  },
+  "resolutions": {
+    "jimp": "0.22.12"
   }
 }

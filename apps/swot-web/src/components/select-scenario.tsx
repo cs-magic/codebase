@@ -1,9 +1,5 @@
-import { ScenarioType } from "@cs-magic/common/schema/scenario"
-import {
-  Select,
-  SelectContent,
-  SelectValue,
-} from "@cs-magic/common/ui/components/shadcn/ui/select"
+import { ScenarioType } from "@cs-magic/common"
+import { Select, SelectContent, SelectValue } from "@cs-magic/common"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
 import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
 import { scenarioTypeAtom } from "../store/system.atom"

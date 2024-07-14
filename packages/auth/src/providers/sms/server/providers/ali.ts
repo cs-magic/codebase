@@ -8,14 +8,14 @@ import Dysmsapi, * as Api from "@alicloud/dysmsapi20170525"
 import { Config } from "@alicloud/openapi-client"
 import { RuntimeOptions } from "@alicloud/tea-util"
 import { logger } from "@cs-magic/common"
-import { getEnv } from "@cs-magic/common/env"
-import { formatError } from "@cs-magic/common/utils/format-error"
+import { getEnv } from "@cs-magic/env"
+import { formatError } from "@cs-magic/common"
 
 const env = getEnv()
 
 const aliSmsConfig = {
-  ak: env.ALI_AK,
-  sk: env.ALI_SK,
+  ak: env?.ALI_AK,
+  sk: env?.ALI_SK,
   // Endpoint 请参考 https://api.aliyun.com/product/Dysmsapi
   endpoint: `dysmsapi.aliyuncs.com`,
   signName: "计算机魔法研究",

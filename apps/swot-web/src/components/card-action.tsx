@@ -1,7 +1,7 @@
 "use client"
 
-import { ButtonWithLoading } from "@cs-magic/common/ui/components/button-with-loading"
-import { cn } from "@cs-magic/common/ui/utils"
+import { ButtonWithLoading } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { ActionType } from "@cs-magic/swot-core/schema/card"
 import { atom, PrimitiveAtom, useAtom } from "jotai"
 import capitalize from "lodash/capitalize"

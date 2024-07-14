@@ -1,5 +1,4 @@
-import { ILlmMessage } from "@cs-magic/common/schema/message"
-import { formatString } from "@cs-magic/common/utils/format-string"
+import { ILlmMessage, formatString } from "@cs-magic/common"
 
 export const formatLlmMessage = (m: ILlmMessage, maxLength = 40) =>
   // `  [${m.role[0]!.toUpperCase()}]: ${formatString(JSON.stringify(m.content), maxLength)}`

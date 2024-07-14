@@ -1,7 +1,7 @@
 "use client"
 
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
+import { LabelLine } from "@cs-magic/common"
+import { Input } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import React from "react"
 

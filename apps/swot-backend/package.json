@@ -2,19 +2,18 @@
   "name": "@cs-magic/swot-backend",
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
-  "type": "module",
-  "scripts": {
-    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/server.ts",
-    "build": "rm -rf dist && tsc -b",
-    "start": "node dist/src/index.js | pino-pretty",
-    "stop": ""
-  },
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
   "exports": {
     ".": "./dist/src/index.js",
     "./*": "./dist/src/*.js"
   },
-  "main": "./dist/src/index.js",
-  "typings": "./dist/src/index.d.ts",
+  "scripts": {
+    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
+    "build": "rm -rf dist && tsc -b",
+    "start": "node dist/src/main.js | pino-pretty",
+    "stop": ""
+  },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",

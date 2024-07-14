@@ -1,6 +1,6 @@
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
-import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+import { LabelLine } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { StandardCard } from "@cs-magic/common"
 import { api } from "../trpc/client"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 

@@ -1,4 +1,4 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import { parseJsonSafe } from "@cs-magic/common"
 import fs, { promises } from "fs"
 import { IWechatData, wechatyDataPath } from "./handle-message.js"
 

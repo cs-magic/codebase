@@ -1,0 +1,20 @@
+{
+  "name": "@cs-magic/os",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./*": "./dist/src/*.js"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkShawn2020/codebase.git"
+  },
+  "dependencies": {
+    "@cs-magic/common": "workspace:^"
+  }
+}

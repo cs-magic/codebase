@@ -1,4 +1,4 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import { prisma } from "@cs-magic/os"
 import Credentials from "next-auth/providers/credentials"
 import { SMS_PROVIDER_ID } from "./const" // // sb tsx 需要用 default
 

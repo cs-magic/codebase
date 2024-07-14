@@ -8,7 +8,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "@cs-magic/common/ui/components/shadcn/ui/alert-dialog"
+} from "@cs-magic/common"
 import { useAtom } from "jotai"
 
 import { signIn } from "next-auth/react"

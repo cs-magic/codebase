@@ -1,4 +1,4 @@
-import { ITransEvent } from "@cs-magic/common/sse/schema"
+import { ITransEvent } from "@cs-magic/common"
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
 

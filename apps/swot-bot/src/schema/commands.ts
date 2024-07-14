@@ -1,4 +1,4 @@
-import { LangType } from "@cs-magic/common/i18n/schema"
+import { LangType } from "@cs-magic/common"
 import { z } from "zod"
 
 import { Priority } from "../handlers/handle-message/plugins/task.plugin.js"

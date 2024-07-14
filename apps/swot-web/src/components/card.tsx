@@ -1,10 +1,10 @@
 "use client"
 
-import { useSearchParam } from "@cs-magic/common/hooks/use-search-param"
-import { AtomSelector } from "@cs-magic/common/ui/components/atom-switcher"
-import { Separator } from "@cs-magic/common/ui/components/shadcn/ui/separator"
-import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
-import { cn } from "@cs-magic/common/ui/utils"
+import { useSearchParam } from "@cs-magic/common"
+import { AtomSelector } from "@cs-magic/common"
+import { Separator } from "@cs-magic/common"
+import { StandardCard } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,

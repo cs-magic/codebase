@@ -3,7 +3,7 @@ import {
   ITransClient,
   ITransEvent,
   ResponseFinalStatus,
-} from "@cs-magic/common/sse/schema"
+} from "@cs-magic/common"
 import remove from "lodash/remove.js"
 
 import { ILLMManagerTraditional } from "./schema.js"

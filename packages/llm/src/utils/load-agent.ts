@@ -1,5 +1,5 @@
-import { projectDir } from "@cs-magic/common/path/index"
-import { promises } from "fs"
+import { projectDir } from "@cs-magic/os"
+import fs from "fs"
 import yaml from "js-yaml"
 import path from "path"
 
@@ -7,7 +7,7 @@ import { IAgentReq } from "../schema/llm.api.js"
 import { AgentType } from "./safe-call-agent.js"
 
 export const loadAgent = async (agentType: AgentType) => {
-  const yamlConfig = await promises.readFile(
+  const yamlConfig = await fs.promises.readFile(
     path.join(projectDir, `packages/llm/config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )

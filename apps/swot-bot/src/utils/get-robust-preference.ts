@@ -1,6 +1,6 @@
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
-import omit from "lodash/omit.js"
+import { parseJsonSafe } from "@cs-magic/common"
 import merge from "lodash/merge.js"
+import omit from "lodash/omit.js"
 
 import {
   defaultWechatData,

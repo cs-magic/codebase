@@ -49,7 +49,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
         const { id, access_token } = tokens
         if (!id || !access_token) throw new Error("missing id | access_token")
         const userInfo = await getWechatUserProfile(access_token, id)
-        logger.info("[common-auth-wechat] userinfo callback: %o", {
+        logger.info("[common", {
           tokens,
           userInfo,
         })
@@ -75,7 +75,7 @@ export default function WechatProvider<P extends IWechatAdaptedProfile>(
         wxid: profile.openid,
         wxidVerified: new Date(),
       }
-      logger.info("[common-auth-wechat] profile callback: %o", {
+      logger.info("[common", {
         profile,
         profileOut,
       })

@@ -5,10 +5,10 @@ import {
   smsCodeAtom,
   smsSignInPayloadAtom,
 } from "@cs-magic/auth/providers/sms/store"
-import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
-import { SMS_DIGIT_SIZE } from "@cs-magic/common/ui/config"
-import { uiLoadingAlertDialogAtom } from "@cs-magic/common/ui/store"
-import { cn } from "@cs-magic/common/ui/utils"
+import { Label } from "@cs-magic/common"
+import { SMS_DIGIT_SIZE } from "@cs-magic/common"
+import { uiLoadingAlertDialogAtom } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"
 import { useEffect, useRef } from "react"

@@ -1,5 +1,5 @@
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { cn } from "@cs-magic/common/ui/utils"
+import { FlexContainer } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { Header } from "../../components/header"
 import { PropsWithChildren } from "react"
 

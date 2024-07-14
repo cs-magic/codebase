@@ -1,4 +1,4 @@
-import { Nullable } from "@cs-magic/common/schema/base"
+import { Nullable } from "@cs-magic/common"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 

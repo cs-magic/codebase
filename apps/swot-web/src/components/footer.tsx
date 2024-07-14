@@ -1,4 +1,4 @@
-import { ImageEqualHeight } from "@cs-magic/common/ui/components/image-equal-height"
+import { ImageEqualHeight } from "@cs-magic/common"
 import { BrandingPartners } from "./branding-partners"
 import Link from "next/link"
 

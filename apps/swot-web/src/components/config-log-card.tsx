@@ -1,7 +1,7 @@
-import { pusherLogLevelAtom } from "@cs-magic/common/pusher/store"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { SelectLogLevel } from "@cs-magic/common/ui/components/select-log-level"
-import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+import { pusherLogLevelAtom } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
+import { SelectLogLevel } from "@cs-magic/common"
+import { StandardCard } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 

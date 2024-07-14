@@ -1,17 +1,8 @@
-import { devEnabledAtom } from "@cs-magic/common/dev/store"
-import { IconContainer } from "@cs-magic/common/ui/components/icon-container"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@cs-magic/common/ui/components/shadcn/ui/sheet"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@cs-magic/common/ui/components/shadcn/ui/tabs"
-import { cn } from "@cs-magic/common/ui/utils"
+import { devEnabledAtom } from "@cs-magic/common"
+import { IconContainer } from "@cs-magic/common"
+import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/common"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cs-magic/common"
+import { cn } from "@cs-magic/common"
 import { useHotkeys } from "@mantine/hooks"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"

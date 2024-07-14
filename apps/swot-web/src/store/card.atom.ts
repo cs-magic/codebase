@@ -1,5 +1,5 @@
-import { getOssUrl } from "@cs-magic/common/oss/utils"
-import { parseJsonSafe } from "@cs-magic/common/utils/parse-json"
+import { getOssUrl } from "@cs-magic/common"
+import { parseJsonSafe } from "@cs-magic/common"
 import {
   ICardInnerPreview,
   ICardPreview,

@@ -1,4 +1,4 @@
-import { FileBox, type FileBoxInterface } from "@juzi/file-box"
+import { FileBox, type FileBoxInterface } from "file-box"
 
 import { log } from "../config.js"
 

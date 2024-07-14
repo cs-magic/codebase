@@ -3,7 +3,7 @@ import {
   ITransClient,
   ITransEvent,
   ResponseFinalStatus,
-} from "@cs-magic/common/sse/schema"
+} from "@cs-magic/common"
 
 export interface ILLMManagerTraditional {
   //////////////////////////////

@@ -1,4 +1,5 @@
-import { api } from "@cs-magic/common/api-client/api"
+import { api } from "@cs-magic/common"
+
 import { IFetchWechatArticleStat } from "../schema"
 
 /**
@@ -42,7 +43,8 @@ export const parseStatFromUrlMock = (
     key,
   }
 }
-export const fetchWechatArticleStat = async ({
+
+export const fetchWechatArticleStatInWithKey = async ({
   key,
   uin,
   idx,

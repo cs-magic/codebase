@@ -1,30 +1,32 @@
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import logger, { LogLevel } from "@cs-magic/common/log"
-import { NotImplementedError } from "@cs-magic/common/schema/error"
 import {
+  evalObject,
+  formatString,
   IUserSummaryFilled,
+  logger,
+  LogLevel,
+  NotImplementedError,
   wechatMessageDetailSchema,
-} from "@cs-magic/common/schema/user.summary"
-import { evalObject } from "@cs-magic/common/utils/eval-object"
-import { formatString } from "@cs-magic/common/utils/format-string"
+} from "@cs-magic/common"
+import { prisma } from "@cs-magic/os"
 
 import set from "lodash/set.js"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
 
 import {
+  FeatureMap,
+  FeatureType,
   IWechatData,
   IWechatPreference,
-} from "../../../schema/bot.preference.js"
-import { LlmScenario } from "../../../schema/bot.utils.js"
-import { FeatureMap, FeatureType } from "../../../schema/commands.js"
-import { formatFooter } from "../../../utils/format-footer.js"
-import { formatQuery } from "../../../utils/format-query.js"
+  LlmScenario,
+} from "../../../schema"
 import {
+  formatFooter,
+  formatQuery,
   getConvData,
   getConvPreference,
-} from "../../../utils/get-conv-preference.js"
-import { parseText } from "../../../utils/parse-message.js"
+  parseText,
+} from "../../../utils"
 
 export class BasePlugin {
   public message: Message

@@ -1,7 +1,7 @@
 "use server"
 
 import { logger } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
+import { prisma } from "@cs-magic/os"
 import { SMS_PROVIDER_ID } from "../const"
 import { IProviderSendSms } from "../schema"
 

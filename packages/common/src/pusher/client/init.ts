@@ -1,7 +1,7 @@
 "use client"
 
 import PusherJS from "pusher-js"
-import { getEnv } from "../../env/index.js"
+import { getEnv } from "@cs-magic/env"
 import { IPusherServerConfig } from "../schema.js"
 
 const env = getEnv()
@@ -34,9 +34,9 @@ export const initPusherClient = (
   }
 
   console.log("initializing pusher client")
-  if (!env.NEXT_PUBLIC_PUSHER_APP_KEY)
+  if (!env?.NEXT_PUBLIC_PUSHER_APP_KEY)
     throw new Error("no pusher app key in env")
-  const pusherClient = new PusherJS(env.NEXT_PUBLIC_PUSHER_APP_KEY, {
+  const pusherClient = new PusherJS(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,
     wsPort,

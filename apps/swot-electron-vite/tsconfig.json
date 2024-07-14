@@ -1,4 +1,23 @@
 {
   "files": [],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.web.json"
+    },
+    {
+      "path": "../../packages/common"
+    },
+    {
+      "path": "../../packages/spider"
+    },
+    {
+      "path": "../../packages/os"
+    },
+    {
+      "path": "../../packages/llm"
+    }
+  ]
 }

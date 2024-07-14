@@ -9,6 +9,7 @@
   "compilerOptions": {
     "composite": true,
     "jsx": "react-jsx",
+//    "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
       "@renderer/*": [

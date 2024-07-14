@@ -1,7 +1,7 @@
 "use server"
 
-import { api } from "@cs-magic/common/api-client/api"
-import { getEnv } from "@cs-magic/common/env/index"
+import { api } from "@cs-magic/common"
+import { getEnv } from "@cs-magic/env"
 import { sha1 } from "js-sha1"
 import { fetchWechatApi } from "../functions"
 
@@ -14,7 +14,7 @@ import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
 export const getWechatToken = async () => {
   const env = getEnv()
 
-  if (!env.NEXT_PUBLIC_WECHAT_APP_ID || !env.WECHAT_APP_SECRET)
+  if (!env?.NEXT_PUBLIC_WECHAT_APP_ID || !env?.WECHAT_APP_SECRET)
     throw new Error("invalid wechat app id/secret in env")
 
   return fetchWechatApi<IWechatSDKToken>(
@@ -22,8 +22,8 @@ export const getWechatToken = async () => {
     "/cgi-bin/token",
     {
       grant_type: "client_credential",
-      appid: env.NEXT_PUBLIC_WECHAT_APP_ID,
-      secret: env.WECHAT_APP_SECRET,
+      appid: env?.NEXT_PUBLIC_WECHAT_APP_ID,
+      secret: env?.WECHAT_APP_SECRET,
     },
   )
 }

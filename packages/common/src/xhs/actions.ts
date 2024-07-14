@@ -1,6 +1,6 @@
 "use server"
 
-import { api } from "../api-client/api.js"
+import { api } from "../api/api.js"
 import { parseJs } from "../utils/parse-js.js"
 import { IXiaoHongShuNotePageData } from "./schema.js"
 

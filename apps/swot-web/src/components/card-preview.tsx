@@ -1,10 +1,6 @@
-import { config } from "@cs-magic/common"
-import { moment } from "@cs-magic/common/datetime/moment"
-import { IUserSummary } from "@cs-magic/common/schema/user.summary"
-import { VerticalAspectRatio } from "@cs-magic/common/ui/components/aspect-ratio"
-import { AspectRatio } from "@cs-magic/common/ui/components/shadcn/ui/aspect-ratio"
-import { cn } from "@cs-magic/common/ui/utils"
-import { ICardPreview } from "@cs-magic/swot-core/schema/card"
+import { cn, IUserSummary, moment } from "@cs-magic/common"
+import { ICardPreview } from "@cs-magic/swot-core"
+import { AspectRatio, VerticalAspectRatio } from "@cs-magic/ui"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"
@@ -212,7 +208,7 @@ export const CardPreview = forwardRef<
 
       <div className={"flex flex-col items-end p-2 text-primary2/10"}>
         <div>
-          {preview?.inner?.id}@{config.version}
+          {preview?.inner?.id}@{process.env.npm_package_version}
         </div>
         {/*<div></div>*/}
       </div>

@@ -1,4 +1,4 @@
-import { api } from "@cs-magic/common/api-client/api"
+import { api } from "@cs-magic/common"
 import { WECHAT_API_URL } from "./config"
 import { isWechatError } from "./schema"
 

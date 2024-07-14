@@ -1,13 +1,13 @@
 "use client"
 
-import { ApiMethod } from "@cs-magic/common/api-client/schema"
-import { sleep } from "@cs-magic/common/datetime/utils"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { LabelLine } from "@cs-magic/common/ui/components/label-line"
-import { Badge } from "@cs-magic/common/ui/components/shadcn/ui/badge"
-import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
-import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
-import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+import { ApiMethod } from "@cs-magic/common"
+import { sleep } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/common"
+import { LabelLine } from "@cs-magic/common"
+import { Badge } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
+import { Input } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
 import {
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common/ui/components/shadcn/ui/select"
-import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
-import { Textarea } from "@cs-magic/common/ui/components/textarea-auto"
+} from "@cs-magic/common"
+import { StandardCard } from "@cs-magic/common"
+import { Textarea } from "@cs-magic/common"
 
 import { produce } from "immer"
 import { useAtom } from "jotai"

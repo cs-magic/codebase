@@ -1,16 +1,19 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import logger from "@cs-magic/common/log"
-import { ITaskDetail, taskDetailSchema } from "@cs-magic/common/schema/task"
-import { parseFunction } from "@cs-magic/common/utils/parse-function"
-import _ from "lodash"
+import {
+  ITaskDetail,
+  logger,
+  parseFunction,
+  SEPARATOR_LINE,
+  taskDetailSchema,
+} from "@cs-magic/common"
+import { prisma } from "@cs-magic/os"
+import chain from "lodash/chain"
 import omit from "lodash/omit.js"
 import sortBy from "lodash/sortBy.js"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
+import { Priority } from "./task.plugin.js"
 
 import { type TaskStatus } from ".prisma/client"
-import { Priority } from "./task.plugin.js"
 
 export type ITaskWithIndex = ITaskDetail & {
   index: number
@@ -41,7 +44,7 @@ const serializeTaskGroup = (
   const ans = [`${taskStatusMap[status]}（数量：${items.length}）`]
 
   if (!onlyCount) {
-    const arr = _(items)
+    const arr = chain(items)
       .groupBy("priority")
       .entries()
       .map(([priority, items]) => [

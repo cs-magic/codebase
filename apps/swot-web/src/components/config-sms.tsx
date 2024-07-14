@@ -5,8 +5,8 @@ import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
 } from "@cs-magic/auth/providers/sms/store"
-import { Input } from "@cs-magic/common/ui/components/shadcn/ui/input"
-import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+import { Input } from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
 import {
   Select,
   SelectContent,
@@ -14,8 +14,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common/ui/components/shadcn/ui/select"
-import { StandardCard } from "@cs-magic/common/ui/components/standard-card"
+} from "@cs-magic/common"
+import { StandardCard } from "@cs-magic/common"
 import { useAtom } from "jotai"
 
 export const ConfigSMSCard = () => {

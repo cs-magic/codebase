@@ -1,18 +1,22 @@
 {
   "name": "@cs-magic/common",
-  "packageManager": "yarn@4.1.1",
-  "type": "module",
   "exports": {
-    ".": "./dist/src/index.js",
-    "./log": "./dist/src/log/index.js",
-    "./env": "./dist/src/env/index.js",
-    "./*": "./dist/src/*.js"
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/src/*.js",
+      "types": "./dist/src/*.d.ts"
+    }
   },
   "main": "./dist/src/index.js",
+  "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "rm -rf dist && tsc -b"
   },
   "dependencies": {
+    "@cs-magic/env": "workspace:^",
     "@types/lodash": "^4.14.202",
     "anylogger": "^1.0.11",
     "jotai": "^2.8.4",

@@ -1,4 +1,4 @@
-import { SummaryOptions } from "@cs-magic/wechat/wxmp-article/fetch/approaches/nodejs/md2summary"
+import { SummaryOptions } from "@cs-magic/wechat"
 
 import { ICardPlatform } from "./card-platform.js"
 import { RequestOptions } from "./request.js"

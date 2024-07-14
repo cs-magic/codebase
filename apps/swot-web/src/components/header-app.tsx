@@ -1,5 +1,5 @@
-import { MSG_TODO } from "@cs-magic/common/const"
-import { AspectRatio } from "@cs-magic/common/ui/components/shadcn/ui/aspect-ratio"
+import { MSG_TODO } from "@cs-magic/common"
+import { AspectRatio } from "@cs-magic/common"
 import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"

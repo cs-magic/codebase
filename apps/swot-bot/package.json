@@ -2,15 +2,11 @@
   "name": "@cs-magic/swot-bot",
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
-  "type": "module",
-  "exports": {
-    ".": "./dist/src/index.js",
-    "./*": "./dist/src/*.js"
-  },
+  "main": "./dist/src/index.js",
   "scripts": {
-    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/index.ts",
+    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
     "build": "rm -rf dist && tsc -b",
-    "start": "node --experimental-specifier-resolution=node ./dist/src/index.js | pino-pretty",
+    "start": "node ./dist/src/main.js | pino-pretty",
     "test": "jest"
   },
   "dependencies": {

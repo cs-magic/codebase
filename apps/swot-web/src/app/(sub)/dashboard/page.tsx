@@ -1,15 +1,14 @@
 "use client"
-import { useDraftSession } from "@cs-magic/common/hooks/use-user-draft-session"
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
-import { Button } from "@cs-magic/common/ui/components/shadcn/ui/button"
+import { FlexContainer } from "@cs-magic/common"
+import { Button } from "@cs-magic/common"
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "@cs-magic/common/ui/components/shadcn/ui/card"
-import { Label } from "@cs-magic/common/ui/components/shadcn/ui/label"
+} from "@cs-magic/common"
+import { Label } from "@cs-magic/common"
 import { EditIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"

@@ -1,6 +1,6 @@
 "use client"
 
-import { FlexContainer } from "@cs-magic/common/ui/components/flex-container"
+import { FlexContainer } from "@cs-magic/common"
 
 const videoUrl = "/api/video-proxy"
 

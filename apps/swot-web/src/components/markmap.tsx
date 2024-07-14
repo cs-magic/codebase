@@ -1,10 +1,7 @@
 "use client"
 
-import { AspectRatio } from "@cs-magic/common/ui/components/shadcn/ui/aspect-ratio"
-import {
-  mapLevelsMaxAtom,
-  mapSpacingVerticalAtom,
-} from "@cs-magic/common/visualization/store"
+import { AspectRatio } from "@cs-magic/common"
+import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "@cs-magic/common"
 import { cardMindmapRenderedAtom } from "../store/card.rendered.atom"
 // import { cardMindmapRenderedAtom } from "@cs-magic/swot-web/store/card.rendered.atom"
 import { useAtom, useSetAtom } from "jotai"

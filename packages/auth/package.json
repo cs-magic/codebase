@@ -1,7 +1,12 @@
 {
   "name": "@cs-magic/auth",
   "packageManager": "yarn@4.1.1",
+  "main": "./dist/src/index.js",
   "exports": {
+    ".": {
+      "default": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
     "./*": "./dist/src/*.js"
   },
   "scripts": {
@@ -9,6 +14,8 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
+    "@cs-magic/os": "workspace:^",
+    "@cs-magic/wechat": "workspace:^",
     "next-auth": "^4.24.7"
   }
 }

@@ -1,15 +1,18 @@
-import { SEPARATOR_LINE } from "@cs-magic/common/const"
-import { moment } from "@cs-magic/common/datetime/moment"
-import { logger, LogLevel } from "@cs-magic/common/log"
-import { formatError } from "@cs-magic/common/utils/format-error"
-import { formatString } from "@cs-magic/common/utils/format-string"
-import qrcodeTerminal from "qrcode-terminal"
+import {
+  formatError,
+  formatString,
+  logger,
+  LogLevel,
+  moment,
+  SEPARATOR_LINE,
+} from "@cs-magic/common"
+import { generate } from "qrcode-terminal"
 import { ScanStatus, Wechaty } from "wechaty"
 
-import { initBotContext } from "../schema/bot.context.js"
-import { formatTalkerFromMessage } from "../utils/format-talker.js"
+import { initBotContext } from "../schema"
+import { formatTalkerFromMessage } from "../utils"
+import { handleMessage } from "./handle-message"
 import { handleFriendship } from "./handle-friendship.js"
-import { handleMessage } from "./handle-message/index.js"
 import { handleRoomInvite } from "./handle-room-invite.js"
 import { handleRoomJoin } from "./handle-room-join.js"
 
@@ -49,7 +52,7 @@ export const handleWechatyBot = (bot: Wechaty) => {
       logger.info(
         `onScan (status=${ScanStatus[status]}, data=${formatString(data ?? "", 20)}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
       )
-      qrcodeTerminal.generate(qrcode, { small: true })
+      generate(qrcode, { small: true })
     })
 
     .on("login", async (user) => {

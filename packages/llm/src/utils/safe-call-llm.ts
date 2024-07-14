@@ -1,9 +1,10 @@
-import { SEPARATOR_BOX } from "@cs-magic/common/const"
-import { env } from "@cs-magic/common/env/index"
-import { logEnv } from "@cs-magic/common/env/log-env"
-import logger from "@cs-magic/common/log/index"
-import { formatError } from "@cs-magic/common/utils/format-error"
-import { formatString } from "@cs-magic/common/utils/format-string"
+import {
+  SEPARATOR_BOX,
+  logger,
+  formatError,
+  formatString,
+} from "@cs-magic/common"
+import { env, logEnv } from "@cs-magic/env"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai"
 import { v4 } from "uuid"
@@ -43,11 +44,11 @@ export const safeCallLLM = async (
 
   const API_KEY_NAME =
     `${llmProviderType}_api_key`.toUpperCase() as keyof typeof env
-  const apiKey = env[API_KEY_NAME]
+  const apiKey = env?.[API_KEY_NAME]
 
   if (!apiKey) throw new Error(`missing env variable of ${API_KEY_NAME}`)
 
-  const httpAgent = env.PROXY ? new HttpsProxyAgent(env.PROXY) : undefined
+  const httpAgent = env?.PROXY ? new HttpsProxyAgent(env?.PROXY) : undefined
 
   const clientConfig = {
     apiKey,

@@ -1,10 +1,10 @@
 "use client"
 
+import { isServer } from "@cs-magic/env"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
+import { uiInnerHeight, uiViewportHeight } from "../store/ui.atom"
 
-import { isServer } from "../env/is-server.js"
-import { uiInnerHeight, uiViewportHeight } from "../ui/store.js"
 import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top.js"
 
 /**
@@ -18,7 +18,7 @@ export const useDisplayAutoHeight = () => {
   const [ih, setIh] = useAtom(uiInnerHeight)
 
   const getHeight = useCallback(() => {
-    const vh = isServer ? 0 : window.visualViewport?.height ?? null
+    const vh = isServer ? 0 : (window.visualViewport?.height ?? null)
     setVh(vh)
 
     const ih = isServer ? 0 : window.innerHeight

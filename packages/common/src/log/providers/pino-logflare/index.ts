@@ -1,7 +1,7 @@
 import pino from "pino"
 import { logflarePinoVercel } from "pino-logflare"
 
-import { getEnv } from "../../../env/index.js"
+import { getEnv } from "@cs-magic/env"
 
 const env = getEnv()
 
@@ -12,8 +12,8 @@ const env = getEnv()
 // Vercel log drain was setup to send logs here: https://logflare.app/sources/13830
 
 const { stream, send } = logflarePinoVercel({
-  apiKey: env.NEXT_PUBLIC_PINO_LOGFLARE_API_KEY!,
-  sourceToken: env.NEXT_PUBLIC_PINO_LOGFLARE_SOURCE_TOKEN!,
+  apiKey: env?.NEXT_PUBLIC_PINO_LOGFLARE_API_KEY!,
+  sourceToken: env?.NEXT_PUBLIC_PINO_LOGFLARE_SOURCE_TOKEN!,
 })
 
 /**
@@ -37,8 +37,8 @@ const pinoLogflareLogger = pino(
     },
     level: "debug",
     base: {
-      env: env.NODE_ENV,
-      revision: env.VERCEL_GITHUB_COMMIT_SHA,
+      env: env?.NODE_ENV,
+      revision: env?.VERCEL_GITHUB_COMMIT_SHA,
     },
   },
   stream,

@@ -1,6 +1,6 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@cs-magic/common/db/providers/prisma/connection"
-import { getEnv } from "@cs-magic/common/env"
+import { prisma } from "@cs-magic/os"
+import { getEnv } from "@cs-magic/env"
 
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { Adapter } from "next-auth/adapters"
@@ -79,8 +79,8 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as unknown as Adapter,
   providers: [
     WechatProvider({
-      clientId: env.NEXT_PUBLIC_WECHAT_APP_ID!,
-      clientSecret: env.WECHAT_APP_SECRET!,
+      clientId: env?.NEXT_PUBLIC_WECHAT_APP_ID!,
+      clientSecret: env?.WECHAT_APP_SECRET!,
     }),
 
     SmsProvider,
@@ -88,8 +88,8 @@ export const authOptions: NextAuthOptions = {
     ProfileUpdateProvider,
 
     // DiscordProvider({
-    //   clientId: env.DISCORD_CLIENT_ID,
-    //   clientSecret: env.DISCORD_CLIENT_SECRET,
+    //   clientId: env?.DISCORD_CLIENT_ID,
+    //   clientSecret: env?.DISCORD_CLIENT_SECRET,
     // }),
     /**
      * ...add more providers here.
