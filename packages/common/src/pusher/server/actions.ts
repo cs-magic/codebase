@@ -1,7 +1,11 @@
 "use server"
 
 import { pusherServerConfigs } from "../config.js"
-import { PusherEventData, PusherEventType, PusherServerId } from "../schema.js"
+import type {
+  PusherEventData,
+  PusherEventType,
+  PusherServerId,
+} from "../schema.js"
 import { initPusherServer } from "./init.js"
 
 export const pusherSend = async <T extends PusherEventType>(

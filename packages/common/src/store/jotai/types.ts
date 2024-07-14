@@ -1,4 +1,4 @@
-import { PrimitiveAtom, WritableAtom } from "jotai"
+import type { PrimitiveAtom, WritableAtom } from "jotai"
 import { RESET } from "jotai/utils"
 
 export type SetStateActionWithReset<Value> =

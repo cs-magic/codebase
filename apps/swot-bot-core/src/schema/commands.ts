@@ -1,6 +1,6 @@
-import { LangType } from "@cs-magic/common"
+import type { LangType } from "@cs-magic/common"
 import { z } from "zod"
-import { Priority } from "./priority"
+import { Priority } from "./priority.js"
 
 export const featureTypeSchema = z.enum([
   "system",

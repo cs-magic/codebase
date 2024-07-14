@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import { IDimension } from "../schema/ui"
+import type { IDimension } from "../schema/index.js"
 
 /**
  * alert dialog for loading

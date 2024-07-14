@@ -27,5 +27,5 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class RoomPlugin extends BasePlugin {
-  public i18n = i18n
+  public override i18n = i18n
 }

@@ -4,9 +4,9 @@ import { prisma } from "@cs-magic/os"
 
 import Credentials from "next-auth/providers/credentials"
 
-import { PROFILE_UPDATE_PROVIDER_ID } from "./const"
+import { PROFILE_UPDATE_PROVIDER_ID } from "./const.js"
 
-export const ProfileUpdateProvider = Credentials({
+export const ProfileUpdateProvider = Credentials.default({
   id: PROFILE_UPDATE_PROVIDER_ID,
   credentials: {
     id: { type: "string" },

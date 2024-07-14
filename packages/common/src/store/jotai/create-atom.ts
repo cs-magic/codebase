@@ -1,5 +1,5 @@
 import { atomWithStorage } from "jotai/utils"
-import lowerCase from "lodash/lowerCase"
+import lowerCase from "lodash/lowerCase.js"
 
 export const createBoolStorageAtom = (
   name: string,

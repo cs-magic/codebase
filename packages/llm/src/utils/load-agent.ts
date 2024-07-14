@@ -3,8 +3,8 @@ import fs from "fs"
 import yaml from "js-yaml"
 import path from "path"
 
-import { IAgentReq } from "../schema/llm.api.js"
-import { AgentType } from "./safe-call-agent.js"
+import type { IAgentReq } from "../schema/llm.api.js"
+import type { AgentType } from "./safe-call-agent.js"
 
 export const loadAgent = async (agentType: AgentType) => {
   const yamlConfig = await fs.promises.readFile(

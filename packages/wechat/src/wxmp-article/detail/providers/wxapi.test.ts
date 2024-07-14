@@ -1,6 +1,6 @@
 import { sampleWxmpArticleUrl } from "@cs-magic/common"
 
-import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
+import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi.js"
 
 describe("wxapi without token", () => {
   test("no token", async () => {

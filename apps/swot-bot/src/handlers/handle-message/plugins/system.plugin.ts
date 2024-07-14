@@ -1,10 +1,10 @@
 import { llmModelTypeSchema } from "@cs-magic/llm"
 import { prisma } from "@cs-magic/os"
+import { FeatureMap } from "@cs-magic/swot-bot-core"
 import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { FeatureMap } from "@cs-magic/swot-bot-core"
-import { parseLimitedCommand } from "../../../utils"
+import { parseLimitedCommand } from "../../../utils/index.js"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([
@@ -48,9 +48,9 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class SystemPlugin extends BasePlugin {
-  public i18n = i18n
+  public override i18n = i18n
 
-  async parse(input?: string) {
+  override async parse(input?: string) {
     if (!input) return this.help()
 
     const commands = this.i18n[await this.getLang()]?.commands

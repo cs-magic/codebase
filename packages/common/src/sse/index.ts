@@ -1,2 +1,2 @@
-export * from "./core"
-export * from "./schema"
+export * from "./core.js"
+export * from "./schema.js"

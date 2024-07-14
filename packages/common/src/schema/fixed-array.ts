@@ -7,7 +7,7 @@ export class FixedArray<T> extends Array<T> {
     this.maxSize = size
   }
 
-  public push(...items: T[]): number {
+  public override push(...items: T[]): number {
     super.push(...items)
     while (this.length > this.maxSize) this.shift()
     // console.log("pushed: ", this.toString())

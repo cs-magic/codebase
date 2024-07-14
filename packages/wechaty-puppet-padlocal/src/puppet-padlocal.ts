@@ -1,5 +1,3 @@
-import { logger } from "@cs-magic/common";
-
 import * as XMLParser from "fast-xml-parser";
 import { FileBox, FileBoxInterface } from "file-box";
 import { KickOutEvent, Log as PadLocalLog, PadLocalClient } from "padlocal-client-ts";
@@ -851,12 +849,12 @@ class PuppetPadlocal extends PUPPET.Puppet {
   }
 
   override async messageRecall(messageId: string): Promise<boolean> {
-    logger.info(`recalling message(id=${messageId})`);
+    log.info(`recalling message(id=${messageId})`);
     const message = (await this._cacheMgr!.getMessage(messageId))!;
-    logger.info(`recalling message: %o`, message);
+    log.info(`recalling message: %o`, message);
 
     const messageRevokeInfo = (await this._cacheMgr!.getMessageRevokeInfo(messageId))!;
-    logger.info(`recalling message revoke info: %o`, messageRevokeInfo);
+    log.info(`recalling message revoke info: %o`, messageRevokeInfo);
 
     await this._client!.api.revokeMessage(
       messageId,
@@ -868,7 +866,7 @@ class PuppetPadlocal extends PUPPET.Puppet {
         .setCreatetime(messageRevokeInfo.createtime)
     );
 
-    logger.info(`recalled`);
+    log.info(`recalled`);
 
     return true;
   }
@@ -1680,4 +1678,4 @@ export { PuppetPadlocal, VERSION, AppMessageType, MessageParser, MessageParserCo
 export type { ReferMsgPayload };
 export default PuppetPadlocal;
 
-logger.info(`\n== PuppetPadlocal ==\n`);
+log.info(`\n== PuppetPadlocal ==\n`);

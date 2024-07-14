@@ -1,7 +1,7 @@
-import { ILlmMessage, logger, compressContent } from "@cs-magic/common"
+import { type ILlmMessage, logger, compressContent } from "@cs-magic/common"
 
-import { ILlmQueryConfig } from "../schema/llm.api.js"
-import { LlmModelType } from "../schema/llm.models.js"
+import type { ILlmQueryConfig } from "../schema/llm.api.js"
+import type { LlmModelType } from "../schema/llm.models.js"
 import { loadAgent } from "./load-agent.js"
 import { safeCallLLM } from "./safe-call-llm.js"
 

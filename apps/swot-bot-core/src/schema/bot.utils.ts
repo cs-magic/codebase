@@ -1,5 +1,5 @@
 import type { payloads } from "wechaty"
-import { IWechatPreference } from "./bot.preference"
+import { IWechatPreference } from "./bot.preference.js"
 
 export type IWechatBotScan = { value: string; status: number }
 export type IUser = payloads.Contact

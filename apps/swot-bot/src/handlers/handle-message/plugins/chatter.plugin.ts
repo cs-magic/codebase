@@ -5,7 +5,7 @@ import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
 
 import { types } from "wechaty"
 import { z } from "zod"
-import { listMessagesOfLatestTopic } from "../../../utils"
+import { listMessagesOfLatestTopic } from "../../../utils/index.js"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([
@@ -43,10 +43,10 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ChatterPlugin extends BasePlugin {
-  static name: FeatureType = "chatter"
-  public i18n = i18n
+  static override name: FeatureType = "chatter"
+  public override i18n = i18n
 
-  async help() {
+  override async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
     const preference = await this.getConvPreference()

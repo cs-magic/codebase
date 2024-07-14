@@ -7,9 +7,10 @@ import {
 } from "@cs-magic/common"
 import { BotData, IBotContext, QueueTask } from "@cs-magic/swot-bot-core"
 import { Wechaty } from "wechaty"
-import { getConvPreference } from "./get-conv-preference"
-import { SenderQueue } from "./sender-queue"
 import yaml from "js-yaml"
+
+import { getConvPreference } from "./get-conv-preference.js"
+import { SenderQueue } from "./sender-queue.js"
 
 export const initBotContext = async (bot: Wechaty): Promise<IBotContext> => {
   const name = "飞脑"

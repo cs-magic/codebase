@@ -1,9 +1,9 @@
-import { ITransEvent } from "@cs-magic/common"
+import type { ITransEvent } from "@cs-magic/common/dist/esm/src/index.js"
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
 
-import { StaticLLMManager } from "./provider-static.js"
-import { llmEncoder } from "./utils.js"
+import { StaticLLMManager } from "@cs-magic/llm/dist/src/@deprecated/providers/llm-sse/provider-static.js"
+import { llmEncoder } from "@cs-magic/llm/dist/src/@deprecated/providers/llm-sse/utils.js"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url).searchParams.get("r") ?? ""

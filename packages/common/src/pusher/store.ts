@@ -5,14 +5,14 @@ import PusherJS from "pusher-js"
 
 import { LogLevel } from "../log/index.js"
 import { FixedArray } from "../schema/fixed-array.js"
-import { PusherConnectionState, PusherServerId } from "./schema.js"
+import type { PusherConnectionState, PusherServerId } from "./schema.js"
 
 //////////////////////////////
 // base
 //////////////////////////////
 
 export const pusherServerAtom = atom<Pusher | null>(null)
-export const pusherClientAtom = atom<PusherJS | null>(null)
+export const pusherClientAtom = atom<PusherJS.default | null>(null)
 export const pusherServerIdAtom = atomWithStorage<PusherServerId>(
   "pusher.server.id",
   "tencent_wss",

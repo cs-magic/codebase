@@ -1,6 +1,6 @@
 import { api, parseMetaFromHtml } from "@cs-magic/common"
 
-import parse from "node-html-parser"
+import { parse } from "node-html-parser"
 
 export const getWechatArticleUrlFromShortId = (shortId: string) =>
   `https://mp.weixin.qq.com/s/${shortId}`

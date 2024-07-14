@@ -6,7 +6,7 @@ import anylogger from "anylogger"
  * @param loggerName
  */
 export const getLogger = (loggerName: string) => {
-  const log = anylogger(loggerName)
+  const log = anylogger.default(loggerName)
   // log("Logging is easy!")
 
   return log

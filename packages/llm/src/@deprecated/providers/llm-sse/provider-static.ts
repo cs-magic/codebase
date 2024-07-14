@@ -1,4 +1,4 @@
-import {
+import type {
   ITransChannel,
   ITransClient,
   ITransEvent,
@@ -6,7 +6,7 @@ import {
 } from "@cs-magic/common"
 import remove from "lodash/remove.js"
 
-import { ILLMManagerTraditional } from "./schema.js"
+import type { ILLMManagerTraditional } from "./schema.js"
 
 export class StaticLLMManager implements ILLMManagerTraditional {
   static triggers: Record<string, ITransChannel> = {}

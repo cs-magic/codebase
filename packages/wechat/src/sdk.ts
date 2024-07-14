@@ -2,8 +2,8 @@ import {
   getWechatSignature,
   getWechatTicket,
   getWechatToken,
-} from "./notify/functions"
-import { IWechatSDKToken } from "./schema"
+} from "./notify/functions.js"
+import { IWechatSDKToken } from "./schema.js"
 
 export class WechatSDK {
   private token?: IWechatSDKToken

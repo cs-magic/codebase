@@ -1,5 +1,5 @@
 import { useAtom } from "jotai"
-import sum from "lodash/sum"
+import sum from "lodash/sum.js"
 import PusherJS from "pusher-js"
 import { useEffect, useRef } from "react"
 
@@ -26,7 +26,7 @@ export const usePusherClient = () => {
   const [latencies] = useAtom(pusherLatenciesAtom)
   const [, setPusherLatency] = useAtom(pusherLatencyAtom)
 
-  const refPusherClient = useRef<PusherJS>()
+  const refPusherClient = useRef<PusherJS.default>()
 
   useEffect(() => {
     refPusherClient.current = initPusherClient(pusherServerConfigs[serverId], {

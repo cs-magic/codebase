@@ -10,8 +10,7 @@ import { FileBox } from "file-box"
 import { z } from "zod"
 
 import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
-import { getQuotedMessage } from "../../../utils"
-import { parseText } from "../../../utils"
+import { getQuotedMessage, parseText } from "../../../utils/index.js"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([""])
@@ -28,12 +27,12 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class ParserPlugin extends BasePlugin {
-  static name: FeatureType = "parser"
+  static override name: FeatureType = "parser"
   static uniParser: CardSimulator | null = null
   static toParse = 0
-  public i18n = i18n
+  public override i18n = i18n
 
-  async help() {
+  override async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
     await this.standardReply(

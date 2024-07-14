@@ -4,12 +4,12 @@ import { getEnv } from "@cs-magic/env"
 
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { Adapter } from "next-auth/adapters"
-import { tokenExpireSeconds } from "./config"
+import { tokenExpireSeconds } from "./config.js"
 
-import { ProfileUpdateProvider } from "./providers/profile/provider"
-import { SmsProvider } from "./providers/sms/provider"
-import WechatProvider from "./providers/wechat/provider"
-import { IWechatProfile } from "./providers/wechat/schema"
+import { ProfileUpdateProvider } from "./providers/profile/provider.js"
+import { SmsProvider } from "./providers/sms/provider.js"
+import WechatProvider from "./providers/wechat/provider.js"
+import { IWechatProfile } from "./providers/wechat/schema.js"
 
 const env = getEnv()
 

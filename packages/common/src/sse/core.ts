@@ -1,6 +1,6 @@
 import { logger } from "../log/index.js"
 import { formatError } from "../utils/format-error.js"
-import { TransEventType } from "./schema.js"
+import type { TransEventType } from "./schema.js"
 
 export const fetchSSE = (
   requestUrl: string,

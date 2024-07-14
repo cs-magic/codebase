@@ -4,8 +4,8 @@ import { Message, Sayable } from "wechaty"
 
 import { LogLevel } from "@cs-magic/common"
 
-import { QueueTask } from "./queue"
-import { LlmScenario } from "./bot.utils"
+import { QueueTask } from "./queue.js"
+import { LlmScenario } from "./bot.utils.js"
 
 export type BotData = {
   name: string

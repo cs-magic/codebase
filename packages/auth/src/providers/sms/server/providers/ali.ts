@@ -25,7 +25,7 @@ const aliSmsConfig = {
 }
 
 const initClient = () =>
-  new Dysmsapi(
+  new Dysmsapi.default(
     new Config({
       accessKeyId: aliSmsConfig.ak,
       accessKeySecret: aliSmsConfig.sk,

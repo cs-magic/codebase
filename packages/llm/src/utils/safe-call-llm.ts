@@ -11,9 +11,9 @@ import { v4 } from "uuid"
 
 import {
   defaultLlmQueryConfigExtra,
-  ILlmQueryConfig,
-  ILlmQueryConfigExtra,
-  ILlmRes,
+  type ILlmQueryConfig,
+  type ILlmQueryConfigExtra,
+  type ILlmRes,
 } from "../schema/llm.api.js"
 import { callLlm } from "./call-llm.js"
 import { formatLlmMessage } from "./format-llm-message.js"

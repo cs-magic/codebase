@@ -1,16 +1,14 @@
 {
   "name": "@cs-magic/common",
+  "type": "module",
+  "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/src/index.js",
   "exports": {
     ".": {
-      "import": "./dist/src/index.js",
-      "types": "./dist/src/index.d.ts"
-    },
-    "./*": {
-      "import": "./dist/src/*.js",
-      "types": "./dist/src/*.d.ts"
+      "require": "./dist/cjs/src/index.js",
+      "import": "./dist/esm/src/index.js"
     }
   },
-  "main": "./dist/src/index.js",
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "rm -rf dist && tsc -b"

@@ -5,9 +5,9 @@ import { useAtom, useSetAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { toast } from "sonner"
-import { $sendSms } from "../server/actions"
-import { $sendSmsViaAli } from "../server/providers/ali"
-import { $sendSmsViaTencent } from "../server/providers/tencent"
+import { $sendSms } from "../server/actions.js"
+import { $sendSmsViaAli } from "../server/providers/ali.js"
+import { $sendSmsViaTencent } from "../server/providers/tencent.js"
 import {
   smsCodeCurCountdownSecondsAtom,
   smsCodeExpireSecondsAtom,
@@ -16,7 +16,7 @@ import {
   smsProviderTypeAtom,
   smsSendCodePayloadAtom,
   smsStageAtom,
-} from "../store"
+} from "../store.js"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)

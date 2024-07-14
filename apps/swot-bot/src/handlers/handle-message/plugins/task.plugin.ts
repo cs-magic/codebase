@@ -51,16 +51,16 @@ const i18n: FeatureMap<CommandType> = {
 }
 
 export class TaskPlugin extends BasePlugin {
-  static name: FeatureType = "todo"
+  static override name: FeatureType = "todo"
   // todo: global jobs
+  public override i18n = i18n
   static jobs: Record<string, Job> = {}
-  public i18n = i18n
 
   public service = new TaskService(this.message.payload!)
 
   public sync = async () => this.reply(await this.service.format())
 
-  async help() {
+  override async help() {
     const commands = await this.getCommands()
     const desc = await this.getDescription()
     await this.standardReply(
@@ -75,7 +75,7 @@ export class TaskPlugin extends BasePlugin {
    *
    * @param input
    */
-  async parse(input?: string) {
+  override async parse(input?: string) {
     if (!input) return this.help()
 
     const commands = await this.getCommands()

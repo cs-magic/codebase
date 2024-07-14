@@ -1,2 +1,2 @@
-export * from "./schema"
-export * from "./store"
+export * from "./schema.js"
+export * from "./store.js"

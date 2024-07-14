@@ -1,2 +1,2 @@
-export * from "./providers/prisma/connection"
-export * from "./providers/redis/connection"
+export * from "./providers/prisma/connection.js"
+export * from "./providers/redis/connection.js"

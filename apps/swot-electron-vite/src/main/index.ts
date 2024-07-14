@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-import { initServer } from '@cs-magic/swot-backend'
+import backend from '@cs-magic/swot-backend'
 
 function createWindow(): void {
   // Create the browser window.
@@ -56,7 +56,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', async () => {
     console.log('pong')
     // start wechaty account service
-    initServer()
+    backend.initServer()
   })
 
   createWindow()

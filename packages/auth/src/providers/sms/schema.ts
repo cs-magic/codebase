@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { validatePhone } from "./validation"
+import { validatePhone } from "./validation.js"
 
 /**
  * 用户短信发送在form里需要的信息

@@ -5,7 +5,7 @@ import {
   IWechatProfile,
   IWechatRefreshedToken,
   IWechatToken,
-} from "../schema"
+} from "../schema.js"
 
 const env = getEnv()
 

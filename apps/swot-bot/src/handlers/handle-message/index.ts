@@ -6,12 +6,13 @@ import {
 } from "@cs-magic/swot-bot-core"
 import omit from "lodash/omit.js"
 import { type Message, types, type Wechaty } from "wechaty"
+
 import {
   formatTalkerFromMessage,
   parseLimitedCommand,
   parseText,
   storageMessage,
-} from "../../utils"
+} from "../../utils/index.js"
 
 import { BasePlugin } from "./plugins/base.plugin.js"
 import { ChatterPlugin } from "./plugins/chatter.plugin.js"

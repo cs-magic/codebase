@@ -5,7 +5,7 @@ import {
   getRobustData,
   getRobustPreference,
   sendMessageOnRoomJoin,
-} from "../utils"
+} from "../utils/index.js"
 
 /**
  * 小群邀请自己也会触发该 hook

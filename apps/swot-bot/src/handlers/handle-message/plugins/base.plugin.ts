@@ -26,7 +26,7 @@ import {
   getConvData,
   getConvPreference,
   parseText,
-} from "../../../utils"
+} from "../../../utils/index.js"
 
 export class BasePlugin {
   public message: Message

@@ -1,2 +1,2 @@
-export * from "./moment"
-export * from "./utils"
+export * from "./moment.js"
+export * from "./utils.js"

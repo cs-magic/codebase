@@ -1,2 +1,2 @@
-export * from "./compress-md"
-export * from "./html2md"
+export * from "./compress-md.js"
+export * from "./html2md.js"

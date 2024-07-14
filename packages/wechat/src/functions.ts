@@ -1,6 +1,6 @@
 import { api } from "@cs-magic/common"
-import { WECHAT_API_URL } from "./config"
-import { isWechatError } from "./schema"
+import { WECHAT_API_URL } from "./config.js"
+import { isWechatError } from "./schema.js"
 
 /**
  * wrapper 微信的各个 auth 接口

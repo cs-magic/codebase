@@ -2,6 +2,7 @@
   "name": "@cs-magic/swot-electron-vite",
   "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",
+  "type": "module",
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
@@ -30,9 +31,15 @@
     "electron-updater": "^6.1.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.8",
+    "@babel/preset-env": "^7.24.8",
+    "@babel/register": "^7.24.6",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
     "@electron-toolkit/eslint-config-ts": "^2.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/babel__core": "^7",
+    "@types/babel__preset-env": "^7",
+    "@types/babel__register": "^7",
     "@types/node": "^20.14.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

@@ -1,4 +1,4 @@
-import { isClient } from "./is-client"
+import { isClient } from "./is-client.js"
 
 /**
  * ref: https://stackoverflow.com/a/30026162

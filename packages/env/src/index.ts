@@ -72,8 +72,8 @@ export const getEnv = () =>
 
 export const env = getEnv()
 
-export * from "./is-client"
-export * from "./is-server"
-export * from "./is-mobile-browser"
-export * from "./is-wechat-browser"
-export * from "./log-env"
+export * from "./is-client.js"
+export * from "./is-server.js"
+export * from "./is-mobile-browser.js"
+export * from "./is-wechat-browser.js"
+export * from "./log-env.js"

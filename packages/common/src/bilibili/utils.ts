@@ -1,4 +1,4 @@
-import { IBilibiliVideo } from "./schema.js"
+import type { IBilibiliVideo } from "./schema.js"
 
 export const getBilibiliIFrameUrl = (video: IBilibiliVideo) => {
   let url = "//player.bilibili.com/player.html"

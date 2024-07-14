@@ -1,0 +1,92 @@
+{
+  // ref: https://www.totaltypescript.com/tsconfig-cheat-sheet
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    //    "verbatimModuleSyntax": true,  // 是否要限制 导入 type
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    /* If transpiling with TypeScript: */
+    "module": "NodeNext",
+    "outDir": "dist",
+    "sourceMap": true,
+    //    /* If NOT transpiling with TypeScript: */
+    //    "module": "preserve",
+    //    "noEmit": true,
+
+    /* AND if you're building for a library: */
+    "declaration": true,
+    /* AND if you're building for a library in a monorepo: */
+    "composite": true,
+    "declarationMap": true,
+    /* If your code doesn't run in the DOM: */
+    "lib": [
+      "es2022"
+    ],
+    //    /* If your code runs in the DOM: */
+    //    "lib": ["es2022", "dom", "dom.iterable"],
+
+    //    "module": "NodeNext",
+    //    "moduleResolution": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "ignoreDeprecations": "5.0",
+    "traceResolution": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "skipDefaultLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "baseUrl": ".",
+    "paths": {
+      //      "@cs-magic/common/*": ["./packages/common/dist/src/*.js"],
+      //      "@cs-magic/common/utils": ["./packages/common/dist/src/utils.js"],
+      //          "@/*": ["src/*"],
+      //      "@trpc/react-query": [
+      //        "node_modules/@trpc/react-query/", // ref: https://github.com/microsoft/TypeScript/issues/29808#issuecomment-540292885
+      //      ]
+    }
+
+    //    "baseUrl": ".",
+    //    "paths": {
+    //      "@cs-magic/common": ["./packages/common/dist/src/index.js"],
+    //      "@cs-magic/common/*": ["./packages/common/dist/src/*"],
+    //      "@cs-magic/llm/*": ["./packages/llm/dist/src/*"],
+    //
+    //      "@cs-magic/wechat4u/*": ["./packages/wechat4u/dist/src/*"],
+    //      "wechaty-puppet/*": ["./packages/wechaty-puppet/dist/src/*"],
+    //      "wechaty-puppet-padlocal/*": ["./packages/wechaty-puppet-padlocal/dist/src/*"],
+    //      "wechaty-puppet-wechat4u/*": ["./packages/wechaty-puppet-wechat4u/dist/src/*"],
+    //
+    //      "@cs-magic/wechat/*": ["./packages/wechat/dist/src/*"],
+    //
+    //      "@cs-magic/swot-core/*": ["./apps/swot-core/dist/src/*"],
+    //      "@cs-magic/swot-bot/*": ["./apps/swot-bot/dist/src/*"],
+    //      "@cs-magic/swot-backend/*": ["./apps/swot-backend/dist/src/*"],
+    //      "@cs-magic/swot-web/*": ["./apps/swot-web/dist/src/*"],
+    //      "@cs-magic/swot-desktop/*": ["./apps/swot-desktop/dist/src/*"]
+    //    }
+  },
+  "exclude": [
+    "node_modules",
+    "apps/swot-tauri/dist/src-tauri/target"
+  ]
+}

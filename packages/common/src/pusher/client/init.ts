@@ -1,8 +1,8 @@
 "use client"
 
-import PusherJS from "pusher-js"
 import { getEnv } from "@cs-magic/env"
-import { IPusherServerConfig } from "../schema.js"
+import { default as PusherJS } from "pusher-js"
+import type { IPusherServerConfig } from "../schema.js"
 
 const env = getEnv()
 
@@ -11,7 +11,7 @@ export const initPusherClient = (
   options?: {
     onPing?: () => void
     onPong?: () => void
-    onInit?: (client: PusherJS) => void
+    onInit?: (client: PusherJS.default) => void
   },
 ) => {
   const { host: wsHost, port: wsPort, useTLS: forceTLS, cluster } = config
@@ -22,7 +22,7 @@ export const initPusherClient = (
    * 所以我们只能在 log 里去 hook ping
    * @param message
    */
-  PusherJS.log = (message: string) => {
+  PusherJS.default.log = (message: string) => {
     // console.log({ message })
     const exists = (events: string[]) => events.some((s) => message.includes(s))
 
@@ -36,7 +36,7 @@ export const initPusherClient = (
   console.log("initializing pusher client")
   if (!env?.NEXT_PUBLIC_PUSHER_APP_KEY)
     throw new Error("no pusher app key in env")
-  const pusherClient = new PusherJS(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
+  const pusherClient = new PusherJS.default(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,
     wsPort,

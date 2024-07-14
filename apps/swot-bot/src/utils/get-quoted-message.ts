@@ -1,6 +1,6 @@
 import { prisma } from "@cs-magic/os"
 import { types } from "wechaty"
-import { PuppetVersion } from "wechaty-puppet"
+import type { PuppetVersion } from "wechaty-puppet"
 
 /**
  * todo: limited input

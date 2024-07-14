@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.node.json",
   "compilerOptions": {
     "jsx": "preserve",
     "plugins": [
@@ -22,7 +22,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noImplicitAny": true,
+    "noImplicitAny": true
     // for trpc api, ref: https://github.com/microsoft/TypeScript/issues/42873
   },
   // include 和 exclude 是独立的，extend的时候也要写上
@@ -39,7 +39,7 @@
     ".next-tmp/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ],
   "references": [
     {

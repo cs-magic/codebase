@@ -1,4 +1,7 @@
-import { CompressLineFunction, CompressLinesFunction } from "../schema/utils.js"
+import type {
+  CompressLineFunction,
+  CompressLinesFunction,
+} from "../schema/utils.js"
 
 export function compressContent(
   content: string,

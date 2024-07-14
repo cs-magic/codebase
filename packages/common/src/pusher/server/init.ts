@@ -1,7 +1,6 @@
-import Pusher from "pusher"
-
 import { getEnv } from "@cs-magic/env"
-import { IPusherServerConfig } from "../schema.js"
+import Pusher from "pusher"
+import type { IPusherServerConfig } from "../schema.js"
 
 const env = getEnv()
 

@@ -4,7 +4,7 @@ import { env, logEnv } from "@cs-magic/env"
 import { type Wechaty, WechatyBuilder } from "wechaty"
 import wechatyPuppetWechat4u from "wechaty-puppet-wechat4u"
 
-import { handleWechatyBot } from "./handlers"
+import { handleWechatyBot } from "./handlers/index.js"
 
 console.log({ wechatyPuppetWechat4u })
 

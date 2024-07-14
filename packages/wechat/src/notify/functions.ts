@@ -3,10 +3,10 @@
 import { api } from "@cs-magic/common"
 import { getEnv } from "@cs-magic/env"
 import { sha1 } from "js-sha1"
-import { fetchWechatApi } from "../functions"
+import { fetchWechatApi } from "../functions.js"
 
-import { IWechatSDKToken } from "../schema"
-import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config"
+import { IWechatSDKToken } from "../schema.js"
+import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config.js"
 
 /**
  * ref: https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html

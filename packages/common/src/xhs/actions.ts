@@ -2,7 +2,7 @@
 
 import { api } from "../api/api.js"
 import { parseJs } from "../utils/parse-js.js"
-import { IXiaoHongShuNotePageData } from "./schema.js"
+import type { IXiaoHongShuNotePageData } from "./schema.js"
 
 /**
  * approach 1 (via server json):

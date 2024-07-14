@@ -1,6 +1,6 @@
 import { ZodBoolean, ZodString } from "zod"
 
-import { InputValidatorType } from "../schema/utils.js"
+import type { InputValidatorType } from "../schema/utils.js"
 
 export const dumpInputValidator = (v: InputValidatorType): string => {
   if ("options" in v)

@@ -1,10 +1,10 @@
 {
   "extends": [
-    "../../tsconfig.json"
+    "../../tsconfig.node.json"
   ],
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist",
+    "outDir": "dist/esm",
   },
   "include": [
     "./src"
@@ -12,6 +12,9 @@
   "references": [
     {
       "path": "../../packages/common"
+    },
+    {
+      "path": "../swot-core"
     }
   ]
 }

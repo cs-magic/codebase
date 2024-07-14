@@ -2,10 +2,18 @@
   "name": "@cs-magic/swot-bot",
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
-  "main": "./dist/src/index.js",
+  "type": "module",
+  "main": "./dist/cjs/src/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/src/index.js",
+      "import": "./dist/esm/src/index.js"
+    }
+  },
   "scripts": {
     "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
     "build": "rm -rf dist && tsc -b",
+    "build:cjs": "tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
     "start": "node ./dist/src/main.js | pino-pretty",
     "test": "jest"
   },

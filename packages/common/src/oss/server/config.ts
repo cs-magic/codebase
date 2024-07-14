@@ -1,6 +1,5 @@
-import OSS from "ali-oss"
-
 import { getEnv } from "@cs-magic/env"
+import OSS from "ali-oss"
 import { OSS_BUCKET_NAME, OSS_REGION } from "../const.js"
 
 const env = getEnv()

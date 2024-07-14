@@ -1,4 +1,4 @@
-import { calculateToken } from "./calculate-token"
+import { calculateToken } from "./calculate-token.js"
 
 it("should ", () => {
   const result = calculateToken(

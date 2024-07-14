@@ -54,6 +54,6 @@ export const $sendSmsViaTencent = async (
   const res = await smsTencentClient.SendSms(params)
   logger.info("[sms-tencent] response: %o", res)
 
-  const message = res?.SendStatusSet![0]!.Code
+  const message = res.SendStatusSet![0]?.Code
   return message === "Ok"
 }

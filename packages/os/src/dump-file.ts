@@ -1,7 +1,7 @@
 import { formatAction } from "@cs-magic/common"
 import fs from "fs"
 import path from "path"
-import { generatedDir } from "./path"
+import { generatedDir } from "./path.js"
 
 export const dumpFile = async (
   content: string | object,

@@ -1,6 +1,6 @@
 import winston from "winston"
-import { fileRotateTransport } from "./transports/rotate-file.js"
 import { consoleTransport } from "./transports/console.js"
+import { fileRotateTransport } from "./transports/rotate-file.js"
 
 export const winstonLogger = winston.createLogger({
   level: "info",

@@ -1,6 +1,6 @@
 import { atom } from "jotai"
 import { payloads } from "wechaty-puppet"
-import { IUser } from "./bot.utils"
+import { IUser } from "./bot.utils.js"
 
 export const botSocketOpenedAtom = atom(false)
 

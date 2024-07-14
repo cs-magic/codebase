@@ -1,7 +1,11 @@
 /**
  * error handler: Axios & Error handling like a boss 😎 - DEV Community, https://dev.to/mperon/axios-error-handling-like-a-boss-333d
  */
-import axios, { AxiosError, AxiosResponse, CreateAxiosDefaults } from "axios"
+import axios, {
+  AxiosError,
+  type AxiosResponse,
+  type CreateAxiosDefaults,
+} from "axios"
 import { toast } from "sonner"
 
 import { logger } from "../log/index.js"

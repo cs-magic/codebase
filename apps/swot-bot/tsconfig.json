@@ -1,8 +1,10 @@
 {
-  "extends": ["../../tsconfig.json"],
+  "extends": [
+    "../../tsconfig.node.json"
+  ],
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist",
+    "outDir": "dist/esm",
   },
   "include": ["src/**/*"],
   "references": [
@@ -10,11 +12,10 @@
     {"path": "../../packages/llm"},
 
 //    {"path": "../../packages/wechaty-puppet"},
-    {"path": "../../packages/wechaty-puppet-padlocal"},
-    {"path": "../../packages/wechaty-puppet-wechat4u"},
+//    {"path": "../../packages/wechaty-puppet-padlocal"},
+//    {"path": "../../packages/wechaty-puppet-wechat4u"},
     {"path": "../../packages/wechat"},
 
-    {"path": "../swot-core"},
     {"path": "../swot-bot-core"},
   ]
 }

@@ -1,13 +1,13 @@
 {
   "name": "@cs-magic/auth",
   "packageManager": "yarn@4.1.1",
+  "type": "module",
   "main": "./dist/src/index.js",
   "exports": {
     ".": {
       "default": "./dist/src/index.js",
       "types": "./dist/src/index.d.ts"
-    },
-    "./*": "./dist/src/*.js"
+    }
   },
   "scripts": {
     "build": "rm -rf dist && tsc -b"
