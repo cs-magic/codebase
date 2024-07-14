@@ -1,4 +1,5 @@
-import config_ from "./config.json" with { type: "json" }
+import config_ from "./config.json" assert { type: "json" }
+// with { type: "json" }
 // import config_ from "./config.json"
 export const config = config_
 
