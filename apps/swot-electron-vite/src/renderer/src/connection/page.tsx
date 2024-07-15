@@ -1,6 +1,5 @@
 'use client'
 
-// import { getEnv } from '@cs-magic/env'
 import { socketStatusMap, useInit, cn } from '@cs-magic/common'
 // import { useUserIsAdmin } from '@cs-magic/auth'
 import {
@@ -48,7 +47,7 @@ export default function BotPage() {
   const socket = useInit<WebSocket | null>(() => {
     console.log('-- env: ', process.env)
     console.log('-- initing socket --')
-    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL
+    const socketUrl = import.meta.env.VITE_SOCKET_URL ?? process.env.NEXT_PUBLIC_SOCKET_URL
     console.log({ socketUrl })
     if (!socketUrl) {
       console.warn('no socket url')

@@ -9,17 +9,19 @@ import wasm from 'vite-plugin-wasm'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 // import react from '@vitejs/plugin-react'
 
+const envDir = resolve('../..')
+
 export default defineConfig({
   main: {
-    envDir: '../../',
+    envDir,
     plugins: [externalizeDepsPlugin()]
   },
   preload: {
-    envDir: '../../',
+    envDir,
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
-    envDir: '../../',
+    envDir,
     // wechaty-puppet-wechat4u: commonjs / nodePolyfills
     resolve: {
       alias: {

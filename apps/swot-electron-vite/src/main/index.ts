@@ -18,13 +18,14 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
-      sandbox: false
+      sandbox: false,
+      devTools: true
     }
   })
 
   mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
     mainWindow.webContents.openDevTools()
+    mainWindow.show()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
