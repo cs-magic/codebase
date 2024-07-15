@@ -1,14 +1,13 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { initServer } from '@cs-magic/swot-backend'
 
 import icon from '../../resources/icon.png?asset'
 
-// console.log('\n[=== env ===] ', process.env)
-
-import { initServer } from '@cs-magic/swot-backend'
-
 function createWindow(): void {
+  void initServer()
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1280,
@@ -60,8 +59,6 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', async () => {
     console.log('pong')
-    // start wechaty account service
-    initServer()
   })
 
   createWindow()
