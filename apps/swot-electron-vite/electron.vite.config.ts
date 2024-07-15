@@ -25,15 +25,16 @@ export default defineConfig({
     // wechaty-puppet-wechat4u: commonjs / nodePolyfills
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src')
+        '@renderer': resolve('src/renderer/src'),
+        '.prisma/client/index-browser': '../../node_modules/.prisma/client/index-browser.js' // ref: https://github.com/prisma/prisma/issues/12504#issuecomment-1285883083
       }
     },
-    build: {
-      rollupOptions: {
-        // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        external: new RegExp('/yargs-parser/.*')
-      }
-    },
+    // build: {
+    //   rollupOptions: {
+    //     // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
+    //     external: new RegExp('/yargs-parser/.*')
+    //   }
+    // },
     plugins: [
       commonjs(), // for wechat4u
       nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415

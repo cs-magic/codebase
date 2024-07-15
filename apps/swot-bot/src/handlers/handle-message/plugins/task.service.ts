@@ -13,7 +13,7 @@ import sortBy from "lodash/sortBy.js"
 import { Job } from "node-schedule"
 import { Message } from "wechaty-puppet/payloads"
 
-import { type TaskStatus } from ".prisma/client"
+import { type TaskStatus } from "@prisma/client"
 
 export type ITaskWithIndex = ITaskDetail & {
   index: number
