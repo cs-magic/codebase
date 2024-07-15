@@ -1,6 +1,5 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
-import { Button } from '@cs-magic/ui'
 import ConnectionPage from './connection/page'
 
 function App(): JSX.Element {
@@ -31,15 +30,6 @@ function App(): JSX.Element {
       </div>
       <Versions></Versions>
 
-      <div className={''}>
-        <div className={'flex'}>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-        </div>
-
-        <Button className={'text-red-500'}>wow</Button>
-      </div>
       <ConnectionPage />
     </>
   )

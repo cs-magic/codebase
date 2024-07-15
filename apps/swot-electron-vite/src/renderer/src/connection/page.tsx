@@ -21,7 +21,6 @@ import {
   botScanningAtom,
   botScanStatusAtom,
   botScanValueAtom,
-  botSocketOpenedAtom,
   botUserAtom,
   ScanStatus
 } from '@cs-magic/swot-bot-core'
@@ -31,14 +30,15 @@ import { QRCodeSVG } from 'qrcode.react'
 import { CSVLink } from 'react-csv'
 import { toast } from 'sonner'
 import { useAtom } from 'jotai'
+import { useState } from 'react'
 
 export default function BotPage() {
+  const [socketStatus, setSocketStatus] = useState<number>(0)
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)
   const [botScanValue, setBotScanValue] = useAtom(botScanValueAtom)
   const [botScanStatus, setBotScanStatus] = useAtom(botScanStatusAtom)
   const [botUser, setBotUser] = useAtom(botUserAtom)
   const [botContacts, setBotContacts] = useAtom(botContactsAtom)
-  const [botSocketOpened, setBotSocketOpened] = useAtom(botSocketOpenedAtom)
   const [botLoggedIn, setBotLoggedIn] = useAtom(botLoggedInAtom)
   const [botLogging, setBotLogging] = useAtom(botLoggingAtom)
 
@@ -59,11 +59,11 @@ export default function BotPage() {
     socket.addEventListener('error', console.error)
 
     socket.addEventListener('open', () => {
-      setBotSocketOpened(true)
+      setSocketStatus(1)
     })
 
     socket.addEventListener('close', () => {
-      setBotSocketOpened(false)
+      setSocketStatus(0)
     })
 
     socket.addEventListener('message', (event: MessageEvent<string>) => {
@@ -121,12 +121,12 @@ export default function BotPage() {
           'Socket初始化中……'
         ) : (
           <>
-            <LabelLine title={'readyState'}>{socketStatusMap[socket.readyState]}</LabelLine>
+            <LabelLine title={'readyState'}>{socketStatusMap[socketStatus]}</LabelLine>
           </>
         )}
       </StandardCard>
 
-      {botSocketOpened && (
+      {socketStatus !== 0 && (
         <>
           <StandardCard title={'Bot Actions'}>
             <div className={'flex items-center gap-2'}>

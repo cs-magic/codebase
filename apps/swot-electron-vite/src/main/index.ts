@@ -11,8 +11,8 @@ import { initServer } from '@cs-magic/swot-backend'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1280,
+    height: 720,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -20,6 +20,7 @@ function createWindow(): void {
       preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false,
       devTools: true
+      // webSecurity: false // Disable web security to allow localhost connections (use cautiously)
     }
   })
 
