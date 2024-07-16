@@ -7,8 +7,8 @@ function App(): JSX.Element {
   const [versions] = useState(window.electron.process.versions)
 
   return (
-    <div className={'w-full h-screen overflow-auto flex flex-col items-center'}>
-      <img src={swotLogo} className={'w-32 h-32 logo mt-16'} />
+    <div className={'w-screen h-screen overflow-hidden flex flex-col items-center p-4 gap-4'}>
+      <img src={swotLogo} className={'w-32 h-32 logo mt-8'} />
 
       <div className="text">
         <span className="gradient-1">飞脑</span>：一款更像真人的

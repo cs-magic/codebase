@@ -117,17 +117,14 @@ export default function BotPage() {
         // "bg-cyan-950"
       }
     >
-      <StandardCard title={'Socket'}>
-        {!socket ? (
-          'Socket初始化中……'
-        ) : (
-          <>
-            <LabelLine title={'readyState'}>{socketStatusMap[socketStatus]}</LabelLine>
-          </>
+      <div
+        className={cn(
+          !!socket ? 'bg-green-700' : 'bg-red-700',
+          'w-3 h-3 rounded-full fixed right-4 top-4'
         )}
-      </StandardCard>
+      />
 
-      {socketStatus !== 0 && (
+      {botUser ? (
         <>
           <StandardCard title={'Bot Actions'}>
             <div className={'flex items-center gap-2'}>
@@ -165,52 +162,46 @@ export default function BotPage() {
             </div>
           </StandardCard>
 
-          {botScanning && (
-            <StandardCard title={'Scan'}>
-              <LabelLine title={'Status'}>{ScanStatus[botScanStatus]}</LabelLine>
+          <StandardCard title={'Bot Payload'}>
+            <div>id: {botUser?.id}</div>
+            <div>name: {botUser?.name}</div>
 
-              <QRCodeSVG value={botScanValue} />
-            </StandardCard>
-          )}
-
-          {botUser && (
-            <StandardCard title={'Bot Payload'}>
-              <div>id: {botUser?.id}</div>
-              <div>name: {botUser?.name}</div>
-
-              <div className={'flex gap-2'}>
-                <Button
-                  onClick={() => {
-                    socket?.send('get-contacts')
-                  }}
-                >
-                  Get Contacts
-                </Button>
-
-                {botContacts && (
-                  <CSVLink
-                    className={cn(buttonVariants({}))}
-                    data={botContacts}
-                    filename={'contacts.csv'}
-                    onClick={() => {
-                      toast.success('downloaded')
-                    }}
-                  >
-                    Dump Contacts
-                  </CSVLink>
-                )}
-              </div>
+            <div className={'flex gap-2'}>
+              <Button
+                onClick={() => {
+                  socket?.send('get-contacts')
+                }}
+              >
+                Get Contacts
+              </Button>
 
               {botContacts && (
-                <div>
-                  <div className={'max-h-[320px] overflow-auto'}>
-                    <DataTable columns={columns} data={botContacts} />
-                  </div>
-                </div>
+                <CSVLink
+                  className={cn(buttonVariants({}))}
+                  data={botContacts}
+                  filename={'contacts.csv'}
+                  onClick={() => {
+                    toast.success('downloaded')
+                  }}
+                >
+                  Dump Contacts
+                </CSVLink>
               )}
-            </StandardCard>
-          )}
+            </div>
+
+            {botContacts && (
+              <div className={'w-full h-full overflow-auto'}>
+                <DataTable columns={columns} data={botContacts} />
+              </div>
+            )}
+          </StandardCard>
         </>
+      ) : (
+        <div className={'flex flex-col items-center justify-center m-8 gap-4'}>
+          <QRCodeSVG value={botScanValue} />
+
+          <div className={'tip'}>状态：{ScanStatus[botScanStatus]}</div>
+        </div>
       )}
     </FlexContainer>
   )

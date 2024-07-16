@@ -24,7 +24,9 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => {
-    mainWindow.webContents.openDevTools()
+    if (import.meta.env.DEV) {
+      mainWindow.webContents.openDevTools()
+    }
     mainWindow.show()
   })
 
