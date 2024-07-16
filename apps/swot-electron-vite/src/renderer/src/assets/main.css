@@ -32,7 +32,7 @@ code {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 
 .logo {
@@ -53,7 +53,7 @@ code {
   line-height: 16px;
   color: var(--ev-c-text-2);
   font-weight: 600;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 .text {
@@ -73,7 +73,7 @@ code {
   font-weight: 600;
 }
 
-.react {
+.gradient-1 {
   background: -webkit-linear-gradient(315deg, #087ea4 55%, #7c93ee);
   background-clip: text;
   -webkit-background-clip: text;
@@ -81,7 +81,7 @@ code {
   font-weight: 700;
 }
 
-.ts {
+.gradient-2 {
   background: -webkit-linear-gradient(315deg, #3178c6 45%, #f0dc4e);
   background-clip: text;
   -webkit-background-clip: text;
@@ -126,8 +126,8 @@ code {
 }
 
 .versions {
-  position: absolute;
-  bottom: 30px;
+  /*position: absolute;*/
+  /*bottom: 30px;*/
   margin: 0 auto;
   padding: 15px 0;
   font-family: 'Menlo', 'Lucida Console', monospace;

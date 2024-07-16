@@ -1,14 +1,17 @@
 {
   "extends": [
     "./tsconfig.node.json"
+    //    "@tsconfig/next/tsconfig.json"
   ],
   "compilerOptions": {
-    //    /* If your code runs in the DOM: */
+    //    "noEmit": false,
     "lib": [
       "es2022",
       "dom",
       "dom.iterable"
     ],
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
   }
 }

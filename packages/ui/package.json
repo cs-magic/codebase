@@ -2,11 +2,12 @@
   "name": "@cs-magic/ui",
   "version": "1.0.0",
   "description": "",
-  "exports": {
-    ".": "./dist/src/index.js",
-    "./*": "./dist/src/*.js"
-  },
+  "type": "module",
   "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
   "scripts": {
     "build": "rm -rf dist && tsc -b"
   },
@@ -15,6 +16,8 @@
     "url": "https://github.com/MarkShawn2020/codebase.git"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^"
+    "@cs-magic/common": "workspace:^",
+    "@cs-magic/hooks": "workspace:^",
+    "@cs-magic/store": "workspace:^"
   }
 }

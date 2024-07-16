@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: swot-electron-vite
+appId: com.cs-magic.swot-electron-vite
+productName: CS Magic SWOT
 directories:
   buildResources: build
 files:

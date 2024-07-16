@@ -1,6 +1,6 @@
 "use client"
 
-import { uiLoadingAlertDialogAtom } from "@cs-magic/common"
+import { uiLoadingAlertDialogAtom } from "@cs-magic/store"
 import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import React from "react"

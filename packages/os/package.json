@@ -4,18 +4,22 @@
   "description": "",
   "type": "module",
   "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
   "exports": {
-    ".": "./dist/src/index.js",
-    "./*": "./dist/src/*.js"
+    ".": "./dist/src/index.js"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "dev": "node ./dist/src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/MarkShawn2020/codebase.git"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^"
+    "@cs-magic/common": "workspace:^",
+    "electron": "^31.2.1",
+    "ioredis": "^5.4.1",
+    "prisma": "^5.16.2"
   }
 }

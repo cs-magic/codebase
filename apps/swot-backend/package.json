@@ -4,6 +4,7 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/src/index.js",
   "exports": {
     ".": {
       "require": "./dist/cjs/src/index.js",
@@ -18,8 +19,12 @@
     "stop": ""
   },
   "dependencies": {
+    "@cs-magic/auth": "workspace:^",
     "@cs-magic/common": "workspace:^",
+    "@cs-magic/env": "workspace:^",
     "@cs-magic/llm": "workspace:^",
+    "@cs-magic/os": "workspace:^",
+    "@cs-magic/spider": "workspace:^",
     "@cs-magic/swot-bot": "workspace:^",
     "@fastify/websocket": "^10.0.1",
     "@types/lodash": "^4.14.202",
@@ -27,6 +32,9 @@
     "fastify": "^4.26.2",
     "fastify-websocket": "^4.3.0",
     "lodash": "^4.17.21",
+    "wechat4u": "workspace:^",
+    "wechaty": "workspace:^",
+    "wechaty-puppet": "workspace:^",
     "wechaty-puppet-padlocal": "workspace:^"
   },
   "devDependencies": {

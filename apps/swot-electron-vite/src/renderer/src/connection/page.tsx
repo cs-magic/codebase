@@ -1,17 +1,8 @@
 'use client'
 
-import { socketStatusMap, useInit, cn } from '@cs-magic/common'
+import { socketStatusMap, cn, logger } from '@cs-magic/common'
+import { useInit } from '@cs-magic/hooks'
 // import { useUserIsAdmin } from '@cs-magic/auth'
-import {
-  Button,
-  buttonVariants,
-  ButtonWithLoading,
-  FlexContainer,
-  LabelLine,
-  StandardCard
-} from '@cs-magic/ui'
-
-import { columns, DataTable } from './contacts.table.js'
 
 import {
   IWechatBotTransfer,
@@ -24,13 +15,23 @@ import {
   botUserAtom,
   ScanStatus
 } from '@cs-magic/swot-bot-core'
-import { logger } from '@cs-magic/common'
 import { QRCodeSVG } from 'qrcode.react'
 
 import { CSVLink } from 'react-csv'
 import { toast } from 'sonner'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
+
+import {
+  Button,
+  buttonVariants,
+  ButtonWithLoading,
+  FlexContainer,
+  LabelLine,
+  StandardCard
+} from '@cs-magic/ui'
+
+import { columns, DataTable } from './contacts.table.js'
 
 export default function BotPage() {
   const [socketStatus, setSocketStatus] = useState<number>(0)
@@ -112,7 +113,7 @@ export default function BotPage() {
     <FlexContainer
       orientation={'vertical'}
       className={
-        cn()
+        cn('justify-start')
         // "bg-cyan-950"
       }
     >

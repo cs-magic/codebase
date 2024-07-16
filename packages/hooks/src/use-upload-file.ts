@@ -1,7 +1,5 @@
+import { IUploadFile, uploadFile } from "@cs-magic/common"
 import { useState } from "react"
-
-import type { IUploadFile } from "../schema.js"
-import { uploadFile } from "../upload.js"
 
 export const useUploadFile = () => {
   const [status, setStatus] = useState<IUploadFile>({ status: "idle" })

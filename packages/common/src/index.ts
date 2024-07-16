@@ -1,6 +1,4 @@
 import config_ from "./config.json" assert { type: "json" }
-// with { type: "json" }
-// import config_ from "./config.json"
 export const config = config_
 
 export * from "./api/index.js"
@@ -8,9 +6,6 @@ export * from "./bilibili/index.js"
 export * from "./config.js"
 export * from "./const.js"
 export * from "./datetime/index.js"
-export * from "./dev/index.js"
-export * from "./extend-tv/index.js"
-export * from "./hooks/index.js"
 export * from "./html/index.js"
 export * from "./i18n/index.js"
 export * from "./log/index.js"
@@ -20,7 +15,6 @@ export * from "./pusher/index.js"
 export * from "./sample.js"
 export * from "./schema/index.js"
 export * from "./sse/index.js"
-export * from "./store/index.js"
 export * from "./transport/index.js"
 export * from "./utils/index.js"
 export * from "./visualization/index.js"

@@ -6,7 +6,6 @@ import axios, {
   type AxiosResponse,
   type CreateAxiosDefaults,
 } from "axios"
-import { toast } from "sonner"
 
 import { logger } from "../log/index.js"
 
@@ -134,7 +133,8 @@ class ErrorHandlerRegistry {
   // if the error is an ErrorHandlerObject, handle here
   handleErrorObject(error: THttpError, options: ErrorHandlerObject = {}) {
     options?.before?.(error, options)
-    toast.error(options.message ?? "Unknown Error!!")
+    // 不要引入 UI 组件
+    // toast.error(options.message ?? "Unknown Error!!")
     return true
   }
 

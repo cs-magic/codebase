@@ -5,12 +5,12 @@ import {
   ITransEvent,
   ResponseFinalStatus,
   ResponseStatus,
-} from "@cs-magic/common/dist/esm/src/index.js"
+} from "@cs-magic/common"
 import { redis } from "@cs-magic/os"
 
 import Pusher from "pusher"
 
-import { ILLMManagerPusher } from "@cs-magic/llm/dist/src/@deprecated/providers/llm-pusher/schema.js"
+import { ILLMManagerPusher } from "@cs-magic/llm"
 
 /**
  *

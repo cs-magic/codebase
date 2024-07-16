@@ -1,5 +1,5 @@
 import { atom } from "jotai"
-import type { IDimension } from "../schema/index.js"
+import type { IDimension } from "@cs-magic/common"
 
 /**
  * alert dialog for loading

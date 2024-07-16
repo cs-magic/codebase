@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-import type { IUploadFile } from "../schema.js"
-import { uploadFile } from "../upload.js"
+import { uploadFile, type IUploadFile } from "@cs-magic/common"
 
 export const useUploadFiles = ({
   onUploadChange,

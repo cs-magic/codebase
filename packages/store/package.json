@@ -1,0 +1,25 @@
+{
+  "name": "@cs-magic/store",
+  "type": "module",
+  "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/src/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/src/index.js",
+      "import": "./dist/esm/src/index.js"
+    }
+  },
+  "packageManager": "yarn@4.1.1",
+  "scripts": {
+    "build": "rm -rf dist && tsc -b"
+  },
+  "dependencies": {
+    "@cs-magic/common": "workspace:^",
+    "pusher-js": "^8.4.0-rc2",
+    "react": "^18.3.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3"
+  }
+}

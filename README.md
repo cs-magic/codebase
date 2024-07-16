@@ -45,7 +45,25 @@ gsed -i 's#\\033\[47m  \\033\[0m#\u001B[47m  \u001B[0m#g' node_modules/qrcode-te
 
 see: https://chatgpt.com/c/84c78d18-bdee-4646-b2f6-4f54d95db0e0
 
+### electron build mac
 
+1. `package.json` 中的 name 要和 build 中 appId 的名字保持一致，see: https://github.com/electron-userland/electron-builder/issues/5134#issuecomment-1949867455
+2. 要开启 app 权限，see: https://github.com/electron-userland/electron-builder/issues/5431#issuecomment-1312180989
+
+## instruction
+
+### debug tech
+
+当想确定什么进程没有退出的时候：
+
+```shell
+import wtfnode from "wtfnode"
+
+export const debugProcesses = () => {
+  wtfnode.dump()
+}
+
+```
 
 ## reference 
 

@@ -1,6 +1,6 @@
 import { atom } from "jotai"
 
-import type { TransportType } from "./schema.js"
+import type { TransportType } from "@cs-magic/common"
 
 ///////////////////////////////
 // base

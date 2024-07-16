@@ -4,17 +4,15 @@
   ],
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist",
-
-    "jsx": "react-jsx"
+    "outDir": "dist/esm"
   },
-  "include": ["src"],
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json"
+  ],
   "references": [
     {
       "path": "../common"
-    },
-    {
-      "path": "../hooks"
     }
   ]
 }

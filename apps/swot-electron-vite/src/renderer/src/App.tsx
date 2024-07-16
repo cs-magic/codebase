@@ -1,37 +1,35 @@
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
+import { FlexContainer } from '@cs-magic/ui'
+import { useState } from 'react'
+import swotLogo from './assets/swot.png'
 import ConnectionPage from './connection/page'
 
 function App(): JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  const [versions] = useState(window.electron.process.versions)
 
   return (
-    <>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions></Versions>
+    <div className={'w-full h-screen overflow-auto flex flex-col items-center'}>
+      <img src={swotLogo} className={'w-32 h-32 logo mt-16'} />
 
-      <ConnectionPage />
-    </>
+      <div className="text">
+        <span className="gradient-1">飞脑</span>：一款更像真人的
+        <span className="gradient-2">AI社交助理</span>
+      </div>
+
+      <p className="tip">
+        <code>V0.4.0</code> 支持你本地化地登录<span>Web端</span>微信，并导出自己的通讯录
+      </p>
+
+      <div className={'grow overflow-hidden w-full'}>
+        <ConnectionPage />
+      </div>
+
+      <div className={'flex items-center flex-col gap-4 p-4 mt-auto'}>
+        <div className="creator !text-xs">
+          Powered by electron-vite (Electron v{versions.electron}, Chromium v{versions.chrome}, Node
+          v{versions.node})
+        </div>
+      </div>
+    </div>
   )
 }
 

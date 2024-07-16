@@ -16,6 +16,9 @@
     "url": "https://github.com/MarkShawn2020/codebase.git"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^"
+    "@cs-magic/common": "workspace:^",
+    "playwright": "^1.45.1",
+    "playwright-core": "^1.45.1",
+    "puppeteer": "^22.13.0"
   }
 }

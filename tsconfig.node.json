@@ -55,6 +55,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+
+
     "baseUrl": ".",
     "paths": {
       //      "@cs-magic/common/*": ["./packages/common/dist/src/*.js"],

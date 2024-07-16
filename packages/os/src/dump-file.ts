@@ -1,12 +1,11 @@
 import { formatAction } from "@cs-magic/common"
 import fs from "fs"
 import path from "path"
-import { generatedDir } from "./path.js"
 
 export const dumpFile = async (
   content: string | object,
   // type: "json" | "text" = "json",
-  options?:
+  options:
     | {
         fn: string
         dir?: string
@@ -15,17 +14,15 @@ export const dumpFile = async (
         fp: string
       },
 ) => {
-  let fp: string = path.join(generatedDir, `${Date.now()}.json`)
+  let fp: string = ""
 
-  if (options) {
-    if ("fn" in options) {
-      const fn = options.fn
-      const dir = options.dir ?? generatedDir
-      if (!fs.existsSync(dir)) fs.mkdir(dir, () => null)
-      fp = path.join(dir, fn)
-    } else if ("fp" in options) {
-      fp = options.fp
-    }
+  if ("fn" in options) {
+    const fn = options.fn
+    const dir = options.dir ?? "."
+    if (!fs.existsSync(dir)) fs.mkdir(dir, () => null)
+    fp = path.join(dir, fn)
+  } else if ("fp" in options) {
+    fp = options.fp
   }
 
   await formatAction(async () => {

@@ -11,6 +11,11 @@
     "build": "tsc -b"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^"
+    "@cs-magic/common": "workspace:^",
+    "@cs-magic/os": "workspace:^",
+    "js-md5": "^0.8.3",
+    "openai": "^4.52.7",
+    "tiktoken": "^1.0.15",
+    "zhipuai-sdk-nodejs-v4": "^0.1.12"
   }
 }

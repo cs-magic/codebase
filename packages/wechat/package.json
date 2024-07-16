@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/llm": "workspace:^"
+    "@cs-magic/llm": "workspace:^",
+    "js-sha1": "^0.7.0",
+    "node-html-parser": "^6.1.13"
   }
 }

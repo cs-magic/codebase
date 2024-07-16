@@ -8,8 +8,6 @@ const config = {
       "@typescript-eslint"
   ],
   extends: [
-    // 目前和 eslint@9 还不兼容，see: https://github.com/vercel/next.js/issues/64409
-    "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
   ],

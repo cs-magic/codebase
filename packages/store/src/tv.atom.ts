@@ -1,6 +1,6 @@
 import { atom } from "jotai"
-import type { IDimension } from "../schema/index.js"
-import { uiScreenAtom } from "../store/index.js"
+import type { IDimension } from "@cs-magic/common"
+import { uiScreenAtom } from "./index"
 
 // import { IDimension } from "../ui/schema.js"
 // import { uiScreenAtom } from "../ui/store.js"

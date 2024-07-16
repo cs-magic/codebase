@@ -3,8 +3,7 @@ import sum from "lodash/sum.js"
 import PusherJS from "pusher-js"
 import { useEffect, useRef } from "react"
 
-import { initPusherClient } from "../client/init.js"
-import { pusherServerConfigs } from "../config.js"
+import { initPusherClient, pusherServerConfigs } from "@cs-magic/common"
 import {
   pusherClientAtom,
   pusherLastPingTimeAtom,
@@ -12,7 +11,7 @@ import {
   pusherLatenciesAtom,
   pusherLatencyAtom,
   pusherServerIdAtom,
-} from "../store.js"
+} from "@cs-magic/store"
 
 export const usePusherClient = () => {
   const [serverId] = useAtom(pusherServerIdAtom)
@@ -26,7 +25,7 @@ export const usePusherClient = () => {
   const [latencies] = useAtom(pusherLatenciesAtom)
   const [, setPusherLatency] = useAtom(pusherLatencyAtom)
 
-  const refPusherClient = useRef<PusherJS.default>()
+  const refPusherClient = useRef<PusherJS>()
 
   useEffect(() => {
     refPusherClient.current = initPusherClient(pusherServerConfigs[serverId], {
