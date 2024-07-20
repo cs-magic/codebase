@@ -1,5 +1,5 @@
-appId: com.cs-magic.swot-electron-vite
-productName: CS Magic SWOT
+appId: com.cs-magic.swot-wechat-helper
+productName: 飞脑微信助手
 directories:
   buildResources: build
 files:

@@ -8079,6 +8079,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.17.7":
+  version: 4.17.7
+  resolution: "@types/lodash@npm:4.17.7"
+  checksum: 10c0/40c965b5ffdcf7ff5c9105307ee08b782da228c01b5c0529122c554c64f6b7168fc8f11dc79aa7bae4e67e17efafaba685dc3a47e294dbf52a65ed2b67100561
+  languageName: node
+  linkType: hard
+
 "@types/lru-cache@npm:^5.1.1":
   version: 5.1.1
   resolution: "@types/lru-cache@npm:5.1.1"
@@ -13778,6 +13785,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cs-magic@workspace:."
   dependencies:
+    "@types/lodash": "npm:^4.17.7"
     next: "npm:^14.2.5"
     typescript-eslint: "npm:^7.16.1"
   languageName: unknown
@@ -32588,9 +32596,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swot-electron-vite@workspace:apps/swot-electron-vite":
+"swot-wechat-helper@workspace:apps/swot-electron-vite":
   version: 0.0.0-use.local
-  resolution: "swot-electron-vite@workspace:apps/swot-electron-vite"
+  resolution: "swot-wechat-helper@workspace:apps/swot-electron-vite"
   dependencies:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"
