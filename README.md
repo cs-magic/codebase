@@ -21,6 +21,11 @@ yarn db:generate
 
 ## bugfix
 
+### electron notarize （2024-07-21)
+
+- https://github.com/electron-userland/electron-builder/issues/8103#issuecomment-2024039553
+- 
+
 ### electron 安装时需要固定版本
 
 ### file-box、padlocal-ts包默认安装的 jimp 是 0.16，没有 es/index.js，导致 vite 打包时错误，在根目录强制为 0.22 即可，see: https://chatgpt.com/c/5dfc8a13-42b2-4c1b-9596-81e23cf1f4bb

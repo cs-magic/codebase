@@ -47,6 +47,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "electron": "31.2.0",
     "electron-builder": "^24.13.3",
+    "electron-notarize": "^1.2.2",
     "electron-vite": "^2.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
@@ -61,6 +62,14 @@
     "vite-plugin-wasm": "^3.3.0"
   },
   "build": {
+    "mac": {
+      "notarize": {
+        "teamId": "758SN987H4"
+      }
+    },
+    "dmg": {
+      "sign": false
+    },
     "asarUnpack": [
       "node_modules/node-gyp-build"
     ],
