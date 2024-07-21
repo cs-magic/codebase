@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "electron": "^31.2.1",
     "ioredis": "^5.4.1",
     "prisma": "^5.16.2"
   }
