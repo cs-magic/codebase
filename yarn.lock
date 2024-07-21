@@ -31715,6 +31715,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "swot-electron-forge-vite@workspace:apps/swot-electron-forge-vite"
   dependencies:
+    "@cs-magic/swot-backend": "workspace:^"
     "@electron-forge/cli": "npm:^7.4.0"
     "@electron-forge/maker-deb": "npm:^7.4.0"
     "@electron-forge/maker-dmg": "npm:^7.4.0"

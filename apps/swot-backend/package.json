@@ -3,14 +3,7 @@
   "version": "0.1.0",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-  "main": "./dist/cjs/src/index.js",
-  "module": "./dist/esm/src/index.js",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/src/index.js",
-      "import": "./dist/esm/src/index.js"
-    }
-  },
+  "main": "./dist/esm/src/index.js",
   "scripts": {
     "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
     "build": "rm -rf dist && tsc -b",

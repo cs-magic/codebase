@@ -40,6 +40,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@cs-magic/swot-backend": "workspace:^",
     "electron-squirrel-startup": "^1.0.1"
   }
 }
