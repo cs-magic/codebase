@@ -109,39 +109,31 @@ async function resolvePuppetName(
   let puppetModule
 
   try {
-    // puppetModule = requireDynamically(puppetName)
-    // const suffix = puppetName.slice(puppetName.lastIndexOf("-"))
-    // puppetModule = await import(`wechaty-puppet-${suffix}`)
-    // puppetModule = await import(
-    //   /* webpackChunkName: "wechaty-puppet-wechat4u" */
-    //   puppetName
-    // )
-    // const suffix = puppetName.slice(puppetName.lastIndexOf("-") + 1)
-    // puppetModule = await import(
-    //   /* webpackChunkName: "wechaty-puppet-wechat4u" */ `wechaty-puppet-${suffix}`
-    // )
-    puppetModule = (await import(`wechaty-puppet-wechat4u`)) as any
+    puppetModule = await import(
+      /* webpackChunkName: "wechaty-puppet-wechat4u" */ `wechaty-puppet-${suffix}`
+    )
+    // puppetModule = (await import(`wechaty-puppet-wechat4u`)) as any
   } catch (e) {
     log.error(e as unknown as string)
-    // log.error(
-    //   "Puppet",
-    //   "resolvePuppetName %s",
-    //   [
-    //     "",
-    //     'Failed to import Wechaty Puppet Provider (WPP) NPM module: "' +
-    //       puppetName +
-    //       '"',
-    //     "Please make sure:",
-    //     " 1. it has been installed correctly. (run `npm install " +
-    //       puppetName +
-    //       "` if it doesn't)",
-    //     ' 2. "' + puppetName + '" is a valid Wechaty Puppet Provider (WPP).',
-    //     "",
-    //     "learn more about Wechaty Puppet Providers (WPP) from the official website:",
-    //     "<https://wechaty.js.org/docs/puppet-providers>",
-    //     "",
-    //   ].join("\n"),
-    // )
+    log.error(
+      "Puppet",
+      "resolvePuppetName %s",
+      [
+        "",
+        'Failed to import Wechaty Puppet Provider (WPP) NPM module: "' +
+          puppetName +
+          '"',
+        "Please make sure:",
+        " 1. it has been installed correctly. (run `npm install " +
+          puppetName +
+          "` if it doesn't)",
+        ' 2. "' + puppetName + '" is a valid Wechaty Puppet Provider (WPP).',
+        "",
+        "learn more about Wechaty Puppet Providers (WPP) from the official website:",
+        "<https://wechaty.js.org/docs/puppet-providers>",
+        "",
+      ].join("\n"),
+    )
 
     console.trace()
 
