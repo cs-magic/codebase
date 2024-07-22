@@ -65,7 +65,8 @@
     "test": "npm-run-all lint test:unit",
     "test:pack": "bash -x scripts/npm-pack-testing.sh",
     "test:unit": "cross-env NODE_OPTIONS=\"--no-warnings --loader=ts-node/esm\" tap \"src/**/*.spec.ts\" \"tests/**/*.spec.ts\"",
-    "typedoc": "bash scripts/typedoc.sh"
+    "typedoc": "bash scripts/typedoc.sh",
+    "postinstall": "yarn dist"
   },
   "repository": {
     "type": "git",
