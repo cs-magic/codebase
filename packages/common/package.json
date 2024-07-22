@@ -2,17 +2,10 @@
   "name": "@cs-magic/common",
   "type": "module",
   "main": "./dist/esm/src/index.js",
-  "module": "./dist/esm/src/index.js",
-  "types": "./dist/esm/src/index.d.ts",
-  "exports": {
-    ".": {
-      "default": "./dist/esm/src/index.js",
-      "types": "./dist/esm/src/index.d.ts"
-    }
-  },
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/env": "workspace:^",

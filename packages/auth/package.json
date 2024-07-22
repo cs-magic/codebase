@@ -3,14 +3,9 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "main": "./dist/src/index.js",
-  "exports": {
-    ".": {
-      "default": "./dist/src/index.js",
-      "types": "./dist/src/index.d.ts"
-    }
-  },
   "scripts": {
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
