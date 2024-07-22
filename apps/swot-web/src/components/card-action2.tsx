@@ -1,6 +1,5 @@
 "use client"
 
-import { uploadFile } from "@cs-magic/common"
 import { Action2Type, ActionType } from "@cs-magic/swot-core"
 import { cardOssAtom, cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
@@ -12,6 +11,7 @@ import { RefObject } from "react"
 import { toast } from "sonner"
 import { updateOssUrl } from "../utils/update-oss-url.action"
 import { CardAction } from "./card-action"
+import { uploadFile } from "@cs-magic/common/server"
 
 export const CardAction2 = ({
   type,

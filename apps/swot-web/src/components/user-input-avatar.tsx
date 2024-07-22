@@ -1,4 +1,4 @@
-import { uploadFile } from "@cs-magic/common"
+import { uploadFile } from "@cs-magic/common/server"
 import { Label } from "@cs-magic/ui"
 import { UserAvatar } from "./user-avatar"
 import { useDraftSession } from "@cs-magic/hooks"
