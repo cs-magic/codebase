@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { Card } from "../../../../components/card"
 import { genPageTitle } from "../../../../utils/get-page-title"
 
@@ -7,9 +6,6 @@ export const metadata = {
 }
 
 export default async function GenCardViaFrontendPage() {
-  return (
-    <Suspense>
-      <Card />
-    </Suspense>
-  )
+  return <Card />
+  // return "hello"
 }

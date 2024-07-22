@@ -1,3 +1,5 @@
+"use server"
+
 import { initAliOss } from "./config.js"
 
 export const getOssSignatureUrl = async (id: string) =>

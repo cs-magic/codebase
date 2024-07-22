@@ -1,4 +1,5 @@
-import { IUploadFile, uploadFile } from "@cs-magic/common"
+import { IUploadFile } from "@cs-magic/common"
+import { uploadFile } from "@cs-magic/common/server"
 import { useState } from "react"
 
 export const useUploadFile = () => {

@@ -1,19 +1,18 @@
 "use client"
 
-import { useSearchParam } from "@cs-magic/hooks"
-import { AtomSelector } from "@cs-magic/ui"
-import { Separator } from "@cs-magic/ui"
-import { StandardCard } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
+import { useSearchParam } from "@cs-magic/hooks"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
 } from "@cs-magic/swot-core"
-import { cardPreviewAtom } from "../store/card.atom"
-import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
+import { AtomSelector, Separator, StandardCard } from "@cs-magic/ui"
 import { useAtomValue } from "jotai"
 import React from "react"
-import { CardInputBackend } from "./card-input-backend"
+
+import { cardPreviewAtom } from "../store/card.atom"
+import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
+// import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreviewContainer } from "./card-preview-container"
 
@@ -21,7 +20,8 @@ export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)
   const renderType = useSearchParam<GenCardApproach>("renderType") ?? "frontend"
 
-  const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend
+  // const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend
+  const Input = CardInputFrontend
 
   console.log({ preview })
 
@@ -31,9 +31,7 @@ export const Card = () => {
         "mx-auto grid h-full w-full grid-cols-1 gap-4 overflow-auto p-2 sm:grid-cols-2 sm:p-4",
       )}
     >
-      <StandardCard title={"Input Control"}>
-        <Input />
-      </StandardCard>
+      <StandardCard title={"Input Control"}>{<Input />}</StandardCard>
 
       <StandardCard title={"Preview"} id={"card-previews"}>
         <AtomSelector

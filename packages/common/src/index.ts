@@ -10,7 +10,12 @@ export * from "./html/index.js"
 export * from "./i18n/index.js"
 export * from "./log/index.js"
 export * from "./markdown/index.js"
-export * from "./oss/index.js"
+
+export * from "./oss/const.js"
+export * from "./oss/schema.js"
+// export * from "./oss/upload.js"
+export * from "./oss/utils.js"
+
 export * from "./pusher/index.js"
 export * from "./sample.js"
 export * from "./schema/index.js"

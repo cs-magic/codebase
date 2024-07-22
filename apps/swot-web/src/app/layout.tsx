@@ -14,6 +14,7 @@ import { Dev } from "../components/dev"
 import GlobalHooksProviders from "../providers/global.provider"
 import "../styles/globals.css"
 import { TRPCReactProvider } from "../trpc/react"
+import { Suspense } from "react"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,37 +47,39 @@ export default function RootLayout({
     <html lang="zh" suppressHydrationWarning>
       <body className={cn(`font-sans`, inter.variable)}>
         {/* 1. data layer */}
-        <JotaiProvider>
-          <SessionProvider>
-            <TRPCReactProvider>
-              {/* 2. ui layer */}
-              <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
-                <TooltipProvider>
-                  <ScreenProvider>
-                    {/* 3. hooks layer */}
-                    <GlobalHooksProviders>
-                      <main className={cn("relative")}>
-                        {children}
+        <Suspense>
+          <JotaiProvider>
+            <SessionProvider>
+              <TRPCReactProvider>
+                {/* 2. ui layer */}
+                <ThemeProvider defaultTheme={"dark"} attribute={"class"}>
+                  <TooltipProvider>
+                    <ScreenProvider>
+                      {/* 3. hooks layer */}
+                      <GlobalHooksProviders>
+                        <main className={cn("relative")}>
+                          {children}
 
-                        <Toaster
-                          richColors
-                          position={"top-right"}
-                          duration={3000}
-                          closeButton={false}
-                        />
+                          <Toaster
+                            richColors
+                            position={"top-right"}
+                            duration={3000}
+                            closeButton={false}
+                          />
 
-                        <LoadingAlertDialog />
+                          <LoadingAlertDialog />
 
-                        {/* 开发专用 */}
-                        <Dev />
-                      </main>
-                    </GlobalHooksProviders>
-                  </ScreenProvider>
-                </TooltipProvider>
-              </ThemeProvider>
-            </TRPCReactProvider>
-          </SessionProvider>
-        </JotaiProvider>
+                          {/* 开发专用 */}
+                          <Dev />
+                        </main>
+                      </GlobalHooksProviders>
+                    </ScreenProvider>
+                  </TooltipProvider>
+                </ThemeProvider>
+              </TRPCReactProvider>
+            </SessionProvider>
+          </JotaiProvider>
+        </Suspense>
       </body>
     </html>
   )

@@ -2,6 +2,11 @@
   "name": "@cs-magic/common",
   "type": "module",
   "main": "./dist/esm/src/index.js",
+  "exports": {
+    ".": "./dist/esm/src/index.js",
+    "./server": "./dist/esm/src/server.js",
+    "./server-actions": "./dist/esm/src/server-actions.js"
+  },
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "rm -rf dist && tsc -b",

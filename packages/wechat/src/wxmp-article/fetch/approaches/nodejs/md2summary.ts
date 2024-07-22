@@ -1,8 +1,5 @@
-import {
-  type ILlmQueryConfig,
-  type LlmModelType,
-  safeCallAgent,
-} from "@cs-magic/llm"
+import { type ILlmQueryConfig, type LlmModelType } from "@cs-magic/llm"
+import { safeCallAgent } from "@cs-magic/llm/server"
 
 export type SummaryOptions = {
   enabled?: boolean
