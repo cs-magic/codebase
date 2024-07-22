@@ -96,11 +96,6 @@ async function resolvePuppet(
   return puppetInstance
 }
 
-// function requireDynamically(path: string) {
-//   path = path.split("\\").join("/") // Normalize windows slashes
-//   return eval(`require('${path}');`) // Ensure Webpack does not analyze the require statement
-// }
-
 async function resolvePuppetName(
   puppetName: PuppetNpmName,
 ): Promise<PuppetConstructor> {
@@ -110,7 +105,8 @@ async function resolvePuppetName(
 
   try {
     puppetModule = await import(
-      /* webpackChunkName: "wechaty-puppet-wechat4u" */ `wechaty-puppet-${suffix}`
+      /* webpackChunkName: "wechaty-puppet-wechat4u" */
+      puppetName
     )
     // puppetModule = (await import(`wechaty-puppet-wechat4u`)) as any
   } catch (e) {
