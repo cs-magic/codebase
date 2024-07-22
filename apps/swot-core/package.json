@@ -4,7 +4,8 @@
   "type": "module",
   "main": "./dist/src/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",

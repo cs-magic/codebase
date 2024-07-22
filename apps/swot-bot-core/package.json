@@ -4,6 +4,7 @@
   "type": "module",
   "main": "./dist/esm/src/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -b"
+    "build": "rm -rf dist && tsc -b",
+    "postinstall": "yarn build"
   }
 }

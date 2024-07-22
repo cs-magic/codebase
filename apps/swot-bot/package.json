@@ -9,7 +9,8 @@
     "build": "rm -rf dist && tsc -b",
     "build:cjs": "tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
     "start": "node ./dist/src/main.js | pino-pretty",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
