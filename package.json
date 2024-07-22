@@ -14,7 +14,7 @@
   "scripts": {
     "test": "jest",
     "lint": "echo 'skip eslint'",
-    "db:generate": "prisma generate",
+    "db:generate": "npx prisma generate",
     "postinstall": "yarn db:generate"
   },
   "packageManager": "yarn@4.1.1",
