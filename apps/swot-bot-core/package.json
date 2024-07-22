@@ -6,5 +6,9 @@
   "scripts": {
     "build": "rm -rf dist && tsc -b",
     "postinstall": "yarn build"
+  },
+  "dependencies": {
+    "wechaty": "workspace:^",
+    "wechaty-puppet": "workspace:^"
   }
 }

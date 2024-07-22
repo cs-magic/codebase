@@ -8,5 +8,8 @@
     "node_modules/",
     "dist/",
     "tests/fixtures/smoke-testing.ts"
+  ],
+  "references": [
+    {"path": "../common"},
   ]
 }

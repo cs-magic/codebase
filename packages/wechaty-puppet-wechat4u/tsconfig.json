@@ -5,7 +5,7 @@
   ],
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/esm",
+    "outDir": "dist/esm"
   },
   "exclude": [
     "node_modules/",
@@ -18,5 +18,8 @@
     "scripts/**/*.ts",
     "src/**/*.ts",
     "tests/**/*.spec.ts"
+  ],
+  "references": [
+    {"path": "../wechaty-puppet"}
   ]
 }

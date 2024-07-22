@@ -2131,6 +2131,9 @@ __metadata:
 "@cs-magic/swot-bot-core@workspace:^, @cs-magic/swot-bot-core@workspace:apps/swot-bot-core":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-bot-core@workspace:apps/swot-bot-core"
+  dependencies:
+    wechaty: "workspace:^"
+    wechaty-puppet: "workspace:^"
   languageName: unknown
   linkType: soft
 

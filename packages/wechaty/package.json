@@ -38,7 +38,7 @@
     "DEFAULT_APIHOST": "api.chatie.io"
   },
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "yarn clean && tsc && tsc -p tsconfig.cjs.json",
     "changelog": "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u wechaty -p wechaty && sed -i'.bak' /greenkeeper/d CHANGELOG.md && sed -i'.bak' /Snyk/d CHANGELOG.md && sed -i'.bak' '/An in-range update of/d' CHANGELOG.md && node --no-warnings --loader=ts-node/esm scripts/sort-contributiveness.ts < CHANGELOG.md > CHANGELOG.new.md 2>/dev/null && cat CHANGELOG.md >> CHANGELOG.new.md && mv CHANGELOG.new.md CHANGELOG.md",
     "clean": "shx rm -fr dist",
     "coverage": "nyc report --reporter=lcov",
@@ -125,7 +125,6 @@
     "state-switch": "^1.6.3",
     "uuid": "^8.3.2",
     "wechaty-puppet": "^1.20.1",
-    "wechaty-puppet-padlocal": "workspace:^",
     "wechaty-puppet-service": "^1.19.8",
     "wechaty-puppet-wechat4u": "workspace:^",
     "wechaty-token": "^1.1.1",
@@ -154,7 +153,8 @@
     "sloc": "^0.2.1",
     "typed-emitter": "^1.5.0-from-event",
     "typedoc": "^1.0.0-dev.4 ",
-    "wechaty-puppet-mock": "^1.18.2"
+    "wechaty-puppet-mock": "^1.18.2",
+    "wechaty-puppet-padlocal": "workspace:^"
   },
   "files": [
     "bin/",

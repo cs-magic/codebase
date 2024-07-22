@@ -10,7 +10,7 @@
   "exclude": [
     "node_modules/",
     "dist/",
-    "tests/fixtures/",
+    "tests/fixtures/"
   ],
   "include": [
     "app/**/*.ts",
@@ -19,6 +19,9 @@
     "examples/**/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
-    "tests/**/*.spec.ts",
+    "tests/**/*.spec.ts"
   ],
+  "references": [
+    {"path": "../wechaty-puppet"},
+  ]
 }

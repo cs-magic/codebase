@@ -4,4 +4,7 @@
     "module": "CommonJS",
     "outDir": "dist/cjs",
   },
+  "references": [
+    {"path": "../wechaty-puppet"},
+  ]
 }
