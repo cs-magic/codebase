@@ -1,4 +1,4 @@
-import { userImageAtom, userNameAtom } from "@cs-magic/common"
+import { userImageAtom, userNameAtom } from "@cs-magic/store"
 import { useAtom } from "jotai"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"

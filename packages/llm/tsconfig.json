@@ -10,8 +10,7 @@
     "./src"
   ],
   "references": [
-    {
-      "path": "../common"
-    }
+    {"path": "../common"},
+    {"path": "../os"},
   ]
 }

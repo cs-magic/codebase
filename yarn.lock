@@ -1966,6 +1966,7 @@ __metadata:
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/os": "workspace:^"
+    "@cs-magic/store": "workspace:^"
     "@cs-magic/wechat": "workspace:^"
     next-auth: "npm:^4.24.7"
   languageName: unknown

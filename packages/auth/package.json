@@ -10,6 +10,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/os": "workspace:^",
+    "@cs-magic/store": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
     "next-auth": "^4.24.7"
   }
