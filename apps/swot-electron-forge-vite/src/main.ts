@@ -1,15 +1,23 @@
+// import { logger } from "@cs-magic/common"
+import core from "@cs-magic/common"
 import { app, BrowserWindow } from "electron"
 import path from "path"
 // const backend = import("@cs-magic/swot-backend")
 // const { initServer } = await import("@cs-magic/swot-backend")
 // import { initServer } from "@cs-magic/swot-backend"
+// import core from "@cs-magic/swot-bot-core"
+// import { env } from "@cs-magic/env"
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // if (require("electron-squirrel-startup")) app.quit()
 
 const createWindow = () => {
-  // void initServer()
-  import("@cs-magic/swot-backend").then((res) => res.initServer())
+  // logger.info("hello")
+  console.log({
+    core,
+    // env,
+  })
+  // import("@cs-magic/swot-backend").then((res) => res.initServer())
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({

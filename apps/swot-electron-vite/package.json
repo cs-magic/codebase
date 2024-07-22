@@ -1,6 +1,6 @@
 {
   "name": "swot-wechat-helper",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "SWOT Wechat Helper",
   "type": "module",
   "main": "./out/main/index.js",

@@ -4,10 +4,6 @@
   "description": "",
   "type": "module",
   "main": "./dist/src/index.js",
-  "module": "./dist/src/index.js",
-  "exports": {
-    ".": "./dist/src/index.js"
-  },
   "scripts": {
     "build": "rm -rf dist && tsc -b"
   },

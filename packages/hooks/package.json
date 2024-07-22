@@ -1,14 +1,7 @@
 {
   "name": "@cs-magic/hooks",
   "type": "module",
-  "main": "./dist/cjs/src/index.js",
-  "module": "./dist/esm/src/index.js",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/src/index.js",
-      "import": "./dist/esm/src/index.js"
-    }
-  },
+  "main": "./dist/esm/src/index.js",
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "rm -rf dist && tsc -b"

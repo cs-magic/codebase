@@ -3,10 +3,6 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "main": "./dist/src/index.js",
-  "exports": {
-    ".": "./dist/src/index.js",
-    "./*": "./dist/src/*.js"
-  },
   "scripts": {
     "build": "tsc -b"
   },

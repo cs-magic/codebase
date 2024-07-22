@@ -3,13 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "./dist/cjs/src/index.js",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/src/index.js",
-      "import": "./dist/esm/src/index.js"
-    }
-  },
+  "main": "./dist/esm/src/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc -b"
   },

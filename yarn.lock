@@ -31715,7 +31715,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "swot-electron-forge-vite@workspace:apps/swot-electron-forge-vite"
   dependencies:
-    "@cs-magic/swot-backend": "workspace:^"
+    "@cs-magic/common": "workspace:^"
     "@electron-forge/cli": "npm:^7.4.0"
     "@electron-forge/maker-deb": "npm:^7.4.0"
     "@electron-forge/maker-dmg": "npm:^7.4.0"
@@ -31737,6 +31737,7 @@ __metadata:
     ts-node: "npm:^10.0.0"
     typescript: "npm:~4.5.4"
     vite: "npm:^5.0.12"
+    vite-plugin-externalize-deps: "npm:^0.8.0"
   languageName: unknown
   linkType: soft
 
@@ -34052,6 +34053,15 @@ __metadata:
     fast-glob: "npm:^3.2.12"
     magic-string: "npm:^0.30.1"
   checksum: 10c0/ad069da3be8b6cd730b028174ded3b97a810a3ad2171fe6e22d5623d57b07af94a81e8b0c994f26b4b43e7ffa0d99bb34ebc392a9ae8e4fc39bc2bc9c49e63cf
+  languageName: node
+  linkType: hard
+
+"vite-plugin-externalize-deps@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "vite-plugin-externalize-deps@npm:0.8.0"
+  peerDependencies:
+    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: 10c0/0ed0d2a85f96e6470b700c1a598de9e3b189b186f7a3d05e4e945c0381bb2717dce5a40de5d6b485ec8e30f31ff33b17d56d487f618395d7b55ad7ef74d35ca3
   languageName: node
   linkType: hard
 

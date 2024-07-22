@@ -55,6 +55,11 @@ see: https://chatgpt.com/c/84c78d18-bdee-4646-b2f6-4f54d95db0e0
 1. `package.json` 中的 name 要和 build 中 appId 的名字保持一致，see: https://github.com/electron-userland/electron-builder/issues/5134#issuecomment-1949867455
 2. 要开启 app 权限，see: https://github.com/electron-userland/electron-builder/issues/5431#issuecomment-1312180989
 
+### disable-library-validation
+
+- https://github.com/opencv/opencv/issues/15645
+- https://github.com/electron-userland/electron-builder/issues/5427
+
 ## instruction
 
 ### debug tech
