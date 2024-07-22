@@ -1,6 +1,6 @@
 {
   "name": "swot-wechat-helper",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "SWOT Wechat Helper",
   "type": "module",
   "main": "./out/main/index.js",
@@ -14,7 +14,7 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview | pino-pretty",
     "dev": "electron-vite dev | pino-pretty",
-    "build": "npm run typecheck && electron-vite build",
+    "build": "source ../../.env && npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
