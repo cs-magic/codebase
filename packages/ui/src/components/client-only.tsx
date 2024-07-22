@@ -1,8 +1,10 @@
-import React, { HTMLAttributes } from "react"
+"use client"
+
+import { HTMLAttributes, useEffect, useState } from "react"
 
 export function ClientOnly({ children }: HTMLAttributes<HTMLDivElement>) {
-  const [hasMounted, setHasMounted] = React.useState(false)
-  React.useEffect(() => {
+  const [hasMounted, setHasMounted] = useState(false)
+  useEffect(() => {
     setHasMounted(true)
   }, [])
   if (!hasMounted) {

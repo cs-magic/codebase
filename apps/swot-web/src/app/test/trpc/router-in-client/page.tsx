@@ -1,9 +1,9 @@
 "use client"
 
-import { FlexContainer } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/ui"
+import { Button } from "@cs-magic/ui"
+import { Input } from "@cs-magic/ui"
+import { Label } from "@cs-magic/ui"
 import { useSession } from "next-auth/react"
 import { useRef } from "react"
 import { api } from "../../../../trpc/client"

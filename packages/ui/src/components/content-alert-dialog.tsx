@@ -1,4 +1,5 @@
 "use client"
+
 import { uiAlertDialogOpen } from "@cs-magic/store"
 import { useAtom } from "jotai"
 import React, { PropsWithChildren } from "react"

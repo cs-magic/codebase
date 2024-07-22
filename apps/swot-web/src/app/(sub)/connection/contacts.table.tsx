@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@cs-magic/common"
+} from "@cs-magic/ui"
 import {
   ColumnDef,
   flexRender,

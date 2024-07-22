@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@cs-magic/auth/utils"
+import { getServerAuthSession } from "@cs-magic/auth/server"
 
 /**
  * 1. CONTEXT

@@ -1,4 +1,4 @@
-import { Textarea } from "@cs-magic/common"
+import { TextareaAuto } from "@cs-magic/ui"
 import { useAtom } from "jotai"
 import React from "react"
 import { cardInnerInputAtom } from "../store/card.atom"
@@ -11,7 +11,7 @@ export const CardInputBackend = () => {
     <>
       <CardInputUser />
 
-      <Textarea
+      <TextareaAuto
         id={"card-content"}
         minRows={10}
         maxRows={20}

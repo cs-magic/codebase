@@ -1,15 +1,15 @@
-import { LoadingAlertDialog } from "@cs-magic/common"
-import { Toaster } from "@cs-magic/common"
-import { TooltipProvider } from "@cs-magic/common"
-import JotaiProvider from "@cs-magic/common"
-import { ScreenProvider } from "@cs-magic/common"
-import { SessionProvider } from "@cs-magic/common"
-import ThemeProvider from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
+import { cn, config } from "@cs-magic/common"
+import {
+  JotaiProvider,
+  LoadingAlertDialog,
+  ScreenProvider,
+  SessionProvider,
+  ThemeProvider,
+  Toaster,
+  TooltipProvider,
+} from "@cs-magic/ui"
 import { type Viewport } from "next"
 import { Inter } from "next/font/google"
-
-import { config } from "@cs-magic/common"
 import { Dev } from "../components/dev"
 import GlobalHooksProviders from "../providers/global.provider"
 import "../styles/globals.css"

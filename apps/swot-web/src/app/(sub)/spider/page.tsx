@@ -2,12 +2,12 @@
 
 import { ApiMethod } from "@cs-magic/common"
 import { sleep } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { Badge } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/ui"
+import { LabelLine } from "@cs-magic/ui"
+import { Badge } from "@cs-magic/ui"
+import { Button } from "@cs-magic/ui"
+import { Input } from "@cs-magic/ui"
+import { Label } from "@cs-magic/ui"
 import {
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common"
-import { StandardCard } from "@cs-magic/common"
-import { Textarea } from "@cs-magic/common"
+} from "@cs-magic/ui"
+import { StandardCard } from "@cs-magic/ui"
+import { TextareaAuto } from "@cs-magic/ui"
 
 import { produce } from "immer"
 import { useAtom } from "jotai"
@@ -120,7 +120,7 @@ export default function SpiderPage() {
         </LabelLine>
 
         <LabelLine title={"cookie"}>
-          <Textarea
+          <TextareaAuto
             minRows={2}
             maxRows={4}
             value={inputCookie}

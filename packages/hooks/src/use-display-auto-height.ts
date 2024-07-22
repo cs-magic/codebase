@@ -1,5 +1,3 @@
-"use client"
-
 import { uiInnerHeight, uiViewportHeight } from "@cs-magic/store"
 import { isServer } from "@cs-magic/env"
 import { useAtom } from "jotai"

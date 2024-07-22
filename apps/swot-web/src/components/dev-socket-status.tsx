@@ -1,7 +1,7 @@
 "use client"
 
-import { devEnabledAtom } from "@cs-magic/common"
-import { pusherLatencyAtom } from "@cs-magic/common"
+import { devEnabledAtom } from "@cs-magic/store"
+import { pusherLatencyAtom } from "@cs-magic/store"
 import { cn } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { BarChart } from "lucide-react"

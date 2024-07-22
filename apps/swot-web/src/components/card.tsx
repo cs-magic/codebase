@@ -1,14 +1,14 @@
 "use client"
 
-import { useSearchParam } from "@cs-magic/common"
-import { AtomSelector } from "@cs-magic/common"
-import { Separator } from "@cs-magic/common"
-import { StandardCard } from "@cs-magic/common"
+import { useSearchParam } from "@cs-magic/hooks"
+import { AtomSelector } from "@cs-magic/ui"
+import { Separator } from "@cs-magic/ui"
+import { StandardCard } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
-} from "@cs-magic/swot-core/schema/card"
+} from "@cs-magic/swot-core"
 import { cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import { useAtomValue } from "jotai"

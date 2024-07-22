@@ -1,20 +1,18 @@
 "use client"
-import { useSmsSendCode } from "@cs-magic/auth/providers/sms/hooks/use-sms-send-code"
-import { ISendSms, sendSmsSchema } from "@cs-magic/auth/providers/sms/schema"
+
+import { ISendSms, sendSmsSchema } from "@cs-magic/common"
+import { useSmsSendCode } from "@cs-magic/hooks"
+import { smsCodeCurCountdownSecondsAtom, userPhoneAtom } from "@cs-magic/store"
 import {
-  smsCodeCurCountdownSecondsAtom,
-  userPhoneAtom,
-} from "@cs-magic/auth/providers/sms/store"
-import { ButtonWithLoading } from "@cs-magic/common"
-import {
+  ButtonWithLoading,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
+  Input,
+} from "@cs-magic/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom, useSetAtom } from "jotai"
 import { useForm } from "react-hook-form"

@@ -1,4 +1,4 @@
-import { authOptions } from "@cs-magic/auth/next-auth.options"
+import { authOptions } from "@cs-magic/auth/server"
 import NextAuth from "next-auth"
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

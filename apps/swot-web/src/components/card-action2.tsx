@@ -1,7 +1,7 @@
 "use client"
 
 import { uploadFile } from "@cs-magic/common"
-import { Action2Type, ActionType } from "@cs-magic/swot-core/schema/card"
+import { Action2Type, ActionType } from "@cs-magic/swot-core"
 import { cardOssAtom, cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import * as html2image from "html-to-image"

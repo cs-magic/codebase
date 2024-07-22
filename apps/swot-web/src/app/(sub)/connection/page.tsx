@@ -1,16 +1,9 @@
 "use client"
 
 import { logger } from "@cs-magic/common"
-import { env } from "../../../../../../packages/env/src"
-import { useInit } from "@cs-magic/common"
+import { env } from "@cs-magic/env"
+import { useInit, useUserIsAdmin } from "@cs-magic/hooks"
 import { socketStatusMap } from "@cs-magic/common"
-import { ButtonWithLoading } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { Button, buttonVariants } from "@cs-magic/common"
-import { StandardCard } from "@cs-magic/common"
-import { cn } from "@cs-magic/common"
-import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema/bot.utils"
 import {
   botContactsAtom,
   botLoggedInAtom,
@@ -20,7 +13,14 @@ import {
   botScanValueAtom,
   botSocketOpenedAtom,
   botUserAtom,
-} from "../../../../../swot-bot-core/src/schema/bot.atom"
+  IWechatBotTransfer,
+} from "@cs-magic/swot-bot-core"
+import { ButtonWithLoading } from "@cs-magic/ui"
+import { FlexContainer } from "@cs-magic/ui"
+import { LabelLine } from "@cs-magic/ui"
+import { Button, buttonVariants } from "@cs-magic/ui"
+import { StandardCard } from "@cs-magic/ui"
+import { cn } from "@cs-magic/common"
 
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"

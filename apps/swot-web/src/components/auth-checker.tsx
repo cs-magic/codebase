@@ -8,7 +8,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogTitle,
-} from "@cs-magic/common"
+} from "@cs-magic/ui"
 import { useAtom } from "jotai"
 
 import { signIn } from "next-auth/react"

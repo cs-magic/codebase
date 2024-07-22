@@ -1,5 +1,3 @@
-"use server"
-
 import { pusherServerConfigs } from "../config.js"
 import type {
   PusherEventData,

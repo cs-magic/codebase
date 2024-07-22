@@ -1,4 +1,4 @@
-import { uiInnerHeight } from "@cs-magic/common"
+import { uiInnerHeight } from "@cs-magic/store"
 import { useAtom } from "jotai"
 import { useWindowSize } from "react-use"
 

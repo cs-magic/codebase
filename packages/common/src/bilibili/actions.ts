@@ -1,5 +1,3 @@
-"use server"
-
 import { api } from "../api/api.js"
 import type { IApiResult } from "../api/schema.js"
 import { logger } from "../log/index.js"

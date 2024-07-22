@@ -1,9 +1,9 @@
 "use client"
 
-import { useEnvironments } from "@cs-magic/common"
-import JoinComponents from "@cs-magic/common"
-import { SeparatorContainer } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { useEnvironments } from "@cs-magic/hooks"
+import { JoinComponents } from "@cs-magic/ui"
+import { SeparatorContainer } from "@cs-magic/ui"
+import { Label } from "@cs-magic/ui"
 import { AuthSmsSignIn } from "./auth-sms-sign-in"
 import { AuthWechatSignIn } from "./auth-wechat-sign-in"
 import { BrandingTitle } from "./branding-title"

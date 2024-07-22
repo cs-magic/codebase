@@ -1,6 +1,6 @@
 "use client"
 
-import { smsStageAtom, userPhoneAtom } from "@cs-magic/auth/providers/sms/store"
+import { smsStageAtom, userPhoneAtom } from "@cs-magic/store"
 import { useAtom, useSetAtom } from "jotai"
 import { EditIcon } from "lucide-react"
 

@@ -1,4 +1,5 @@
-import { InputWithEnter } from "@cs-magic/common"
+import { useDraftSession } from "@cs-magic/hooks"
+import { InputWithEnter } from "@cs-magic/ui"
 
 export const UserInputName = ({
   onEnter,

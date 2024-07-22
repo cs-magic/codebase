@@ -1,3 +1,5 @@
+"use client"
+
 import { Atom, PrimitiveAtom, useAtom } from "jotai"
 import React from "react"
 import { LabelLine } from "./label-line.js"

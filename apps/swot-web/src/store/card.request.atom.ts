@@ -1,8 +1,8 @@
-import { RequestApproachType } from "@cs-magic/swot-core/schema/card"
-import { RequestOptions } from "@cs-magic/swot-core/schema/request"
+import { RequestApproachType } from "@cs-magic/swot-core"
+import { RequestOptions } from "@cs-magic/swot-core"
 import { atom, PrimitiveAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { BackendType } from "@cs-magic/llm/schema/llm.base"
+import { BackendType } from "@cs-magic/llm"
 
 export const cardFetchWithCacheAtom = atomWithStorage(
   "card.fetch.with-cache",

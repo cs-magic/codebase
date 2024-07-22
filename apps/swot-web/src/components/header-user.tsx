@@ -1,6 +1,6 @@
 "use client"
 
-import { IconContainer } from "@cs-magic/common"
+import { IconContainer } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
 import { useSession } from "next-auth/react"
 import Link from "next/link"

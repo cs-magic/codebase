@@ -20,7 +20,7 @@ import {
  * 1. https://github.com/nextauthjs/next-auth/issues/5937
  * 2. node_modules/next-auth/providers/facebook.ts
  */
-export default function WechatProvider<P extends IWechatAdaptedProfile>(
+export function WechatProvider<P extends IWechatAdaptedProfile>(
   options: OAuthUserConfig<P>,
 ): OAuthConfig<P> {
   // @ts-ignore

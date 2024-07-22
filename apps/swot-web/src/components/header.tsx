@@ -1,14 +1,14 @@
 "use client"
 
-import { IconContainer } from "@cs-magic/common"
+import { IconContainer } from "@cs-magic/ui"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@cs-magic/common"
-import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/common"
+} from "@cs-magic/ui"
+import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
 import { MenuIcon } from "lucide-react"
 import Link from "next/link"

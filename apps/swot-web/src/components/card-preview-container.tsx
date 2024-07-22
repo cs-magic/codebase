@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  Action2Type,
-  GenCardApproach,
-  ICardPreview,
-} from "@cs-magic/swot-core/schema/card"
+import { Action2Type, GenCardApproach, ICardPreview } from "@cs-magic/swot-core"
 import { cardRenderedAtom } from "../store/card.rendered.atom"
 import { useAtom, useAtomValue } from "jotai"
 import { cardUserAtom } from "../store/card.user.atom"

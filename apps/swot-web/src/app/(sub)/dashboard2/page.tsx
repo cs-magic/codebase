@@ -1,12 +1,12 @@
 "use client"
 
-import { env } from "../../../../../../packages/env/src"
-import { useInit } from "@cs-magic/common"
+import { env } from "@cs-magic/env"
+import { useInit } from "@cs-magic/hooks"
 import { socketStatusMap } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { IWechatPreference } from "@cs-magic/swot-bot/schema/bot.preference"
-import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema/bot.utils"
+import { IWechatPreference } from "@cs-magic/swot-bot-core"
+import { IWechatBotTransfer } from "@cs-magic/swot-bot-core"
+import { FlexContainer } from "@cs-magic/ui"
+import { LabelLine } from "@cs-magic/ui"
 import { useState } from "react"
 import DDS_lanhupage_0 from "./comp"
 

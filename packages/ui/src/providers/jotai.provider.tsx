@@ -1,5 +1,4 @@
 "use client"
-
 /**
  * ref: https://jotai.org/
  */
@@ -7,7 +6,7 @@
 import { Provider } from "jotai"
 import React, { PropsWithChildren } from "react"
 
-export default function JotaiProvider({ children }: PropsWithChildren) {
+export function JotaiProvider({ children }: PropsWithChildren) {
   // useAtomsDevtools("Jotai!")
 
   return (

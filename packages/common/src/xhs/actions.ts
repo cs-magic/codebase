@@ -1,5 +1,3 @@
-"use server"
-
 import { api } from "../api/api.js"
 import { parseJs } from "../utils/parse-js.js"
 import type { IXiaoHongShuNotePageData } from "./schema.js"

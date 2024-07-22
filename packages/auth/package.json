@@ -3,6 +3,11 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "main": "./dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./server": "./dist/src/server.js",
+    "./server-actions": "./dist/src/server-actions.js"
+  },
   "scripts": {
     "build": "rm -rf dist && tsc -b",
     "postinstall": "yarn build"

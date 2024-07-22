@@ -48,6 +48,9 @@ const config = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i
 
+    // ref: https://stackoverflow.com/a/70573610/9422455
+    config.experiments.asyncWebAssembly = true
+
     return config
   },
 
@@ -64,7 +67,6 @@ const config = {
 
   // ref: https://jotai.org/docs/tools/devtools#next-js-setup
   transpilePackages: ["jotai-devtools"],
-  experimental: {},
 
   // ref: https://nextjs.org/docs/app/building-your-application/routing/redirecting#redirects-in-nextconfigjs
   async redirects() {

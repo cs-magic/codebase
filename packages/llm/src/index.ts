@@ -1,6 +1,5 @@
 export * from "./@deprecated/providers/llm-sse/schema.js"
 export * from "./@deprecated/providers/llm-sse/utils.js"
-export * from "./@deprecated/providers/llm-sse/provider-redis.js"
 export * from "./@deprecated/providers/llm-sse/provider-static.js"
 export * from "./@deprecated/providers/llm-pusher/schema.js"
 export * from "./schema/llm.api.js"

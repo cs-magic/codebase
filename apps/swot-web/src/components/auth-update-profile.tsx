@@ -1,11 +1,8 @@
 "use client"
 
-import { userImageAtom, userNameAtom } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { userImageAtom, userNameAtom } from "@cs-magic/store"
+import { Button, Label } from "@cs-magic/ui"
 import { useAtom } from "jotai"
-import { signOut } from "next-auth/react"
-import { toast } from "sonner"
 import { UserInputAvatar } from "./user-input-avatar"
 import { UserInputName } from "./user-input-name"
 

@@ -1,6 +1,7 @@
+import { SMS_PROVIDER_ID } from "@cs-magic/common"
 import { prisma } from "@cs-magic/os"
 import Credentials from "next-auth/providers/credentials"
-import { SMS_PROVIDER_ID } from "./const.js" // // sb tsx 需要用 default
+// // sb tsx 需要用 default
 
 // // sb tsx 需要用 default
 // import CredentialsModule from "next-auth/providers/credentials"

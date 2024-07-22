@@ -8,7 +8,7 @@ import { tokenExpireSeconds } from "./config.js"
 
 import { ProfileUpdateProvider } from "./providers/profile/provider.js"
 import { SmsProvider } from "./providers/sms/provider.js"
-import WechatProvider from "./providers/wechat/provider.js"
+import { WechatProvider } from "./providers/wechat/provider.js"
 import { IWechatProfile } from "./providers/wechat/schema.js"
 
 const env = getEnv()

@@ -1,13 +1,8 @@
-"use client"
-
-import { uiLoadingAlertDialogAtom } from "@cs-magic/store"
-import { useAtom, useSetAtom } from "jotai"
-import { useSession } from "next-auth/react"
-import { useEffect } from "react"
-import { toast } from "sonner"
-import { $sendSms } from "../server/actions.js"
-import { $sendSmsViaAli } from "../server/providers/ali.js"
-import { $sendSmsViaTencent } from "../server/providers/tencent.js"
+import {
+  $sendSms,
+  $sendSmsViaAli,
+  $sendSmsViaTencent,
+} from "@cs-magic/auth/server-actions"
 import {
   smsCodeCurCountdownSecondsAtom,
   smsCodeExpireSecondsAtom,
@@ -16,7 +11,12 @@ import {
   smsProviderTypeAtom,
   smsSendCodePayloadAtom,
   smsStageAtom,
-} from "../store.js"
+  uiLoadingAlertDialogAtom,
+} from "@cs-magic/store"
+import { useAtom, useSetAtom } from "jotai"
+import { useSession } from "next-auth/react"
+import { useEffect } from "react"
+import { toast } from "sonner"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)

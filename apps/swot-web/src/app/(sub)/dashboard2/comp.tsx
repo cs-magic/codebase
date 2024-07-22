@@ -2,12 +2,13 @@
 
 import React, { Component } from "react"
 
-import "./common"
+import "./common.css"
 import "./index.responsive.css"
 
 class DDS_lanhupage_0 extends Component {
-  state = {}
-  render() {
+  override state = {}
+
+  override render() {
     return (
       <div className="page flex-col">
         <div className="section_8 flex-row">

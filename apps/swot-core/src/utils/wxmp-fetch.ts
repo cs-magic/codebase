@@ -1,3 +1,5 @@
+"use server"
+
 import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
 import { prisma } from "@cs-magic/os"
 import { FetchWxmpArticleRes, md2summary } from "@cs-magic/wechat"

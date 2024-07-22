@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.node.json",
+  "extends": "../../tsconfig.dom.json",
   "compilerOptions": {
     "jsx": "preserve",
     "plugins": [
@@ -50,6 +50,12 @@
     },
     {
       "path": "../../packages/wechat"
+    },
+    {
+      "path": "../../packages/ui"
+    },
+    {
+      "path": "../../packages/hooks"
     },
     {
       "path": "../swot-core"

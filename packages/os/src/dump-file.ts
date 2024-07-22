@@ -1,3 +1,5 @@
+"use server"
+
 import { formatAction } from "@cs-magic/common"
 import fs from "fs"
 import path from "path"

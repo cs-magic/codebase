@@ -1,4 +1,4 @@
-import { tvFullScreenAtom, tvScreenOnAtom } from "@cs-magic/common"
+import { tvFullScreenAtom, tvScreenOnAtom } from "@cs-magic/store"
 import { useSetAtom } from "jotai"
 
 export const Controls = () => {

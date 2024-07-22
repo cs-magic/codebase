@@ -1,5 +1,3 @@
-"use client"
-
 import { cn } from "@cs-magic/common"
 import React, { HTMLAttributes, LegacyRef } from "react"
 import Markdown, { ExtraProps } from "react-markdown"

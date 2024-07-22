@@ -15,6 +15,7 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/hooks": "workspace:^",
-    "@cs-magic/store": "workspace:^"
+    "@cs-magic/store": "workspace:^",
+    "next-themes": "^0.3.0"
   }
 }

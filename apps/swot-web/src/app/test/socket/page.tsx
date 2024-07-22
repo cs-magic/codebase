@@ -1,10 +1,10 @@
 "use client"
 
-import { usePusherClient } from "@cs-magic/common"
+import { usePusherClient } from "@cs-magic/hooks"
 import { PusherServerId } from "@cs-magic/common"
-import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
-import { Button } from "@cs-magic/common"
+import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/store"
+import { FlexContainer } from "@cs-magic/ui"
+import { Button } from "@cs-magic/ui"
 import {
   Select,
   SelectContent,
@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common"
+} from "@cs-magic/ui"
 import { useAtom, useSetAtom } from "jotai"
 import { useEffect } from "react"
 

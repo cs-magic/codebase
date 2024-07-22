@@ -1,21 +1,21 @@
 "use client"
 
-import { SmsProviderType } from "@cs-magic/auth/providers/sms/schema"
+import { SmsProviderType } from "@cs-magic/common"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "@cs-magic/auth/providers/sms/store"
-import { Input } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+} from "@cs-magic/store"
 import {
+  Input,
+  Label,
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/common"
-import { StandardCard } from "@cs-magic/common"
+  StandardCard,
+} from "@cs-magic/ui"
 import { useAtom } from "jotai"
 
 export const ConfigSMSCard = () => {

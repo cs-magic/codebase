@@ -1,4 +1,4 @@
-import { getEnv } from "../../../../packages/env/src"
+import { getEnv } from "@cs-magic/env"
 
 import {
   createTRPCProxyClient,

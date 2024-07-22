@@ -1,6 +1,6 @@
 import { IUserSummary } from "@cs-magic/common"
-import { VerticalAspectRatio } from "@cs-magic/common"
-import { Avatar, AvatarFallback, AvatarImage } from "@cs-magic/common"
+import { VerticalAspectRatio } from "@cs-magic/ui"
+import { Avatar, AvatarFallback, AvatarImage } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
 import { upgradeUrl } from "@cs-magic/common"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"

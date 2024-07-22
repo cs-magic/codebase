@@ -1,5 +1,5 @@
 export * from "./client/init.js"
-export * from "./server/actions.js"
-export * from "./server/init.js"
+export { pusherSend } from "./server/actions.js"
+export { initPusherServer } from "./server/init.js"
 export * from "./config.js"
 export * from "./schema.js"

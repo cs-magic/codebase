@@ -1,6 +1,7 @@
 import { uploadFile } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { Label } from "@cs-magic/ui"
 import { UserAvatar } from "./user-avatar"
+import { useDraftSession } from "@cs-magic/hooks"
 
 export const UserInputAvatar = () => {
   const { draft, setDraft } = useDraftSession("image")

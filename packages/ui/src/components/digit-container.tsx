@@ -1,3 +1,5 @@
+"use client"
+
 import React, { ComponentProps, useEffect, useRef } from "react"
 
 import { cn, SMS_DIGIT_SIZE } from "@cs-magic/common"

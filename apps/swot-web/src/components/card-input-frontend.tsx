@@ -1,11 +1,13 @@
-import { AtomSelector, AtomSwitcher } from "@cs-magic/common"
-import { LabelLine } from "@cs-magic/common"
-import { Input } from "@cs-magic/common"
-import { Separator } from "@cs-magic/common"
-import { mapSpacingVerticalAtom } from "@cs-magic/common"
-import { backendTypeSchema } from "@cs-magic/llm/schema/llm.base"
-import { llmModelTypeSchema } from "@cs-magic/llm/schema/llm.models"
-import { PrimitiveAtom, useAtom } from "jotai"
+import { backendTypeSchema, llmModelTypeSchema } from "@cs-magic/llm"
+import { mapSpacingVerticalAtom } from "@cs-magic/store"
+import {
+  AtomSelector,
+  AtomSwitcher,
+  Input,
+  LabelLine,
+  Separator,
+} from "@cs-magic/ui"
+import { useAtom } from "jotai"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import {
   cardFetchCommentsEnabledAtom,

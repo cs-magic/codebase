@@ -1,7 +1,7 @@
 "use client"
 
-import { ButtonLink } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/ui"
+import { ButtonLink } from "@cs-magic/ui"
 
 export default function TestPage() {
   return (

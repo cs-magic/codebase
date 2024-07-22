@@ -1,7 +1,7 @@
 "use client"
 
-import { FlexContainer } from "@cs-magic/common"
-import { Label } from "@cs-magic/common"
+import { FlexContainer } from "@cs-magic/ui"
+import { Label } from "@cs-magic/ui"
 import {
   Text2ImageAppSVG,
   Text2TextAppSVG,

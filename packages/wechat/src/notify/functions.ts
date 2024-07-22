@@ -1,5 +1,3 @@
-"use server"
-
 import { api } from "@cs-magic/common"
 import { getEnv } from "@cs-magic/env"
 import { sha1 } from "js-sha1"
