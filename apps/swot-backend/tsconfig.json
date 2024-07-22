@@ -10,6 +10,7 @@
   "references": [
     {"path": "../../packages/common"},
     {"path": "../../packages/llm"},
-    {"path": "../swot-bot"}
+    {"path": "../../packages/spider"},
+    {"path": "../swot-bot"},
   ]
 }
