@@ -1,5 +1,5 @@
 import { ILlmMessage, logger, SEPARATOR_LINE } from "@cs-magic/common"
-import { safeCallLLM, trimMessages } from "@cs-magic/llm"
+import { safeCallLLM, trimMessages } from "@cs-magic/llm/server"
 
 import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
 

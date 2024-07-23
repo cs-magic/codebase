@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { safeCallLLM } from "@cs-magic/llm"
+import { safeCallLLM } from "@cs-magic/llm/server"
 import last from "lodash/last.js"
 import { types } from "wechaty"
 import yargsParser from "yargs-parser"
