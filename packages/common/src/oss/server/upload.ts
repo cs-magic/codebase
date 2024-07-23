@@ -1,6 +1,6 @@
-import { api } from "../api/api.js"
-import type { IApiResult } from "../api/schema.js"
-import { getOssSignatureUrl } from "./server/actions.js"
+import { api } from "../../api/api.js"
+import type { IApiResult } from "../../api/schema.js"
+import { getOssSignatureUrl } from "./actions.js"
 
 export const uploadFile = async (file: File): Promise<IApiResult<string>> => {
   try {

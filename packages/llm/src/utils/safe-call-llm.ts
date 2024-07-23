@@ -19,7 +19,7 @@ import { callLlm } from "./call-llm.js"
 import { formatLlmMessage } from "./format-llm-message.js"
 import { model2provider } from "./model2provider.js"
 
-logEnv("api_key")
+// logEnv("api_key")
 
 /**
  * todo: 集中队列

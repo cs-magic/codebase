@@ -7,7 +7,7 @@ import { cardUserAtom } from "../store/card.user.atom"
 
 import { CardAction2 } from "./card-action2"
 import { CardPreview } from "./card-preview"
-import { useRef } from "react"
+import { Suspense, useRef } from "react"
 
 export const CardPreviewContainer = ({
   preview,

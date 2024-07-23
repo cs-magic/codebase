@@ -1,3 +1,5 @@
+"use server"
+
 import { getEnv } from "@cs-magic/env"
 import OSS from "ali-oss"
 import { OSS_BUCKET_NAME, OSS_REGION } from "../const.js"
