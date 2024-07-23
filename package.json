@@ -24,7 +24,8 @@
     }
   },
   "resolutions": {
-    "jimp": "0.22.12"
+    "jimp": "0.22.12",
+    "electron": "31.2.0"
   },
   "dependencies": {
     "next": "^14.2.5"
