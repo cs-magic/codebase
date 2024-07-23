@@ -58,6 +58,8 @@ export class CardSimulator extends BaseSimulator {
     logger.debug("-- generating")
     await this.page.waitForSelector("#upload-card:not([disabled])") // 可能要很长（涉及到LLM）
 
+    await sleep(3e3) // 强制再等一会，todo: robust state change detection
+
     logger.debug("-- clicking upload button")
     await this.page.locator("#upload-card").click()
 

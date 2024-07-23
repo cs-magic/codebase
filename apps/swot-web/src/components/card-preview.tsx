@@ -17,6 +17,10 @@ import { Tags } from "./card-content-tags"
 import MarkMap from "./markmap"
 import { UserAvatar } from "./user-avatar"
 
+/**
+ * null optional nullish
+ */
+
 export const CardPreview = forwardRef<
   HTMLDivElement,
   {
