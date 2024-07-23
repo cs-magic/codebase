@@ -12,7 +12,7 @@ import React from "react"
 
 import { cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
-// import { CardInputBackend } from "./card-input-backend"
+import { CardInputBackend } from "./card-input-backend"
 import { CardInputFrontend } from "./card-input-frontend"
 import { CardPreviewContainer } from "./card-preview-container"
 
@@ -20,8 +20,8 @@ export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)
   const renderType = useSearchParam<GenCardApproach>("renderType") ?? "frontend"
 
-  // const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend
-  const Input = CardInputFrontend
+  const Input = renderType === "backend" ? CardInputBackend : CardInputFrontend
+  // const Input = CardInputFrontend
 
   console.log({ preview })
 
