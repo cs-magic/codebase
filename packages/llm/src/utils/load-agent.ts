@@ -9,7 +9,7 @@ import type { AgentType } from "./safe-call-agent.js"
 
 export const loadAgent = async (agentType: AgentType) => {
   const yamlConfig = await fs.promises.readFile(
-    path.join(`../config/${agentType}.agent.yml`),
+    path.join(__dirname, `../config/${agentType}.agent.yml`),
     { encoding: "utf-8" },
   )
   // how can I use some library to ensure the AgentConfig is consistent with the interface
