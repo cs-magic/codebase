@@ -8,7 +8,7 @@
     "./server": "./dist/src/server.js"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -b",
+    "build": "rm -rf dist && tsc -b && copyfiles src/config/*.yml dist",
     "postinstall": "yarn build"
   },
   "dependencies": {
