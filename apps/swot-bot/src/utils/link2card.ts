@@ -24,6 +24,8 @@ export const link2card = async ({
 
   version?: "v1" | "v2"
 }) => {
+  logger.info(`[link2card] url=${url}, user.name=${user.name}`)
+
   switch (version) {
     case "v1": {
       // todo: add userIdentity into parser
@@ -58,6 +60,7 @@ export const link2card = async ({
       const download = await downloadPromise
       // Wait for the download process to complete and save the downloaded file somewhere.
       const fp = ".generated/" + download.suggestedFilename()
+      logger.info(`[link2card] fp=${fp}`)
       await download.saveAs(fp)
 
       await page.close()
