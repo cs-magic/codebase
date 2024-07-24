@@ -1120,10 +1120,8 @@ export default class WechatCore {
     return Promise.resolve()
       .then(() => {
         let url = this.CONF.origin + HeadImgUrl
-        console.log(
-          `getting head image from url: ${url}, with cookie:\n`,
-          this.COOKIE,
-        )
+        // web 版拿头像需要 cookie
+        // console.log(`getting head image from url: ${url}, with cookie:\n`, this.COOKIE,)
 
         return this.request({
           method: "GET",
