@@ -14,7 +14,7 @@ export type IUserSummary = Prisma.UserGetPayload<typeof userSummarySchema> & {
 
 export type IUserSummaryFilled = {
   name: string
-  image: string
+  image?: string
 }
 
 export const convertUserSummary = (

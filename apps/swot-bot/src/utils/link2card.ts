@@ -50,7 +50,7 @@ export const link2card = async ({
 
       await page.locator("#card-input-url").fill(url)
       await page.locator("#card-user-name").fill(user.name)
-      await page.locator("#card-user-avatar").fill(user.image)
+      if (user.image) await page.locator("#card-user-avatar").fill(user.image)
 
       await page.locator("#generate-card").click()
 

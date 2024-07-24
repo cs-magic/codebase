@@ -79,21 +79,22 @@ export class BasePlugin {
 
   async getTalkingUser(): Promise<IUserSummaryFilled> {
     const sender = this.message.talker()
-    const image =
-      this.bot.context?.puppet.type === "padlocal"
-        ? sender.payload!.avatar
-        : await (await sender.avatar()).toDataURL()
-
-    // DataURL formatted image 很长，避免打印 or truncate
-    // logger.debug(`fetching talking User(image=${formatString(image, 20)})`)
-
-    // puppet-web有问题，拿不到avatar
-    // if (!image) throw new Error("talking user has no avatar")
-
-    return {
+    const user: IUserSummaryFilled = {
       name: sender.name(),
-      image: image,
+      image: undefined,
     }
+
+    if (this.bot.context?.puppet.type === "padlocal") {
+      user.image = sender.payload!.avatar
+    } else {
+      const avatar = await sender.avatar()
+      // 有可能拿不到 avatar
+      if (avatar) {
+        user.image = await avatar.toDataURL()
+      }
+    }
+
+    return user
   }
 
   async getUserIdentity() {
