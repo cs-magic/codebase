@@ -13,6 +13,33 @@ import { updateOssUrl } from "../utils/update-oss-url.action"
 import { CardAction } from "./card-action"
 import { uploadFile } from "@cs-magic/common"
 
+const handleDownload = ({
+  blob,
+  fileName = `${Date.now()}.jpg`,
+}: {
+  blob: Blob
+  fileName?: string
+}) => {
+  // 创建一个URL
+  const url = window.URL.createObjectURL(blob)
+
+  // 创建一个隐藏的<a>元素
+  const a = document.createElement("a")
+  a.style.display = "none"
+  a.href = url
+  a.download = fileName
+
+  // 将<a>元素添加到DOM并触发点击事件
+  document.body.appendChild(a)
+  a.click()
+
+  // 清理
+  window.URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+
+  return fileName
+}
+
 export const CardAction2 = ({
   type,
   obj,
@@ -52,7 +79,10 @@ export const CardAction2 = ({
                 resolve(data)
               })
             })
-    if (!blob) return
+    if (!blob) {
+      console.error(`no blob`)
+      return
+    }
 
     switch (type) {
       case "copy":
@@ -64,12 +94,14 @@ export const CardAction2 = ({
         toast.success("copied image to clipboard")
         break
 
-      //   case "download":
-      //     const fp = `${card.platformType}_${card.platformId}.png`
-      //     download(blob, fp)
-      //     toast.success(`downloaded at ${fp}`, { closeButton: true, duration: 0 })
-      //     break
-      //
+      case "download":
+        const fileName = handleDownload({
+          blob,
+          // fileName // todo: name
+        })
+        toast.success(`downloaded at ${fileName}`, { closeButton: true })
+        break
+
       case "upload":
         if (!oss) return
         const file = new File([blob], oss.key, {
