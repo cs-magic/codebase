@@ -8,7 +8,7 @@
     "dev": "cp ../../.env* . && next dev -p 40326 | pino-pretty",
     "build": "cp ../../.env* . && next build",
     "start": "next start -p 40326",
-    "cicd": "yarn && DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
+    "cicd": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
     "test": "jest",
     "test:watch": "jest --watch",
     "start-api-service": "yarn workspace @cs-magic/api dev"
