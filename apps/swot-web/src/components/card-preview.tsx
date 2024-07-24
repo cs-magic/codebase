@@ -177,9 +177,8 @@ export const CardPreview = forwardRef<
             imageProps={{
               onLoad: () => {
                 // 如果不加这个限制的话，可能在没有数据时置true
-                if (preview?.inner?.author) {
-                  setCardAuthorAvatarRendered(true)
-                }
+                // if (preview?.inner?.author)
+                setCardAuthorAvatarRendered(true)
               },
               // onChange 有时候是不够的，比如是hidden状态，导致直接跳过
               onChange: () => setCardAuthorAvatarRendered(false),

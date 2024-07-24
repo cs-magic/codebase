@@ -11,7 +11,7 @@ import { RefObject } from "react"
 import { toast } from "sonner"
 import { updateOssUrl } from "../utils/update-oss-url.action"
 import { CardAction } from "./card-action"
-import { uploadFile } from "@cs-magic/common/server"
+import { uploadFile } from "@cs-magic/common"
 
 export const CardAction2 = ({
   type,

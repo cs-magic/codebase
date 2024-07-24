@@ -66,7 +66,8 @@ const config = {
 
   // ref: https://nextjs.org/docs/api-reference/next/image#remote-patterns
   images: {
-    unoptimized: true,
+    // 如果不优化的话，图片无法导出，会有cors问题
+    // unoptimized: true,
 
     remotePatterns: [
       // ref:https://stackoverflow.com/a/73951135/9422455

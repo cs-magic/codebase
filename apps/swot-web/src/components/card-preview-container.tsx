@@ -34,7 +34,7 @@ export const CardPreviewContainer = ({
         <div className={"flex gap-2"}>
           <Action type={"copy"} />
           <Action type={"download"} />
-          {genCardApproach === "backend" && <Action type={"upload"} />}
+          <Action type={"upload"} />
         </div>
       )}
 
