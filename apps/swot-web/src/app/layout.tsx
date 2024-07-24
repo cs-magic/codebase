@@ -12,9 +12,10 @@ import { type Viewport } from "next"
 import { Inter } from "next/font/google"
 import { Dev } from "../components/dev"
 import GlobalHooksProviders from "../providers/global.provider"
-import "../styles/globals.css"
 import { TRPCReactProvider } from "../trpc/react"
 import { Suspense } from "react"
+
+import "../styles/globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
