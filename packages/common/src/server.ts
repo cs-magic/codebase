@@ -1,2 +1,6 @@
-export * from "./oss/server/upload.js"
+export {
+  getOssSignatureUrl,
+  uploadFile,
+  checkOssObjectExists,
+} from "./oss/server/actions.js"
 export * from "./oss/server/config.js"

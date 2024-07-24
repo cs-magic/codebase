@@ -4,6 +4,8 @@
  */
 // await import("@/env.mjs")
 
+import webpack from "webpack"
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: false,
@@ -50,6 +52,14 @@ const config = {
 
     // ref: https://stackoverflow.com/a/70573610/9422455
     config.experiments.asyncWebAssembly = true
+
+    // ref:
+    config.plugins.push(
+      new webpack.ContextReplacementPlugin(
+        /any-promise/,
+        /node_modules\/any-promise\/register\.js$/,
+      ),
+    )
 
     return config
   },

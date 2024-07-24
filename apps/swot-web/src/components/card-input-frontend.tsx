@@ -6,8 +6,9 @@ import {
   Input,
   LabelLine,
   Separator,
+  Switch,
 } from "@cs-magic/ui"
-import { useAtom } from "jotai"
+import { PrimitiveAtom, useAtom } from "jotai"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import {
   cardFetchCommentsEnabledAtom,
