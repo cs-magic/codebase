@@ -30,7 +30,6 @@
   "dependencies": {
     "async-lock": "^1.4.1",
     "lodash-es": "^4.17.21",
-    "next": "^14.2.5",
     "proxy-agent": "^6.4.0"
   },
   "devDependencies": {
@@ -39,6 +38,7 @@
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.17.7",
     "@types/lodash-es": "^4",
+    "@types/webpack-bundle-analyzer": "^4",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "copyfiles": "^2.4.1",
@@ -47,6 +47,8 @@
     "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^7.16.1"
+    "typescript-eslint": "^7.16.1",
+    "webpack": "^5.93.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

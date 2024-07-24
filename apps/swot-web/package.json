@@ -10,8 +10,7 @@
     "start": "next start -p 40326 | pinp-pretty",
     "cicd": "DIST=.next-tmp && rm -rf $DIST && DIST=$DIST yarn build && rm -rf .next && mv $DIST .next && DIST=.next yarn start",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "start-api-service": "yarn workspace @cs-magic/api dev"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "2.0.24",
@@ -166,6 +165,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
+    "webpack": "^5.93.0",
     "wtfnode": "^0.9.1"
   },
   "ct3aMetadata": {
