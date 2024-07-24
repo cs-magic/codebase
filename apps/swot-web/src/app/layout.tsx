@@ -8,7 +8,7 @@ import {
   Toaster,
   TooltipProvider,
 } from "@cs-magic/ui"
-import { type Viewport } from "next"
+import { Metadata, type Viewport } from "next"
 import { Inter } from "next/font/google"
 import { Dev } from "../components/dev"
 import GlobalHooksProviders from "../providers/global.provider"
@@ -22,10 +22,13 @@ const inter = Inter({
   variable: "--font-sans",
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: config.website.title,
   description: config.website.title,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+
+  // 不加这个会导致微信公众号文章图片无法引用，ref: https://blog.csdn.net/qq_42961150/article/details/121833692#:~:text=%E8%AF%A6%E8%A7%A3%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87%E9%98%B2%E7%9B%97%E9%93%BE,%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%AE%A9%E6%88%91%E4%BB%AC...
+  referrer: "no-referrer",
 }
 
 // ref: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#use-viewport-export
