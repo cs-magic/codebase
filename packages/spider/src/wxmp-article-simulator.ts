@@ -5,7 +5,9 @@ import { BaseSimulator } from "./base-simulator.js"
  */
 export class WxmpArticleSimulator extends BaseSimulator {
   async crawl(url: string): Promise<string> {
-    const page = await this.initPageSafe()
+    const browser = await this.initBrowserSafe()
+
+    const page = await browser.newPage()
 
     console.log(`-- visiting: ${url}`)
     //  等待加载（包括跳转）完毕
@@ -22,6 +24,8 @@ export class WxmpArticleSimulator extends BaseSimulator {
 
     // 仅供测试环境
     // await dumpFile(content, `${Date.now()}.html`)
+
+    await page.close()
 
     return content
   }
