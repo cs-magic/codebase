@@ -42,6 +42,8 @@ export const safeHandle = async (
 }
 
 export const handleWechatyBot = (bot: Wechaty) => {
+  logger.info("-- handleWechatyBot")
+
   bot
     //////////////////////////////
     // basic

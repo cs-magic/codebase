@@ -9,10 +9,10 @@
     "./schema": "./dist/esm/src/schema/index.js"
   },
   "scripts": {
-    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
+    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts | pino-pretty",
     "build": "rm -rf dist && tsc -b",
     "build:cjs": "tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
-    "start": "node ./dist/src/main.js | pino-pretty",
+    "start": "node ./dist/esm/src/main.js | pino-pretty",
     "test": "jest",
     "postinstall": "yarn build"
   },

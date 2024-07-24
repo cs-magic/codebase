@@ -5,12 +5,11 @@ import {
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common"
 import { CardSimulator } from "@cs-magic/spider"
-import { wxmpUrl2preview } from "@cs-magic/swot-core"
-import { FileBox } from "file-box"
 import { z } from "zod"
 
 import { FeatureMap, FeatureType } from "../../../schema/index.js"
 import { getQuotedMessage, parseText } from "../../../utils/index.js"
+import { link2card } from "../../../utils/link2card.js"
 import { BasePlugin } from "./base.plugin.js"
 
 const commandTypeSchema = z.enum([""])
@@ -123,21 +122,8 @@ export class ParserPlugin extends BasePlugin {
         "parser",
       )
 
-      if (!ParserPlugin.uniParser) ParserPlugin.uniParser = new CardSimulator()
+      const file = await link2card({ url, user, convPreference })
 
-      // todo: add userIdentity into parser
-      const inner = await wxmpUrl2preview(
-        url,
-        convPreference.features.parser.options,
-      )
-
-      const { cardUrl } = await ParserPlugin.uniParser.genCard(
-        JSON.stringify(inner),
-        user,
-      )
-      logger.info(`-- sending file: ${cardUrl}`)
-
-      const file = FileBox.fromUrl(cardUrl)
       void this.reply(file)
       void this.notify(`✅ 解析成功: ${title}`, "parser")
       logger.info("-- sent file")

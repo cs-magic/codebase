@@ -29,7 +29,13 @@ export const createWechatyBot = () => {
   }) as Wechaty // 等会再更新其他扩展的信息
 
   // todo: is ready ok ?
-  handleWechatyBot(bot)
+  try {
+    handleWechatyBot(bot)
+  } catch (e) {
+    logger.error("-- handleWechatyBot error")
+    throw e
+  }
 
+  logger.info(`-- inited bot`)
   return bot
 }
