@@ -57,7 +57,7 @@ export const link2card = async ({
       // Wait for the download process to complete and save the downloaded file somewhere.
       const fp = ".generated/" + download.suggestedFilename()
       await download.saveAs(fp)
-      await page.close()
+      // await page.close() // todo: init page not close
       return FileBox.fromFile(fp)
     }
   }
