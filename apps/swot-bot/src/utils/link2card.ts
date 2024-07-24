@@ -39,7 +39,10 @@ export const link2card = async ({
     }
 
     case "v2": {
-      const page = await simulator.initPage()
+      const browser = await simulator.initBrowserSafe()
+      const page = await browser.newPage({
+        screen: { width: 1280, height: 720 },
+      })
 
       await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)
 
@@ -58,7 +61,8 @@ export const link2card = async ({
       await download.saveAs(fp)
 
       // await page.close() // todo: init page not close
-      await page.locator("#reset-card").click()
+      // await page.locator("#reset-card").click()
+      await page.close()
       return FileBox.fromFile(fp)
     }
   }

@@ -39,7 +39,7 @@ export class CardSimulator extends BaseSimulator {
     content: string,
     user: IUserSummaryFilled,
   ): Promise<{ cardUrl: string }> {
-    if (!this.page) await this.initPage()
+    if (!this.page) await this.initPageSafe()
     if (!this.page) throw new UnexpectedError()
 
     // logger.debug("-- inputting user if necessary: %o", user)
@@ -82,9 +82,9 @@ export class CardSimulator extends BaseSimulator {
     return { cardUrl }
   }
 
-  override async initPage() {
+  override async initPageSafe() {
     if (!this.page) {
-      this.page = await super.initPage()
+      this.page = await super.initPageSafe()
       const env = getEnv()
       const targetUrl = `${env?.NEXT_PUBLIC_APP_URL}/card/gen?renderType=backend`
       logger.info(`-- visiting: ${targetUrl}`)

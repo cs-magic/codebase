@@ -1,21 +1,15 @@
-import {
-  type Browser as PlaywrightBrowser,
-  type BrowserType,
-  chromium,
-  type LaunchOptions,
-} from "playwright"
-import { type Page as PlaywrightPage } from "playwright-core"
-import { type Page as PuppetPage } from "puppeteer"
-
 import { logger } from "@cs-magic/common"
+import { chromium } from "playwright"
+import type { Browser, BrowserType, LaunchOptions, Page } from "playwright-core"
 import { type DriverType } from "./schema.js"
+import AsyncLock from "async-lock"
 
-export type Page = PuppetPage & PlaywrightPage
+const lock = new AsyncLock()
 
 export class BaseSimulator {
   public launchOptions: LaunchOptions
   protected driver: BrowserType
-  protected browser: PlaywrightBrowser | null = null
+  protected browser: Browser | null = null
   protected page?: Page
 
   constructor(
@@ -38,21 +32,35 @@ export class BaseSimulator {
     process.exit()
   }
 
-  async initPage(): Promise<Page> {
-    if (!this.page) {
-      logger.info("-- opening browser")
-      this.browser = await this.driver.launch({
-        downloadsPath: "/tmp",
-        ...this.launchOptions,
-      })
+  async initBrowserSafe() {
+    await lock.acquire("browser", async () => {
+      if (!this.browser) {
+        logger.info("-- opening browser")
+        this.browser = await this.driver.launch({
+          downloadsPath: "/tmp",
+          ...this.launchOptions,
+        })
+      }
+    })
+    return this.browser!
+  }
 
-      this.page = (await this.browser.newPage({
-        screen: {
-          width: 1080,
-          height: 720,
-        },
-      })) as Page
-    }
-    return this.page
+  async initPageSafe(url?: string) {
+    await lock.acquire("page", async () => {
+      if (!this.page) {
+        logger.info("-- new page")
+        this.page = await this.browser!.newPage({
+          screen: {
+            width: 1080,
+            height: 720,
+          },
+        })
+        if (url) {
+          logger.info(`-- goto ${url}`)
+          await this.page.goto(url)
+        }
+      }
+    })
+    return this.page!
   }
 }
