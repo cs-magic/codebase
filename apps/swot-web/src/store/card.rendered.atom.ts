@@ -7,7 +7,8 @@ export const cardMindmapRenderedAtom = atom(true)
 export const cardMindmapHasContentAtom = atom(true)
 export const cardCoverRenderedAtom = atom(false)
 export const cardAuthorAvatarRenderedAtom = atom(false)
-export const cardUserAvatarRenderedAtom = atom(false)
+// since avatar is possibly empty, set true default, and load to be false, then true
+export const cardUserAvatarRenderedAtom = atom(true)
 
 export const cardRenderedAtom = atom((get) => {
   const cover = get(cardCoverRenderedAtom)

@@ -8,8 +8,8 @@ import React from "react"
 import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.user.atom"
 
 export const CardInputUser = () => {
-  const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [cardUserName, setCardUserName] = useAtom(cardUserNameAtom)
+  const [cardUserAvatar, setCardUserAvatar] = useAtom(cardUserAvatarAtom)
   const [, setCardUserAvatarRendered] = useAtom(cardUserAvatarRenderedAtom)
 
   return (

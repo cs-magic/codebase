@@ -78,10 +78,7 @@ export const CardPreview = forwardRef<
             user={user ?? null}
             imageProps={{
               onLoad: () => {
-                // 如果不加这个限制的话，可能在没有数据时置true (optional, since user input is independent)
-                if (user) {
-                  setCardUserAvatarRendered(true)
-                }
+                setCardUserAvatarRendered(true)
               },
               onChange: () => setCardUserAvatarRendered(false),
             }}

@@ -47,7 +47,11 @@ export const UserAvatar = ({
             {...omit(imageProps, ["src", "width", "height"])}
           />
           <AvatarFallback>
-            <UserIcon className={"h-full w-full"} />
+            {user?.name?.length ? (
+              user.name.slice(0, 2)
+            ) : (
+              <UserIcon className={"h-full w-full"} />
+            )}
           </AvatarFallback>
         </Avatar>
       </VerticalAspectRatio>
