@@ -49,7 +49,8 @@ export class BaseSimulator {
     await lock.acquire("page", async () => {
       if (!this.page) {
         logger.info("-- new page")
-        this.page = await this.browser!.newPage({
+        const browser = await this.initBrowserSafe()
+        this.page = await browser.newPage({
           screen: {
             width: 1080,
             height: 720,
