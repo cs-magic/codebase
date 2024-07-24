@@ -58,9 +58,7 @@ export const link2card = async ({
       await download.saveAs(fp)
 
       // await page.close() // todo: init page not close
-      await page.locator("#card-input-url").fill("")
-      await page.locator("#card-user-name").fill("")
-      await page.locator("#card-user-avatar").fill("")
+      await page.locator("#reset-card").click()
       return FileBox.fromFile(fp)
     }
   }
