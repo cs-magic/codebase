@@ -60,8 +60,6 @@ export const link2card = async ({
       const fp = ".generated/" + download.suggestedFilename()
       await download.saveAs(fp)
 
-      // await page.close() // todo: init page not close
-      // await page.locator("#reset-card").click()
       await page.close()
       return FileBox.fromFile(fp)
     }
