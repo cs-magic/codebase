@@ -5,16 +5,17 @@ import { atomWithStorage } from "jotai/utils"
 import { getOssKeyWithSuffix } from "../utils/get-oss-key-with-suffix"
 import { cardUserAtom } from "./card.user.atom"
 
-export const cardArticleUrlAtom = atomWithStorage("url.toParse", "")
+export const cardArticleUrlAtom = atom("")
+// atomWithStorage("url.toParse", "")
 
-export const cardInnerInputAtom = atomWithStorage("card.inner.input", "")
+export const cardInnerInputAtom = atom("")
+// atomWithStorage("card.inner.input", "")
 
-export const cardAuthorWithTitleAtom = atomWithStorage(
-  "card.author.with-title",
-  false,
-)
+export const cardAuthorWithTitleAtom = atom(false)
+// atomWithStorage("card.author.with-title", false,)
 
-export const cardNewContentAtom = atomWithStorage("card.new.content", "")
+export const cardNewContentAtom = atom("")
+// atomWithStorage("card.new.content", "")
 
 ///////////////////////////////
 // derived
