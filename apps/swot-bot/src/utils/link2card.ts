@@ -44,7 +44,6 @@ export const link2card = async ({
       await page.goto(`${env.NEXT_PUBLIC_APP_URL}/card/gen`)
 
       await page.locator("#card-input-url").fill(url)
-
       await page.locator("#card-user-name").fill(user.name)
       await page.locator("#card-user-avatar").fill(user.image)
 
@@ -57,7 +56,11 @@ export const link2card = async ({
       // Wait for the download process to complete and save the downloaded file somewhere.
       const fp = ".generated/" + download.suggestedFilename()
       await download.saveAs(fp)
+
       // await page.close() // todo: init page not close
+      await page.locator("#card-input-url").fill("")
+      await page.locator("#card-user-name").fill("")
+      await page.locator("#card-user-avatar").fill("")
       return FileBox.fromFile(fp)
     }
   }
