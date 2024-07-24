@@ -3,8 +3,10 @@
 import { env } from "@cs-magic/env"
 import { useInit } from "@cs-magic/hooks"
 import { socketStatusMap } from "@cs-magic/common"
-import { IWechatPreference } from "@cs-magic/swot-bot-core"
-import { IWechatBotTransfer } from "@cs-magic/swot-bot-core"
+import {
+  IWechatPreference,
+  IWechatBotTransfer,
+} from "@cs-magic/swot-bot/schema"
 import { FlexContainer } from "@cs-magic/ui"
 import { LabelLine } from "@cs-magic/ui"
 import { useState } from "react"

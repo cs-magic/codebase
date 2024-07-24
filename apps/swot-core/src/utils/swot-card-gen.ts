@@ -1,7 +1,6 @@
 import { IUserSummaryFilled } from "@cs-magic/common"
 import { env } from "@cs-magic/env"
 import { BaseSimulator } from "@cs-magic/spider"
-import * as url from "node:url"
 
 const simulator = new BaseSimulator("playwright", { headless: false })
 
@@ -27,7 +26,15 @@ export const genSwotCard = async ({
 
   await page.locator("#generate-card").click()
 
+  // Start waiting for download before clicking. Note no await.
+  const downloadPromise = page.waitForEvent("download")
   await page.locator("#download-card:not([disabled])").click()
+  const download = await downloadPromise
+  // Wait for the download process to complete and save the downloaded file somewhere.
+  await download.saveAs(
+    // "/Users/mark/Downloads/" +
+    download.suggestedFilename(),
+  )
 }
 
 void genSwotCard({

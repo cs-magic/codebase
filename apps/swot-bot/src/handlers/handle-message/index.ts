@@ -3,7 +3,7 @@ import {
   commandsSchema,
   type CommandType,
   ManagerType,
-} from "@cs-magic/swot-bot-core"
+} from "../../schema/index.js"
 import omit from "lodash/omit.js"
 import { type Message, types, type Wechaty } from "wechaty"
 

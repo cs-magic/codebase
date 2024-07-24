@@ -9,7 +9,7 @@ import { parseCommand, prisma } from "@cs-magic/os"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
 
-import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
+import { FeatureMap, FeatureType } from "../../../schema/index.js"
 import { BasePlugin } from "./base.plugin.js"
 import { TaskService } from "./task.service.js"
 

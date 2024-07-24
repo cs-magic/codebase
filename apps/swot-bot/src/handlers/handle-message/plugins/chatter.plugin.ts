@@ -1,7 +1,7 @@
 import { ILlmMessage, logger, SEPARATOR_LINE } from "@cs-magic/common"
 import { safeCallLLM, trimMessages } from "@cs-magic/llm/server"
 
-import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
+import { FeatureMap, FeatureType } from "../../../schema/index.js"
 
 import { types } from "wechaty"
 import { z } from "zod"

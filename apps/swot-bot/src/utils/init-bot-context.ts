@@ -5,7 +5,7 @@ import {
   LogLevel,
   SEPARATOR_LINE,
 } from "@cs-magic/common"
-import { BotData, IBotContext, QueueTask } from "@cs-magic/swot-bot-core"
+import { BotData, IBotContext, QueueTask } from "../schema/index.js"
 import { Wechaty } from "wechaty"
 import yaml from "js-yaml"
 

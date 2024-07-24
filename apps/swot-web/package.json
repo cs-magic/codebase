@@ -20,7 +20,6 @@
     "@cs-magic/auth": "workspace:^",
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
-    "@cs-magic/swot-bot-core": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
     "@emotion/react": "^11.11.4",

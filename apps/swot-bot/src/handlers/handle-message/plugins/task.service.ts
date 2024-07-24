@@ -6,7 +6,7 @@ import {
   taskDetailSchema,
 } from "@cs-magic/common"
 import { prisma } from "@cs-magic/os"
-import { Priority } from "@cs-magic/swot-bot-core"
+import { Priority } from "../../../schema/index.js"
 import chain from "lodash/chain.js"
 import omit from "lodash/omit.js"
 import sortBy from "lodash/sortBy.js"

@@ -9,7 +9,7 @@ import { wxmpUrl2preview } from "@cs-magic/swot-core"
 import { FileBox } from "file-box"
 import { z } from "zod"
 
-import { FeatureMap, FeatureType } from "@cs-magic/swot-bot-core"
+import { FeatureMap, FeatureType } from "../../../schema/index.js"
 import { getQuotedMessage, parseText } from "../../../utils/index.js"
 import { BasePlugin } from "./base.plugin.js"
 

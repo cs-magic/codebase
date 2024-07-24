@@ -2119,22 +2119,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-bot-core@workspace:^, @cs-magic/swot-bot-core@workspace:apps/swot-bot-core":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-bot-core@workspace:apps/swot-bot-core"
-  dependencies:
-    wechaty: "workspace:^"
-    wechaty-puppet: "workspace:^"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/swot-bot@workspace:^, @cs-magic/swot-bot@workspace:apps/swot-bot":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-bot@workspace:apps/swot-bot"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/swot-bot-core": "workspace:^"
     "@cs-magic/swot-core": "workspace:^"
     "@cs-magic/wechat": "workspace:^"
     "@types/node-schedule": "npm:^2.1.7"
@@ -2187,7 +2177,6 @@ __metadata:
     "@cs-magic/auth": "workspace:^"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/swot-bot-core": "workspace:^"
     "@cs-magic/swot-core": "workspace:^"
     "@cs-magic/wechat": "workspace:^"
     "@emotion/react": "npm:^11.11.4"

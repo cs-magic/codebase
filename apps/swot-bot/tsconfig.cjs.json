@@ -13,6 +13,5 @@
 //    {"path": "../../packages/wechaty-puppet-wechat4u"},
     {"path": "../../packages/wechat"},
 
-    {"path": "../swot-bot-core"}
   ]
 }

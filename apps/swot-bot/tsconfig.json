@@ -17,6 +17,5 @@
 //    {"path": "../../packages/wechaty"},
     {"path": "../../packages/wechat"},
 
-    {"path": "../swot-bot-core"},
   ]
 }

@@ -1,5 +1,5 @@
 import { formatError, logger, sleep } from "@cs-magic/common"
-import { QueueTask } from "@cs-magic/swot-bot-core"
+import { QueueTask } from "../schema/index.js"
 
 export class SenderQueue {
   static queue: QueueTask[]

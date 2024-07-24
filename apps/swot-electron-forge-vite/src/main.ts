@@ -5,7 +5,6 @@ import path from "path"
 // const backend = import("@cs-magic/swot-backend")
 // const { initServer } = await import("@cs-magic/swot-backend")
 // import { initServer } from "@cs-magic/swot-backend"
-// import core from "@cs-magic/swot-bot-core"
 // import { env } from "@cs-magic/env"
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

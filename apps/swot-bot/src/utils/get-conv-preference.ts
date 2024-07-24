@@ -1,4 +1,4 @@
-import { IWechatData, IWechatPreference } from "@cs-magic/swot-bot-core"
+import { IWechatData, IWechatPreference } from "../schema/index.js"
 import { getConvRow } from "./get-conv-row.js"
 import { getRobustData, getRobustPreference } from "./get-robust-preference.js"
 

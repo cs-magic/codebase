@@ -1,4 +1,4 @@
-import { IWechatBotScan } from "@cs-magic/swot-bot-core"
+import { IWechatBotScan } from "@cs-magic/swot-bot/schema"
 import { Wechaty } from "wechaty"
 import { WebSocket } from "ws"
 

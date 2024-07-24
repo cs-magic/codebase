@@ -14,7 +14,7 @@ import {
   botSocketOpenedAtom,
   botUserAtom,
   IWechatBotTransfer,
-} from "@cs-magic/swot-bot-core"
+} from "@cs-magic/swot-bot/schema"
 import { ButtonWithLoading } from "@cs-magic/ui"
 import { FlexContainer } from "@cs-magic/ui"
 import { LabelLine } from "@cs-magic/ui"

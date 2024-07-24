@@ -1,6 +1,6 @@
 import { llmModelTypeSchema } from "@cs-magic/llm"
 import { prisma } from "@cs-magic/os"
-import { FeatureMap } from "@cs-magic/swot-bot-core"
+import { FeatureMap } from "./../../../schema/index.js"
 import { FileBox } from "file-box"
 import { z } from "zod"
 

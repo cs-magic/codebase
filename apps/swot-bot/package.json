@@ -4,6 +4,10 @@
   "packageManager": "yarn@4.1.1",
   "type": "module",
   "main": "./dist/esm/src/index.js",
+  "exports": {
+    ".": "./dist/esm/src/index.js",
+    "./schema": "./dist/esm/src/schema/index.js"
+  },
   "scripts": {
     "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts",
     "build": "rm -rf dist && tsc -b",
@@ -15,7 +19,6 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
-    "@cs-magic/swot-bot-core": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
     "node-schedule": "^2.1.1",

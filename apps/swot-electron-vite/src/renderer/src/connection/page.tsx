@@ -14,7 +14,7 @@ import {
   botScanValueAtom,
   botUserAtom,
   ScanStatus
-} from '@cs-magic/swot-bot-core'
+} from '@cs-magic/swot-bot/schema'
 import { QRCodeSVG } from 'qrcode.react'
 
 import { CSVLink } from 'react-csv'
