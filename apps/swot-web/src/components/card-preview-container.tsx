@@ -5,7 +5,7 @@ import { cardRenderedAtom } from "../store/card.rendered.atom"
 import { useAtom, useAtomValue } from "jotai"
 import { cardUserAtom } from "../store/card.user.atom"
 
-import { CardAction2 } from "./card-action2"
+import { PreviewCardAction } from "./card-action-preview"
 import { CardPreview } from "./card-preview"
 import { Suspense, useRef } from "react"
 
@@ -25,7 +25,7 @@ export const CardPreviewContainer = ({
   // console.log("-- preview: ", { rendered })
 
   const Action = ({ type }: { type: Action2Type }) => (
-    <CardAction2 type={type} obj={obj} rendered={rendered} />
+    <PreviewCardAction type={type} obj={obj} rendered={rendered} />
   )
 
   return (

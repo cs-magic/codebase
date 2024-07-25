@@ -5,9 +5,9 @@ import { cardArticleUrlAtom, cardInnerInputAtom } from "../store/card.atom"
 import { cardGenOptionsAtom } from "../store/card.gen.atom"
 import { cardUserAvatarAtom, cardUserNameAtom } from "../store/card.user.atom"
 import { genCardFromUrl } from "../utils/gen-card"
-import { CardAction } from "./card-action"
+import { GeneralCardAction } from "./card-action-general"
 
-export const CardAction1 = ({ type }: { type: Action1Type }) => {
+export const InputCardAction = ({ type }: { type: Action1Type }) => {
   const [inputUrl] = useAtom(cardArticleUrlAtom)
   const [options] = useAtom(cardGenOptionsAtom)
   const setCardInnerInput = useSetAtom(cardInnerInputAtom)
@@ -31,5 +31,5 @@ export const CardAction1 = ({ type }: { type: Action1Type }) => {
     }
   }
 
-  return <CardAction action={action} type={type} />
+  return <GeneralCardAction action={action} type={type} />
 }

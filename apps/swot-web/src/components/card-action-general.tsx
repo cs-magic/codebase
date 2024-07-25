@@ -16,7 +16,7 @@ import {
 
 const tAtom = atom(false)
 
-export const CardAction = ({
+export const GeneralCardAction = ({
   disabled,
   type,
   action,

@@ -22,7 +22,7 @@ import {
   cardLlmModelTypeAtom,
   cardSummaryWithImageAtom,
 } from "../store/card.summary.atom"
-import { CardAction1 } from "./card-action1"
+import { InputCardAction } from "./card-action-input"
 import { CardInputUrl } from "./card-input-url"
 import { CardInputUser } from "./card-input-user"
 
@@ -97,8 +97,8 @@ export const CardInputFrontend = () => {
       <Separator orientation={"horizontal"} />
 
       <div className={"flex items-center gap-2"}>
-        <CardAction1 type={"generate"} />
-        <CardAction1 type={"reset"} />
+        <InputCardAction type={"generate"} />
+        <InputCardAction type={"reset"} />
       </div>
     </>
   )

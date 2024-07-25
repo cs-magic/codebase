@@ -6,11 +6,11 @@ import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import * as html2image from "html-to-image"
 import html2canvas from "html2canvas"
 import { useAtom } from "jotai"
-import { domToBlob } from "modern-screenshot"
+import { domToBlob, domToJpeg } from "modern-screenshot"
 import { RefObject } from "react"
 import { toast } from "sonner"
 import { updateOssUrl } from "../utils/update-oss-url.action"
-import { CardAction } from "./card-action"
+import { GeneralCardAction } from "./card-action-general"
 import { uploadFile } from "@cs-magic/common"
 
 const handleDownload = ({
@@ -40,7 +40,7 @@ const handleDownload = ({
   return fileName
 }
 
-export const CardAction2 = ({
+export const PreviewCardAction = ({
   type,
   obj,
   rendered,
@@ -53,38 +53,45 @@ export const CardAction2 = ({
   const [oss] = useAtom(cardOssAtom)
   const [engine] = useAtom(cardPreviewEngineAtom)
 
-  const action = async (type: ActionType) => {
-    console.log({ type, engine })
+  const action = async (actionType: ActionType) => {
+    console.log({ actionType, engine })
     if (!obj.current || !preview) return
+
+    const scale = 4
+    // quality 要配合 type 才有用，see: https://github.com/qq15725/modern-screenshot/blob/main/src/converts/dom-to-blob.ts
+    const type = "image/jpeg"
+    const quality = 0.5
+    const options = { type, quality, scale }
 
     const blob =
       engine === "modern-screenshot"
-        ? await domToBlob(obj.current, {
-            scale: 4,
-          })
+        ? await domToBlob(obj.current, { ...options })
         : engine === "html2image"
           ? await html2image.toBlob(obj.current, {
-              pixelRatio: 4 /* 这个因子非常重要，否则低端浏览器图片会很糊 */,
               backgroundColor: "transparent", // 好像没用。。。微信手机端还是有白色倒角。。
+              pixelRatio: options.scale,
+              ...options,
             })
           : await new Promise<Blob | null>(async (resolve, reject) => {
               if (!obj.current || !preview) return
 
-              const canvas = await html2canvas(obj.current, {
-                scale: 4,
-              })
+              const canvas = await html2canvas(obj.current, { ...options })
 
-              canvas.toBlob((data) => {
-                console.log("blobCallback: ", data)
-                resolve(data)
-              })
+              canvas.toBlob(
+                (data) => {
+                  console.log("blobCallback: ", data)
+                  resolve(data)
+                },
+                options.type,
+                options.quality,
+              )
             })
     if (!blob) {
       console.error(`no blob`)
       return
     }
 
-    switch (type) {
+    switch (actionType) {
       case "copy":
         await navigator.clipboard.write([
           new ClipboardItem({
@@ -116,5 +123,5 @@ export const CardAction2 = ({
     }
   }
 
-  return <CardAction action={action} type={type} disabled={!rendered} />
+  return <GeneralCardAction action={action} type={type} disabled={!rendered} />
 }
