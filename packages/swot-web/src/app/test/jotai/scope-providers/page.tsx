@@ -1,6 +1,6 @@
 "use client"
-import { FlexContainer } from "@cs-magic/ui"
-import { Label } from "@cs-magic/ui"
+import { FlexContainer } from "@cs-magic/react-ui"
+import { Label } from "@cs-magic/react-ui"
 import { Provider } from "jotai"
 import { ScopeProvider } from "jotai-scope"
 import { PlainContext } from "../plain-context"

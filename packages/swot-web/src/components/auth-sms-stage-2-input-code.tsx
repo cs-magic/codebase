@@ -5,8 +5,8 @@ import {
   smsCodeAtom,
   smsSignInPayloadAtom,
   uiLoadingAlertDialogAtom,
-} from "@cs-magic/ui"
-import { Label } from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
+import { Label } from "@cs-magic/react-ui"
 import { useHotkeys } from "@mantine/hooks"
 import { useAtom, useSetAtom } from "jotai"
 import { signIn } from "next-auth/react"

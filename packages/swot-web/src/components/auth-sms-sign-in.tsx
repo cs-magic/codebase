@@ -1,4 +1,4 @@
-import { smsStageAtom } from "@cs-magic/ui"
+import { smsStageAtom } from "@cs-magic/react-ui"
 import { UnexpectedError } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { AuthSmsStage2InputCode } from "./auth-sms-stage-2-input-code"

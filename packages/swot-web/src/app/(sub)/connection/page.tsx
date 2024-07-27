@@ -2,7 +2,7 @@
 
 import { logger } from "@cs-magic/common"
 import { env } from "@cs-magic/common"
-import { useInit, useUserIsAdmin } from "@cs-magic/hooks"
+import { useInit, useUserIsAdmin } from "@cs-magic/react-hooks"
 import { socketStatusMap } from "@cs-magic/common"
 import {
   botContactsAtom,
@@ -15,11 +15,11 @@ import {
   botUserAtom,
   IWechatBotTransfer,
 } from "@cs-magic/swot-bot/schema"
-import { ButtonWithLoading } from "@cs-magic/ui"
-import { FlexContainer } from "@cs-magic/ui"
-import { LabelLine } from "@cs-magic/ui"
-import { Button, buttonVariants } from "@cs-magic/ui"
-import { StandardCard } from "@cs-magic/ui"
+import { ButtonWithLoading } from "@cs-magic/react-ui"
+import { FlexContainer } from "@cs-magic/react-ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Button, buttonVariants } from "@cs-magic/react-ui"
+import { StandardCard } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
 
 import { useAtom } from "jotai"

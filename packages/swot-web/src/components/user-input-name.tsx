@@ -1,5 +1,5 @@
-import { useDraftSession } from "@cs-magic/hooks"
-import { InputWithEnter } from "@cs-magic/ui"
+import { useDraftSession } from "@cs-magic/react-hooks"
+import { InputWithEnter } from "@cs-magic/react-ui"
 
 export const UserInputName = ({
   onEnter,

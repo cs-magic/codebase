@@ -1,7 +1,7 @@
 import { uploadFile } from "@cs-magic/common/server"
-import { Label } from "@cs-magic/ui"
+import { Label } from "@cs-magic/react-ui"
 import { UserAvatar } from "./user-avatar"
-import { useDraftSession } from "@cs-magic/hooks"
+import { useDraftSession } from "@cs-magic/react-hooks"
 
 export const UserInputAvatar = () => {
   const { draft, setDraft } = useDraftSession("image")

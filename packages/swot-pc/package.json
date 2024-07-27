@@ -1,7 +1,7 @@
 {
-  "name": "swot-wechat-helper",
+  "name": "swot-pc",
   "version": "0.4.5",
-  "description": "SWOT Wechat Helper",
+  "description": "飞脑微信助手",
   "type": "module",
   "main": "./out/main/index.js",
   "author": "cs-magic.com",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/ui": "workspace:^",
+    "@cs-magic/react-ui": "workspace:^",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "electron-updater": "^6.1.7",

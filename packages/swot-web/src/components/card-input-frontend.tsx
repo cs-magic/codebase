@@ -1,5 +1,5 @@
 import { backendTypeSchema, llmModelTypeSchema } from "@cs-magic/llm"
-import { mapSpacingVerticalAtom } from "@cs-magic/ui"
+import { mapSpacingVerticalAtom } from "@cs-magic/react-ui"
 import {
   AtomSelector,
   AtomSwitcher,
@@ -7,7 +7,7 @@ import {
   LabelLine,
   Separator,
   Switch,
-} from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
 import { PrimitiveAtom, useAtom } from "jotai"
 import { cardAuthorWithTitleAtom } from "../store/card.atom"
 import {

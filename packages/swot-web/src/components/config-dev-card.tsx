@@ -1,7 +1,7 @@
-import { devEnabledAtom } from "@cs-magic/ui"
-import { LabelLine } from "@cs-magic/ui"
-import { Switch } from "@cs-magic/ui"
-import { StandardCard } from "@cs-magic/ui"
+import { devEnabledAtom } from "@cs-magic/react-ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Switch } from "@cs-magic/react-ui"
+import { StandardCard } from "@cs-magic/react-ui"
 import { useAtom } from "jotai"
 import { requestsSlideTextVisibleAtom } from "../store/ui.atom"
 

@@ -4,7 +4,7 @@ import { SmsProviderType } from "@cs-magic/common"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
 import {
   Input,
   Label,
@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
   StandardCard,
-} from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
 import { useAtom } from "jotai"
 
 export const ConfigSMSCard = () => {

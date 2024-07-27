@@ -1,6 +1,6 @@
 "use client"
 
-import { ButtonWithLoading } from "@cs-magic/ui"
+import { ButtonWithLoading } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
 import { ActionType } from "@cs-magic/swot-core"
 import { atom, PrimitiveAtom, useAtom } from "jotai"

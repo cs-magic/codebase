@@ -1,7 +1,7 @@
 'use client'
 
 import { socketStatusMap, cn, logger } from '@cs-magic/common'
-import { useInit } from '@cs-magic/hooks'
+import { useInit } from '@cs-magic/react-hooks'
 // import { useUserIsAdmin } from '@cs-magic/auth'
 
 import {
@@ -29,7 +29,7 @@ import {
   FlexContainer,
   LabelLine,
   StandardCard
-} from '@cs-magic/ui'
+} from '@cs-magic/react-ui'
 
 import { columns, DataTable } from './contacts.table.js'
 

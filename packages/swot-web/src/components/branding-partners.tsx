@@ -1,7 +1,7 @@
 import { config } from "@cs-magic/common"
-import { ImageEqualHeight } from "@cs-magic/ui"
-import { SeparatorContainer } from "@cs-magic/ui"
-import { Avatar, AvatarImage } from "@cs-magic/ui"
+import { ImageEqualHeight } from "@cs-magic/react-ui"
+import { SeparatorContainer } from "@cs-magic/react-ui"
+import { Avatar, AvatarImage } from "@cs-magic/react-ui"
 
 export const BrandingPartners = () => {
   const avatars = [config.website.avatar.mark, config.website.avatar.idoubi]

@@ -1,12 +1,12 @@
 "use client"
 
 import { cn } from "@cs-magic/common"
-import { useSearchParam } from "@cs-magic/hooks"
+import { useSearchParam } from "@cs-magic/react-hooks"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
 } from "@cs-magic/swot-core"
-import { AtomSelector, Separator, StandardCard } from "@cs-magic/ui"
+import { AtomSelector, Separator, StandardCard } from "@cs-magic/react-ui"
 import { useAtomValue } from "jotai"
 import React from "react"
 

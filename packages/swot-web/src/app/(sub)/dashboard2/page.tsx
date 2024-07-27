@@ -1,14 +1,14 @@
 "use client"
 
 import { env } from "@cs-magic/common"
-import { useInit } from "@cs-magic/hooks"
+import { useInit } from "@cs-magic/react-hooks"
 import { socketStatusMap } from "@cs-magic/common"
 import {
   IWechatPreference,
   IWechatBotTransfer,
 } from "@cs-magic/swot-bot/schema"
-import { FlexContainer } from "@cs-magic/ui"
-import { LabelLine } from "@cs-magic/ui"
+import { FlexContainer } from "@cs-magic/react-ui"
+import { LabelLine } from "@cs-magic/react-ui"
 import { useState } from "react"
 import DDS_lanhupage_0 from "./comp"
 

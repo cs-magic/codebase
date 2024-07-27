@@ -1,9 +1,9 @@
 "use client"
 
-import { useEnvironments } from "@cs-magic/hooks"
+import { useEnvironments } from "@cs-magic/react-hooks"
 import { UnexpectedError } from "@cs-magic/common"
-import { Loading } from "@cs-magic/ui"
-import { Label } from "@cs-magic/ui"
+import { Loading } from "@cs-magic/react-ui"
+import { Label } from "@cs-magic/react-ui"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"

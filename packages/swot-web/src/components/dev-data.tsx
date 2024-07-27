@@ -1,5 +1,5 @@
-import { devEnabledAtom } from "@cs-magic/ui"
-import { FlexContainer } from "@cs-magic/ui"
+import { devEnabledAtom } from "@cs-magic/react-ui"
+import { FlexContainer } from "@cs-magic/react-ui"
 import { useAtom } from "jotai"
 
 export const DevData = () => {

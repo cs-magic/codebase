@@ -52,10 +52,10 @@
       "path": "../wechat"
     },
     {
-      "path": "../ui"
+      "path": "../react-ui"
     },
     {
-      "path": "../hooks"
+      "path": "../react-hooks"
     },
     {
       "path": "../swot-core"

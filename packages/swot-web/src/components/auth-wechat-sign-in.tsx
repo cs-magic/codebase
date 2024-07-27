@@ -1,5 +1,5 @@
 import { WECHAT_PROVIDER_ID } from "@cs-magic/auth"
-import { Button } from "@cs-magic/ui"
+import { Button } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
 import { signIn } from "next-auth/react"
 

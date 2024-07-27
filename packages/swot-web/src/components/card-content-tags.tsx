@@ -1,4 +1,4 @@
-import { Badge } from "@cs-magic/ui"
+import { Badge } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
 
 export const Tags = ({ tags }: { tags: string[] | null | undefined }) => {

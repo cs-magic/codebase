@@ -1,5 +1,5 @@
 {
-  "name": "@cs-magic/hooks",
+  "name": "@cs-magic/react-hooks",
   "type": "module",
   "main": "./dist/esm/src/index.js",
   "packageManager": "yarn@4.1.1",

@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@cs-magic/common"
-import { Atom, useMounted } from "@cs-magic/hooks"
+import { Atom, useMounted } from "@cs-magic/react-hooks"
 import { useAtom } from "jotai"
 import React, { ComponentProps, forwardRef } from "react"
 import ReactTextareaAutoSize from "react-textarea-autosize"

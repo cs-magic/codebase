@@ -47,4 +47,4 @@ export * from "./providers/screen.provider"
 export * from "./providers/session.provider"
 export * from "./providers/theme.provider"
 
-export * from "../../hooks/src/store/ui.atom"
+export * from "../../react-hooks/src/store/ui.atom"

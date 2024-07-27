@@ -1,5 +1,5 @@
 "use client"
-import { useDraftSession } from "@cs-magic/hooks"
+import { useDraftSession } from "@cs-magic/react-hooks"
 import {
   Button,
   Card,
@@ -9,7 +9,7 @@ import {
   CardHeader,
   FlexContainer,
   Label,
-} from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
 import { EditIcon } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"

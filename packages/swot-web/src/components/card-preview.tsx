@@ -1,6 +1,6 @@
 import { cn, IUserSummary, moment } from "@cs-magic/common"
 import { ICardPreview } from "@cs-magic/swot-core"
-import { AspectRatio, VerticalAspectRatio } from "@cs-magic/ui"
+import { AspectRatio, VerticalAspectRatio } from "@cs-magic/react-ui"
 import { useAtom } from "jotai"
 import Image from "next/image"
 import { QRCodeSVG } from "qrcode.react"

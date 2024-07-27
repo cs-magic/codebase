@@ -1,6 +1,6 @@
-import { LabelLine } from "@cs-magic/ui"
-import { Button } from "@cs-magic/ui"
-import { StandardCard } from "@cs-magic/ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Button } from "@cs-magic/react-ui"
+import { StandardCard } from "@cs-magic/react-ui"
 import { api } from "../trpc/client"
 import { TrpcLogEnabled } from "./config-trpc-log-enabled"
 

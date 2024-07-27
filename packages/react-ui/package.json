@@ -1,5 +1,5 @@
 {
-  "name": "@cs-magic/ui",
+  "name": "@cs-magic/react-ui",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/hooks": "workspace:^",
+    "@cs-magic/react-hooks": "workspace:^",
     "next-themes": "^0.3.0"
   }
 }

@@ -1,7 +1,7 @@
 "use client"
 
-import { LabelLine } from "@cs-magic/ui"
-import { Input } from "@cs-magic/ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Input } from "@cs-magic/react-ui"
 import { cardUserAvatarRenderedAtom } from "../store/card.rendered.atom"
 import { useAtom } from "jotai"
 import React from "react"

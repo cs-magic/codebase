@@ -2,7 +2,7 @@ import { ScenarioType } from "@cs-magic/common"
 import { BEST_VIEWPOINT } from "@cs-magic/common"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { uiScreenAtom } from "@cs-magic/hooks"
+import { uiScreenAtom } from "@cs-magic/react-hooks"
 
 //////////////////////////////
 // base

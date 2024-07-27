@@ -1847,14 +1847,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/hooks@workspace:^, @cs-magic/hooks@workspace:packages/hooks":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/hooks@workspace:packages/hooks"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/llm@workspace:^, @cs-magic/llm@workspace:packages/llm":
   version: 0.0.0-use.local
   resolution: "@cs-magic/llm@workspace:packages/llm"
@@ -1864,6 +1856,24 @@ __metadata:
     openai: "npm:^4.52.7"
     tiktoken: "npm:^1.0.15"
     zhipuai-sdk-nodejs-v4: "npm:^0.1.12"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/react-hooks@workspace:^, @cs-magic/react-hooks@workspace:packages/react-hooks":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/react-hooks@workspace:packages/react-hooks"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/react-ui@workspace:^, @cs-magic/react-ui@workspace:packages/react-ui":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/react-ui@workspace:packages/react-ui"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+    "@cs-magic/react-hooks": "workspace:^"
+    next-themes: "npm:^0.3.0"
   languageName: unknown
   linkType: soft
 
@@ -2061,16 +2071,6 @@ __metadata:
     zhipuai-sdk-nodejs-v4: "npm:^0.1.12"
     zod: "npm:3.21.1"
     zustand: "npm:^4.5.2"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/ui@workspace:^, @cs-magic/ui@workspace:packages/ui":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/ui@workspace:packages/ui"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    "@cs-magic/hooks": "workspace:^"
-    next-themes: "npm:^0.3.0"
   languageName: unknown
   linkType: soft
 
@@ -28924,15 +28924,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swot-wechat-helper@workspace:packages/swot-electron-vite":
+"swot-pc@workspace:packages/swot-pc":
   version: 0.0.0-use.local
-  resolution: "swot-wechat-helper@workspace:packages/swot-electron-vite"
+  resolution: "swot-pc@workspace:packages/swot-pc"
   dependencies:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"
     "@babel/register": "npm:^7.24.6"
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/ui": "workspace:^"
+    "@cs-magic/react-ui": "workspace:^"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"
     "@electron-toolkit/preload": "npm:^3.0.1"

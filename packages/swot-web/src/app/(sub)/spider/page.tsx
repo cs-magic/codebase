@@ -2,12 +2,12 @@
 
 import { ApiMethod } from "@cs-magic/common"
 import { sleep } from "@cs-magic/common"
-import { FlexContainer } from "@cs-magic/ui"
-import { LabelLine } from "@cs-magic/ui"
-import { Badge } from "@cs-magic/ui"
-import { Button } from "@cs-magic/ui"
-import { Input } from "@cs-magic/ui"
-import { Label } from "@cs-magic/ui"
+import { FlexContainer } from "@cs-magic/react-ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Badge } from "@cs-magic/react-ui"
+import { Button } from "@cs-magic/react-ui"
+import { Input } from "@cs-magic/react-ui"
+import { Label } from "@cs-magic/react-ui"
 import {
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@cs-magic/ui"
-import { StandardCard } from "@cs-magic/ui"
-import { TextareaAuto } from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
+import { StandardCard } from "@cs-magic/react-ui"
+import { TextareaAuto } from "@cs-magic/react-ui"
 
 import { produce } from "immer"
 import { useAtom } from "jotai"

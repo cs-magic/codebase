@@ -7,7 +7,7 @@ import {
   ThemeProvider,
   Toaster,
   TooltipProvider,
-} from "@cs-magic/ui"
+} from "@cs-magic/react-ui"
 import { Metadata, type Viewport } from "next"
 import { Inter } from "next/font/google"
 import { Dev } from "../components/dev"

@@ -1,6 +1,6 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@cs-magic/ui'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@cs-magic/react-ui'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { payloads } from 'wechaty-puppet'
 
