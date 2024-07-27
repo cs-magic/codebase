@@ -24,6 +24,8 @@
     "@cs-magic/llm": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
     "@cs-magic/wechat": "workspace:^",
+    "@fastify/websocket": "^10.0.1",
+    "fastify": "^4.28.1",
     "node-schedule": "^2.1.1",
     "qrcode-terminal": "^0.12.0",
     "wechat4u": "workspace:^",

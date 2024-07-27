@@ -1,5 +1,5 @@
-import { getEnv } from "packages/common/src/index.js"
 import { Redis } from "ioredis"
+import { getEnv } from "../../../env/index.js"
 
 const env = getEnv()
 

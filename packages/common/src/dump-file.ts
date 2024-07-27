@@ -1,8 +1,8 @@
 "use server"
 
-import { formatAction } from "packages/common/src/index.js"
 import fs from "fs"
 import path from "path"
+import { formatAction } from "./utils/format-action.js"
 
 export const dumpFile = async (
   content: string | object,

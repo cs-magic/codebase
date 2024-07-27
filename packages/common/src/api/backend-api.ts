@@ -1,4 +1,4 @@
-import { env } from "@cs-magic/common"
+import { env } from "../env/index.js"
 import logger from "../log/index.js"
 
 import { createHttpInstance } from "./core.js"
