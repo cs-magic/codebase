@@ -2,7 +2,7 @@
 
 import { ISendSms, sendSmsSchema } from "@cs-magic/common"
 import { useSmsSendCode } from "@cs-magic/hooks"
-import { smsCodeCurCountdownSecondsAtom, userPhoneAtom } from "@cs-magic/store"
+import { smsCodeCurCountdownSecondsAtom, userPhoneAtom } from "@cs-magic/ui"
 import {
   ButtonWithLoading,
   Form,

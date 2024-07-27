@@ -1,6 +1,6 @@
 "use client"
 
-import { uiScreenAtom } from "@cs-magic/store"
+import { uiScreenAtom } from "@cs-magic/hooks"
 import { useSetAtom } from "jotai"
 import React, { PropsWithChildren, useEffect } from "react"
 import { useMeasure } from "react-use"

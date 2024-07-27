@@ -1,5 +1,5 @@
 "use client"
-import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@cs-magic/store"
+import { getTvScale, tvFullScreenAtom, tvScreenOnAtom } from "@cs-magic/ui"
 import { FlexContainer } from "@cs-magic/ui"
 import { cn } from "@cs-magic/common"
 import { Controls } from "./tv-controls"

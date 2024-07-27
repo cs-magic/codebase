@@ -5,7 +5,7 @@ import {
   smsCodeAtom,
   smsSignInPayloadAtom,
   uiLoadingAlertDialogAtom,
-} from "@cs-magic/store"
+} from "@cs-magic/ui"
 import { Label } from "@cs-magic/ui"
 import { useHotkeys } from "@mantine/hooks"
 import { useAtom, useSetAtom } from "jotai"

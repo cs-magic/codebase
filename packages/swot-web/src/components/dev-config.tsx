@@ -1,4 +1,4 @@
-import { devEnabledAtom } from "@cs-magic/store"
+import { devEnabledAtom } from "@cs-magic/ui"
 import { IconContainer } from "@cs-magic/ui"
 import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/ui"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cs-magic/ui"

@@ -2,7 +2,7 @@
 
 import { usePusherClient } from "@cs-magic/hooks"
 import { PusherServerId } from "@cs-magic/common"
-import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/store"
+import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/ui"
 import { FlexContainer } from "@cs-magic/ui"
 import { Button } from "@cs-magic/ui"
 import {

@@ -46,3 +46,5 @@ export * from "./providers/jotai.provider"
 export * from "./providers/screen.provider"
 export * from "./providers/session.provider"
 export * from "./providers/theme.provider"
+
+export * from "../../hooks/src/store/ui.atom"

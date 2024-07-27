@@ -1,5 +1,5 @@
 import { useAtom } from "jotai"
-import sum from "lodash/sum.js"
+import sum from "lodash/sum"
 import PusherJS from "pusher-js"
 import { useEffect, useRef } from "react"
 
@@ -11,7 +11,7 @@ import {
   pusherLatenciesAtom,
   pusherLatencyAtom,
   pusherServerIdAtom,
-} from "@cs-magic/store"
+} from "./store"
 
 export const usePusherClient = () => {
   const [serverId] = useAtom(pusherServerIdAtom)

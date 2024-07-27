@@ -1,9 +1,9 @@
 import { atom } from "jotai"
 import type { IDimension } from "@cs-magic/common"
-import { uiScreenAtom } from "./index"
+import { uiScreenAtom } from "./ui.atom"
 
-// import { IDimension } from "../ui/schema.js"
-// import { uiScreenAtom } from "../ui/store.js"
+// import { IDimension } from "../ui/schema"
+// import { uiScreenAtom } from "../ui/store"
 
 //////////////////////////////
 // base

@@ -1803,7 +1803,6 @@ __metadata:
   resolution: "@cs-magic/auth@workspace:packages/auth"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/store": "workspace:^"
     "@cs-magic/wechat": "workspace:^"
     next-auth: "npm:^4.24.7"
   languageName: unknown
@@ -1853,7 +1852,6 @@ __metadata:
   resolution: "@cs-magic/hooks@workspace:packages/hooks"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/store": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1876,18 +1874,6 @@ __metadata:
     "@cs-magic/common": "workspace:^"
     playwright: "npm:^1.45.1"
     playwright-core: "npm:^1.45.1"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/store@workspace:^, @cs-magic/store@workspace:packages/store":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/store@workspace:packages/store"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    "@types/react": "npm:^18.3.3"
-    pusher-js: "npm:^8.4.0-rc2"
-    react: "npm:^18.3.1"
-    zustand: "npm:^4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -2109,7 +2095,6 @@ __metadata:
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/hooks": "workspace:^"
-    "@cs-magic/store": "workspace:^"
     next-themes: "npm:^0.3.0"
   languageName: unknown
   linkType: soft

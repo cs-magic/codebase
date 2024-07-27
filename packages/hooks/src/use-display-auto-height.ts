@@ -1,9 +1,9 @@
-import { uiInnerHeight, uiViewportHeight } from "@cs-magic/store"
+import { uiInnerHeight, uiViewportHeight } from "./store"
 import { isServer } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"
 
-import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top.js"
+import { useDisplayAutoScrollTop } from "./use-display-auto-scroll-top"
 
 /**
  * 充分性：自动调整屏幕高度

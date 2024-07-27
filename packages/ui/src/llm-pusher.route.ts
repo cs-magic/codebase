@@ -6,7 +6,7 @@ import {
   ResponseFinalStatus,
   ResponseStatus,
 } from "@cs-magic/common"
-import { redis } from "@cs-magic/common"
+import { redis } from "@cs-magic/common/server"
 
 import Pusher from "pusher"
 

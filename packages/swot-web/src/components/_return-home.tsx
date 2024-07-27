@@ -1,5 +1,5 @@
 "use client"
-import { uiAlertDialogContent } from "@cs-magic/store"
+import { uiAlertDialogContent } from "@cs-magic/ui"
 import { ContentAlertDialog } from "@cs-magic/ui"
 import { Button } from "@cs-magic/ui"
 import Link from "next/link"

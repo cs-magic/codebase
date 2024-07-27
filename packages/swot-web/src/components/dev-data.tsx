@@ -1,4 +1,4 @@
-import { devEnabledAtom } from "@cs-magic/store"
+import { devEnabledAtom } from "@cs-magic/ui"
 import { FlexContainer } from "@cs-magic/ui"
 import { useAtom } from "jotai"
 

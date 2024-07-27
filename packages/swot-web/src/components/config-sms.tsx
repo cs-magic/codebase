@@ -4,7 +4,7 @@ import { SmsProviderType } from "@cs-magic/common"
 import {
   smsCodeToCountdownSecondsAtom,
   smsProviderTypeAtom,
-} from "@cs-magic/store"
+} from "@cs-magic/ui"
 import {
   Input,
   Label,

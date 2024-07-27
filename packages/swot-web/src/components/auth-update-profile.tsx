@@ -1,6 +1,6 @@
 "use client"
 
-import { userImageAtom, userNameAtom } from "@cs-magic/store"
+import { userImageAtom, userNameAtom } from "@cs-magic/ui"
 import { Button, Label } from "@cs-magic/ui"
 import { useAtom } from "jotai"
 import { UserInputAvatar } from "./user-input-avatar"

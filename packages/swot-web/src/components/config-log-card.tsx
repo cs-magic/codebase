@@ -1,4 +1,4 @@
-import { pusherLogLevelAtom } from "@cs-magic/store"
+import { pusherLogLevelAtom } from "@cs-magic/ui"
 import { LabelLine } from "@cs-magic/ui"
 import { SelectLogLevel } from "@cs-magic/ui"
 import { StandardCard } from "@cs-magic/ui"

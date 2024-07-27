@@ -1,5 +1,5 @@
 import { backendTypeSchema, llmModelTypeSchema } from "@cs-magic/llm"
-import { mapSpacingVerticalAtom } from "@cs-magic/store"
+import { mapSpacingVerticalAtom } from "@cs-magic/ui"
 import {
   AtomSelector,
   AtomSwitcher,

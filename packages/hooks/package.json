@@ -8,7 +8,6 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "@cs-magic/common": "workspace:^",
-    "@cs-magic/store": "workspace:^"
+    "@cs-magic/common": "workspace:^"
   }
 }

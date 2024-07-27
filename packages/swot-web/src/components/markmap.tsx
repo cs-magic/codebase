@@ -1,7 +1,7 @@
 "use client"
 
 import { AspectRatio } from "@cs-magic/ui"
-import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "@cs-magic/store"
+import { mapLevelsMaxAtom, mapSpacingVerticalAtom } from "@cs-magic/ui"
 import { cardMindmapRenderedAtom } from "../store/card.rendered.atom"
 // import { cardMindmapRenderedAtom } from "@cs-magic/swot-web/store/card.rendered.atom"
 import { useAtom, useSetAtom } from "jotai"
