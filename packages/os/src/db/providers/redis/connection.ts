@@ -1,6 +1,5 @@
+import { getEnv } from "@cs-magic/common"
 import { Redis } from "ioredis"
-
-import { getEnv } from "@cs-magic/env"
 
 const env = getEnv()
 

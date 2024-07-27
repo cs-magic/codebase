@@ -1,6 +1,6 @@
-import { getEnv } from "@cs-magic/env"
 import { pino } from "pino"
 import { logflarePinoVercel } from "pino-logflare"
+import { getEnv } from "../../../env/index.js"
 
 const env = getEnv()
 

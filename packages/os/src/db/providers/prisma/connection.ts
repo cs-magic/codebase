@@ -1,5 +1,5 @@
+import { getEnv } from "@cs-magic/common"
 import { PrismaClient } from "@prisma/client"
-import { getEnv } from "@cs-magic/env"
 
 const env = getEnv()
 

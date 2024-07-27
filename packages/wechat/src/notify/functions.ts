@@ -1,5 +1,4 @@
-import { api } from "@cs-magic/common"
-import { getEnv } from "@cs-magic/env"
+import { api, getEnv } from "@cs-magic/common"
 import { sha1 } from "js-sha1"
 import { fetchWechatApi } from "../functions.js"
 

@@ -1,4 +1,4 @@
-import { isClient } from "@cs-magic/env"
+import { isClient } from "@cs-magic/common"
 
 export const upgradeUrl = (url: string) =>
   isClient && location.href.includes("https")

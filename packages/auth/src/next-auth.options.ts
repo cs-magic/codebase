@@ -1,6 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@cs-magic/os"
-import { getEnv } from "@cs-magic/env"
 
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { Adapter } from "next-auth/adapters"
@@ -10,6 +9,7 @@ import { ProfileUpdateProvider } from "./providers/profile/provider.js"
 import { SmsProvider } from "./providers/sms/provider.js"
 import { WechatProvider } from "./providers/wechat/provider.js"
 import { IWechatProfile } from "./providers/wechat/schema.js"
+import { getEnv } from "@cs-magic/common"
 
 const env = getEnv()
 

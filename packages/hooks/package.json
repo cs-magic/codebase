@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/env": "workspace:^",
     "@cs-magic/store": "workspace:^"
   }
 }

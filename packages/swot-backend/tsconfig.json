@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "../../tsconfig.json"
+  ],
+  "compilerOptions": {
+    "outDir": "dist/esm",
+    "composite": true
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {"path": "../common"},
+    {"path": "../llm"},
+    {"path": "../spider"},
+    {"path": "../swot-bot"},
+  ]
+}

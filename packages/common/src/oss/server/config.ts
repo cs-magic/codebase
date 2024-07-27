@@ -1,6 +1,6 @@
-import { getEnv } from "@cs-magic/env"
 import OSS from "ali-oss"
 import { OSS_BUCKET_NAME, OSS_REGION } from "../const.js"
+import { getEnv } from "../../env/get-env.js"
 
 // ref: https://help.aliyun.com/zh/oss/developer-reference/initialization-10#783f1f604f969
 export const initAliOss = () => {

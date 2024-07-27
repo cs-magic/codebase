@@ -1,7 +1,6 @@
 "use server"
 
-import { logger } from "@cs-magic/common"
-import { getEnv } from "@cs-magic/env"
+import { getEnv, logger } from "@cs-magic/common"
 /**
  * `yarn add net tls`
  */

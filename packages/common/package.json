@@ -13,7 +13,6 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "@cs-magic/env": "workspace:^",
     "@types/lodash": "^4.14.202",
     "ali-oss": "^6.20.0",
     "ansicolors": "^0.3.2",

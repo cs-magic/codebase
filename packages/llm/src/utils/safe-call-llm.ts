@@ -4,7 +4,7 @@ import {
   formatError,
   formatString,
 } from "@cs-magic/common"
-import { env, logEnv } from "@cs-magic/env"
+import { env, logEnv } from "@cs-magic/common"
 import { HttpsProxyAgent } from "https-proxy-agent"
 import OpenAI from "openai"
 import { v4 } from "uuid"

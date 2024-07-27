@@ -1,4 +1,3 @@
-import { getEnv } from "@cs-magic/env"
 import { fetchWechatApi } from "@cs-magic/wechat"
 import {
   IWechatAdaptedToken,
@@ -6,6 +5,7 @@ import {
   IWechatRefreshedToken,
   IWechatToken,
 } from "../schema.js"
+import { getEnv } from "@cs-magic/common"
 
 const env = getEnv()
 
