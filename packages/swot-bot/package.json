@@ -6,13 +6,16 @@
   "main": "./dist/esm/src/index.js",
   "exports": {
     ".": "./dist/esm/src/index.js",
-    "./schema": "./dist/esm/src/schema/index.js"
+    "./schema": "./dist/esm/src/schema/index.js",
+    "./backend": "./dist/esm/src/backend/index.js"
   },
   "scripts": {
-    "dev": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts | pino-pretty",
+    "dev:bot": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts | pino-pretty",
+    "dev:backend": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/backend/main.ts | pino-pretty",
     "build": "rm -rf dist && tsc -b",
     "build:cjs": "tsc -b tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json",
-    "start": "node ./dist/esm/src/main.js | pino-pretty",
+    "start:bot": "node ./dist/esm/src/main.js | pino-pretty",
+    "start:backend": "node ./dist/esm/src/backend/main.js | pino-pretty",
     "test": "jest",
     "postinstall": "yarn build"
   },

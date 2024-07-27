@@ -16,8 +16,5 @@
     {
       "path": "../llm"
     },
-    {
-      "path": "../swot-backend"
-    }
   ]
 }

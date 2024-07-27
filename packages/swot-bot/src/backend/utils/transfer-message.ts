@@ -1,4 +1,4 @@
-import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema"
+import { IWechatBotTransfer } from "../../schema/index.js"
 import { WebSocket } from "ws"
 
 export const transferMessage = (

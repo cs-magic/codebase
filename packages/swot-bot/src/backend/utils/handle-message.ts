@@ -1,8 +1,10 @@
+import path from "path"
+
 import { formatError, logger } from "@cs-magic/common"
 import { dumpFile } from "@cs-magic/common/server"
-import { getConvPreference, parseLimitedCommand } from "@cs-magic/swot-bot"
-import { IWechatBotTransfer } from "@cs-magic/swot-bot/schema"
-import path from "path"
+
+import { IWechatBotTransfer } from "../../schema/index.js"
+import { getConvPreference, parseLimitedCommand } from "../../utils/index.js"
 import { BotCommandType, botCommandTypeSchema } from "../schema/commands.js"
 import { IContext } from "../schema/context.js"
 import { startBot } from "./start-bot.js"
