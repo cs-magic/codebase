@@ -1,3 +1,5 @@
+import "./globals.css"
+
 export * from "./components/shadcn/ui/alert-dialog"
 export * from "./components/shadcn/ui/aspect-ratio"
 export * from "./components/shadcn/ui/avatar"

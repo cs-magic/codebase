@@ -38,7 +38,7 @@ export const debugProcesses = () => {
 
 ## reference 
 
-- [Tech](./docs/tech.md)
+- [Tech](__docs__/tech.md)
 
 
 ## finished todo
