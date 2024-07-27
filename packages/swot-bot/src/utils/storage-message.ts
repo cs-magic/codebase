@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 import omit from "lodash/omit.js"
 import { Message, types } from "wechaty"
 

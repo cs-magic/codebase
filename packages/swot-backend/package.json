@@ -16,7 +16,6 @@
     "@cs-magic/auth": "workspace:^",
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
-    "@cs-magic/os": "workspace:^",
     "@cs-magic/spider": "workspace:^",
     "@cs-magic/swot-bot": "workspace:^",
     "@fastify/websocket": "^10.0.1",

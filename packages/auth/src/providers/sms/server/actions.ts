@@ -1,7 +1,7 @@
 "use server"
 
 import { IProviderSendSms, logger, SMS_PROVIDER_ID } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 
 /**
  * 发送验证码的时候，要创建Account以存储AccessToken，并在后续验证的时候实现登录

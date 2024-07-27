@@ -1803,7 +1803,6 @@ __metadata:
   resolution: "@cs-magic/auth@workspace:packages/auth"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/os": "workspace:^"
     "@cs-magic/store": "workspace:^"
     "@cs-magic/wechat": "workspace:^"
     next-auth: "npm:^4.24.7"
@@ -1863,21 +1862,10 @@ __metadata:
   resolution: "@cs-magic/llm@workspace:packages/llm"
   dependencies:
     "@cs-magic/common": "workspace:^"
-    "@cs-magic/os": "workspace:^"
     js-md5: "npm:^0.8.3"
     openai: "npm:^4.52.7"
     tiktoken: "npm:^1.0.15"
     zhipuai-sdk-nodejs-v4: "npm:^0.1.12"
-  languageName: unknown
-  linkType: soft
-
-"@cs-magic/os@workspace:^, @cs-magic/os@workspace:packages/os":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/os@workspace:packages/os"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    ioredis: "npm:^5.4.1"
-    prisma: "npm:^5.16.2"
   languageName: unknown
   linkType: soft
 
@@ -1910,7 +1898,6 @@ __metadata:
     "@cs-magic/auth": "workspace:^"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/os": "workspace:^"
     "@cs-magic/spider": "workspace:^"
     "@cs-magic/swot-bot": "workspace:^"
     "@fastify/websocket": "npm:^10.0.1"
@@ -17880,7 +17867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ioredis@npm:^5.3.2, ioredis@npm:^5.4.1":
+"ioredis@npm:^5.3.2":
   version: 5.4.1
   resolution: "ioredis@npm:5.4.1"
   dependencies:

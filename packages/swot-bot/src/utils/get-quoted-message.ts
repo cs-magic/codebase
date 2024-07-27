@@ -1,4 +1,4 @@
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 import { types } from "wechaty"
 import type { PuppetVersion } from "wechaty-puppet"
 

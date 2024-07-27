@@ -2,7 +2,7 @@
 
 import { IBilibiliVideoDetail } from "@cs-magic/common"
 import { getBilibiliIFrameUrl } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common"
 import { Card, Prisma } from "@prisma/client"
 
 export const bilibili2card = (

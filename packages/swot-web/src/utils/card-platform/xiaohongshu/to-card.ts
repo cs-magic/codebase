@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common"
 import { IXiaoHongShuNotePageData } from "@cs-magic/common"
 import { Card, Prisma } from "@prisma/client"
 

@@ -11,6 +11,5 @@
   ],
   "references": [
     {"path": "../common"},
-    {"path": "../os"},
   ]
 }

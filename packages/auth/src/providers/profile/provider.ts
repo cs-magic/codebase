@@ -1,6 +1,6 @@
 import { logger } from "@cs-magic/common"
 import { userDetailSchema } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 
 import Credentials from "next-auth/providers/credentials"
 

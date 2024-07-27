@@ -5,7 +5,7 @@ import {
   SEPARATOR_LINE,
   taskDetailSchema,
 } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 import { Priority } from "../../../schema/index.js"
 import chain from "lodash/chain.js"
 import omit from "lodash/omit.js"

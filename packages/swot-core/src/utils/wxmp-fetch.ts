@@ -1,7 +1,7 @@
 "use server"
 
 import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
-import { prisma } from "@cs-magic/os"
+import { prisma } from "@cs-magic/common/server"
 import { FetchWxmpArticleRes, md2summary } from "@cs-magic/wechat"
 
 import { GenWxmpArticleCardFetchOptions } from "../schema/wxmp-article.js"

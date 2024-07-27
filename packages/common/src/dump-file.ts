@@ -1,6 +1,6 @@
 "use server"
 
-import { formatAction } from "@cs-magic/common"
+import { formatAction } from "packages/common/src/index.js"
 import fs from "fs"
 import path from "path"
 
