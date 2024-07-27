@@ -825,6 +825,8 @@ export default class WechatCore {
   sendPic(mediaId, to) {
     return Promise.resolve()
       .then(() => {
+        console.log("\n=== Disable Full Image ===\n")
+
         let params = {
           pass_ticket: this.PROP.passTicket,
           fun: "async",

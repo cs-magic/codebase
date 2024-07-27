@@ -2,6 +2,7 @@ import { logger } from "@cs-magic/common"
 import { safeCallLLM } from "@cs-magic/llm/server"
 import last from "lodash/last.js"
 import { types } from "wechaty"
+import { FileBox } from "file-box"
 import yargsParser from "yargs-parser"
 
 import { BasePlugin } from "./base.plugin.js"
@@ -10,14 +11,19 @@ export class TestPlugin extends BasePlugin {
   async run(args: string) {
     const programme = yargsParser(args)
 
-    if (programme._[0]?.toString().includes("recall-last-one"))
-      await this.testRecallLastOne()
+    const s = programme._[0]?.toString().trim()
 
-    if (programme._[0]?.toString().includes("reply-link"))
-      await this.testReplyLink()
+    if (!s) return
 
-    if (programme._[0]?.toString().includes("describe-last-image"))
-      await this.testDescribeLastImage()
+    if (s.includes("recall-last-one")) await this.testRecallLastOne()
+
+    if (s.includes("reply-link")) await this.testReplyLink()
+
+    if (s.includes("describe-last-image")) await this.testDescribeLastImage()
+
+    if (/^\d+\.(png|jpg|gif|webp|jpeg)$/.test(s)) {
+      await this.reply(FileBox.fromFile(`./.generated/${s}`))
+    }
   }
 
   async testDescribeLastImage() {
