@@ -1,5 +1,4 @@
 import { useAtom } from "jotai"
-import sum from "lodash/sum"
 import PusherJS from "pusher-js"
 import { useEffect, useRef } from "react"
 
@@ -12,6 +11,7 @@ import {
   pusherLatencyAtom,
   pusherServerIdAtom,
 } from "./store"
+import { sum } from "lodash-es"
 
 export const usePusherClient = () => {
   const [serverId] = useAtom(pusherServerIdAtom)

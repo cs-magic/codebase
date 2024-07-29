@@ -21,6 +21,5 @@
     "tests/**/*.ts"
   ],
   "references": [
-    {"path": "../common"},
   ]
 }

@@ -1,7 +1,6 @@
-import dotenv from "dotenv"
-
-dotenv.config()
-
+/**
+ * 不能加 dotenv，否则无法用于 frontend 了，可以在程序运行前的时候，额外使用 dotenv
+ */
 export const getEnv = () => ({
   // env
   NODE_ENV: process.env.NODE_ENV,

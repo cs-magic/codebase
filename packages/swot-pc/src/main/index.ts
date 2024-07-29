@@ -18,8 +18,12 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false,
-      devTools: true
+      devTools: true,
       // webSecurity: false // Disable web security to allow localhost connections (use cautiously)
+
+      // fix 'process is not defined', ref: https://stackoverflow.com/a/66612626/9422455
+      nodeIntegration: true,
+      contextIsolation: false
     }
   })
 

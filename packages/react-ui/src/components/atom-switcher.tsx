@@ -9,8 +9,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./shadcn/ui/select.js"
-import { Switch } from "./shadcn/ui/switch.js"
+} from "@/shadcn/ui/select.js"
+import { Switch } from "@/shadcn/ui/switch.js"
 
 /**
  * @param atom

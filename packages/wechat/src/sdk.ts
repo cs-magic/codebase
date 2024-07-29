@@ -1,9 +1,9 @@
+import { IWechatSDKToken } from "@cs-magic/common"
 import {
   getWechatSignature,
   getWechatTicket,
   getWechatToken,
 } from "./notify/functions.js"
-import { IWechatSDKToken } from "./schema.js"
 
 export class WechatSDK {
   private token?: IWechatSDKToken

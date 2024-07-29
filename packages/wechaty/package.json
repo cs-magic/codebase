@@ -38,6 +38,7 @@
     "DEFAULT_APIHOST": "api.chatie.io"
   },
   "scripts": {
+    "postinstall": "yarn dist",
     "build": "tsc && tsc -p tsconfig.cjs.json",
     "changelog": "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN -v \"$(pwd)\":/usr/local/src/your-app ferrarimarco/github-changelog-generator -u wechaty -p wechaty && sed -i'.bak' /greenkeeper/d CHANGELOG.md && sed -i'.bak' /Snyk/d CHANGELOG.md && sed -i'.bak' '/An in-range update of/d' CHANGELOG.md && node --no-warnings --loader=ts-node/esm scripts/sort-contributiveness.ts < CHANGELOG.md > CHANGELOG.new.md 2>/dev/null && cat CHANGELOG.md >> CHANGELOG.new.md && mv CHANGELOG.new.md CHANGELOG.md",
     "clean": "shx rm -fr dist",
@@ -143,6 +144,7 @@
     "@types/raven": "^2.5.4",
     "@types/uuid": "^8.3.4",
     "@types/ws": "^8.5.3",
+    "brolog": "1.14.2",
     "coveralls": "^3.1.1",
     "glob": "^7.2.0",
     "jsdoc-to-markdown": "^7.1.1",
@@ -150,9 +152,11 @@
     "qrcode-terminal": "^0.12.0",
     "raven": "^2.6.4",
     "regenerator-runtime": "^0.13.9",
+    "rxjs": "^7.8.1",
     "sloc": "^0.2.1",
     "typed-emitter": "^1.5.0-from-event",
     "typedoc": "^1.0.0-dev.4 ",
+    "typescript": "^5.5.4",
     "wechaty-puppet-mock": "^1.18.2",
     "wechaty-puppet-padlocal": "workspace:^"
   },

@@ -1,5 +1,5 @@
 import type { ITransEvent } from "@cs-magic/common"
-import { type WritableStreamDefaultWriter } from "web-streams-polyfill/dist/types/ponyfill.js"
+import { WritableStreamDefaultWriter } from "web-streams-polyfill"
 
 export const llmEncoder = new TextEncoder()
 

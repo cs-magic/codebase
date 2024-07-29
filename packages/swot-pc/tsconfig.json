@@ -1,5 +1,7 @@
 {
-  "files": [],
+  "include": [
+    "electron.vite.config.*", "src/**/*",
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

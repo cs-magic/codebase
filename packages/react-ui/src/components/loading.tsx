@@ -5,7 +5,7 @@ import { useAtom } from "jotai"
 import { LoaderIcon } from "lucide-react"
 import React from "react"
 import { FlexContainer } from "./flex-container.js"
-import { AlertDialog, AlertDialogContent } from "./shadcn/ui/alert-dialog.js"
+import { AlertDialog, AlertDialogContent } from "@/shadcn/ui/alert-dialog.js"
 
 export const Loading = () => (
   <FlexContainer>

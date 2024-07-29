@@ -54,6 +54,7 @@
     "npm": ">=7"
   },
   "scripts": {
+    "postinstall": "yarn dist",
     "clean": "shx rm -fr dist",
     "dist": "npm-run-all clean build dist:commonjs",
     "build": "tsc -b && tsc -b tsconfig.cjs.json",
@@ -65,8 +66,7 @@
     "test": "npm-run-all lint test:unit",
     "test:pack": "bash -x scripts/npm-pack-testing.sh",
     "test:unit": "cross-env NODE_OPTIONS=\"--no-warnings --loader=ts-node/esm\" tap \"src/**/*.spec.ts\" \"tests/**/*.spec.ts\"",
-    "typedoc": "bash scripts/typedoc.sh",
-    "postinstall": "yarn dist"
+    "typedoc": "bash scripts/typedoc.sh"
   },
   "repository": {
     "type": "git",
@@ -102,7 +102,6 @@
   },
   "dependencies": {
     "@alloc/quick-lru": "^5.2.0",
-    "@cs-magic/common": "workspace:^",
     "brolog": "^1.14.2",
     "clone-class": "^1.1.1",
     "file-box": "^1.4.13",

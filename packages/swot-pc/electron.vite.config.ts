@@ -12,19 +12,16 @@ export default defineConfig({
     envDir,
     plugins: [
       externalizeDepsPlugin(),
-      commonjs(), // for wechat4u
-      nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
-      wasm() // for tiktoken
+      // commonjs(), // for wechat4u
+      // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
+      // wasm() // for tiktoken
     ],
-    resolve: {
-      alias: {}
-    },
     build: {
       rollupOptions: {
         // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        external: new RegExp('/qrcode-terminal|yargs-parser/.*')
-      }
-    }
+        external: new RegExp('/qrcode-terminal|yargs-parser/.*'),
+      },
+    },
   },
 
   renderer: {
@@ -34,34 +31,40 @@ export default defineConfig({
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
-        '.prisma/client/index-browser': '../../node_modules/.prisma/client/index-browser.js' // ref: https://github.com/prisma/prisma/issues/12504#issuecomment-1285883083
-      }
+        '.prisma/client/index-browser': '../../node_modules/.prisma/client/index-browser.js', // ref: https://github.com/prisma/prisma/issues/12504#issuecomment-1285883083
+      },
     },
     optimizeDeps: {
-      // include: ['next', 'next/font', 'next/font/local']
+      include: [
+        // 'next',
+        // 'next/font',
+        // 'next/font/local'
+      ],
     },
     build: {
       commonjsOptions: {
         exclude: [
-          'yargs-parser'
+          'openid-client',
+          // 'yargs-parser'
           // 'next/font/local'
-        ] // ref: https://github.com/vitejs/vite/issues/2679#issuecomment-994772493
+        ], // ref: https://github.com/vitejs/vite/issues/2679#issuecomment-994772493
       },
       rollupOptions: {
         // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        external: new RegExp('/yargs-parser/.*')
-      }
+        // external: new RegExp('/yargs-parser/.*')
+      },
     },
     plugins: [
+      externalizeDepsPlugin(),
       commonjs(), // for wechat4u
       nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
       wasm(), // for tiktoken
-      react()
-    ]
+      react(),
+    ],
   },
 
   preload: {
     envDir,
-    plugins: [externalizeDepsPlugin()]
-  }
+    plugins: [externalizeDepsPlugin()],
+  },
 })

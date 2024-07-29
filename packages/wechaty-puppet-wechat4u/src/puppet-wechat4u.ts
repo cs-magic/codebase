@@ -16,7 +16,6 @@
  *   limitations under the License.
  *
  */
-// import { logger } from "@cs-magic/common"
 
 import Wechat4u from "wechat4u"
 import QuickLru from "@alloc/quick-lru"

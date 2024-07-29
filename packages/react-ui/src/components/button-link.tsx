@@ -2,7 +2,7 @@ import Link from "next/link"
 import React, { ComponentProps } from "react"
 
 import { cn } from "@cs-magic/common"
-import { buttonVariants } from "./shadcn/ui/button.js"
+import { buttonVariants } from "@/shadcn/ui/button.js"
 
 export const ButtonLink = ({
   href,

@@ -19,8 +19,8 @@
     "src/"
   ],
   "scripts": {
-    "postinstall": "yarn build",
-    "clean": "shx rm -fr dist/*",
+    "postinstall": "yarn dist",
+    "clean": "shx rm -fr dist",
     "dist": "npm-run-all clean build dist:commonjs",
     "build": "tsc -b && tsc -b tsconfig.cjs.json",
     "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/package.json",

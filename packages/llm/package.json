@@ -16,6 +16,7 @@
     "js-md5": "^0.8.3",
     "openai": "^4.52.7",
     "tiktoken": "^1.0.15",
+    "web-streams-polyfill": "^4.0.0",
     "zhipuai-sdk-nodejs-v4": "^0.1.12"
   }
 }

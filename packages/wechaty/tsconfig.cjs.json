@@ -5,6 +5,8 @@
     "outDir": "dist/cjs",
   },
   "references": [
-    {"path": "../wechaty-puppet"},
+    {"path": "../wechaty-puppet/tsconfig.cjs.json"},
+    {"path": "../wechaty-puppet-wechat4u/tsconfig.cjs.json"},
+    {"path": "../wechaty-puppet-padlocal/tsconfig.cjs.json"}
   ]
 }

@@ -2,7 +2,7 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@cs-magic/react-ui'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { payloads } from 'wechaty-puppet'
+import { ContactPayload } from './concat.schema.js'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -13,7 +13,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
   })
 
   return (
@@ -58,12 +58,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   )
 }
 
-export const columns: ColumnDef<payloads.Contact>[] = [
+export const columns: ColumnDef<ContactPayload>[] = [
   {
     accessorKey: 'id',
     cell: ({ row }) => {
       return <div className={'max-w-[8rem] truncate'}>{row.getValue('id')}</div>
-    }
+    },
   },
   { accessorKey: 'name' },
   { accessorKey: 'alias' },
@@ -71,7 +71,7 @@ export const columns: ColumnDef<payloads.Contact>[] = [
     accessorKey: 'avatar',
     cell: ({ row }) => {
       return <div className={'max-w-[20rem] truncate'}>{row.getValue('avatar')}</div>
-    }
+    },
   },
   { accessorKey: 'friend' },
   { accessorKey: 'address' },
@@ -87,5 +87,5 @@ export const columns: ColumnDef<payloads.Contact>[] = [
   { accessorKey: 'star' },
   { accessorKey: 'title' },
   { accessorKey: 'type' },
-  { accessorKey: 'weixin' }
+  { accessorKey: 'weixin' },
 ]

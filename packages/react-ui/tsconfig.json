@@ -6,7 +6,11 @@
     "composite": true,
     "outDir": "dist",
 
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"],
   "references": [
@@ -19,5 +23,5 @@
     {
       "path": "../llm"
     },
-  ]
+  ],
 }

@@ -1,8 +1,6 @@
-import { api, getEnv } from "@cs-magic/common"
+import { api, fetchWechatApi, getEnv, IWechatSDKToken } from "@cs-magic/common"
 import { sha1 } from "js-sha1"
-import { fetchWechatApi } from "../functions.js"
 
-import { IWechatSDKToken } from "../schema.js"
 import { WECHAT_NONCE_STR, WECHAT_TIMESTAMP } from "./config.js"
 
 /**

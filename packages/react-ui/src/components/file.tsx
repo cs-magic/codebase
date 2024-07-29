@@ -5,7 +5,7 @@ import React, { HTMLAttributes } from "react"
 
 import { FlexContainer } from "./flex-container.js"
 import { Loading } from "./loading.js"
-import { AspectRatio } from "./shadcn/ui/aspect-ratio.js"
+import { AspectRatio } from "@/shadcn/ui/aspect-ratio.js"
 
 export const FileComp = ({
   file,

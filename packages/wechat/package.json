@@ -6,8 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc -b",
     "postinstall": "yarn build",
-    "test": "jest",
-    "test-fetch-wxmp-article": "tsx -r dotenv/config wxmp-article/fetch/fetch-wxmp-article.script.ts"
+    "test": "jest"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
