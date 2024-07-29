@@ -1,4 +1,4 @@
-import "./globals.css"
+// import "./globals.css"
 
 export * from "./components/shadcn/ui/alert-dialog"
 export * from "./components/shadcn/ui/aspect-ratio"
@@ -48,5 +48,3 @@ export * from "./providers/jotai.provider"
 export * from "./providers/screen.provider"
 export * from "./providers/session.provider"
 export * from "./providers/theme.provider"
-
-export * from "../../react-hooks/src/store/ui.atom"

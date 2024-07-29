@@ -1,9 +1,5 @@
 import { resolve } from 'path'
-import {
-  defineConfig,
-  externalizeDepsPlugin
-  // loadEnv
-} from 'electron-vite'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import commonjs from 'vite-plugin-commonjs'
 import wasm from 'vite-plugin-wasm'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
@@ -14,12 +10,23 @@ const envDir = resolve('../..')
 export default defineConfig({
   main: {
     envDir,
-    plugins: [externalizeDepsPlugin()]
+    plugins: [
+      externalizeDepsPlugin(),
+      commonjs(), // for wechat4u
+      nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
+      wasm() // for tiktoken
+    ],
+    resolve: {
+      alias: {}
+    },
+    build: {
+      rollupOptions: {
+        // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
+        external: new RegExp('/qrcode-terminal|yargs-parser/.*')
+      }
+    }
   },
-  preload: {
-    envDir,
-    plugins: [externalizeDepsPlugin()]
-  },
+
   renderer: {
     envDir,
 
@@ -36,12 +43,13 @@ export default defineConfig({
     build: {
       commonjsOptions: {
         exclude: [
+          'yargs-parser'
           // 'next/font/local'
         ] // ref: https://github.com/vitejs/vite/issues/2679#issuecomment-994772493
       },
       rollupOptions: {
         // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        // external: new RegExp('/yargs-parser/.*')
+        external: new RegExp('/yargs-parser/.*')
       }
     },
     plugins: [
@@ -50,5 +58,10 @@ export default defineConfig({
       wasm(), // for tiktoken
       react()
     ]
+  },
+
+  preload: {
+    envDir,
+    plugins: [externalizeDepsPlugin()]
   }
 })

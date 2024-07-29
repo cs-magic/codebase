@@ -1,7 +1,7 @@
 {
   "name": "swot-pc",
   "version": "0.4.5",
-  "description": "飞脑微信助手",
+  "description": "SWOT Wechat Helper",
   "type": "module",
   "main": "./out/main/index.js",
   "author": "cs-magic.com",
