@@ -21,6 +21,7 @@ yarn
 - wechaty-puppet 相关需要安装 `jq`，而且不能用 yarn 装，要在系统级别 (2024-06-13)：
   - mac: `brew install jq`
   - ubuntu: `sudo apt install jq`
+- `wechaty-puppet-*` 之类的 puppet 的 dependencies 里不要加 `wechaty`，否则在 yarn monorepo 里会导致 circular dependencies error，主要是这些 puppet 的实际代码里也没有 `wechaty` （只在 tests 里有）
 
 ## instruction
 

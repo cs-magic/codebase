@@ -1,7 +1,6 @@
-import { WECHAT_API_URL } from "@cs-magic/wechat"
 import { api } from "../../../api/index.js"
 import { env } from "../../../env/index.js"
-import { WECHAT_AUTH_CALLBACK_URL } from "./config.js"
+import { WECHAT_API_URL, WECHAT_AUTH_CALLBACK_URL } from "./config.js"
 import {
   isWechatError,
   IWechatAdaptedToken,

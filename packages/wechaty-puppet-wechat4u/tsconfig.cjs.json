@@ -6,6 +6,6 @@
     "ignoreDeprecations": "5.0"
   },
   "references": [
-    {"path": "../wechaty-puppet/tsconfig.cjs.json"}
+//    {"path": "../wechaty-puppet/tsconfig.cjs.json"}
   ]
 }

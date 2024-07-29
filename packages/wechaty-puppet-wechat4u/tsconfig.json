@@ -20,6 +20,6 @@
     "tests/**/*.spec.ts"
   ],
   "references": [
-    {"path": "../wechaty-puppet/tsconfig.json"}
+//    {"path": "../wechaty-puppet/tsconfig.json"}
   ]
 }

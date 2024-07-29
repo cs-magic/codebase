@@ -8,15 +8,15 @@
   },
   "include": ["src/**/*"],
   "references": [
-    {"path": "../common"},
-    {"path": "../llm"},
-    {"path": "../spider"},
+//    {"path": "../common"},
+//    {"path": "../llm"},
+//    {"path": "../spider"},
 
 //    {"path": "../wechat4u"},
 //    {"path": "../wechaty-puppet"},
 //    {"path": "../wechaty-puppet-padlocal"},
 //    {"path": "../wechaty-puppet-wechat4u"},
 //    {"path": "../wechaty"},
-    {"path": "../wechat"},
+//    {"path": "../wechat"},
   ]
 }

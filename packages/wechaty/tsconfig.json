@@ -23,8 +23,8 @@
     "tests/**/*.spec.ts"
   ],
   "references": [
-    {"path": "../wechaty-puppet/tsconfig.json"},
-    {"path": "../wechaty-puppet-wechat4u/tsconfig.json"},
-    {"path": "../wechaty-puppet-padlocal/tsconfig.json"},
+//    {"path": "../wechaty-puppet/tsconfig.json"},
+//    {"path": "../wechaty-puppet-wechat4u/tsconfig.json"},
+//    {"path": "../wechaty-puppet-padlocal/tsconfig.json"},
   ]
 }

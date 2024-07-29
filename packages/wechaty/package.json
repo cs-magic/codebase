@@ -125,9 +125,7 @@
     "rx-queue": "^1.0.5",
     "state-switch": "^1.6.3",
     "uuid": "^8.3.2",
-    "wechaty-puppet": "^1.20.1",
-    "wechaty-puppet-service": "^1.19.8",
-    "wechaty-puppet-wechat4u": "workspace:^",
+    "wechaty-puppet": "workspace:^",
     "wechaty-token": "^1.1.1",
     "ws": "^8.5.0"
   },
@@ -158,7 +156,8 @@
     "typedoc": "^1.0.0-dev.4 ",
     "typescript": "^5.5.4",
     "wechaty-puppet-mock": "^1.18.2",
-    "wechaty-puppet-padlocal": "workspace:^"
+    "wechaty-puppet-service": "^1.19.8",
+    "wechaty-puppet-wechat4u": "workspace:^"
   },
   "files": [
     "bin/",
