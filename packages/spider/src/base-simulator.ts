@@ -1,8 +1,10 @@
-import { logger } from "@cs-magic/common"
 import { chromium } from "playwright"
 import type { Browser, BrowserType, LaunchOptions, Page } from "playwright-core"
-import { type DriverType } from "./schema.js"
 import AsyncLock from "async-lock"
+
+import { logger } from "@cs-magic/common"
+
+import { type DriverType } from "./schema.js"
 
 const lock = new AsyncLock()
 

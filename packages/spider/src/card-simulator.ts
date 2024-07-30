@@ -1,7 +1,10 @@
-import { getEnv, sleep } from "@cs-magic/common"
-import { logger } from "@cs-magic/common"
-import { UnexpectedError } from "@cs-magic/common"
-import { IUserSummaryFilled } from "@cs-magic/common"
+import {
+  getEnv,
+  IUserSummaryFilled,
+  logger,
+  sleep,
+  UnexpectedError,
+} from "@cs-magic/common"
 import { BaseSimulator } from "./base-simulator.js"
 
 /**

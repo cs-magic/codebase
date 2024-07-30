@@ -23,8 +23,8 @@ function createWindow(): void {
 
       // fix 'process is not defined', ref: https://stackoverflow.com/a/66612626/9422455
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
 
   mainWindow.on('ready-to-show', () => {

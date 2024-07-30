@@ -46,7 +46,8 @@ const config = {
     "@typescript-eslint/prefer-nullish-coalescing": "warn",
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/no-namespace": "warn",
-    "@typescript-eslint/no-redundant-type-constituents": "warn"
+    "@typescript-eslint/no-redundant-type-constituents": "warn",
+    "@typescript-eslint/dot-notation": "off"
   },
 }
 

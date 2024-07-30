@@ -9,6 +9,7 @@ const envDir = resolve('../..')
 
 export default defineConfig({
   main: {
+    logLevel: 'info',
     envDir,
     plugins: [
       externalizeDepsPlugin(),
@@ -19,12 +20,24 @@ export default defineConfig({
     build: {
       rollupOptions: {
         // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        external: new RegExp('/qrcode-terminal|yargs-parser/.*'),
+        external: [
+          // new RegExp('/qrcode-terminal|yargs-parser/.*'),
+
+          // Explicitly externalize modules if needed
+          'vite-plugin-node-polyfills/shims/process',
+        ],
+      },
+    },
+    resolve: {
+      alias: {
+        // Ensure that path-browserify is resolved correctly
+        'path-browserify': 'path-browserify/index.js',
       },
     },
   },
 
   renderer: {
+    logLevel: 'info',
     envDir,
 
     // wechaty-puppet-wechat4u: commonjs / nodePolyfills
@@ -32,6 +45,8 @@ export default defineConfig({
       alias: {
         '@renderer': resolve('src/renderer/src'),
         '.prisma/client/index-browser': '../../node_modules/.prisma/client/index-browser.js', // ref: https://github.com/prisma/prisma/issues/12504#issuecomment-1285883083
+        // Ensure that path-browserify is resolved correctly
+        'path-browserify': 'path-browserify/index.js',
       },
     },
     optimizeDeps: {
@@ -51,13 +66,18 @@ export default defineConfig({
       },
       rollupOptions: {
         // 实在无法用plugin去拯救，see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-        // external: new RegExp('/yargs-parser/.*')
+        external: [
+          // new RegExp('/qrcode-terminal|yargs-parser/.*'),
+
+          // Explicitly externalize modules if needed
+          'vite-plugin-node-polyfills/shims/process',
+        ],
       },
     },
     plugins: [
-      externalizeDepsPlugin(),
-      commonjs(), // for wechat4u
-      nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
+      // externalizeDepsPlugin(),
+      // commonjs(), // for wechat4u
+      // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
       wasm(), // for tiktoken
       react(),
     ],

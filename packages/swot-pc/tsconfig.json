@@ -1,22 +1,11 @@
 {
-  "include": [
-    "electron.vite.config.*", "src/**/*",
-  ],
+  "files": [],
   "references": [
     {
       "path": "./tsconfig.node.json"
     },
     {
       "path": "./tsconfig.web.json"
-    },
-    {
-      "path": "../common"
-    },
-    {
-      "path": "../spider"
-    },
-    {
-      "path": "../llm"
-    },
+    }
   ]
 }
