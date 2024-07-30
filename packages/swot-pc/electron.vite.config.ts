@@ -2,6 +2,8 @@ import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import commonjs from 'vite-plugin-commonjs'
 import wasm from 'vite-plugin-wasm'
+// const wasm = await import('vite-plugin-wasm')
+// import wasm = require('vite-plugin-wasm')
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import react from '@vitejs/plugin-react'
 
@@ -13,10 +15,15 @@ export default defineConfig({
     envDir,
     plugins: [
       externalizeDepsPlugin(),
-      // commonjs(), // for wechat4u
+      (commonjs as any).default || commonjs, // for wechat4u
       // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
       // wasm() // for tiktoken
     ],
+    build: {
+      rollupOptions: {
+        external: ['qrcode-terminal'],
+      },
+    },
   },
 
   preload: {
@@ -41,7 +48,8 @@ export default defineConfig({
       // externalizeDepsPlugin(),
       // commonjs(), // for wechat4u
       // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
-      wasm(), // for tiktoken
+      // wasm(), // for tiktoken
+      (wasm as any).default || wasm,
       react(),
     ],
   },

@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin, loadEnv } from 'electron-vite'
-import commonjs from 'vite-plugin-commonjs'
+// import commonjs from 'vite-plugin-commonjs'
 // import react from '@vitejs/plugin-react'
 // import wasm from 'vite-plugin-wasm'
 // import { nodePolyfills } from 'vite-plugin-node-polyfills'
@@ -11,32 +11,32 @@ export default defineConfig(({ mode }) => {
 
   return {
     main: {
-      plugins: [externalizeDepsPlugin()]
+      plugins: [externalizeDepsPlugin()],
     },
     preload: {
-      plugins: [externalizeDepsPlugin()]
+      plugins: [externalizeDepsPlugin()],
     },
     renderer: {
       define: {
-        'process.env': env
+        'process.env': env,
       },
       resolve: {
         alias: {
-          '@renderer': resolve('src/renderer/src')
-        }
+          '@renderer': resolve('src/renderer/src'),
+        },
       },
       build: {
         rollupOptions: {
           // see: https://github.com/vitejs/vite/discussions/7374#discussioncomment-2787001
-          external: new RegExp('/tiktoken|yargs-parser|file-box|wechaty-puppet-service/.*')
-        }
+          external: new RegExp('/tiktoken|yargs-parser|file-box|wechaty-puppet-service/.*'),
+        },
       },
       plugins: [
         // react(),
-        commonjs()
+        // commonjs.default(),
         // nodePolyfills({}), // for fs, path, ..., see: https://github.com/vitejs/vite/discussions/15415
         // wasm() // for tiktoken.wasm
-      ]
-    }
+      ],
+    },
   }
 })
