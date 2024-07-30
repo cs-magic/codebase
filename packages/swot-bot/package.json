@@ -7,7 +7,8 @@
   "exports": {
     ".": "./dist/esm/src/index.js",
     "./schema": "./dist/esm/src/schema/index.js",
-    "./backend": "./dist/esm/src/backend/index.js"
+    "./backend": "./dist/esm/src/backend/index.js",
+    "./*": "./*"
   },
   "scripts": {
     "dev:bot": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/main.ts | pino-pretty",

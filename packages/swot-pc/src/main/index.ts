@@ -2,12 +2,18 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
-// import { initServer } from '@cs-magic/swot-bot/dist/esm/src/backend/index.js'
+// import { initServer } from '@cs-magic/swot-bot/backend'
+// import { initServer } from '@cs-magic/swot-bot/dist/esm/src/backend/server.js'
+
+const startBackend = async () => {
+  const backend = await import('@cs-magic/swot-bot/backend')
+  void backend.initServer()
+}
 
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
-  // void initServer()
+  void startBackend()
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({

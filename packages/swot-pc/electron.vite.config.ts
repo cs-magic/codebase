@@ -22,7 +22,7 @@ export default defineConfig({
     ],
     build: {
       rollupOptions: {
-        external: ['qrcode-terminal'],
+        external: ['qrcode-terminal', '.prisma/client/default'],
       },
     },
   },

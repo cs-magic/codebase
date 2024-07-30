@@ -1910,7 +1910,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-bot@workspace:packages/swot-bot":
+"@cs-magic/swot-bot@workspace:^, @cs-magic/swot-bot@workspace:packages/swot-bot":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-bot@workspace:packages/swot-bot"
   dependencies:
@@ -28437,6 +28437,7 @@ __metadata:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"
     "@babel/register": "npm:^7.24.6"
+    "@cs-magic/swot-bot": "workspace:^"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"
     "@electron-toolkit/preload": "npm:^3.0.1"
