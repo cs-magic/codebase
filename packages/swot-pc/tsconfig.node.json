@@ -4,7 +4,7 @@
     "@electron-toolkit/tsconfig/tsconfig.node.json"
   ],
   "include": [
-    "electron.vite.config.*",
+    "electron.vite.config.ts",
     "src/main/**/*",
     "src/preload/**/*"
   ],
@@ -19,7 +19,7 @@
     "noUnusedLocals": false,
 
     // 要用 esm
-//    "module": "ESNext",
-//    "moduleResolution": "Node",
+//    "module": "NodeNext",
+    "moduleResolution": "Bundler",
   }
 }
