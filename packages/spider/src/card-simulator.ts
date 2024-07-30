@@ -1,5 +1,5 @@
 import {
-  getEnv,
+  env,
   IUserSummaryFilled,
   logger,
   sleep,
@@ -87,7 +87,6 @@ export class CardSimulator extends BaseSimulator {
   override async initPageSafe() {
     if (!this.page) {
       this.page = await super.initPageSafe()
-      const env = getEnv()
       const targetUrl = `${env?.NEXT_PUBLIC_APP_URL}/card/gen?renderType=backend`
       logger.info(`-- visiting: ${targetUrl}`)
       await this.page.goto(targetUrl)

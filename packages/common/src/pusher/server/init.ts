@@ -1,8 +1,6 @@
 import Pusher from "pusher"
+import { env } from "../../env/index.js"
 import type { IPusherServerConfig } from "../schema.js"
-import { getEnv } from "../../env/get-env.js"
-
-const env = getEnv()
 
 export const initPusherServer = (config: IPusherServerConfig) => {
   const { port, useTLS, cluster, host } = config

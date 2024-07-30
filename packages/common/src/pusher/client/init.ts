@@ -1,15 +1,13 @@
-import { default as PusherJS } from "pusher-js"
+import Pusher from "pusher-js"
+import { env } from "../../env/index.js"
 import type { IPusherServerConfig } from "../schema.js"
-import { getEnv } from "../../env/get-env.js"
-
-const env = getEnv()
 
 export const initPusherClient = (
   config: IPusherServerConfig,
   options?: {
     onPing?: () => void
     onPong?: () => void
-    onInit?: (client: PusherJS.default) => void
+    onInit?: (client: Pusher.default) => void
   },
 ) => {
   const { host: wsHost, port: wsPort, useTLS: forceTLS, cluster } = config
@@ -20,7 +18,7 @@ export const initPusherClient = (
    * 所以我们只能在 log 里去 hook ping
    * @param message
    */
-  PusherJS.default.log = (message: string) => {
+  Pusher.default.log = (message: string) => {
     // console.log({ message })
     const exists = (events: string[]) => events.some((s) => message.includes(s))
 
@@ -34,7 +32,7 @@ export const initPusherClient = (
   console.log("initializing pusher client")
   if (!env?.NEXT_PUBLIC_PUSHER_APP_KEY)
     throw new Error("no pusher app key in env")
-  const pusherClient = new PusherJS.default(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
+  const pusherClient = new Pusher.default(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,
     wsPort,

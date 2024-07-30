@@ -1,4 +1,5 @@
-import config_ from "./config.json" with { type: "json" }
+import config_ from "./config.json"
+// with { type: "json" }
 export const config = config_
 
 export * from "./api/index.js"

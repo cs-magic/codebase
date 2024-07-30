@@ -4,10 +4,8 @@
  * `yarn add net tls`
  */
 import { v20210111 } from "tencentcloud-sdk-nodejs-sms/tencentcloud/services/sms/v20210111"
-import { getEnv } from "../../../../../env/index.js"
+import { env } from "../../../../../env/index.js"
 import logger from "../../../../../log/index.js"
-
-const env = getEnv()
 
 const tencentSmsConfig = {
   signName: "邢健的个人博客",

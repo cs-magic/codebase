@@ -1,7 +1,7 @@
 {
   "extends": [
+    "../../tsconfig.dom.json",
     "@electron-toolkit/tsconfig/tsconfig.web.json",
-//    "../../tsconfig.dom.json"
   ],
 
   "include": [

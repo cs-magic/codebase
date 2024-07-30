@@ -1,15 +1,6 @@
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "../../../db/index.js"
 import { SMS_PROVIDER_ID } from "../../../sms.base.js"
-// // sb tsx 需要用 default
-
-// // sb tsx 需要用 default
-// import CredentialsModule from "next-auth/providers/credentials"
-// const Credentials = (
-//   "default" in CredentialsModule ? CredentialsModule.default : CredentialsModule
-// ) as typeof CredentialsModule
-//
-// console.log({ Credentials })
 
 export const SmsProvider = Credentials.default({
   id: SMS_PROVIDER_ID,

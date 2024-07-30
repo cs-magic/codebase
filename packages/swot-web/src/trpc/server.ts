@@ -1,3 +1,4 @@
+import { env } from "@cs-magic/common"
 import {
   createTRPCProxyClient,
   loggerLink,
@@ -8,13 +9,11 @@ import { observable } from "@trpc/server/observable"
 import { type TRPCErrorResponse } from "@trpc/server/rpc"
 import { headers } from "next/headers"
 import { cache } from "react"
-import "server-only"
 import { appRouter } from "../app/api/trpc"
 import { createTRPCContext } from "./context"
 import { transformer } from "./shared"
-import { getEnv } from "@cs-magic/common"
 
-const env = getEnv()
+import "server-only"
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

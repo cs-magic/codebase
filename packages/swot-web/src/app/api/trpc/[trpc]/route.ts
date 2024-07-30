@@ -3,9 +3,7 @@ import { type NextRequest } from "next/server"
 import { createTRPCContext } from "../../../../trpc/context"
 
 import { appRouter } from "../index"
-import { getEnv } from "@cs-magic/common"
-
-const env = getEnv()
+import { env } from "@cs-magic/common"
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

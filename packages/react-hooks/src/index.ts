@@ -1,5 +1,4 @@
 export * from "./store"
-export { useSearchParam, useEnhancedRouter } from "./nextjs"
 export { useAutoTruncate } from "./hooks/use-auto-truncate"
 export { useDisplayAutoHeight } from "./hooks/use-display-auto-height"
 export { useDisplayAutoScrollTop } from "./hooks/use-display-auto-scroll-top"
