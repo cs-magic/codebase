@@ -1,5 +1,6 @@
 import { ILlmMessage, logger, SEPARATOR_LINE } from "@cs-magic/common"
-import { safeCallLLM, trimMessages } from "@cs-magic/llm/server"
+import { safeCallLLM } from "@cs-magic/llm/dist/utils/safe-call-llm.js"
+import { trimMessages } from "@cs-magic/llm/dist/utils/trim-messages.js"
 
 import { FeatureMap, FeatureType } from "../../../schema/index.js"
 

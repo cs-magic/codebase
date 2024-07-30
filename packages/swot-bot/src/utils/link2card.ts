@@ -1,6 +1,9 @@
 import { IUserSummaryFilled, logger } from "@cs-magic/common"
 import { env } from "@cs-magic/common"
-import { BaseSimulator, CardSimulator } from "@cs-magic/spider"
+import {
+  BaseSimulator,
+  CardSimulator,
+} from "@cs-magic/common/dist/spider/index.js"
 import { wxmpUrl2preview } from "@cs-magic/swot-core"
 
 import { FileBox } from "file-box"

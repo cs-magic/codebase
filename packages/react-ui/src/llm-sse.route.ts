@@ -1,9 +1,8 @@
 import type { ITransEvent } from "@cs-magic/common"
+
+import { llmEncoder, StaticLLMManager } from "@cs-magic/llm"
 import { nanoid } from "nanoid"
 import { NextRequest } from "next/server"
-
-import { StaticLLMManager } from "@cs-magic/llm"
-import { llmEncoder } from "@cs-magic/llm"
 
 export async function GET(req: NextRequest) {
   const triggerId = new URL(req.url as string).searchParams.get("r") ?? ""
@@ -39,6 +38,7 @@ export async function GET(req: NextRequest) {
     id: clientId,
     // todo: onEvent in serialization approach like Redis?
     onEvent: async (sseEvent) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await write(sseEvent)
       if (sseEvent.event === "close") await writer.close()
     },

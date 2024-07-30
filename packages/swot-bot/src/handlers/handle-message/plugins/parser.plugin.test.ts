@@ -3,7 +3,7 @@ import {
   sampleWxmpArticleUrl,
   sampleWxmpArticleUrls,
 } from "@cs-magic/common"
-import { CardSimulator } from "@cs-magic/spider"
+import { CardSimulator } from "@cs-magic/common/dist/spider/card-simulator.js"
 import { wxmpUrl2preview } from "@cs-magic/swot-core"
 
 describe("test parser", () => {

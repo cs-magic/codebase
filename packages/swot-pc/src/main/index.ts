@@ -2,13 +2,12 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
-// import { initServer } from '@cs-magic/swot-bot/backend'
+import { initServer } from '@cs-magic/swot-bot/dist/backend/server.js'
 // import { initServer } from '@cs-magic/swot-bot/dist/esm/src/backend/server.js'
-
-const initServer = async () => {
-  const backend = await import('@cs-magic/swot-bot/backend')
-  void backend.initServer()
-}
+// const initServer = async () => {
+//   const backend = await import('@cs-magic/swot-bot/dist/backend/server.js')
+//   void backend.initServer()
+// }
 
 import icon from '../../resources/icon.png?asset'
 
@@ -23,7 +22,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false,
       devTools: true,
       // webSecurity: false // Disable web security to allow localhost connections (use cautiously)

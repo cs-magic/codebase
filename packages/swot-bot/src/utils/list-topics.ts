@@ -1,4 +1,4 @@
-import { prisma } from "@cs-magic/common/server"
+import { prisma } from "@cs-magic/common/dist/server.js"
 import { parseLimitedCommand } from "./parse-command.js"
 
 export const listTopics = async (convId: string) => {

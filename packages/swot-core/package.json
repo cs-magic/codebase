@@ -2,14 +2,18 @@
   "name": "@cs-magic/swot-core",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./*"
+  },
   "scripts": {
-    "build": "rm -rf dist && tsc -b",
+    "clean": "rm -rf dist",
+    "build": "tsc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/llm": "workspace:^",
-    "@cs-magic/wechat": "workspace:^"
+    "@cs-magic/llm": "workspace:^"
   }
 }

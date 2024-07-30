@@ -4,6 +4,7 @@
   "description": "SWOT Wechat Helper",
   "author": "cs-magic.com",
   "homepage": "https://cs-magic.com",
+  "type": "module",
   "main": "./out/main/index.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -21,11 +22,9 @@
     "typecheck": "npm run typecheck:node && npm run typecheck:web"
   },
   "dependencies": {
-    "@cs-magic/swot-bot": "workspace:^",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
-    "electron-updater": "^6.1.7",
-    "prisma": "^5.16.2"
+    "electron-updater": "^6.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.24.8",
@@ -41,6 +40,7 @@
     "@types/path-browserify": "^1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/yargs-parser": "^21",
     "@vitejs/plugin-react": "^4.3.1",
     "electron": "31.2.0",
     "electron-builder": "^24.13.3",

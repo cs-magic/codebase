@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/server"
+import { prisma } from "@cs-magic/common/dist/server.js"
 import { Contact, Room, Wechaty } from "wechaty"
 import {
   getRobustData,

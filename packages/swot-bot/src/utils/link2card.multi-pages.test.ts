@@ -1,6 +1,6 @@
 import { IUserSummaryFilled, logger, sleep } from "@cs-magic/common"
 import { env } from "@cs-magic/common"
-import { BaseSimulator } from "@cs-magic/spider"
+import { BaseSimulator } from "@cs-magic/common/dist/spider/base-simulator.js"
 
 import { random, range } from "lodash-es"
 

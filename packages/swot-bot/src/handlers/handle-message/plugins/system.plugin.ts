@@ -1,5 +1,5 @@
 import { llmModelTypeSchema } from "@cs-magic/llm"
-import { prisma } from "@cs-magic/common/server"
+import { prisma } from "@cs-magic/common/dist/server.js"
 import { FeatureMap } from "./../../../schema/index.js"
 import { FileBox } from "file-box"
 import { z } from "zod"

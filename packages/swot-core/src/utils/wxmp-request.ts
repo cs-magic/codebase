@@ -7,12 +7,12 @@ import {
   IUserSummary,
   withError,
 } from "@cs-magic/common"
-import { WxmpArticleSimulator } from "@cs-magic/spider"
 
 import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"
 import { z } from "zod"
 
+import { WxmpArticleSimulator } from "@cs-magic/common/dist/spider/index.js"
 import { RequestOptions } from "../schema/request.js"
 import { parseWxmpArticleUrl } from "./parse-wxmp-article-url.js"
 

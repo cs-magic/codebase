@@ -3,8 +3,8 @@
     "../../tsconfig.node.json"
   ],
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist/esm"
+    "rootDir": "src",
+    "outDir": "dist"
   },
   "include": [
     "./src/**/*",

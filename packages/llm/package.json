@@ -2,13 +2,15 @@
   "name": "@cs-magic/llm",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/src/index.js",
-    "./server": "./dist/src/server.js"
+    ".": "./dist/index.js",
+    "./server": "./dist/server.js",
+    "./*": "./*"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -b && copyfiles src/config/*.yml dist",
+    "clean": "rm -rf dist",
+    "build": "copyfiles -u1 src/config/*.yml dist && tsc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {

@@ -19,7 +19,6 @@
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
     "@cs-magic/swot-core": "workspace:^",
-    "@cs-magic/wechat": "workspace:^",
     "@emotion/react": "^11.11.4",
     "@hookform/resolvers": "^3.3.4",
     "@langchain/core": "^0.1.32",

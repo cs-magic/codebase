@@ -48,7 +48,7 @@ export const initServer = () => {
       async (socket /* WebSocket */, req /* FastifyRequest */) => {
         // The WebSocket connection is established at this point, ref: https://chat.openai.com/c/41683f6c-265f-4a36-ae33-4386970bd14c
 
-        const id = genNanoId()
+        const id = await genNanoId()
 
         socket.id = id
 

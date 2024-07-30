@@ -1,7 +1,7 @@
 {
   "extends": [
+    "@electron-toolkit/tsconfig/tsconfig.node.json",
     "../../tsconfig.node.json",
-    "@electron-toolkit/tsconfig/tsconfig.node.json"
   ],
   "include": [
     "electron.vite.config.ts",
@@ -20,6 +20,6 @@
 
     // 要用 esm
 //    "module": "NodeNext",
-    "moduleResolution": "Bundler",
+//    "moduleResolution": "Bundler",
   }
 }

@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { safeCallLLM } from "@cs-magic/llm/server"
+import { safeCallLLM } from "@cs-magic/llm/dist/utils/safe-call-llm.js"
 import last from "lodash/last.js"
 import { types } from "wechaty"
 import { FileBox } from "file-box"

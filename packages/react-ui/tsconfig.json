@@ -3,25 +3,24 @@
     "../../tsconfig.dom.json"
   ],
   "compilerOptions": {
-    "composite": true,
     "outDir": "dist",
+    "rootDir": "src",
 
-    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../common"
     },
     {
-      "path": "../react-hooks"
-    },
-    {
       "path": "../llm"
     },
+    {
+      "path": "../react-hooks"
+    }
   ],
 }

@@ -1,44 +1,37 @@
 {
   // ref: https://www.totaltypescript.com/tsconfig-cheat-sheet
   "compilerOptions": {
-    /* Base Options: */
+    /* If transpiling with TypeScript: */
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "sourceMap": true,
+    //    /* If NOT transpiling with TypeScript: */
+    //    "module": "preserve",
+    //    "noEmit": true,
+
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": false,
     "resolveJsonModule": true,
+    "lib": [
+      "ESNext"
+    ],
+    /* Base Options: */
+    "allowJs": false,
     "moduleDetection": "force",
     "isolatedModules": true,
-
     //    "verbatimModuleSyntax": true,  // 是否要限制 导入 type
 
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    /* If transpiling with TypeScript: */
-    "module": "NodeNext",
-    "outDir": "dist",
-    "sourceMap": true,
-    //    /* If NOT transpiling with TypeScript: */
-    //    "module": "preserve",
-    //    "noEmit": true,
-
     /* AND if you're building for a library: */
     "declaration": true,
     /* AND if you're building for a library in a monorepo: */
     "composite": true,
+    "incremental": true,
     "declarationMap": true,
-    /* If your code doesn't run in the DOM: */
-    "lib": [
-      "es2022"
-    ],
-    //    /* If your code runs in the DOM: */
-    //    "lib": ["es2022", "dom", "dom.iterable"],
-
-    //    "module": "NodeNext",
-    //    "moduleResolution": "NodeNext",
-    "moduleResolution": "NodeNext",
     "ignoreDeprecations": "5.0",
     "traceResolution": false,
     "noLib": false,
@@ -54,11 +47,9 @@
     "allowSyntheticDefaultImports": true,
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
-    "noUnusedParameters": false,
-
+    "noUnusedParameters": false
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "files": [],
+  "include": [],
+  "exclude": ["node_modules", "dist"],
 }

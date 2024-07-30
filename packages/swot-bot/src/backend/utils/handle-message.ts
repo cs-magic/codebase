@@ -1,7 +1,7 @@
 import path from "path"
 
 import { formatError, logger } from "@cs-magic/common"
-import { dumpFile } from "@cs-magic/common/server"
+import { dumpFile } from "@cs-magic/common/dist/server.js"
 
 import { IWechatBotTransfer } from "../../schema/index.js"
 import { getConvPreference, parseLimitedCommand } from "../../utils/index.js"

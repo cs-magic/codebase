@@ -14,7 +14,7 @@ export const initPusherServer = (config: IPusherServerConfig) => {
 
   return new Pusher({
     host,
-    port: port === undefined ? port : port.toString(),
+    port: port === undefined ? undefined : port.toString(),
     useTLS,
     cluster,
 

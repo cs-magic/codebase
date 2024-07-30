@@ -6,7 +6,8 @@ import {
   moment,
   SEPARATOR_LINE,
 } from "@cs-magic/common"
-import qrcodeTerminal from "qrcode-terminal" // cjs package
+// Legacy octal escape is not permitted in strict mode
+// import qrcodeTerminal from "qrcode-terminal" // cjs package
 import { ScanStatus, Wechaty } from "wechaty"
 
 import { formatTalkerFromMessage, initBotContext } from "../utils/index.js"
@@ -53,7 +54,9 @@ export const handleWechatyBot = (bot: Wechaty) => {
       logger.info(
         `onScan (status=${ScanStatus[status]}, data=${formatString(data ?? "", 20)}), scan the following qrcode or from wechaty official: https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`,
       )
-      qrcodeTerminal.generate(qrcode, { small: true })
+      // Build Error: Legacy octal escape is not permitted in strict mode
+      // const qrcodeTerminal = await import("qrcode-terminal")
+      // qrcodeTerminal.generate(qrcode, { small: true })
     })
 
     .on("login", async (user) => {

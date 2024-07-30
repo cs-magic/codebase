@@ -11,14 +11,4 @@ export {
   getOssSignatureUrl,
 } from "./oss/utils.server.js"
 
-export {
-  ProfileUpdateProvider,
-  WechatProvider,
-  WechatAuth,
-  authOptions,
-  SmsProvider,
-  $sendSms,
-  $sendSmsViaTencent,
-  $sendSmsViaAli,
-  getServerAuthSession,
-} from "./auth/server.js"
+export { $sendSms, $sendSmsViaTencent, $sendSmsViaAli } from "./auth/server.js"

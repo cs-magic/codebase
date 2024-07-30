@@ -7,7 +7,7 @@ import {
   NotImplementedError,
   wechatMessageDetailSchema,
 } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/server"
+import { prisma } from "@cs-magic/common/dist/server.js"
 
 import set from "lodash/set.js"
 import { Message, Sayable, type Wechaty } from "wechaty"

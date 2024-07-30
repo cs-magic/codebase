@@ -4,7 +4,7 @@ import {
   parseTitleFromWechatUrlMessage,
   parseUrlFromWechatUrlMessage,
 } from "@cs-magic/common"
-import { CardSimulator } from "@cs-magic/spider"
+import { CardSimulator } from "@cs-magic/common/dist/spider/card-simulator.js"
 import { z } from "zod"
 
 import { FeatureMap, FeatureType } from "../../../schema/index.js"

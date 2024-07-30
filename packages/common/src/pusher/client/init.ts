@@ -7,7 +7,7 @@ export const initPusherClient = (
   options?: {
     onPing?: () => void
     onPong?: () => void
-    onInit?: (client: Pusher.default) => void
+    onInit?: (client: Pusher) => void
   },
 ) => {
   const { host: wsHost, port: wsPort, useTLS: forceTLS, cluster } = config
@@ -18,7 +18,7 @@ export const initPusherClient = (
    * 所以我们只能在 log 里去 hook ping
    * @param message
    */
-  Pusher.default.log = (message: string) => {
+  Pusher.log = (message: string) => {
     // console.log({ message })
     const exists = (events: string[]) => events.some((s) => message.includes(s))
 
@@ -32,7 +32,7 @@ export const initPusherClient = (
   console.log("initializing pusher client")
   if (!env?.NEXT_PUBLIC_PUSHER_APP_KEY)
     throw new Error("no pusher app key in env")
-  const pusherClient = new Pusher.default(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
+  const pusherClient = new Pusher(env?.NEXT_PUBLIC_PUSHER_APP_KEY, {
     cluster,
     wsHost,
     wsPort,

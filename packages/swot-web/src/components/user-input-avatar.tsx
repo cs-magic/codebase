@@ -1,4 +1,4 @@
-import { uploadFile } from "@cs-magic/common/server"
+import { uploadFile } from "@cs-magic/common/dist/server.js"
 import { Label } from "@cs-magic/react-ui"
 import { UserAvatar } from "./user-avatar"
 import { useDraftSession } from "@cs-magic/react-hooks"

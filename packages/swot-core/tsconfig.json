@@ -3,13 +3,12 @@
     "../../tsconfig.node.json"
   ],
   "compilerOptions": {
-    "composite": true,
     "outDir": "dist",
+    "rootDir": "src"
   },
   "include": ["src"],
   "references": [
     {"path": "../common"},
     {"path": "../llm"},
-    {"path": "../wechat"},
   ]
 }

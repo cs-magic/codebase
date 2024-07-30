@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -b && tsc-alias",
+    "clean": "rm -rf dist",
+    "build": "tsc -b && tsc-alias",
     "postinstall": "yarn build"
   },
   "repository": {

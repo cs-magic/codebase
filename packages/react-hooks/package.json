@@ -1,15 +1,16 @@
 {
   "name": "@cs-magic/react-hooks",
   "type": "module",
-  "main": "./dist/esm/src/index.js",
+  "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/esm/src/index.js",
-    "./nextjs": "./dist/esm/src/nextjs/index.js",
-    "./server": "./dist/esm/src/server.js"
+    ".": "./dist/index.js",
+    "./nextjs": "./dist/nextjs/index.js",
+    "./server": "./dist/server.js"
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "build": "rm -rf dist && tsc -b",
+    "clean": "rm -rf dist",
+    "build": "tsc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {
