@@ -15,7 +15,8 @@ export default defineConfig({
     envDir,
     plugins: [
       externalizeDepsPlugin(),
-      (commonjs as any).default || commonjs, // for wechat4u
+      commonjs(),
+      // (commonjs as any).default || commonjs, // for wechat4u
       // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
       // wasm() // for tiktoken
     ],
@@ -48,8 +49,7 @@ export default defineConfig({
       // externalizeDepsPlugin(),
       // commonjs(), // for wechat4u
       // nodePolyfills({}), // for file-box|/wechaty-puppet-service, ..., see: https://github.com/vitejs/vite/discussions/15415
-      // wasm(), // for tiktoken
-      (wasm as any).default || wasm,
+      wasm(), // for tiktoken
       react(),
     ],
   },

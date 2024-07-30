@@ -18,9 +18,8 @@
 
     "noUnusedLocals": false,
 
-//    "module": "NodeNext",
-//    "moduleResolution": "NodeNext",
-
-    "esModuleInterop": true
+    // 要用 esm
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
   }
 }
