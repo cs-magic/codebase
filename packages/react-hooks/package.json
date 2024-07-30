@@ -4,7 +4,8 @@
   "main": "./dist/esm/src/index.js",
   "exports": {
     ".": "./dist/esm/src/index.js",
-    "./nextjs": "./dist/esm/src/nextjs/index.js"
+    "./nextjs": "./dist/esm/src/nextjs/index.js",
+    "./server": "./dist/esm/src/server.js"
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {

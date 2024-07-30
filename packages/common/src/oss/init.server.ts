@@ -1,11 +1,9 @@
 import OSS from "ali-oss"
-import { OSS_BUCKET_NAME, OSS_REGION } from "../const.js"
-import { getEnv } from "../../env/get-env.js"
+import { env } from "../env/index.js"
+import { OSS_BUCKET_NAME, OSS_REGION } from "./const.js"
 
 // ref: https://help.aliyun.com/zh/oss/developer-reference/initialization-10#783f1f604f969
 export const initAliOss = () => {
-  const env = getEnv()
-
   if (!env?.ALI_AK || !env?.ALI_SK) throw new Error("no ali key error")
 
   return new OSS({

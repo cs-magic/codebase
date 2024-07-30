@@ -6,6 +6,18 @@
     },
     {
       "path": "./tsconfig.web.json"
+    },
+    {
+      "path": "../swot-core"
+    },
+    {
+      "path": "../swot-bot"
+    },
+    {
+      "path": "../react-hooks",
+    },
+    {
+      "path": "../react-ui"
     }
   ]
 }

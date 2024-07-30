@@ -47,7 +47,8 @@ const config = {
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/no-namespace": "warn",
     "@typescript-eslint/no-redundant-type-constituents": "warn",
-    "@typescript-eslint/dot-notation": "off"
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
 }
 

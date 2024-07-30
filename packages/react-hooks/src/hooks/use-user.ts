@@ -2,7 +2,7 @@
 
 import { IUserSummary } from "@cs-magic/common"
 import { useSession } from "next-auth/react"
-import { userImageAtom, userNameAtom } from "./store"
+import { userImageAtom, userNameAtom } from "../store"
 import { useAtom } from "jotai"
 import { useEffect } from "react"
 

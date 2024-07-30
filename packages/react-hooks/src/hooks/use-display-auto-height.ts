@@ -1,4 +1,4 @@
-import { uiInnerHeight, uiViewportHeight } from "./store"
+import { uiInnerHeight, uiViewportHeight } from "../store"
 import { isServer } from "@cs-magic/common"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useState } from "react"

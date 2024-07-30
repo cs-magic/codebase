@@ -10,7 +10,7 @@ import {
   pusherLatenciesAtom,
   pusherLatencyAtom,
   pusherServerIdAtom,
-} from "./store"
+} from "../store"
 import { sum } from "lodash-es"
 
 export const usePusherClient = () => {
