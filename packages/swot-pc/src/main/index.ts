@@ -2,12 +2,12 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
-import { initServer } from '@cs-magic/swot-bot/backend'
+// import { initServer } from '@cs-magic/swot-bot/dist/esm/src/backend/index.js'
 
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
-  void initServer()
+  // void initServer()
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -17,7 +17,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.mjs'),
+      preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
       devTools: true,
       // webSecurity: false // Disable web security to allow localhost connections (use cautiously)

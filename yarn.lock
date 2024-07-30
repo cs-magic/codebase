@@ -1830,6 +1830,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/prisma@workspace:packages/prisma":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/prisma@workspace:packages/prisma"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/react-hooks@workspace:^, @cs-magic/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@cs-magic/react-hooks@workspace:packages/react-hooks"

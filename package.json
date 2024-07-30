@@ -14,10 +14,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "lint": "echo 'skip eslint'",
-    "db:generate": "prisma generate",
-    "electron:postinstall": "electron-builder install-app-deps",
-    "postinstall": "run-p db:generate electron:postinstall"
+    "lint": "echo 'skip eslint'"
   },
   "resolutions": {
     "jimp": "0.22.12",

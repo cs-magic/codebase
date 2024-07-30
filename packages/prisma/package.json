@@ -1,0 +1,10 @@
+{
+  "name": "@cs-magic/prisma",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "db:generate": "npx prisma generate",
+    "postinstall": "yarn db:generate"
+  }
+}

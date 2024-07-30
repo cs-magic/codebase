@@ -2,7 +2,7 @@
 **/*.memory-card.json
 
 # zod
-prisma/generated
+packages/prisma/generated
 
 **/.logs
 **/.next
@@ -24,8 +24,8 @@ prisma/generated
 /coverage
 
 # database
-/prisma/db.sqlite
-/prisma/db.sqlite-journal
+/packages/prisma/db.sqlite
+/packages/prisma/db.sqlite-journal
 
 # next.js
 /.next/

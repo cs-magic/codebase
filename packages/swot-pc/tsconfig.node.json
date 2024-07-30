@@ -19,7 +19,7 @@
     "noUnusedLocals": false,
 
     // 要用 esm
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+//    "module": "ESNext",
+//    "moduleResolution": "Node",
   }
 }
