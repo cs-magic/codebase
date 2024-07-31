@@ -20,7 +20,7 @@ import {
   smsSendCodePayloadAtom,
   smsStageAtom,
   uiLoadingAlertDialogAtom,
-} from "../store"
+} from "@cs-magic/react-hooks"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)

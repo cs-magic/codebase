@@ -1,16 +1,14 @@
-"use server"
-
 import {
   extractFirstUrl,
   isWxmpArticleUrl,
   logger,
   NotImplementedError,
 } from "@cs-magic/common"
-import { wxmpUrl2preview } from "@cs-magic/swot-backend/bot"
 import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
 } from "@cs-magic/swot-backend/schema"
+import { wxmpUrl2preview } from "@cs-magic/swot-backend/bot"
 
 /**
  * 从用户输入的 url 中返回解析出的结构

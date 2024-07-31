@@ -5,7 +5,8 @@ import { formatError, logger } from "@cs-magic/common"
 import { IWechatBotTransfer } from "../../schema"
 
 import { BotCommandType, botCommandTypeSchema } from "../../schema/api-commands"
-import { IContext } from "../../schema/api-context"
+
+import { IContext } from "../schema"
 import { startBot } from "./start-bot.js"
 import { syncClients } from "./sync-clients.js"
 import { getConvPreference, parseLimitedCommand } from "../../bot/utils"

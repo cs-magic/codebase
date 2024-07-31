@@ -11,7 +11,7 @@ import {
 import { Metadata, type Viewport } from "next"
 import { Inter } from "next/font/google"
 import { Dev } from "../components/dev"
-import GlobalHooksProviders from "../providers/global.provider"
+import GlobalHooksProviders from "./global.provider"
 import { TRPCReactProvider } from "../trpc/react"
 import { Suspense } from "react"
 

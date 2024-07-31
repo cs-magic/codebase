@@ -2,6 +2,7 @@ import { sampleWxmpArticleComment } from "@cs-magic/common"
 import { ICardPlatform } from "./card"
 import { RequestOptions } from "./request"
 import { SummaryOptions } from "./summary"
+import { Card, LlmResponse } from "@prisma/client"
 
 export type IWxmpArticleUrlParsed = {
   platformId?: string
@@ -52,3 +53,4 @@ export type IWechatArticleStat = {
   biz: string
 }
 export type IWechatArticleComment = typeof sampleWxmpArticleComment
+export type FetchWxmpArticleRes = { article: Card; llmResponse: LlmResponse }

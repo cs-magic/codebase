@@ -3,9 +3,9 @@ import { Check } from "lucide-react"
 import Image from "next/image"
 import React, { HTMLAttributes } from "react"
 
-import { FlexContainer } from "./flex-container.js"
-import { Loading } from "./loading.js"
-import { AspectRatio } from "@/shadcn/ui/aspect-ratio.js"
+import { FlexContainer } from "./flex-container"
+import { Loading } from "./loading"
+import { AspectRatio } from "@/shadcn/ui/aspect-ratio"
 
 export const FileComp = ({
   file,

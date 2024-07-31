@@ -2,15 +2,15 @@
 
 import { Atom, PrimitiveAtom, useAtom } from "jotai"
 import React from "react"
-import { LabelLine } from "./label-line.js"
+import { LabelLine } from "./label-line"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shadcn/ui/select.js"
-import { Switch } from "@/shadcn/ui/switch.js"
+} from "@/shadcn/ui/select"
+import { Switch } from "@/shadcn/ui/switch"
 
 /**
  * @param atom

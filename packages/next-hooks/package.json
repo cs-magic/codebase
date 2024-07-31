@@ -1,5 +1,5 @@
 {
-  "name": "@cs-magic/swot-frontend",
+  "name": "@cs-magic/next-hooks",
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
@@ -7,15 +7,12 @@
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rm -rf dist",
     "build": "tspc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
-    "@cs-magic/next-hooks": "workspace:^",
-    "@cs-magic/react-hooks": "workspace:^",
-    "@cs-magic/swot-backend": "workspace:^",
     "ansicolors": "^0.3.2",
     "jotai": "^2.9.1",
     "lodash-es": "^4.17.21",
@@ -24,8 +21,7 @@
     "pusher-js": "^8.4.0-rc2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sonner": "^1.5.0",
-    "wechaty-puppet": "workspace:^"
+    "sonner": "^1.5.0"
   },
   "devDependencies": {
     "@types/ansicolors": "^0",

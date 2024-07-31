@@ -1,7 +1,4 @@
 export * from "./api-commands"
-export * from "./api-context"
-export * from "./bot-context"
-export * from "./bot-preference"
 export * from "./bot-preference"
 export * from "./bot-scan"
 export * from "./bot-utils"

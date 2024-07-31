@@ -3,13 +3,14 @@
     "../../tsconfig.dom.json"
   ],
   "compilerOptions": {
-    "outDir": "dist",
     "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
 
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
   },
   "include": ["./src/**/*"],
   "references": [

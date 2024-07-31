@@ -5,7 +5,7 @@ import {
   smsCodeCurCountdownSecondsAtom,
   userPhoneAtom,
 } from "@cs-magic/react-hooks"
-import { useSmsSendCode } from "@cs-magic/react-hooks/server"
+import { useSmsSendCode } from "@cs-magic/next-hooks"
 
 import {
   ButtonWithLoading,

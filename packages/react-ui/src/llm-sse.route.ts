@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
   const llmManager = new StaticLLMManager(triggerId)
 
-  // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next.js/discussions/61972#discussioncomment-8545109
+  // NOTE: 不这么做服务器会报错，ref: https://github.com/vercel/next/discussions/61972#discussioncomment-8545109
   req.signal.onabort = async () => {
     console.log(`Client(id=${clientId}) aborted connection.`)
 

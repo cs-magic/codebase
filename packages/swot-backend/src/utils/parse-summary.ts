@@ -1,4 +1,4 @@
-import { ISummaryParsed } from "../../schema/summary"
+import { ISummaryParsed } from "../schema"
 
 /**
  *  regex of `/ms`: ref:  https://stackoverflow.com/a/66001191/9422455

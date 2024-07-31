@@ -1,7 +1,7 @@
 "use client"
 
 import { IUploadFile } from "@cs-magic/common"
-import { useUploadFiles } from "@cs-magic/react-hooks/server"
+import { useUploadFiles } from "@cs-magic/react-hooks"
 import { VerticalAspectRatio } from "@cs-magic/react-ui"
 import { ButtonWithLoading } from "@cs-magic/react-ui"
 import { FileComp } from "@cs-magic/react-ui"

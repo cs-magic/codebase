@@ -3,8 +3,10 @@
 import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
 import { prisma } from "@cs-magic/common/dist/server"
 
-import { GenWxmpArticleCardFetchOptions } from "../../schema/wxmp-article"
-import { FetchWxmpArticleRes } from "./wxmp-article/fetch/fetch-wxmp-article"
+import {
+  FetchWxmpArticleRes,
+  GenWxmpArticleCardFetchOptions,
+} from "../../schema/wxmp-article"
 import { md2summary } from "./wxmp-article/fetch/md2summary"
 import { wxmpRequest } from "./wxmp-request"
 import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"

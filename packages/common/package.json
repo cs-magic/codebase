@@ -10,7 +10,7 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc -b",
+    "build": "tspc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {

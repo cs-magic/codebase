@@ -5,13 +5,10 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "tsc -b && tsc-alias",
+    "prepare": "ts-patch install -s",
+    "clean": "rimraf dist",
+    "build": "tspc",
     "postinstall": "yarn build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MarkShawn2020/codebase.git"
   },
   "dependencies": {
     "@cs-magic/common": "workspace:^",
@@ -50,6 +47,7 @@
     "@types/react-dom": "^18.3.0",
     "eslint": "*",
     "eslint-config-next": "^14.2.5",
-    "tailwindcss": "^3.4.7"
+    "tailwindcss": "^3.4.7",
+    "tsc-alias": "^1.8.10"
   }
 }

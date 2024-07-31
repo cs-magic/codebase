@@ -5,9 +5,10 @@ import {
   LogLevel,
   SEPARATOR_LINE,
 } from "@cs-magic/common"
-import { BotData, IBotContext, QueueTask } from "../../schema/index.js"
+import { QueueTask } from "../../schema/index.js"
 import { Wechaty } from "wechaty"
 import yaml from "js-yaml"
+import { BotData, IBotContext } from "../schema"
 
 import { getConvPreference } from "./get-conv-preference.js"
 import { SenderQueue } from "./sender-queue.js"

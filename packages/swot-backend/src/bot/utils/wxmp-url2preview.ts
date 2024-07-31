@@ -1,3 +1,5 @@
+"use server"
+
 import {
   logger,
   IUserSummary,
@@ -8,7 +10,7 @@ import { ILlmRes } from "@cs-magic/llm"
 
 import { ICardInnerPreview, IMedia } from "../../schema/card"
 import { GenWxmpArticleCardFetchOptions } from "../../schema/wxmp-article"
-import { parseSummary } from "./parse-summary"
+import { parseSummary } from "../../utils/parse-summary"
 import { fetchWxmpArticle } from "./wxmp-fetch"
 
 export const wxmpUrl2preview = async (

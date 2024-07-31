@@ -3,14 +3,12 @@
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./nextjs": "./dist/nextjs/index.js",
-    "./server": "./dist/server.js"
+    ".": "./dist/index.js"
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc -b",
+    "build": "tspc -b",
     "postinstall": "yarn build"
   },
   "dependencies": {
@@ -18,8 +16,6 @@
     "ansicolors": "^0.3.2",
     "jotai": "^2.9.1",
     "lodash-es": "^4.17.21",
-    "next": "^14.2.5",
-    "next-auth": "^4.24.7",
     "pusher-js": "^8.4.0-rc2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

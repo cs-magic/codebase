@@ -1,7 +1,7 @@
 import React, { ComponentProps, forwardRef } from "react"
 
 import { cn } from "@cs-magic/common"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip.js"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/ui/tooltip"
 
 export const IconContainer = forwardRef<
   HTMLButtonElement,

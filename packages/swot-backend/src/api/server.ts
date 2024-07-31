@@ -6,7 +6,7 @@ import remove from "lodash/remove.js"
 
 import { logger } from "@cs-magic/common"
 
-import { IContext } from "../schema/api-context"
+import { IContext } from "./schema"
 
 import { startBot } from "./utils/start-bot.js"
 import { syncClients } from "./utils/sync-clients.js"

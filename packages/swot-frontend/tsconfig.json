@@ -3,18 +3,20 @@
     "../../tsconfig.dom.json"
   ],
   "compilerOptions": {
-    "composite": true,
+    "rootDir": "src",
     "outDir": "dist",
-    "rootDir": "src"
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
   "include": [
     "./src/**/*",
     "./src/**/*.json"
   ],
   "references": [
-    {
-      "path": "../common"
-    },
-
+    {"path": "../common"},
+    {"path": "../swot-backend"},
+    {"path": "../next-auth"},
+    {"path": "../next-hooks"},
+    {"path": "../react-hooks"},
+    {"path": "../react-ui"},
   ]
 }

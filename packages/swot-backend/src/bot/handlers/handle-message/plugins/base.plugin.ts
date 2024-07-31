@@ -9,7 +9,7 @@ import {
 } from "@cs-magic/common"
 import { prisma } from "@cs-magic/common/dist/server.js"
 
-import set from "lodash/set.js"
+import set from "lodash/set"
 import { Message, Sayable, type Wechaty } from "wechaty"
 import { deserializeMsg, puppetVersion } from "wechaty-puppet"
 

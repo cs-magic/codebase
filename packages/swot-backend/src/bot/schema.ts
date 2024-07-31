@@ -1,17 +1,14 @@
-import { Job } from "node-schedule"
-
-import { Message, Sayable } from "wechaty"
-
 import { LogLevel } from "@cs-magic/common"
-
-import { QueueTask } from "./common"
-import { LlmScenario } from "./bot-utils"
+import { Message, Sayable } from "wechaty"
+import { LlmScenario, QueueTask } from "../schema"
+import { Job } from "node-schedule"
 
 export type BotData = {
   name: string
   version: string
   startTime: number
   wxid: string
+  // todo: job interface to be pure?
   jobs: Job[]
   puppet: {
     name: string

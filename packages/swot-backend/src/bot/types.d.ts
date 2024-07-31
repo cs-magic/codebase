@@ -1,8 +1,8 @@
 import { type WechatyBuilder } from "wechaty"
-import { Message as MessagePayload } from "wechaty-puppet/payloads"
-import { IBotContext } from "./schema/index.js"
+import { Message as MessagePayload } from "wechaty-puppet/dist/esm/src/mods/payloads"
+import { IBotContext } from "./index"
 
-declare module "wechaty-puppet/payloads" {
+declare module "wechaty-puppet/dist/esm/src/mods/payloads" {
   /**
    * todo: extend not works, @see: https://chat.openai.com/c/3360abde-c640-4e31-878a-a5be82e2ce07
    */

@@ -1,6 +1,7 @@
 import { logger } from "@cs-magic/common"
 import { createWechatyBot } from "../../bot"
-import { IContext } from "../../schema/api-context"
+
+import { IContext } from "../schema"
 import { syncClients } from "./sync-clients.js"
 import { transferMessage } from "./transfer-message.js"
 

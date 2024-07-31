@@ -1,4 +1,4 @@
-import { IContext } from "../../schema/api-context"
+import { IContext } from "../schema"
 import { transferMessage } from "./transfer-message.js"
 
 export const syncClients = (context: IContext) => {
