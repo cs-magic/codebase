@@ -1,4 +1,4 @@
-import { CardPreviewEngineType } from "@cs-magic/swot-core"
+import { CardPreviewEngineType } from "@cs-magic/swot-bot/core"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 

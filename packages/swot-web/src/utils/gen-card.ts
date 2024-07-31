@@ -10,7 +10,7 @@ import {
   GenWxmpArticleCardFetchOptions,
   ICardInnerPreview,
   wxmpUrl2preview,
-} from "@cs-magic/swot-core"
+} from "@cs-magic/swot-bot/core"
 
 /**
  * 从用户输入的 url 中返回解析出的结构

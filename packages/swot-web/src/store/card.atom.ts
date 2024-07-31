@@ -1,5 +1,5 @@
 import { getOssUrl, parseJsonSafe } from "@cs-magic/common"
-import { ICardInnerPreview, ICardPreview } from "@cs-magic/swot-core"
+import { ICardInnerPreview, ICardPreview } from "@cs-magic/swot-bot/core"
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { getOssKeyWithSuffix } from "../utils/get-oss-key-with-suffix"

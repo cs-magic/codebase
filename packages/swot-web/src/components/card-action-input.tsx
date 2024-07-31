@@ -1,5 +1,5 @@
 import { logger } from "@cs-magic/common"
-import { Action1Type } from "@cs-magic/swot-core"
+import { Action1Type } from "@cs-magic/swot-bot/core"
 import { useAtom, useSetAtom } from "jotai"
 import { cardArticleUrlAtom, cardInnerInputAtom } from "../store/card.atom"
 import { cardGenOptionsAtom } from "../store/card.gen.atom"

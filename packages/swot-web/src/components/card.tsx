@@ -5,7 +5,7 @@ import { useSearchParam } from "@cs-magic/react-hooks"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
-} from "@cs-magic/swot-core"
+} from "@cs-magic/swot-bot/core"
 import { AtomSelector, Separator, StandardCard } from "@cs-magic/react-ui"
 import { useAtomValue } from "jotai"
 import React from "react"

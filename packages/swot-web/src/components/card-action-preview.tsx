@@ -1,6 +1,6 @@
 "use client"
 
-import { Action2Type, ActionType } from "@cs-magic/swot-core"
+import { Action2Type, ActionType } from "@cs-magic/swot-bot/core"
 import { cardOssAtom, cardPreviewAtom } from "../store/card.atom"
 import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 import * as html2image from "html-to-image"

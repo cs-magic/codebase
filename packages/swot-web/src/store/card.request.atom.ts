@@ -1,5 +1,5 @@
-import { RequestApproachType } from "@cs-magic/swot-core"
-import { RequestOptions } from "@cs-magic/swot-core"
+import { RequestApproachType } from "@cs-magic/swot-bot/core"
+import { RequestOptions } from "@cs-magic/swot-bot/core"
 import { atom, PrimitiveAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 import { BackendType } from "@cs-magic/llm"

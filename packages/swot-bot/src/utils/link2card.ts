@@ -4,10 +4,10 @@ import {
   BaseSimulator,
   CardSimulator,
 } from "@cs-magic/common/dist/spider/index.js"
-import { wxmpUrl2preview } from "@cs-magic/swot-core"
-
 import { FileBox } from "file-box"
+
 import { IWechatPreference } from "../schema/index.js"
+import { wxmpUrl2preview } from "../core/index.js"
 
 const uniParser = new CardSimulator()
 const simulator = new BaseSimulator("playwright", {

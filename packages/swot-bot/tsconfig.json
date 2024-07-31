@@ -9,8 +9,6 @@
 
   "include": ["src/**/*"],
   "references": [
-    {
-      "path": "../swot-core"
-    }
+
   ]
 }

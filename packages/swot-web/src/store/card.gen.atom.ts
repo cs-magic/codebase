@@ -1,4 +1,4 @@
-import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-core"
+import { GenWxmpArticleCardFetchOptions } from "@cs-magic/swot-bot/core"
 import { atom } from "jotai"
 import {
   cardFetchCommentsEnabledAtom,

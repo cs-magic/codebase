@@ -1942,7 +1942,6 @@ __metadata:
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/swot-core": "workspace:^"
     "@fastify/websocket": "npm:^10.0.1"
     "@types/node-schedule": "npm:^2.1.7"
     fastify: "npm:^4.28.1"
@@ -1955,15 +1954,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-core@workspace:^, @cs-magic/swot-core@workspace:packages/swot-core":
-  version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-core@workspace:packages/swot-core"
-  dependencies:
-    "@cs-magic/common": "workspace:^"
-    "@cs-magic/llm": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
 "@cs-magic/swot-web@workspace:packages/swot-web":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-web@workspace:packages/swot-web"
@@ -1973,7 +1963,6 @@ __metadata:
     "@auth/prisma-adapter": "npm:^1.4.0"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
-    "@cs-magic/swot-core": "workspace:^"
     "@emotion/react": "npm:^11.11.4"
     "@hookform/resolvers": "npm:^3.3.4"
     "@langchain/core": "npm:^0.1.32"

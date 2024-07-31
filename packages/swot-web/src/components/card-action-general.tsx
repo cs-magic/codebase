@@ -2,7 +2,7 @@
 
 import { ButtonWithLoading } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
-import { ActionType } from "@cs-magic/swot-core"
+import { ActionType } from "@cs-magic/swot-bot/core"
 import { atom, PrimitiveAtom, useAtom } from "jotai"
 import capitalize from "lodash/capitalize"
 import { HTMLAttributes } from "react"

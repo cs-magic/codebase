@@ -1,5 +1,5 @@
 import { cn, IUserSummary, moment } from "@cs-magic/common"
-import { ICardPreview } from "@cs-magic/swot-core"
+import { ICardPreview } from "@cs-magic/swot-bot/core"
 import { AspectRatio, VerticalAspectRatio } from "@cs-magic/react-ui"
 import { useAtom } from "jotai"
 import Image from "next/image"

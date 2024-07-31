@@ -7,6 +7,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./schema": "./dist/schema/index.js",
+    "./core": "./dist/core/index.js",
     "./backend": "./dist/backend/index.js",
     "./*": "./*"
   },
@@ -23,7 +24,6 @@
   "dependencies": {
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
-    "@cs-magic/swot-core": "workspace:^",
     "@fastify/websocket": "^10.0.1",
     "fastify": "^4.28.1",
     "node-schedule": "^2.1.1",

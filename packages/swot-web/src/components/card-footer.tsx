@@ -3,7 +3,7 @@
 import { config } from "@cs-magic/common"
 import { moment } from "@cs-magic/common"
 import { cn } from "@cs-magic/common"
-import { CardOuterPreview } from "@cs-magic/swot-core"
+import { CardOuterPreview } from "@cs-magic/swot-bot/core"
 
 import { CalendarHeartIcon, MilestoneIcon } from "lucide-react"
 import { CardFooterItem } from "./card-footer-item"

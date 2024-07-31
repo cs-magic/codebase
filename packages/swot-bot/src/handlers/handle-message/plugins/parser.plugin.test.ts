@@ -4,7 +4,7 @@ import {
   sampleWxmpArticleUrls,
 } from "@cs-magic/common"
 import { CardSimulator } from "@cs-magic/common/dist/spider/card-simulator.js"
-import { wxmpUrl2preview } from "@cs-magic/swot-core"
+import { wxmpUrl2preview } from "../../../core/index.js"
 
 describe("test parser", () => {
   const parser = new CardSimulator("playwright", { headless: false })
