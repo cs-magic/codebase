@@ -44,6 +44,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alicloud/dysmsapi20170525@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@alicloud/dysmsapi20170525@npm:3.0.0"
+  dependencies:
+    "@alicloud/endpoint-util": "npm:^0.0.1"
+    "@alicloud/openapi-client": "npm:^0.4.10"
+    "@alicloud/openapi-util": "npm:^0.3.2"
+    "@alicloud/tea-typescript": "npm:^1.7.1"
+    "@alicloud/tea-util": "npm:^1.4.8"
+  checksum: 10c0/ee1a2093f5b680ca1ddbfef86dcc79a4853be0e0a307491b7214643a6ebc38c69ef0ee94e4576a51f52b751cd814af28f70ecd4d0691b66db6a432918ed6fe54
+  languageName: node
+  linkType: hard
+
 "@alicloud/dysmsapi20180501@npm:^1.0.4":
   version: 1.0.5
   resolution: "@alicloud/dysmsapi20180501@npm:1.0.5"
@@ -77,7 +90,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@alicloud/openapi-client@npm:^0.4.4, @alicloud/openapi-client@npm:^0.4.8":
+"@alicloud/openapi-client@npm:^0.4.10, @alicloud/openapi-client@npm:^0.4.4, @alicloud/openapi-client@npm:^0.4.8":
   version: 0.4.10
   resolution: "@alicloud/openapi-client@npm:0.4.10"
   dependencies:
@@ -1782,32 +1795,44 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cs-magic/common@workspace:packages/common"
   dependencies:
+    "@alicloud/dysmsapi20170525": "npm:^3.0.0"
     "@types/ansicolors": "npm:^0"
+    "@types/async-lock": "npm:^1.4.2"
     "@types/lodash": "npm:^4.14.202"
+    "@types/lodash-es": "npm:^4"
     "@types/nodemailer": "npm:^6"
     "@types/triple-beam": "npm:^1"
     "@types/uuid": "npm:^10"
     "@types/winston": "npm:^2.4.4"
+    "@types/yargs-parser": "npm:^21"
     ali-oss: "npm:^6.20.0"
     ansicolors: "npm:^0.3.2"
     anylogger: "npm:^1.0.11"
+    async-lock: "npm:^1.4.1"
     axios: "npm:^1.7.2"
     clsx: "npm:^2.1.1"
     https-proxy-agent: "npm:^7.0.5"
+    ioredis: "npm:^5.4.1"
     jotai: "npm:^2.9.0"
     js-sha1: "npm:^0.7.0"
     lodash: "npm:^4.17.21"
+    lodash-es: "npm:^4.17.21"
     moment: "npm:^2.30.1"
     nanoid: "npm:^5.0.7"
     next-auth: "npm:^4.24.7"
     node-html-markdown: "npm:^1.3.0"
+    node-html-parser: "npm:^6.1.13"
     nodemailer: "npm:^6.9.14"
     pino: "npm:^9.3.1"
     pino-logflare: "npm:^0.4.2"
+    playwright: "npm:^1.45.3"
+    playwright-core: "npm:^1.45.3"
     prisma: "npm:^5.16.2"
+    proxy-agent: "npm:^6.4.0"
     pusher: "npm:^5.2.0"
     pusher-js: "npm:^8.4.0-rc2"
     tailwind-merge: "npm:^2.4.0"
+    tencentcloud-sdk-nodejs-sms: "npm:^4.0.882"
     triple-beam: "npm:^1.4.1"
     ulog: "npm:2.0.0-beta.19"
     universal-logger: "npm:^1.0.1"
@@ -1815,6 +1840,7 @@ __metadata:
     uuid: "npm:^10.0.0"
     winston: "npm:^3.13.1"
     winston-daily-rotate-file: "npm:^5.0.0"
+    yargs-parser: "npm:^21.1.1"
     zod: "npm:^3.23.8"
     zustand: "npm:^4.5.4"
   languageName: unknown
@@ -1910,7 +1936,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-bot@workspace:packages/swot-bot":
+"@cs-magic/swot-bot@workspace:^, @cs-magic/swot-bot@workspace:packages/swot-bot":
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-bot@workspace:packages/swot-bot"
   dependencies:
@@ -1924,6 +1950,8 @@ __metadata:
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "workspace:^"
     wechaty-puppet: "workspace:^"
+    wechaty-puppet-service: "npm:1.18.2"
+    wechaty-puppet-wechat4u: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -17381,7 +17409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ioredis@npm:^5.3.2":
+"ioredis@npm:^5.3.2, ioredis@npm:^5.4.1":
   version: 5.4.1
   resolution: "ioredis@npm:5.4.1"
   dependencies:
@@ -22709,7 +22737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-html-parser@npm:^6.1.1, node-html-parser@npm:^6.1.12":
+"node-html-parser@npm:^6.1.1, node-html-parser@npm:^6.1.12, node-html-parser@npm:^6.1.13":
   version: 6.1.13
   resolution: "node-html-parser@npm:6.1.13"
   dependencies:
@@ -24323,7 +24351,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.45.3":
+"playwright-core@npm:1.45.3, playwright-core@npm:^1.45.3":
   version: 1.45.3
   resolution: "playwright-core@npm:1.45.3"
   bin:
@@ -24332,7 +24360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.42.1":
+"playwright@npm:^1.42.1, playwright@npm:^1.45.3":
   version: 1.45.3
   resolution: "playwright@npm:1.45.3"
   dependencies:
@@ -28439,6 +28467,7 @@ __metadata:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"
     "@babel/register": "npm:^7.24.6"
+    "@cs-magic/swot-bot": "workspace:^"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"
     "@electron-toolkit/preload": "npm:^3.0.1"
@@ -28460,6 +28489,7 @@ __metadata:
     electron-vite: "npm:^2.3.0"
     eslint: "npm:^8"
     eslint-plugin-react: "npm:^7.34.3"
+    jotai: "npm:^2.9.1"
     node-stdlib-browser: "npm:^1.2.0"
     path-browserify: "npm:^1.0.1"
     prettier: "npm:^3.3.2"
@@ -28761,7 +28791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tencentcloud-sdk-nodejs-sms@npm:^4.0.789":
+"tencentcloud-sdk-nodejs-sms@npm:^4.0.789, tencentcloud-sdk-nodejs-sms@npm:^4.0.882":
   version: 4.0.882
   resolution: "tencentcloud-sdk-nodejs-sms@npm:4.0.882"
   dependencies:
@@ -30851,7 +30881,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"wechaty-grpc@npm:^1.5.2":
+"wechaty-grpc@npm:^1.1.1, wechaty-grpc@npm:^1.5.2":
   version: 1.5.2
   resolution: "wechaty-grpc@npm:1.5.2"
   dependencies:
@@ -30873,6 +30903,28 @@ __metadata:
   peerDependencies:
     wechaty-puppet: ^1.19.4
   checksum: 10c0/7d331af159bc90ef98593f85acfb95c891053048566b22a135a8385bb2efe6f83d2a44d27543e7309abafca4abfeb119c400e6cf14fa92a2cc1a6404544e3584
+  languageName: node
+  linkType: hard
+
+"wechaty-puppet-service@npm:1.18.2":
+  version: 1.18.2
+  resolution: "wechaty-puppet-service@npm:1.18.2"
+  dependencies:
+    clone-class: "npm:^1.0.3"
+    ducks: "npm:^1.0.2"
+    flash-store: "npm:^1.3.4"
+    gerror: "npm:^1.0.16"
+    redux-observable: "npm:^2.0.0"
+    rxjs: "npm:^7.5.5"
+    semver: "npm:^7.3.5"
+    stronger-typed-streams: "npm:^0.2.0"
+    uuid: "npm:^8.3.2"
+    wechaty-grpc: "npm:^1.1.1"
+    wechaty-redux: "npm:^1.10.2"
+    wechaty-token: "npm:^1.0.6"
+  peerDependencies:
+    wechaty-puppet: ^1.18.2
+  checksum: 10c0/5d69c51ec520f7a105f05f1b37279429ecd391fdaa8ffcd24f4230d11d25ba69ff3106706493213c25ee544dd257d3e9a1c2cd39bec0f9f8dcec6fc4e8e5e9e8
   languageName: node
   linkType: hard
 
@@ -30955,7 +31007,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"wechaty-redux@npm:^1.20.2":
+"wechaty-redux@npm:^1.10.2, wechaty-redux@npm:^1.20.2":
   version: 1.20.2
   resolution: "wechaty-redux@npm:1.20.2"
   dependencies:

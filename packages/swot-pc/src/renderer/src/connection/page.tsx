@@ -1,10 +1,18 @@
 'use client'
 
-import { socketStatusMap, cn, logger } from '@cs-magic/common'
-import { useUserIsAdmin, useInit } from '@cs-magic/react-hooks'
+import { cn, logger } from '@cs-magic/common'
+import { useInit } from '@cs-magic/react-hooks'
 
 import {
-  IWechatBotTransfer,
+  Button,
+  buttonVariants,
+  ButtonWithLoading,
+  FlexContainer,
+  StandardCard,
+} from '@cs-magic/react-ui'
+
+import { IWechatBotTransfer, ScanStatus } from '@cs-magic/swot-bot/schema'
+import {
   botContactsAtom,
   botLoggedInAtom,
   botLoggingAtom,
@@ -12,25 +20,13 @@ import {
   botScanStatusAtom,
   botScanValueAtom,
   botUserAtom,
-  ScanStatus,
-} from '@cs-magic/swot-bot/schema'
+} from '@renderer/store/bot.atom'
+import { useAtom } from 'jotai'
 import { QRCodeSVG } from 'qrcode.react'
+import { useState } from 'react'
 
 import { CSVLink } from 'react-csv'
 import { toast } from 'sonner'
-import { useAtom } from 'jotai'
-import { useState } from 'react'
-
-import {
-  Button,
-  buttonVariants,
-  ButtonWithLoading,
-  FlexContainer,
-  LabelLine,
-  StandardCard,
-} from '@cs-magic/react-ui'
-
-import { columns, DataTable } from './contacts.table.js'
 
 export default function BotPage() {
   const [socketStatus, setSocketStatus] = useState<number>(0)
@@ -201,7 +197,10 @@ export default function BotPage() {
         <div className={'flex flex-col items-center justify-center m-8 gap-4'}>
           <QRCodeSVG value={botScanValue} />
 
-          <div className={'tip'}>状态：{ScanStatus[botScanStatus]}</div>
+          <div className={'tip'}>
+            状态：
+            {ScanStatus[botScanStatus]}
+          </div>
         </div>
       )}
     </FlexContainer>

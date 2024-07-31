@@ -13,12 +13,20 @@ asarUnpack:
   - resources/**
 win:
   executableName: ${name}
+#  target:
+#    - target: nsis
+#      arch:
+#        - x64
+#        - ia32
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  target:
+    - target: dmg
+      arch: universal
   hardenedRuntime: true
   gatekeeperAssess: false
   entitlementsInherit: build/entitlements.mac.plist

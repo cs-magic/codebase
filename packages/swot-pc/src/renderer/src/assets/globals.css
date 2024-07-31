@@ -4,208 +4,205 @@
 
 @layer base {
 
-    :root {
-        --wechat: 118 99% 35%;
+  :root {
+    --wechat: 118 99% 35%;
 
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-        /*--primary: 222.2 47.4% 11.2%;*/
-        --primary: 150 19% 10%;
-        /*--primary-foreground: 210 40% 98%;*/
-        /* pink-500 （粉）*/
-        --primary-foreground: 330 81% 60%;
+    /*--primary: 222.2 47.4% 11.2%;*/
+    --primary: 150 19% 10%;
+    /*--primary-foreground: 210 40% 98%;*/
+    /* pink-500 （粉）*/
+    --primary-foreground: 330 81% 60%;
 
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
 
-        --radius: 0.5rem;
+    --radius: 0.5rem;
 
-        --primary2: 190 85% 19%;
-    }
+    --primary2: 190 85% 19%;
+  }
 
-    .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-        --primary: 210 40% 98%;
-        /*--primary-foreground: 222.2 47.4% 11.2%;*/
-        /* pink-500 （粉）*/
-        --primary-foreground: 330 81% 60%;
+    --primary: 210 40% 98%;
+    /*--primary-foreground: 222.2 47.4% 11.2%;*/
+    /* pink-500 （粉）*/
+    --primary-foreground: 330 81% 60%;
 
-        --secondary: 217.2 32.6% 17.5%;
-        /*--secondary-foreground: 210 40% 98%;*/
-        /* indigo-500 (蓝)*/
-        --secondary-foreground: 239 84% 67%;
+    --secondary: 217.2 32.6% 17.5%;
+    /*--secondary-foreground: 210 40% 98%;*/
+    /* indigo-500 (蓝)*/
+    --secondary-foreground: 239 84% 67%;
 
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 212.7 26.8% 83.9%;
-    }
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
 
 @layer base {
-    * {
-        @apply border-border;
+  * {
+    @apply border-border;
+  }
+
+  main {
+    height: 100vh;
+    /*height: -webkit-fill-available;*/
+    max-height: var(--app-height);
+    /* NOTE: 不能用这个，会导致初始屏幕不占满*/
+    /*height: var(--app-height);*/
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .center {
+    @apply flex items-center justify-center;
+  }
+
+
+  .interactive {
+    @apply hover:bg-accent;
+  }
+
+
+  /*
+  自定义遮罩层样式，父级元素加 relative，该元素加 absolute
+  ref: https://chat.openai.com/c/91b8bb72-01f9-49d8-8a4f-19a92adabd33
+  */
+  .darken-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2); /* 黑色遮罩，透明度为50% */
+    /*background-color: rgba(255, 255, 255, 0.05); !* 黑色遮罩，透明度为50% *!*/
+    z-index: -10;
+  }
+
+
+  /* https://chat.openai.com/c/12c4286c-6a22-4ddd-a031-cea2fa7990e2 */
+  @keyframes blink {
+    0%, 49% {
+      opacity: 1;
     }
-
-    main {
-        height: 100vh;
-        /*height: -webkit-fill-available;*/
-        max-height: var(--app-height);
-        /* NOTE: 不能用这个，会导致初始屏幕不占满*/
-        /*height: var(--app-height);*/
+    50%, 100% {
+      opacity: 0;
     }
+  }
 
-    body {
-        @apply bg-background text-foreground;
-    }
-
-    .center {
-        @apply flex items-center justify-center;
-    }
+  .cursor {
+    @apply inline-block w-[2px] h-5 bg-gray-300;
+    animation: blink 1s infinite;
+  }
 
 
-    .interactive {
-        @apply hover:bg-accent;
-    }
+  .primary-gradient {
+    @apply bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text;
+    /* for tv */
+    /*@apply bg-gradient-to-r from-red-200 via-purple-500 to-indigo-500 text-transparent bg-clip-text*/
+  }
+
+  .corner-gradient {
+    background: conic-gradient(#F2E7DA 0deg, #F3EDD7 30deg, #F0D1DF 150deg, #EEBDE3 210deg, #F1DDDB 330deg, #F2E7DA 360deg);
+    background-blend-mode: screen;
+  }
 
 
+  .card-bg {
+    /*@apply corner-gradient;*/
+    @apply bg-gradient-to-b from-[rgb(249,244,238)] to-[rgb(212,233,238)];
+    /*@apply bg-gradient-to-b from-[#333333] to-[#aaaaaa];*/
+  }
+
+  .card-notch {
+    clip-path: polygon(
+      0% 50%, 10% 0%, 90% 0%,
+      100% 50%, 90% 100%, 10% 100%
+    );
+  }
+
+  .ticket {
+    width: 100%;
+    height: 16px;
+    background: radial-gradient(8px at right, transparent 100%, white) right,
+    radial-gradient(8px at left, transparent 100%, white) left;
+    background-size: 51% 100%;
+    background-repeat: no-repeat;
+    /*border-radius: 10px;*/
+    /*filter: drop-shadow(0 0.5rem 0.2rem rgb(0 0 0 / 50%));*/
+  }
 
 
-    /*
-    自定义遮罩层样式，父级元素加 relative，该元素加 absolute
-    ref: https://chat.openai.com/c/91b8bb72-01f9-49d8-8a4f-19a92adabd33
-    */
-    .darken-overlay::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.2); /* 黑色遮罩，透明度为50% */
-        /*background-color: rgba(255, 255, 255, 0.05); !* 黑色遮罩，透明度为50% *!*/
-        z-index: -10;
-    }
+  .card-notch-2 {
+    /*clip-path: circle(4px at 0% 50%), circle(4px at 100% 50%);*/
 
+    height: 16px;
+    width: 100%;
+    /*background:*/
+    /*        radial-gradient(8px at right, #0000 100%, white) right,*/
+    /*        radial-gradient(8px at left , #0000 100%, white) left;*/
 
-    /* https://chat.openai.com/c/12c4286c-6a22-4ddd-a031-cea2fa7990e2 */
-    @keyframes blink {
-        0%, 49% {
-            opacity: 1;
-        }
-        50%, 100% {
-            opacity: 0;
-        }
-    }
+    --mask1: radial-gradient(circle 8px at 0 50%, transparent 0, transparent 8px, white);
+    --mask2: radial-gradient(circle 8px at 100% 50%, transparent 0, transparent 8px, white);
+    /* webkit needed for Chrome */
+    -webkit-mask-image: var(--mask1), var(--mask2);
+    mask-image: var(--mask1), var(--mask2);
+  }
 
-    .cursor {
-        @apply inline-block w-[2px] h-5 bg-gray-300;
-        animation: blink 1s infinite;
-    }
-
-
-    .primary-gradient {
-        @apply bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text;
-        /* for tv */
-        /*@apply bg-gradient-to-r from-red-200 via-purple-500 to-indigo-500 text-transparent bg-clip-text*/
-    }
-    .corner-gradient {
-        background: conic-gradient(#F2E7DA 0deg, #F3EDD7 30deg, #F0D1DF 150deg, #EEBDE3 210deg, #F1DDDB 330deg, #F2E7DA 360deg);
-        background-blend-mode: screen;
-    }
-
-
-    .card-bg {
-        /*@apply corner-gradient;*/
-        @apply bg-gradient-to-b from-[rgb(249,244,238)] to-[rgb(212,233,238)];
-        /*@apply bg-gradient-to-b from-[#333333] to-[#aaaaaa];*/
-    }
-
-    .card-notch {
-        clip-path: polygon(
-                0% 50%, 10% 0%, 90% 0%,
-                100% 50%, 90% 100%, 10% 100%
-        );
-    }
-
-    .ticket {
-        width: 100%;
-        height: 16px;
-        background:
-                radial-gradient(8px at right, transparent 100%, white) right,
-                radial-gradient(8px at left , transparent 100%, white) left;
-        background-size: 51% 100%;
-        background-repeat: no-repeat;
-        /*border-radius: 10px;*/
-        /*filter: drop-shadow(0 0.5rem 0.2rem rgb(0 0 0 / 50%));*/
-    }
-
-
-    .card-notch-2 {
-        /*clip-path: circle(4px at 0% 50%), circle(4px at 100% 50%);*/
-
-        height: 16px;
-        width: 100%;
-        /*background:*/
-        /*        radial-gradient(8px at right, #0000 100%, white) right,*/
-        /*        radial-gradient(8px at left , #0000 100%, white) left;*/
-
-        --mask1: radial-gradient(circle 8px at 0 50%, transparent 0, transparent 8px, white);
-        --mask2: radial-gradient(circle 8px at 100% 50%, transparent 0, transparent 8px, white);
-        /* webkit needed for Chrome */
-        -webkit-mask-image: var(--mask1), var(--mask2);
-        mask-image: var(--mask1), var(--mask2);
-    }
-
-    .bg-dots {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 11 11'%3E%3Crect x='5' y='5' width='1' height='1' fill='rgba(128,128,128,25%)'/%3E%3C/svg%3E");
-        background-repeat: repeat;
-    }
+  .bg-dots {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 11 11'%3E%3Crect x='5' y='5' width='1' height='1' fill='rgba(128,128,128,25%)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
 }
-
 
 
 /* Assuming you placed your fonts in public/fonts/ */
 @font-face {
-    font-family: 'Zapfino';
-    src: url('/fonts/Zapfino.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Zapfino';
+  src: url('/fonts/Zapfino.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
