@@ -1,6 +1,6 @@
 // import { Card } from "../../../../components/card"
+import { genPageTitle } from "@cs-magic/swot-frontend/utils/get-page-title"
 import dynamic from "next/dynamic"
-import { genPageTitle } from "../../../../utils/get-page-title"
 
 // ref: https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
 const CardNoSSR = dynamic(() => import("../../../../components/card"), {

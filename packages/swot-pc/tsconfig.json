@@ -8,7 +8,7 @@
       "path": "./tsconfig.web.json"
     },
     {
-      "path": "../swot-bot"
+      "path": "../swot-backend"
     },
     {
       "path": "../react-hooks",

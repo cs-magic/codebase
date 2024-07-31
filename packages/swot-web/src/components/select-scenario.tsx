@@ -1,10 +1,10 @@
+import { Text2ImageAppSVG, Text2TextAppSVG } from "@/assets"
 import { ScenarioType } from "@cs-magic/common"
 import { Select, SelectContent, SelectValue } from "@cs-magic/react-ui"
+import { SelectModel } from "@cs-magic/swot-frontend/components/_select-model"
+import { scenarioTypeAtom } from "@cs-magic/swot-frontend/store/system.atom"
 import { SelectTrigger as SelectPrimitiveTrigger } from "@radix-ui/react-select"
-import { Text2ImageAppSVG, Text2TextAppSVG } from "./assets"
-import { scenarioTypeAtom } from "../store/system.atom"
 
-import { SelectModel } from "./_select-model"
 import { useAtom } from "jotai"
 
 export const SelectScenario = () => {

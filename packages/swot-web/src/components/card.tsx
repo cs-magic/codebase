@@ -1,20 +1,21 @@
 "use client"
 
 import { cn } from "@cs-magic/common"
-import { useSearchParam } from "@cs-magic/react-hooks"
+import { useSearchParam } from "@cs-magic/react-hooks/server"
+import { AtomSelector, Separator, StandardCard } from "@cs-magic/react-ui"
 import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
-} from "@cs-magic/swot-bot/core"
-import { AtomSelector, Separator, StandardCard } from "@cs-magic/react-ui"
+} from "@cs-magic/swot-backend/schema"
+import { CardInputBackend } from "@cs-magic/swot-frontend/components/card-input-backend"
+import { CardInputFrontend } from "@cs-magic/swot-frontend/components/card-input-frontend"
+import { cardPreviewAtom } from "@cs-magic/swot-frontend/store/card.atom"
+import { cardPreviewEngineAtom } from "@cs-magic/swot-frontend/store/card.rendered.atom"
+
 import { useAtomValue } from "jotai"
 import React from "react"
 
-import { cardPreviewAtom } from "../store/card.atom"
-import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
-import { CardInputBackend } from "./card-input-backend"
-import { CardInputFrontend } from "./card-input-frontend"
-import { CardPreviewContainer } from "./card-preview-container"
+import { CardPreviewContainer } from "@/components/card-preview-container"
 
 export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)

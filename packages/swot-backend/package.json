@@ -1,0 +1,40 @@
+{
+  "name": "@cs-magic/swot-backend",
+  "version": "0.1.0",
+  "packageManager": "yarn@4.1.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./bot": "./dist/bot/index.js",
+    "./api": "./dist/api/index.js",
+    "./schema": "./dist/schema/index.js",
+    "./*": "./dist/*.js"
+  },
+  "scripts": {
+    "postinstall": "yarn build",
+    "dev:bot": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/bot/main.ts | pino-pretty",
+    "dev:backend": "DOTENV_CONFIG_PATH=../../.env tsx -r dotenv/config src/api/main.ts | pino-pretty",
+    "clean": "rm -rf dist",
+    "build": "tsc -b",
+    "start:bot": "node ./dist/main.js | pino-pretty",
+    "start:backend": "node ./dist/backend/main.js | pino-pretty",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@cs-magic/common": "workspace:^",
+    "@cs-magic/llm": "workspace:^",
+    "@fastify/websocket": "^10.0.1",
+    "fastify": "^4.28.1",
+    "node-schedule": "^2.1.1",
+    "prisma": "^5.17.0",
+    "qrcode-terminal": "^0.12.0",
+    "wechaty": "workspace:^",
+    "wechaty-puppet": "workspace:^",
+    "wechaty-puppet-service": "1.18.2",
+    "wechaty-puppet-wechat4u": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/node-schedule": "^2.1.7"
+  }
+}

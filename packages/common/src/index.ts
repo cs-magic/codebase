@@ -13,8 +13,7 @@ export * from "./markdown/index.js"
 
 export * from "./oss/const.js"
 export * from "./oss/schema.js"
-// export * from "./oss/upload.js"
-export * from "./oss/utils.js"
+export { getOssUrl } from "./oss/utils.js"
 
 export * from "./pusher/index.js"
 export * from "./sample.js"

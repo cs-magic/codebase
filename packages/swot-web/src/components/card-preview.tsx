@@ -1,21 +1,21 @@
+import { CsMagicLogoSvg } from "@/assets"
 import { cn, IUserSummary, moment } from "@cs-magic/common"
-import { ICardPreview } from "@cs-magic/swot-bot/core"
 import { AspectRatio, VerticalAspectRatio } from "@cs-magic/react-ui"
-import { useAtom } from "jotai"
-import Image from "next/image"
-import { QRCodeSVG } from "qrcode.react"
-import { forwardRef } from "react"
+import { ICardPreview } from "@cs-magic/swot-backend/schema"
+import { Tags } from "@cs-magic/swot-frontend/components/card-content-tags"
+import MarkMap from "@cs-magic/swot-frontend/components/markmap"
+import { UserAvatar } from "@cs-magic/swot-frontend/components/user-avatar"
 import {
   cardAuthorAvatarRenderedAtom,
   cardCoverRenderedAtom,
   cardUserAvatarRenderedAtom,
-} from "../store/card.rendered.atom"
-import { cardWatermarkTextAtom } from "../store/card.request.atom"
-import { getPlatformName } from "../utils/card-platform/get-platform-name"
-import { CsMagicLogoSvg } from "./assets"
-import { Tags } from "./card-content-tags"
-import MarkMap from "./markmap"
-import { UserAvatar } from "./user-avatar"
+} from "@cs-magic/swot-frontend/store/card.rendered.atom"
+import { cardWatermarkTextAtom } from "@cs-magic/swot-frontend/store/card.request.atom"
+import { getPlatformName } from "@cs-magic/swot-frontend/utils/card-platform/get-platform-name"
+import { useAtom } from "jotai"
+import Image from "next/image"
+import { QRCodeSVG } from "qrcode.react"
+import { forwardRef } from "react"
 
 /**
  * null optional nullish

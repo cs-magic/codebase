@@ -18,6 +18,8 @@
     "@auth/prisma-adapter": "^1.4.0",
     "@cs-magic/common": "workspace:^",
     "@cs-magic/llm": "workspace:^",
+    "@cs-magic/swot-backend": "workspace:^",
+    "@cs-magic/swot-frontend": "workspace:^",
     "@emotion/react": "^11.11.4",
     "@hookform/resolvers": "^3.3.4",
     "@langchain/core": "^0.1.32",

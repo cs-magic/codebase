@@ -1,6 +1,6 @@
 import { FlexContainer } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
-import { Header } from "../../components/header"
+import { Header } from "@cs-magic/swot-frontend/components/header"
 import { PropsWithChildren } from "react"
 
 export default function SubLayout({ children }: PropsWithChildren) {

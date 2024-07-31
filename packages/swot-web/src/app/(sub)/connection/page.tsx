@@ -4,6 +4,12 @@ import { logger } from "@cs-magic/common"
 import { env } from "@cs-magic/common"
 import { useInit, useUserIsAdmin } from "@cs-magic/react-hooks"
 import { socketStatusMap } from "@cs-magic/common"
+import { ButtonWithLoading } from "@cs-magic/react-ui"
+import { FlexContainer } from "@cs-magic/react-ui"
+import { LabelLine } from "@cs-magic/react-ui"
+import { Button, buttonVariants } from "@cs-magic/react-ui"
+import { StandardCard } from "@cs-magic/react-ui"
+import { cn } from "@cs-magic/common"
 import {
   botContactsAtom,
   botLoggedInAtom,
@@ -13,14 +19,7 @@ import {
   botScanValueAtom,
   botSocketOpenedAtom,
   botUserAtom,
-  IWechatBotTransfer,
-} from "@cs-magic/swot-bot/schema"
-import { ButtonWithLoading } from "@cs-magic/react-ui"
-import { FlexContainer } from "@cs-magic/react-ui"
-import { LabelLine } from "@cs-magic/react-ui"
-import { Button, buttonVariants } from "@cs-magic/react-ui"
-import { StandardCard } from "@cs-magic/react-ui"
-import { cn } from "@cs-magic/common"
+} from "@cs-magic/swot-frontend"
 
 import { useAtom } from "jotai"
 import { QRCodeSVG } from "qrcode.react"
@@ -28,6 +27,7 @@ import { CSVLink } from "react-csv"
 import { toast } from "sonner"
 import { ScanStatus } from "wechaty-puppet/types"
 import { columns, DataTable } from "./contacts.table"
+import { IWechatBotTransfer } from "@cs-magic/swot-backend/schema"
 
 export default function BotPage() {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)

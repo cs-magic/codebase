@@ -1,12 +1,8 @@
 "use client"
 
+import { Text2ImageAppSVG, Text2TextAppSVG, V2AGIBrand } from "@/assets"
 import { FlexContainer } from "@cs-magic/react-ui"
 import { Label } from "@cs-magic/react-ui"
-import {
-  Text2ImageAppSVG,
-  Text2TextAppSVG,
-  V2AGIBrand,
-} from "../../../components/assets"
 
 export default function TestSVGPage() {
   return (

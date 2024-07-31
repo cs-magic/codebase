@@ -1,4 +1,4 @@
-import { devEnabledAtom } from "@cs-magic/react-ui"
+import { devEnabledAtom } from "@cs-magic/react-hooks"
 import { IconContainer } from "@cs-magic/react-ui"
 import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/react-ui"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cs-magic/react-ui"
@@ -9,11 +9,11 @@ import { SettingsIcon } from "lucide-react"
 import * as process from "process"
 import { useState } from "react"
 
-import { ConfigDevCard } from "./config-dev-card"
-import { ConfigLogCard } from "./config-log-card"
-import { ConfigSMSCard } from "./config-sms"
-import { ConfigTRPCCard } from "./config-trpc"
-import { UserSignOutButton } from "./user-sign-out-button"
+import { ConfigDevCard } from "@cs-magic/swot-frontend/components/config-dev-card"
+import { ConfigLogCard } from "@cs-magic/swot-frontend/components/config-log-card"
+import { ConfigSMSCard } from "@cs-magic/swot-frontend/components/config-sms"
+import { ConfigTRPCCard } from "@/components/config-trpc"
+import { UserSignOutButton } from "@cs-magic/swot-frontend/components/user-sign-out-button"
 
 export const DevConfig = () => {
   const [devEnabled] = useAtom(devEnabledAtom)

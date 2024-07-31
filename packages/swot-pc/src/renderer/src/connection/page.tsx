@@ -20,7 +20,7 @@ import {
   botScanStatusAtom,
   botScanValueAtom,
   botUserAtom,
-} from '@renderer/store/bot.atom'
+} from '@cs-magic/swot-frontend'
 import { useAtom } from 'jotai'
 import { QRCodeSVG } from 'qrcode.react'
 import { useState } from 'react'

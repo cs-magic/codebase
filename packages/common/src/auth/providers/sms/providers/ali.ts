@@ -62,7 +62,7 @@ export const $sendSmsViaAli = async (phone: string, code: string) => {
       new RuntimeOptions({}),
     )
     logger.info("[sms] sent result: %o", res)
-    return res.statusCode === 200 && res.body.code === "OK"
+    return res.statusCode === 200 && res.body?.code === "OK"
   } catch (err) {
     formatError(err)
     return false

@@ -1936,9 +1936,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-bot@workspace:^, @cs-magic/swot-bot@workspace:packages/swot-bot":
+"@cs-magic/swot-backend@workspace:^, @cs-magic/swot-backend@workspace:packages/swot-backend":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-bot@workspace:packages/swot-bot"
+  resolution: "@cs-magic/swot-backend@workspace:packages/swot-backend"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
@@ -1946,11 +1946,35 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.7"
     fastify: "npm:^4.28.1"
     node-schedule: "npm:^2.1.1"
+    prisma: "npm:^5.17.0"
     qrcode-terminal: "npm:^0.12.0"
     wechaty: "workspace:^"
     wechaty-puppet: "workspace:^"
     wechaty-puppet-service: "npm:1.18.2"
     wechaty-puppet-wechat4u: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@cs-magic/swot-frontend@workspace:^, @cs-magic/swot-frontend@workspace:packages/swot-frontend":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/swot-frontend@workspace:packages/swot-frontend"
+  dependencies:
+    "@cs-magic/common": "workspace:^"
+    "@cs-magic/swot-backend": "workspace:^"
+    "@types/ansicolors": "npm:^0"
+    "@types/lodash-es": "npm:^4"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    ansicolors: "npm:^0.3.2"
+    jotai: "npm:^2.9.1"
+    lodash-es: "npm:^4.17.21"
+    next: "npm:^14.2.5"
+    next-auth: "npm:^4.24.7"
+    pusher-js: "npm:^8.4.0-rc2"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    sonner: "npm:^1.5.0"
+    wechaty-puppet: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1963,6 +1987,8 @@ __metadata:
     "@auth/prisma-adapter": "npm:^1.4.0"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
+    "@cs-magic/swot-backend": "workspace:^"
+    "@cs-magic/swot-frontend": "workspace:^"
     "@emotion/react": "npm:^11.11.4"
     "@hookform/resolvers": "npm:^3.3.4"
     "@langchain/core": "npm:^0.1.32"
@@ -28456,7 +28482,8 @@ __metadata:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"
     "@babel/register": "npm:^7.24.6"
-    "@cs-magic/swot-bot": "workspace:^"
+    "@cs-magic/swot-backend": "workspace:^"
+    "@cs-magic/swot-frontend": "workspace:^"
     "@electron-toolkit/eslint-config-prettier": "npm:^2.0.0"
     "@electron-toolkit/eslint-config-ts": "npm:^2.0.0"
     "@electron-toolkit/preload": "npm:^3.0.1"

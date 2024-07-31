@@ -4,13 +4,13 @@ import { useEnvironments } from "@cs-magic/react-hooks"
 import { UnexpectedError } from "@cs-magic/common"
 import { Loading } from "@cs-magic/react-ui"
 import { Label } from "@cs-magic/react-ui"
+import { Auth } from "@cs-magic/swot-frontend/components/auth"
+import { AuthSmsSignIn } from "@cs-magic/swot-frontend/components/auth-sms-sign-in"
+import { AuthUpdateProfile } from "@cs-magic/swot-frontend/components/auth-update-profile"
+import { AuthWechatSignIn } from "@cs-magic/swot-frontend/components/auth-wechat-sign-in"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { Auth } from "../../../components/auth"
-import { AuthSmsSignIn } from "../../../components/auth-sms-sign-in"
-import { AuthUpdateProfile } from "../../../components/auth-update-profile"
-import { AuthWechatSignIn } from "../../../components/auth-wechat-sign-in"
 
 export default function AuthPage() {
   const session = useSession()

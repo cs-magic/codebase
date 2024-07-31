@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "../../tsconfig.dom.json"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../common"
+    },
+
+  ]
+}

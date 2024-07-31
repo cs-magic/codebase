@@ -1,5 +1,3 @@
-"use server"
-
 import { OSS_DOMAIN } from "./const.js"
 
 /**

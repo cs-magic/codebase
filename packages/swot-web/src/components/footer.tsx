@@ -1,9 +1,9 @@
+import { CsMagicBrand } from "@/assets"
 import { ImageEqualHeight } from "@cs-magic/react-ui"
-import { BrandingPartners } from "./branding-partners"
+import { BrandingPartners } from "@cs-magic/swot-frontend/components/branding-partners"
 import Link from "next/link"
 
 import { config } from "@cs-magic/common"
-import { CsMagicBrand } from "./assets"
 
 export const Footer = () => {
   const enterprises: string[] = []
