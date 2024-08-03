@@ -25,9 +25,7 @@ Swot Backend:
 
 ```mermaid
 graph TD;
-    prisma --> swot-backend;
-    common --> swot-backend;
-    llm --> swot-backend;
+    * --> swot-backend;
     wechaty-puppet --> swot-backend;
     wechaty --> swot-backend;
 ```
@@ -36,9 +34,7 @@ Swot Frontend:
 
 ```mermaid
 graph TD;
-    prisma --> swot-frontend;
-    common --> swot-frontend;
-    llm --> swot-frontend;
+    * --> swot-frontend;
     swot-backend --> swot-frontend;
     react-hooks --> react-ui;
     react-hooks --> next-hooks;
