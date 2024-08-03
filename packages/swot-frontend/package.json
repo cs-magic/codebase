@@ -4,15 +4,17 @@
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js",
+    "./assets/*": "./dist/assets/*.js",
     "./components/*": "./dist/components/*.js",
     "./store/*": "./dist/store/*.js",
     "./utils/*": "./dist/utils/*.js",
     "./*": "./*"
   },
-  "packageManager": "yarn@4.1.1",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "tspc -b",
+    "copy-assets": "copyfiles -u1 src/assets/**/* dist",
+    "build-source": "tspc -b",
+    "build": "run-p build-source copy-assets",
     "postinstall": "yarn build"
   },
   "dependencies": {

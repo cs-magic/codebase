@@ -1,4 +1,4 @@
-import { CsMagicLogoSvg } from "@/assets"
+import { CsMagicLogoSvg } from "@cs-magic/swot-frontend/dist/assets.js"
 import { cn, IUserSummary, moment } from "@cs-magic/common"
 import { AspectRatio, VerticalAspectRatio } from "@cs-magic/react-ui"
 import { ICardPreview } from "@cs-magic/swot-backend/schema"

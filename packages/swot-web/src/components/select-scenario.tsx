@@ -1,4 +1,7 @@
-import { Text2ImageAppSVG, Text2TextAppSVG } from "@/assets"
+import {
+  Text2ImageAppSVG,
+  Text2TextAppSVG,
+} from "@cs-magic/swot-frontend/dist/assets.js"
 import { ScenarioType } from "@cs-magic/common"
 import { Select, SelectContent, SelectValue } from "@cs-magic/react-ui"
 import { SelectModel } from "@cs-magic/swot-frontend/components/_select-model"
