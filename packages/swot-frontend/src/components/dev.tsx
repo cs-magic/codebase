@@ -1,6 +1,6 @@
 "use client"
-import { DevConfig } from "@/components/dev-config"
-import { DevSocketStatus } from "@cs-magic/swot-frontend/components/dev-socket-status"
+import { DevConfig } from "./dev-config"
+import { DevSocketStatus } from "./dev-socket-status"
 
 export const Dev = () => {
   return (

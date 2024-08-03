@@ -1796,6 +1796,7 @@ __metadata:
   resolution: "@cs-magic/common@workspace:packages/common"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:^3.0.0"
+    "@cs-magic/prisma": "workspace:^"
     "@types/ansicolors": "npm:^0"
     "@types/async-lock": "npm:^1.4.2"
     "@types/lodash": "npm:^4.14.202"
@@ -1888,7 +1889,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/prisma@workspace:packages/prisma":
+"@cs-magic/prisma@workspace:^, @cs-magic/prisma@workspace:packages/prisma":
   version: 0.0.0-use.local
   resolution: "@cs-magic/prisma@workspace:packages/prisma"
   languageName: unknown

@@ -1,19 +1,25 @@
-import { devEnabledAtom } from "@cs-magic/react-hooks"
-import { IconContainer } from "@cs-magic/react-ui"
-import { Sheet, SheetContent, SheetTrigger } from "@cs-magic/react-ui"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cs-magic/react-ui"
 import { cn } from "@cs-magic/common"
+import { devEnabledAtom } from "@cs-magic/react-hooks"
+import {
+  IconContainer,
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@cs-magic/react-ui"
+
+import { ConfigDevCard } from "./config-dev-card"
+import { ConfigLogCard } from "./config-log-card"
+import { ConfigSMSCard } from "./config-sms"
+import { UserSignOutButton } from "./user-sign-out-button"
 import { useHotkeys } from "@mantine/hooks"
 import { useAtom } from "jotai"
 import { SettingsIcon } from "lucide-react"
 import * as process from "process"
 import { useState } from "react"
-
-import { ConfigDevCard } from "@cs-magic/swot-frontend/components/config-dev-card"
-import { ConfigLogCard } from "@cs-magic/swot-frontend/components/config-log-card"
-import { ConfigSMSCard } from "@cs-magic/swot-frontend/components/config-sms"
-import { ConfigTRPCCard } from "@/components/config-trpc"
-import { UserSignOutButton } from "@cs-magic/swot-frontend/components/user-sign-out-button"
 
 export const DevConfig = () => {
   const [devEnabled] = useAtom(devEnabledAtom)
@@ -68,9 +74,7 @@ export const DevConfig = () => {
             <ConfigLogCard />
           </TabsContent>
 
-          <TabsContent value={"trpc"}>
-            <ConfigTRPCCard />
-          </TabsContent>
+          <TabsContent value={"trpc"}>{/*<ConfigTRPCCard />*/}</TabsContent>
 
           <TabsContent value={"dev"}>
             <ConfigDevCard />
