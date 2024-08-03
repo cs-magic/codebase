@@ -7,7 +7,10 @@ General:
 ```mermaid
 graph TD;
     prisma --> *;
+    prisma --> common;
+    prisma --> llm;
     common --> *;
+    common --> llm;
     llm --> *;
 ```
 
