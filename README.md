@@ -4,24 +4,24 @@
 
 ```mermaid
 graph TD;
-    @cs-magic/prisma --> *;
-    @cs-magic/common --> *;
-    @cs-magic/llm --> *;
+    prisma --> *;
+    common --> *;
+    llm --> *;
     wechat4u --> wechaty-puppet-wechat4u;
     wechaty-puppet --> wechaty-puppet-wechat4u;
     wechaty-puppet --> wechaty;
     wechaty-puppet-wechat4u --> wechaty;
-    wechaty-puppet --> @cs-magic/swot-backend;
-    wechaty --> @cs-magic/swot-backend;
-    @cs-magic/swot-backend --> @cs-magic/swot-frontend;
-    @cs-magic/react-hooks --> @cs-magic/next-hooks;
-    @cs-magic/react-hooks --> @cs-magic/swot-frontend;
-    @cs-magic/react-ui --> @cs-magic/swot-frontend;
-    @cs-magic/next-hooks --> @cs-magic/next-auth;
-    @cs-magic/next-hooks --> @cs-magic/swot-frontend;
-    @cs-magic/next-auth --> @cs-magic/swot-frontend;
-    @cs-magic/swot-frontend --> @cs-magic/swot-web;
-    @cs-magic/swot-frontend --> swot-pc;
+    wechaty-puppet --> swot-backend;
+    wechaty --> swot-backend;
+    swot-backend --> swot-frontend;
+    react-hooks --> next-hooks;
+    react-hooks --> swot-frontend;
+    react-ui --> swot-frontend;
+    next-hooks --> next-auth;
+    next-hooks --> swot-frontend;
+    next-auth --> swot-frontend;
+    swot-frontend --> swot-web;
+    swot-frontend --> swot-pc;
 ```
 
 ## environment preparation
@@ -50,4 +50,4 @@ yarn
 ## todo
 
 - [ ] 【重要】server function split for swot-pc
-- [ ] `@cs-magic/react-hooks` split next/next-auth
+- [ ] `react-hooks` split next/next-auth
