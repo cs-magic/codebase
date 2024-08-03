@@ -1,6 +1,6 @@
 # CS Magic Codebase
 
-## project overview
+## Project Overview
 
 General: 
 
@@ -50,7 +50,7 @@ graph TD;
     swot-frontend --> swot-pc;
 ```
 
-## environment preparation
+## Preparation
 
 - wechaty-puppet 相关需要安装 `jq`，而且不能用 yarn 装，要在系统级别 (2024-06-13)：
     - mac: `brew install jq`
@@ -59,7 +59,7 @@ graph TD;
 - env 配置（参考 env.sample）
 - db migrate: `yarn workspace @cs-magic/prisma db:migrate:dev`
 
-## start
+## Run
 
 ```shell
 # start web in dev
@@ -84,12 +84,12 @@ yarn workspace @cs-magic/swot-frontend start
 # 双击安装 packages/swot-pc/dist/swot-pc-${version}.dmg
 ```
 
-## reference 
+## References 
 
 - [Tech](__docs__/tech.md)
 - [Finished Todo](__docs__/finished-todo.md)
 
-## todo
+## TODO
 
 - [ ] 【重要】server function split for swot-pc
 - [ ] `react-hooks` split next/next-auth
