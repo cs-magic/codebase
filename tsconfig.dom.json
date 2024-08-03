@@ -9,6 +9,7 @@
       "dom.iterable"
     ],
     "jsx": "react-jsx",
+
     "module": "ESNext",
     "moduleResolution": "Bundler"
   }

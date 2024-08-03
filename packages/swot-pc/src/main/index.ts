@@ -2,10 +2,10 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
-import { initServer } from '@cs-magic/swot-bot/dist/backend/server.js'
-// import { initServer } from '@cs-magic/swot-bot/dist/esm/src/backend/server.js'
+import { initServer } from '@cs-magic/swot-bot/backend/server'
+// import { initServer } from '@cs-magic/swot-bot/esm/src/backend/server'
 // const initServer = async () => {
-//   const backend = await import('@cs-magic/swot-bot/dist/backend/server.js')
+//   const backend = await import('@cs-magic/swot-bot/backend/server')
 //   void backend.initServer()
 // }
 

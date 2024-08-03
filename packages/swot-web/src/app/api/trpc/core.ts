@@ -1,5 +1,5 @@
-import { prisma } from "@cs-magic/common"
 import { userDetailSchema } from "@cs-magic/common"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 import { z } from "zod"
 import { createTRPCRouter, protectedProcedure } from "../../../trpc/trpc"
 

@@ -5,7 +5,8 @@ import {
   SEPARATOR_LINE,
   TaskTimer,
 } from "@cs-magic/common"
-import { parseCommand, prisma } from "@cs-magic/common/dist/server.js"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
+import { parseCommand } from "@cs-magic/common/dist/parse-command.js"
 import { Job, scheduleJob } from "node-schedule"
 import { z } from "zod"
 

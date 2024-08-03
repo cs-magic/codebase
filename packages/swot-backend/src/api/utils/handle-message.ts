@@ -1,4 +1,4 @@
-import { dumpFile } from "@cs-magic/common/dist/server"
+import { dumpFile } from "@cs-magic/common/dist/dump-file.js"
 import path from "path"
 
 import { formatError, logger } from "@cs-magic/common"

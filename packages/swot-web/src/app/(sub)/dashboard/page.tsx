@@ -1,5 +1,5 @@
 "use client"
-import { useDraftSession } from "@cs-magic/react-hooks"
+import { useDraftSession } from "@cs-magic/next-hooks"
 import {
   Button,
   Card,

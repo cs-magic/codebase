@@ -1,4 +1,4 @@
-import { sampleWxmpArticleComment } from "@cs-magic/common"
+import { sampleWxmpArticleComment } from "@cs-magic/common/dist/sample.js"
 import { ICardPlatform } from "./card"
 import { RequestOptions } from "./request"
 import { SummaryOptions } from "./summary"

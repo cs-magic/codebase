@@ -6,12 +6,6 @@ import { useEffect } from "react"
 import { toast } from "sonner"
 
 import {
-  $sendSms,
-  $sendSmsViaAli,
-  $sendSmsViaTencent,
-} from "@cs-magic/common/server"
-
-import {
   smsCodeCurCountdownSecondsAtom,
   smsCodeExpireSecondsAtom,
   smsCodeSentOKAtom,
@@ -21,6 +15,9 @@ import {
   smsStageAtom,
   uiLoadingAlertDialogAtom,
 } from "@cs-magic/react-hooks"
+import { $sendSmsViaAli } from "@cs-magic/common/dist/auth/providers/sms/providers/ali.js"
+import { $sendSmsViaTencent } from "@cs-magic/common/dist/auth/providers/sms/providers/tencent.js"
+import { $sendSms } from "@cs-magic/common/dist/auth/providers/sms/actions.js"
 
 export const useSmsSendCode = () => {
   const [smsProviderType] = useAtom(smsProviderTypeAtom)

@@ -1,5 +1,5 @@
 import { logger, type ITransClient, type ITransEvent } from "@cs-magic/common"
-import { redis } from "@cs-magic/common/dist/server.js"
+import { redis } from "@cs-magic/common/dist/db/redis.js"
 
 import type { ILLMManagerTraditional } from "./schema.js"
 

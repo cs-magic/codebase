@@ -2,7 +2,7 @@
 
 import { logger } from "@cs-magic/common"
 import { env } from "@cs-magic/common"
-import { useInit, useUserIsAdmin } from "@cs-magic/react-hooks"
+import { useInit } from "@cs-magic/react-hooks"
 import { socketStatusMap } from "@cs-magic/common"
 import { ButtonWithLoading } from "@cs-magic/react-ui"
 import { FlexContainer } from "@cs-magic/react-ui"
@@ -28,6 +28,7 @@ import { toast } from "sonner"
 import { ScanStatus } from "wechaty-puppet/types"
 import { columns, DataTable } from "./contacts.table"
 import { IWechatBotTransfer } from "@cs-magic/swot-backend/schema"
+import { useUserIsAdmin } from "@cs-magic/next-hooks"
 
 export default function BotPage() {
   const [botScanning, setBotScanning] = useAtom(botScanningAtom)

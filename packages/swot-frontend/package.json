@@ -3,7 +3,11 @@
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./components/*": "./dist/components/*.js",
+    "./store/*": "./dist/store/*.js",
+    "./utils/*": "./dist/utils/*.js",
+    "./*": "./*"
   },
   "packageManager": "yarn@4.1.1",
   "scripts": {

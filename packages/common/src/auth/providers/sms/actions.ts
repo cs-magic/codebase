@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "../../../db/index.js"
+import { prisma } from "../../../db/prisma.js"
 import logger from "../../../log/index.js"
 import { SMS_PROVIDER_ID } from "../../../sms.base.js"
 import { IProviderSendSms } from "../../../sms.schema.js"

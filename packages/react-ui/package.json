@@ -4,6 +4,10 @@
   "description": "",
   "type": "module",
   "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./*"
+  },
   "scripts": {
     "prepare": "ts-patch install -s",
     "clean": "rimraf dist",

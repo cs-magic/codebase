@@ -3,10 +3,12 @@ import {
   PROFILE_UPDATE_PROVIDER_ID,
   userDetailSchema,
 } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/server"
-import Credentials from "next-auth/providers/credentials"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
+import CredentialsProvider from "next-auth/providers/credentials"
 
-export const ProfileUpdateProvider = Credentials({
+console.log({ CredentialsProvider })
+
+export const ProfileUpdateProvider = CredentialsProvider({
   id: PROFILE_UPDATE_PROVIDER_ID,
   credentials: {
     id: { type: "string" },

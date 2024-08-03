@@ -12,6 +12,12 @@ const config = {
 
   distDir: process.env.DIST ?? ".next",
 
+  experimental: {
+    // 支持 自己的 esm package 导入（比如 @cs-magic/next-auth）
+    // ref: https://nextjs.org/docs/messages/import-esm-externals
+    esmExternals: 'loose'
+  },
+
   webpack(config, { dev, isServer }) {
     // 以下是gpt给的，为了解决wechaty的问题，但没用，无法启动
     // if (!isServer) {

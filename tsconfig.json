@@ -12,6 +12,8 @@
     //    "noEmit": true,
 
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "lib": [
@@ -45,7 +47,6 @@
     "alwaysStrict": true,
     "skipDefaultLibCheck": true,
     "suppressImplicitAnyIndexErrors": true,
-    "allowSyntheticDefaultImports": true,
     "noPropertyAccessFromIndexSignature": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

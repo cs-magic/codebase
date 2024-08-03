@@ -25,6 +25,8 @@ yarn
 
 ## instruction
 
+- `next-auth` 的 package.json 里 type 不能是 module，否则 nextjs 导入时会有 provider default 问题
+
 ### debug tech
 
 当想确定什么进程没有退出的时候：

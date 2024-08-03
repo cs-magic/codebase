@@ -7,8 +7,8 @@ import {
   ICardPreview,
 } from "@cs-magic/swot-backend/schema"
 import { PreviewCardAction } from "@cs-magic/swot-frontend/components/card-action-preview"
-import { cardRenderedAtom } from "@cs-magic/swot-frontend/store/card.rendered.atom"
-import { cardUserAtom } from "@cs-magic/swot-frontend/store/card.user.atom"
+import { cardRenderedAtom } from "@cs-magic/swot-frontend/dist/store/card.rendered.atom.js"
+import { cardUserAtom } from "@cs-magic/swot-frontend/dist/store/card.user.atom.js"
 import { useAtom, useAtomValue } from "jotai"
 import { Suspense, useRef } from "react"
 

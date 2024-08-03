@@ -1,3 +1,5 @@
+"use server"
+
 import OSS from "ali-oss"
 import { api, IApiResult } from "../api"
 import { env } from "../env"

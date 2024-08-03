@@ -1,6 +1,10 @@
 {
   "extends": "../../tsconfig.dom.json",
   "compilerOptions": {
+    // 需要加以下两行，否则会有 Type error: The inferred type of 'api' cannot be named without a reference to '../../../../node_modules/@trpc/react-query/dist/createTRPCReact'. This is likely not portable. A type annotation is necessary.
+    // 参考：https://github.com/trpc/trpc/issues/2717#issuecomment-1247425462
+    "composite": false,
+    "declaration": false,
     "jsx": "preserve",
     "plugins": [
       {
@@ -27,7 +31,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   // include 和 exclude 是独立的，extend的时候也要写上
@@ -55,6 +61,6 @@
     },
     {
       "path": "../react-hooks"
-    },
+    }
   ]
 }

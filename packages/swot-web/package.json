@@ -49,10 +49,11 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-table": "^8.17.3",
-    "@trpc/client": "^10.45.1",
+    "@trpc/client": "^10.45.2",
     "@trpc/next": "^10.45.1",
+    "@trpc/react": "^9.27.4",
     "@trpc/react-query": "^10.45.1",
-    "@trpc/server": "^10.45.1",
+    "@trpc/server": "^10.45.2",
     "@uiw/react-md-editor": "^4.0.4",
     "ali-oss": "^6.20.0",
     "ansi-colors": "^4.1.3",
@@ -111,6 +112,7 @@
     "react-icons": "^5.0.1",
     "react-markdown": "^9.0.1",
     "react-player": "^2.15.1",
+    "react-query": "3",
     "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^8.5.3",
     "react-use": "^17.5.0",
@@ -166,13 +168,5 @@
     "typescript": "^5.3.3",
     "webpack": "^5.93.0",
     "wtfnode": "^0.9.1"
-  },
-  "ct3aMetadata": {
-    "initVersion": "7.27.0"
-  },
-  "packageManager": "yarn@4.1.1",
-  "resolutions": {
-    "jackspeak": "2.1.1",
-    "markmap-view@npm:0.16.0": "patch:markmap-view@npm%3A0.16.0#~/.yarn/patches/markmap-view-npm-0.16.0-f358605936.patch"
   }
 }

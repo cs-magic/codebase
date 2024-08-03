@@ -1,9 +1,9 @@
 import { llmModelTypeSchema } from "@cs-magic/llm"
-import { prisma } from "@cs-magic/common/dist/server.js"
-import { FeatureMap } from "../../../../schema/index.js"
 import { FileBox } from "file-box"
 import { z } from "zod"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 
+import { FeatureMap } from "../../../../schema/index.js"
 import { parseLimitedCommand } from "../../../utils/index.js"
 import { BasePlugin } from "./base.plugin.js"
 

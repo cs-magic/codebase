@@ -1,8 +1,8 @@
 "use server"
 
-import { prisma } from "@cs-magic/common/server"
 import { IXiaoHongShuNotePageData } from "@cs-magic/common"
 import { Card, Prisma } from "@prisma/client"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 
 export const xiaohongshu2card = (
   inputData: IXiaoHongShuNotePageData,

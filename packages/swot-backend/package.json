@@ -9,7 +9,8 @@
     "./bot": "./dist/bot/index.js",
     "./api": "./dist/api/index.js",
     "./schema": "./dist/schema/index.js",
-    "./utils": "./dist/utils/index.js"
+    "./utils": "./dist/utils/index.js",
+    "./*": "./*"
   },
   "scripts": {
     "postinstall": "yarn build",

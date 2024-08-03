@@ -1,5 +1,5 @@
 import { Redis } from "ioredis"
-import { env } from "../../../env/index.js"
+import { env } from "../env"
 
 const createRedisClient = () =>
   new Redis().on("error", (err) => console.log("Redis Client Error", err))

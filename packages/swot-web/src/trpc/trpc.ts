@@ -7,10 +7,10 @@
  * need to use are documented accordingly near the end.
  */
 
-import { prisma } from "@cs-magic/common"
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { ZodError } from "zod"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 import { Context } from "./context"
 
 /**

@@ -21,13 +21,15 @@ export const BrandingTitle = ({
         // " bg-cyan-800",
       )}
     >
-      <Image
-        src={"/branding/enterprise/swot.png"}
-        alt={""}
-        width={36}
-        height={36}
-        className={"h-auto"}
-      />
+      {/* todo: add image link */}
+      {/*<Image*/}
+      {/*  src={"/branding/enterprise/swot.png"}*/}
+      {/*  alt={""}*/}
+      {/*  width={36}*/}
+      {/*  height={36}*/}
+      {/*  className={"h-auto"}*/}
+      {/*/>*/}
+
       <h1
         className={cn(
           "primary-gradient flex gap-4 text-lg font-bold sm:text-2xl",

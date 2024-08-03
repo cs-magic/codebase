@@ -1,4 +1,4 @@
-import { sampleWxmpArticleUrl } from "@cs-magic/common"
+import { sampleWxmpArticleUrl } from "@cs-magic/common/dist/sample.js"
 import { fetchWechatArticleComments, fetchWechatArticleStat } from "./wxapi"
 
 describe("wxapi without token", () => {

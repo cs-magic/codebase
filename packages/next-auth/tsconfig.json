@@ -5,7 +5,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "tsBuildInfoFile": "dist/.tsbuildinfo",
-    "rootDir": "src"
+    "rootDir": "src",
+//    "module": "CommonJS",
+//    "moduleResolution": "Node"
   },
   "include": [
     "./src/**/*",

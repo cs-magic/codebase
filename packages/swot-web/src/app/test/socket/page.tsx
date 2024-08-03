@@ -1,8 +1,11 @@
 "use client"
 
-import { usePusherClient } from "@cs-magic/react-hooks"
+import {
+  cleanPusherAtom,
+  pusherServerIdAtom,
+  usePusherClient,
+} from "@cs-magic/react-hooks"
 import { PusherServerId } from "@cs-magic/common"
-import { cleanPusherAtom, pusherServerIdAtom } from "@cs-magic/react-ui"
 import { FlexContainer } from "@cs-magic/react-ui"
 import { Button } from "@cs-magic/react-ui"
 import {

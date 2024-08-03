@@ -1,7 +1,7 @@
 "use server"
 
 import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/dist/server"
+import { prisma } from "@cs-magic/common/dist/db/prisma"
 
 import {
   FetchWxmpArticleRes,

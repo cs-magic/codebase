@@ -1,18 +1,19 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { env, IWechatProfile, tokenExpireSeconds } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/server"
-
 import { CallbacksOptions, type NextAuthOptions } from "next-auth"
 import { Adapter } from "next-auth/adapters"
-import { ProfileUpdateProvider } from "./providers/profile-update"
-import { SmsProvider } from "./providers/sms"
-import { WechatProvider } from "./providers/wechat"
+import { PrismaAdapter } from "@auth/prisma-adapter"
 import { Provider } from "next-auth/providers/index"
 
-const providers: Provider[] = [
-  SmsProvider,
+import { env, IWechatProfile, tokenExpireSeconds } from "@cs-magic/common"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 
+import { ProfileUpdateProvider } from "./providers/profile-update.js"
+// import { SmsProvider } from "./providers/sms.js"
+import { WechatProvider } from "./providers/wechat.js"
+
+const providers: Provider[] = [
   ProfileUpdateProvider,
+
+  // SmsProvider,
 
   // DiscordProvider({
   //   clientId: env?.DISCORD_CLIENT_ID,
