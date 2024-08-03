@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import swotLogo from './assets/swot.png'
-import ConnectionPage from './connection/page'
+import ConnectionPage from '@cs-magic/swot-frontend/pages/connection/page'
 
 function App(): JSX.Element {
   const [versions] = useState(window.electron.process.versions)

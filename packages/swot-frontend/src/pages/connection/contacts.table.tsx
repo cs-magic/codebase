@@ -1,7 +1,12 @@
-'use client'
+"use client"
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { ContactPayload } from './concat.schema.js'
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+import { Contact } from "wechaty-puppet/payloads"
 import {
   Table,
   TableBody,
@@ -9,14 +14,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@cs-magic/react-ui/dist/shadcn/ui/table.js'
+} from "@cs-magic/react-ui/dist/shadcn/ui/table.js"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -34,7 +42,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 )
               })}
@@ -44,7 +55,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -65,34 +79,36 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   )
 }
 
-export const columns: ColumnDef<ContactPayload>[] = [
+export const columns: ColumnDef<Contact>[] = [
   {
-    accessorKey: 'id',
+    accessorKey: "id",
     cell: ({ row }) => {
-      return <div className={'max-w-[8rem] truncate'}>{row.getValue('id')}</div>
+      return <div className={"max-w-[8rem] truncate"}>{row.getValue("id")}</div>
     },
   },
-  { accessorKey: 'name' },
-  { accessorKey: 'alias' },
+  { accessorKey: "name" },
+  { accessorKey: "alias" },
   {
-    accessorKey: 'avatar',
+    accessorKey: "avatar",
     cell: ({ row }) => {
-      return <div className={'max-w-[20rem] truncate'}>{row.getValue('avatar')}</div>
+      return (
+        <div className={"max-w-[20rem] truncate"}>{row.getValue("avatar")}</div>
+      )
     },
   },
-  { accessorKey: 'friend' },
-  { accessorKey: 'address' },
-  { accessorKey: 'city' },
-  { accessorKey: 'corporation' },
-  { accessorKey: 'coworker' },
-  { accessorKey: 'description' },
-  { accessorKey: 'gender' },
-  { accessorKey: 'handle' },
-  { accessorKey: 'phone' },
-  { accessorKey: 'province' },
-  { accessorKey: 'signature' },
-  { accessorKey: 'star' },
-  { accessorKey: 'title' },
-  { accessorKey: 'type' },
-  { accessorKey: 'weixin' },
+  { accessorKey: "friend" },
+  { accessorKey: "address" },
+  { accessorKey: "city" },
+  { accessorKey: "corporation" },
+  { accessorKey: "coworker" },
+  { accessorKey: "description" },
+  { accessorKey: "gender" },
+  { accessorKey: "handle" },
+  { accessorKey: "phone" },
+  { accessorKey: "province" },
+  { accessorKey: "signature" },
+  { accessorKey: "star" },
+  { accessorKey: "title" },
+  { accessorKey: "type" },
+  { accessorKey: "weixin" },
 ]

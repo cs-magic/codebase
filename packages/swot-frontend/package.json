@@ -4,10 +4,11 @@
   "main": "./dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./assets/*": "./dist/assets/*.js",
+    "./pages/*": "./dist/pages/*.js",
     "./components/*": "./dist/components/*.js",
     "./store/*": "./dist/store/*.js",
     "./utils/*": "./dist/utils/*.js",
+    "./assets/*": "./dist/assets/*.js",
     "./*": "./*"
   },
   "scripts": {
