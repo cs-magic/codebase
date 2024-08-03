@@ -4,10 +4,24 @@
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    @cs-magic/prisma --> *;
+    @cs-magic/common --> *;
+    @cs-magic/llm --> *;
+    wechat4u --> wechaty-puppet-wechat4u;
+    wechaty-puppet --> wechaty-puppet-wechat4u;
+    wechaty-puppet --> wechaty;
+    wechaty-puppet-wechat4u --> wechaty;
+    wechaty-puppet --> @cs-magic/swot-backend;
+    wechaty --> @cs-magic/swot-backend;
+    @cs-magic/swot-backend --> @cs-magic/swot-frontend;
+    @cs-magic/react-hooks --> @cs-magic/next-hooks;
+    @cs-magic/react-hooks --> @cs-magic/swot-frontend;
+    @cs-magic/react-ui --> @cs-magic/swot-frontend;
+    @cs-magic/next-hooks --> @cs-magic/next-auth;
+    @cs-magic/next-hooks --> @cs-magic/swot-frontend;
+    @cs-magic/next-auth --> @cs-magic/swot-frontend;
+    @cs-magic/swot-frontend --> @cs-magic/swot-web;
+    @cs-magic/swot-frontend --> swot-pc;
 ```
 
 ## environment preparation
