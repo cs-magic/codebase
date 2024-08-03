@@ -40,6 +40,7 @@ graph TD;
     common --> swot-frontend;
     llm --> swot-frontend;
     swot-backend --> swot-frontend;
+    react-hooks --> react-ui;
     react-hooks --> next-hooks;
     react-hooks --> swot-frontend;
     react-ui --> swot-frontend;
