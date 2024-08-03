@@ -2,17 +2,43 @@
 
 ## project overview
 
+General: 
+
 ```mermaid
 graph TD;
     prisma --> *;
     common --> *;
     llm --> *;
+```
+
+Wechaty:
+
+```mermaid
+graph TD;
     wechat4u --> wechaty-puppet-wechat4u;
     wechaty-puppet --> wechaty-puppet-wechat4u;
     wechaty-puppet --> wechaty;
     wechaty-puppet-wechat4u --> wechaty;
+```
+
+Swot Backend:
+
+```mermaid
+graph TD;
+    prisma --> swot-backend;
+    common --> swot-backend;
+    llm --> swot-backend;
     wechaty-puppet --> swot-backend;
     wechaty --> swot-backend;
+```
+
+Swot Frontend:
+
+```mermaid
+graph TD;
+    prisma --> swot-frontend;
+    common --> swot-frontend;
+    llm --> swot-frontend;
     swot-backend --> swot-frontend;
     react-hooks --> next-hooks;
     react-hooks --> swot-frontend;
