@@ -3,8 +3,8 @@ import { LlmModelType } from "@cs-magic/llm"
 import { PlatformType, Prisma, $Enums } from "@prisma/client"
 import { z } from "zod"
 
-import { ISummaryParsed } from "./summary"
-import { IWechatArticleComment, IWechatArticleStat } from "./wxmp-article"
+import { ISummaryParsed } from "./summary.js"
+import { IWechatArticleComment, IWechatArticleStat } from "./wxmp-article.js"
 
 export type ICardStat = {
   reads?: number

@@ -1,7 +1,8 @@
 import { LogLevel } from "@cs-magic/common"
 import { Message, Sayable } from "wechaty"
-import { LlmScenario, QueueTask } from "../schema"
 import { Job } from "node-schedule"
+
+import { LlmScenario, QueueTask } from "../schema/index.js"
 
 export type BotData = {
   name: string

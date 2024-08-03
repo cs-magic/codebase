@@ -1,17 +1,16 @@
 'use client'
 
+import { useAtom } from 'jotai'
+import { QRCodeSVG } from 'qrcode.react'
+import { useState } from 'react'
+import { CSVLink } from 'react-csv'
+import { toast } from 'sonner'
+
 import { cn, logger } from '@cs-magic/common'
-import { useInit } from '@cs-magic/react-hooks'
+import { useInit } from '@cs-magic/react-hooks/dist/hooks/use-init.js'
 
-import {
-  Button,
-  buttonVariants,
-  ButtonWithLoading,
-  FlexContainer,
-  StandardCard,
-} from '@cs-magic/react-ui'
+import { IWechatBotTransfer, ScanStatus } from '@cs-magic/swot-backend/schema'
 
-import { IWechatBotTransfer, ScanStatus } from '@cs-magic/swot-bot/schema'
 import {
   botContactsAtom,
   botLoggedInAtom,
@@ -21,12 +20,11 @@ import {
   botScanValueAtom,
   botUserAtom,
 } from '@cs-magic/swot-frontend'
-import { useAtom } from 'jotai'
-import { QRCodeSVG } from 'qrcode.react'
-import { useState } from 'react'
-
-import { CSVLink } from 'react-csv'
-import { toast } from 'sonner'
+import { FlexContainer } from '@cs-magic/react-ui/dist/components/flex-container.js'
+import { StandardCard } from '@cs-magic/react-ui/dist/components/standard-card.js'
+import { ButtonWithLoading } from '@cs-magic/react-ui/dist/components/button-with-loading.js'
+import { Button, buttonVariants } from '@cs-magic/react-ui/dist/shadcn/ui/button.js'
+import { columns, DataTable } from './contacts.table'
 
 export default function BotPage() {
   const [socketStatus, setSocketStatus] = useState<number>(0)
@@ -103,10 +101,7 @@ export default function BotPage() {
     return socket
   })
 
-  logger.info({ botUser, botContacts })
-
   return (
-    // null
     <FlexContainer
       orientation={'vertical'}
       className={
@@ -188,7 +183,7 @@ export default function BotPage() {
 
             {botContacts && (
               <div className={'w-full h-full overflow-auto'}>
-                {/*<DataTable columns={columns} data={botContacts} />*/}
+                <DataTable columns={columns} data={botContacts} />
               </div>
             )}
           </StandardCard>

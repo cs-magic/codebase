@@ -1,5 +1,6 @@
-import { IWechatBotTransfer } from "../../schema"
 import { WebSocket } from "ws"
+
+import { IWechatBotTransfer } from "../../schema/index.js"
 
 export const transferMessage = (
   data: IWechatBotTransfer,

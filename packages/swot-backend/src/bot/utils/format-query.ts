@@ -1,5 +1,5 @@
 import { SEPARATOR_BOX, SEPARATOR_LINE } from "@cs-magic/common"
-import { CommandStyle } from "../../schema/bot-preference"
+import { CommandStyle } from "../../schema/bot-preference.js"
 
 /**
  * 可用于微信的回复

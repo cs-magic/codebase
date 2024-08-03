@@ -1,5 +1,6 @@
 import { parseJsonSafe } from "@cs-magic/common"
 import fs, { promises } from "fs"
+
 import { IWechatData, wechatyDataPath } from "./handle-message.js"
 
 export const loadBotToken = async () => {

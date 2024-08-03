@@ -1,5 +1,5 @@
-import { Contact } from "wechaty-puppet/dist/esm/src/mods/payloads"
-import { IWechatPreference } from "./bot-preference"
+import { Contact } from "wechaty-puppet/payloads"
+import { IWechatPreference } from "./bot-preference.js"
 
 export type IWechatBotScan = { value: string; status: number }
 export type IUser = Contact

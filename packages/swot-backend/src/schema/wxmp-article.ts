@@ -1,8 +1,10 @@
-import { sampleWxmpArticleComment } from "@cs-magic/common/dist/sample.js"
-import { ICardPlatform } from "./card"
-import { RequestOptions } from "./request"
-import { SummaryOptions } from "./summary"
 import { Card, LlmResponse } from "@prisma/client"
+
+import { sampleWxmpArticleComment } from "@cs-magic/common/dist/sample.js"
+
+import { ICardPlatform } from "./card.js"
+import { RequestOptions } from "./request.js"
+import { SummaryOptions } from "./summary.js"
 
 export type IWxmpArticleUrlParsed = {
   platformId?: string

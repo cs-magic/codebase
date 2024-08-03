@@ -1,6 +1,6 @@
 import { backendApi } from "@cs-magic/common"
 import { Prisma } from "@prisma/client"
-import { SummaryOptions } from "../../../../schema"
+import { SummaryOptions } from "../../../../schema/index.js"
 
 export const fetchWxmpArticleViaFastapi = async (
   url: string,

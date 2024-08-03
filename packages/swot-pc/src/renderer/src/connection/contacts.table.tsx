@@ -1,8 +1,15 @@
 'use client'
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@cs-magic/react-ui'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { ContactPayload } from './concat.schema.js'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@cs-magic/react-ui/dist/shadcn/ui/table.js'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

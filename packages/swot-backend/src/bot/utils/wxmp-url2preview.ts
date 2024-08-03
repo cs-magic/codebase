@@ -8,10 +8,10 @@ import {
 } from "@cs-magic/common"
 import { ILlmRes } from "@cs-magic/llm"
 
-import { ICardInnerPreview, IMedia } from "../../schema/card"
-import { GenWxmpArticleCardFetchOptions } from "../../schema/wxmp-article"
-import { parseSummary } from "../../utils/parse-summary"
-import { fetchWxmpArticle } from "./wxmp-fetch"
+import { ICardInnerPreview, IMedia } from "../../schema/card.js"
+import { GenWxmpArticleCardFetchOptions } from "../../schema/wxmp-article.js"
+import { parseSummary } from "../../utils/parse-summary.js"
+import { fetchWxmpArticle } from "./wxmp-fetch.js"
 
 export const wxmpUrl2preview = async (
   url: string,

@@ -5,8 +5,8 @@ import {
   CardSimulator,
 } from "@cs-magic/common/dist/spider/index.js"
 import { FileBox } from "file-box"
-import { wxmpUrl2preview } from "../../bot"
 
+import { wxmpUrl2preview } from "../../bot/index.js"
 import { IWechatPreference } from "../../schema/index.js"
 
 const uniParser = new CardSimulator()

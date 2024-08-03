@@ -1,5 +1,5 @@
 import { api } from "@cs-magic/common"
-import { IFetchWechatArticleStat } from "../../../../../schema"
+import { IFetchWechatArticleStat } from "../../../../../schema/index.js"
 
 /**
  *

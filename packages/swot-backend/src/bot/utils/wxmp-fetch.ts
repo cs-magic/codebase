@@ -1,15 +1,15 @@
 "use server"
 
 import { logger, cardDetailSchema, formatString } from "@cs-magic/common"
-import { prisma } from "@cs-magic/common/dist/db/prisma"
+import { prisma } from "@cs-magic/common/dist/db/prisma.js"
 
 import {
   FetchWxmpArticleRes,
   GenWxmpArticleCardFetchOptions,
-} from "../../schema/wxmp-article"
-import { md2summary } from "./wxmp-article/fetch/md2summary"
-import { wxmpRequest } from "./wxmp-request"
-import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
+} from "../../schema/wxmp-article.js"
+import { md2summary } from "./wxmp-article/fetch/md2summary.js"
+import { wxmpRequest } from "./wxmp-request.js"
+import { parseWxmpArticleUrl } from "./parse-wxmp-article-url.js"
 
 export const fetchWxmpArticle = async (
   url: string,

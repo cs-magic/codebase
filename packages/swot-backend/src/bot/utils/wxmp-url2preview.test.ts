@@ -1,4 +1,4 @@
-import { wxmpUrl2preview } from "./wxmp-url2preview"
+import { wxmpUrl2preview } from "./wxmp-url2preview.js"
 
 describe("test wxmp url2preview", async () => {
   const res = wxmpUrl2preview(

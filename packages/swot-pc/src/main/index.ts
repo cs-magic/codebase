@@ -2,12 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
-import { initServer } from '@cs-magic/swot-bot/backend/server'
-// import { initServer } from '@cs-magic/swot-bot/esm/src/backend/server'
-// const initServer = async () => {
-//   const backend = await import('@cs-magic/swot-bot/backend/server')
-//   void backend.initServer()
-// }
+import { initServer } from '@cs-magic/swot-backend/dist/api/server.js'
 
 import icon from '../../resources/icon.png?asset'
 

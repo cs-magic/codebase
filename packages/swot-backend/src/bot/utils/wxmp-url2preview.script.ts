@@ -1,4 +1,4 @@
-import { wxmpUrl2preview } from "./wxmp-url2preview"
+import { wxmpUrl2preview } from "./wxmp-url2preview.js"
 
 const programme = async () => {
   console.log("-- starting")

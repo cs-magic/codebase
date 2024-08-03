@@ -12,9 +12,9 @@ import { Prisma } from "@prisma/client"
 import { parse } from "node-html-parser"
 import { z } from "zod"
 
-import { WxmpArticleSimulator } from "@cs-magic/common/dist/spider"
-import { RequestOptions } from "../../schema/request"
-import { parseWxmpArticleUrl } from "./parse-wxmp-article-url"
+import { WxmpArticleSimulator } from "@cs-magic/common/dist/spider/wxmp-article-simulator.js"
+import { RequestOptions } from "../../schema/request.js"
+import { parseWxmpArticleUrl } from "./parse-wxmp-article-url.js"
 
 // import { parseWxmpArticleUrl } from "@cs-magic/swot-web/utils/card-platform/wechat-article/utils"
 

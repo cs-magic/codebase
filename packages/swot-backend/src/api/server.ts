@@ -2,12 +2,11 @@ import { genNanoId } from "@cs-magic/common"
 import fw from "@fastify/websocket"
 
 import Fastify from "fastify"
-import remove from "lodash/remove.js"
+import remove from "lodash-es/remove.js"
 
 import { logger } from "@cs-magic/common"
 
-import { IContext } from "./schema"
-
+import { IContext } from "./schema.js"
 import { startBot } from "./utils/start-bot.js"
 import { syncClients } from "./utils/sync-clients.js"
 import { handleMessage } from "./utils/handle-message.js"
