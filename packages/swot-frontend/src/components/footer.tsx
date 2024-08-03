@@ -1,6 +1,6 @@
-import { CsMagicBrand } from "@cs-magic/swot-frontend/dist/assets.js"
+import { CsMagicBrand } from "../assets"
 import { ImageEqualHeight } from "@cs-magic/react-ui"
-import { BrandingPartners } from "@cs-magic/swot-frontend/components/branding-partners"
+import { BrandingPartners } from "./branding-partners"
 import Link from "next/link"
 
 import { config } from "@cs-magic/common"

@@ -10,12 +10,12 @@ import {
 } from "@cs-magic/react-ui"
 import { Metadata, type Viewport } from "next"
 import { Inter } from "next/font/google"
-import { Dev } from "@cs-magic/swot-frontend/src/components/dev"
+import { Dev } from "@cs-magic/swot-frontend/components/dev"
 import GlobalHooksProviders from "./global.provider"
 import { TRPCReactProvider } from "../trpc/react"
 import { Suspense } from "react"
 
-import "../styles/globals.css"
+import "@cs-magic/swot-frontend/dist/styles/globals.css"
 
 const inter = Inter({
   subsets: ["latin"],

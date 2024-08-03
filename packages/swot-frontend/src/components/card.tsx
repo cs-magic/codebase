@@ -10,12 +10,12 @@ import {
   cardPreviewEngineTypeSchema,
   GenCardApproach,
 } from "@cs-magic/swot-backend/schema"
-import { CardInputBackend } from "@cs-magic/swot-frontend/components/card-input-backend"
-import { CardInputFrontend } from "@cs-magic/swot-frontend/components/card-input-frontend"
-import { cardPreviewAtom } from "@cs-magic/swot-frontend/store/card.atom"
-import { cardPreviewEngineAtom } from "@cs-magic/swot-frontend/store/card.rendered.atom"
+import { CardInputBackend } from "./card-input-backend"
+import { CardInputFrontend } from "./card-input-frontend"
+import { cardPreviewAtom } from "../store/card.atom"
+import { cardPreviewEngineAtom } from "../store/card.rendered.atom"
 
-import { CardPreviewContainer } from "@/components/card-preview-container"
+import { CardPreviewContainer } from "./card-preview-container"
 
 export const Card = () => {
   const preview = useAtomValue(cardPreviewAtom)

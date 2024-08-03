@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "copy-assets": "copyfiles -u1 src/assets/**/* dist",
+    "copy-assets": "copyfiles -u1 src/assets/**/* src/styles/**/* dist",
     "build-source": "tspc -b",
     "build": "run-p build-source copy-assets",
     "postinstall": "yarn build"

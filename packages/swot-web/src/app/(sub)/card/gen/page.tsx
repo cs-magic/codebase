@@ -3,9 +3,12 @@ import { genPageTitle } from "@cs-magic/swot-frontend/utils/get-page-title"
 import dynamic from "next/dynamic"
 
 // ref: https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
-const CardNoSSR = dynamic(() => import("../../../../components/card"), {
-  ssr: false,
-})
+const CardNoSSR = dynamic(
+  () => import("@cs-magic/swot-frontend/dist/components/card.js"),
+  {
+    ssr: false,
+  },
+)
 
 export const metadata = {
   title: genPageTitle("渲染卡片"),
