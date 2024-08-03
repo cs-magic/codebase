@@ -1,9 +1,14 @@
 # CS Magic Codebase
 
-## todo
+## project overview
 
-- [ ] 【重要】server function split for swot-pc 
-- [ ] `@cs-magic/react-hooks` split next/next-auth
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
 
 ## environment preparation
 
@@ -27,3 +32,8 @@ yarn
 
 - [Tech](__docs__/tech.md)
 - [Finished Todo](__docs__/finished-todo.md)
+
+## todo
+
+- [ ] 【重要】server function split for swot-pc
+- [ ] `@cs-magic/react-hooks` split next/next-auth
