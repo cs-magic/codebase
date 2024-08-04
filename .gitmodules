@@ -1,3 +1,3 @@
 [submodule "packages/homepage"]
 	path = packages/homepage
-	url = ./packages/homepage
+	url = https://github.com/cs-magic/cs-magic
