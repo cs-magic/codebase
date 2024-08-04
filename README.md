@@ -1,8 +1,10 @@
-# CS Magic Codebase
+[//]: # (# CS Magic Codebase)
 
 ![CS Magic Logo](packages/swot-frontend/src/assets/branding/enterprise/cs-magic_branding_white.jpg)
 
 [//]: # (![SWOT Logo]&#40;packages/swot-frontend/src/assets/branding/enterprise/swot.png&#41;)
+
+---
 
 ## Project Overview
 
