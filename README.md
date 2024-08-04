@@ -9,9 +9,8 @@
 ```mermaid
 graph LR;
     subgraph general
-        prisma --> common & llm & *;
-        common --> llm & *;
-        llm --> *;
+        prisma --> common & llm;
+        common --> llm;
     end
     
     subgraph wechaty_eco
@@ -21,14 +20,13 @@ graph LR;
     end
     
     subgraph swot_backend
-        * --> swot-backend;
-        wechaty-puppet --> swot-backend;
-        wechaty --> swot-backend;
+        general --> swot-backend;
+        wechaty_eco --> swot-backend;
     end
     
     subgraph swot_frontend
-        * --> swot-frontend;
-        swot-backend --> swot-frontend;
+        general --> swot-frontend;
+        swot_backend --> swot-frontend;
         react-hooks --> react-ui & next-hooks & swot-frontend;
         react-ui --> swot-frontend;
         next-hooks --> next-auth & swot-frontend;
