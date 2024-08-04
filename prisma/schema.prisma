@@ -1,0 +1,501 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+generator zod {
+  provider                         = "npx zod-prisma-types"
+  output                           = "./generated/zod" // default is ./generated/zod
+  useMultipleFiles                 = true // default is false
+  writeBarrelFiles                 = true // default is true
+  createInputTypes                 = true // default is true
+  createModelTypes                 = true // default is true
+  addInputTypeValidation           = true // default is true
+  addIncludeType                   = true // default is true
+  addSelectType                    = true // default is true
+  validateWhereUniqueInput         = true // default is true
+  createOptionalDefaultValuesTypes = true // default is false
+  createRelationValuesTypes        = true // default is false
+  createPartialTypes               = true // default is false
+  useDefaultValidators             = true // default is true
+  coerceDate                       = true // default is true
+  writeNullishInModelTypes         = true // default is false
+  // prismaClientPath                 = "./path/to/prisma/client" // default is client output path
+}
+
+datasource db {
+  provider = "postgresql"
+  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+  // Further reading:
+  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  url      = env("DATABASE_URL")
+}
+
+// Necessary for Next auth
+model Account {
+  id                String  @id @default(nanoid(5))
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([provider, providerAccountId])
+}
+
+model App {
+  id        String   @id @default(nanoid(5))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fromUser User?   @relation(fields: [user], references: [id], onDelete: Cascade)
+  // string
+  // Optional
+  // A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. Learn more.
+  user     String?
+
+  model     Model  @relation(fields: [modelName], references: [id], onDelete: Cascade)
+  // ID of the model to use. See the model endpoint compatibility table for details on which models work with the Chat API.
+  modelName String
+
+  requests  Request[]
+  responses Response[]
+
+  systemPrompt String?
+  title        String?
+
+  // 授权上架后的才可以展示在选择框内
+  granted Boolean @default(false)
+
+  // -------
+  // langchain的代码 OpenAIBaseInput
+  // todo: nai doc: https://platform.openai.com/docs/api-reference/chat/create
+  // -------
+
+  // number or null
+  // Optional
+  // Defaults to 1
+  // What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+  //
+  // We generally recommend altering this or top_p but not both.
+  temperature Float? @default(0.7)
+
+  // integer or null
+  // Optional
+  // The maximum number of tokens that can be generated in the chat completion.
+  //
+  // The total length of input tokens and generated tokens is limited by the model's context length. Example Python code for counting tokens.
+  maxTokens Int? @default(4096)
+
+  // number or null
+  // Optional
+  // Defaults to 1
+  // An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+  //
+  // We generally recommend altering this or temperature but not both.
+  topP Float? @default(0.5)
+
+  // number or null
+  // Optional
+  // Defaults to 0
+  // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
+  frequencyPenalty Float? @default(0)
+
+  // number or null
+  // Optional
+  // Defaults to 0
+  // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+  presencePenalty Float? @default(0)
+
+  // integer or null
+  // Optional
+  // Defaults to 1
+  // How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep n as 1 to minimize costs.
+  n Int? @default(1)
+
+  // map
+  // Optional
+  // Defaults to null
+  // Modify the likelihood of specified tokens appearing in the completion.
+  //
+  // Accepts a JSON object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from -100 to 100. Mathematically, the bias is added to the logits generated by the model prior to sampling. The exact effect will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection; values like -100 or 100 should result in a ban or exclusive selection of the relevant token.
+  // logitBias?: Record<string, number>;
+
+  // boolean or null
+  // Optional
+  // Defaults to false
+  // If set, partial message deltas will be sent, like in ChatGPT. Tokens will be sent as data-only server-sent events as they become available, with the stream terminated by a data: [DONE] message. Example Python code.
+  streaming Boolean? @default(true)
+
+  // /** Holds any additional parameters that are valid to pass to {@link
+  // * https://platform.openai.com/docs/api-reference/completions/create |
+  // * `openai.createCompletion`} that are not explicitly specified on this class.
+  // */
+  // modelKwargs?: Record<string, any>;
+
+  // string / array / null
+  // Optional
+  // Defaults to null
+  // Up to 4 sequences where the API will stop generating further tokens.
+  stop String[] @default([])
+
+  // /**
+  // * Timeout to use when making requests to OpenAI.
+  // */
+  timeout Int? @default(3000)
+
+  // /**
+  // * API key to use when making requests to OpenAI. Defaults to the value of
+  // * `OPENAI_API_KEY` environment variable.
+  //*/
+  openAIApiKey String?
+}
+
+model Session {
+  id           String   @id @default(nanoid(5))
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id    String  @id @default(nanoid(5))
+  name  String?
+  image String?
+
+  email         String?   @unique
+  phone         String?   @unique
+  wxid          String?   @unique
+  emailVerified DateTime?
+  phoneVerified DateTime?
+  wxidVerified  DateTime?
+
+  accounts Account[]
+  sessions Session[]
+
+  convs Conv[]
+  apps  App[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Card {
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// [IUserSummary]
+  user Json?
+
+  platformType PlatformType
+
+  // 微信可能不知道实际id是多少
+  platformId   String?
+  // [ICardPlatform]
+  platformData Json?
+
+  sourceUrl   String?
+  /// [IUserSummary]
+  author      Json?
+  time        DateTime?
+  title       String?
+  description String?
+
+  /// [IMedia]
+  cover   Json?
+  /// [IMedia]
+  images  Json[]
+  /// [IMedia]
+  iFrames Json[]
+  /// [IMedia]
+  videos  Json[]
+
+  // read from url
+  html String?
+
+  // 公众号文章的核心内容（markdown格式）
+  contentMd String?
+
+  /// [ICardStat]
+  stat Json?
+
+  ossUrl      String?
+  llmResponse LlmResponse[]
+
+  // todo: card comments
+  @@unique([platformType, platformId])
+}
+
+// for eval-ai
+model Company {
+  id    String  @id @default(nanoid(5))
+  title String
+  url   String?
+  logo  String?
+
+  models Model[]
+}
+
+// for eval-ai
+model Conv {
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fromUser   User   @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+  fromUserId String
+
+  requests         Request[] @relation("requests")
+  currentRequestId String?
+
+  titleResponse Response?
+}
+
+model LlmResponse {
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  card   Card   @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId String
+
+  // 基于核心内容总结后的结果
+  /// [ICallLlmResponse]
+  response Json?
+
+  // 每一种模型都可以生成一张图  
+  ossUrl String?
+}
+
+// for eval-ai
+model Model {
+  id        String   @id @default(nanoid(5))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  logo  String?
+  url   String?
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  apps      App[]
+}
+
+enum PlatformType {
+  wxmpArticle
+  bilibiliVideo
+  xhsNote
+}
+
+// for eval-ai
+model Request {
+  id        String   @id @default(nanoid(9))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// [QueryContex]
+  context Json
+
+  conv   Conv   @relation("requests", fields: [convId], references: [id], onDelete: Cascade)
+  convId String
+
+  apps App[]
+
+  responses Response[]
+}
+
+// for eval-ai
+model Response {
+  // appId 与 requestId 与 responseId 是两两多对多
+  // appClientId String // 做好同步的关键一招！ //不用这个了，直接response，不要依赖倒置
+  id        String   @id @default(nanoid(9))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conv   Conv?   @relation(fields: [convId], references: [id], onDelete: Cascade)
+  convId String? @unique
+
+  // 用户也可以手动更新 response，所以 request 是非必须的，强制required写起来也麻烦
+  request     Request? @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId   String?
+  app         App?     @relation(fields: [appId], references: [id], onDelete: Cascade)
+  appId       String?
+  appClientId String? // requestId + appClientId 唯一确定客户端； requestId 与 appId 是一对多关系
+
+  content String?
+  error   String?
+
+  tTrigger DateTime?
+  tStart   DateTime?
+  tEnd     DateTime?
+
+  // 客户端
+  isDraft       Boolean?  @default(false)
+  interruptedAt DateTime?
+}
+
+model Task {
+  id        String   @id @default(nanoid(7))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String?
+  status      TaskStatus @default(pending)
+
+  conv   WechatConv? @relation(fields: [convId], references: [id], onDelete: Cascade)
+  convId String?
+
+  notes    String[]
+  priority Int      @default(5)
+
+  /// [TaskTimer]
+  timer Json?
+}
+
+enum TaskStatus {
+  pending
+  running
+  paused
+  done
+  discarded
+}
+
+model WechatMessage {
+  id        String   @id // '3430847513737913148',
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  talker   WechatConv @relation("talker", fields: [talkerId], references: [id], onDelete: Cascade)
+  talkerId String // 'wxid_ck85xup8b1bj21',
+
+  listener   WechatConv? @relation("listener", fields: [listenerId], references: [id])
+  listenerId String?
+
+  room   WechatConv? @relation("room", fields: [roomId], references: [id], onDelete: Cascade)
+  roomId String? // : '47778688503@chatroom',
+
+  timestamp     Int // 1712846017,
+  type          Int //: 7,
+  text          String? // '现在我们要支持 card - model 的一对多关系了',
+  mentionIdList String[] // : [],
+  filename      String?
+}
+
+model WechatConv {
+  id        String   @id //
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// user
+  // user necessary, room not, room is topic
+  name             String? //: '南川 Mark',
+  // puppet-web 可能拿不到 avatar
+  avatar           String? //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
+  sentMessages     WechatMessage[] @relation("talker")
+  receivedMessages WechatMessage[] @relation("listener")
+
+  friend    Boolean? //: true,
+  gender    Int? //: 1,
+  type      Int? //: 1,
+  weixin    String? //: "youshouldspeakhow",
+  alias     String? //: "",
+  city      String? //: "Haidian",
+  province  String? // : "Beijing",
+  signature String? //: "Run, don’t look back.",
+  phone     String[] //: [],
+
+  address String? // puppet-web 有 address
+  star    Boolean? // puppet-web 有星标
+
+  /// room
+  messages WechatMessage[] @relation("room")
+
+  adminIdList  String[] //: [],
+  memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
+  topic        String? //: "test bot 0-1"
+
+  // todo: owner
+  ownerId String? // : "wxid_ck85xup8b1bj21",
+
+  /// [IWechatPreference]
+  preference Json?
+  /// [IWechatData]
+  data       Json?
+  tasks      Task[]
+}
+
+//
+// model WechatUser {
+//   id        String   @id //
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   name             String //: '南川 Mark',
+//   // puppet-web 可能拿不到 avatar
+//   avatar           String? //: "https://wx.qlogo.cn/mmhead/ver_1/FrESIibfTuEAHkrQgEm89K4iaibfHclRaaWuOYo2GA6L9zibVxliamyLKhkGuglr4icf9Uo7ZYOoGShTdGZAsVVuOosrzODvFKGkbrUMg0kM8IkFd17WUpRfIxWU5oskrEDIxa/0",
+//   sentMessages     WechatMessage[] @relation("talker")
+//   receivedMessages WechatMessage[] @relation("listener")
+//
+//   friend    Boolean? //: true,
+//   gender    Int? //: 1,
+//   type      Int? //: 1,
+//   weixin    String? //: "youshouldspeakhow",
+//   alias     String? //: "",
+//   city      String? //: "Haidian",
+//   province  String? // : "Beijing",
+//   signature String? //: "Run, don’t look back.",
+//   phone     String[] //: [],
+//
+//   address String? // puppet-web 有 address
+//   star    Boolean? // puppet-web 有星标
+//
+//   tasks Task[]
+//
+//   /// [IWechatPreference]
+//   preference Json?
+//   /// [IWechatData]
+//   data       Json?
+// }
+//
+// model WechatRoom {
+//   id        String   @id //
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   messages WechatMessage[]
+//
+//   adminIdList  String[] //: [],
+//   memberIdList String[] //: ["wxid_ck85xup8b1bj21", "wxid_keep6ntaelc822", "wxid_llwaw2tg2sre12"],
+//   avatar       String? //: "https://wx.qlogo.cn/mmcrhead/CIBk7rL0WLTU0WWdfTzHwImxNakuKQnE9DxX8PRT6tT0DiaPV6HCoGmxUiatVSwnXpD8JVPQ7vrhg/0",
+//   topic        String? //: "test bot 0-1"
+//
+//   // todo: owner
+//   ownerId String? // : "wxid_ck85xup8b1bj21",
+//
+//   /// [IWechatPreference]
+//   preference Json?
+//   /// [IWechatData]
+//   data       Json?
+//   Task       Task[]
+// }

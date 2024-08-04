@@ -1,8 +1,10 @@
+
+
 # wechaty
 **/*.memory-card.json
 
 # zod
-packages/prisma/generated
+prisma/generated
 
 **/.logs
 **/.next
@@ -24,8 +26,8 @@ packages/prisma/generated
 /coverage
 
 # database
-/packages/prisma/db.sqlite
-/packages/prisma/db.sqlite-journal
+/prisma/db.sqlite
+/prisma/db.sqlite-journal
 
 # next.js
 /.next/

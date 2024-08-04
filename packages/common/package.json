@@ -55,7 +55,6 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@cs-magic/prisma": "workspace:^",
     "@types/ansicolors": "^0",
     "@types/async-lock": "^1.4.2",
     "@types/lodash-es": "^4",
