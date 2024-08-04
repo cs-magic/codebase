@@ -8,44 +8,35 @@
 
 ## Project Overview
 
-General: 
-
 ```mermaid
 graph TD;
-    prisma --> common & llm & *;
-    common --> llm & *;
-    llm --> *;
-```
-
-Wechaty:
-
-```mermaid
-graph TD;
-    wechat4u --> wechaty-puppet-wechat4u;
-    wechaty-puppet --> wechaty-puppet-wechat4u & wechaty;
-    wechaty-puppet-wechat4u --> wechaty;
-```
-
-Swot Backend:
-
-```mermaid
-graph TD;
-    * --> swot-backend;
-    wechaty-puppet --> swot-backend;
-    wechaty --> swot-backend;
-```
-
-Swot Frontend:
-
-```mermaid
-graph TD;
-    * --> swot-frontend;
-    swot-backend --> swot-frontend;
-    react-hooks --> react-ui & next-hooks & swot-frontend;
-    react-ui --> swot-frontend;
-    next-hooks --> next-auth & swot-frontend;
-    next-auth --> swot-frontend;
-    swot-frontend --> swot-web & swot-pc;
+    subgraph general
+        prisma --> common & llm & *;
+        common --> llm & *;
+        llm --> *;
+    end
+    
+    subgraph wechaty
+        wechat4u --> wechaty-puppet-wechat4u;
+        wechaty-puppet --> wechaty-puppet-wechat4u & wechaty;
+        wechaty-puppet-wechat4u --> wechaty;
+    end
+    
+    subgraph swot-backend
+        * --> swot-backend;
+        wechaty-puppet --> swot-backend;
+        wechaty --> swot-backend;
+    end
+    
+    subgraph swot-frontend
+        * --> swot-frontend;
+        swot-backend --> swot-frontend;
+        react-hooks --> react-ui & next-hooks & swot-frontend;
+        react-ui --> swot-frontend;
+        next-hooks --> next-auth & swot-frontend;
+        next-auth --> swot-frontend;
+        swot-frontend --> swot-web & swot-pc;
+    end
 ```
 
 ## Preparation
