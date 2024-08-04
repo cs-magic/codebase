@@ -15,30 +15,6 @@ graph TD;
     prisma --> common & llm & *;
     common --> llm & *;
     llm --> *;
-
-graph TD;
-    wechat4u --> wechaty-puppet-wechat4u;
-    wechaty-puppet --> wechaty-puppet-wechat4u;
-    wechaty-puppet --> wechaty;
-    wechaty-puppet-wechat4u --> wechaty;
-
-graph TD;
-    * --> swot-backend;
-    wechaty-puppet --> swot-backend;
-    wechaty --> swot-backend;
-
-graph TD;
-    * --> swot-frontend;
-    swot-backend --> swot-frontend;
-    react-hooks --> react-ui;
-    react-hooks --> next-hooks;
-    react-hooks --> swot-frontend;
-    react-ui --> swot-frontend;
-    next-hooks --> next-auth;
-    next-hooks --> swot-frontend;
-    next-auth --> swot-frontend;
-    swot-frontend --> swot-web;
-    swot-frontend --> swot-pc;
 ```
 
 Wechaty:
