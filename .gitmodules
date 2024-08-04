@@ -1,0 +1,3 @@
+[submodule "packages/homepage"]
+	path = packages/homepage
+	url = ./packages/homepage
