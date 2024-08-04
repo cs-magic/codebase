@@ -12,11 +12,8 @@ General:
 
 ```mermaid
 graph TD;
-    prisma --> *;
-    prisma --> common;
-    prisma --> llm;
-    common --> *;
-    common --> llm;
+    prisma --> common & llm & *;
+    common --> llm & *;
     llm --> *;
 
 graph TD;
@@ -49,8 +46,7 @@ Wechaty:
 ```mermaid
 graph TD;
     wechat4u --> wechaty-puppet-wechat4u;
-    wechaty-puppet --> wechaty-puppet-wechat4u;
-    wechaty-puppet --> wechaty;
+    wechaty-puppet --> wechaty-puppet-wechat4u & wechaty;
     wechaty-puppet-wechat4u --> wechaty;
 ```
 
@@ -69,15 +65,11 @@ Swot Frontend:
 graph TD;
     * --> swot-frontend;
     swot-backend --> swot-frontend;
-    react-hooks --> react-ui;
-    react-hooks --> next-hooks;
-    react-hooks --> swot-frontend;
+    react-hooks --> react-ui & next-hooks & swot-frontend;
     react-ui --> swot-frontend;
-    next-hooks --> next-auth;
-    next-hooks --> swot-frontend;
+    next-hooks --> next-auth & swot-frontend;
     next-auth --> swot-frontend;
-    swot-frontend --> swot-web;
-    swot-frontend --> swot-pc;
+    swot-frontend --> swot-web & swot-pc;
 ```
 
 ## Preparation
