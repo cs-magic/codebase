@@ -16,19 +16,19 @@ graph TD;
         llm --> *;
     end
     
-    subgraph wechaty
+    subgraph wechaty_eco
         wechat4u --> wechaty-puppet-wechat4u;
         wechaty-puppet --> wechaty-puppet-wechat4u & wechaty;
         wechaty-puppet-wechat4u --> wechaty;
     end
     
-    subgraph swot-backend
+    subgraph swot_backend
         * --> swot-backend;
         wechaty-puppet --> swot-backend;
         wechaty --> swot-backend;
     end
     
-    subgraph swot-frontend
+    subgraph swot_frontend
         * --> swot-frontend;
         swot-backend --> swot-frontend;
         react-hooks --> react-ui & next-hooks & swot-frontend;
