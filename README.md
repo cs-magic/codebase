@@ -78,3 +78,4 @@ yarn workspace @cs-magic/swot-frontend start
 
 - [ ] 【重要】server function split for swot-pc
 - [ ] `react-hooks` split next/next-auth
+- [ ] `next` 需要从 18.3.0 降为 18.2.0 否则 dev 运行 `@cs-magic/homepage` 会有 warning

@@ -10,3 +10,4 @@ import { authOptions } from "./next-auth.options.js"
 export const getServerAuthSession = () => getServerSession(authOptions)
 
 export { authOptions }
+export type { IWechatAdaptedProfile } from "./providers/wechat"

@@ -3,15 +3,17 @@ import {
   getWechatAuthorizationUrl,
   getWechatAuthToken,
   getWechatUserProfile,
-  IWechatAdaptedProfile,
   IWechatAdaptedToken,
   IWechatProfile,
   logger,
   WECHAT_PROVIDER_ID,
 } from "@cs-magic/common"
+import { Profile } from "next-auth"
 
 // noinspection ES6PreferShortImport: 因为next-auth的packages.json的exports里规定了从 ./providers/* 里导出, see: https://github.com/nextauthjs/next-auth/issues/8263#issuecomment-1671918326
 import { OAuthConfig, OAuthUserConfig } from "next-auth/providers/index"
+
+export interface IWechatAdaptedProfile extends IWechatProfile, Profile {}
 
 /**
  * todo: type hint on callbacks

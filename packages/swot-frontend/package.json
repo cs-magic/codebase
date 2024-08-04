@@ -23,21 +23,25 @@
     "@cs-magic/next-hooks": "workspace:^",
     "@cs-magic/react-hooks": "workspace:^",
     "@cs-magic/swot-backend": "workspace:^",
+    "@tanstack/react-table": "^8.20.1",
+    "@uiw/react-md-editor": "^4.0.4",
     "ansicolors": "^0.3.2",
     "jotai": "^2.9.1",
     "lodash-es": "^4.17.21",
+    "lucide-react": "^0.424.0",
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
     "pusher-js": "^8.4.0-rc2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-use": "^17.5.1",
     "sonner": "^1.5.0",
     "wechaty-puppet": "workspace:^"
   },
   "devDependencies": {
     "@types/ansicolors": "^0",
     "@types/lodash-es": "^4",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0"
   }
 }

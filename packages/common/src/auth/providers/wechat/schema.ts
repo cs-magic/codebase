@@ -1,5 +1,3 @@
-import { Profile } from "next-auth"
-
 export enum WechatScopeType {
   base = "snsapi_base",
   info = "snsapi_userinfo",
@@ -44,8 +42,6 @@ export interface IWechatProfile extends Record<string, any> {
   country: string
   privilege: string[]
 }
-
-export interface IWechatAdaptedProfile extends IWechatProfile, Profile {}
 
 export type IWechatError = {
   errcode: number
