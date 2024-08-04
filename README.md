@@ -4,8 +4,6 @@
 
 [//]: # (![SWOT Logo]&#40;packages/swot-frontend/src/assets/branding/enterprise/swot.png&#41;)
 
----
-
 ## Project Overview
 
 ```mermaid
