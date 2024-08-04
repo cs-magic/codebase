@@ -9,7 +9,7 @@
 ## Project Overview
 
 ```mermaid
-graph TD;
+graph LR;
     subgraph general
         prisma --> common & llm & *;
         common --> llm & *;
