@@ -23,7 +23,7 @@ export const BrandingTitle = ({
     >
       {/* todo: add image link */}
       {/*<Image*/}
-      {/*  src={"/branding/enterprise/swot.png"}*/}
+      {/*  src={"/branding/swot.png"}*/}
       {/*  alt={""}*/}
       {/*  width={36}*/}
       {/*  height={36}*/}

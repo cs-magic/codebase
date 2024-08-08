@@ -10,7 +10,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "__tests__/*"
+    "__tests__/*",
+    "private_projects/*"
   ],
   "scripts": {
     "test": "jest",
