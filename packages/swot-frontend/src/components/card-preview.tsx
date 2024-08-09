@@ -17,7 +17,7 @@ import {
 } from "../store/card.rendered.atom"
 import { cardWatermarkTextAtom } from "../store/card.request.atom"
 import { getPlatformName } from "../utils/card-platform/get-platform-name"
-import { CsMagicLogoSvg } from "../assets"
+import CsMagicBlackLogoSvg from "@cs-magic/assets/branding/cs-magic_logo_1280.svg"
 
 /**
  * null optional nullish
@@ -55,7 +55,7 @@ export const CardPreview = forwardRef<
         )}
       >
         <div className={"flex items-center font-normal"}>
-          <CsMagicLogoSvg className={"w-8 h-8"} />
+          <CsMagicBlackLogoSvg className={"w-8 h-8"} />
           <span className={"text-2xl"}>CS魔法社</span>
         </div>
 

@@ -1,4 +1,4 @@
-import { CsMagicBrand } from "../assets"
+import CsMagicBannerSvg from "@cs-magic/assets/branding/CS-magic_banner_方正字汇-锐速体.svg"
 import { ImageEqualHeight } from "@cs-magic/react-ui"
 import { BrandingPartners } from "./branding-partners"
 import Link from "next/link"
@@ -21,7 +21,7 @@ export const Footer = () => {
           className={"h-full"}
           target={"_blank"}
         >
-          <CsMagicBrand className={"h-full w-auto"} />
+          <CsMagicBannerSvg className={"h-full w-auto"} />
         </Link>
 
         {/*<Link*/}

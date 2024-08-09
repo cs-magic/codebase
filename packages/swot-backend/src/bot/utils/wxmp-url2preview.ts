@@ -6,12 +6,36 @@ import {
   formatWxmpUrl,
   parseJsonSafe,
 } from "@cs-magic/common"
-import { ILlmRes } from "@cs-magic/llm"
+import { ILlmRes, LlmModelType } from "@cs-magic/llm"
 
 import { ICardInnerPreview, IMedia } from "../../schema/card.js"
 import { GenWxmpArticleCardFetchOptions } from "../../schema/wxmp-article.js"
 import { parseSummary } from "../../utils/parse-summary.js"
 import { fetchWxmpArticle } from "./wxmp-fetch.js"
+
+export const audio2preview = async (
+  filePath: string,
+  externalInfo: Pick<
+    ICardInnerPreview,
+    "author" | "id" | "title" | "time" | "cover" | "platformType" | "sourceUrl"
+  > & { model: LlmModelType },
+): Promise<ICardInnerPreview> => {
+  return {
+    ...externalInfo,
+    summary: {
+      model: externalInfo.model,
+      parsed: {
+        title: externalInfo.title ?? filePath,
+        comment: "",
+        // todo: what's this
+        result: {},
+        description: undefined,
+        mindmap: undefined,
+        tags: undefined,
+      },
+    },
+  }
+}
 
 export const wxmpUrl2preview = async (
   url: string,

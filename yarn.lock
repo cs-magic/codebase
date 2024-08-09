@@ -1885,6 +1885,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cs-magic/assets@workspace:^, @cs-magic/assets@workspace:packages/assets":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/assets@workspace:packages/assets"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/common@workspace:^, @cs-magic/common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "@cs-magic/common@workspace:packages/common"
@@ -2055,6 +2061,7 @@ __metadata:
   resolution: "@cs-magic/homepage@workspace:packages/homepage"
   dependencies:
     "@babel/core": "npm:^7.25.2"
+    "@cs-magic/swot-frontend": "workspace:^"
     "@dword-design/eslint-plugin-import-alias": "npm:^4.0.8"
     "@hookform/resolvers": "npm:^3.1.1"
     "@mantine/hooks": "npm:^6.0.17"
@@ -2273,6 +2280,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cs-magic/swot-frontend@workspace:packages/swot-frontend"
   dependencies:
+    "@cs-magic/assets": "workspace:^"
     "@cs-magic/common": "workspace:^"
     "@cs-magic/next-hooks": "workspace:^"
     "@cs-magic/react-hooks": "workspace:^"
@@ -15277,6 +15285,12 @@ __metadata:
   conditions: os=darwin
   languageName: node
   linkType: hard
+
+"doc2qa@workspace:private_projects/doc2qa":
+  version: 0.0.0-use.local
+  resolution: "doc2qa@workspace:private_projects/doc2qa"
+  languageName: unknown
+  linkType: soft
 
 "doctrine@npm:^2.1.0":
   version: 2.1.0

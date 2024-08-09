@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "../../tsconfig.dom.json"
+  ],
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  "include": [
+    "./**/*",
+//    "./src/**/*.png",
+//    "./src/**/*.jpg",
+//    "./src/**/*.ttf",
+//    "./src/assets.d.ts"
+  ],
+  "references": [
+  ]
+}

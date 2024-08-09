@@ -1,6 +1,6 @@
 [//]: # (# CS Magic Codebase)
 
-![CS Magic Logo](packages/swot-frontend/src/assets/branding/enterprise/cs-magic_branding_white.jpg)
+![CS Magic Banner](packages/assets/branding/cs-magic_banner_white.jpg)
 
 [//]: # (![SWOT Logo]&#40;packages/swot-frontend/src/assets/branding/enterprise/swot.png&#41;)
 
@@ -25,6 +25,7 @@ graph LR;
     end
     
     subgraph swot_frontend
+        assets --> swot-frontend;
         general --> swot-frontend;
         swot_backend --> swot-frontend;
         react-hooks --> react-ui & next-hooks & swot-frontend;
