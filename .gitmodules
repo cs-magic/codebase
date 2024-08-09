@@ -1,6 +1,6 @@
 [submodule "packages/homepage"]
-	path = app-home/home
+	path = app-home/web
 	url = https://github.com/cs-magic/cs-magic
 [submodule "packages/eval-ai"]
-	path = app-eval-ai/eval-ai
+	path = app-eval-ai/web
 	url = https://github.com/cs-magic/eval-ai
