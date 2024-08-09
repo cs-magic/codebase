@@ -1,4 +1,4 @@
-private_projects
+private-app-*
 
 # wechaty
 **/*.memory-card.json

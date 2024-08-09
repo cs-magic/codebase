@@ -1945,9 +1945,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/eval-ai@workspace:packages/eval-ai":
+"@cs-magic/eval-ai@workspace:app-eval-ai/eval-ai":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/eval-ai@workspace:packages/eval-ai"
+  resolution: "@cs-magic/eval-ai@workspace:app-eval-ai/eval-ai"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
@@ -2056,9 +2056,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/homepage@workspace:packages/homepage":
+"@cs-magic/home@workspace:app-home/home":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/homepage@workspace:packages/homepage"
+  resolution: "@cs-magic/home@workspace:app-home/home"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@cs-magic/swot-frontend": "workspace:^"
@@ -2191,6 +2191,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cs-magic/prisma@workspace:packages/prisma":
+  version: 0.0.0-use.local
+  resolution: "@cs-magic/prisma@workspace:packages/prisma"
+  languageName: unknown
+  linkType: soft
+
 "@cs-magic/react-hooks@workspace:^, @cs-magic/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@cs-magic/react-hooks@workspace:packages/react-hooks"
@@ -2257,9 +2263,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-backend@workspace:^, @cs-magic/swot-backend@workspace:packages/swot-backend":
+"@cs-magic/swot-backend@workspace:^, @cs-magic/swot-backend@workspace:app-swot/swot-backend":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-backend@workspace:packages/swot-backend"
+  resolution: "@cs-magic/swot-backend@workspace:app-swot/swot-backend"
   dependencies:
     "@cs-magic/common": "workspace:^"
     "@cs-magic/llm": "workspace:^"
@@ -2276,9 +2282,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-frontend@workspace:^, @cs-magic/swot-frontend@workspace:packages/swot-frontend":
+"@cs-magic/swot-frontend@workspace:^, @cs-magic/swot-frontend@workspace:app-swot/swot-frontend":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-frontend@workspace:packages/swot-frontend"
+  resolution: "@cs-magic/swot-frontend@workspace:app-swot/swot-frontend"
   dependencies:
     "@cs-magic/assets": "workspace:^"
     "@cs-magic/common": "workspace:^"
@@ -2306,9 +2312,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cs-magic/swot-web@workspace:packages/swot-web":
+"@cs-magic/swot-web@workspace:app-swot/swot-web":
   version: 0.0.0-use.local
-  resolution: "@cs-magic/swot-web@workspace:packages/swot-web"
+  resolution: "@cs-magic/swot-web@workspace:app-swot/swot-web"
   dependencies:
     "@alicloud/dysmsapi20170525": "npm:2.0.24"
     "@alicloud/dysmsapi20180501": "npm:^1.0.4"
@@ -15286,9 +15292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"doc2qa@workspace:private_projects/doc2qa":
+"doc2qa@workspace:private-app-doc2qa/doc2qa":
   version: 0.0.0-use.local
-  resolution: "doc2qa@workspace:private_projects/doc2qa"
+  resolution: "doc2qa@workspace:private-app-doc2qa/doc2qa"
   languageName: unknown
   linkType: soft
 
@@ -31725,9 +31731,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swot-pc@workspace:packages/swot-pc":
+"swot-pc@workspace:app-swot/swot-pc":
   version: 0.0.0-use.local
-  resolution: "swot-pc@workspace:packages/swot-pc"
+  resolution: "swot-pc@workspace:app-swot/swot-pc"
   dependencies:
     "@babel/core": "npm:^7.24.8"
     "@babel/preset-env": "npm:^7.24.8"

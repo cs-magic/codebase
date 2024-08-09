@@ -53,14 +53,8 @@
     "node_modules"
   ],
   "references": [
-    {
-      "path": "../common"
-    },
-    {
-      "path": "../react-ui"
-    },
-    {
-      "path": "../react-hooks"
-    }
+    {"path": "../../packages/common"},
+    {"path": "../../packages/react-ui"},
+    {"path": "../../packages/react-hooks"}
   ]
 }

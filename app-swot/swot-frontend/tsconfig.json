@@ -12,11 +12,11 @@
     "./src/**/*.json",
   ],
   "references": [
-    {"path": "../common"},
+    {"path": "../../packages/common"},
+    {"path": "../../packages/next-auth"},
+    {"path": "../../packages/next-hooks"},
+    {"path": "../../packages/react-hooks"},
+    {"path": "../../packages/react-ui"},
     {"path": "../swot-backend"},
-    {"path": "../next-auth"},
-    {"path": "../next-hooks"},
-    {"path": "../react-hooks"},
-    {"path": "../react-ui"},
   ]
 }
